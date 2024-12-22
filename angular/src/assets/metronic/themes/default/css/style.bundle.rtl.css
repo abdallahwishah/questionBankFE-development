@@ -30,7 +30,7 @@
   --bs-gray-800: #252F4A;
   --bs-gray-900: #071437;
   --bs-light: #F9F9F9;
-  --bs-primary: #3E97FF;
+  --bs-primary: #6D31ED;
   --bs-secondary: #DBDFE9;
   --bs-success: #50cd89;
   --bs-info: #7239ea;
@@ -38,14 +38,14 @@
   --bs-danger: #f1416c;
   --bs-dark: #071437;
   --bs-light-rgb: 249, 249, 249;
-  --bs-primary-rgb: 62, 151, 255;
+  --bs-primary-rgb: 109, 49, 237;
   --bs-secondary-rgb: 219, 223, 233;
   --bs-success-rgb: 80, 205, 137;
   --bs-info-rgb: 114, 57, 234;
   --bs-warning-rgb: 255, 199, 0;
   --bs-danger-rgb: 241, 65, 108;
   --bs-dark-rgb: 7, 20, 55;
-  --bs-primary-text-emphasis: #193c66;
+  --bs-primary-text-emphasis: #b18dfe;
   --bs-secondary-text-emphasis: #58595d;
   --bs-success-text-emphasis: #205237;
   --bs-info-text-emphasis: #2e175e;
@@ -61,7 +61,7 @@
   --bs-danger-bg-subtle: #fcd9e2;
   --bs-light-bg-subtle: #fcfcfc;
   --bs-dark-bg-subtle: #B5B5C3;
-  --bs-primary-border-subtle: #b2d5ff;
+  --bs-primary-border-subtle: #dbcaff;
   --bs-secondary-border-subtle: #f1f2f6;
   --bs-success-border-subtle: #b9ebd0;
   --bs-info-border-subtle: #c7b0f7;
