@@ -1,0 +1,50 @@
+<div class="d-flex justify-content-between m-5">
+    <div style="color: #202224" class="gap-2 d-flex" *ngIf="primengTableHelper.totalRecordsCount !== 0">
+        <div>
+            {{
+                paginator.getPage() * primengTableHelper.defaultRecordsCountPerPage +
+                    1 +
+                    ' - ' +
+                    (primengTableHelper.totalRecordsCount -
+                        paginator.getPage() * primengTableHelper.defaultRecordsCountPerPage <
+                    primengTableHelper.defaultRecordsCountPerPage
+                        ? primengTableHelper.totalRecordsCount
+                        : (paginator.getPage() + 1) * primengTableHelper.defaultRecordsCountPerPage)
+            }}
+        </div>
+        <div>{{ ' ' + l('of') + ' ' + primengTableHelper.totalRecordsCount }}</div>
+    </div>
+    <div class="d-flex border border-gray-300 rounded" style="width: min-content">
+        <div class="border-gray-300 rounded d-flex">
+            <div>
+                <i
+                    class="fa-solid fa-chevron-{{
+                        localization.currentLanguage.name === 'en' ? 'left' : 'right'
+                    }} px-5 py-2 {{
+                        primengTableHelper.totalRecordsCount
+                            ? paginator.getPage() === 0
+                                ? 'disabled'
+                                : 'text-dark'
+                            : 'disabled'
+                    }}"
+                    (click)="previousPage(paginator)"
+                ></i>
+            </div>
+            <div class="border"></div>
+            <div>
+                <i
+                    class="fa-solid fa-chevron-{{
+                        localization.currentLanguage.name === 'ar' ? 'left' : 'right'
+                    }} px-5 py-2 {{
+                        primengTableHelper.totalRecordsCount
+                            ? paginator.getPage() === paginator.getPageCount() - 1
+                                ? 'disabled'
+                                : 'text-dark'
+                            : 'disabled'
+                    }}"
+                    (click)="nextPage(paginator)"
+                ></i>
+            </div>
+        </div>
+    </div>
+</div>

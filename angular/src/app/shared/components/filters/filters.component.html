@@ -1,0 +1,76 @@
+<div class="filter-container  {{classStyle}}">
+    <div
+        (click)="openPanel()"
+        class="icon-file d-inline-flex justify-content-center align-items-center  px-6 cursor-pointer"
+    >
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M13.3333 6.04169C12.9916 6.04169 12.7083 5.75835 12.7083 5.41669C12.7083 5.07502 12.9916 4.79169 13.3333 4.79169H18.3333C18.6749 4.79169 18.9583 5.07502 18.9583 5.41669C18.9583 5.75835 18.6749 6.04169 18.3333 6.04169H13.3333Z" fill="#6D31ED"/>
+        <path d="M1.66675 6.04169C1.32508 6.04169 1.04175 5.75835 1.04175 5.41669C1.04175 5.07502 1.32508 4.79169 1.66675 4.79169H5.00008C5.34175 4.79169 5.62508 5.07502 5.62508 5.41669C5.62508 5.75835 5.34175 6.04169 5.00008 6.04169H1.66675Z" fill="#6D31ED"/>
+        <path fill-rule="evenodd" clip-rule="evenodd" d="M4.79175 5.41667C4.79175 3.46667 6.38341 1.875 8.33341 1.875C10.2834 1.875 11.8751 3.46667 11.8751 5.41667C11.8751 7.36667 10.2834 8.95833 8.33341 8.95833C6.38341 8.95833 4.79175 7.36667 4.79175 5.41667ZM6.04175 5.41667C6.04175 6.68333 7.06675 7.70833 8.33341 7.70833C9.60008 7.70833 10.6251 6.68333 10.6251 5.41667C10.6251 4.15 9.60008 3.125 8.33341 3.125C7.06675 3.125 6.04175 4.15 6.04175 5.41667Z" fill="#6D31ED"/>
+        <path d="M15 15.2083C14.6583 15.2083 14.375 14.925 14.375 14.5833C14.375 14.2416 14.6583 13.9583 15 13.9583H18.3333C18.675 13.9583 18.9583 14.2416 18.9583 14.5833C18.9583 14.925 18.675 15.2083 18.3333 15.2083H15Z" fill="#6D31ED"/>
+        <path d="M1.66675 15.2083C1.32508 15.2083 1.04175 14.925 1.04175 14.5833C1.04175 14.2416 1.32508 13.9583 1.66675 13.9583H6.66675C7.00841 13.9583 7.29175 14.2416 7.29175 14.5833C7.29175 14.925 7.00841 15.2083 6.66675 15.2083H1.66675Z" fill="#6D31ED"/>
+        <path fill-rule="evenodd" clip-rule="evenodd" d="M8.125 14.5834C8.125 12.6334 9.71667 11.0417 11.6667 11.0417C13.6167 11.0417 15.2083 12.6334 15.2083 14.5834C15.2083 16.5334 13.6167 18.125 11.6667 18.125C9.71667 18.125 8.125 16.5334 8.125 14.5834ZM9.375 14.5834C9.375 15.85 10.4 16.875 11.6667 16.875C12.9333 16.875 13.9583 15.85 13.9583 14.5834C13.9583 13.3167 12.9333 12.2917 11.6667 12.2917C10.4 12.2917 9.375 13.3167 9.375 14.5834Z" fill="#6D31ED"/>
+        </svg>
+
+        <span class="ps-4">{{ 'filters' | localize }}</span>
+    </div>
+    <div class="filter-panel" *ngIf="isPanelOpen">
+        <div class="panel-header d-flex align-items-center justify-content-between pb-4 mb-5">
+            <p class="mb-0 fs-5 fw-bolder">{{ 'Filter' | localize }}</p>
+            <div class="icon-close" (click)="isPanelOpen = !isPanelOpen">
+                <i class="pi pi-times"></i>
+            </div>
+        </div>
+        <ng-content select="[filterBody]"></ng-content>
+
+        <!--
+        <div>
+            <div class="d-flex justify-content-between mb-3">
+                <label for="00">التاريخ النهائي</label>
+                <span class="text-primary cursor-pointer">إلغاء</span>
+            </div>
+            <p-calendar appendTo="body" #00 id="0" name="00"></p-calendar>
+        </div>
+        <div class="my-6">
+            <div class="d-flex justify-content-between mb-3">
+                <label for="00">الفئة</label>
+                <span class="text-primary cursor-pointer">إلغاء</span>
+            </div>
+            <p-dropdown [optionLabel]="'sharedLookup.nameL'" [optionValue]="'sharedLookup.id'"
+                ></p-dropdown>
+        </div>
+        <div>
+            <div class="d-flex justify-content-between mb-3">
+                <label for="00">نوع المهمة</label>
+                <span class="text-primary cursor-pointer">إلغاء</span>
+            </div>
+
+         <div class="checkBoxes">
+            <label for="EditEdition_IsFree" class="form-check form-check-custom form-check-solid ">
+                <input class="form-check-input cursor-pointer" id="EditEdition_IsFree" name="errorImpactId"
+                    [value]="'item.id'" type="radio" />
+                <span class="form-check-label">
+                    تحتاج موافقة
+                </span>
+            </label>
+            <label for="EditEdition_IsFree" class="form-check form-check-custom form-check-solid ">
+                <input class="form-check-input cursor-pointer" id="EditEdition_IsFree" name="errorImpactId"
+                    [value]="'item.id'" type="radio" />
+                <span class="form-check-label">
+                    طلباتي
+                </span>
+            </label>
+         </div>
+
+        </div> -->
+
+        <div class="d-flex justify-content-between mt-7">
+            <button class="btn btn-primary">
+                {{ 'Save' | localize }}
+            </button>
+            <button class="btn btn-outline">
+                {{ 'Reset' | localize }}
+            </button>
+        </div>
+    </div>
+</div>

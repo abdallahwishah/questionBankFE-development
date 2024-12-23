@@ -1,38 +1,27 @@
-<a href="/" [class]="customHrefClass" (window:resize)="onResize()">
+<a href="/" [class]="customHrefClass" class="mt-10 d-inline-block" (window:resize)="onResize()">
     <img
         alt="Logo"
         *ngIf="!appSession.tenant || !appSession.tenant.HasLogo()"
-        src="../../../../../assets/common/images/logo.svg"
-        class=" mt-5 app-sidebar-logo-default"
+        src="assets/common/images/logo.svg"
+        class=" app-sidebar-logo-default"
     />
     <img
         alt="Logo"
         *ngIf="!appSession.tenant || !appSession.tenant.HasLogoMinimal()"
-        [src]="defaultSmallLogo"
+        src="assets/common/images/logo.svg"
         class="h-20px app-sidebar-logo-minimize"
     />
     <img
         alt="Logo"
         *ngIf="appSession.tenant && appSession.tenant.HasLogo()"
-        [src]="
-            remoteServiceBaseUrl +
-            '/TenantCustomization/GetTenantLogo?skin=' +
-            this.skin +
-            '&tenantId=' +
-            appSession.tenant.id
-        "
+        src="assets/common/images/logo.svg"
+
         class="h-25px app-sidebar-logo-default"
     />
     <img
         alt="Logo"
         *ngIf="appSession.tenant && appSession.tenant.HasLogoMinimal()"
-        [src]="
-            remoteServiceBaseUrl +
-            '/TenantCustomization/GetTenantLogo?skin=' +
-            this.skin + '-sm' +
-            '&tenantId=' +
-            appSession.tenant.id
-        "
+        src="assets/common/images/logo.svg"
         class="h-20px app-sidebar-logo-minimize"
     />
 </a>

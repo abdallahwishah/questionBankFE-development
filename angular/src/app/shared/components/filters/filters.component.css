@@ -1,0 +1,57 @@
+
+
+.filter-container {
+    position: relative;
+}
+
+.icon-file {
+    border-radius:0.475rem;
+    background: #6D31ED1A;
+    border: 1px solid var(--bs-primary);
+    transition: 0.2s all;
+    padding: 10.2px 0;
+}
+
+.icon-file:hover {
+    background: #6d31ed2b;
+}
+.icon-close {
+    width: 2.2rem !important;
+    height: 2.2rem !important;
+    border: 0.5px solid #dddddd !important;
+    background: #fbfbfb !important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    transition: 0.3s all;
+    cursor: pointer;
+}
+.icon-close:hover {
+    color: rgba(237, 28, 36, 1);
+}
+
+.filter-panel {
+    position: absolute;
+    top: 50px;
+    left: 0;
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 30px 0px #0000001a;
+    border: 0.5px solid #dddddd;
+    z-index: 9;
+    width: 380px;
+}
+.filter-panel-archive {
+    position: absolute;
+    top: -10px;
+    left: 130px;
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 30px 0px #0000001a;
+    border: 0.5px solid #dddddd;
+    z-index: 9;
+    width: 60%;
+}

@@ -1,0 +1,26 @@
+<div class="btn-group dropdown" dropdown container="body" >
+
+    <ng-container >
+        <div id="action-button" class="btn-option cursor-pointer " dropdownToggle>
+            <img src="/assets/common/images/option.svg" alt="">
+          </div>
+
+         <ul class="dropdown-menu" container="body" *dropdownMenu>
+            <ng-container *ngFor="let ActionInfo of ActionsInfo">
+                <li *ngIf="ActionInfo?.hasPermission!=false &&ActionInfo?.hasCondition != false">
+                    <a
+                        class="dropdown-item style-flex-icons"
+                        [routerLink]="ActionInfo?.routerLink"
+                        [queryParams]="ActionInfo?.queryParams"
+                        (click)="action?.emit(ActionInfo?.label)"
+                        [class]="{ disabled: ActionInfo.disabled == true }"
+                    >
+                        <i [class]="getIconClass(ActionInfo?.label, ActionInfo?.customIcon)"></i>
+                        {{ l(ActionInfo?.label) }}
+                    </a>
+                </li>
+            </ng-container>
+        </ul>
+    </ng-container>
+
+</div>

@@ -68,14 +68,14 @@
                     <div *ngIf="!appSession.theme.isTopMenuUsed">&nbsp;</div>
                     <!--end::Menu wrapper-->
                     <!--begin::Navbar-->
-                    <div class="app-navbar flex-shrink-0">
+                    <div class="app-navbar flex-shrink-0 mt-4">
                         <active-delegated-users-combo *ngIf="!installationMode"></active-delegated-users-combo>
                         <subscription-notification-bar></subscription-notification-bar>
                         <quick-theme-selection></quick-theme-selection>
                         <language-switch-dropdown></language-switch-dropdown>
                         <header-notifications></header-notifications>
                         <chat-toggle-button></chat-toggle-button>
-                        <toggle-dark-mode [isDarkModeActive]="isDarkModeActive()"></toggle-dark-mode>
+                       <!--  <toggle-dark-mode [isDarkModeActive]="isDarkModeActive()"></toggle-dark-mode> -->
                         <user-menu></user-menu>
                     </div>
                     <!--end::Navbar-->
@@ -100,7 +100,7 @@
                 data-kt-drawer-toggle="#kt_app_sidebar_mobile_toggle"
             >
                 <!--begin::Logo-->
-                <div class="app-sidebar-logo h-80px px-6 justify-content-center" id="kt_app_sidebar_logo">
+                <div class="app-sidebar-logo h-80px mb-8 px-6 justify-content-center" id="kt_app_sidebar_logo">
                     <!--begin::Logo image-->
                     <default-brand></default-brand>
                     <!--end::Logo image-->

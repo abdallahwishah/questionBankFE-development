@@ -1,0 +1,24 @@
+<div class="app-dropdown" [ngClass]="{ rtl: !isEnglish }">
+    <label *ngIf="labelField" class="block font-medium mb-2">
+        {{ labelField }}
+    </label>
+    <p-dropdown
+        *ngIf="!loading"
+        placeholder="select "
+        class="w-full py-2"
+        [ngClass]="{ disabled: disabled }"
+        [formControl]="fieldControl"
+        [options]="options"
+        [optionLabel]="optionLabel"
+        [optionValue]="optionValue"
+        [panelStyleClass]="!isEnglish ? 'rtl' : ''"
+        [filter]="filter"
+        [filterBy]="filterBy"
+        [showClear]="!!!required"
+        [appendTo]="appendTo"
+        [virtualScroll]="virtualScroll"
+        [virtualScrollItemSize]="38"
+        [lazy]="lazy"
+        (onLazyLoad)="onLoad.emit($event)"
+    ></p-dropdown>
+</div>
