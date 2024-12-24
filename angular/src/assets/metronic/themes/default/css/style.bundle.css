@@ -50447,3 +50447,10 @@ body,
     color: #ffffff !important;
   }
 }
+
+/* custom */
+.filter-panel{
+    left: unset !important;
+
+    right: 0 !important;
+}

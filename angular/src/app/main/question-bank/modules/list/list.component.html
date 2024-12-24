@@ -1,14 +1,14 @@
 <div [@routerTransition]>
     <div class="container-fluid px-5">
-        <h2 class="fs-3 fw-medium justify-content-center mb-4 page-heading text-dark">بنك الأسئلة</h2>
+        <h2 class="fs-3 fw-medium justify-content-center mb-4 page-heading text-dark">{{ l('QuestionBank') }}</h2>
         <div class="d-flex justify-content-between">
             <div class="d-flex gap-5">
                 <div class="d-flex gap-2">
-                    <p class="gray">كل الأسئلة:</p>
+                    <p class="gray">{{ l('AllQuestions') }}:</p>
                     <span class="text-dark">150</span>
                 </div>
                 <div class="d-flex gap-2">
-                    <p class="gray">الأسئلة الفعالة:</p>
+                    <p class="gray">{{ l('EffectiveQuestions') }}:</p>
                     <span class="text-dark">67</span>
                 </div>
             </div>
@@ -34,7 +34,7 @@
                         </svg>
 
                         <span class="d-none d-md-inline-block" [routerLink]="'/app/main/question-bank/addQuestion/1'">
-                            {{ 'أضف سؤال' | localize }}
+                            {{ l('AddAQuestion') }}
                         </span>
                     </button>
                 </div>
@@ -56,7 +56,7 @@
                         </svg>
 
                         <span class="d-none d-md-inline-block">
-                            {{ 'إدخال ملف' | localize }}
+                            {{ l('EnterFile') }}
                         </span>
                     </button>
                 </div>
@@ -117,28 +117,27 @@
                 <ng-template pTemplate="header">
                     <tr>
                         <th pSortableColumn="caseCode">
-                            {{ l('Code') }}
-                            <p-sortIcon field="caseCode"></p-sortIcon>
+                            {{  '#' }}
                         </th>
-                        <th pSortableColumn="name">
-                            {{ l('CaseTitle') }}
-                            <p-sortIcon field="name"></p-sortIcon>
+                        <th pSortableColumn="TheQuestion">
+                            {{ l('TheQuestion') }}
+                            <p-sortIcon field="TheQuestion"></p-sortIcon>
                         </th>
-                        <th pSortableColumn="OrganizationUnitFk.DisplayName">
-                            {{ l('CaseOwner') }}
-                            <p-sortIcon field="OrganizationUnitFk.DisplayName"></p-sortIcon>
+                        <th pSortableColumn="QuestionType">
+                            {{ l('QuestionType') }}
+                            <p-sortIcon field="QuestionType"></p-sortIcon>
                         </th>
-                        <th pSortableColumn="schedulerPeriodId">
-                            {{ l('RepeatCase') }}
-                            <p-sortIcon field="schedulerPeriodId"></p-sortIcon>
+                        <th pSortableColumn="Class">
+                            {{ l('Class') }}
+                            <p-sortIcon field="Class"></p-sortIcon>
                         </th>
-                        <th pSortableColumn="creationTime">
-                            {{ l('CreationDate') }}
-                            <p-sortIcon field="creationTime"></p-sortIcon>
+                        <th pSortableColumn="StudyMaterial">
+                            {{ l('StudyMaterial') }}
+                            <p-sortIcon field="StudyMaterial"></p-sortIcon>
                         </th>
-                        <th pSortableColumn="CreatorUser.Name">
-                            {{ l('CreatedBy') }}
-                            <p-sortIcon field="CreatorUser.Name"></p-sortIcon>
+                        <th pSortableColumn="Status">
+                            {{ l('Status') }}
+                            <p-sortIcon field="Status"></p-sortIcon>
                         </th>
                         <th>
                             {{ l('Actions') }}

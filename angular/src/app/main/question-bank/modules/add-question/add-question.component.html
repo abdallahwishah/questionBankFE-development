@@ -15,11 +15,62 @@
                   fill="#999999"
               />
           </svg>
-          {{ l('بنك الأسئلة') }}
+          {{ l('QuestionBank') }}
       </span>
       <span class="mx-2">/</span>
 
-      <h2 class="fw-bolder">{{ 'إضافة سؤال' }}</h2>
+      <h2 class="fw-bolder">{{ 'AddAQuestion' }}</h2>
   </div>
   </div>
+
+  <!-- Start Qusestion  -->
+  <div class="container-fluid mt-8 px-5">
+    <div class="row">
+        <!-- first card -->
+        <div class="col-12">
+            <div class="card px-8 py-6">
+                <h3>معرفات السؤال</h3>
+
+                <div class="row mt-6">
+                    <div class="col-md-6 mb-5">
+                        <app-dropdown-field [labelField]="l('StudyMaterial')"></app-dropdown-field>
+                    </div>
+                    <div class="col-md-6 mb-5">
+                        <app-dropdown-field  [labelField]="l('Class')"></app-dropdown-field>
+                    </div>
+                    <div class="col-md-6 mb-5">
+                        <app-dropdown-field  [labelField]="l('StudyUnit')"></app-dropdown-field>
+                    </div>
+                    <div class="col-md-6 mb-5">
+                        <app-dropdown-field  [labelField]="l('ExcludedPageUumbers')"></app-dropdown-field>
+                    </div>
+                    <div class="col-12 mb-2">
+                        <app-dropdown-field  [labelField]="l('DifficultyLevel')"></app-dropdown-field>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- second card -->
+        <div class="col-12 mt-6">
+            <div class="card px-8 py-6">
+              <div class="d-flex  justify-content-between align-items-center">
+                <h3>نص السؤال</h3>
+                <p-toggleswitch [(ngModel)]="checked" />
+              </div>
+
+                <div class="row mt-6">
+                    <div class="col-12 mb-2">
+                       <!--  <p-editor  [style]="{ height: '320px' }" /> -->
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+  </div>
+
+
 </div>
