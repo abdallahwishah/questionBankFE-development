@@ -1,4 +1,4 @@
-<div [@routerTransition]>
+<div>
     <div class="container-fluid px-5">
         <div class="d-flex align-items-center">
             <span class="cursor-pointer" [routerLink]="'/app/main/question-bank'">
@@ -19,7 +19,7 @@
             </span>
             <span class="mx-2">/</span>
 
-            <h2 class="fw-bolder">{{ 'AddAQuestion' }}</h2>
+            <h2 class="fw-bolder mb-0">{{ 'AddAQuestion' }}</h2>
         </div>
     </div>
 
@@ -29,7 +29,7 @@
             <!-- first card -->
             <div class="col-12">
                 <div class="card px-8 py-6">
-                    <h3>معرفات السؤال</h3>
+                    <h3>{{ l('QuestionIDs') }}</h3>
 
                     <div class="row mt-6">
                         <div class="col-md-6 mb-5">
@@ -55,20 +55,100 @@
             <div class="col-12 mt-6">
                 <div class="card px-8 py-6">
                     <div class="d-flex justify-content-between align-items-center">
-                        <h3>نص السؤال</h3>
-                        <p-toggleswitch [(ngModel)]="checked" />
+                        <h3>{{ l('QuestionText') }}</h3>
+                        <p-inputSwitch (onChange)="getChecked($event)" [(ngModel)]="checked" />
                     </div>
+                    @if (checked) {
+                        <div class="row mt-6">
+                            <div class="col-12 mb-2">
+                                <app-editor></app-editor>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
 
+            <!-- third card -->
+            <div class="col-12 mt-6">
+                <div class="card px-8 py-6">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h3 class="fs-3 fw-medium">{{ l('ExplanatoryNote') }}</h3>
+                    </div>
                     <div class="row mt-6">
                         <div class="col-12 mb-2">
-                            <!-- ثثث -->
-                            <!--  <p-editor  [style]="{ height: '320px' }" /> -->
+                            <app-editor></app-editor>
                         </div>
                     </div>
                 </div>
             </div>
+
+            <!-- forth card -->
+            <div class="col-12 mt-6">
+                <div class="card px-8 py-6">
+                    <h3>{{ l('QuestionDetails') }}</h3>
+
+                    <div class="row mt-6">
+                        <div class="col-md-6 mb-5">
+                            <app-dropdown-field (onSelectionChange)="getQuestionType($event)" [options]="questionsType" [labelField]="l('QuestionType')"></app-dropdown-field>
+                        </div>
+                        <div class="col-md-3 mb-5 d-flex align-items-end">
+                            <input
+                                name="text"
+                                class="form-control m-input"
+                                [placeholder]="l('MinimumPoints')"
+                                type="text"
+                            />
+                        </div>
+                        <div class="col-md-3 mb-5 d-flex align-items-end">
+                            <input
+                                name="text"
+                                class="form-control m-input"
+                                [placeholder]="l('MaximumPoints')"
+                                type="text" />
+                        </div>
+                    </div>
+
+                    <!-- dynamic question -->
+                    <app-dynamic-question [questionType]="type"></app-dynamic-question>
+                </div>
+            </div>
+
+               <!-- Fifth card -->
+               <div class="col-12 mt-6">
+                <div class="card px-8 py-6">
+                    <div class="row mt-2">
+                        <div class="col-md-3 mb-2 d-flex justify-content-center align-items-center gap-3">
+                            <p-inputSwitch [(ngModel)]="checked" />
+                            <label> {{ l('AutomaticallyCorrectTheQuestion') }}</label>
+                        </div>
+                        <div class="col-md-3 mb-2 d-flex justify-content-center align-items-center gap-3">
+                            <p-inputSwitch [(ngModel)]="checked" />
+                            <label> {{ l('MixingAnswers') }}</label>
+                        </div>
+                        <div class="col-12 py-7">
+                           <div class="line"></div>
+                        </div>
+
+                        <div class="d-flex justify-content-between">
+                            <button class="btn btn-outline-primary">
+                                {{ 'AddAnotherQuestion' | localize }}
+                            </button>
+                           <div>
+                            <button class="btn btn-primary">
+                                {{ 'Save' | localize }}
+                            </button>
+                            <button class="btn btn-outline">
+                                {{ 'Reset' | localize }}
+                            </button>
+                           </div>
+                        </div>
+
+
+                    </div>
+
+                </div>
+               </div>
+
         </div>
     </div>
-
-    <app-dynamic-question></app-dynamic-question>
 </div>
