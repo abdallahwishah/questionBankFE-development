@@ -4,6 +4,7 @@ import { AddQuestionComponent } from './add-question.component';
 import { AppSharedModule } from '@app/shared/app-shared.module';
 import { RouterModule } from '@node_modules/@angular/router';
 import { DropdownFieldComponent } from "../../../../shared/components/dropdown-field/dropdown-field.component";
+import { DynamicQuestionComponent } from '../../components/dynamic-question/dynamic-question.component';
 
 @NgModule({
   imports: [
@@ -15,7 +16,8 @@ import { DropdownFieldComponent } from "../../../../shared/components/dropdown-f
             component: AddQuestionComponent,
         },
     ]),
-    DropdownFieldComponent
+    DropdownFieldComponent,
+    DynamicQuestionComponent
 ],
   declarations: [AddQuestionComponent]
 })
