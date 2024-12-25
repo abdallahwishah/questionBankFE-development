@@ -334,6 +334,9 @@ textarea{
 .btn-delete{
     background-color: #ED1C241A !important;
 }
+.btn-add{
+    background-color: #52C93F26 !important;
+}
 .p-inputnumber button{
     background-color: #FBFBFB !important;
     color: #565D6D;
@@ -361,6 +364,29 @@ textarea{
 }
 .app-header{
     background: #fff !important;
+}
+.status-grean{
+    background: #52C93F26;
+    color: #008000;
+    border-radius: 25px;
+}
+
+.question-box{
+    border: 1px solid #DEE1E6;
+    border-radius: 8px;
+}
+
+.question-box-header{
+    background: #6D31ED0F;
+    border-radius: 8px 8px 0 0 ;
+}
+
+.outline-dashed{
+    border-style: dashed !important;
+}
+.outline-darg-drop-wodrld{
+    color: #171A1F !important;
+    box-shadow: 0px 0px 4px 3px #6D31ED26 !important;
 }
 [data-kt-app-layout=light-sidebar] .app-sidebar .menu .menu-item .menu-link.active {
     background-color:var(--bs-primary) !important;

@@ -16,6 +16,10 @@ import { RouterModule } from '@angular/router';
                         path: 'question-bank',
                         loadChildren: () => import('./question-bank/question-bank.module').then((m) => m.QuestionBankModule)
                     },
+                    {
+                        path: 'sessions',
+                        loadChildren: () => import('./sessions/sessions.module').then((m) => m.SessionsModule)
+                    },
                     { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
                     { path: '**', redirectTo: 'dashboard' },
                 ],

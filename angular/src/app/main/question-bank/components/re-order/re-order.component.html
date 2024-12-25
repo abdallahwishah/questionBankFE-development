@@ -1,18 +1,19 @@
-<div class="d-flex gap-3 mt-2 mb-6">
-    <p class="mb-0 fw-medium">الاختيارات</p>
-    <span class="d-inline-block text-gray-700">اختر الإجابة الصحيحة</span>
+<div class="d-flex mt-2 mb-6">
+    <p class="mb-0 fw-medium">جمل التوصيل</p>
 </div>
 <!-- Question item -->
 <div class="row question d-flex align-items-center mb-6">
-    <div class="col-md-1 col-3 d-flex align-items-center gap-5">
+    <div class="col-md-1 col-2 d-flex align-items-center gap-5">
         <img class="cursor-pointer" src="assets/common/images/menu.svg" alt="" />
-        <input class="form-check-input" id="EditEdition_IsFree" name="SubscriptionPrice" [value]="true" type="radio" />
     </div>
 
-    <div class="col-md-7 col-9 mb-md-0 mb-3">
-        <p class="mb-0">الإجابة الأولى</p>
+    <div class="col-md-4 col-6 mb-md-0 mb-3">
+        <input name="text" class="form-control m-input" [placeholder]="'الكلمة الاولى'" type="text" />
     </div>
-    <div class="col-md-4 d-flex align-items-center justify-content-end ">
+    <div class="col-md-4 col-6 mb-md-0 mb-3">
+        <input name="text" class="form-control m-input" [placeholder]="'التريب'" type="text" />
+    </div>
+    <div class="col-md-3 d-flex align-items-center justify-content-end gap-2">
         <p-inputNumber
             [(ngModel)]="value3"
             [showButtons]="true"
@@ -25,23 +26,25 @@
             incrementButtonIcon="pi pi-plus"
             decrementButtonIcon="pi pi-minus"
         />
-        <button class="btn btn-edit p-3 mx-2">
-            <img src="assets/common/images/edit.svg" alt="" />
+        <button class="btn btn-delete p-3 m-0">
+            <img src="assets/common/images/trash.svg" alt="" />
         </button>
     </div>
 </div>
+
 <!-- Question item -->
 <div class="row question d-flex align-items-center mb-6">
-    <div class="col-md-1 col-3 d-flex align-items-center gap-5">
+    <div class="col-md-1 col-2 d-flex align-items-center gap-5">
         <img class="cursor-pointer" src="assets/common/images/menu.svg" alt="" />
-        <input class="form-check-input" id="EditEdition_IsFree" name="SubscriptionPrice" [value]="true" type="radio" />
     </div>
 
-    <div class="col-md-8 col-9 mb-md-0 mb-3 d-flex justify-content-between">
-        <p class="mb-0">الإجابة الأولى</p>
-        <span class="status-grean py-2 px-3">الاجابة الصحيحة</span>
+    <div class="col-md-4 col-6 mb-md-0 mb-3">
+        <input name="text" class="form-control m-input" [placeholder]="'الكلمة الاولى'" type="text" />
     </div>
-    <div class="col-md-3 d-flex align-items-center justify-content-end ">
+    <div class="col-md-4 col-6 mb-md-0 mb-3">
+        <input name="text" class="form-control m-input" [placeholder]="'التريب'" type="text" />
+    </div>
+    <div class="col-md-3 d-flex align-items-center justify-content-end gap-2">
         <p-inputNumber
             [(ngModel)]="value3"
             [showButtons]="true"
@@ -54,8 +57,8 @@
             incrementButtonIcon="pi pi-plus"
             decrementButtonIcon="pi pi-minus"
         />
-        <button class="btn btn-edit p-3 mx-2">
-            <img src="assets/common/images/edit.svg" alt="" />
+        <button class="btn btn-delete p-3 m-0">
+            <img src="assets/common/images/trash.svg" alt="" />
         </button>
     </div>
 </div>

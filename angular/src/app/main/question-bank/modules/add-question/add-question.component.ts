@@ -9,7 +9,7 @@ import { AppComponentBase } from '@shared/common/app-component-base';
 export class AddQuestionComponent extends AppComponentBase implements OnInit {
     checked:boolean = true;
     questionsType:any[] = [];
-    type:any = 1;
+    type:any = 8;
   constructor(private _injector: Injector,
   ) { super(_injector);}
 

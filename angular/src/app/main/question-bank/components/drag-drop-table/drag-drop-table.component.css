@@ -1,0 +1,23 @@
+::ng-deep .p-datatable-wrapper {
+    border: 1px solid #DEE1E6;
+    border-radius: 8px;
+}
+::ng-deep .p-datatable-wrapper tr {
+    border-bottom: 1px solid #DEE1E6
+}
+::ng-deep .p-datatable-wrapper td {
+   position: relative;
+}
+::ng-deep .p-datatable-wrapper .form-check-input {
+    position: absolute;
+    right: 20px;
+    top: 22px;
+    z-index: 888888;
+}
+::ng-deep .p-datatable-wrapper .form-check-input:not(:checked) {
+    background:  #fff !important;
+}
+
+::ng-deep .p-datatable-wrapper .form-control{
+ padding-inline-start: 45px !important;
+}
