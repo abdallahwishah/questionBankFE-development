@@ -1,5 +1,5 @@
 <div class="d-flex mt-2 mb-6">
-    <p class="mb-0 fw-medium">جمل التوصيل</p>
+    <p class="mb-0 fw-medium">{{ l('MatchingWords') }}</p>
 </div>
 <!-- Question item -->
 <div class="row question d-flex align-items-center mb-6">
@@ -74,7 +74,7 @@
             fill="#6D31ED"
         />
     </svg>
-    <span class="text-primary">اضافة خيار جديد</span>
+    <span class="text-primary">{{l('AddNewOption')}}</span>
 </h5>
 
 <div class="line my-8"></div>
@@ -82,7 +82,7 @@
 <!--  -->
 <div class="d-flex align-items-center gap-3 mb-6">
     <p-checkbox [binary]="true" inputId="binary" />
-    <label>إضافة إجابات وهمية</label>
+    <label>{{ l('AddFakeAnswers') }}</label>
 </div>
 
 <!-- Question item -->
@@ -113,5 +113,5 @@
             fill="#6D31ED"
         />
     </svg>
-    <span class="text-primary">إضافة إجابة وهمية جديدة</span>
+    <span class="text-primary">{{ l('AddNewFakeAnswers') }}</span>
 </h5>

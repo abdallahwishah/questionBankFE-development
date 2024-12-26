@@ -17,7 +17,13 @@ export class AddQuestionComponent extends AppComponentBase implements OnInit {
   ngOnInit() {
     this.questionsType = [
         {label:'اختيار من متعدد (خيار واحد)' , value :'1' },
-        {label:'اختيار من متعدد (أكثر من خيار)' , value :'2' }
+        {label:'اختيار من متعدد (أكثر من خيار)' , value :'2' },
+        {label:'صح أو خطأ' , value :'3' },
+        {label:'توصيل' , value :'4' },
+        {label:'اختيار من متعدد (خيار واحد)' , value :'5' },
+        {label:'إعادة الترتيب' , value :'6' },
+        {label:'سحب وإفلات إلى نص' , value :'7' },
+        {label:'سحب وإفلات إلى جدول' , value :'8' },
     ]
   }
 

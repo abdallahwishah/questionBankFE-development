@@ -1,14 +1,14 @@
 <div class="d-flex gap-3 mt-2 mb-6">
-    <p class="mb-0 fw-medium">النصوص</p>
-    <span class="d-inline-block text-gray-600 fw-normal ">اختر الكلمات المناسبة للنص المفقود</span>
+    <p class="mb-0 fw-medium">{{l('Texts')}}</p>
+    <span class="d-inline-block text-gray-600 fw-normal ">{{l('ChooseTheAppropriateWordsForTheMissingText')}}</span>
 </div>
 
 <!-- new Question item 3 -->
 <div class="row question d-flex align-items-center mb-2">
+
     <div class="col-md-1 d-flex align-items-center gap-5 mb-md-0 mb-3">
         <img class="cursor-pointer" src="assets/common/images/menu.svg" alt="" />
     </div>
-
     <div class="col-md-10">
         <app-editor class="w-100"></app-editor>
     </div>
@@ -33,7 +33,7 @@
             <button class="btn btn-outline-primary outline-darg-drop-deleted  mt-4"> الكلمة الثالة
                 <img src="assets/common/images/trash-gray.svg" alt="">
             </button>
-            <button class="btn btn-outline-primary outline-dashed mt-4"> اضافة سؤال جديد </button>
+            <button class="btn btn-outline-primary outline-dashed mt-4"> {{l('AddNewQuestion')}} </button>
         </div>
 
     </div>
@@ -50,5 +50,5 @@
             fill="#6D31ED"
         />
     </svg>
-    <span class="text-primary">إضافة نص جديد</span>
+    <span class="text-primary">{{l('AddNewText')}}</span>
 </h5>

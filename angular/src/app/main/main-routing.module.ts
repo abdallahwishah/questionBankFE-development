@@ -20,6 +20,10 @@ import { RouterModule } from '@angular/router';
                         path: 'sessions',
                         loadChildren: () => import('./sessions/sessions.module').then((m) => m.SessionsModule)
                     },
+                    {
+                        path: 'templates',
+                        loadChildren: () => import('./templates/templates.module').then((m) => m.TemplatesModule)
+                    },
                     { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
                     { path: '**', redirectTo: 'dashboard' },
                 ],

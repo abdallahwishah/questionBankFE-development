@@ -1,5 +1,5 @@
 <div class="d-flex mt-2 mb-6">
-    <p class="mb-0 fw-medium">جمل التوصيل</p>
+    <p class="mb-0 fw-medium">{{ l('ConnectingSentences') }}</p>
 </div>
 <!-- Question item -->
 <div class="row question d-flex align-items-center mb-6">
@@ -8,10 +8,10 @@
     </div>
 
     <div class="col-md-4 col-6 mb-md-0 mb-3">
-        <input name="text" class="form-control m-input" [placeholder]="'الكلمة الاولى'" type="text" />
+        <input name="text" class="form-control m-input" [placeholder]="l('TheFirstWord')" type="text" />
     </div>
     <div class="col-md-4 col-6 mb-md-0 mb-3">
-        <input name="text" class="form-control m-input" [placeholder]="'التريب'" type="text" />
+        <input name="text" class="form-control m-input" [placeholder]="l('Sorting')" type="text" />
     </div>
     <div class="col-md-3 d-flex align-items-center justify-content-end gap-2">
         <p-inputNumber
@@ -39,10 +39,10 @@
     </div>
 
     <div class="col-md-4 col-6 mb-md-0 mb-3">
-        <input name="text" class="form-control m-input" [placeholder]="'الكلمة الاولى'" type="text" />
+        <input name="text" class="form-control m-input" [placeholder]="l('TheFirstWord')" type="text" />
     </div>
     <div class="col-md-4 col-6 mb-md-0 mb-3">
-        <input name="text" class="form-control m-input" [placeholder]="'التريب'" type="text" />
+        <input name="text" class="form-control m-input" [placeholder]="l('Sorting')" type="text" />
     </div>
     <div class="col-md-3 d-flex align-items-center justify-content-end gap-2">
         <p-inputNumber
@@ -74,5 +74,5 @@
             fill="#6D31ED"
         />
     </svg>
-    <span class="text-primary">اضافة خيار جديد</span>
+    <span class="text-primary"> {{l('AddNewOption')}}</span>
 </h5>

@@ -7,6 +7,7 @@ import { DropdownFieldComponent } from "../../../../shared/components/dropdown-f
 import { InputSwitchModule  } from 'primeng/inputswitch';
 import { DynamicQuestionComponent } from "../../components/dynamic-question/dynamic-question.component";
 import { EditorComponent } from "../../components/editor/editor.component";
+import { AddFileModalComponent } from "../../components/modals/add-file-modal/add-file-modal.component";
 
 @NgModule({
   imports: [
@@ -21,7 +22,8 @@ import { EditorComponent } from "../../components/editor/editor.component";
     DropdownFieldComponent,
     DynamicQuestionComponent,
     EditorComponent,
-    InputSwitchModule
+    InputSwitchModule,
+    AddFileModalComponent
 ],
   declarations: [AddQuestionComponent]
 })

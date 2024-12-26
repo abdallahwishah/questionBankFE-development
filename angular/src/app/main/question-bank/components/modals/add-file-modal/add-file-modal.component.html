@@ -1,0 +1,36 @@
+<app-dialog-shared
+    [width]="'50vw'"
+    (close)="closeDialog()"
+    [dialogHeader]="l('EnterFile')"
+    [dialog_name]="Add_File_dialog"
+>
+    <ng-container bodyDialog>
+        <ng-container>
+
+                <div class="row">
+                    <div class="col-md-12">
+                       <app-dropdown-field [labelField]="l('QuestionType')"></app-dropdown-field>
+                    </div>
+
+
+                </div>
+
+
+        </ng-container>
+    </ng-container>
+    <ng-container footerDialog>
+
+
+
+        <button
+            type="submit"
+            class="btn btn-primary blue"
+            (click)="Save()"
+        >
+       <!--  [buttonBusy]="saving"
+        [busyText]="l('Save')" -->
+        <span>{{l('FileEntry')}}</span>
+        </button>
+        <button class="btn btn-outline-primary">{{l('DownloadTemplate')}}</button>
+    </ng-container>
+</app-dialog-shared>

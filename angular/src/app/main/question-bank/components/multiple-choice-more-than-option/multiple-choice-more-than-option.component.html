@@ -1,6 +1,6 @@
 <div class="d-flex gap-3 mt-2 mb-6">
-    <p class="mb-0 fw-medium">الاختيارات</p>
-    <span class="d-inline-block text-gray-700">اختر الإجابة الصحيحة</span>
+    <p class="mb-0 fw-medium">{{ l('Choices') }}</p>
+    <span class="d-inline-block text-gray-700"> {{ l('ChooseTheCorrectAnswer') }}</span>
 </div>
 <!-- Question item -->
 <div class="row question d-flex align-items-center mb-6">
@@ -42,7 +42,7 @@
 
     <div class="col-md-7 col-9 mb-md-0 mb-3 d-flex justify-content-between">
         <p class="mb-0">الإجابة الأولى</p>
-        <span class="status-grean py-2 px-3">الاجابة الصحيحة الاولى</span>
+        <span class="status-grean py-2 px-3">{{l('TheFirstCorrectAnswer')}}</span>
     </div>
     <div class="col-md-4 d-flex align-items-center justify-content-end ">
         <p-inputNumber
@@ -74,7 +74,7 @@
 
     <div class="col-md-7 col-9 mb-md-0 mb-3 d-flex justify-content-between">
         <p class="mb-0">الإجابة الأولى</p>
-        <span class="status-grean py-2 px-3">الاجابة الصحيحة الثانية</span>
+        <span class="status-grean py-2 px-3">{{l('TheSecondCorrectAnswer')}}</span>
     </div>
     <div class="col-md-4 d-flex align-items-center justify-content-end ">
         <p-inputNumber
@@ -128,5 +128,5 @@
             fill="#6D31ED"
         />
     </svg>
-    <span class="text-primary">اضافة خيار جديد</span>
+    <span class="text-primary">{{l('AddNewOption')}}</span>
 </h5>

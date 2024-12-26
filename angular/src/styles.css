@@ -299,11 +299,13 @@ ul.p-autocomplete-items{
     padding: 1px !important;
     width: 100% !important;
 }
-.card .p-dropdown , .form-control , textarea{
+.card .p-dropdown , textarea , .p-dialog-content .p-dropdown  ,.p-dialog-content .form-control , .p-dialog-content textarea {
     background: #F8F8F8 !important;
     border-color:#F8F8F8 !important;
 }
-
+.input-group .form-control {
+    border: 1px solid #DEE1E6 !important;
+}
 .p-dropdown:not(.p-disabled).p-focus {
     /* box-shadow: inset 0 0 0 1px #d2d5db, inset 0 0 0 1px #d2d5db, inset 0 0 0 1px #d2d5db, inset 0 0 0 1px #d2d5db; */
     box-shadow: none !important;
@@ -388,6 +390,11 @@ textarea{
     color: #171A1F !important;
     box-shadow: 0px 0px 4px 3px #6D31ED26 !important;
 }
+.p-dialog-header-icons{
+    display: none !important;
+}
+
+
 [data-kt-app-layout=light-sidebar] .app-sidebar .menu .menu-item .menu-link.active {
     background-color:var(--bs-primary) !important;
     color: var(--bs-primary-inverse) !important;

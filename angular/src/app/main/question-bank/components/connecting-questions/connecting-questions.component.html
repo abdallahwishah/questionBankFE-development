@@ -1,13 +1,13 @@
 <div class="question-box">
        <h4 class="question-box-header py-4 px-5">
-        السؤال الأول
+        {{ l('FirstQuestion') }}
        </h4>
    <div class="p-5">
 
     <div class="row d-flex justify-content-between ">
         <div class="col-md-4">
             <label  class="block text-gray-700 font-medium mb-2">
-                {{ 'نص السؤال' }}
+                {{ l('QuestionText') }}
             </label>
         </div>
         <div class="col-md-3 mb-2 d-flex justify-content-center align-items-center gap-3">
@@ -45,9 +45,9 @@
 
 
     <div class="d-flex gap-3 mt-2 mb-6">
-        <p class="mb-0 fw-medium">الاختيارات</p>
-        <span class="d-inline-block text-gray-700">اختر الإجابة الصحيحة</span>
-    </div>
+        <p class="mb-0 fw-medium">{{ l('Choices') }}</p>
+        <span class="d-inline-block text-gray-700"> {{ l('ChooseTheCorrectAnswer') }}</span>
+        </div>
     <!-- Question item -->
     <div class="row question d-flex align-items-center mb-6">
         <div class="col-md-1 col-3 d-flex align-items-center gap-5">
@@ -88,7 +88,7 @@
 
         <div class="col-md-7 col-9 mb-md-0 mb-3 d-flex justify-content-between">
             <p class="mb-0">الإجابة الأولى</p>
-            <span class="status-grean py-2 px-3">الاجابة الصحيحة</span>
+            <span class="status-grean py-2 px-3">{{ l('TheRightAnswer') }}</span>
         </div>
         <div class="col-md-4 d-flex align-items-center justify-content-end ">
             <p-inputNumber
@@ -142,9 +142,9 @@
                 fill="#6D31ED"
             />
         </svg>
-        <span class="text-primary">اضافة خيار جديد</span>
+        <span class="text-primary">{{l('AddNewOption')}}</span>
     </h5>
    </div>
 </div>
 
-<button class="btn btn-outline-primary outline-dashed mt-4"> اضافة سؤال جديد </button>
+<button class="btn btn-outline-primary outline-dashed mt-4">{{l('AddNewQuestion')}}</button>

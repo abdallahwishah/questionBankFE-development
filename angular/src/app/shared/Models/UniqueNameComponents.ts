@@ -6,6 +6,7 @@ export enum UniqueNameComponents {
     add_Or_edit_post_dialog='add_Or_edit_post_dialog',
     classify_archive_dialog='classify_archive_dialog',
     View_Ads_dialog='View_Ads_dialog',
+    Add_File_dialog='Add_File_dialog',
 
 
 }
