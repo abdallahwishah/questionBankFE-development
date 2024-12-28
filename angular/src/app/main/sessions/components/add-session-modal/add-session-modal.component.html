@@ -1,0 +1,42 @@
+<app-dialog-shared
+    [width]="'55vw'"
+    (close)="closeDialog()"
+    [dialogHeader]="l('AddNewSession')"
+    [dialog_name]="Add_Session_dialog"
+>
+    <ng-container bodyDialog>
+        <ng-container>
+            <div class="row">
+                <div class="col-md-6 mb-5">
+                    <app-auto-complete [label]="l('SessionName')" [placeholder]="l('SessionName')"></app-auto-complete>
+                </div>
+                <div class="col-md-6 mb-5">
+                    <app-dropdown-field [labelField]="l('Test')"></app-dropdown-field>
+                </div>
+                <div class="col-md-6 mb-5">
+                    <app-dropdown-field [labelField]="l('StudyMaterial')"></app-dropdown-field>
+                </div>
+                <div class="col-md-6 mb-5">
+                    <app-dropdown-field [labelField]="l('Class')"></app-dropdown-field>
+                </div>
+                <div class="col-md-6 mb-5">
+                    <app-date [label]="l('StartDate')"></app-date>
+                </div>
+                <div class="col-md-6 mb-5">
+                    <app-date [label]="l('EndDate')"></app-date>
+                </div>
+                <div class="col-12 mb-5">
+                    <app-dropdown-field [labelField]="l('Supervisor')"></app-dropdown-field>
+                </div>
+            </div>
+        </ng-container>
+    </ng-container>
+    <ng-container footerDialog>
+        <button type="submit" class="btn btn-primary blue" (click)="Save()">
+            <!--  [buttonBusy]="saving"
+        [busyText]="l('Save')" -->
+            <span>{{ l('Save') }}</span>
+        </button>
+        <button class="btn btn-outline">{{ l('Cancel') }}</button>
+    </ng-container>
+</app-dialog-shared>

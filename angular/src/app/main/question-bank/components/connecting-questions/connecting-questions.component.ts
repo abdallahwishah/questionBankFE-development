@@ -4,7 +4,7 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { ButtonModule } from 'primeng/button';
 import { EditorComponent } from "../editor/editor.component";
 import { AppComponentBase } from '@shared/common/app-component-base';
-import { DropdownFieldComponent } from '@app/shared/components/dropdown-field/dropdown-field.component';
+import { DropdownFieldComponent } from '@app/shared/components/fields/dropdown-field/dropdown-field.component';
 import { InputSwitchModule } from 'primeng/inputswitch';
 
 @Component({

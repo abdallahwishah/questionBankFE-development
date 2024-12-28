@@ -7,6 +7,7 @@ export enum UniqueNameComponents {
     classify_archive_dialog='classify_archive_dialog',
     View_Ads_dialog='View_Ads_dialog',
     Add_File_dialog='Add_File_dialog',
-
+    Add_Session_dialog='Add_Session_dialog',
+    Warning_dialog='Warning_dialog',
 
 }

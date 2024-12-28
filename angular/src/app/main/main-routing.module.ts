@@ -24,6 +24,10 @@ import { RouterModule } from '@angular/router';
                         path: 'templates',
                         loadChildren: () => import('./templates/templates.module').then((m) => m.TemplatesModule)
                     },
+                    {
+                        path: 'correcting',
+                        loadChildren: () => import('./correcting/correcting.module').then((m) => m.CorrectingModule)
+                    },
                     { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
                     { path: '**', redirectTo: 'dashboard' },
                 ],

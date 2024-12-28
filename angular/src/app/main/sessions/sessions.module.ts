@@ -14,12 +14,7 @@ import { RouterModule } from '@node_modules/@angular/router';
                   {
                       path: '',
                       loadChildren: () => import('./modules/list/list.module').then((m) => m.ListModule),
-                  },
-                   {
-                      path: 'answers/:id',
-                      loadChildren: () =>
-                          import('./modules/answers/answers.module').then((m) => m.AnswersModule),
-                  },
+                  }
               ],
           },
       ]),

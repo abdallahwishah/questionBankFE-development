@@ -184,7 +184,9 @@
 *::after {
   box-sizing: border-box;
 }
-
+.p-component{
+    font-family: var(--bs-body-font-family) !important;
+}
 body {
   margin: 0;
   font-family: var(--bs-body-font-family);

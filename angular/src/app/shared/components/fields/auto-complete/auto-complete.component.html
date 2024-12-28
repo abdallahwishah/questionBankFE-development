@@ -1,0 +1,9 @@
+@if (label) {
+    <label class="d-block font-medium mb-2">
+        {{ label }}
+    </label>
+}
+<p-autoComplete
+    [suggestions]="[]"
+    [placeholder]="placeholder"
+    (completeMethod)="search($event)" />

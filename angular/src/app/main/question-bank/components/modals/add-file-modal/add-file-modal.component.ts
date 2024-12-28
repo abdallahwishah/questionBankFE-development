@@ -3,7 +3,7 @@ import { DialogSharedModule } from "../../../../../shared/components/dialog-shar
 import { UniqueNameComponents } from '@app/shared/Models/UniqueNameComponents';
 import { DialogSharedService } from '@app/shared/components/dialog-shared/dialog-shared.service';
 import { AppComponentBase } from '@shared/common/app-component-base';
-import { DropdownFieldComponent } from "../../../../../shared/components/dropdown-field/dropdown-field.component";
+import { DropdownFieldComponent } from "../../../../../shared/components/fields/dropdown-field/dropdown-field.component";
 
 @Component({
   selector: 'app-add-file-modal',

@@ -1,5 +1,5 @@
 <div>
-    <div class="container-fluid px-5">
+    <div class="container-fluid px-5 mt-md-0 mt-7">
         <div class="d-flex align-items-center">
             <span class="cursor-pointer text-gray-700" [routerLink]="'/app/main/sessions'">
                 <svg
@@ -18,11 +18,13 @@
                 {{ l('SessionsScreen') }}
             </span>
             <span class="mx-2">/</span>
+            <span class="cursor-pointer text-gray-700" [routerLink]="'/app/main/sessions'">
+                {{ l('Sessions') }}
+            </span>
+            <span class="mx-2">/</span>
 
             <h2 class="fw-bolder mb-0">{{ 'StudentAnswers' }}</h2>
         </div>
-
-
 
 
     <!-- Search  -->
