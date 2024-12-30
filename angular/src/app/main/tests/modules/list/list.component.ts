@@ -33,7 +33,7 @@ export class ListComponent extends AppComponentBase implements OnInit {
         }
     }
 
-    addTest(){
+    AddExam(){
         this._DialogSharedService.showDialog(this.Add_Test_dialog , {})
     }
 }

@@ -1,9 +1,9 @@
 <div>
     <div class="container-fluid px-5 mt-md-0 mt-7">
-        <h2 class="fs-3 fw-medium justify-content-center mb-4 page-heading text-dark">{{ l('Tests') }}</h2>
+        <h2 class="fs-3 fw-medium justify-content-center mb-4 page-heading text-dark">{{ l('Exams') }}</h2>
         <div class="d-flex justify-content-between">
             <div class="d-flex gap-2">
-                <p class="gray">{{ l('NumberOfTests') }}:</p>
+                <p class="gray">{{ l('NumberOfExams') }}:</p>
                 <span class="text-dark">150</span>
             </div>
 
@@ -26,8 +26,8 @@
                             />
                         </svg>
 
-                        <span class="d-none d-md-inline-block" (click)="addTest()">
-                            {{ l('AddTest') }}
+                        <span class="d-none d-md-inline-block" (click)="AddExam()">
+                            {{ l('AddExam') }}
                         </span>
                     </button>
                 </div>
@@ -88,9 +88,9 @@
                         <th pSortableColumn="caseCode">
                             {{  '#' }}
                         </th>
-                        <th pSortableColumn="TestName">
-                            {{ l('TestName') }}
-                            <p-sortIcon field="TestName"></p-sortIcon>
+                        <th pSortableColumn="ExamName">
+                            {{ l('ExamName') }}
+                            <p-sortIcon field="ExamName"></p-sortIcon>
                         </th>
                         <th pSortableColumn="TemplateName">
                             {{ l('TemplateName') }}
@@ -193,8 +193,8 @@
 </div>
 
 <p class="mb-0 mt-4">for test</p>
-<button class="btn btn-primary" routerLink="/app/main/tests/view/1">
-    go to Test Vieo
+<button class="btn btn-primary" routerLink="/app/main/exams/view/1">
+    go to Test View
 </button>
 
 <!-- Modals -->

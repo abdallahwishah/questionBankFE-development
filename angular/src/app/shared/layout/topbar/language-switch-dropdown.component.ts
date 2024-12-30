@@ -6,7 +6,7 @@ import { DateTimeService } from '@app/shared/common/timing/date-time.service';
 
 @Component({
     selector: 'language-switch-dropdown',
-    templateUrl: './language-switch-dropdown.component.html',
+    templateUrl: './language-switch-dropdown.component.html'
 })
 export class LanguageSwitchDropdownComponent extends ThemesLayoutBaseComponent implements OnInit {
     @Input() isDropup = false;
@@ -14,7 +14,7 @@ export class LanguageSwitchDropdownComponent extends ThemesLayoutBaseComponent i
 
     languages: abp.localization.ILanguageInfo[];
     currentLanguage: abp.localization.ILanguageInfo;
-
+    filteredArray:any;
     public constructor(
         injector: Injector,
         private _profileServiceProxy: ProfileServiceProxy,
@@ -26,6 +26,10 @@ export class LanguageSwitchDropdownComponent extends ThemesLayoutBaseComponent i
     ngOnInit(): void {
         this.languages = _filter(this.localization.languages, (l) => l.isDisabled === false);
         this.currentLanguage = this.localization.currentLanguage;
+        this.filteredArray = this.languages.filter(item => item.name === "ar" || item.name === "en");
+
+        console.log('languages :' , this.languages)
+        console.log('currentLanguage :' , this.currentLanguage)
     }
 
     changeLanguage(languageName: string): void {

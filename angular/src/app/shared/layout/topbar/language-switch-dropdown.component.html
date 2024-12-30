@@ -1,4 +1,11 @@
-<div class="d-flex header-icon align-items-center ms-1 ms-lg-3 dropdown-language" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-start" *ngIf="languages.length > 1">
+
+<ul class="toggle-lang">
+    <li [ngClass]="{ 'active': currentLanguage.name == 'ar'}" (click)="changeLanguage('ar')">عربي</li>
+    <li [ngClass]="{ 'active': currentLanguage.name == 'en'}" (click)="changeLanguage('en')">إنكليزي</li>
+</ul>
+
+
+<!-- <div class="d-flex header-icon align-items-center ms-1 ms-lg-3 dropdown-language" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-start" *ngIf="languages.length > 1">
     <div [class]="customStyle">
         <i [class]="currentLanguage.icon"></i>
     </div>
@@ -14,3 +21,4 @@
         </a>
     </div>
 </div>
+ -->

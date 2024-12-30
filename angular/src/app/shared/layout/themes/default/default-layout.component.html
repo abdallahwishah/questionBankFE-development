@@ -68,16 +68,29 @@
                     <div *ngIf="!appSession.theme.isTopMenuUsed">&nbsp;</div>
                     <!--end::Menu wrapper-->
                     <!--begin::Navbar-->
-                    <div class="app-navbar flex-shrink-0 mt-4">
+
+                     <!--    <input
+                            name="filterText"
+                            class="form-control m-input"
+                            [placeholder]="l('Search')"
+                            type="text"
+
+                        /> -->
+
+                    <div class="app-navbar flex-shrink-0 mt-4  ">
                         <active-delegated-users-combo *ngIf="!installationMode"></active-delegated-users-combo>
                         <subscription-notification-bar></subscription-notification-bar>
                         <quick-theme-selection></quick-theme-selection>
-                        <language-switch-dropdown></language-switch-dropdown>
                         <header-notifications></header-notifications>
-                        <chat-toggle-button></chat-toggle-button>
+                        <div class="vertical-line mx-3 mt-1"></div>
+                        <language-switch-dropdown></language-switch-dropdown>
+                        <!-- <chat-toggle-button></chat-toggle-button> -->
                        <!--  <toggle-dark-mode [isDarkModeActive]="isDarkModeActive()"></toggle-dark-mode> -->
                         <user-menu></user-menu>
                     </div>
+
+
+
                     <!--end::Navbar-->
                 </div>
                 <!--end::Header wrapper-->
@@ -105,7 +118,7 @@
                     <default-brand></default-brand>
                     <!--end::Logo image-->
                     <!--begin::Sidebar toggle-->
-                    <div
+                 <!--    <div
                         *ngIf="appSession.theme.baseSettings.menu.allowAsideMinimizing"
                         id="kt_app_sidebar_toggle"
                         class="
@@ -125,7 +138,6 @@
                         data-kt-toggle-target="body"
                         data-kt-toggle-name="app-sidebar-minimize"
                     >
-                        <!--begin::Svg Icon | path: icons/duotune/arrows/arr079.svg-->
                         <span class="svg-icon svg-icon-2 rotate-180">
                             <svg
                                 width="24"
@@ -145,8 +157,7 @@
                                 ></path>
                             </svg>
                         </span>
-                        <!--end::Svg Icon-->
-                    </div>
+                    </div> -->
                     <!--end::Sidebar toggle-->
                 </div>
                 <!--end::Logo-->

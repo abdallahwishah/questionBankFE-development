@@ -422,3 +422,46 @@ textarea{
         width: 33px;
     }
 }
+
+
+
+/* toggle-lang */
+
+.toggle-lang{
+    background: #EFEFEF;
+    padding: 4px !important;
+    border-radius: 30px;
+    display: flex;
+    align-items: center;
+}
+.toggle-lang li{
+    padding: 7px 25px !important;
+ cursor: pointer;
+ border-radius: 27px;
+ color: #565D6D;
+ list-style-type: none;
+ font-family: "Alexandria", serif !important;
+}
+
+.toggle-lang li.active{
+    background: #fff;
+    color: var(--bs-primary) !important;
+}
+.vertical-line{
+    height: 55%;
+    width: 2px;
+    background: #DDDDDD;
+}
+[data-kt-app-layout=light-sidebar] .app-sidebar .menu .menu-item .menu-link .menu-title{
+    color: #565D6D !important;
+}
+
+.app-sidebar .menu .menu-item .menu-link.active svg path{
+    fill: #fff !important;
+}
+.app-sidebar .menu .menu-icon{
+    margin-left: 5px !important;
+}
+.menu-item .menu-link{
+    padding: 0.65rem !important;
+}

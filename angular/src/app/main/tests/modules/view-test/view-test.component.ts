@@ -37,4 +37,18 @@ export class ViewTestComponent extends AppComponentBase implements OnInit {
       /*   this.type = $event?.value */
       }
 /*  */
+
+
+isOpen = false;
+
+toggleAccordion() {
+  this.isOpen = !this.isOpen;
+}
+isOpenChlid = false;
+
+toggleChlidAccordion() {
+  this.isOpenChlid = !this.isOpenChlid;
+}
+
+
 }

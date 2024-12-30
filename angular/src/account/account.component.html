@@ -10,7 +10,7 @@
         style="background-image: url(../assets/common/images/bg-login.png) ; height: 100vh;"
     >
         <div
-            class="d-flex flex-center flex-column flex-column-fluid p-10"
+            class="d-flex align-items-start justify-content-center  flex-column flex-column-fluid p-10"
             [class.pb-lg-20]="!isSelectEditionPage()"
             [class.pb-0]="isSelectEditionPage()"
         >
@@ -37,7 +37,7 @@
                 </div>
                 <router-outlet></router-outlet>
             </div>
-            <div *ngIf="!isSelectEditionPage()" class="w-lg-500px bg-body rounded shadow-sm p-10 p-lg-15 mx-auto">
+            <div *ngIf="!isSelectEditionPage()" class="w-lg-500px bg-body rounded shadow-sm p-10 p-lg-15 ">
                <!--  <div *ngIf="showTenantChange()" class="tenant-change-box mb-5 tenant-change-box">
                     <tenant-change></tenant-change>
                 </div> -->
