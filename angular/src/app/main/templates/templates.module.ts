@@ -24,6 +24,7 @@ import { RouterModule } from '@node_modules/@angular/router';
                ],
            },
        ]),
+
      ],
   declarations: [TemplatesComponent]
 })

@@ -1,36 +1,45 @@
+@if (show) {
+
 <p-dialog
-    *ngIf="show"
-    [modal]="true"
-    [style]="{ width: width, height: height }"
-    [visible]="visible"
-    [draggable]="false"
-    showEffect="fade"
-    [resizable]="false"
-    [closeOnEscape]="true"
+[modal]="true"
+[style]="{ width: width, height: height }"
+[visible]="visible"
+[draggable]="false"
+showEffect="fade"
+[resizable]="false"
+[closeOnEscape]="true"
 >
-    <ng-template pTemplate="header" *ngIf="showheader">
-        <div
-            class="d-flex justify-content-between align-items-center header-dialog"
-            style="background: #f5f6fa; border-bottom: 1px solid #e8e8e8"
-        >
-            <h5 class="flex align-items-center style-title-dialog">
-                <i [class]="imageSrc"></i>
-                <span class="mx-2">{{ l(dialogHeader) }}</span>
-            </h5>
-            <div class="close" (click)="close()">
-                <i class="pi pi-times"></i>
-            </div>
+@if (showheader) {
+<ng-template pTemplate="header" >
+    <div
+        class="d-flex justify-content-between align-items-center header-dialog"
+        style="background: #f5f6fa; border-bottom: 1px solid #e8e8e8"
+    >
+        <h5 class="flex align-items-center style-title-dialog">
+            <i [class]="imageSrc"></i>
+            <span class="mx-2">{{ l(dialogHeader) }}</span>
+        </h5>
+        <div class="close" (click)="close()">
+            <i class="pi pi-times"></i>
         </div>
-    </ng-template>
-
-    <div>
-        <ng-content select="[bodyDialog]" class="p-4"></ng-content>
     </div>
+</ng-template>
 
-    <ng-template *ngIf="showfooter" pTemplate="footer" class="" style="background: #f5f6fa">
-        <hr />
-        <div class="d-flex justify-content-center">
-            <ng-content select="[footerDialog]"></ng-content>
-        </div>
-    </ng-template>
+}
+
+
+<div>
+    <ng-content select="[bodyDialog]" class="p-4"></ng-content>
+</div>
+@if (showfooter) {
+<ng-template  pTemplate="footer" class="" style="background: #f5f6fa">
+    <hr />
+    <div class="d-flex justify-content-center">
+        <ng-content select="[footerDialog]"></ng-content>
+    </div>
+</ng-template>
+}
+
 </p-dialog>
+
+}

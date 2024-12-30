@@ -17,6 +17,10 @@ import { RouterModule } from '@angular/router';
                         loadChildren: () => import('./question-bank/question-bank.module').then((m) => m.QuestionBankModule)
                     },
                     {
+                        path: 'tests',
+                        loadChildren: () => import('./tests/tests.module').then((m) => m.TestsModule)
+                    },
+                    {
                         path: 'sessions',
                         loadChildren: () => import('./sessions/sessions.module').then((m) => m.SessionsModule)
                     },
@@ -27,6 +31,10 @@ import { RouterModule } from '@angular/router';
                     {
                         path: 'correcting',
                         loadChildren: () => import('./correcting/correcting.module').then((m) => m.CorrectingModule)
+                    },
+                    {
+                        path: 'audit',
+                        loadChildren: () => import('./audit/audit.module').then((m) => m.AuditModule)
                     },
                     { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
                     { path: '**', redirectTo: 'dashboard' },

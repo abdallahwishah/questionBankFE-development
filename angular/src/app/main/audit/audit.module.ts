@@ -1,15 +1,16 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { CorrectingComponent } from './correcting.component';
+import { AuditComponent } from './audit.component';
 import { RouterModule } from '@node_modules/@angular/router';
 
 @NgModule({
     imports: [
         CommonModule,
+        CommonModule,
         RouterModule.forChild([
             {
                 path: '',
-                component: CorrectingComponent,
+                component: AuditComponent,
                 children: [
                     {
                         path: '',
@@ -20,11 +21,10 @@ import { RouterModule } from '@node_modules/@angular/router';
                         loadChildren: () =>
                             import('../correcting/modules/answers/answers.module').then((m) => m.AnswersModule),
                     }
-
                 ],
             },
         ]),
     ],
-    declarations: [CorrectingComponent]
+    declarations: [AuditComponent]
 })
-export class CorrectingModule { }
+export class AuditModule { }

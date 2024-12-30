@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { CorrectingComponent } from './correcting.component';
+import { TestsComponent } from './tests.component';
 import { RouterModule } from '@node_modules/@angular/router';
 
 @NgModule({
@@ -9,22 +9,22 @@ import { RouterModule } from '@node_modules/@angular/router';
         RouterModule.forChild([
             {
                 path: '',
-                component: CorrectingComponent,
+                component: TestsComponent,
                 children: [
                     {
                         path: '',
                         loadChildren: () => import('./modules/list/list.module').then((m) => m.ListModule),
                     },
                     {
-                        path: 'answers/:id',
+                        path: 'view/:id',
                         loadChildren: () =>
-                            import('../correcting/modules/answers/answers.module').then((m) => m.AnswersModule),
-                    }
+                            import('./modules/view-test/view-test.module').then((m) => m.ViewTestModule),
+                    },
 
                 ],
             },
         ]),
     ],
-    declarations: [CorrectingComponent]
+    declarations: [TestsComponent]
 })
-export class CorrectingModule { }
+export class TestsModule { }

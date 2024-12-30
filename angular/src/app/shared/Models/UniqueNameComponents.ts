@@ -8,6 +8,6 @@ export enum UniqueNameComponents {
     View_Ads_dialog='View_Ads_dialog',
     Add_File_dialog='Add_File_dialog',
     Add_Session_dialog='Add_Session_dialog',
+    Add_Test_dialog='Add_Test_dialog',
     Warning_dialog='Warning_dialog',
-
 }

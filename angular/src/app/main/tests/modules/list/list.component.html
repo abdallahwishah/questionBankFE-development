@@ -1,0 +1,201 @@
+<div>
+    <div class="container-fluid px-5 mt-md-0 mt-7">
+        <h2 class="fs-3 fw-medium justify-content-center mb-4 page-heading text-dark">{{ l('Tests') }}</h2>
+        <div class="d-flex justify-content-between">
+            <div class="d-flex gap-2">
+                <p class="gray">{{ l('NumberOfTests') }}:</p>
+                <span class="text-dark">150</span>
+            </div>
+
+                <div>
+                    <button class="btn btn-primary d-flex gap-2">
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M6.66663 10.625C6.32496 10.625 6.04163 10.3417 6.04163 10C6.04163 9.65833 6.32496 9.375 6.66663 9.375H13.3333C13.675 9.375 13.9583 9.65833 13.9583 10C13.9583 10.3417 13.675 10.625 13.3333 10.625H6.66663Z"
+                                fill="white"
+                            />
+                            <path
+                                d="M9.375 13.3334V6.66669C9.375 6.32502 9.65833 6.04169 10 6.04169C10.3417 6.04169 10.625 6.32502 10.625 6.66669V13.3334C10.625 13.675 10.3417 13.9584 10 13.9584C9.65833 13.9584 9.375 13.675 9.375 13.3334Z"
+                                fill="white"
+                            />
+                            <path
+                                fill-rule="evenodd"
+                                clip-rule="evenodd"
+                                d="M7.49996 18.9584C2.97496 18.9584 1.04163 17.025 1.04163 12.5V7.50002C1.04163 2.97502 2.97496 1.04169 7.49996 1.04169H12.5C17.025 1.04169 18.9583 2.97502 18.9583 7.50002V12.5C18.9583 17.025 17.025 18.9584 12.5 18.9584H7.49996ZM2.29163 7.50002V12.5C2.29163 16.3417 3.65829 17.7084 7.49996 17.7084H12.5C16.3416 17.7084 17.7083 16.3417 17.7083 12.5V7.50002C17.7083 3.65835 16.3416 2.29169 12.5 2.29169H7.49996C3.65829 2.29169 2.29163 3.65835 2.29163 7.50002Z"
+                                fill="white"
+                            />
+                        </svg>
+
+                        <span class="d-none d-md-inline-block" (click)="addTest()">
+                            {{ l('AddTest') }}
+                        </span>
+                    </button>
+                </div>
+        </div>
+
+        <!--  -->
+        <div class="row justify-content-between switch-serch-bar mt-9">
+            <div class="col-md-3">
+                <div class="input-group">
+                    <input
+                        name="filterText"
+                        class="form-control m-input"
+                        [placeholder]="l('Search')"
+                        type="text"
+                        [(ngModel)]="filter"
+                        (ngModelChange)="getQuestion()"
+                    />
+                    <button class="btn btn-primary" type="submit">
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                fill-rule="evenodd"
+                                clip-rule="evenodd"
+                                d="M18.959 9.1665C18.959 4.68317 15.3173 1.0415 10.834 1.0415C6.35065 1.0415 2.70898 4.68317 2.70898 9.1665C2.70898 13.6498 6.35065 17.2915 10.834 17.2915C15.3173 17.2915 18.959 13.6498 18.959 9.1665ZM17.709 9.1665C17.709 12.9582 14.6257 16.0415 10.834 16.0415C7.04232 16.0415 3.95898 12.9582 3.95898 9.1665C3.95898 5.37484 7.04232 2.2915 10.834 2.2915C14.6257 2.2915 17.709 5.37484 17.709 9.1665Z"
+                                fill="#fff"
+                            />
+                            <path
+                                fill-rule="evenodd"
+                                clip-rule="evenodd"
+                                d="M3.39208 18.975C3.78375 18.925 4.49208 18.6583 4.89208 17.4667C5.10041 16.8417 5.02541 16.2167 4.68375 15.7417C4.34208 15.2667 3.76708 15 3.10875 15C2.25875 15 1.59208 15.325 1.29208 15.9C0.992081 16.475 1.07541 17.2083 1.55041 17.9167C2.14208 18.8083 2.78375 18.9917 3.20041 18.9917C3.26708 18.9917 3.33375 18.9833 3.39208 18.975ZM3.22541 17.7417C3.09208 17.7583 2.84208 17.6 2.58375 17.225C2.34208 16.8667 2.32541 16.6083 2.38375 16.4917C2.44208 16.375 2.67541 16.25 3.10875 16.25C3.36708 16.25 3.55875 16.3333 3.66708 16.475C3.76708 16.6167 3.78375 16.8333 3.70041 17.075C3.55875 17.5083 3.35875 17.725 3.22541 17.7417Z"
+                                fill="#fff"
+                            />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <div class="col-md-3 d-grid justify-content-end">
+                <app-filters></app-filters>
+            </div>
+        </div>
+
+        <!-- Start Tabel -->
+        <div class="primeng-datatable-container p-8 col-12 mt-6">
+            <p-table
+                #dataTable
+                [value]="primengTableHelper.records"
+                (onLazyLoad)="getList($event)"
+                rows="{{ primengTableHelper.defaultRecordsCountPerPage }}"
+                [paginator]="false"
+                [loading]="primengTableHelper.isLoading"
+                [lazy]="true"
+                [scrollable]="true"
+                ScrollWidth="100%"
+                [resizableColumns]="primengTableHelper.resizableColumns"
+            >
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th pSortableColumn="caseCode">
+                            {{  '#' }}
+                        </th>
+                        <th pSortableColumn="TestName">
+                            {{ l('TestName') }}
+                            <p-sortIcon field="TestName"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="TemplateName">
+                            {{ l('TemplateName') }}
+                            <p-sortIcon field="TemplateName"></p-sortIcon>
+                        </th>
+
+                        <th pSortableColumn="NumberOfModels">
+                            {{ l('NumberOfModels') }}
+                            <p-sortIcon field="NumberOfModels"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="Class">
+                            {{ l('Class') }}
+                            <p-sortIcon field="Class"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="StudyMaterial">
+                            {{ l('StudyMaterial') }}
+                            <p-sortIcon field="StudyMaterial"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="CreatedBy">
+                            {{ l('CreatedBy') }}
+                            <p-sortIcon field="CreatedBy"></p-sortIcon>
+                        </th>
+                        <th>
+                            {{ l('Actions') }}
+                        </th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-record="$implicit" let-i="rowIndex">
+                    <tr>
+                        <td>
+                            <span class="p-column-title">{{ l('Code') }}</span>
+                            {{ record.auditCase.caseCode || '-' }}
+                        </td>
+                        <td>
+                            <span class="p-column-title">{{ l('CaseTitle') }}</span>
+                            {{ record.auditCase.name || '-' }}
+                        </td>
+                        <td>
+                            <span class="p-column-title">{{ l('CaseOwner') }}</span>
+                            {{ record.organizationUnitDisplayName || '-' }}
+                        </td>
+                        <td>
+                            <span class="p-column-title">{{ l('RepeatCase') }}</span>
+                            {{ l('') || '-' }}
+                        </td>
+
+                        <td>
+                            <span class="p-column-title">{{ l('creationDate') }}</span>
+                            {{ (record.auditCase.creationTime | luxonFormat: 'dd/MM/yyyy - hh:mm a') || '-' }}
+                        </td>
+                        <td>
+                            <span class="p-column-title">{{ l('CreatedBy') }}</span>
+                            <!-- <img
+                            [src]="record.profilePictureUrl"
+                            class="img-rounded"
+                            width="25"
+                            height="25"
+                            alt=""
+                        /> -->
+                            {{ record.creatorUser || '--' }}
+                        </td>
+                        <td>
+                            <app-action-button
+                                [ActionsInfo]="[
+                                    { label: 'View' },
+                                    {
+                                        label: 'Edit'
+                                    },
+                                    {
+                                        label: 'Delete'
+                                    }
+                                ]"
+                                (action)="doActions($event, record)"
+                            ></app-action-button>
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+            <div class="primeng-no-data" *ngIf="primengTableHelper.totalRecordsCount == 0">
+                {{ l('NoData') }}
+            </div>
+            <p-paginator
+                #paginator
+                [hidden]="true"
+                [rows]="primengTableHelper.defaultRecordsCountPerPage"
+                (onPageChange)="getList($event)"
+                [totalRecords]="primengTableHelper.totalRecordsCount"
+                [showCurrentPageReport]="true"
+                [rows]="primengTableHelper.defaultRecordsCountPerPage"
+                [rowsPerPageOptions]="primengTableHelper.predefinedRecordsCountPerPage"
+            ></p-paginator>
+            <app-paginator
+                [hidden]="primengTableHelper.totalRecordsCount == 0"
+                [paginator]="paginator"
+                [primengTableHelper]="primengTableHelper"
+            ></app-paginator>
+        </div>
+        <!-- End Tabel -->
+    </div>
+</div>
+
+<p class="mb-0 mt-4">for test</p>
+<button class="btn btn-primary" routerLink="/app/main/tests/view/1">
+    go to Test Vieo
+</button>
+
+<!-- Modals -->
+<app-add-test-modal></app-add-test-modal>

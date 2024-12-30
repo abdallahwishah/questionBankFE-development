@@ -1,0 +1,37 @@
+<app-dialog-shared
+    [width]="'35vw'"
+    (close)="closeDialog()"
+    [dialogHeader]="l('CreateTest')"
+    [dialog_name]="Add_Test_dialog"
+>
+    <ng-container bodyDialog>
+        <ng-container>
+            <div class="row">
+                <div class="col-12 mb-5">
+                    <label class="mb-2">{{l('TestName')}}</label>
+                    <input
+                    name="text"
+                    class="form-control m-input"
+                    [placeholder]="l('EnterTestName')"
+                    type="text" />
+                </div>
+
+                <div class="col-12 mb-5">
+                    <app-dropdown-field [labelField]="l('TestTemplate')"></app-dropdown-field>
+                </div>
+                <div class="col-12 mb-5">
+                    <app-dropdown-field [labelField]="l('NumberOfModels')"></app-dropdown-field>
+                </div>
+
+            </div>
+        </ng-container>
+    </ng-container>
+    <ng-container footerDialog>
+        <button type="submit" class="btn btn-primary blue" (click)="Save()">
+            <!--  [buttonBusy]="saving"
+        [busyText]="l('Save')" -->
+            <span>{{ l('Save') }}</span>
+        </button>
+        <button class="btn btn-outline">{{ l('Cancel') }}</button>
+    </ng-container>
+</app-dialog-shared>

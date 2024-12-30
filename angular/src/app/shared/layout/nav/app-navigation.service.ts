@@ -22,9 +22,11 @@ export class AppNavigationService {
             ),
             new AppMenuItem('Dashboard', 'Pages.Tenant.Dashboard', 'flaticon-line-graph', '/app/main/dashboard'),
             new AppMenuItem('QuestionBank', '', 'flaticon-line-graph', '/app/main/question-bank'),
+            new AppMenuItem('Tests', '', 'flaticon-line-graph', '/app/main/tests'),
             new AppMenuItem('Sessions', '', 'flaticon-line-graph', '/app/main/sessions'),
             new AppMenuItem('Templates', '', 'flaticon-line-graph', '/app/main/templates'),
             new AppMenuItem('CorrectingSession', '', 'flaticon-line-graph', '/app/main/correcting'),
+            new AppMenuItem('Audit', '', 'flaticon-line-graph', '/app/main/audit'),
             new AppMenuItem('Tenants', 'Pages.Tenants', 'flaticon-list-3', '/app/admin/tenants'),
             new AppMenuItem('Editions', 'Pages.Editions', 'flaticon-app', '/app/admin/editions'),
             new AppMenuItem(
