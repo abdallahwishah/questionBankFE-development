@@ -10,6 +10,7 @@ import { AppComponentBase } from '@shared/common/app-component-base';
 })
 export class ListComponent extends AppComponentBase implements OnInit {
     Warning_dialog = UniqueNameComponents.Warning_dialog;
+    Copy_Template_dialog = UniqueNameComponents.Copy_Template_dialog;
 
     filter: string;
 
@@ -35,5 +36,8 @@ export class ListComponent extends AppComponentBase implements OnInit {
 
     addTemplate(){
         this._DialogSharedService.showDialog(this.Warning_dialog , {})
+    }
+    CopyTemplate(){
+        this._DialogSharedService.showDialog(this.Copy_Template_dialog , {})
     }
 }

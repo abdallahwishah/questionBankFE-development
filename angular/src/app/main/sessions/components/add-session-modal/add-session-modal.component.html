@@ -1,5 +1,5 @@
 <app-dialog-shared
-    [width]="'55vw'"
+    [width]="'50vw'"
     (close)="closeDialog()"
     [dialogHeader]="l('AddNewSession')"
     [dialog_name]="Add_Session_dialog"
@@ -8,7 +8,8 @@
         <ng-container>
             <div class="row">
                 <div class="col-md-6 mb-5">
-                    <app-auto-complete [label]="l('SessionName')" [placeholder]="l('SessionName')"></app-auto-complete>
+                    <label class="mb-2">{{l('SessionName')}}</label>
+                    <input name="text" class="form-control m-input" [placeholder]="l('EnterSessionName')" type="text" />
                 </div>
                 <div class="col-md-6 mb-5">
                     <app-dropdown-field [labelField]="l('Test')"></app-dropdown-field>
@@ -26,7 +27,23 @@
                     <app-date [label]="l('EndDate')"></app-date>
                 </div>
                 <div class="col-12 mb-5">
-                    <app-dropdown-field [labelField]="l('Supervisor')"></app-dropdown-field>
+                    <app-auto-complete [label]="l('Supervisor')" [placeholder]="l('ChooseTheSessionSupervisor')"></app-auto-complete>
+                </div>
+                <div class="col-md-6 mb-5">
+                    <div class="upload-input p-1 d-flex justify-content-between align-items-center cursor-pointer">
+                        <span class="mx-3">أرفق ملف المدارس</span>
+                         <div class="icon d-inline-flex flex-center">
+                           <img src="assets/common/images/link.svg" alt="">
+                         </div>
+                    </div>
+                </div>
+                <div class="col-md-6 mb-5">
+                    <div class="upload-input p-1 d-flex justify-content-between align-items-center cursor-pointer">
+                        <span class="mx-3">أرفق ملف الطلاب</span>
+                         <div class="icon d-inline-flex flex-center">
+                           <img src="assets/common/images/eye.svg" alt="">
+                         </div>
+                    </div>
                 </div>
             </div>
         </ng-container>

@@ -299,7 +299,10 @@ ul.p-autocomplete-items{
     padding: 1px !important;
     width: 100% !important;
 }
-.card .p-dropdown , textarea , .p-dialog-content .p-dropdown  ,.p-dialog-content .form-control , .p-dialog-content textarea , .card .form-control ,.p-calendar , .p-autocomplete-input{
+.card .p-dropdown , textarea , .p-dialog-content .p-dropdown  ,
+.p-dialog-content .form-control , .p-dialog-content textarea ,
+.card .form-control ,.p-calendar , .p-autocomplete-input,
+ .filter-panel .p-dropdown ,.filter-panel .form-control {
     background: #F8F8F8 !important;
     border-color:#F8F8F8 !important;
 }
@@ -435,7 +438,7 @@ textarea{
     align-items: center;
 }
 .toggle-lang li{
-    padding: 7px 25px !important;
+ padding: 7px 25px !important;
  cursor: pointer;
  border-radius: 27px;
  color: #565D6D;

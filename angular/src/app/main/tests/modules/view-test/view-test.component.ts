@@ -45,9 +45,28 @@ toggleAccordion() {
   this.isOpen = !this.isOpen;
 }
 isOpenChlid = false;
-
-toggleChlidAccordion() {
-  this.isOpenChlid = !this.isOpenChlid;
+isOpenChlid2 = false;
+isOpenChlid3 = false;
+isOpenChlid4 = false;
+toggleChlidAccordion(type:any) {
+    switch(type) {
+        case 1: {
+            this.isOpenChlid = !this.isOpenChlid;
+           break;
+        }
+        case 2: {
+            this.isOpenChlid2 = !this.isOpenChlid2;
+           break;
+        }
+        case 3: {
+            this.isOpenChlid3 = !this.isOpenChlid3;
+           break;
+        }
+        default: {
+            this.isOpenChlid4 = !this.isOpenChlid4;
+           break;
+        }
+     }
 }
 
 

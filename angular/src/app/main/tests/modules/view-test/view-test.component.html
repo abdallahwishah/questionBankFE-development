@@ -115,11 +115,10 @@
                             style="transition: max-height 0.3s ease-in-out"
                         >
                             <div class="px-3 py-2">
-
                                 <!-- Child 1 -->
                                 <div
                                     class="accordion-header d-flex align-items-center justify-content-between pt-3 px-3 border-0"
-                                    (click)="toggleChlidAccordion()"
+                                    (click)="toggleChlidAccordion(1)"
                                     style="cursor: pointer"
                                 >
                                     <h4 class="question-name text-primary fw-normal mb-0">
@@ -129,7 +128,7 @@
 
                                     <!-- Left Section (Icons) -->
                                     <div class="d-flex align-items-center gap-2">
-                                        <button class="btn btn-link chevron-icons">
+                                        <button class="btn btn-link chevron-icons-chlid">
                                             @if (isOpenChlid) {
                                                 <svg
                                                     width="21"
@@ -169,10 +168,12 @@
                                         <app-dynamic-exam-question [questionType]="1"></app-dynamic-exam-question>
                                     </div>
                                 </div>
+                                <div class="line mt-5"></div>
+
                                 <!-- Child 2 -->
                                 <div
                                     class="accordion-header d-flex align-items-center justify-content-between pt-3 px-3 border-0"
-                                    (click)="toggleChlidAccordion()"
+                                    (click)="toggleChlidAccordion(2)"
                                     style="cursor: pointer"
                                 >
                                     <h4 class="question-name text-primary fw-normal mb-0">
@@ -182,8 +183,8 @@
 
                                     <!-- Left Section (Icons) -->
                                     <div class="d-flex align-items-center gap-2">
-                                        <button class="btn btn-link chevron-icons">
-                                            @if (isOpenChlid) {
+                                        <button class="btn btn-link chevron-icons-chlid">
+                                            @if (isOpenChlid2) {
                                                 <svg
                                                     width="21"
                                                     height="20"
@@ -215,23 +216,129 @@
                                 </div>
                                 <div
                                     class="accordion-content overflow-hidden"
-                                    [ngStyle]="{ 'max-height': isOpenChlid ? '100%' : '0px' }"
+                                    [ngStyle]="{ 'max-height': isOpenChlid2 ? '100%' : '0px' }"
                                     style="transition: max-height 0.3s ease-in-out"
                                 >
                                     <div class="px-3 py-2 mt-4">
                                         <app-dynamic-exam-question [questionType]="2"></app-dynamic-exam-question>
                                     </div>
                                 </div>
+                                <div class="line mt-5"></div>
 
+                                <!-- Child 3 -->
+                                <div
+                                    class="accordion-header d-flex align-items-center justify-content-between pt-3 px-3 border-0"
+                                    (click)="toggleChlidAccordion(3)"
+                                    style="cursor: pointer"
+                                >
+                                    <h4 class="question-name text-primary fw-normal mb-0">
+                                        صح وخطأ
+                                        <span>(1)</span>
+                                    </h4>
 
+                                    <!-- Left Section (Icons) -->
+                                    <div class="d-flex align-items-center gap-2">
+                                        <button class="btn btn-link chevron-icons-chlid">
+                                            @if (isOpenChlid3) {
+                                                <svg
+                                                    width="21"
+                                                    height="20"
+                                                    viewBox="0 0 21 20"
+                                                    fill="none"
+                                                    xmlns="http://www.w3.org/2000/svg"
+                                                >
+                                                    <path
+                                                        d="M17.5419 7.94225L12.1086 13.3756C11.2253 14.2589 9.77526 14.2589 8.89193 13.3756L3.45859 7.94225C3.21693 7.70059 3.21693 7.30059 3.45859 7.05892C3.70026 6.81725 4.10026 6.81725 4.34193 7.05892L9.77526 12.4923C10.1753 12.8923 10.8253 12.8923 11.2253 12.4923L16.6586 7.05892C16.9003 6.81725 17.3003 6.81725 17.5419 7.05892C17.6586 7.18392 17.7253 7.34225 17.7253 7.50059C17.7253 7.65892 17.6669 7.81725 17.5419 7.94225Z"
+                                                        fill="black"
+                                                    />
+                                                </svg>
+                                            } @else {
+                                                <svg
+                                                    width="21"
+                                                    height="20"
+                                                    viewBox="0 0 21 20"
+                                                    fill="none"
+                                                    xmlns="http://www.w3.org/2000/svg"
+                                                >
+                                                    <path
+                                                        d="M12.5577 17.0419L7.12441 11.6086C6.24108 10.7253 6.24108 9.27526 7.12441 8.39193L12.5577 2.95859C12.7994 2.71693 13.1994 2.71693 13.4411 2.95859C13.6827 3.20026 13.6827 3.60026 13.4411 3.84193L8.00775 9.27526C7.60775 9.67526 7.60775 10.3253 8.00775 10.7253L13.4411 16.1586C13.6827 16.4003 13.6827 16.8003 13.4411 17.0419C13.3161 17.1586 13.1577 17.2253 12.9994 17.2253C12.8411 17.2253 12.6827 17.1669 12.5577 17.0419Z"
+                                                        fill="black"
+                                                    />
+                                                </svg>
+                                            }
+                                        </button>
+                                    </div>
+                                </div>
+                                <div
+                                    class="accordion-content overflow-hidden"
+                                    [ngStyle]="{ 'max-height': isOpenChlid3 ? '100%' : '0px' }"
+                                    style="transition: max-height 0.3s ease-in-out"
+                                >
+                                    <div class="px-3 py-2 mt-4">
+                                        <app-dynamic-exam-question [questionType]="3"></app-dynamic-exam-question>
+                                    </div>
+                                </div>
+                                <div class="line mt-5"></div>
 
+                                <!-- Child 4 -->
+                                <div
+                                    class="accordion-header d-flex align-items-center justify-content-between pt-3 px-3 border-0"
+                                    (click)="toggleChlidAccordion(4)"
+                                    style="cursor: pointer"
+                                >
+                                    <h4 class="question-name text-primary fw-normal mb-0">
+                                        اختيار من متعدد (أكثر من خيار)
+                                        <span>(1)</span>
+                                    </h4>
+
+                                    <!-- Left Section (Icons) -->
+                                    <div class="d-flex align-items-center gap-2">
+                                        <button class="btn btn-link chevron-icons-chlid">
+                                            @if (isOpenChlid4) {
+                                                <svg
+                                                    width="21"
+                                                    height="20"
+                                                    viewBox="0 0 21 20"
+                                                    fill="none"
+                                                    xmlns="http://www.w3.org/2000/svg"
+                                                >
+                                                    <path
+                                                        d="M17.5419 7.94225L12.1086 13.3756C11.2253 14.2589 9.77526 14.2589 8.89193 13.3756L3.45859 7.94225C3.21693 7.70059 3.21693 7.30059 3.45859 7.05892C3.70026 6.81725 4.10026 6.81725 4.34193 7.05892L9.77526 12.4923C10.1753 12.8923 10.8253 12.8923 11.2253 12.4923L16.6586 7.05892C16.9003 6.81725 17.3003 6.81725 17.5419 7.05892C17.6586 7.18392 17.7253 7.34225 17.7253 7.50059C17.7253 7.65892 17.6669 7.81725 17.5419 7.94225Z"
+                                                        fill="black"
+                                                    />
+                                                </svg>
+                                            } @else {
+                                                <svg
+                                                    width="21"
+                                                    height="20"
+                                                    viewBox="0 0 21 20"
+                                                    fill="none"
+                                                    xmlns="http://www.w3.org/2000/svg"
+                                                >
+                                                    <path
+                                                        d="M12.5577 17.0419L7.12441 11.6086C6.24108 10.7253 6.24108 9.27526 7.12441 8.39193L12.5577 2.95859C12.7994 2.71693 13.1994 2.71693 13.4411 2.95859C13.6827 3.20026 13.6827 3.60026 13.4411 3.84193L8.00775 9.27526C7.60775 9.67526 7.60775 10.3253 8.00775 10.7253L13.4411 16.1586C13.6827 16.4003 13.6827 16.8003 13.4411 17.0419C13.3161 17.1586 13.1577 17.2253 12.9994 17.2253C12.8411 17.2253 12.6827 17.1669 12.5577 17.0419Z"
+                                                        fill="black"
+                                                    />
+                                                </svg>
+                                            }
+                                        </button>
+                                    </div>
+                                </div>
+                                <div
+                                    class="accordion-content overflow-hidden"
+                                    [ngStyle]="{ 'max-height': isOpenChlid4 ? '100%' : '0px' }"
+                                    style="transition: max-height 0.3s ease-in-out"
+                                >
+                                    <div class="px-3 py-2 mt-4">
+                                        <app-dynamic-exam-question [questionType]="4"></app-dynamic-exam-question>
+                                    </div>
+                                </div>
+                                <div class="line mt-5"></div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-
-
         </div>
     </div>
 </div>

@@ -1,0 +1,32 @@
+<app-dialog-shared
+    [width]="'35vw'"
+    (close)="closeDialog()"
+    [dialogHeader]="l('CopyTemplate')"
+    [dialog_name]="Copy_Template_dialog"
+>
+    <ng-container bodyDialog>
+        <ng-container>
+            <div class="row mt-4">
+                <div class="col-md-12">
+                    <input name="text" class="form-control m-input" [placeholder]="l('TemplateName')" type="text" />
+                </div>
+            </div>
+
+        </ng-container>
+    </ng-container>
+    <ng-container footerDialog>
+
+
+
+        <button
+            type="submit"
+            class="btn btn-primary blue"
+            [routerLink]="'/app/main/templates/add-template/1'"
+        >
+       <!--  [buttonBusy]="saving"
+        [busyText]="l('Save')" -->
+        <span>{{l('Yes')}}</span>
+        </button>
+        <button class="btn btn-outline-primary">{{l('No')}}</button>
+    </ng-container>
+</app-dialog-shared>

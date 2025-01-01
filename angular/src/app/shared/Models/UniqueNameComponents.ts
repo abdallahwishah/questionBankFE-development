@@ -10,4 +10,8 @@ export enum UniqueNameComponents {
     Add_Session_dialog='Add_Session_dialog',
     Add_Test_dialog='Add_Test_dialog',
     Warning_dialog='Warning_dialog',
+    Copy_Template_dialog='Copy_Template_dialog',
+    Copy_Class_dialog='Copy_Class_dialog',
+    Add_Class_dialog='Add_Class_dialog',
+    Add_Subject_dialog='Add_Subject_dialog',
 }

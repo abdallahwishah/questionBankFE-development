@@ -1,0 +1,38 @@
+<app-dialog-shared
+    [width]="'35vw'"
+    (close)="closeDialog()"
+    [dialogHeader]="l('AddSubject')"
+    [dialog_name]="Add_Subject_dialog">
+    <ng-container bodyDialog>
+        <ng-container>
+            <div class="row mt-4">
+                <div class="col-md-12">
+                    <input name="text" class="form-control m-input" [placeholder]="l('SubjectName')" type="text" />
+                </div>
+                <div class="col-md-12 mt-6">
+                    <app-dropdown-field [labelField]="l('SelectLanguage')"></app-dropdown-field>
+                </div>
+                <div class="col-md-2 d-flex align-items-center gap-2 mt-8  ">
+                    <p-inputSwitch [(ngModel)]="checked" />
+                    <label> {{ l('Active') }}</label>
+                </div>
+            </div>
+
+        </ng-container>
+    </ng-container>
+    <ng-container footerDialog>
+
+
+
+        <button
+            type="submit"
+            class="btn btn-primary blue"
+            [routerLink]="'/app/main/templates/add-template/1'"
+        >
+       <!--  [buttonBusy]="saving"
+        [busyText]="l('Save')" -->
+        <span>{{l('Save')}}</span>
+        </button>
+        <button class="btn btn-outline-primary">{{l('Cancel')}}</button>
+    </ng-container>
+</app-dialog-shared>

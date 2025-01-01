@@ -1,35 +1,30 @@
-<app-dialog-shared
-    [width]="'50vw'"
-    (close)="closeDialog()"
-    [dialogHeader]="l('EnterFile')"
-    [dialog_name]="Add_File_dialog"
->
+<app-dialog-shared [width]="'35vw'" (close)="closeDialog()" [dialogHeader]="l('EnterFile')"
+    [dialog_name]="Add_File_dialog">
     <ng-container bodyDialog>
         <ng-container>
 
-                <div class="row">
-                    <div class="col-md-12">
-                       <app-dropdown-field [labelField]="l('QuestionType')"></app-dropdown-field>
-                    </div>
-
-
+            <div class="row">
+                <div class="col-md-12">
+                    <app-dropdown-field [labelField]="l('QuestionType')"></app-dropdown-field>
                 </div>
 
+                <div class="col-md-12 mt-6">
+                    <div class="upload-box py-7 px-3 text-center">
+                        <img src="assets/common/images/drag-and-drop.svg" alt="">
+                        <p class="mt-4 mb-1">اسحب الملف وأفلت أو <span class="text-primary cursor-pointer">اختر الملف من
+                                هنا</span></p>
+                        <small>الحجم الأقصى المسموح 50MB</small>
+                    </div>
+                </div>
+            </div>
 
         </ng-container>
     </ng-container>
     <ng-container footerDialog>
-
-
-
-        <button
-            type="submit"
-            class="btn btn-primary blue"
-            (click)="Save()"
-        >
-       <!--  [buttonBusy]="saving"
+        <button type="submit" class="btn btn-primary blue" (click)="Save()">
+            <!--  [buttonBusy]="saving"
         [busyText]="l('Save')" -->
-        <span>{{l('FileEntry')}}</span>
+            <span>{{l('FileEntry')}}</span>
         </button>
         <button class="btn btn-outline-primary">{{l('DownloadTemplate')}}</button>
     </ng-container>

@@ -13,6 +13,14 @@ import { RouterModule } from '@angular/router';
                         data: { permission: 'Pages.Tenant.Dashboard' },
                     },
                     {
+                        path: 'question-ids',
+                        loadChildren: () => import('./classes/classes.module').then((m) => m.ClassesModule)
+                    },
+                    {
+                        path: 'subjects',
+                        loadChildren: () => import('./subjects/subjects.module').then((m) => m.SubjectsModule)
+                    },
+                    {
                         path: 'question-bank',
                         loadChildren: () => import('./question-bank/question-bank.module').then((m) => m.QuestionBankModule)
                     },

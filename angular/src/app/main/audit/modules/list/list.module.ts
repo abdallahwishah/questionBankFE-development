@@ -6,6 +6,7 @@ import { RouterModule } from '@node_modules/@angular/router';
 import { FiltersComponent } from "../../../../shared/components/filters/filters.component";
 import { ActionButtonComponent } from "../../../../shared/components/action-button/action-button.component";
 import { PaginatorComponent } from '@app/shared/common/paginator/paginator.component';
+import { DropdownFieldComponent } from '@app/shared/components/fields/dropdown-field/dropdown-field.component';
 
 @NgModule({
   imports: [
@@ -20,6 +21,7 @@ import { PaginatorComponent } from '@app/shared/common/paginator/paginator.compo
     FiltersComponent,
     ActionButtonComponent,
     PaginatorComponent,
+    DropdownFieldComponent
 ],
   declarations: [ListComponent]
 })

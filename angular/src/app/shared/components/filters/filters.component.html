@@ -23,54 +23,6 @@
         </div>
         <ng-content select="[filterBody]"></ng-content>
 
-        <!--
-        <div>
-            <div class="d-flex justify-content-between mb-3">
-                <label for="00">التاريخ النهائي</label>
-                <span class="text-primary cursor-pointer">إلغاء</span>
-            </div>
-            <p-calendar appendTo="body" #00 id="0" name="00"></p-calendar>
-        </div>
-        <div class="my-6">
-            <div class="d-flex justify-content-between mb-3">
-                <label for="00">الفئة</label>
-                <span class="text-primary cursor-pointer">إلغاء</span>
-            </div>
-            <p-dropdown [optionLabel]="'sharedLookup.nameL'" [optionValue]="'sharedLookup.id'"
-                ></p-dropdown>
-        </div>
-        <div>
-            <div class="d-flex justify-content-between mb-3">
-                <label for="00">نوع المهمة</label>
-                <span class="text-primary cursor-pointer">إلغاء</span>
-            </div>
 
-         <div class="checkBoxes">
-            <label for="EditEdition_IsFree" class="form-check form-check-custom form-check-solid ">
-                <input class="form-check-input cursor-pointer" id="EditEdition_IsFree" name="errorImpactId"
-                    [value]="'item.id'" type="radio" />
-                <span class="form-check-label">
-                    تحتاج موافقة
-                </span>
-            </label>
-            <label for="EditEdition_IsFree" class="form-check form-check-custom form-check-solid ">
-                <input class="form-check-input cursor-pointer" id="EditEdition_IsFree" name="errorImpactId"
-                    [value]="'item.id'" type="radio" />
-                <span class="form-check-label">
-                    طلباتي
-                </span>
-            </label>
-         </div>
-
-        </div> -->
-
-        <div class="d-flex justify-content-between mt-7">
-            <button class="btn btn-primary">
-                {{ 'Save' | localize }}
-            </button>
-            <button class="btn btn-outline">
-                {{ 'Reset' | localize }}
-            </button>
-        </div>
     </div>
 </div>

@@ -1,0 +1,11 @@
+.upload-input{
+    border-radius: 0.475rem;
+    border: 1px solid #DEE1E6;
+}
+
+.upload-input .icon{
+    border-radius: 0.400rem;
+    background: #6D31ED0F;
+    height: 36px;
+    width: 36px;
+}

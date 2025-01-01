@@ -1,0 +1,10 @@
+.upload-box {
+    border: 2px dashed var(--bs-primary);
+    border-radius: 12px;
+}
+.upload-box{
+    color: #565D6D;
+}
+.upload-box small{
+ color: #BDC1CA;
+}

@@ -38,14 +38,22 @@
     .chevron-icons{
         width: 40px;
         height: 40px;
+        border-radius: 0.475rem !important;
+
+    }
+    .chevron-icons-chlid{
+        width: 30px;
+        height: 30px;
+        border-radius: 50% !important;
+    }
+
+    .chevron-icons , .chevron-icons-chlid{
         text-align: center;
         display: flex;
         align-items: center;
         justify-content: center;
         border: 0.5px solid #DEE1E6 !important;
         background: #FBFBFB;
-        border-radius: 0.475rem !important;
-
     }
 
     .question-name {

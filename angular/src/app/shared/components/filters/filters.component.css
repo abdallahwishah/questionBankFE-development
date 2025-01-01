@@ -55,3 +55,7 @@
     z-index: 9;
     width: 60%;
 }
+
+.panel-header{
+    border-bottom: 1px solid #DDDDDD
+}
