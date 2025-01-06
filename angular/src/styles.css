@@ -407,7 +407,6 @@ textarea{
 
 
 [data-kt-app-layout=light-sidebar] .app-sidebar .menu .menu-item .menu-link.active {
-    background-color:var(--bs-primary) !important;
     color: var(--bs-primary-inverse) !important;
     box-shadow: 0px 8px 17px 0px #6D31ED26 !important;
 
@@ -495,5 +494,44 @@ textarea{
 }
 
 .menu-sub .active{
-    background-color: #8048f8 !important;
+    background-color: #565D6D !important;
+}
+.app-main{
+    min-height: 93vh;
+}
+.primeng-no-data{
+    text-align: center;
+    margin: 8px 0;
+}
+.primeng-datatable-container{
+    background: #fff;
+}
+
+th{
+    background: #FCFCFC !important;
+    /* padding: 15px 4px !important; */
+}
+ th:first-of-type{
+    border-radius: 0 6px ;
+}
+
+ th:last-of-type{
+    border-radius: 6px 0;
+}
+
+td , th{
+    border-bottom: 1px dashed #DDDDDD !important;
+}
+.p-inputswitch-slider{
+    padding: 11px 21.5px;
+    border-radius: 20px;
+}
+.p-inputswitch .p-inputswitch-slider:before{
+    left: 2px !important;
+}
+.p-inputswitch.p-inputswitch-checked .p-inputswitch-slider{
+    background: var(--bs-primary) !important;
+}
+.p-inputswitch.p-inputswitch-checked .p-inputswitch-slider:before{
+    background: #fff !important;
 }

@@ -56,12 +56,12 @@
     </div>
 
     <div class="col-md-2 d-grid justify-content-end" style="grid-template-columns: 1fr;">
-        <app-dropdown-field></app-dropdown-field>
+        <app-dropdown-field [placeholder]="'Status'"></app-dropdown-field>
     </div>
 </div>
 
         <!-- Start Tabel -->
-        <div class="primeng-datatable-container p-8 col-12 mt-6">
+        <div class="primeng-datatable-container p-0 col-12 mt-6">
             <p-table
                 #dataTable
                 [value]="primengTableHelper.records"

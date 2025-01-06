@@ -18,7 +18,7 @@ export class AnswersComponent extends AppComponentBase implements OnInit {
   getList($event){
 
   }
-  getStudent(){
+  getAnswers(){
 
   }
   doActions(label: any, record: any) {

@@ -2,18 +2,11 @@
     <div class="container-fluid px-5 mt-md-0 mt-7">
         <div class="d-flex align-items-center">
             <span class="cursor-pointer" [routerLink]="'/app/main/question-bank'">
-                <svg
-                    width="14"
-                    height="14"
-                    viewBox="0 0 14 14"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                    class="postion"
-                >
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"
+                    class="postion">
                     <path
                         d="M9.3337 8.12643L5.53036 11.9298C5.3612 12.0989 5.0812 12.0989 4.91203 11.9298C4.74286 11.7606 4.74286 11.4806 4.91203 11.3114L8.71536 7.5081C8.99536 7.2281 8.99536 6.7731 8.71536 6.4931L4.91203 2.68977C4.74286 2.5206 4.74286 2.2406 4.91203 2.07143C5.0812 1.90226 5.3612 1.90226 5.53036 2.07143L9.3337 5.87476C9.64286 6.18393 9.80036 6.59227 9.80036 7.0006C9.80036 7.40893 9.64286 7.81727 9.3337 8.12643Z"
-                        fill="#999999"
-                    />
+                        fill="#999999" />
                 </svg>
                 {{ l('Exams') }}
             </span>
@@ -31,11 +24,8 @@
 
                     <div class="accordion border rounded my-5">
                         <!-- Accordion Header -->
-                        <div
-                            class="accordion-header d-flex align-items-center justify-content-between p-3 border-bottom"
-                            (click)="toggleAccordion()"
-                            style="cursor: pointer"
-                        >
+                        <div class="accordion-header d-flex align-items-center justify-content-between p-3 border-bottom"
+                            (click)="toggleAccordion()" style="cursor: pointer">
                             <!-- Right Section (Title) -->
                             <img class="cursor-pointer" src="assets/common/images/menu.svg" alt="" />
                             <span class="text-primary fw-medium">القسم الأول</span>
@@ -46,27 +36,17 @@
                             </div>
                             <!-- Middle Section -->
                             <div class="px-4 py-2 time d-flex align-items-center gap-3">
-                                <svg
-                                    width="20"
-                                    height="20"
-                                    viewBox="0 0 20 20"
-                                    fill="none"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                >
-                                    <path
-                                        fill-rule="evenodd"
-                                        clip-rule="evenodd"
+                                <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd" clip-rule="evenodd"
                                         d="M2.0835 11.0417C2.0835 6.675 5.6335 3.125 10.0002 3.125C14.3668 3.125 17.9168 6.675 17.9168 11.0417C17.9168 15.4083 14.3668 18.9583 10.0002 18.9583C5.6335 18.9583 2.0835 15.4083 2.0835 11.0417ZM3.3335 11.0417C3.3335 14.7167 6.32516 17.7083 10.0002 17.7083C13.6752 17.7083 16.6668 14.7167 16.6668 11.0417C16.6668 7.36667 13.6752 4.375 10.0002 4.375C6.32516 4.375 3.3335 7.36667 3.3335 11.0417Z"
-                                        fill="#171A1F"
-                                    />
+                                        fill="#171A1F" />
                                     <path
                                         d="M9.375 10.8337V6.66699C9.375 6.32533 9.65833 6.04199 10 6.04199C10.3417 6.04199 10.625 6.32533 10.625 6.66699V10.8337C10.625 11.1753 10.3417 11.4587 10 11.4587C9.65833 11.4587 9.375 11.1753 9.375 10.8337Z"
-                                        fill="#171A1F"
-                                    />
+                                        fill="#171A1F" />
                                     <path
                                         d="M7.5 2.29199C7.15833 2.29199 6.875 2.00866 6.875 1.66699C6.875 1.32533 7.15833 1.04199 7.5 1.04199H12.5C12.8417 1.04199 13.125 1.32533 13.125 1.66699C13.125 2.00866 12.8417 2.29199 12.5 2.29199H7.5Z"
-                                        fill="#171A1F"
-                                    />
+                                        fill="#171A1F" />
                                 </svg>
                                 60 دقيقة
                             </div>
@@ -79,260 +59,151 @@
                             <div class="d-flex align-items-center gap-2">
                                 <button class="btn btn-link chevron-icons">
                                     @if (isOpen) {
-                                        <svg
-                                            width="21"
-                                            height="20"
-                                            viewBox="0 0 21 20"
-                                            fill="none"
-                                            xmlns="http://www.w3.org/2000/svg"
-                                        >
-                                            <path
-                                                d="M17.5419 7.94225L12.1086 13.3756C11.2253 14.2589 9.77526 14.2589 8.89193 13.3756L3.45859 7.94225C3.21693 7.70059 3.21693 7.30059 3.45859 7.05892C3.70026 6.81725 4.10026 6.81725 4.34193 7.05892L9.77526 12.4923C10.1753 12.8923 10.8253 12.8923 11.2253 12.4923L16.6586 7.05892C16.9003 6.81725 17.3003 6.81725 17.5419 7.05892C17.6586 7.18392 17.7253 7.34225 17.7253 7.50059C17.7253 7.65892 17.6669 7.81725 17.5419 7.94225Z"
-                                                fill="black"
-                                            />
-                                        </svg>
+                                    <svg width="21" height="20" viewBox="0 0 21 20" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="M17.5419 7.94225L12.1086 13.3756C11.2253 14.2589 9.77526 14.2589 8.89193 13.3756L3.45859 7.94225C3.21693 7.70059 3.21693 7.30059 3.45859 7.05892C3.70026 6.81725 4.10026 6.81725 4.34193 7.05892L9.77526 12.4923C10.1753 12.8923 10.8253 12.8923 11.2253 12.4923L16.6586 7.05892C16.9003 6.81725 17.3003 6.81725 17.5419 7.05892C17.6586 7.18392 17.7253 7.34225 17.7253 7.50059C17.7253 7.65892 17.6669 7.81725 17.5419 7.94225Z"
+                                            fill="black" />
+                                    </svg>
                                     } @else {
-                                        <svg
-                                            width="21"
-                                            height="20"
-                                            viewBox="0 0 21 20"
-                                            fill="none"
-                                            xmlns="http://www.w3.org/2000/svg"
-                                        >
-                                            <path
-                                                d="M12.5577 17.0419L7.12441 11.6086C6.24108 10.7253 6.24108 9.27526 7.12441 8.39193L12.5577 2.95859C12.7994 2.71693 13.1994 2.71693 13.4411 2.95859C13.6827 3.20026 13.6827 3.60026 13.4411 3.84193L8.00775 9.27526C7.60775 9.67526 7.60775 10.3253 8.00775 10.7253L13.4411 16.1586C13.6827 16.4003 13.6827 16.8003 13.4411 17.0419C13.3161 17.1586 13.1577 17.2253 12.9994 17.2253C12.8411 17.2253 12.6827 17.1669 12.5577 17.0419Z"
-                                                fill="black"
-                                            />
-                                        </svg>
+                                    <svg width="21" height="20" viewBox="0 0 21 20" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="M12.5577 17.0419L7.12441 11.6086C6.24108 10.7253 6.24108 9.27526 7.12441 8.39193L12.5577 2.95859C12.7994 2.71693 13.1994 2.71693 13.4411 2.95859C13.6827 3.20026 13.6827 3.60026 13.4411 3.84193L8.00775 9.27526C7.60775 9.67526 7.60775 10.3253 8.00775 10.7253L13.4411 16.1586C13.6827 16.4003 13.6827 16.8003 13.4411 17.0419C13.3161 17.1586 13.1577 17.2253 12.9994 17.2253C12.8411 17.2253 12.6827 17.1669 12.5577 17.0419Z"
+                                            fill="black" />
+                                    </svg>
                                     }
                                 </button>
                             </div>
                         </div>
                         <!-- Accordion Content -->
-                        <div
-                            class="accordion-content overflow-hidden"
+                        <div class="accordion-content overflow-hidden"
                             [ngStyle]="{ 'max-height': isOpen ? '100%' : '0px' }"
-                            style="transition: max-height 0.3s ease-in-out"
-                        >
-                            <div class="px-3 py-2">
+                            style="transition: max-height 0.3s ease-in-out">
+                            <div class="px-5 py-2">
                                 <!-- Child 1 -->
-                                <div
-                                    class="accordion-header d-flex align-items-center justify-content-between pt-3 px-3 border-0"
-                                    (click)="toggleChlidAccordion(1)"
-                                    style="cursor: pointer"
-                                >
+                                <div class="d-flex justify-content-between align-items-center my-4">
                                     <h4 class="question-name text-primary fw-normal mb-0">
                                         الأسئلة المقالية
                                         <span>(1)</span>
                                     </h4>
-
-                                    <!-- Left Section (Icons) -->
-                                    <div class="d-flex align-items-center gap-2">
+                                    <div class="d-flex align-items-center gap-1">
                                         <button class="btn btn-link chevron-icons-chlid">
-                                            @if (isOpenChlid) {
-                                                <svg
-                                                    width="21"
-                                                    height="20"
-                                                    viewBox="0 0 21 20"
-                                                    fill="none"
-                                                    xmlns="http://www.w3.org/2000/svg"
-                                                >
-                                                    <path
-                                                        d="M17.5419 7.94225L12.1086 13.3756C11.2253 14.2589 9.77526 14.2589 8.89193 13.3756L3.45859 7.94225C3.21693 7.70059 3.21693 7.30059 3.45859 7.05892C3.70026 6.81725 4.10026 6.81725 4.34193 7.05892L9.77526 12.4923C10.1753 12.8923 10.8253 12.8923 11.2253 12.4923L16.6586 7.05892C16.9003 6.81725 17.3003 6.81725 17.5419 7.05892C17.6586 7.18392 17.7253 7.34225 17.7253 7.50059C17.7253 7.65892 17.6669 7.81725 17.5419 7.94225Z"
-                                                        fill="black"
-                                                    />
-                                                </svg>
-                                            } @else {
-                                                <svg
-                                                    width="21"
-                                                    height="20"
-                                                    viewBox="0 0 21 20"
-                                                    fill="none"
-                                                    xmlns="http://www.w3.org/2000/svg"
-                                                >
-                                                    <path
-                                                        d="M12.5577 17.0419L7.12441 11.6086C6.24108 10.7253 6.24108 9.27526 7.12441 8.39193L12.5577 2.95859C12.7994 2.71693 13.1994 2.71693 13.4411 2.95859C13.6827 3.20026 13.6827 3.60026 13.4411 3.84193L8.00775 9.27526C7.60775 9.67526 7.60775 10.3253 8.00775 10.7253L13.4411 16.1586C13.6827 16.4003 13.6827 16.8003 13.4411 17.0419C13.3161 17.1586 13.1577 17.2253 12.9994 17.2253C12.8411 17.2253 12.6827 17.1669 12.5577 17.0419Z"
-                                                        fill="black"
-                                                    />
-                                                </svg>
-                                            }
+                                            <svg width="12" height="8" viewBox="0 0 10 6" fill="none"
+                                                xmlns="http://www.w3.org/2000/svg">
+                                                <path
+                                                    d="M4.47016 5.78992L0.940156 2.25992C0.650156 1.96992 0.650156 1.48992 0.940156 1.19992C1.23016 0.909922 1.71016 0.909922 2.00016 1.19992L5.00016 4.19992L8.00016 1.19992C8.29016 0.909922 8.77016 0.909922 9.06016 1.19992C9.35016 1.48992 9.35016 1.96992 9.06016 2.25992L5.53016 5.78992C5.38016 5.93992 5.19016 6.00992 5.00016 6.00992C4.81016 6.00992 4.62016 5.93992 4.47016 5.78992Z"
+                                                    fill="#171A1F" />
+                                            </svg>
+
+                                        </button>
+                                        <button class="btn btn-link chevron-icons-chlid">
+                                            <svg width="12" height="8" viewBox="0 0 10 6" fill="none"
+                                                xmlns="http://www.w3.org/2000/svg">
+                                                <path
+                                                    d="M8.00016 5.78992L5.00016 2.78992L2.00016 5.78992C1.71016 6.07992 1.23016 6.07992 0.940156 5.78992C0.650156 5.49992 0.650156 5.01992 0.940156 4.72992L4.47016 1.19992C4.76016 0.909922 5.24016 0.909922 5.53016 1.19992L9.06016 4.72992C9.35016 5.01992 9.35016 5.49992 9.06016 5.78992C8.91016 5.93992 8.72016 6.00992 8.53016 6.00992C8.34016 6.00992 8.15016 5.93992 8.00016 5.78992Z"
+                                                    fill="#171A1F" />
+                                            </svg>
                                         </button>
                                     </div>
                                 </div>
-                                <div
-                                    class="accordion-content overflow-hidden"
-                                    [ngStyle]="{ 'max-height': isOpenChlid ? '100%' : '0px' }"
-                                    style="transition: max-height 0.3s ease-in-out"
-                                >
-                                    <div class="px-3 py-2 mt-4">
-                                        <app-dynamic-exam-question [questionType]="1"></app-dynamic-exam-question>
-                                    </div>
-                                </div>
+                                <app-dynamic-exam-question [questionType]="1"></app-dynamic-exam-question>
                                 <div class="line mt-5"></div>
 
                                 <!-- Child 2 -->
-                                <div
-                                    class="accordion-header d-flex align-items-center justify-content-between pt-3 px-3 border-0"
-                                    (click)="toggleChlidAccordion(2)"
-                                    style="cursor: pointer"
-                                >
+                                <div class="d-flex justify-content-between align-items-center my-4">
                                     <h4 class="question-name text-primary fw-normal mb-0">
                                         اختيار من متعدد (اختيار واحد)
                                         <span>(1)</span>
                                     </h4>
-
-                                    <!-- Left Section (Icons) -->
-                                    <div class="d-flex align-items-center gap-2">
+                                    <div class="d-flex align-items-center gap-1">
                                         <button class="btn btn-link chevron-icons-chlid">
-                                            @if (isOpenChlid2) {
-                                                <svg
-                                                    width="21"
-                                                    height="20"
-                                                    viewBox="0 0 21 20"
-                                                    fill="none"
-                                                    xmlns="http://www.w3.org/2000/svg"
-                                                >
-                                                    <path
-                                                        d="M17.5419 7.94225L12.1086 13.3756C11.2253 14.2589 9.77526 14.2589 8.89193 13.3756L3.45859 7.94225C3.21693 7.70059 3.21693 7.30059 3.45859 7.05892C3.70026 6.81725 4.10026 6.81725 4.34193 7.05892L9.77526 12.4923C10.1753 12.8923 10.8253 12.8923 11.2253 12.4923L16.6586 7.05892C16.9003 6.81725 17.3003 6.81725 17.5419 7.05892C17.6586 7.18392 17.7253 7.34225 17.7253 7.50059C17.7253 7.65892 17.6669 7.81725 17.5419 7.94225Z"
-                                                        fill="black"
-                                                    />
-                                                </svg>
-                                            } @else {
-                                                <svg
-                                                    width="21"
-                                                    height="20"
-                                                    viewBox="0 0 21 20"
-                                                    fill="none"
-                                                    xmlns="http://www.w3.org/2000/svg"
-                                                >
-                                                    <path
-                                                        d="M12.5577 17.0419L7.12441 11.6086C6.24108 10.7253 6.24108 9.27526 7.12441 8.39193L12.5577 2.95859C12.7994 2.71693 13.1994 2.71693 13.4411 2.95859C13.6827 3.20026 13.6827 3.60026 13.4411 3.84193L8.00775 9.27526C7.60775 9.67526 7.60775 10.3253 8.00775 10.7253L13.4411 16.1586C13.6827 16.4003 13.6827 16.8003 13.4411 17.0419C13.3161 17.1586 13.1577 17.2253 12.9994 17.2253C12.8411 17.2253 12.6827 17.1669 12.5577 17.0419Z"
-                                                        fill="black"
-                                                    />
-                                                </svg>
-                                            }
+                                            <svg width="12" height="8" viewBox="0 0 10 6" fill="none"
+                                                xmlns="http://www.w3.org/2000/svg">
+                                                <path
+                                                    d="M4.47016 5.78992L0.940156 2.25992C0.650156 1.96992 0.650156 1.48992 0.940156 1.19992C1.23016 0.909922 1.71016 0.909922 2.00016 1.19992L5.00016 4.19992L8.00016 1.19992C8.29016 0.909922 8.77016 0.909922 9.06016 1.19992C9.35016 1.48992 9.35016 1.96992 9.06016 2.25992L5.53016 5.78992C5.38016 5.93992 5.19016 6.00992 5.00016 6.00992C4.81016 6.00992 4.62016 5.93992 4.47016 5.78992Z"
+                                                    fill="#171A1F" />
+                                            </svg>
+
+                                        </button>
+                                        <button class="btn btn-link chevron-icons-chlid">
+                                            <svg width="12" height="8" viewBox="0 0 10 6" fill="none"
+                                                xmlns="http://www.w3.org/2000/svg">
+                                                <path
+                                                    d="M8.00016 5.78992L5.00016 2.78992L2.00016 5.78992C1.71016 6.07992 1.23016 6.07992 0.940156 5.78992C0.650156 5.49992 0.650156 5.01992 0.940156 4.72992L4.47016 1.19992C4.76016 0.909922 5.24016 0.909922 5.53016 1.19992L9.06016 4.72992C9.35016 5.01992 9.35016 5.49992 9.06016 5.78992C8.91016 5.93992 8.72016 6.00992 8.53016 6.00992C8.34016 6.00992 8.15016 5.93992 8.00016 5.78992Z"
+                                                    fill="#171A1F" />
+                                            </svg>
                                         </button>
                                     </div>
                                 </div>
-                                <div
-                                    class="accordion-content overflow-hidden"
-                                    [ngStyle]="{ 'max-height': isOpenChlid2 ? '100%' : '0px' }"
-                                    style="transition: max-height 0.3s ease-in-out"
-                                >
-                                    <div class="px-3 py-2 mt-4">
-                                        <app-dynamic-exam-question [questionType]="2"></app-dynamic-exam-question>
-                                    </div>
-                                </div>
+                                <app-dynamic-exam-question [questionType]="2"></app-dynamic-exam-question>
                                 <div class="line mt-5"></div>
 
+
+
+
+
                                 <!-- Child 3 -->
-                                <div
-                                    class="accordion-header d-flex align-items-center justify-content-between pt-3 px-3 border-0"
-                                    (click)="toggleChlidAccordion(3)"
-                                    style="cursor: pointer"
-                                >
+                                <div class="d-flex justify-content-between align-items-center my-4">
                                     <h4 class="question-name text-primary fw-normal mb-0">
                                         صح وخطأ
                                         <span>(1)</span>
                                     </h4>
-
-                                    <!-- Left Section (Icons) -->
-                                    <div class="d-flex align-items-center gap-2">
+                                    <div class="d-flex align-items-center gap-1">
                                         <button class="btn btn-link chevron-icons-chlid">
-                                            @if (isOpenChlid3) {
-                                                <svg
-                                                    width="21"
-                                                    height="20"
-                                                    viewBox="0 0 21 20"
-                                                    fill="none"
-                                                    xmlns="http://www.w3.org/2000/svg"
-                                                >
-                                                    <path
-                                                        d="M17.5419 7.94225L12.1086 13.3756C11.2253 14.2589 9.77526 14.2589 8.89193 13.3756L3.45859 7.94225C3.21693 7.70059 3.21693 7.30059 3.45859 7.05892C3.70026 6.81725 4.10026 6.81725 4.34193 7.05892L9.77526 12.4923C10.1753 12.8923 10.8253 12.8923 11.2253 12.4923L16.6586 7.05892C16.9003 6.81725 17.3003 6.81725 17.5419 7.05892C17.6586 7.18392 17.7253 7.34225 17.7253 7.50059C17.7253 7.65892 17.6669 7.81725 17.5419 7.94225Z"
-                                                        fill="black"
-                                                    />
-                                                </svg>
-                                            } @else {
-                                                <svg
-                                                    width="21"
-                                                    height="20"
-                                                    viewBox="0 0 21 20"
-                                                    fill="none"
-                                                    xmlns="http://www.w3.org/2000/svg"
-                                                >
-                                                    <path
-                                                        d="M12.5577 17.0419L7.12441 11.6086C6.24108 10.7253 6.24108 9.27526 7.12441 8.39193L12.5577 2.95859C12.7994 2.71693 13.1994 2.71693 13.4411 2.95859C13.6827 3.20026 13.6827 3.60026 13.4411 3.84193L8.00775 9.27526C7.60775 9.67526 7.60775 10.3253 8.00775 10.7253L13.4411 16.1586C13.6827 16.4003 13.6827 16.8003 13.4411 17.0419C13.3161 17.1586 13.1577 17.2253 12.9994 17.2253C12.8411 17.2253 12.6827 17.1669 12.5577 17.0419Z"
-                                                        fill="black"
-                                                    />
-                                                </svg>
-                                            }
+                                            <svg width="12" height="8" viewBox="0 0 10 6" fill="none"
+                                                xmlns="http://www.w3.org/2000/svg">
+                                                <path
+                                                    d="M4.47016 5.78992L0.940156 2.25992C0.650156 1.96992 0.650156 1.48992 0.940156 1.19992C1.23016 0.909922 1.71016 0.909922 2.00016 1.19992L5.00016 4.19992L8.00016 1.19992C8.29016 0.909922 8.77016 0.909922 9.06016 1.19992C9.35016 1.48992 9.35016 1.96992 9.06016 2.25992L5.53016 5.78992C5.38016 5.93992 5.19016 6.00992 5.00016 6.00992C4.81016 6.00992 4.62016 5.93992 4.47016 5.78992Z"
+                                                    fill="#171A1F" />
+                                            </svg>
+
+                                        </button>
+                                        <button class="btn btn-link chevron-icons-chlid">
+                                            <svg width="12" height="8" viewBox="0 0 10 6" fill="none"
+                                                xmlns="http://www.w3.org/2000/svg">
+                                                <path
+                                                    d="M8.00016 5.78992L5.00016 2.78992L2.00016 5.78992C1.71016 6.07992 1.23016 6.07992 0.940156 5.78992C0.650156 5.49992 0.650156 5.01992 0.940156 4.72992L4.47016 1.19992C4.76016 0.909922 5.24016 0.909922 5.53016 1.19992L9.06016 4.72992C9.35016 5.01992 9.35016 5.49992 9.06016 5.78992C8.91016 5.93992 8.72016 6.00992 8.53016 6.00992C8.34016 6.00992 8.15016 5.93992 8.00016 5.78992Z"
+                                                    fill="#171A1F" />
+                                            </svg>
                                         </button>
                                     </div>
                                 </div>
-                                <div
-                                    class="accordion-content overflow-hidden"
-                                    [ngStyle]="{ 'max-height': isOpenChlid3 ? '100%' : '0px' }"
-                                    style="transition: max-height 0.3s ease-in-out"
-                                >
-                                    <div class="px-3 py-2 mt-4">
-                                        <app-dynamic-exam-question [questionType]="3"></app-dynamic-exam-question>
-                                    </div>
-                                </div>
+                                <app-dynamic-exam-question [questionType]="3"></app-dynamic-exam-question>
                                 <div class="line mt-5"></div>
 
+
+
+
                                 <!-- Child 4 -->
-                                <div
-                                    class="accordion-header d-flex align-items-center justify-content-between pt-3 px-3 border-0"
-                                    (click)="toggleChlidAccordion(4)"
-                                    style="cursor: pointer"
-                                >
+                                <!-- Child 3 -->
+                                <div class="d-flex justify-content-between align-items-center my-4">
                                     <h4 class="question-name text-primary fw-normal mb-0">
                                         اختيار من متعدد (أكثر من خيار)
                                         <span>(1)</span>
                                     </h4>
 
-                                    <!-- Left Section (Icons) -->
-                                    <div class="d-flex align-items-center gap-2">
+                                    <div class="d-flex align-items-center gap-1">
                                         <button class="btn btn-link chevron-icons-chlid">
-                                            @if (isOpenChlid4) {
-                                                <svg
-                                                    width="21"
-                                                    height="20"
-                                                    viewBox="0 0 21 20"
-                                                    fill="none"
-                                                    xmlns="http://www.w3.org/2000/svg"
-                                                >
-                                                    <path
-                                                        d="M17.5419 7.94225L12.1086 13.3756C11.2253 14.2589 9.77526 14.2589 8.89193 13.3756L3.45859 7.94225C3.21693 7.70059 3.21693 7.30059 3.45859 7.05892C3.70026 6.81725 4.10026 6.81725 4.34193 7.05892L9.77526 12.4923C10.1753 12.8923 10.8253 12.8923 11.2253 12.4923L16.6586 7.05892C16.9003 6.81725 17.3003 6.81725 17.5419 7.05892C17.6586 7.18392 17.7253 7.34225 17.7253 7.50059C17.7253 7.65892 17.6669 7.81725 17.5419 7.94225Z"
-                                                        fill="black"
-                                                    />
-                                                </svg>
-                                            } @else {
-                                                <svg
-                                                    width="21"
-                                                    height="20"
-                                                    viewBox="0 0 21 20"
-                                                    fill="none"
-                                                    xmlns="http://www.w3.org/2000/svg"
-                                                >
-                                                    <path
-                                                        d="M12.5577 17.0419L7.12441 11.6086C6.24108 10.7253 6.24108 9.27526 7.12441 8.39193L12.5577 2.95859C12.7994 2.71693 13.1994 2.71693 13.4411 2.95859C13.6827 3.20026 13.6827 3.60026 13.4411 3.84193L8.00775 9.27526C7.60775 9.67526 7.60775 10.3253 8.00775 10.7253L13.4411 16.1586C13.6827 16.4003 13.6827 16.8003 13.4411 17.0419C13.3161 17.1586 13.1577 17.2253 12.9994 17.2253C12.8411 17.2253 12.6827 17.1669 12.5577 17.0419Z"
-                                                        fill="black"
-                                                    />
-                                                </svg>
-                                            }
+                                            <svg width="12" height="8" viewBox="0 0 10 6" fill="none"
+                                                xmlns="http://www.w3.org/2000/svg">
+                                                <path
+                                                    d="M4.47016 5.78992L0.940156 2.25992C0.650156 1.96992 0.650156 1.48992 0.940156 1.19992C1.23016 0.909922 1.71016 0.909922 2.00016 1.19992L5.00016 4.19992L8.00016 1.19992C8.29016 0.909922 8.77016 0.909922 9.06016 1.19992C9.35016 1.48992 9.35016 1.96992 9.06016 2.25992L5.53016 5.78992C5.38016 5.93992 5.19016 6.00992 5.00016 6.00992C4.81016 6.00992 4.62016 5.93992 4.47016 5.78992Z"
+                                                    fill="#171A1F" />
+                                            </svg>
+
+                                        </button>
+                                        <button class="btn btn-link chevron-icons-chlid">
+                                            <svg width="12" height="8" viewBox="0 0 10 6" fill="none"
+                                                xmlns="http://www.w3.org/2000/svg">
+                                                <path
+                                                    d="M8.00016 5.78992L5.00016 2.78992L2.00016 5.78992C1.71016 6.07992 1.23016 6.07992 0.940156 5.78992C0.650156 5.49992 0.650156 5.01992 0.940156 4.72992L4.47016 1.19992C4.76016 0.909922 5.24016 0.909922 5.53016 1.19992L9.06016 4.72992C9.35016 5.01992 9.35016 5.49992 9.06016 5.78992C8.91016 5.93992 8.72016 6.00992 8.53016 6.00992C8.34016 6.00992 8.15016 5.93992 8.00016 5.78992Z"
+                                                    fill="#171A1F" />
+                                            </svg>
                                         </button>
                                     </div>
                                 </div>
-                                <div
-                                    class="accordion-content overflow-hidden"
-                                    [ngStyle]="{ 'max-height': isOpenChlid4 ? '100%' : '0px' }"
-                                    style="transition: max-height 0.3s ease-in-out"
-                                >
-                                    <div class="px-3 py-2 mt-4">
-                                        <app-dynamic-exam-question [questionType]="4"></app-dynamic-exam-question>
-                                    </div>
-                                </div>
+                                <app-dynamic-exam-question [questionType]="4"></app-dynamic-exam-question>
                                 <div class="line mt-5"></div>
                             </div>
                         </div>
