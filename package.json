@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "ckeditor4-angular": "^4.0.1"
+  }
+}
