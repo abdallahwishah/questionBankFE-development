@@ -468,3 +468,32 @@ textarea{
 .menu-item .menu-link{
     padding: 0.65rem !important;
 }
+
+
+
+.search-group{
+    position: relative;
+    border: 1px solid #DEE1E6 !important;
+    border-radius: 8px !important;
+    padding: 3px;
+}
+.search-group .form-control{
+    border: 0 !important;
+    padding: 0.3rem 1rem !important;
+}
+.switch-serch-bar .input-group button[type="submit"]{
+    background: #6D31ED0F !important;
+    border-radius: 6px !important;
+    padding: calc(0.65rem + 1px) calc(1.3rem + 1px) !important;
+}
+.switch-serch-bar .input-group button[type="submit"]:hover path{
+  fill: #fff !important;
+}
+
+.switch-serch-bar .p-dropdown{
+    padding: 3px 1px !important;
+}
+
+.menu-sub .active{
+    background-color: #8048f8 !important;
+}

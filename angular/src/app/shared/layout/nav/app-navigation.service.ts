@@ -29,7 +29,7 @@ export class AppNavigationService {
                 [],
                 [
                     new AppMenuItem('ClassRoom', 'Pages.Administration.Roles', 'flaticon-point', '/app/main/question-ids'),
-                    new AppMenuItem('subjects', 'Pages.Administration.Users', 'flaticon-users', '/app/main/subjects'),
+                    new AppMenuItem('Subjects', 'Pages.Administration.Users', 'flaticon-users', '/app/main/subjects'),
                 ],
             ),
             new AppMenuItem('QuestionBank', '', 'flaticon-line-graph', '/app/main/question-bank'),

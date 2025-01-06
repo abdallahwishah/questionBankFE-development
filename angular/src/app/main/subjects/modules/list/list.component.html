@@ -34,41 +34,31 @@
 
         </div>
 
-        <!--  -->
-        <div class="row justify-content-between switch-serch-bar mt-9">
-            <div class="col-md-3">
-                <div class="input-group">
-                    <input
-                        name="filterText"
-                        class="form-control m-input"
-                        [placeholder]="l('Search')"
-                        type="text"
-                        [(ngModel)]="filter"
-                        (ngModelChange)="getQuestion()"
-                    />
-                    <button class="btn btn-primary" type="submit">
-                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path
-                                fill-rule="evenodd"
-                                clip-rule="evenodd"
-                                d="M18.959 9.1665C18.959 4.68317 15.3173 1.0415 10.834 1.0415C6.35065 1.0415 2.70898 4.68317 2.70898 9.1665C2.70898 13.6498 6.35065 17.2915 10.834 17.2915C15.3173 17.2915 18.959 13.6498 18.959 9.1665ZM17.709 9.1665C17.709 12.9582 14.6257 16.0415 10.834 16.0415C7.04232 16.0415 3.95898 12.9582 3.95898 9.1665C3.95898 5.37484 7.04232 2.2915 10.834 2.2915C14.6257 2.2915 17.709 5.37484 17.709 9.1665Z"
-                                fill="#fff"
-                            />
-                            <path
-                                fill-rule="evenodd"
-                                clip-rule="evenodd"
-                                d="M3.39208 18.975C3.78375 18.925 4.49208 18.6583 4.89208 17.4667C5.10041 16.8417 5.02541 16.2167 4.68375 15.7417C4.34208 15.2667 3.76708 15 3.10875 15C2.25875 15 1.59208 15.325 1.29208 15.9C0.992081 16.475 1.07541 17.2083 1.55041 17.9167C2.14208 18.8083 2.78375 18.9917 3.20041 18.9917C3.26708 18.9917 3.33375 18.9833 3.39208 18.975ZM3.22541 17.7417C3.09208 17.7583 2.84208 17.6 2.58375 17.225C2.34208 16.8667 2.32541 16.6083 2.38375 16.4917C2.44208 16.375 2.67541 16.25 3.10875 16.25C3.36708 16.25 3.55875 16.3333 3.66708 16.475C3.76708 16.6167 3.78375 16.8333 3.70041 17.075C3.55875 17.5083 3.35875 17.725 3.22541 17.7417Z"
-                                fill="#fff"
-                            />
-                        </svg>
-                    </button>
-                </div>
-            </div>
-
-            <div class="col-md-3 d-grid justify-content-end gap-5" style="grid-template-columns: 1fr auto">
-                <app-dropdown-field></app-dropdown-field>
-            </div>
+        <!-- Filter & Search  -->
+ <div class="row justify-content-between switch-serch-bar mt-9">
+    <div class="col-md-4">
+        <div class="input-group search-group">
+            <input
+                name="filterText"
+                class="form-control m-input"
+                [placeholder]="l('Search')"
+                type="text"
+                [(ngModel)]="filter"
+                (ngModelChange)="getQuestion()"
+            />
+            <button class="btn btn-primary" type="submit">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M18.9584 9.58317C18.9584 4.87484 15.125 1.0415 10.4167 1.0415C5.70837 1.0415 1.87504 4.87484 1.87504 9.58317C1.87504 14.2915 5.70837 18.1248 10.4167 18.1248C15.125 18.1248 18.9584 14.2915 18.9584 9.58317ZM17.7084 9.58317C17.7084 13.5998 14.4417 16.8748 10.4167 16.8748C6.39171 16.8748 3.12504 13.5998 3.12504 9.58317C3.12504 5.5665 6.39171 2.2915 10.4167 2.2915C14.4417 2.2915 17.7084 5.5665 17.7084 9.58317Z" fill="#6D31ED"/>
+                    <path d="M2.10802 18.7752L3.77468 17.1085C4.01635 16.8669 4.01635 16.4669 3.77468 16.2252C3.53302 15.9835 3.13301 15.9835 2.89135 16.2252L1.22468 17.8919C0.983015 18.1335 0.983015 18.5335 1.22468 18.7752C1.34968 18.9002 1.50802 18.9585 1.66635 18.9585C1.82468 18.9585 1.98302 18.9002 2.10802 18.7752Z" fill="#6D31ED"/>
+                    </svg>
+            </button>
         </div>
+    </div>
+
+    <div class="col-md-2 d-grid justify-content-end" style="grid-template-columns: 1fr;">
+        <app-dropdown-field></app-dropdown-field>
+    </div>
+</div>
 
         <!-- Start Tabel -->
         <div class="primeng-datatable-container p-8 col-12 mt-6">
