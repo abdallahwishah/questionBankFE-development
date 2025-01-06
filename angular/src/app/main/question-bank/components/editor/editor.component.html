@@ -1,6 +1,6 @@
-<textarea
-    rows="5"
-    class="w"
-    placeholder="Enter Here"
-    pInputTextarea >
-</textarea>
+<ckeditor
+  [config]="editorConfig"
+  [ngModel]="editorValue"
+  (ngModelChange)="onEditorChange($event)"
+  (focus)="onEditorFocus()">
+</ckeditor>
