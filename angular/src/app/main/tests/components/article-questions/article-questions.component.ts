@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { EditorComponent } from "../../../question-bank/components/editor/editor.component";
+import { EditorComponent } from "../../../../shared/components/editor/editor.component";
 
 @Component({
   selector: 'app-article-questions',

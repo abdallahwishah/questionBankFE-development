@@ -18,16 +18,26 @@ export class LanguageSwitchComponent extends AppComponentBase implements OnInit 
     ngOnInit(): void {
         this.languages = _filter(abp.localization.languages, (l) => (<any>l).isDisabled === false);
         this.currentLanguage = abp.localization.currentLanguage;
+        console.log('language :' , this.currentLanguage)
+
     }
 
-    changeLanguage(language: abp.localization.ILanguageInfo) {
+   /*  changeLanguage(language: abp.localization.ILanguageInfo) {
         abp.utils.setCookieValue(
             'Abp.Localization.CultureName',
             language.name,
             new Date(new Date().getTime() + 5 * 365 * 86400000), // 5 year
             abp.appPath
         );
-
+        location.reload();
+    } */
+    changeLanguage(name:any) {
+        abp.utils.setCookieValue(
+            'Abp.Localization.CultureName',
+            name,
+            new Date(new Date().getTime() + 5 * 365 * 86400000), // 5 year
+            abp.appPath
+        );
         location.reload();
     }
 }

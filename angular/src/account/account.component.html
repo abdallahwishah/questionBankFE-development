@@ -37,22 +37,25 @@
                 </div>
                 <router-outlet></router-outlet>
             </div>
-            <div *ngIf="!isSelectEditionPage()" class="w-lg-500px bg-body rounded shadow-sm p-10 p-lg-15 ">
+            <div *ngIf="!isSelectEditionPage()" class="w-lg-500px bg-body rounded shadow-sm p-10 p-lg-15 pt-lg-15 pb-lg-5 ">
                <!--  <div *ngIf="showTenantChange()" class="tenant-change-box mb-5 tenant-change-box">
                     <tenant-change></tenant-change>
                 </div> -->
 
                 <router-outlet></router-outlet>
+                <div class="text-center mt-8">
+                    <language-switch class="d-inline-block"></language-switch>
+                </div>
+
             </div>
+
+
+
             <!--end::Wrapper-->
         </div>
         <!--end::Content-->
         <!--begin::Footer-->
-      <!--   <div class="d-flex flex-center flex-column-auto p-10" [class.pt-0]="isSelectEditionPage()">
-            <div class="d-flex align-items-center fw-bold fs-6">
-                <language-switch class="mx-auto"></language-switch>
-            </div>
-        </div> -->
+
         <!--end::Footer-->
     </div>
     <!--end::Authentication - Sign-in-->

@@ -6,11 +6,12 @@ import { MultipleChoiceMoreThanOptionComponent } from '../multiple-choice-more-t
 import { ConnectingWordsComponent } from "../connecting-words/connecting-words.component";
 import { RelatedQuestionsComponent } from "../related-questions/related-questions.component";
 import { WordsOrderComponent } from "../words-order/words-order.component";
+import { CartesianLevelComponent } from "../cartesian-level/cartesian-level.component";
 
 @Component({
   selector: 'app-dynamic-exam-question',
   standalone: true,
-  imports: [ArticleQuestionsComponent, TrueFaseComponent, MultipleChoiceOneOptionComponent, MultipleChoiceMoreThanOptionComponent, ConnectingWordsComponent, RelatedQuestionsComponent, WordsOrderComponent],
+  imports: [ArticleQuestionsComponent, TrueFaseComponent, MultipleChoiceOneOptionComponent, MultipleChoiceMoreThanOptionComponent, ConnectingWordsComponent, RelatedQuestionsComponent, WordsOrderComponent, CartesianLevelComponent],
   templateUrl: './dynamic-exam-question.component.html',
   styleUrl: './dynamic-exam-question.component.css'
 })

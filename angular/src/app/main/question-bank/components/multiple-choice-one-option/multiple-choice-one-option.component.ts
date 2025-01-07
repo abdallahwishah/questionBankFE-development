@@ -2,7 +2,7 @@ import { Component, Injector, OnInit } from '@angular/core';
 import { FormsModule } from '@node_modules/@angular/forms';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { ButtonModule } from 'primeng/button';
-import { EditorComponent } from '../editor/editor.component';
+import { EditorComponent } from '../../../../shared/components/editor/editor.component';
 import { AppComponentBase } from '@shared/common/app-component-base';
 
 @Component({

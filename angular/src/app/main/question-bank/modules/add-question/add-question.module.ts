@@ -6,7 +6,7 @@ import { RouterModule } from '@node_modules/@angular/router';
 import { DropdownFieldComponent } from "../../../../shared/components/fields/dropdown-field/dropdown-field.component";
 import { InputSwitchModule  } from 'primeng/inputswitch';
 import { DynamicQuestionComponent } from "../../components/dynamic-question/dynamic-question.component";
-import { EditorComponent } from "../../components/editor/editor.component";
+import { EditorComponent } from "../../../../shared/components/editor/editor.component";
 import { AddFileModalComponent } from "../../components/modals/add-file-modal/add-file-modal.component";
 
 @NgModule({
