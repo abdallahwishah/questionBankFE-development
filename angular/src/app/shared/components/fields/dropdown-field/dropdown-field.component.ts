@@ -150,7 +150,7 @@ export class DropdownFieldComponent extends Dropdown implements OnInit, ControlV
             }),
         );
         this.getOptions();
-        this.placeholder = this.placeholder();
+        this.placeholder = this.placeholder;
     }
     getFullDataForItemSelected(value: any) {
         let itemSelected = this.options?.find((item) => item[this.optionValue] == value);

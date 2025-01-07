@@ -43,6 +43,8 @@
     "angular-oauth2-oidc": "^17.0.1",
     "animate.css": "^4.1.1",
     "chart.js": "^4.4.0",
+    "ckeditor4-angular": "^5.2.0",
+    "ckeditor5": "^44.1.0",
     "cookieconsent": "^3.1.1",
     "core-js": "^3.35.1",
     "core-util-is": "^1.0.3",

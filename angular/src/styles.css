@@ -535,3 +535,6 @@ td , th{
 .p-inputswitch.p-inputswitch-checked .p-inputswitch-slider:before{
     background: #fff !important;
 }
+.bg-transparent{
+ background: transparent !important;
+}
