@@ -1,52 +1,37 @@
-import {
-    Component,
-    Injector,
-    forwardRef
-  } from '@angular/core';
-  import {
-    ControlValueAccessor,
-    NG_VALUE_ACCESSOR
-  } from '@angular/forms';
-  import { AppComponentBase } from '@shared/common/app-component-base';
+import { Component, Injector, forwardRef } from '@angular/core';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { AppComponentBase } from '@shared/common/app-component-base';
 
-  import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
-  import { FormsModule } from '@angular/forms';
-  import { InputNumberModule } from 'primeng/inputnumber';
-  import { ButtonModule } from 'primeng/button';
-  import { CheckboxModule } from 'primeng/checkbox';
-  import { DragDropModule } from '@angular/cdk/drag-drop';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+import { FormsModule } from '@angular/forms';
+import { InputNumberModule } from 'primeng/inputnumber';
+import { ButtonModule } from 'primeng/button';
+import { CheckboxModule } from 'primeng/checkbox';
+import { DragDropModule } from '@angular/cdk/drag-drop';
+import { CommonModule } from '@node_modules/@angular/common';
 
-  /** Example DTO for rearranging items */
-  export class CreateOrEditRearrangeQuestionDto {
+/** Example DTO for rearranging items */
+export class CreateOrEditRearrangeQuestionDto {
     order!: number;
     point!: number;
     word!: string | undefined;
-  }
+}
 
-  @Component({
+@Component({
     selector: 'app-re-order',
     standalone: true,
-    imports: [
-      FormsModule,
-      InputNumberModule,
-      ButtonModule,
-      CheckboxModule,
-      DragDropModule
-    ],
+    imports: [FormsModule, InputNumberModule, ButtonModule, CheckboxModule, DragDropModule, CommonModule],
     templateUrl: './re-order.component.html',
     styleUrls: ['./re-order.component.css'],
     providers: [
-      {
-        provide: NG_VALUE_ACCESSOR,
-        useExisting: forwardRef(() => ReOrderComponent),
-        multi: true
-      }
-    ]
-  })
-  export class ReOrderComponent
-    extends AppComponentBase
-    implements ControlValueAccessor
-  {
+        {
+            provide: NG_VALUE_ACCESSOR,
+            useExisting: forwardRef(() => ReOrderComponent),
+            multi: true,
+        },
+    ],
+})
+export class ReOrderComponent extends AppComponentBase implements ControlValueAccessor {
     /**
      * The array of items to reorder,
      * bound from the parent via [(ngModel)]="value.rearrangeQuestions"
@@ -58,26 +43,26 @@ import {
     private onTouched: () => void = () => {};
 
     constructor(injector: Injector) {
-      super(injector);
+        super(injector);
     }
 
     // -----------------------------------
     // ControlValueAccessor Implementation
     // -----------------------------------
     writeValue(obj: CreateOrEditRearrangeQuestionDto[]): void {
-      this.value = obj || [];
+        this.value = obj || [];
     }
 
     registerOnChange(fn: (val: CreateOrEditRearrangeQuestionDto[]) => void): void {
-      this.onChange = fn;
+        this.onChange = fn;
     }
 
     registerOnTouched(fn: () => void): void {
-      this.onTouched = fn;
+        this.onTouched = fn;
     }
 
     setDisabledState?(isDisabled: boolean): void {
-      // If you need to disable child controls, handle it here
+        // If you need to disable child controls, handle it here
     }
 
     /**
@@ -85,8 +70,8 @@ import {
      * so the parent form knows the value changed.
      */
     notifyValueChange(): void {
-      this.onChange(this.value);
-      this.onTouched();
+        this.onChange(this.value);
+        this.onTouched();
     }
 
     // -----------------------------------
@@ -95,20 +80,20 @@ import {
 
     /** Add a new blank item */
     addRearrangeItem(): void {
-      const newItem = new CreateOrEditRearrangeQuestionDto();
-      newItem.word = '';
-      newItem.order = 1;
-      newItem.point = 1;
-      this.value.push(newItem);
-      this.notifyValueChange();
+        const newItem = new CreateOrEditRearrangeQuestionDto();
+        newItem.word = '';
+        newItem.order = 1;
+        newItem.point = 1;
+        this.value.push(newItem);
+        this.notifyValueChange();
     }
 
     /** Remove an item from the array */
     removeRearrangeItem(index: number): void {
-      if (index >= 0 && index < this.value.length) {
-        this.value.splice(index, 1);
-        this.notifyValueChange();
-      }
+        if (index >= 0 && index < this.value.length) {
+            this.value.splice(index, 1);
+            this.notifyValueChange();
+        }
     }
 
     /**
@@ -116,7 +101,7 @@ import {
      * via Angular CDK events
      */
     dropReorder(event: CdkDragDrop<CreateOrEditRearrangeQuestionDto[]>): void {
-      moveItemInArray(this.value, event.previousIndex, event.currentIndex);
-      this.notifyValueChange();
+        moveItemInArray(this.value, event.previousIndex, event.currentIndex);
+        this.notifyValueChange();
     }
-  }
+}

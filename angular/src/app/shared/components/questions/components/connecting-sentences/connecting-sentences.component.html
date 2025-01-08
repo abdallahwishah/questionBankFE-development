@@ -1,153 +1,128 @@
 <!-- Title -->
 <div class="d-flex mt-2 mb-6">
     <p class="mb-0 fw-medium">{{ l('MatchingWords') }}</p>
-  </div>
+</div>
 
-  <!-- Real items container -->
-  <div
-    cdkDropList
-    [cdkDropListData]="realPairs"
-    (cdkDropListDropped)="dropReal($event)"
-  >
+<!-- Real items container -->
+<div cdkDropList [cdkDropListData]="realPairs" (cdkDropListDropped)="dropReal($event)">
     <!-- Real pair item -->
-    <div
-      class="row question d-flex align-items-center mb-6"
-      *ngFor="let item of realPairs; let i = index"
-      cdkDrag
-    >
-      <!-- Drag handle -->
-      <div class="col-md-1 col-2 d-flex align-items-center gap-5" cdkDragHandle>
-        <img class="cursor-pointer" src="assets/common/images/menu.svg" alt="" />
-      </div>
+    <div class="row question d-flex align-items-center mb-6" *ngFor="let item of realPairs; let i = index" cdkDrag>
+        <!-- Drag handle -->
+        <div class="col-md-1 col-2 d-flex align-items-center gap-5" cdkDragHandle>
+            <img class="cursor-pointer" src="assets/common/images/menu.svg" alt="" />
+        </div>
 
-      <!-- Left input -->
-      <div class="col-md-4 col-6 mb-md-0 mb-3">
-        <input
-          name="leftText"
-          class="form-control m-input"
-          type="text"
-          [(ngModel)]="item.word"
-          (ngModelChange)="notifyValueChange()"
-        />
-      </div>
+        <!-- Left input -->
+        <div class="col-md-4 col-6 mb-md-0 mb-3">
+            <input
+                name="leftText"
+                class="form-control m-input"
+                type="text"
+                [(ngModel)]="item.word"
+                (ngModelChange)="notifyValueChange()"
+            />
+        </div>
 
-      <!-- Right input -->
-      <div class="col-md-4 col-6 mb-md-0 mb-3">
-        <input
-          name="rightText"
-          class="form-control m-input"
-          type="text"
-          [(ngModel)]="item.matchedWord"
-          (ngModelChange)="notifyValueChange()"
-        />
-      </div>
+        <!-- Right input -->
+        <div class="col-md-4 col-6 mb-md-0 mb-3">
+            <input
+                name="rightText"
+                class="form-control m-input"
+                type="text"
+                [(ngModel)]="item.matchedWord"
+                (ngModelChange)="notifyValueChange()"
+            />
+        </div>
 
-      <!-- Points + Delete -->
-      <div class="col-md-3 d-flex align-items-center justify-content-end gap-2">
-        <p-inputNumber
-          [(ngModel)]="item.point"
-          (ngModelChange)="notifyValueChange()"
-          [showButtons]="true"
-          buttonLayout="horizontal"
-          spinnerMode="horizontal"
-          [step]="1"
-          decrementButtonClass="min"
-          incrementButtonClass="max"
-          incrementButtonIcon="pi pi-plus"
-          decrementButtonIcon="pi pi-minus"
-        >
-        </p-inputNumber>
+        <!-- Points + Delete -->
+        <div class="col-md-3 d-flex align-items-center justify-content-end gap-2">
+            <p-inputNumber
+                [(ngModel)]="item.point"
+                (ngModelChange)="notifyValueChange()"
+                [showButtons]="true"
+                buttonLayout="horizontal"
+                spinnerMode="horizontal"
+                [step]="1"
+                decrementButtonClass="min"
+                incrementButtonClass="max"
+                incrementButtonIcon="pi pi-plus"
+                decrementButtonIcon="pi pi-minus"
+            ></p-inputNumber>
 
-        <button class="btn btn-delete p-3 m-0" (click)="removeRealPair(item)">
-          <img src="assets/common/images/trash.svg" alt="" />
-        </button>
-      </div>
+            <button class="btn btn-delete p-3 m-0" (click)="removeRealPair(item)">
+                <img src="assets/common/images/trash.svg" alt="" />
+            </button>
+        </div>
     </div>
-  </div>
+</div>
 
-  <!-- Add a new real pair -->
-  <h5
-    class="d-flex align-items-center justify-content-start gap-2 cursor-pointer"
-    (click)="addRealPair()"
-  >
+<!-- Add a new real pair -->
+<h5 class="d-flex align-items-center justify-content-start gap-2 cursor-pointer" (click)="addRealPair()">
     <svg width="25" height="24" viewBox="0 0 25 24" fill="none">
-      <path
-        d="M6.5 12.75C6.09 12.75 5.75 12.41 5.75 12C5.75 11.59 6.09 11.25 6.5 11.25H18.5C18.91 11.25 19.25 11.59 19.25 12C19.25 12.41 18.91 12.75 18.5 12.75H6.5Z"
-        fill="#6D31ED"
-      />
-      <path
-        d="M11.75 18V6C11.75 5.59 12.09 5.25 12.5 5.25C12.91 5.25 13.25 5.59 13.25 6V18C13.25 18.41 12.91 18.75 12.5 18.75C12.09 18.75 11.75 18.41 11.75 18Z"
-        fill="#6D31ED"
-      />
+        <path
+            d="M6.5 12.75C6.09 12.75 5.75 12.41 5.75 12C5.75 11.59 6.09 11.25 6.5 11.25H18.5C18.91 11.25 19.25 11.59 19.25 12C19.25 12.41 18.91 12.75 18.5 12.75H6.5Z"
+            fill="#6D31ED"
+        />
+        <path
+            d="M11.75 18V6C11.75 5.59 12.09 5.25 12.5 5.25C12.91 5.25 13.25 5.59 13.25 6V18C13.25 18.41 12.91 18.75 12.5 18.75C12.09 18.75 11.75 18.41 11.75 18Z"
+            fill="#6D31ED"
+        />
     </svg>
     <span class="text-primary">{{ l('AddNewOption') }}</span>
-  </h5>
+</h5>
 
-  <div class="line my-8"></div>
+<div class="line my-8"></div>
 
-  <!-- Toggle "AddFakeAnswers" -->
-  <div class="d-flex align-items-center gap-3 mb-6">
-    <p-checkbox
-      [binary]="true"
-      [(ngModel)]="addFakeAnswers"
-      (ngModelChange)="toggleFakeAnswers()"
-      inputId="binary"
-    ></p-checkbox>
+<!-- Toggle "AddFakeAnswers" -->
+<div class="d-flex align-items-center gap-3 mb-6">
+    <p-checkbox [binary]="true" [(ngModel)]="addFakeAnswers" inputId="binary"></p-checkbox>
     <label for="binary">{{ l('AddFakeAnswers') }}</label>
-  </div>
+</div>
 
-  <!-- Fake items container (visible if addFakeAnswers = true) -->
-  <div
-    *ngIf="addFakeAnswers"
-    cdkDropList
-    [cdkDropListData]="fakeAnswersList"
-    (cdkDropListDropped)="dropFake($event)"
-  >
+<!-- Fake items container (visible if addFakeAnswers = true) -->
+<div *ngIf="addFakeAnswers" cdkDropList [cdkDropListData]="fakeAnswersList" (cdkDropListDropped)="dropFake($event)">
     <!-- Fake item -->
     <div
-      class="row question d-flex align-items-center mb-6"
-      *ngFor="let item of fakeAnswersList; let j = index"
-      cdkDrag
+        class="row question d-flex align-items-center mb-6"
+        *ngFor="let item of fakeAnswersList; let j = index"
+        cdkDrag
     >
-      <!-- Drag handle -->
-      <div class="col-md-1 col-2 d-flex align-items-center gap-5" cdkDragHandle>
-        <img class="cursor-pointer" src="assets/common/images/menu.svg" alt="" />
-      </div>
+        <!-- Drag handle -->
+        <div class="col-md-1 col-2 d-flex align-items-center gap-5" cdkDragHandle>
+            <img class="cursor-pointer" src="assets/common/images/menu.svg" alt="" />
+        </div>
 
-      <div class="col-md-10 mb-md-0 mb-3">
-        <input
-          name="fakeText"
-          class="form-control m-input"
-          type="text"
-          [(ngModel)]="item.matchedFakeWord"
-          (ngModelChange)="notifyValueChange()"
-        />
-      </div>
+        <div class="col-md-10 mb-md-0 mb-3">
+            <input
+                name="fakeText"
+                class="form-control m-input"
+                type="text"
+                [(ngModel)]="item.matchedFakeWord"
+                (ngModelChange)="notifyValueChange()"
+            />
+        </div>
 
-      <div class="col-md-1 d-flex align-items-center justify-content-end gap-2">
-        <button class="btn btn-delete p-3 m-0" (click)="removeFakeAnswer(item)">
-          <img src="assets/common/images/trash.svg" alt="" />
-        </button>
-      </div>
+        <div class="col-md-1 d-flex align-items-center justify-content-end gap-2">
+            <button class="btn btn-delete p-3 m-0" (click)="removeFakeAnswer(item)">
+                <img src="assets/common/images/trash.svg" alt="" />
+            </button>
+        </div>
     </div>
-  </div>
+</div>
 
-  <!-- Add a new fake item -->
-  <div *ngIf="addFakeAnswers">
-    <h5
-      class="d-flex align-items-center justify-content-start gap-2 cursor-pointer"
-      (click)="addFake()"
-    >
-      <svg width="25" height="24" fill="none">
-        <path
-          d="M6.5 12.75C6.09 12.75 5.75 12.41 5.75 12C5.75 11.59 6.09 11.25 6.5 11.25H18.5C18.91 11.25 19.25 11.59 19.25 12C19.25 12.41 18.91 12.75 18.5 12.75H6.5Z"
-          fill="#6D31ED"
-        />
-        <path
-          d="M11.75 18V6C11.75 5.59 12.09 5.25 12.5 5.25C12.91 5.25 13.25 5.59 13.25 6V18C13.25 18.41 12.91 18.75 12.5 18.75C12.09 18.75 11.75 18.41 11.75 18Z"
-          fill="#6D31ED"
-        />
-      </svg>
-      <span class="text-primary">{{ l('AddNewFakeAnswers') }}</span>
+<!-- Add a new fake item -->
+<div *ngIf="addFakeAnswers">
+    <h5 class="d-flex align-items-center justify-content-start gap-2 cursor-pointer" (click)="addFake()">
+        <svg width="25" height="24" fill="none">
+            <path
+                d="M6.5 12.75C6.09 12.75 5.75 12.41 5.75 12C5.75 11.59 6.09 11.25 6.5 11.25H18.5C18.91 11.25 19.25 11.59 19.25 12C19.25 12.41 18.91 12.75 18.5 12.75H6.5Z"
+                fill="#6D31ED"
+            />
+            <path
+                d="M11.75 18V6C11.75 5.59 12.09 5.25 12.5 5.25C12.91 5.25 13.25 5.59 13.25 6V18C13.25 18.41 12.91 18.75 12.5 18.75C12.09 18.75 11.75 18.41 11.75 18Z"
+                fill="#6D31ED"
+            />
+        </svg>
+        <span class="text-primary">{{ l('AddNewFakeAnswers') }}</span>
     </h5>
-  </div>
+</div>

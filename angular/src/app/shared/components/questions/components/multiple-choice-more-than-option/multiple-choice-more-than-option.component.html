@@ -60,27 +60,7 @@
     </div>
   </div>
 
-  <!-- Add new choice row (optional template) -->
-  <div class="row question d-flex align-items-center mb-6">
-    <div class="col-md-1 d-flex align-items-center gap-5 mb-md-0 mb-3">
-      <img class="cursor-pointer" src="assets/common/images/menu.svg" alt="" />
-      <p-checkbox [binary]="true" [disabled]="true"></p-checkbox>
-    </div>
 
-    <div class="col-md-10">
-      <!-- Typically just a placeholder editor or blank row, if needed -->
-      <app-editor class="w-100"></app-editor>
-    </div>
-    <div class="col-md-1 d-flex align-items-center justify-content-end">
-      <!-- When user clicks this, we actually add a new choice in the array -->
-      <button class="btn btn-add py-3 px-4 mx-2" (click)="addChoice()">
-        <img src="assets/common/images/check.svg" alt="" />
-      </button>
-      <button class="btn btn-delete p-3 m-0">
-        <img src="assets/common/images/trash.svg" alt="" />
-      </button>
-    </div>
-  </div>
 
   <!-- Or a simpler "Add New" button at the bottom -->
   <h5

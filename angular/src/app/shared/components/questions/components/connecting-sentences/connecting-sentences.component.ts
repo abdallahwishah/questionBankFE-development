@@ -18,6 +18,7 @@ import {
   import { ButtonModule } from 'primeng/button';
   import { CheckboxModule } from 'primeng/checkbox';
   import { DragDropModule } from '@angular/cdk/drag-drop';
+import { CommonModule } from '@node_modules/@angular/common';
 
   /** DTO for each match item */
   export class CreateOrEditMatchQuestionDto {
@@ -35,7 +36,8 @@ import {
       InputNumberModule,
       ButtonModule,
       CheckboxModule,
-      DragDropModule
+      DragDropModule,
+      CommonModule
     ],
     templateUrl: './connecting-sentences.component.html',
     styleUrls: ['./connecting-sentences.component.css'],
@@ -140,21 +142,10 @@ import {
 
     // --------------------------------
     // Fake answers logic
-    // --------------------------------
-    toggleFakeAnswers(): void {
-      this.addFakeAnswers = !this.addFakeAnswers;
-      // Optionally remove items if user unchecks
-      /*
-      if (!this.addFakeAnswers) {
-        this.value = this.value.filter(item => !item.matchedFakeWord);
-        this.notifyValueChange();
-      }
-      */
-    }
 
     addFake(): void {
       const fake = new CreateOrEditMatchQuestionDto();
-      fake.matchedFakeWord = '';
+      fake.matchedFakeWord = ' ';
       fake.point = 1;
       this.value.push(fake);
       this.notifyValueChange();

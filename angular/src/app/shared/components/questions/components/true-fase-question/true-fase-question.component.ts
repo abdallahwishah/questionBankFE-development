@@ -15,6 +15,7 @@ import {
   import { AppComponentBase } from '@shared/common/app-component-base';
   import { CreateOrEditChoiceQuestionDto } from '@shared/service-proxies/service-proxies';
   import { QuestionOptionTypeEnum } from '@shared/service-proxies/service-proxies';
+import { CommonModule } from '@node_modules/@angular/common';
 
   @Component({
     selector: 'app-true-fase-question',
@@ -23,6 +24,7 @@ import {
       FormsModule,
       InputNumberModule,
       ButtonModule,
+      CommonModule
     ],
     templateUrl: './true-fase-question.component.html',
     styleUrls: ['./true-fase-question.component.css'],

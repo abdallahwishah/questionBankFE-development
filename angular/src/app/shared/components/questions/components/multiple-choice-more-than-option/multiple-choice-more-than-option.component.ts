@@ -1,46 +1,30 @@
-import {
-    Component,
-    Injector,
-    forwardRef,
-    OnInit
-  } from '@angular/core';
-  import {
-    ControlValueAccessor,
-    NG_VALUE_ACCESSOR
-  } from '@angular/forms';
-  import { FormsModule } from '@angular/forms';
-  import { InputNumberModule } from 'primeng/inputnumber';
-  import { ButtonModule } from 'primeng/button';
-  import { CheckboxModule } from 'primeng/checkbox';
+import { Component, Injector, forwardRef, OnInit } from '@angular/core';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
+import { InputNumberModule } from 'primeng/inputnumber';
+import { ButtonModule } from 'primeng/button';
+import { CheckboxModule } from 'primeng/checkbox';
 
-  import { AppComponentBase } from '@shared/common/app-component-base';
-  import { EditorComponent } from '@app/shared/components/editor/editor.component';
-  import { CreateOrEditChoiceQuestionDto, QuestionOptionTypeEnum } from '@shared/service-proxies/service-proxies';
+import { AppComponentBase } from '@shared/common/app-component-base';
+import { EditorComponent } from '@app/shared/components/editor/editor.component';
+import { CreateOrEditChoiceQuestionDto, QuestionOptionTypeEnum } from '@shared/service-proxies/service-proxies';
+import { CommonModule } from '@angular/common';
 
-  @Component({
+@Component({
     selector: 'app-multiple-choice-more-than-option',
     standalone: true,
-    imports: [
-      FormsModule,
-      InputNumberModule,
-      ButtonModule,
-      CheckboxModule,
-      EditorComponent
-    ],
+    imports: [CommonModule, FormsModule, InputNumberModule, ButtonModule, CheckboxModule, EditorComponent],
     templateUrl: './multiple-choice-more-than-option.component.html',
     styleUrls: ['./multiple-choice-more-than-option.component.css'],
     providers: [
-      {
-        provide: NG_VALUE_ACCESSOR,
-        useExisting: forwardRef(() => MultipleChoiceMoreThanOptionComponent),
-        multi: true
-      }
-    ]
-  })
-  export class MultipleChoiceMoreThanOptionComponent
-    extends AppComponentBase
-    implements OnInit, ControlValueAccessor
-  {
+        {
+            provide: NG_VALUE_ACCESSOR,
+            useExisting: forwardRef(() => MultipleChoiceMoreThanOptionComponent),
+            multi: true,
+        },
+    ],
+})
+export class MultipleChoiceMoreThanOptionComponent extends AppComponentBase implements OnInit, ControlValueAccessor {
     /**
      * In a ControlValueAccessor, we store the array of choices here.
      * The parent form will set this via `writeValue()`.
@@ -55,38 +39,38 @@ import {
     private onTouched: () => void = () => {};
 
     constructor(injector: Injector) {
-      super(injector);
+        super(injector);
     }
 
     ngOnInit(): void {
-      // If you want at least one choice by default:
-      if (!this.value || this.value.length === 0) {
-        const defaultChoice = new CreateOrEditChoiceQuestionDto();
-        defaultChoice.name = '';
-        defaultChoice.point = 1;
-        defaultChoice.optionType = QuestionOptionTypeEnum.Normal;
-        this.value.push(defaultChoice);
-      }
+        // If you want at least one choice by default:
+        if (!this.value || this.value.length === 0) {
+            const defaultChoice = new CreateOrEditChoiceQuestionDto();
+            defaultChoice.name = '';
+            defaultChoice.point = 1;
+            defaultChoice.optionType = QuestionOptionTypeEnum.Normal;
+            this.value.push(defaultChoice);
+        }
     }
 
     // ------------------------------------------
     // ControlValueAccessor implementation
     // ------------------------------------------
     writeValue(obj: CreateOrEditChoiceQuestionDto[]): void {
-      // Called by Angular when parent sets the value
-      this.value = obj || [];
+        // Called by Angular when parent sets the value
+        this.value = obj || [];
     }
 
     registerOnChange(fn: (val: CreateOrEditChoiceQuestionDto[]) => void): void {
-      this.onChange = fn;
+        this.onChange = fn;
     }
 
     registerOnTouched(fn: () => void): void {
-      this.onTouched = fn;
+        this.onTouched = fn;
     }
 
     setDisabledState?(isDisabled: boolean): void {
-      // If the form wants to disable this component, handle it here
+        // If the form wants to disable this component, handle it here
     }
 
     /**
@@ -94,8 +78,8 @@ import {
      * so the parent form knows about the new array.
      */
     notifyValueChange(): void {
-      this.onChange(this.value);
-      this.onTouched();
+        this.onChange(this.value);
+        this.onTouched();
     }
 
     // ------------------------------------------
@@ -107,34 +91,34 @@ import {
      * For multiple correct answers, you can have multiple pinned items.
      */
     toggleCorrect(choice: CreateOrEditChoiceQuestionDto): void {
-      if (choice.optionType === QuestionOptionTypeEnum.Pinned) {
-        choice.optionType = QuestionOptionTypeEnum.Normal;
-      } else {
-        choice.optionType = QuestionOptionTypeEnum.Pinned;
-      }
-      this.notifyValueChange();
+        if (choice.optionType === QuestionOptionTypeEnum.Pinned) {
+            choice.optionType = QuestionOptionTypeEnum.Normal;
+        } else {
+            choice.optionType = QuestionOptionTypeEnum.Pinned;
+        }
+        this.notifyValueChange();
     }
 
     /**
      * Add a new choice
      */
     addChoice(): void {
-      const newChoice = new CreateOrEditChoiceQuestionDto();
-      newChoice.name = '';
-      newChoice.point = 1;
-      newChoice.optionType = QuestionOptionTypeEnum.Normal;
-      this.value.push(newChoice);
+        const newChoice = new CreateOrEditChoiceQuestionDto();
+        newChoice.name = '';
+        newChoice.point = 1;
+        newChoice.optionType = QuestionOptionTypeEnum.Normal;
+        this.value.push(newChoice);
 
-      this.notifyValueChange();
+        this.notifyValueChange();
     }
 
     /**
      * Remove a choice by index
      */
     removeChoice(index: number): void {
-      if (index >= 0 && index < this.value.length) {
-        this.value.splice(index, 1);
-        this.notifyValueChange();
-      }
+        if (index >= 0 && index < this.value.length) {
+            this.value.splice(index, 1);
+            this.notifyValueChange();
+        }
     }
-  }
+}

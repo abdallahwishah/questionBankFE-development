@@ -7,10 +7,12 @@ import { DropdownFieldComponent } from '@app/shared/components/fields/dropdown-f
 
 import { AppComponentBase } from '@shared/common/app-component-base';
 import { CreateOrEditChoiceQuestionDto, QuestionOptionTypeEnum } from '@shared/service-proxies/service-proxies';
+import { CommonModule } from '@node_modules/@angular/common';
 
 @Component({
     standalone: true,
     imports: [
+        CommonModule,
         FormsModule,
         InputNumberModule,
         ButtonModule,
