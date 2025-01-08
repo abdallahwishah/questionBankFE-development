@@ -8,6 +8,7 @@ import { InputSwitchModule } from 'primeng/inputswitch';
 import { EditorComponent } from '../../../../shared/components/editor/editor.component';
 import { DynamicQuestionComponent } from '@app/shared/components/questions/dynamic-question/dynamic-question.component';
 import { AddFileModalComponent } from '../../components/add-file-modal/add-file-modal.component';
+import { ComplexitiesServiceProxy, StudyLevelsServiceProxy, StudySubjectsServiceProxy, SubjectUnitsServiceProxy } from '@shared/service-proxies/service-proxies';
 
 @NgModule({
     imports: [
@@ -26,5 +27,6 @@ import { AddFileModalComponent } from '../../components/add-file-modal/add-file-
         AddFileModalComponent,
     ],
     declarations: [AddQuestionComponent],
+    providers:[StudyLevelsServiceProxy , StudySubjectsServiceProxy  , SubjectUnitsServiceProxy  , ComplexitiesServiceProxy ]
 })
 export class AddQuestionModule {}

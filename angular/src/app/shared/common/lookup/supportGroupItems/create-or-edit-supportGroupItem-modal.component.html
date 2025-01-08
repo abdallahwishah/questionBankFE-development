@@ -1,0 +1,76 @@
+﻿<div bsModal #createOrEditModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="createOrEditModal" aria-hidden="true" [config]="{backdrop: 'static'}">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form *ngIf="active" #supportGroupItemForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="supportGroupItem.id">{{l("EditSupportGroupItem")}}</span>
+                        <span *ngIf="!supportGroupItem.id">{{l("CreateNewSupportGroupItem")}}</span>
+                    </h4>                    
+                    
+                    
+                 <button type="button" class="btn-close" (click)="close()" aria-label="Close" [disabled]="saving"></button>
+             
+                </div>
+                <div class="modal-body">
+                 
+
+
+					<div class="my-3">
+                        <label class="form-label" for="SupportGroupNameL">{{l("SupportGroup")}}</label>
+                        <div class="input-group">
+                            <input class="form-control" id="SupportGroupNameL" name="supportGroupNameL" [(ngModel)]="supportGroupNameL" type="text" disabled>     
+                            <button class="btn btn-primary blue" (click)="openSelectSupportGroupModal()" type="button"><i class="fa fa-search"></i> {{l("Pick")}}</button>
+                            <button class="btn btn-danger btn-icon" type="button" (click)="setSupportGroupIdNull()"><i class="fa fa-times"></i></button>                            
+                        </div>
+                    </div>
+                    <input class="form-control" name="supportGroupItem.supportGroupId" [(ngModel)]="supportGroupItem.supportGroupId" type="text" required hidden>
+                        
+
+
+								<div class="my-3">
+									<label class="form-label" for="SupportGroupItem_Value">{{l("Value")}}</label>
+									<input type="text" #SupportGroupItem_Value="ngModel" id="SupportGroupItem_Value" class="form-control" [(ngModel)]="supportGroupItem.value" name="Value"    />
+								    <validation-messages [formCtrl]="SupportGroupItem_Value"></validation-messages>
+								</div>
+					
+								<div class="my-3">
+									<label class="form-label" for="SupportGroupItem_Quote">{{l("Quote")}}</label>
+									<input type="text" #SupportGroupItem_Quote="ngModel" id="SupportGroupItem_Quote" class="form-control" [(ngModel)]="supportGroupItem.quote" name="Quote"    />
+								    <validation-messages [formCtrl]="SupportGroupItem_Quote"></validation-messages>
+								</div>
+					
+								<div class="my5">
+									<label class="form-label" for="SupportGroupItem_OrderNo">{{l("OrderNo")}}</label>
+									<input type="number" #SupportGroupItem_OrderNo="ngModel" id="SupportGroupItem_OrderNo" class="form-control" [(ngModel)]="supportGroupItem.orderNo" name="OrderNo"    />
+									<validation-messages [formCtrl]="SupportGroupItem_OrderNo"></validation-messages>
+								</div>
+					
+								<br/>
+								<label class="form-check form-check-custom form-check-solid">
+                                    <input
+                                        id="SupportGroupItem_IsActive" 
+                                        #SupportGroupItem_IsActive="ngModel"
+                                        name="IsActive" 
+                                        [(ngModel)]="supportGroupItem.isActive"
+                                        type="checkbox"
+                                        class="form-check-input"
+                                    />
+                                    <span class="form-check-label">
+                                        {{l("IsActive")}}
+                                    </span>
+                                </label>
+                                <validation-messages [formCtrl]="SupportGroupItem_IsActive"></validation-messages>
+					
+
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">{{l("Cancel")}}</button>
+                    <button type="submit" class="btn btn-primary blue" [disabled]="!supportGroupItemForm.form.valid" [buttonBusy]="saving" [busyText]="l('SavingWithThreeDot')"><i class="fa fa-save"></i> <span>{{l("Save")}}</span></button>
+                </div>
+            </form>
+        </div>
+    </div>
+<supportGroupItemSupportGroupLookupTableModal #supportGroupItemSupportGroupLookupTableModal (modalSave)="getNewSupportGroupId()"></supportGroupItemSupportGroupLookupTableModal>
+		 
+</div>

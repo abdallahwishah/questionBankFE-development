@@ -38,6 +38,23 @@ export class AppNavigationService {
             new AppMenuItem('Sessions', '', 'flaticon-line-graph', '/app/main/sessions'),
             new AppMenuItem('CorrectingSession', '', 'flaticon-line-graph', '/app/main/correcting'),
             new AppMenuItem('Audit', '', 'flaticon-line-graph', '/app/main/audit'),
+            new AppMenuItem(
+                'lockup',
+                '',
+                'flaticon-line-graph',
+                '',
+                [],
+                [
+                    new AppMenuItem('categories', '', 'flaticon-app', '/app/main/categories'),
+                    new AppMenuItem('complexities', '', 'flaticon-users', '/app/main/complexities'),
+                    new AppMenuItem('studyLevels', '', 'flaticon-users', '/app/main/studyLevels'),
+                    new AppMenuItem('studySubjects', '', 'flaticon-users', '/app/main/studySubjects'),
+                    new AppMenuItem('subjectGroups', '', 'flaticon-users', '/app/main/subjectGroups'),
+                    new AppMenuItem('subjectUnits', '', 'flaticon-users', '/app/main/subjectUnits'),
+                    new AppMenuItem('supportGroupItems', '', 'flaticon-users', '/app/main/supportGroupItems'),
+                    new AppMenuItem('supportGroups', '', 'flaticon-users', '/app/main/supportGroups'),
+                ],
+            ),
             new AppMenuItem('Tenants', 'Pages.Tenants', 'flaticon-list-3', '/app/admin/tenants'),
             new AppMenuItem('Editions', 'Pages.Editions', 'flaticon-app', '/app/admin/editions'),
             new AppMenuItem(

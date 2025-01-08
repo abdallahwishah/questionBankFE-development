@@ -1,0 +1,59 @@
+﻿<div bsModal #createOrEditModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="createOrEditModal" aria-hidden="true" [config]="{backdrop: 'static'}">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form *ngIf="active" #complexityForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="complexity.id">{{l("EditComplexity")}}</span>
+                        <span *ngIf="!complexity.id">{{l("CreateNewComplexity")}}</span>
+                    </h4>                    
+                    
+                    
+                 <button type="button" class="btn-close" (click)="close()" aria-label="Close" [disabled]="saving"></button>
+             
+                </div>
+                <div class="modal-body">
+                 
+
+
+
+
+								<div class="my-3">
+									<label class="form-label" for="Complexity_NameF">{{l("NameF")}} *</label>
+									<input type="text" #Complexity_NameF="ngModel" id="Complexity_NameF" class="form-control" [(ngModel)]="complexity.nameF" name="NameF"     required/>
+								    <validation-messages [formCtrl]="Complexity_NameF"></validation-messages>
+								</div>
+					
+								<br/>
+								<label class="form-check form-check-custom form-check-solid">
+                                    <input
+                                        id="Complexity_IsActive" 
+                                        #Complexity_IsActive="ngModel"
+                                        name="IsActive" 
+                                        [(ngModel)]="complexity.isActive"
+                                        type="checkbox"
+                                        class="form-check-input"
+                                    />
+                                    <span class="form-check-label">
+                                        {{l("IsActive")}}
+                                    </span>
+                                </label>
+                                <validation-messages [formCtrl]="Complexity_IsActive"></validation-messages>
+					
+								<div class="my-3">
+									<label class="form-label" for="Complexity_NameL">{{l("NameL")}} *</label>
+									<input type="text" #Complexity_NameL="ngModel" id="Complexity_NameL" class="form-control" [(ngModel)]="complexity.nameL" name="NameL"     required/>
+								    <validation-messages [formCtrl]="Complexity_NameL"></validation-messages>
+								</div>
+					
+
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">{{l("Cancel")}}</button>
+                    <button type="submit" class="btn btn-primary blue" [disabled]="!complexityForm.form.valid" [buttonBusy]="saving" [busyText]="l('SavingWithThreeDot')"><i class="fa fa-save"></i> <span>{{l("Save")}}</span></button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>

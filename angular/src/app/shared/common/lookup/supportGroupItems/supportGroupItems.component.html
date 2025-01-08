@@ -1,0 +1,203 @@
+﻿<div [@routerTransition]>
+  
+  
+   <sub-header [title]="'SupportGroupItems' | localize" [description]="'SupportGroupItemsHeaderInfo' | localize">
+             <div role="actions">
+                 <button (click)="exportToExcel()" class="btn btn-outline btn-outline-success btn-active-light-success me-1"><i class="fa fa-file-excel"></i> {{l("ExportToExcel")}}</button>
+                
+                 <button id="btn_create_supportGroupItem" *ngIf="isGranted('Pages.SupportGroupItems.Create')" (click)="createSupportGroupItem()" 
+                                        class="btn btn-primary blue"><i class="fa fa-plus"></i> {{l("CreateNewSupportGroupItem")}}</button>
+             </div>
+            </sub-header>
+    
+    <div [class]="containerClass">
+        <div class="card card-custom gutter-b">
+            <div class="card-body">
+                <form class="form" autocomplete="off">
+                    <div>
+                        <div class="row align-items-center">
+                            <div class="col-xl-12">
+                                
+                                
+        	<div class="my-3">                
+                <div class="input-group mb-3">
+                  <input [(ngModel)]="filterText" (ngModelChange)="getSupportGroupItems()" name="filterText" autoFocus type="text" class="form-control" [placeholder]="l('SearchWithThreeDot')">
+                  <button class="btn btn-primary" type="submit" (click)="getSupportGroupItems()"><i class="flaticon-search-1"></i></button>
+                </div>
+            </div>
+        	
+                            </div>
+                        </div>
+						 <div class="row" [hidden]="!advancedFiltersAreShown">
+						 	<div class="col-md-12">
+						         
+						     </div>
+
+
+
+							<div class="col-md-3">
+								<div class="my-3">
+									<label class="form-label" for="ValueFilter">{{l("Value")}}</label>
+									<input type="text" class="form-control" id="ValueFilter" name="valueFilter" [(ngModel)]="valueFilter" (ngModelChange)="getSupportGroupItems()">
+								</div>
+                            </div>
+							<div class="col-md-3">
+								<div class="my-3">
+									<label class="form-label" for="QuoteFilter">{{l("Quote")}}</label>
+									<input type="text" class="form-control" id="QuoteFilter" name="quoteFilter" [(ngModel)]="quoteFilter" (ngModelChange)="getSupportGroupItems()">
+								</div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="my-3">
+									<label class="form-label" for="MinOrderNoFilter">{{l("MinMax")}} {{l("OrderNo")}}</label>
+									<div class="input-group">
+                                        <input type="number" class="form-control" id="MinOrderNoFilter" [(ngModel)]="minOrderNoFilter" placeholder="{{l('MinValue')}}" name="minOrderNoFilter" (ngModelChange)="getSupportGroupItems()"/>
+                                        <input type="number" class="form-control" [(ngModel)]="maxOrderNoFilter" placeholder="{{l('MaxValue')}}" name="maxOrderNoFilter" (ngModelChange)="getSupportGroupItems()"/>
+									</div>
+                                </div>
+                            </div>	
+							<div class="col-md-3">
+								<div class="my-3">
+									<label class="form-label" for="IsActiveFilterSelect">{{l("IsActive")}}</label>
+									<select class="form-select" name="IsActiveFilter" id="IsActiveFilterSelect" [(ngModel)]="isActiveFilter" (ngModelChange)="getSupportGroupItems()">
+									<option value="-1">{{l("All")}}</option>
+									<option value="0">{{l("False")}}</option>
+									<option value="1">{{l("True")}}</option>
+									</select>
+								</div>
+                            </div>
+
+
+							<div class="col-md-3">
+								<div class="my-3">
+									<label class="form-label" for="SupportGroupNameLFilter">({{l("SupportGroup")}}) {{l("NameL")}}</label>
+									<input type="text" class="form-control" id="SupportGroupNameLFilter" name="supportGroupNameLFilter" [(ngModel)]="supportGroupNameLFilter">
+                                </div>
+                            </div>
+                            <div class="col-md-12 mt-5">
+                                <button (click)="resetFilters()" class="btn btn-secondary btn-sm" id="btn-reset-filters">Reset</button>
+                            </div>
+                        </div>
+                        <div class="row my-4">
+                            <div class="col-sm-12">
+                                <span class="clickable-item text-muted" *ngIf="!advancedFiltersAreShown" (click)="advancedFiltersAreShown=!advancedFiltersAreShown"><i class="fa fa-angle-down"></i> {{l("ShowAdvancedFilters")}}</span>
+                                <span class="clickable-item text-muted" *ngIf="advancedFiltersAreShown" (click)="advancedFiltersAreShown=!advancedFiltersAreShown"><i class="fa fa-angle-up"></i> {{l("HideAdvancedFilters")}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+                <div class="row align-items-center">
+                    <!--<Primeng-Datatable-Start>-->
+                    <div class="primeng-datatable-container col-12"
+                         [busyIf]="primengTableHelper.isLoading">
+                        <p-table #dataTable
+                                     (onLazyLoad)="getSupportGroupItems($event)"
+                                     [value]="primengTableHelper.records"
+                                     rows="{{primengTableHelper.defaultRecordsCountPerPage}}"
+                                     [paginator]="false"
+                                     [lazy]="true"
+                                     [scrollable]="true"
+                                     ScrollWidth="100%"
+                                     [tableStyle]="{'min-width': '50rem'}"
+                                     [resizableColumns]="primengTableHelper.resizableColumns">
+                            <ng-template pTemplate="header">
+                                <tr>
+                                    <th style="width: 130px" [hidden]="!isGrantedAny('Pages.SupportGroupItems.Edit', 'Pages.SupportGroupItems.Delete')">{{l('Actions')}}</th>
+                                    <th style="width: 150px" pSortableColumn="supportGroupFk.nameL">
+                                        {{l('NameL')}}
+                                        <p-sortIcon field="supportGroupNameL"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="value">
+                                        {{l('Value')}}
+                                        <p-sortIcon field="supportGroupItem.value"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="quote">
+                                        {{l('Quote')}}
+                                        <p-sortIcon field="supportGroupItem.quote"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="orderNo">
+                                        {{l('OrderNo')}}
+                                        <p-sortIcon field="supportGroupItem.orderNo"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="isActive">
+                                        {{l('IsActive')}}
+                                        <p-sortIcon field="supportGroupItem.isActive"></p-sortIcon>
+                                    </th>
+
+                                </tr>
+                            </ng-template>                           
+							<ng-template pTemplate="body" let-record="$implicit" let-i="rowIndex">
+                                <tr>
+                                    <td style="width: 130px"
+                                        [hidden]="!isGrantedAny('Pages.SupportGroupItems.Edit', 'Pages.SupportGroupItems.Delete')">
+                                       <div class="btn-group dropdown" dropdown container="body">
+                                            <button class="dropdown-toggle btn btn-sm btn-primary" dropdownToggle>
+                                                <i class="fa fa-cog"></i><span class="caret"></span> {{l("Actions")}}
+                                            </button>
+												<ul class="dropdown-menu"  *dropdownMenu>
+												<li>
+													<a href="javascript:;" class="dropdown-item"
+														(click)="viewSupportGroupItemModal.show(record)">{{l('View')}}</a>
+												</li>
+												<li>
+                                                <a href="javascript:;" *ngIf="permission.isGranted('Pages.SupportGroupItems.Edit')" class="dropdown-item"
+														(click)="createOrEditSupportGroupItemModal.show(record.supportGroupItem.id)">{{l('Edit')}}</a>												
+                                                </li>
+												<li>
+											        <a class="dropdown-item" href="javascript:;" *ngIf="permission.isGranted('Pages.SupportGroupItems.Delete')"
+														(click)="deleteSupportGroupItem(record.supportGroupItem)">{{l('Delete')}}</a>
+												</li>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                    <td style="width:150px">
+												<span class="p-column-title"> {{l('NameL')}}</span>
+												{{record.supportGroupNameL}}
+											</td>
+                                    <td style="width:150px">
+											<span class="p-column-title"> {{l('Value')}}</span>
+											{{record.supportGroupItem.value}}
+										</td>
+                                    <td style="width:150px">
+											<span class="p-column-title"> {{l('Quote')}}</span>
+											{{record.supportGroupItem.quote}}
+										</td>
+                                    <td style="width:150px">
+											<span class="p-column-title"> {{l('OrderNo')}}</span>
+											{{record.supportGroupItem.orderNo}}
+										</td>
+                                    <td style="width:150px">
+										<span class="p-column-title"> {{l('IsActive')}}</span>
+                                        <div *ngIf="record.supportGroupItem.isActive" class="text-center"><i class="fa fa-check-circle text-success" title="True"></i></div>
+										<div *ngIf="!record.supportGroupItem.isActive" class="text-center"><i class="fa fa-times-circle" title="False"></i></div>
+                                    </td>
+
+                                </tr>
+                               
+                            </ng-template>
+                        </p-table>
+						<div class="primeng-no-data" *ngIf="primengTableHelper.totalRecordsCount == 0">
+                            {{l('NoData')}}
+                        </div>
+                        <div class="primeng-paging-container">
+                            <p-paginator [rows]="primengTableHelper.defaultRecordsCountPerPage"
+                                         #paginator
+                                         (onPageChange)="getSupportGroupItems($event)"
+                                         [totalRecords]="primengTableHelper.totalRecordsCount"
+                                         [rowsPerPageOptions]="primengTableHelper.predefinedRecordsCountPerPage"
+                                         [showCurrentPageReport]="true"
+                                         [currentPageReportTemplate]="'TotalRecordsCount' | localize:primengTableHelper.totalRecordsCount"    
+                            >
+                            </p-paginator>
+                        </div>
+                    </div>
+                    <!--<Primeng-Datatable-End>-->
+                </div>
+            </div>
+        </div>
+    </div>
+    <createOrEditSupportGroupItemModal #createOrEditSupportGroupItemModal (modalSave)="getSupportGroupItems()"></createOrEditSupportGroupItemModal>    
+    <viewSupportGroupItemModal #viewSupportGroupItemModal></viewSupportGroupItemModal>
+    
+  </div>

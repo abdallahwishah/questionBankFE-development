@@ -15,6 +15,7 @@ import { BsDatepickerConfig, BsDaterangepickerConfig, BsLocaleService } from 'ng
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { NgxBootstrapDatePickerConfigService } from 'assets/ngx-bootstrap/ngx-bootstrap-datepicker-config.service';
 import { SubheaderModule } from '@app/shared/common/sub-header/subheader.module';
+import { CategoriesServiceProxy, ComplexitiesServiceProxy, QuestionsServiceProxy, StudyLevelsServiceProxy, StudySubjectsServiceProxy, SubjectGroupsServiceProxy, SubjectUnitsServiceProxy, SupportGroupItemsServiceProxy, SupportGroupsServiceProxy } from '@shared/service-proxies/service-proxies';
 
 NgxBootstrapDatePickerConfigService.registerNgxBootstrapDatePickerLocales();
 
@@ -39,6 +40,15 @@ NgxBootstrapDatePickerConfigService.registerNgxBootstrapDatePickerLocales();
         { provide: BsDatepickerConfig, useFactory: NgxBootstrapDatePickerConfigService.getDatepickerConfig },
         { provide: BsDaterangepickerConfig, useFactory: NgxBootstrapDatePickerConfigService.getDaterangepickerConfig },
         { provide: BsLocaleService, useFactory: NgxBootstrapDatePickerConfigService.getDatepickerLocale },
+        QuestionsServiceProxy,
+        CategoriesServiceProxy,
+        ComplexitiesServiceProxy,
+        StudyLevelsServiceProxy,
+        StudySubjectsServiceProxy,
+        SubjectGroupsServiceProxy,
+        SubjectUnitsServiceProxy,
+        SupportGroupItemsServiceProxy,
+        SupportGroupsServiceProxy,
     ],
 })
 export class MainModule {}

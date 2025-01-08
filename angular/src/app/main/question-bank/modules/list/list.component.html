@@ -98,7 +98,7 @@
                     <ng-container filterBody>
                         <div class="row">
                             <div class="col-12 mb-5">
-                                <app-dropdown-field [labelField]="l('StudyMaterial')"></app-dropdown-field>
+                                <app-dropdown-field [labelField]="l('StudySubject')"></app-dropdown-field>
                             </div>
                             <div class="col-12 mb-5">
                                 <app-dropdown-field [labelField]="l('StudySubject')"></app-dropdown-field>
@@ -125,7 +125,7 @@
             <p-table
                 #dataTable
                 [value]="primengTableHelper.records"
-                (onLazyLoad)="getList($event)"
+                (onLazyLoad)="getQuestion($event)"
                 rows="{{ primengTableHelper.defaultRecordsCountPerPage }}"
                 [paginator]="false"
                 [loading]="primengTableHelper.isLoading"
@@ -151,9 +151,9 @@
                             {{ l('Class') }}
                             <p-sortIcon field="Class"></p-sortIcon>
                         </th>
-                        <th pSortableColumn="StudyMaterial">
-                            {{ l('StudyMaterial') }}
-                            <p-sortIcon field="StudyMaterial"></p-sortIcon>
+                        <th pSortableColumn="StudySubject">
+                            {{ l('StudySubject') }}
+                            <p-sortIcon field="StudySubject"></p-sortIcon>
                         </th>
                         <th pSortableColumn="Status">
                             {{ l('Status') }}
@@ -222,7 +222,7 @@
                 #paginator
                 [hidden]="true"
                 [rows]="primengTableHelper.defaultRecordsCountPerPage"
-                (onPageChange)="getList($event)"
+                (onPageChange)="getQuestion($event)"
                 [totalRecords]="primengTableHelper.totalRecordsCount"
                 [showCurrentPageReport]="true"
                 [rows]="primengTableHelper.defaultRecordsCountPerPage"

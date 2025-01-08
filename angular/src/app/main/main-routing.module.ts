@@ -44,6 +44,38 @@ import { RouterModule } from '@angular/router';
                         path: 'audit',
                         loadChildren: () => import('./audit/audit.module').then((m) => m.AuditModule)
                     },
+                    {
+                        path: 'categories',
+                        loadChildren: () => import('../shared/common/lookup/categories/category.module').then((m) => m.CategoryModule)
+                    },
+                    {
+                        path: 'complexities',
+                        loadChildren: () => import('../shared/common/lookup/complexities/complexity.module').then((m) => m.ComplexityModule)
+                    },
+                    {
+                        path: 'studyLevels',
+                        loadChildren: () => import('../shared/common/lookup/studyLevels/studyLevel.module').then((m) => m.StudyLevelModule)
+                    },
+                    {
+                        path: 'studySubjects',
+                        loadChildren: () => import('../shared/common/lookup/studySubjects/studySubject.module').then((m) => m.StudySubjectModule)
+                    },
+                    {
+                        path: 'subjectGroups',
+                        loadChildren: () => import('../shared/common/lookup/subjectGroups/subjectGroup.module').then((m) => m.SubjectGroupModule)
+                    },
+                    {
+                        path: 'subjectUnits',
+                        loadChildren: () => import('../shared/common/lookup/subjectUnits/subjectUnit.module').then((m) => m.SubjectUnitModule)
+                    },
+                    {
+                        path: 'supportGroupItems',
+                        loadChildren: () => import('../shared/common/lookup/supportGroupItems/supportGroupItem.module').then((m) => m.SupportGroupItemModule)
+                    },
+                    {
+                        path: 'supportGroups',
+                        loadChildren: () => import('../shared/common/lookup/supportGroups/supportGroup.module').then((m) => m.SupportGroupModule)
+                    },
                     { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
                     { path: '**', redirectTo: 'dashboard' },
                 ],
