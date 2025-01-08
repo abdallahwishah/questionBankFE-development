@@ -2,10 +2,10 @@ import { Component, Injector, OnInit } from '@angular/core';
 import { FormsModule } from '@node_modules/@angular/forms';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { ButtonModule } from 'primeng/button';
-import { EditorComponent } from "../../../../shared/components/editor/editor.component";
-import { AppComponentBase } from '@shared/common/app-component-base';
+ import { AppComponentBase } from '@shared/common/app-component-base';
 import { DropdownFieldComponent } from '@app/shared/components/fields/dropdown-field/dropdown-field.component';
 import { InputSwitchModule } from 'primeng/inputswitch';
+import { EditorComponent } from '@app/shared/components/editor/editor.component';
 
 @Component({
   selector: 'app-connecting-questions',

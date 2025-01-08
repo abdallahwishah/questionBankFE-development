@@ -53,6 +53,7 @@ export class DropdownFieldComponent extends Dropdown implements OnInit, ControlV
     @Input() optionsFromApiKeys: any;
     @Input() optionsLocal: any;
     autoCompleteConfig: any;
+    @Input() enm: any;
 
     @Output() onSelectionChange = new EventEmitter();
     @Output() onLoad: EventEmitter<any> = new EventEmitter();
@@ -142,7 +143,17 @@ export class DropdownFieldComponent extends Dropdown implements OnInit, ControlV
             });
             this.autoComplete = false;
         }
+        if (this.enm) {
+            this.options = Object.entries(this.enm)
+                .filter(([key, value]) => typeof value === 'number')
+                .map(([key, value]) => ({
+                    Name: key,
+                    Code: value,
+                }));
 
+            this.optionLabel = 'Name';
+            this.optionValue = 'Code';
+        }
         this.controlSubscription.add(
             this.fieldControl.valueChanges.subscribe((value) => {
                 this.onChange(value);

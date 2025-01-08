@@ -3,28 +3,28 @@ import { CommonModule } from '@angular/common';
 import { AddQuestionComponent } from './add-question.component';
 import { AppSharedModule } from '@app/shared/app-shared.module';
 import { RouterModule } from '@node_modules/@angular/router';
-import { DropdownFieldComponent } from "../../../../shared/components/fields/dropdown-field/dropdown-field.component";
-import { InputSwitchModule  } from 'primeng/inputswitch';
-import { DynamicQuestionComponent } from "../../components/dynamic-question/dynamic-question.component";
-import { EditorComponent } from "../../../../shared/components/editor/editor.component";
-import { AddFileModalComponent } from "../../components/modals/add-file-modal/add-file-modal.component";
+import { DropdownFieldComponent } from '../../../../shared/components/fields/dropdown-field/dropdown-field.component';
+import { InputSwitchModule } from 'primeng/inputswitch';
+import { EditorComponent } from '../../../../shared/components/editor/editor.component';
+import { DynamicQuestionComponent } from '@app/shared/components/questions/dynamic-question/dynamic-question.component';
+import { AddFileModalComponent } from '../../components/add-file-modal/add-file-modal.component';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    AppSharedModule,
-    RouterModule.forChild([
-        {
-            path: '',
-            component: AddQuestionComponent,
-        },
-    ]),
-    DropdownFieldComponent,
-    DynamicQuestionComponent,
-    EditorComponent,
-    InputSwitchModule,
-    AddFileModalComponent
-],
-  declarations: [AddQuestionComponent]
+    imports: [
+        CommonModule,
+        AppSharedModule,
+        RouterModule.forChild([
+            {
+                path: '',
+                component: AddQuestionComponent,
+            },
+        ]),
+        DropdownFieldComponent,
+        DynamicQuestionComponent,
+        EditorComponent,
+        InputSwitchModule,
+        AddFileModalComponent,
+    ],
+    declarations: [AddQuestionComponent],
 })
-export class AddQuestionModule { }
+export class AddQuestionModule {}

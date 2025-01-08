@@ -1,0 +1,104 @@
+<!-- Title + instructions -->
+<div class="d-flex gap-3 mt-2 mb-7">
+    <p class="mb-0 fw-medium">{{ l('TablesDesign') }}</p>
+    <span class="d-inline-block text-gray-600 fw-normal">
+      {{ l('Enter row/column count & generate table. Then fill each cell & check pinned if needed.') }}
+    </span>
+  </div>
+
+  <!-- Row/Col inputs + Generate button -->
+  <div class="row mb-5">
+    <div class="col-md-5 d-flex align-items-center gap-5">
+      <!-- Table Height (# of rows) -->
+      <input
+        name="tableHeight"
+        class="form-control m-input"
+        [placeholder]="l('TableHeight')"
+        type="number"
+        [(ngModel)]="tableHeight"
+      />
+      <svg width="25" height="25" ...> <!-- decorative icon --> </svg>
+
+      <!-- Table Width (# of columns) -->
+      <input
+        name="tableWidth"
+        class="form-control m-input"
+        [placeholder]="l('TableWidth')"
+        type="number"
+        [(ngModel)]="tableWidth"
+      />
+    </div>
+
+    <div class="col-md-1 mt-md-0 mt-4">
+      <!-- Generate (Build) the table once -->
+      <button class="btn btn-primary w-md-auto w-100 p-3" (click)="buildTable()">
+        <svg width="25" height="24" ...> <!-- icon --> </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Wrap the table rows in a cdkDropList for row reordering -->
+  <div
+    cdkDropList
+    [cdkDropListData]="value"
+    (cdkDropListDropped)="dropRow($event)"
+  >
+    <p-table [value]="value" class="w-100">
+      <!-- Table Header -->
+      <ng-template pTemplate="header">
+        <tr>
+          <!-- First cell for drag handle -->
+          <th class="w-50px text-center"></th>
+          <!-- Dynamically render tableWidth columns for the header -->
+          <th *ngFor="let col of [].constructor(tableWidth)">
+            <input
+              class="form-control m-input"
+              [placeholder]="l('EnterSectionTitle')"
+              type="text"
+              disabled
+            />
+          </th>
+        </tr>
+      </ng-template>
+
+      <!-- Table Body -->
+      <ng-template pTemplate="body" let-row let-rowIndex="rowIndex">
+        <!-- each row is cdkDrag -->
+        <tr cdkDrag>
+          <!-- Drag handle cell -->
+          <td cdkDragHandle>
+            <img
+              class="cursor-pointer"
+              src="assets/common/images/menu.svg"
+              alt="Drag handle"
+            />
+          </td>
+
+          <!-- Loop over row.dragDropTableItems for columns -->
+          <td
+            *ngFor="
+              let cell of row.dragDropTableItems;
+              let colIndex = index
+            "
+          >
+            <!-- pinned checkbox -->
+            <input
+              type="checkbox"
+              class="form-check-input me-2"
+              [(ngModel)]="cell.isPinned"
+              (ngModelChange)="notifyValueChange()"
+            />
+
+            <!-- cell text -->
+            <input
+              class="form-control m-input"
+              [placeholder]="l('EnterTheAppropriateWord')"
+              type="text"
+              [(ngModel)]="cell.title"
+              (ngModelChange)="notifyValueChange()"
+            />
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>

@@ -1,9 +1,9 @@
 import { Component, Injector, OnInit } from '@angular/core';
-import { DialogSharedModule } from "../../../../../shared/components/dialog-shared/dialog-shared.module";
-import { UniqueNameComponents } from '@app/shared/Models/UniqueNameComponents';
+ import { UniqueNameComponents } from '@app/shared/Models/UniqueNameComponents';
+import { DialogSharedModule } from '@app/shared/components/dialog-shared/dialog-shared.module';
 import { DialogSharedService } from '@app/shared/components/dialog-shared/dialog-shared.service';
+import { DropdownFieldComponent } from '@app/shared/components/fields/dropdown-field/dropdown-field.component';
 import { AppComponentBase } from '@shared/common/app-component-base';
-import { DropdownFieldComponent } from "../../../../../shared/components/fields/dropdown-field/dropdown-field.component";
 
 @Component({
   selector: 'app-add-file-modal',

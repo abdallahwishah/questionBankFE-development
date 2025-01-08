@@ -1,0 +1,104 @@
+<!-- Title / Subtitle -->
+<div class="d-flex gap-3 mt-2 mb-6">
+    <p class="mb-0 fw-medium">{{ l('Choices') }}</p>
+    <span class="d-inline-block text-gray-700">{{ l('ChooseTheCorrectAnswer') }}</span>
+  </div>
+
+  <!-- Render each choice in a row -->
+  <div
+    class="row question d-flex align-items-center mb-6"
+    *ngFor="let choice of value; let i = index"
+  >
+    <!-- Drag handle + pinned radio button (optional) -->
+    <div class="col-md-1 col-3 d-flex align-items-center gap-5">
+      <img
+        class="cursor-pointer"
+        src="assets/common/images/menu.svg"
+        alt="drag handle"
+      />
+
+      <!-- Single-choice radio button for marking as correct -->
+      <input
+        class="form-check-input"
+        type="radio"
+        name="singleChoice"
+        [checked]="choice.optionType === QuestionOptionTypeEnum.Pinned"
+        (change)="markAsCorrect(choice)"
+      />
+    </div>
+
+    <!-- Editor or name field -->
+    <div class="col-md-7 col-9 mb-md-0 mb-3">
+      <!-- If using a custom WYSIWYG Editor -->
+      <app-editor
+        class="w-100"
+        [(ngModel)]="choice.name"
+        (ngModelChange)="notifyChange()"
+      ></app-editor>
+
+      <!-- Alternatively, just a plain input:
+      <input
+        class="form-control"
+        [(ngModel)]="choice.name"
+        (ngModelChange)="notifyChange()"
+        placeholder="Choice text..."
+      />
+      -->
+    </div>
+
+    <!-- Option type dropdown + points + delete -->
+    <div class="col-md-4 d-flex align-items-center justify-content-end">
+
+      <!-- Example: your custom dropdown to pick between Normal/Fake/Pinned -->
+      <app-dropdown-field
+        [enm]="QuestionOptionTypeEnum"
+        [(ngModel)]="choice.optionType"
+        (ngModelChange)="notifyChange()"
+        placeholder="{{ l('SelectOptionType') }}"
+      ></app-dropdown-field>
+
+      <!-- Points -->
+      <p-inputNumber
+        class="mx-2"
+        [(ngModel)]="choice.point"
+        (ngModelChange)="notifyChange()"
+        [showButtons]="true"
+        buttonLayout="horizontal"
+        spinnerMode="horizontal"
+        [step]="1"
+        decrementButtonClass="min"
+        incrementButtonClass="max"
+        incrementButtonIcon="pi pi-plus"
+        decrementButtonIcon="pi pi-minus"
+      ></p-inputNumber>
+
+      <!-- Delete choice -->
+      <button class="btn btn-delete p-3 m-0" (click)="removeChoice(i)">
+        <img src="assets/common/images/trash.svg" alt="delete" />
+      </button>
+    </div>
+  </div>
+
+  <!-- "Add New Option" button -->
+  <h5
+    class="d-flex align-items-center justify-content-start gap-2 cursor-pointer"
+    (click)="addChoice()"
+  >
+    <svg
+      width="25"
+      height="24"
+      viewBox="0 0 25 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M6.5 12.75C6.09 12.75 5.75 12.41 5.75 12C5.75 11.59 6.09 11.25 6.5 11.25H18.5C18.91 11.25 19.25 11.59 19.25 12C19.25 12.41 18.91 12.75 18.5 12.75H6.5Z"
+        fill="#6D31ED"
+      />
+      <path
+        d="M11.75 18V6C11.75 5.59 12.09 5.25 12.5 5.25C12.91 5.25 13.25 5.59 13.25 6V18C13.25 18.41 12.91 18.75 12.5 18.75C12.09 18.75 11.75 18.41 11.75 18Z"
+        fill="#6D31ED"
+      />
+    </svg>
+    <span class="text-primary">{{ l('AddNewOption') }}</span>
+  </h5>

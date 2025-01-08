@@ -757,7 +757,7 @@ export class AnswersServiceProxy {
      * @param minOriginalScoreFilter (optional) 
      * @param fakeAnswerFilter (optional) 
      * @param questionQuestionHelperFilter (optional) 
-     * @param optionValueFilter (optional) 
+     * @param questionOptionValueFilter (optional) 
      * @param questionQuestionHelper2Filter (optional) 
      * @param attemptNoteFilter (optional) 
      * @param sorting (optional) 
@@ -765,7 +765,7 @@ export class AnswersServiceProxy {
      * @param maxResultCount (optional) 
      * @return Success
      */
-    getAll(filter: string | undefined, valueFilter: string | undefined, maxScoreFilter: number | undefined, minScoreFilter: number | undefined, maxOriginalScoreFilter: number | undefined, minOriginalScoreFilter: number | undefined, fakeAnswerFilter: number | undefined, questionQuestionHelperFilter: string | undefined, optionValueFilter: string | undefined, questionQuestionHelper2Filter: string | undefined, attemptNoteFilter: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfGetAnswerForViewDto> {
+    getAll(filter: string | undefined, valueFilter: string | undefined, maxScoreFilter: number | undefined, minScoreFilter: number | undefined, maxOriginalScoreFilter: number | undefined, minOriginalScoreFilter: number | undefined, fakeAnswerFilter: number | undefined, questionQuestionHelperFilter: string | undefined, questionOptionValueFilter: string | undefined, questionQuestionHelper2Filter: string | undefined, attemptNoteFilter: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfGetAnswerForViewDto> {
         let url_ = this.baseUrl + "/api/services/app/Answers/GetAll?";
         if (filter === null)
             throw new Error("The parameter 'filter' cannot be null.");
@@ -799,10 +799,10 @@ export class AnswersServiceProxy {
             throw new Error("The parameter 'questionQuestionHelperFilter' cannot be null.");
         else if (questionQuestionHelperFilter !== undefined)
             url_ += "QuestionQuestionHelperFilter=" + encodeURIComponent("" + questionQuestionHelperFilter) + "&";
-        if (optionValueFilter === null)
-            throw new Error("The parameter 'optionValueFilter' cannot be null.");
-        else if (optionValueFilter !== undefined)
-            url_ += "OptionValueFilter=" + encodeURIComponent("" + optionValueFilter) + "&";
+        if (questionOptionValueFilter === null)
+            throw new Error("The parameter 'questionOptionValueFilter' cannot be null.");
+        else if (questionOptionValueFilter !== undefined)
+            url_ += "QuestionOptionValueFilter=" + encodeURIComponent("" + questionOptionValueFilter) + "&";
         if (questionQuestionHelper2Filter === null)
             throw new Error("The parameter 'questionQuestionHelper2Filter' cannot be null.");
         else if (questionQuestionHelper2Filter !== undefined)
@@ -1094,12 +1094,12 @@ export class AnswersServiceProxy {
      * @param minOriginalScoreFilter (optional) 
      * @param fakeAnswerFilter (optional) 
      * @param questionQuestionHelperFilter (optional) 
-     * @param optionValueFilter (optional) 
+     * @param questionOptionValueFilter (optional) 
      * @param questionQuestionHelper2Filter (optional) 
      * @param attemptNoteFilter (optional) 
      * @return Success
      */
-    getAnswersToExcel(filter: string | undefined, valueFilter: string | undefined, maxScoreFilter: number | undefined, minScoreFilter: number | undefined, maxOriginalScoreFilter: number | undefined, minOriginalScoreFilter: number | undefined, fakeAnswerFilter: number | undefined, questionQuestionHelperFilter: string | undefined, optionValueFilter: string | undefined, questionQuestionHelper2Filter: string | undefined, attemptNoteFilter: string | undefined): Observable<FileDto> {
+    getAnswersToExcel(filter: string | undefined, valueFilter: string | undefined, maxScoreFilter: number | undefined, minScoreFilter: number | undefined, maxOriginalScoreFilter: number | undefined, minOriginalScoreFilter: number | undefined, fakeAnswerFilter: number | undefined, questionQuestionHelperFilter: string | undefined, questionOptionValueFilter: string | undefined, questionQuestionHelper2Filter: string | undefined, attemptNoteFilter: string | undefined): Observable<FileDto> {
         let url_ = this.baseUrl + "/api/services/app/Answers/GetAnswersToExcel?";
         if (filter === null)
             throw new Error("The parameter 'filter' cannot be null.");
@@ -1133,10 +1133,10 @@ export class AnswersServiceProxy {
             throw new Error("The parameter 'questionQuestionHelperFilter' cannot be null.");
         else if (questionQuestionHelperFilter !== undefined)
             url_ += "QuestionQuestionHelperFilter=" + encodeURIComponent("" + questionQuestionHelperFilter) + "&";
-        if (optionValueFilter === null)
-            throw new Error("The parameter 'optionValueFilter' cannot be null.");
-        else if (optionValueFilter !== undefined)
-            url_ += "OptionValueFilter=" + encodeURIComponent("" + optionValueFilter) + "&";
+        if (questionOptionValueFilter === null)
+            throw new Error("The parameter 'questionOptionValueFilter' cannot be null.");
+        else if (questionOptionValueFilter !== undefined)
+            url_ += "QuestionOptionValueFilter=" + encodeURIComponent("" + questionOptionValueFilter) + "&";
         if (questionQuestionHelper2Filter === null)
             throw new Error("The parameter 'questionQuestionHelper2Filter' cannot be null.");
         else if (questionQuestionHelper2Filter !== undefined)
@@ -1269,8 +1269,8 @@ export class AnswersServiceProxy {
      * @param maxResultCount (optional) 
      * @return Success
      */
-    getAllOptionForLookupTable(filter: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfAnswerOptionLookupTableDto> {
-        let url_ = this.baseUrl + "/api/services/app/Answers/GetAllOptionForLookupTable?";
+    getAllQuestionOptionForLookupTable(filter: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfAnswerQuestionOptionLookupTableDto> {
+        let url_ = this.baseUrl + "/api/services/app/Answers/GetAllQuestionOptionForLookupTable?";
         if (filter === null)
             throw new Error("The parameter 'filter' cannot be null.");
         else if (filter !== undefined)
@@ -1298,20 +1298,20 @@ export class AnswersServiceProxy {
         };
 
         return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGetAllOptionForLookupTable(response_);
+            return this.processGetAllQuestionOptionForLookupTable(response_);
         })).pipe(_observableCatch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
-                    return this.processGetAllOptionForLookupTable(response_ as any);
+                    return this.processGetAllQuestionOptionForLookupTable(response_ as any);
                 } catch (e) {
-                    return _observableThrow(e) as any as Observable<PagedResultDtoOfAnswerOptionLookupTableDto>;
+                    return _observableThrow(e) as any as Observable<PagedResultDtoOfAnswerQuestionOptionLookupTableDto>;
                 }
             } else
-                return _observableThrow(response_) as any as Observable<PagedResultDtoOfAnswerOptionLookupTableDto>;
+                return _observableThrow(response_) as any as Observable<PagedResultDtoOfAnswerQuestionOptionLookupTableDto>;
         }));
     }
 
-    protected processGetAllOptionForLookupTable(response: HttpResponseBase): Observable<PagedResultDtoOfAnswerOptionLookupTableDto> {
+    protected processGetAllQuestionOptionForLookupTable(response: HttpResponseBase): Observable<PagedResultDtoOfAnswerQuestionOptionLookupTableDto> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -1322,7 +1322,7 @@ export class AnswersServiceProxy {
             return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = PagedResultDtoOfAnswerOptionLookupTableDto.fromJS(resultData200);
+            result200 = PagedResultDtoOfAnswerQuestionOptionLookupTableDto.fromJS(resultData200);
             return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
@@ -3034,23 +3034,18 @@ export class CategoriesServiceProxy {
 
     /**
      * @param filter (optional) 
-     * @param valueFilter (optional) 
      * @param isActiveFilter (optional) 
      * @param sorting (optional) 
      * @param skipCount (optional) 
      * @param maxResultCount (optional) 
      * @return Success
      */
-    getAll(filter: string | undefined, valueFilter: string | undefined, isActiveFilter: number | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfGetCategoryForViewDto> {
+    getAll(filter: string | undefined, isActiveFilter: number | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfGetCategoryForViewDto> {
         let url_ = this.baseUrl + "/api/services/app/Categories/GetAll?";
         if (filter === null)
             throw new Error("The parameter 'filter' cannot be null.");
         else if (filter !== undefined)
             url_ += "Filter=" + encodeURIComponent("" + filter) + "&";
-        if (valueFilter === null)
-            throw new Error("The parameter 'valueFilter' cannot be null.");
-        else if (valueFilter !== undefined)
-            url_ += "ValueFilter=" + encodeURIComponent("" + valueFilter) + "&";
         if (isActiveFilter === null)
             throw new Error("The parameter 'isActiveFilter' cannot be null.");
         else if (isActiveFilter !== undefined)
@@ -3331,20 +3326,15 @@ export class CategoriesServiceProxy {
 
     /**
      * @param filter (optional) 
-     * @param valueFilter (optional) 
      * @param isActiveFilter (optional) 
      * @return Success
      */
-    getCategoriesToExcel(filter: string | undefined, valueFilter: string | undefined, isActiveFilter: number | undefined): Observable<FileDto> {
+    getCategoriesToExcel(filter: string | undefined, isActiveFilter: number | undefined): Observable<FileDto> {
         let url_ = this.baseUrl + "/api/services/app/Categories/GetCategoriesToExcel?";
         if (filter === null)
             throw new Error("The parameter 'filter' cannot be null.");
         else if (filter !== undefined)
             url_ += "Filter=" + encodeURIComponent("" + filter) + "&";
-        if (valueFilter === null)
-            throw new Error("The parameter 'valueFilter' cannot be null.");
-        else if (valueFilter !== undefined)
-            url_ += "ValueFilter=" + encodeURIComponent("" + valueFilter) + "&";
         if (isActiveFilter === null)
             throw new Error("The parameter 'isActiveFilter' cannot be null.");
         else if (isActiveFilter !== undefined)
@@ -3770,23 +3760,18 @@ export class ComplexitiesServiceProxy {
 
     /**
      * @param filter (optional) 
-     * @param valueFilter (optional) 
      * @param isActiveFilter (optional) 
      * @param sorting (optional) 
      * @param skipCount (optional) 
      * @param maxResultCount (optional) 
      * @return Success
      */
-    getAll(filter: string | undefined, valueFilter: string | undefined, isActiveFilter: number | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfGetComplexityForViewDto> {
+    getAll(filter: string | undefined, isActiveFilter: number | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfGetComplexityForViewDto> {
         let url_ = this.baseUrl + "/api/services/app/Complexities/GetAll?";
         if (filter === null)
             throw new Error("The parameter 'filter' cannot be null.");
         else if (filter !== undefined)
             url_ += "Filter=" + encodeURIComponent("" + filter) + "&";
-        if (valueFilter === null)
-            throw new Error("The parameter 'valueFilter' cannot be null.");
-        else if (valueFilter !== undefined)
-            url_ += "ValueFilter=" + encodeURIComponent("" + valueFilter) + "&";
         if (isActiveFilter === null)
             throw new Error("The parameter 'isActiveFilter' cannot be null.");
         else if (isActiveFilter !== undefined)
@@ -4067,20 +4052,15 @@ export class ComplexitiesServiceProxy {
 
     /**
      * @param filter (optional) 
-     * @param valueFilter (optional) 
      * @param isActiveFilter (optional) 
      * @return Success
      */
-    getComplexitiesToExcel(filter: string | undefined, valueFilter: string | undefined, isActiveFilter: number | undefined): Observable<FileDto> {
+    getComplexitiesToExcel(filter: string | undefined, isActiveFilter: number | undefined): Observable<FileDto> {
         let url_ = this.baseUrl + "/api/services/app/Complexities/GetComplexitiesToExcel?";
         if (filter === null)
             throw new Error("The parameter 'filter' cannot be null.");
         else if (filter !== undefined)
             url_ += "Filter=" + encodeURIComponent("" + filter) + "&";
-        if (valueFilter === null)
-            throw new Error("The parameter 'valueFilter' cannot be null.");
-        else if (valueFilter !== undefined)
-            url_ += "ValueFilter=" + encodeURIComponent("" + valueFilter) + "&";
         if (isActiveFilter === null)
             throw new Error("The parameter 'isActiveFilter' cannot be null.");
         else if (isActiveFilter !== undefined)
@@ -7214,13 +7194,13 @@ export class ExamQuestionsServiceProxy {
      * @param minOrderFilter (optional) 
      * @param noteFilter (optional) 
      * @param questionQuestionHelperFilter (optional) 
-     * @param sectionNameLFilter (optional) 
+     * @param examSectionNameLFilter (optional) 
      * @param sorting (optional) 
      * @param skipCount (optional) 
      * @param maxResultCount (optional) 
      * @return Success
      */
-    getAll(filter: string | undefined, isManualInsertionFilter: number | undefined, maxOrderFilter: number | undefined, minOrderFilter: number | undefined, noteFilter: string | undefined, questionQuestionHelperFilter: string | undefined, sectionNameLFilter: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfGetExamQuestionForViewDto> {
+    getAll(filter: string | undefined, isManualInsertionFilter: number | undefined, maxOrderFilter: number | undefined, minOrderFilter: number | undefined, noteFilter: string | undefined, questionQuestionHelperFilter: string | undefined, examSectionNameLFilter: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfGetExamQuestionForViewDto> {
         let url_ = this.baseUrl + "/api/services/app/ExamQuestions/GetAll?";
         if (filter === null)
             throw new Error("The parameter 'filter' cannot be null.");
@@ -7246,10 +7226,10 @@ export class ExamQuestionsServiceProxy {
             throw new Error("The parameter 'questionQuestionHelperFilter' cannot be null.");
         else if (questionQuestionHelperFilter !== undefined)
             url_ += "QuestionQuestionHelperFilter=" + encodeURIComponent("" + questionQuestionHelperFilter) + "&";
-        if (sectionNameLFilter === null)
-            throw new Error("The parameter 'sectionNameLFilter' cannot be null.");
-        else if (sectionNameLFilter !== undefined)
-            url_ += "SectionNameLFilter=" + encodeURIComponent("" + sectionNameLFilter) + "&";
+        if (examSectionNameLFilter === null)
+            throw new Error("The parameter 'examSectionNameLFilter' cannot be null.");
+        else if (examSectionNameLFilter !== undefined)
+            url_ += "ExamSectionNameLFilter=" + encodeURIComponent("" + examSectionNameLFilter) + "&";
         if (sorting === null)
             throw new Error("The parameter 'sorting' cannot be null.");
         else if (sorting !== undefined)
@@ -7312,8 +7292,8 @@ export class ExamQuestionsServiceProxy {
      * @param id (optional) 
      * @return Success
      */
-    getQuestionSectionForView(id: number | undefined): Observable<GetExamQuestionForViewDto> {
-        let url_ = this.baseUrl + "/api/services/app/ExamQuestions/GetQuestionSectionForView?";
+    getExamQuestionForView(id: number | undefined): Observable<GetExamQuestionForViewDto> {
+        let url_ = this.baseUrl + "/api/services/app/ExamQuestions/GetExamQuestionForView?";
         if (id === null)
             throw new Error("The parameter 'id' cannot be null.");
         else if (id !== undefined)
@@ -7329,11 +7309,11 @@ export class ExamQuestionsServiceProxy {
         };
 
         return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGetQuestionSectionForView(response_);
+            return this.processGetExamQuestionForView(response_);
         })).pipe(_observableCatch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
-                    return this.processGetQuestionSectionForView(response_ as any);
+                    return this.processGetExamQuestionForView(response_ as any);
                 } catch (e) {
                     return _observableThrow(e) as any as Observable<GetExamQuestionForViewDto>;
                 }
@@ -7342,7 +7322,7 @@ export class ExamQuestionsServiceProxy {
         }));
     }
 
-    protected processGetQuestionSectionForView(response: HttpResponseBase): Observable<GetExamQuestionForViewDto> {
+    protected processGetExamQuestionForView(response: HttpResponseBase): Observable<GetExamQuestionForViewDto> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -7368,8 +7348,8 @@ export class ExamQuestionsServiceProxy {
      * @param id (optional) 
      * @return Success
      */
-    getQuestionSectionForEdit(id: number | undefined): Observable<GetExamQuestionForEditOutput> {
-        let url_ = this.baseUrl + "/api/services/app/ExamQuestions/GetQuestionSectionForEdit?";
+    getExamQuestionForEdit(id: number | undefined): Observable<GetExamQuestionForEditOutput> {
+        let url_ = this.baseUrl + "/api/services/app/ExamQuestions/GetExamQuestionForEdit?";
         if (id === null)
             throw new Error("The parameter 'id' cannot be null.");
         else if (id !== undefined)
@@ -7385,11 +7365,11 @@ export class ExamQuestionsServiceProxy {
         };
 
         return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGetQuestionSectionForEdit(response_);
+            return this.processGetExamQuestionForEdit(response_);
         })).pipe(_observableCatch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
-                    return this.processGetQuestionSectionForEdit(response_ as any);
+                    return this.processGetExamQuestionForEdit(response_ as any);
                 } catch (e) {
                     return _observableThrow(e) as any as Observable<GetExamQuestionForEditOutput>;
                 }
@@ -7398,7 +7378,7 @@ export class ExamQuestionsServiceProxy {
         }));
     }
 
-    protected processGetQuestionSectionForEdit(response: HttpResponseBase): Observable<GetExamQuestionForEditOutput> {
+    protected processGetExamQuestionForEdit(response: HttpResponseBase): Observable<GetExamQuestionForEditOutput> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -7531,11 +7511,11 @@ export class ExamQuestionsServiceProxy {
      * @param minOrderFilter (optional) 
      * @param noteFilter (optional) 
      * @param questionQuestionHelperFilter (optional) 
-     * @param sectionNameLFilter (optional) 
+     * @param examSectionNameLFilter (optional) 
      * @return Success
      */
-    getQuestionSectionsToExcel(filter: string | undefined, isManualInsertionFilter: number | undefined, maxOrderFilter: number | undefined, minOrderFilter: number | undefined, noteFilter: string | undefined, questionQuestionHelperFilter: string | undefined, sectionNameLFilter: string | undefined): Observable<FileDto> {
-        let url_ = this.baseUrl + "/api/services/app/ExamQuestions/GetQuestionSectionsToExcel?";
+    getExamQuestionsToExcel(filter: string | undefined, isManualInsertionFilter: number | undefined, maxOrderFilter: number | undefined, minOrderFilter: number | undefined, noteFilter: string | undefined, questionQuestionHelperFilter: string | undefined, examSectionNameLFilter: string | undefined): Observable<FileDto> {
+        let url_ = this.baseUrl + "/api/services/app/ExamQuestions/GetExamQuestionsToExcel?";
         if (filter === null)
             throw new Error("The parameter 'filter' cannot be null.");
         else if (filter !== undefined)
@@ -7560,10 +7540,10 @@ export class ExamQuestionsServiceProxy {
             throw new Error("The parameter 'questionQuestionHelperFilter' cannot be null.");
         else if (questionQuestionHelperFilter !== undefined)
             url_ += "QuestionQuestionHelperFilter=" + encodeURIComponent("" + questionQuestionHelperFilter) + "&";
-        if (sectionNameLFilter === null)
-            throw new Error("The parameter 'sectionNameLFilter' cannot be null.");
-        else if (sectionNameLFilter !== undefined)
-            url_ += "SectionNameLFilter=" + encodeURIComponent("" + sectionNameLFilter) + "&";
+        if (examSectionNameLFilter === null)
+            throw new Error("The parameter 'examSectionNameLFilter' cannot be null.");
+        else if (examSectionNameLFilter !== undefined)
+            url_ += "ExamSectionNameLFilter=" + encodeURIComponent("" + examSectionNameLFilter) + "&";
         url_ = url_.replace(/[?&]$/, "");
 
         let options_ : any = {
@@ -7575,11 +7555,11 @@ export class ExamQuestionsServiceProxy {
         };
 
         return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGetQuestionSectionsToExcel(response_);
+            return this.processGetExamQuestionsToExcel(response_);
         })).pipe(_observableCatch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
-                    return this.processGetQuestionSectionsToExcel(response_ as any);
+                    return this.processGetExamQuestionsToExcel(response_ as any);
                 } catch (e) {
                     return _observableThrow(e) as any as Observable<FileDto>;
                 }
@@ -7588,7 +7568,7 @@ export class ExamQuestionsServiceProxy {
         }));
     }
 
-    protected processGetQuestionSectionsToExcel(response: HttpResponseBase): Observable<FileDto> {
+    protected processGetExamQuestionsToExcel(response: HttpResponseBase): Observable<FileDto> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -7688,8 +7668,8 @@ export class ExamQuestionsServiceProxy {
      * @param maxResultCount (optional) 
      * @return Success
      */
-    getAllSectionForLookupTable(filter: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfExamQuestionSectionLookupTableDto> {
-        let url_ = this.baseUrl + "/api/services/app/ExamQuestions/GetAllSectionForLookupTable?";
+    getAllExamSectionForLookupTable(filter: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfExamQuestionExamSectionLookupTableDto> {
+        let url_ = this.baseUrl + "/api/services/app/ExamQuestions/GetAllExamSectionForLookupTable?";
         if (filter === null)
             throw new Error("The parameter 'filter' cannot be null.");
         else if (filter !== undefined)
@@ -7717,20 +7697,20 @@ export class ExamQuestionsServiceProxy {
         };
 
         return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGetAllSectionForLookupTable(response_);
+            return this.processGetAllExamSectionForLookupTable(response_);
         })).pipe(_observableCatch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
-                    return this.processGetAllSectionForLookupTable(response_ as any);
+                    return this.processGetAllExamSectionForLookupTable(response_ as any);
                 } catch (e) {
-                    return _observableThrow(e) as any as Observable<PagedResultDtoOfExamQuestionSectionLookupTableDto>;
+                    return _observableThrow(e) as any as Observable<PagedResultDtoOfExamQuestionExamSectionLookupTableDto>;
                 }
             } else
-                return _observableThrow(response_) as any as Observable<PagedResultDtoOfExamQuestionSectionLookupTableDto>;
+                return _observableThrow(response_) as any as Observable<PagedResultDtoOfExamQuestionExamSectionLookupTableDto>;
         }));
     }
 
-    protected processGetAllSectionForLookupTable(response: HttpResponseBase): Observable<PagedResultDtoOfExamQuestionSectionLookupTableDto> {
+    protected processGetAllExamSectionForLookupTable(response: HttpResponseBase): Observable<PagedResultDtoOfExamQuestionExamSectionLookupTableDto> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -7741,7 +7721,7 @@ export class ExamQuestionsServiceProxy {
             return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = PagedResultDtoOfExamQuestionSectionLookupTableDto.fromJS(resultData200);
+            result200 = PagedResultDtoOfExamQuestionExamSectionLookupTableDto.fromJS(resultData200);
             return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
@@ -7771,13 +7751,13 @@ export class ExamsServiceProxy {
      * @param isActiveFilter (optional) 
      * @param generationTokenFilter (optional) 
      * @param titleFilter (optional) 
-     * @param templateInstructionsFilter (optional) 
+     * @param examTemplateInstructionsFilter (optional) 
      * @param sorting (optional) 
      * @param skipCount (optional) 
      * @param maxResultCount (optional) 
      * @return Success
      */
-    getAll(filter: string | undefined, maxVersionNoFilter: number | undefined, minVersionNoFilter: number | undefined, isActiveFilter: number | undefined, generationTokenFilter: string | undefined, titleFilter: string | undefined, templateInstructionsFilter: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfGetExamForViewDto> {
+    getAll(filter: string | undefined, maxVersionNoFilter: number | undefined, minVersionNoFilter: number | undefined, isActiveFilter: number | undefined, generationTokenFilter: string | undefined, titleFilter: string | undefined, examTemplateInstructionsFilter: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfGetExamForViewDto> {
         let url_ = this.baseUrl + "/api/services/app/Exams/GetAll?";
         if (filter === null)
             throw new Error("The parameter 'filter' cannot be null.");
@@ -7803,10 +7783,10 @@ export class ExamsServiceProxy {
             throw new Error("The parameter 'titleFilter' cannot be null.");
         else if (titleFilter !== undefined)
             url_ += "TitleFilter=" + encodeURIComponent("" + titleFilter) + "&";
-        if (templateInstructionsFilter === null)
-            throw new Error("The parameter 'templateInstructionsFilter' cannot be null.");
-        else if (templateInstructionsFilter !== undefined)
-            url_ += "TemplateInstructionsFilter=" + encodeURIComponent("" + templateInstructionsFilter) + "&";
+        if (examTemplateInstructionsFilter === null)
+            throw new Error("The parameter 'examTemplateInstructionsFilter' cannot be null.");
+        else if (examTemplateInstructionsFilter !== undefined)
+            url_ += "ExamTemplateInstructionsFilter=" + encodeURIComponent("" + examTemplateInstructionsFilter) + "&";
         if (sorting === null)
             throw new Error("The parameter 'sorting' cannot be null.");
         else if (sorting !== undefined)
@@ -8088,10 +8068,10 @@ export class ExamsServiceProxy {
      * @param isActiveFilter (optional) 
      * @param generationTokenFilter (optional) 
      * @param titleFilter (optional) 
-     * @param templateInstructionsFilter (optional) 
+     * @param examTemplateInstructionsFilter (optional) 
      * @return Success
      */
-    getExamsToExcel(filter: string | undefined, maxVersionNoFilter: number | undefined, minVersionNoFilter: number | undefined, isActiveFilter: number | undefined, generationTokenFilter: string | undefined, titleFilter: string | undefined, templateInstructionsFilter: string | undefined): Observable<FileDto> {
+    getExamsToExcel(filter: string | undefined, maxVersionNoFilter: number | undefined, minVersionNoFilter: number | undefined, isActiveFilter: number | undefined, generationTokenFilter: string | undefined, titleFilter: string | undefined, examTemplateInstructionsFilter: string | undefined): Observable<FileDto> {
         let url_ = this.baseUrl + "/api/services/app/Exams/GetExamsToExcel?";
         if (filter === null)
             throw new Error("The parameter 'filter' cannot be null.");
@@ -8117,10 +8097,10 @@ export class ExamsServiceProxy {
             throw new Error("The parameter 'titleFilter' cannot be null.");
         else if (titleFilter !== undefined)
             url_ += "TitleFilter=" + encodeURIComponent("" + titleFilter) + "&";
-        if (templateInstructionsFilter === null)
-            throw new Error("The parameter 'templateInstructionsFilter' cannot be null.");
-        else if (templateInstructionsFilter !== undefined)
-            url_ += "TemplateInstructionsFilter=" + encodeURIComponent("" + templateInstructionsFilter) + "&";
+        if (examTemplateInstructionsFilter === null)
+            throw new Error("The parameter 'examTemplateInstructionsFilter' cannot be null.");
+        else if (examTemplateInstructionsFilter !== undefined)
+            url_ += "ExamTemplateInstructionsFilter=" + encodeURIComponent("" + examTemplateInstructionsFilter) + "&";
         url_ = url_.replace(/[?&]$/, "");
 
         let options_ : any = {
@@ -8174,8 +8154,8 @@ export class ExamsServiceProxy {
      * @param maxResultCount (optional) 
      * @return Success
      */
-    getAllTemplateForLookupTable(filter: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfExamTemplateLookupTableDto> {
-        let url_ = this.baseUrl + "/api/services/app/Exams/GetAllTemplateForLookupTable?";
+    getAllExamTemplateForLookupTable(filter: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfExamExamTemplateLookupTableDto> {
+        let url_ = this.baseUrl + "/api/services/app/Exams/GetAllExamTemplateForLookupTable?";
         if (filter === null)
             throw new Error("The parameter 'filter' cannot be null.");
         else if (filter !== undefined)
@@ -8203,20 +8183,20 @@ export class ExamsServiceProxy {
         };
 
         return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGetAllTemplateForLookupTable(response_);
+            return this.processGetAllExamTemplateForLookupTable(response_);
         })).pipe(_observableCatch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
-                    return this.processGetAllTemplateForLookupTable(response_ as any);
+                    return this.processGetAllExamTemplateForLookupTable(response_ as any);
                 } catch (e) {
-                    return _observableThrow(e) as any as Observable<PagedResultDtoOfExamTemplateLookupTableDto>;
+                    return _observableThrow(e) as any as Observable<PagedResultDtoOfExamExamTemplateLookupTableDto>;
                 }
             } else
-                return _observableThrow(response_) as any as Observable<PagedResultDtoOfExamTemplateLookupTableDto>;
+                return _observableThrow(response_) as any as Observable<PagedResultDtoOfExamExamTemplateLookupTableDto>;
         }));
     }
 
-    protected processGetAllTemplateForLookupTable(response: HttpResponseBase): Observable<PagedResultDtoOfExamTemplateLookupTableDto> {
+    protected processGetAllExamTemplateForLookupTable(response: HttpResponseBase): Observable<PagedResultDtoOfExamExamTemplateLookupTableDto> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -8227,8 +8207,968 @@ export class ExamsServiceProxy {
             return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = PagedResultDtoOfExamTemplateLookupTableDto.fromJS(resultData200);
+            result200 = PagedResultDtoOfExamExamTemplateLookupTableDto.fromJS(resultData200);
             return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+}
+
+@Injectable()
+export class ExamSectionsServiceProxy {
+    private http: HttpClient;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        this.http = http;
+        this.baseUrl = baseUrl ?? "";
+    }
+
+    /**
+     * @param filter (optional) 
+     * @param maxDurationTimeFilter (optional) 
+     * @param minDurationTimeFilter (optional) 
+     * @param maxOrderFilter (optional) 
+     * @param minOrderFilter (optional) 
+     * @param instructionsFilter (optional) 
+     * @param nameLFilter (optional) 
+     * @param nameFFilter (optional) 
+     * @param typeFilter (optional) 
+     * @param examTitleFilter (optional) 
+     * @param sorting (optional) 
+     * @param skipCount (optional) 
+     * @param maxResultCount (optional) 
+     * @return Success
+     */
+    getAll(filter: string | undefined, maxDurationTimeFilter: DateTime | undefined, minDurationTimeFilter: DateTime | undefined, maxOrderFilter: number | undefined, minOrderFilter: number | undefined, instructionsFilter: string | undefined, nameLFilter: string | undefined, nameFFilter: string | undefined, typeFilter: number | undefined, examTitleFilter: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfGetExamSectionForViewDto> {
+        let url_ = this.baseUrl + "/api/services/app/ExamSections/GetAll?";
+        if (filter === null)
+            throw new Error("The parameter 'filter' cannot be null.");
+        else if (filter !== undefined)
+            url_ += "Filter=" + encodeURIComponent("" + filter) + "&";
+        if (maxDurationTimeFilter === null)
+            throw new Error("The parameter 'maxDurationTimeFilter' cannot be null.");
+        else if (maxDurationTimeFilter !== undefined)
+            url_ += "MaxDurationTimeFilter=" + encodeURIComponent(maxDurationTimeFilter ? "" + maxDurationTimeFilter.toString() : "") + "&";
+        if (minDurationTimeFilter === null)
+            throw new Error("The parameter 'minDurationTimeFilter' cannot be null.");
+        else if (minDurationTimeFilter !== undefined)
+            url_ += "MinDurationTimeFilter=" + encodeURIComponent(minDurationTimeFilter ? "" + minDurationTimeFilter.toString() : "") + "&";
+        if (maxOrderFilter === null)
+            throw new Error("The parameter 'maxOrderFilter' cannot be null.");
+        else if (maxOrderFilter !== undefined)
+            url_ += "MaxOrderFilter=" + encodeURIComponent("" + maxOrderFilter) + "&";
+        if (minOrderFilter === null)
+            throw new Error("The parameter 'minOrderFilter' cannot be null.");
+        else if (minOrderFilter !== undefined)
+            url_ += "MinOrderFilter=" + encodeURIComponent("" + minOrderFilter) + "&";
+        if (instructionsFilter === null)
+            throw new Error("The parameter 'instructionsFilter' cannot be null.");
+        else if (instructionsFilter !== undefined)
+            url_ += "InstructionsFilter=" + encodeURIComponent("" + instructionsFilter) + "&";
+        if (nameLFilter === null)
+            throw new Error("The parameter 'nameLFilter' cannot be null.");
+        else if (nameLFilter !== undefined)
+            url_ += "NameLFilter=" + encodeURIComponent("" + nameLFilter) + "&";
+        if (nameFFilter === null)
+            throw new Error("The parameter 'nameFFilter' cannot be null.");
+        else if (nameFFilter !== undefined)
+            url_ += "NameFFilter=" + encodeURIComponent("" + nameFFilter) + "&";
+        if (typeFilter === null)
+            throw new Error("The parameter 'typeFilter' cannot be null.");
+        else if (typeFilter !== undefined)
+            url_ += "TypeFilter=" + encodeURIComponent("" + typeFilter) + "&";
+        if (examTitleFilter === null)
+            throw new Error("The parameter 'examTitleFilter' cannot be null.");
+        else if (examTitleFilter !== undefined)
+            url_ += "ExamTitleFilter=" + encodeURIComponent("" + examTitleFilter) + "&";
+        if (sorting === null)
+            throw new Error("The parameter 'sorting' cannot be null.");
+        else if (sorting !== undefined)
+            url_ += "Sorting=" + encodeURIComponent("" + sorting) + "&";
+        if (skipCount === null)
+            throw new Error("The parameter 'skipCount' cannot be null.");
+        else if (skipCount !== undefined)
+            url_ += "SkipCount=" + encodeURIComponent("" + skipCount) + "&";
+        if (maxResultCount === null)
+            throw new Error("The parameter 'maxResultCount' cannot be null.");
+        else if (maxResultCount !== undefined)
+            url_ += "MaxResultCount=" + encodeURIComponent("" + maxResultCount) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetAll(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetAll(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<PagedResultDtoOfGetExamSectionForViewDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<PagedResultDtoOfGetExamSectionForViewDto>;
+        }));
+    }
+
+    protected processGetAll(response: HttpResponseBase): Observable<PagedResultDtoOfGetExamSectionForViewDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = PagedResultDtoOfGetExamSectionForViewDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param id (optional) 
+     * @return Success
+     */
+    getExamSectionForView(id: number | undefined): Observable<GetExamSectionForViewDto> {
+        let url_ = this.baseUrl + "/api/services/app/ExamSections/GetExamSectionForView?";
+        if (id === null)
+            throw new Error("The parameter 'id' cannot be null.");
+        else if (id !== undefined)
+            url_ += "id=" + encodeURIComponent("" + id) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetExamSectionForView(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetExamSectionForView(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<GetExamSectionForViewDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<GetExamSectionForViewDto>;
+        }));
+    }
+
+    protected processGetExamSectionForView(response: HttpResponseBase): Observable<GetExamSectionForViewDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = GetExamSectionForViewDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param id (optional) 
+     * @return Success
+     */
+    getExamSectionForEdit(id: number | undefined): Observable<GetExamSectionForEditOutput> {
+        let url_ = this.baseUrl + "/api/services/app/ExamSections/GetExamSectionForEdit?";
+        if (id === null)
+            throw new Error("The parameter 'id' cannot be null.");
+        else if (id !== undefined)
+            url_ += "Id=" + encodeURIComponent("" + id) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetExamSectionForEdit(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetExamSectionForEdit(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<GetExamSectionForEditOutput>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<GetExamSectionForEditOutput>;
+        }));
+    }
+
+    protected processGetExamSectionForEdit(response: HttpResponseBase): Observable<GetExamSectionForEditOutput> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = GetExamSectionForEditOutput.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param body (optional) 
+     * @return Success
+     */
+    createOrEdit(body: CreateOrEditExamSectionDto | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/ExamSections/CreateOrEdit";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json",
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processCreateOrEdit(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processCreateOrEdit(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<void>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<void>;
+        }));
+    }
+
+    protected processCreateOrEdit(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return _observableOf(null as any);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param id (optional) 
+     * @return Success
+     */
+    delete(id: number | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/ExamSections/Delete?";
+        if (id === null)
+            throw new Error("The parameter 'id' cannot be null.");
+        else if (id !== undefined)
+            url_ += "Id=" + encodeURIComponent("" + id) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+            })
+        };
+
+        return this.http.request("delete", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processDelete(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processDelete(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<void>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<void>;
+        }));
+    }
+
+    protected processDelete(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return _observableOf(null as any);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param filter (optional) 
+     * @param maxDurationTimeFilter (optional) 
+     * @param minDurationTimeFilter (optional) 
+     * @param maxOrderFilter (optional) 
+     * @param minOrderFilter (optional) 
+     * @param instructionsFilter (optional) 
+     * @param nameLFilter (optional) 
+     * @param nameFFilter (optional) 
+     * @param typeFilter (optional) 
+     * @param examTitleFilter (optional) 
+     * @return Success
+     */
+    getExamSectionsToExcel(filter: string | undefined, maxDurationTimeFilter: DateTime | undefined, minDurationTimeFilter: DateTime | undefined, maxOrderFilter: number | undefined, minOrderFilter: number | undefined, instructionsFilter: string | undefined, nameLFilter: string | undefined, nameFFilter: string | undefined, typeFilter: number | undefined, examTitleFilter: string | undefined): Observable<FileDto> {
+        let url_ = this.baseUrl + "/api/services/app/ExamSections/GetExamSectionsToExcel?";
+        if (filter === null)
+            throw new Error("The parameter 'filter' cannot be null.");
+        else if (filter !== undefined)
+            url_ += "Filter=" + encodeURIComponent("" + filter) + "&";
+        if (maxDurationTimeFilter === null)
+            throw new Error("The parameter 'maxDurationTimeFilter' cannot be null.");
+        else if (maxDurationTimeFilter !== undefined)
+            url_ += "MaxDurationTimeFilter=" + encodeURIComponent(maxDurationTimeFilter ? "" + maxDurationTimeFilter.toString() : "") + "&";
+        if (minDurationTimeFilter === null)
+            throw new Error("The parameter 'minDurationTimeFilter' cannot be null.");
+        else if (minDurationTimeFilter !== undefined)
+            url_ += "MinDurationTimeFilter=" + encodeURIComponent(minDurationTimeFilter ? "" + minDurationTimeFilter.toString() : "") + "&";
+        if (maxOrderFilter === null)
+            throw new Error("The parameter 'maxOrderFilter' cannot be null.");
+        else if (maxOrderFilter !== undefined)
+            url_ += "MaxOrderFilter=" + encodeURIComponent("" + maxOrderFilter) + "&";
+        if (minOrderFilter === null)
+            throw new Error("The parameter 'minOrderFilter' cannot be null.");
+        else if (minOrderFilter !== undefined)
+            url_ += "MinOrderFilter=" + encodeURIComponent("" + minOrderFilter) + "&";
+        if (instructionsFilter === null)
+            throw new Error("The parameter 'instructionsFilter' cannot be null.");
+        else if (instructionsFilter !== undefined)
+            url_ += "InstructionsFilter=" + encodeURIComponent("" + instructionsFilter) + "&";
+        if (nameLFilter === null)
+            throw new Error("The parameter 'nameLFilter' cannot be null.");
+        else if (nameLFilter !== undefined)
+            url_ += "NameLFilter=" + encodeURIComponent("" + nameLFilter) + "&";
+        if (nameFFilter === null)
+            throw new Error("The parameter 'nameFFilter' cannot be null.");
+        else if (nameFFilter !== undefined)
+            url_ += "NameFFilter=" + encodeURIComponent("" + nameFFilter) + "&";
+        if (typeFilter === null)
+            throw new Error("The parameter 'typeFilter' cannot be null.");
+        else if (typeFilter !== undefined)
+            url_ += "TypeFilter=" + encodeURIComponent("" + typeFilter) + "&";
+        if (examTitleFilter === null)
+            throw new Error("The parameter 'examTitleFilter' cannot be null.");
+        else if (examTitleFilter !== undefined)
+            url_ += "ExamTitleFilter=" + encodeURIComponent("" + examTitleFilter) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetExamSectionsToExcel(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetExamSectionsToExcel(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<FileDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<FileDto>;
+        }));
+    }
+
+    protected processGetExamSectionsToExcel(response: HttpResponseBase): Observable<FileDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = FileDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param filter (optional) 
+     * @param sorting (optional) 
+     * @param skipCount (optional) 
+     * @param maxResultCount (optional) 
+     * @return Success
+     */
+    getAllExamForLookupTable(filter: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfExamSectionExamLookupTableDto> {
+        let url_ = this.baseUrl + "/api/services/app/ExamSections/GetAllExamForLookupTable?";
+        if (filter === null)
+            throw new Error("The parameter 'filter' cannot be null.");
+        else if (filter !== undefined)
+            url_ += "Filter=" + encodeURIComponent("" + filter) + "&";
+        if (sorting === null)
+            throw new Error("The parameter 'sorting' cannot be null.");
+        else if (sorting !== undefined)
+            url_ += "Sorting=" + encodeURIComponent("" + sorting) + "&";
+        if (skipCount === null)
+            throw new Error("The parameter 'skipCount' cannot be null.");
+        else if (skipCount !== undefined)
+            url_ += "SkipCount=" + encodeURIComponent("" + skipCount) + "&";
+        if (maxResultCount === null)
+            throw new Error("The parameter 'maxResultCount' cannot be null.");
+        else if (maxResultCount !== undefined)
+            url_ += "MaxResultCount=" + encodeURIComponent("" + maxResultCount) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetAllExamForLookupTable(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetAllExamForLookupTable(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<PagedResultDtoOfExamSectionExamLookupTableDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<PagedResultDtoOfExamSectionExamLookupTableDto>;
+        }));
+    }
+
+    protected processGetAllExamForLookupTable(response: HttpResponseBase): Observable<PagedResultDtoOfExamSectionExamLookupTableDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = PagedResultDtoOfExamSectionExamLookupTableDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+}
+
+@Injectable()
+export class ExamTemplatesServiceProxy {
+    private http: HttpClient;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        this.http = http;
+        this.baseUrl = baseUrl ?? "";
+    }
+
+    /**
+     * @param templateId (optional) 
+     * @return Success
+     */
+    checkIfTemplateIsAlreadyUsed(templateId: number | undefined): Observable<boolean> {
+        let url_ = this.baseUrl + "/api/services/app/ExamTemplates/CheckIfTemplateIsAlreadyUsed?";
+        if (templateId === null)
+            throw new Error("The parameter 'templateId' cannot be null.");
+        else if (templateId !== undefined)
+            url_ += "templateId=" + encodeURIComponent("" + templateId) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processCheckIfTemplateIsAlreadyUsed(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processCheckIfTemplateIsAlreadyUsed(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<boolean>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<boolean>;
+        }));
+    }
+
+    protected processCheckIfTemplateIsAlreadyUsed(response: HttpResponseBase): Observable<boolean> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+                result200 = resultData200 !== undefined ? resultData200 : <any>null;
+    
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param filter (optional) 
+     * @param instructionsFilter (optional) 
+     * @param isActiveFilter (optional) 
+     * @param maxVersionCountFilter (optional) 
+     * @param minVersionCountFilter (optional) 
+     * @param studyLevelValueFilter (optional) 
+     * @param studySubjectValueFilter (optional) 
+     * @param sorting (optional) 
+     * @param skipCount (optional) 
+     * @param maxResultCount (optional) 
+     * @return Success
+     */
+    getAll(filter: string | undefined, instructionsFilter: string | undefined, isActiveFilter: number | undefined, maxVersionCountFilter: number | undefined, minVersionCountFilter: number | undefined, studyLevelValueFilter: string | undefined, studySubjectValueFilter: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfGetExamTemplateForViewDto> {
+        let url_ = this.baseUrl + "/api/services/app/ExamTemplates/GetAll?";
+        if (filter === null)
+            throw new Error("The parameter 'filter' cannot be null.");
+        else if (filter !== undefined)
+            url_ += "Filter=" + encodeURIComponent("" + filter) + "&";
+        if (instructionsFilter === null)
+            throw new Error("The parameter 'instructionsFilter' cannot be null.");
+        else if (instructionsFilter !== undefined)
+            url_ += "InstructionsFilter=" + encodeURIComponent("" + instructionsFilter) + "&";
+        if (isActiveFilter === null)
+            throw new Error("The parameter 'isActiveFilter' cannot be null.");
+        else if (isActiveFilter !== undefined)
+            url_ += "IsActiveFilter=" + encodeURIComponent("" + isActiveFilter) + "&";
+        if (maxVersionCountFilter === null)
+            throw new Error("The parameter 'maxVersionCountFilter' cannot be null.");
+        else if (maxVersionCountFilter !== undefined)
+            url_ += "MaxVersionCountFilter=" + encodeURIComponent("" + maxVersionCountFilter) + "&";
+        if (minVersionCountFilter === null)
+            throw new Error("The parameter 'minVersionCountFilter' cannot be null.");
+        else if (minVersionCountFilter !== undefined)
+            url_ += "MinVersionCountFilter=" + encodeURIComponent("" + minVersionCountFilter) + "&";
+        if (studyLevelValueFilter === null)
+            throw new Error("The parameter 'studyLevelValueFilter' cannot be null.");
+        else if (studyLevelValueFilter !== undefined)
+            url_ += "StudyLevelValueFilter=" + encodeURIComponent("" + studyLevelValueFilter) + "&";
+        if (studySubjectValueFilter === null)
+            throw new Error("The parameter 'studySubjectValueFilter' cannot be null.");
+        else if (studySubjectValueFilter !== undefined)
+            url_ += "StudySubjectValueFilter=" + encodeURIComponent("" + studySubjectValueFilter) + "&";
+        if (sorting === null)
+            throw new Error("The parameter 'sorting' cannot be null.");
+        else if (sorting !== undefined)
+            url_ += "Sorting=" + encodeURIComponent("" + sorting) + "&";
+        if (skipCount === null)
+            throw new Error("The parameter 'skipCount' cannot be null.");
+        else if (skipCount !== undefined)
+            url_ += "SkipCount=" + encodeURIComponent("" + skipCount) + "&";
+        if (maxResultCount === null)
+            throw new Error("The parameter 'maxResultCount' cannot be null.");
+        else if (maxResultCount !== undefined)
+            url_ += "MaxResultCount=" + encodeURIComponent("" + maxResultCount) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetAll(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetAll(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<PagedResultDtoOfGetExamTemplateForViewDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<PagedResultDtoOfGetExamTemplateForViewDto>;
+        }));
+    }
+
+    protected processGetAll(response: HttpResponseBase): Observable<PagedResultDtoOfGetExamTemplateForViewDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = PagedResultDtoOfGetExamTemplateForViewDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param id (optional) 
+     * @return Success
+     */
+    getExamTemplateForEdit(id: number | undefined): Observable<GetExamTemplateForEditOutput> {
+        let url_ = this.baseUrl + "/api/services/app/ExamTemplates/GetExamTemplateForEdit?";
+        if (id === null)
+            throw new Error("The parameter 'id' cannot be null.");
+        else if (id !== undefined)
+            url_ += "Id=" + encodeURIComponent("" + id) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetExamTemplateForEdit(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetExamTemplateForEdit(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<GetExamTemplateForEditOutput>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<GetExamTemplateForEditOutput>;
+        }));
+    }
+
+    protected processGetExamTemplateForEdit(response: HttpResponseBase): Observable<GetExamTemplateForEditOutput> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = GetExamTemplateForEditOutput.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param templateId (optional) 
+     * @return Success
+     */
+    generateExamByTemplate(templateId: number | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/ExamTemplates/GenerateExamByTemplate?";
+        if (templateId === null)
+            throw new Error("The parameter 'templateId' cannot be null.");
+        else if (templateId !== undefined)
+            url_ += "templateId=" + encodeURIComponent("" + templateId) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGenerateExamByTemplate(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGenerateExamByTemplate(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<void>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<void>;
+        }));
+    }
+
+    protected processGenerateExamByTemplate(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return _observableOf(null as any);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param body (optional) 
+     * @return Success
+     */
+    createOrEdit(body: CreateOrEditExamTemplateDto | undefined): Observable<number> {
+        let url_ = this.baseUrl + "/api/services/app/ExamTemplates/CreateOrEdit";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json",
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processCreateOrEdit(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processCreateOrEdit(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<number>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<number>;
+        }));
+    }
+
+    protected processCreateOrEdit(response: HttpResponseBase): Observable<number> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+                result200 = resultData200 !== undefined ? resultData200 : <any>null;
+    
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param examTemplateId (optional) 
+     * @return Success
+     */
+    copyTemplate(examTemplateId: number | undefined): Observable<number> {
+        let url_ = this.baseUrl + "/api/services/app/ExamTemplates/CopyTemplate?";
+        if (examTemplateId === null)
+            throw new Error("The parameter 'examTemplateId' cannot be null.");
+        else if (examTemplateId !== undefined)
+            url_ += "examTemplateId=" + encodeURIComponent("" + examTemplateId) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processCopyTemplate(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processCopyTemplate(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<number>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<number>;
+        }));
+    }
+
+    protected processCopyTemplate(response: HttpResponseBase): Observable<number> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+                result200 = resultData200 !== undefined ? resultData200 : <any>null;
+    
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param id (optional) 
+     * @return Success
+     */
+    delete(id: number | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/ExamTemplates/Delete?";
+        if (id === null)
+            throw new Error("The parameter 'id' cannot be null.");
+        else if (id !== undefined)
+            url_ += "Id=" + encodeURIComponent("" + id) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+            })
+        };
+
+        return this.http.request("delete", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processDelete(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processDelete(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<void>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<void>;
+        }));
+    }
+
+    protected processDelete(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return _observableOf(null as any);
             }));
         } else if (status !== 200 && status !== 204) {
             return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
@@ -10714,552 +11654,6 @@ export class NotificationServiceProxy {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
             result200 = GetPublishedNotificationsOutput.fromJS(resultData200);
-            return _observableOf(result200);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf(null as any);
-    }
-}
-
-@Injectable()
-export class OptionsServiceProxy {
-    private http: HttpClient;
-    private baseUrl: string;
-    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
-
-    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
-        this.http = http;
-        this.baseUrl = baseUrl ?? "";
-    }
-
-    /**
-     * @param filter (optional) 
-     * @param valueFilter (optional) 
-     * @param isRequiredFilter (optional) 
-     * @param maxWeightFilter (optional) 
-     * @param minWeightFilter (optional) 
-     * @param maxMinWeightFilter (optional) 
-     * @param minMinWeightFilter (optional) 
-     * @param maxMaxWeightFilter (optional) 
-     * @param minMaxWeightFilter (optional) 
-     * @param optionTypeFilter (optional) 
-     * @param maxOrderFilter (optional) 
-     * @param minOrderFilter (optional) 
-     * @param questionQuestionHelperFilter (optional) 
-     * @param sorting (optional) 
-     * @param skipCount (optional) 
-     * @param maxResultCount (optional) 
-     * @return Success
-     */
-    getAll(filter: string | undefined, valueFilter: string | undefined, isRequiredFilter: number | undefined, maxWeightFilter: number | undefined, minWeightFilter: number | undefined, maxMinWeightFilter: number | undefined, minMinWeightFilter: number | undefined, maxMaxWeightFilter: number | undefined, minMaxWeightFilter: number | undefined, optionTypeFilter: number | undefined, maxOrderFilter: number | undefined, minOrderFilter: number | undefined, questionQuestionHelperFilter: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfGetOptionForViewDto> {
-        let url_ = this.baseUrl + "/api/services/app/Options/GetAll?";
-        if (filter === null)
-            throw new Error("The parameter 'filter' cannot be null.");
-        else if (filter !== undefined)
-            url_ += "Filter=" + encodeURIComponent("" + filter) + "&";
-        if (valueFilter === null)
-            throw new Error("The parameter 'valueFilter' cannot be null.");
-        else if (valueFilter !== undefined)
-            url_ += "ValueFilter=" + encodeURIComponent("" + valueFilter) + "&";
-        if (isRequiredFilter === null)
-            throw new Error("The parameter 'isRequiredFilter' cannot be null.");
-        else if (isRequiredFilter !== undefined)
-            url_ += "IsRequiredFilter=" + encodeURIComponent("" + isRequiredFilter) + "&";
-        if (maxWeightFilter === null)
-            throw new Error("The parameter 'maxWeightFilter' cannot be null.");
-        else if (maxWeightFilter !== undefined)
-            url_ += "MaxWeightFilter=" + encodeURIComponent("" + maxWeightFilter) + "&";
-        if (minWeightFilter === null)
-            throw new Error("The parameter 'minWeightFilter' cannot be null.");
-        else if (minWeightFilter !== undefined)
-            url_ += "MinWeightFilter=" + encodeURIComponent("" + minWeightFilter) + "&";
-        if (maxMinWeightFilter === null)
-            throw new Error("The parameter 'maxMinWeightFilter' cannot be null.");
-        else if (maxMinWeightFilter !== undefined)
-            url_ += "MaxMinWeightFilter=" + encodeURIComponent("" + maxMinWeightFilter) + "&";
-        if (minMinWeightFilter === null)
-            throw new Error("The parameter 'minMinWeightFilter' cannot be null.");
-        else if (minMinWeightFilter !== undefined)
-            url_ += "MinMinWeightFilter=" + encodeURIComponent("" + minMinWeightFilter) + "&";
-        if (maxMaxWeightFilter === null)
-            throw new Error("The parameter 'maxMaxWeightFilter' cannot be null.");
-        else if (maxMaxWeightFilter !== undefined)
-            url_ += "MaxMaxWeightFilter=" + encodeURIComponent("" + maxMaxWeightFilter) + "&";
-        if (minMaxWeightFilter === null)
-            throw new Error("The parameter 'minMaxWeightFilter' cannot be null.");
-        else if (minMaxWeightFilter !== undefined)
-            url_ += "MinMaxWeightFilter=" + encodeURIComponent("" + minMaxWeightFilter) + "&";
-        if (optionTypeFilter === null)
-            throw new Error("The parameter 'optionTypeFilter' cannot be null.");
-        else if (optionTypeFilter !== undefined)
-            url_ += "OptionTypeFilter=" + encodeURIComponent("" + optionTypeFilter) + "&";
-        if (maxOrderFilter === null)
-            throw new Error("The parameter 'maxOrderFilter' cannot be null.");
-        else if (maxOrderFilter !== undefined)
-            url_ += "MaxOrderFilter=" + encodeURIComponent("" + maxOrderFilter) + "&";
-        if (minOrderFilter === null)
-            throw new Error("The parameter 'minOrderFilter' cannot be null.");
-        else if (minOrderFilter !== undefined)
-            url_ += "MinOrderFilter=" + encodeURIComponent("" + minOrderFilter) + "&";
-        if (questionQuestionHelperFilter === null)
-            throw new Error("The parameter 'questionQuestionHelperFilter' cannot be null.");
-        else if (questionQuestionHelperFilter !== undefined)
-            url_ += "QuestionQuestionHelperFilter=" + encodeURIComponent("" + questionQuestionHelperFilter) + "&";
-        if (sorting === null)
-            throw new Error("The parameter 'sorting' cannot be null.");
-        else if (sorting !== undefined)
-            url_ += "Sorting=" + encodeURIComponent("" + sorting) + "&";
-        if (skipCount === null)
-            throw new Error("The parameter 'skipCount' cannot be null.");
-        else if (skipCount !== undefined)
-            url_ += "SkipCount=" + encodeURIComponent("" + skipCount) + "&";
-        if (maxResultCount === null)
-            throw new Error("The parameter 'maxResultCount' cannot be null.");
-        else if (maxResultCount !== undefined)
-            url_ += "MaxResultCount=" + encodeURIComponent("" + maxResultCount) + "&";
-        url_ = url_.replace(/[?&]$/, "");
-
-        let options_ : any = {
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Accept": "text/plain"
-            })
-        };
-
-        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGetAll(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processGetAll(response_ as any);
-                } catch (e) {
-                    return _observableThrow(e) as any as Observable<PagedResultDtoOfGetOptionForViewDto>;
-                }
-            } else
-                return _observableThrow(response_) as any as Observable<PagedResultDtoOfGetOptionForViewDto>;
-        }));
-    }
-
-    protected processGetAll(response: HttpResponseBase): Observable<PagedResultDtoOfGetOptionForViewDto> {
-        const status = response.status;
-        const responseBlob =
-            response instanceof HttpResponse ? response.body :
-            (response as any).error instanceof Blob ? (response as any).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = PagedResultDtoOfGetOptionForViewDto.fromJS(resultData200);
-            return _observableOf(result200);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf(null as any);
-    }
-
-    /**
-     * @param id (optional) 
-     * @return Success
-     */
-    getOptionForView(id: number | undefined): Observable<GetOptionForViewDto> {
-        let url_ = this.baseUrl + "/api/services/app/Options/GetOptionForView?";
-        if (id === null)
-            throw new Error("The parameter 'id' cannot be null.");
-        else if (id !== undefined)
-            url_ += "id=" + encodeURIComponent("" + id) + "&";
-        url_ = url_.replace(/[?&]$/, "");
-
-        let options_ : any = {
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Accept": "text/plain"
-            })
-        };
-
-        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGetOptionForView(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processGetOptionForView(response_ as any);
-                } catch (e) {
-                    return _observableThrow(e) as any as Observable<GetOptionForViewDto>;
-                }
-            } else
-                return _observableThrow(response_) as any as Observable<GetOptionForViewDto>;
-        }));
-    }
-
-    protected processGetOptionForView(response: HttpResponseBase): Observable<GetOptionForViewDto> {
-        const status = response.status;
-        const responseBlob =
-            response instanceof HttpResponse ? response.body :
-            (response as any).error instanceof Blob ? (response as any).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = GetOptionForViewDto.fromJS(resultData200);
-            return _observableOf(result200);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf(null as any);
-    }
-
-    /**
-     * @param id (optional) 
-     * @return Success
-     */
-    getOptionForEdit(id: number | undefined): Observable<GetOptionForEditOutput> {
-        let url_ = this.baseUrl + "/api/services/app/Options/GetOptionForEdit?";
-        if (id === null)
-            throw new Error("The parameter 'id' cannot be null.");
-        else if (id !== undefined)
-            url_ += "Id=" + encodeURIComponent("" + id) + "&";
-        url_ = url_.replace(/[?&]$/, "");
-
-        let options_ : any = {
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Accept": "text/plain"
-            })
-        };
-
-        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGetOptionForEdit(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processGetOptionForEdit(response_ as any);
-                } catch (e) {
-                    return _observableThrow(e) as any as Observable<GetOptionForEditOutput>;
-                }
-            } else
-                return _observableThrow(response_) as any as Observable<GetOptionForEditOutput>;
-        }));
-    }
-
-    protected processGetOptionForEdit(response: HttpResponseBase): Observable<GetOptionForEditOutput> {
-        const status = response.status;
-        const responseBlob =
-            response instanceof HttpResponse ? response.body :
-            (response as any).error instanceof Blob ? (response as any).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = GetOptionForEditOutput.fromJS(resultData200);
-            return _observableOf(result200);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf(null as any);
-    }
-
-    /**
-     * @param body (optional) 
-     * @return Success
-     */
-    createOrEdit(body: CreateOrEditOptionDto | undefined): Observable<void> {
-        let url_ = this.baseUrl + "/api/services/app/Options/CreateOrEdit";
-        url_ = url_.replace(/[?&]$/, "");
-
-        const content_ = JSON.stringify(body);
-
-        let options_ : any = {
-            body: content_,
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Content-Type": "application/json",
-            })
-        };
-
-        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processCreateOrEdit(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processCreateOrEdit(response_ as any);
-                } catch (e) {
-                    return _observableThrow(e) as any as Observable<void>;
-                }
-            } else
-                return _observableThrow(response_) as any as Observable<void>;
-        }));
-    }
-
-    protected processCreateOrEdit(response: HttpResponseBase): Observable<void> {
-        const status = response.status;
-        const responseBlob =
-            response instanceof HttpResponse ? response.body :
-            (response as any).error instanceof Blob ? (response as any).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            return _observableOf(null as any);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf(null as any);
-    }
-
-    /**
-     * @param id (optional) 
-     * @return Success
-     */
-    delete(id: number | undefined): Observable<void> {
-        let url_ = this.baseUrl + "/api/services/app/Options/Delete?";
-        if (id === null)
-            throw new Error("The parameter 'id' cannot be null.");
-        else if (id !== undefined)
-            url_ += "Id=" + encodeURIComponent("" + id) + "&";
-        url_ = url_.replace(/[?&]$/, "");
-
-        let options_ : any = {
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-            })
-        };
-
-        return this.http.request("delete", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processDelete(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processDelete(response_ as any);
-                } catch (e) {
-                    return _observableThrow(e) as any as Observable<void>;
-                }
-            } else
-                return _observableThrow(response_) as any as Observable<void>;
-        }));
-    }
-
-    protected processDelete(response: HttpResponseBase): Observable<void> {
-        const status = response.status;
-        const responseBlob =
-            response instanceof HttpResponse ? response.body :
-            (response as any).error instanceof Blob ? (response as any).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            return _observableOf(null as any);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf(null as any);
-    }
-
-    /**
-     * @param filter (optional) 
-     * @param valueFilter (optional) 
-     * @param isRequiredFilter (optional) 
-     * @param maxWeightFilter (optional) 
-     * @param minWeightFilter (optional) 
-     * @param maxMinWeightFilter (optional) 
-     * @param minMinWeightFilter (optional) 
-     * @param maxMaxWeightFilter (optional) 
-     * @param minMaxWeightFilter (optional) 
-     * @param optionTypeFilter (optional) 
-     * @param maxOrderFilter (optional) 
-     * @param minOrderFilter (optional) 
-     * @param questionQuestionHelperFilter (optional) 
-     * @return Success
-     */
-    getOptionsToExcel(filter: string | undefined, valueFilter: string | undefined, isRequiredFilter: number | undefined, maxWeightFilter: number | undefined, minWeightFilter: number | undefined, maxMinWeightFilter: number | undefined, minMinWeightFilter: number | undefined, maxMaxWeightFilter: number | undefined, minMaxWeightFilter: number | undefined, optionTypeFilter: number | undefined, maxOrderFilter: number | undefined, minOrderFilter: number | undefined, questionQuestionHelperFilter: string | undefined): Observable<FileDto> {
-        let url_ = this.baseUrl + "/api/services/app/Options/GetOptionsToExcel?";
-        if (filter === null)
-            throw new Error("The parameter 'filter' cannot be null.");
-        else if (filter !== undefined)
-            url_ += "Filter=" + encodeURIComponent("" + filter) + "&";
-        if (valueFilter === null)
-            throw new Error("The parameter 'valueFilter' cannot be null.");
-        else if (valueFilter !== undefined)
-            url_ += "ValueFilter=" + encodeURIComponent("" + valueFilter) + "&";
-        if (isRequiredFilter === null)
-            throw new Error("The parameter 'isRequiredFilter' cannot be null.");
-        else if (isRequiredFilter !== undefined)
-            url_ += "IsRequiredFilter=" + encodeURIComponent("" + isRequiredFilter) + "&";
-        if (maxWeightFilter === null)
-            throw new Error("The parameter 'maxWeightFilter' cannot be null.");
-        else if (maxWeightFilter !== undefined)
-            url_ += "MaxWeightFilter=" + encodeURIComponent("" + maxWeightFilter) + "&";
-        if (minWeightFilter === null)
-            throw new Error("The parameter 'minWeightFilter' cannot be null.");
-        else if (minWeightFilter !== undefined)
-            url_ += "MinWeightFilter=" + encodeURIComponent("" + minWeightFilter) + "&";
-        if (maxMinWeightFilter === null)
-            throw new Error("The parameter 'maxMinWeightFilter' cannot be null.");
-        else if (maxMinWeightFilter !== undefined)
-            url_ += "MaxMinWeightFilter=" + encodeURIComponent("" + maxMinWeightFilter) + "&";
-        if (minMinWeightFilter === null)
-            throw new Error("The parameter 'minMinWeightFilter' cannot be null.");
-        else if (minMinWeightFilter !== undefined)
-            url_ += "MinMinWeightFilter=" + encodeURIComponent("" + minMinWeightFilter) + "&";
-        if (maxMaxWeightFilter === null)
-            throw new Error("The parameter 'maxMaxWeightFilter' cannot be null.");
-        else if (maxMaxWeightFilter !== undefined)
-            url_ += "MaxMaxWeightFilter=" + encodeURIComponent("" + maxMaxWeightFilter) + "&";
-        if (minMaxWeightFilter === null)
-            throw new Error("The parameter 'minMaxWeightFilter' cannot be null.");
-        else if (minMaxWeightFilter !== undefined)
-            url_ += "MinMaxWeightFilter=" + encodeURIComponent("" + minMaxWeightFilter) + "&";
-        if (optionTypeFilter === null)
-            throw new Error("The parameter 'optionTypeFilter' cannot be null.");
-        else if (optionTypeFilter !== undefined)
-            url_ += "OptionTypeFilter=" + encodeURIComponent("" + optionTypeFilter) + "&";
-        if (maxOrderFilter === null)
-            throw new Error("The parameter 'maxOrderFilter' cannot be null.");
-        else if (maxOrderFilter !== undefined)
-            url_ += "MaxOrderFilter=" + encodeURIComponent("" + maxOrderFilter) + "&";
-        if (minOrderFilter === null)
-            throw new Error("The parameter 'minOrderFilter' cannot be null.");
-        else if (minOrderFilter !== undefined)
-            url_ += "MinOrderFilter=" + encodeURIComponent("" + minOrderFilter) + "&";
-        if (questionQuestionHelperFilter === null)
-            throw new Error("The parameter 'questionQuestionHelperFilter' cannot be null.");
-        else if (questionQuestionHelperFilter !== undefined)
-            url_ += "QuestionQuestionHelperFilter=" + encodeURIComponent("" + questionQuestionHelperFilter) + "&";
-        url_ = url_.replace(/[?&]$/, "");
-
-        let options_ : any = {
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Accept": "text/plain"
-            })
-        };
-
-        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGetOptionsToExcel(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processGetOptionsToExcel(response_ as any);
-                } catch (e) {
-                    return _observableThrow(e) as any as Observable<FileDto>;
-                }
-            } else
-                return _observableThrow(response_) as any as Observable<FileDto>;
-        }));
-    }
-
-    protected processGetOptionsToExcel(response: HttpResponseBase): Observable<FileDto> {
-        const status = response.status;
-        const responseBlob =
-            response instanceof HttpResponse ? response.body :
-            (response as any).error instanceof Blob ? (response as any).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = FileDto.fromJS(resultData200);
-            return _observableOf(result200);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf(null as any);
-    }
-
-    /**
-     * @param filter (optional) 
-     * @param sorting (optional) 
-     * @param skipCount (optional) 
-     * @param maxResultCount (optional) 
-     * @return Success
-     */
-    getAllQuestionForLookupTable(filter: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfOptionQuestionLookupTableDto> {
-        let url_ = this.baseUrl + "/api/services/app/Options/GetAllQuestionForLookupTable?";
-        if (filter === null)
-            throw new Error("The parameter 'filter' cannot be null.");
-        else if (filter !== undefined)
-            url_ += "Filter=" + encodeURIComponent("" + filter) + "&";
-        if (sorting === null)
-            throw new Error("The parameter 'sorting' cannot be null.");
-        else if (sorting !== undefined)
-            url_ += "Sorting=" + encodeURIComponent("" + sorting) + "&";
-        if (skipCount === null)
-            throw new Error("The parameter 'skipCount' cannot be null.");
-        else if (skipCount !== undefined)
-            url_ += "SkipCount=" + encodeURIComponent("" + skipCount) + "&";
-        if (maxResultCount === null)
-            throw new Error("The parameter 'maxResultCount' cannot be null.");
-        else if (maxResultCount !== undefined)
-            url_ += "MaxResultCount=" + encodeURIComponent("" + maxResultCount) + "&";
-        url_ = url_.replace(/[?&]$/, "");
-
-        let options_ : any = {
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Accept": "text/plain"
-            })
-        };
-
-        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGetAllQuestionForLookupTable(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processGetAllQuestionForLookupTable(response_ as any);
-                } catch (e) {
-                    return _observableThrow(e) as any as Observable<PagedResultDtoOfOptionQuestionLookupTableDto>;
-                }
-            } else
-                return _observableThrow(response_) as any as Observable<PagedResultDtoOfOptionQuestionLookupTableDto>;
-        }));
-    }
-
-    protected processGetAllQuestionForLookupTable(response: HttpResponseBase): Observable<PagedResultDtoOfOptionQuestionLookupTableDto> {
-        const status = response.status;
-        const responseBlob =
-            response instanceof HttpResponse ? response.body :
-            (response as any).error instanceof Blob ? (response as any).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = PagedResultDtoOfOptionQuestionLookupTableDto.fromJS(resultData200);
             return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
@@ -13763,14 +14157,14 @@ export class QuestionCategoriesServiceProxy {
     /**
      * @param filter (optional) 
      * @param noteFilter (optional) 
-     * @param categoryValueFilter (optional) 
+     * @param categoryNameFilter (optional) 
      * @param questionQuestionHelperFilter (optional) 
      * @param sorting (optional) 
      * @param skipCount (optional) 
      * @param maxResultCount (optional) 
      * @return Success
      */
-    getAll(filter: string | undefined, noteFilter: string | undefined, categoryValueFilter: string | undefined, questionQuestionHelperFilter: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfGetQuestionCategoryForViewDto> {
+    getAll(filter: string | undefined, noteFilter: string | undefined, categoryNameFilter: string | undefined, questionQuestionHelperFilter: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfGetQuestionCategoryForViewDto> {
         let url_ = this.baseUrl + "/api/services/app/QuestionCategories/GetAll?";
         if (filter === null)
             throw new Error("The parameter 'filter' cannot be null.");
@@ -13780,10 +14174,10 @@ export class QuestionCategoriesServiceProxy {
             throw new Error("The parameter 'noteFilter' cannot be null.");
         else if (noteFilter !== undefined)
             url_ += "NoteFilter=" + encodeURIComponent("" + noteFilter) + "&";
-        if (categoryValueFilter === null)
-            throw new Error("The parameter 'categoryValueFilter' cannot be null.");
-        else if (categoryValueFilter !== undefined)
-            url_ += "CategoryValueFilter=" + encodeURIComponent("" + categoryValueFilter) + "&";
+        if (categoryNameFilter === null)
+            throw new Error("The parameter 'categoryNameFilter' cannot be null.");
+        else if (categoryNameFilter !== undefined)
+            url_ += "CategoryNameFilter=" + encodeURIComponent("" + categoryNameFilter) + "&";
         if (questionQuestionHelperFilter === null)
             throw new Error("The parameter 'questionQuestionHelperFilter' cannot be null.");
         else if (questionQuestionHelperFilter !== undefined)
@@ -14065,11 +14459,11 @@ export class QuestionCategoriesServiceProxy {
     /**
      * @param filter (optional) 
      * @param noteFilter (optional) 
-     * @param categoryValueFilter (optional) 
+     * @param categoryNameFilter (optional) 
      * @param questionQuestionHelperFilter (optional) 
      * @return Success
      */
-    getQuestionCategoriesToExcel(filter: string | undefined, noteFilter: string | undefined, categoryValueFilter: string | undefined, questionQuestionHelperFilter: string | undefined): Observable<FileDto> {
+    getQuestionCategoriesToExcel(filter: string | undefined, noteFilter: string | undefined, categoryNameFilter: string | undefined, questionQuestionHelperFilter: string | undefined): Observable<FileDto> {
         let url_ = this.baseUrl + "/api/services/app/QuestionCategories/GetQuestionCategoriesToExcel?";
         if (filter === null)
             throw new Error("The parameter 'filter' cannot be null.");
@@ -14079,10 +14473,10 @@ export class QuestionCategoriesServiceProxy {
             throw new Error("The parameter 'noteFilter' cannot be null.");
         else if (noteFilter !== undefined)
             url_ += "NoteFilter=" + encodeURIComponent("" + noteFilter) + "&";
-        if (categoryValueFilter === null)
-            throw new Error("The parameter 'categoryValueFilter' cannot be null.");
-        else if (categoryValueFilter !== undefined)
-            url_ += "CategoryValueFilter=" + encodeURIComponent("" + categoryValueFilter) + "&";
+        if (categoryNameFilter === null)
+            throw new Error("The parameter 'categoryNameFilter' cannot be null.");
+        else if (categoryNameFilter !== undefined)
+            url_ += "CategoryNameFilter=" + encodeURIComponent("" + categoryNameFilter) + "&";
         if (questionQuestionHelperFilter === null)
             throw new Error("The parameter 'questionQuestionHelperFilter' cannot be null.");
         else if (questionQuestionHelperFilter !== undefined)
@@ -14265,6 +14659,533 @@ export class QuestionCategoriesServiceProxy {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
             result200 = PagedResultDtoOfQuestionCategoryQuestionLookupTableDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+}
+
+@Injectable()
+export class QuestionComplexitiesServiceProxy {
+    private http: HttpClient;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        this.http = http;
+        this.baseUrl = baseUrl ?? "";
+    }
+
+    /**
+     * @param filter (optional) 
+     * @param noteFilter (optional) 
+     * @param complexityNameFilter (optional) 
+     * @param questionQuestionHelperFilter (optional) 
+     * @param sorting (optional) 
+     * @param skipCount (optional) 
+     * @param maxResultCount (optional) 
+     * @return Success
+     */
+    getAll(filter: string | undefined, noteFilter: string | undefined, complexityNameFilter: string | undefined, questionQuestionHelperFilter: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfGetQuestionComplexitiyForViewDto> {
+        let url_ = this.baseUrl + "/api/services/app/QuestionComplexities/GetAll?";
+        if (filter === null)
+            throw new Error("The parameter 'filter' cannot be null.");
+        else if (filter !== undefined)
+            url_ += "Filter=" + encodeURIComponent("" + filter) + "&";
+        if (noteFilter === null)
+            throw new Error("The parameter 'noteFilter' cannot be null.");
+        else if (noteFilter !== undefined)
+            url_ += "NoteFilter=" + encodeURIComponent("" + noteFilter) + "&";
+        if (complexityNameFilter === null)
+            throw new Error("The parameter 'complexityNameFilter' cannot be null.");
+        else if (complexityNameFilter !== undefined)
+            url_ += "ComplexityNameFilter=" + encodeURIComponent("" + complexityNameFilter) + "&";
+        if (questionQuestionHelperFilter === null)
+            throw new Error("The parameter 'questionQuestionHelperFilter' cannot be null.");
+        else if (questionQuestionHelperFilter !== undefined)
+            url_ += "QuestionQuestionHelperFilter=" + encodeURIComponent("" + questionQuestionHelperFilter) + "&";
+        if (sorting === null)
+            throw new Error("The parameter 'sorting' cannot be null.");
+        else if (sorting !== undefined)
+            url_ += "Sorting=" + encodeURIComponent("" + sorting) + "&";
+        if (skipCount === null)
+            throw new Error("The parameter 'skipCount' cannot be null.");
+        else if (skipCount !== undefined)
+            url_ += "SkipCount=" + encodeURIComponent("" + skipCount) + "&";
+        if (maxResultCount === null)
+            throw new Error("The parameter 'maxResultCount' cannot be null.");
+        else if (maxResultCount !== undefined)
+            url_ += "MaxResultCount=" + encodeURIComponent("" + maxResultCount) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetAll(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetAll(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<PagedResultDtoOfGetQuestionComplexitiyForViewDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<PagedResultDtoOfGetQuestionComplexitiyForViewDto>;
+        }));
+    }
+
+    protected processGetAll(response: HttpResponseBase): Observable<PagedResultDtoOfGetQuestionComplexitiyForViewDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = PagedResultDtoOfGetQuestionComplexitiyForViewDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param id (optional) 
+     * @return Success
+     */
+    getQuestionComplexitiyForView(id: number | undefined): Observable<GetQuestionComplexitiyForViewDto> {
+        let url_ = this.baseUrl + "/api/services/app/QuestionComplexities/GetQuestionComplexitiyForView?";
+        if (id === null)
+            throw new Error("The parameter 'id' cannot be null.");
+        else if (id !== undefined)
+            url_ += "id=" + encodeURIComponent("" + id) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetQuestionComplexitiyForView(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetQuestionComplexitiyForView(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<GetQuestionComplexitiyForViewDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<GetQuestionComplexitiyForViewDto>;
+        }));
+    }
+
+    protected processGetQuestionComplexitiyForView(response: HttpResponseBase): Observable<GetQuestionComplexitiyForViewDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = GetQuestionComplexitiyForViewDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param id (optional) 
+     * @return Success
+     */
+    getQuestionComplexitiyForEdit(id: number | undefined): Observable<GetQuestionComplexitiyForEditOutput> {
+        let url_ = this.baseUrl + "/api/services/app/QuestionComplexities/GetQuestionComplexitiyForEdit?";
+        if (id === null)
+            throw new Error("The parameter 'id' cannot be null.");
+        else if (id !== undefined)
+            url_ += "Id=" + encodeURIComponent("" + id) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetQuestionComplexitiyForEdit(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetQuestionComplexitiyForEdit(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<GetQuestionComplexitiyForEditOutput>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<GetQuestionComplexitiyForEditOutput>;
+        }));
+    }
+
+    protected processGetQuestionComplexitiyForEdit(response: HttpResponseBase): Observable<GetQuestionComplexitiyForEditOutput> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = GetQuestionComplexitiyForEditOutput.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param body (optional) 
+     * @return Success
+     */
+    createOrEdit(body: CreateOrEditQuestionComplexitiyDto | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/QuestionComplexities/CreateOrEdit";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json",
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processCreateOrEdit(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processCreateOrEdit(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<void>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<void>;
+        }));
+    }
+
+    protected processCreateOrEdit(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return _observableOf(null as any);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param id (optional) 
+     * @return Success
+     */
+    delete(id: number | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/QuestionComplexities/Delete?";
+        if (id === null)
+            throw new Error("The parameter 'id' cannot be null.");
+        else if (id !== undefined)
+            url_ += "Id=" + encodeURIComponent("" + id) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+            })
+        };
+
+        return this.http.request("delete", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processDelete(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processDelete(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<void>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<void>;
+        }));
+    }
+
+    protected processDelete(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return _observableOf(null as any);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param filter (optional) 
+     * @param noteFilter (optional) 
+     * @param complexityNameFilter (optional) 
+     * @param questionQuestionHelperFilter (optional) 
+     * @return Success
+     */
+    getQuestionComplexitiesToExcel(filter: string | undefined, noteFilter: string | undefined, complexityNameFilter: string | undefined, questionQuestionHelperFilter: string | undefined): Observable<FileDto> {
+        let url_ = this.baseUrl + "/api/services/app/QuestionComplexities/GetQuestionComplexitiesToExcel?";
+        if (filter === null)
+            throw new Error("The parameter 'filter' cannot be null.");
+        else if (filter !== undefined)
+            url_ += "Filter=" + encodeURIComponent("" + filter) + "&";
+        if (noteFilter === null)
+            throw new Error("The parameter 'noteFilter' cannot be null.");
+        else if (noteFilter !== undefined)
+            url_ += "NoteFilter=" + encodeURIComponent("" + noteFilter) + "&";
+        if (complexityNameFilter === null)
+            throw new Error("The parameter 'complexityNameFilter' cannot be null.");
+        else if (complexityNameFilter !== undefined)
+            url_ += "ComplexityNameFilter=" + encodeURIComponent("" + complexityNameFilter) + "&";
+        if (questionQuestionHelperFilter === null)
+            throw new Error("The parameter 'questionQuestionHelperFilter' cannot be null.");
+        else if (questionQuestionHelperFilter !== undefined)
+            url_ += "QuestionQuestionHelperFilter=" + encodeURIComponent("" + questionQuestionHelperFilter) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetQuestionComplexitiesToExcel(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetQuestionComplexitiesToExcel(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<FileDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<FileDto>;
+        }));
+    }
+
+    protected processGetQuestionComplexitiesToExcel(response: HttpResponseBase): Observable<FileDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = FileDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param filter (optional) 
+     * @param sorting (optional) 
+     * @param skipCount (optional) 
+     * @param maxResultCount (optional) 
+     * @return Success
+     */
+    getAllComplexityForLookupTable(filter: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfQuestionComplexitiyComplexityLookupTableDto> {
+        let url_ = this.baseUrl + "/api/services/app/QuestionComplexities/GetAllComplexityForLookupTable?";
+        if (filter === null)
+            throw new Error("The parameter 'filter' cannot be null.");
+        else if (filter !== undefined)
+            url_ += "Filter=" + encodeURIComponent("" + filter) + "&";
+        if (sorting === null)
+            throw new Error("The parameter 'sorting' cannot be null.");
+        else if (sorting !== undefined)
+            url_ += "Sorting=" + encodeURIComponent("" + sorting) + "&";
+        if (skipCount === null)
+            throw new Error("The parameter 'skipCount' cannot be null.");
+        else if (skipCount !== undefined)
+            url_ += "SkipCount=" + encodeURIComponent("" + skipCount) + "&";
+        if (maxResultCount === null)
+            throw new Error("The parameter 'maxResultCount' cannot be null.");
+        else if (maxResultCount !== undefined)
+            url_ += "MaxResultCount=" + encodeURIComponent("" + maxResultCount) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetAllComplexityForLookupTable(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetAllComplexityForLookupTable(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<PagedResultDtoOfQuestionComplexitiyComplexityLookupTableDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<PagedResultDtoOfQuestionComplexitiyComplexityLookupTableDto>;
+        }));
+    }
+
+    protected processGetAllComplexityForLookupTable(response: HttpResponseBase): Observable<PagedResultDtoOfQuestionComplexitiyComplexityLookupTableDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = PagedResultDtoOfQuestionComplexitiyComplexityLookupTableDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param filter (optional) 
+     * @param sorting (optional) 
+     * @param skipCount (optional) 
+     * @param maxResultCount (optional) 
+     * @return Success
+     */
+    getAllQuestionForLookupTable(filter: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfQuestionComplexitiyQuestionLookupTableDto> {
+        let url_ = this.baseUrl + "/api/services/app/QuestionComplexities/GetAllQuestionForLookupTable?";
+        if (filter === null)
+            throw new Error("The parameter 'filter' cannot be null.");
+        else if (filter !== undefined)
+            url_ += "Filter=" + encodeURIComponent("" + filter) + "&";
+        if (sorting === null)
+            throw new Error("The parameter 'sorting' cannot be null.");
+        else if (sorting !== undefined)
+            url_ += "Sorting=" + encodeURIComponent("" + sorting) + "&";
+        if (skipCount === null)
+            throw new Error("The parameter 'skipCount' cannot be null.");
+        else if (skipCount !== undefined)
+            url_ += "SkipCount=" + encodeURIComponent("" + skipCount) + "&";
+        if (maxResultCount === null)
+            throw new Error("The parameter 'maxResultCount' cannot be null.");
+        else if (maxResultCount !== undefined)
+            url_ += "MaxResultCount=" + encodeURIComponent("" + maxResultCount) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetAllQuestionForLookupTable(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetAllQuestionForLookupTable(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<PagedResultDtoOfQuestionComplexitiyQuestionLookupTableDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<PagedResultDtoOfQuestionComplexitiyQuestionLookupTableDto>;
+        }));
+    }
+
+    protected processGetAllQuestionForLookupTable(response: HttpResponseBase): Observable<PagedResultDtoOfQuestionComplexitiyQuestionLookupTableDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = PagedResultDtoOfQuestionComplexitiyQuestionLookupTableDto.fromJS(resultData200);
             return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
@@ -14817,14 +15738,14 @@ export class QuestionLevelsServiceProxy {
     /**
      * @param filter (optional) 
      * @param noteFilter (optional) 
-     * @param studyLevelValueFilter (optional) 
+     * @param studyLevelNameFilter (optional) 
      * @param questionQuestionHelperFilter (optional) 
      * @param sorting (optional) 
      * @param skipCount (optional) 
      * @param maxResultCount (optional) 
      * @return Success
      */
-    getAll(filter: string | undefined, noteFilter: string | undefined, studyLevelValueFilter: string | undefined, questionQuestionHelperFilter: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfGetQuestionLevelForViewDto> {
+    getAll(filter: string | undefined, noteFilter: string | undefined, studyLevelNameFilter: string | undefined, questionQuestionHelperFilter: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfGetQuestionLevelForViewDto> {
         let url_ = this.baseUrl + "/api/services/app/QuestionLevels/GetAll?";
         if (filter === null)
             throw new Error("The parameter 'filter' cannot be null.");
@@ -14834,10 +15755,10 @@ export class QuestionLevelsServiceProxy {
             throw new Error("The parameter 'noteFilter' cannot be null.");
         else if (noteFilter !== undefined)
             url_ += "NoteFilter=" + encodeURIComponent("" + noteFilter) + "&";
-        if (studyLevelValueFilter === null)
-            throw new Error("The parameter 'studyLevelValueFilter' cannot be null.");
-        else if (studyLevelValueFilter !== undefined)
-            url_ += "StudyLevelValueFilter=" + encodeURIComponent("" + studyLevelValueFilter) + "&";
+        if (studyLevelNameFilter === null)
+            throw new Error("The parameter 'studyLevelNameFilter' cannot be null.");
+        else if (studyLevelNameFilter !== undefined)
+            url_ += "StudyLevelNameFilter=" + encodeURIComponent("" + studyLevelNameFilter) + "&";
         if (questionQuestionHelperFilter === null)
             throw new Error("The parameter 'questionQuestionHelperFilter' cannot be null.");
         else if (questionQuestionHelperFilter !== undefined)
@@ -15119,11 +16040,11 @@ export class QuestionLevelsServiceProxy {
     /**
      * @param filter (optional) 
      * @param noteFilter (optional) 
-     * @param studyLevelValueFilter (optional) 
+     * @param studyLevelNameFilter (optional) 
      * @param questionQuestionHelperFilter (optional) 
      * @return Success
      */
-    getQuestionLevelsToExcel(filter: string | undefined, noteFilter: string | undefined, studyLevelValueFilter: string | undefined, questionQuestionHelperFilter: string | undefined): Observable<FileDto> {
+    getQuestionLevelsToExcel(filter: string | undefined, noteFilter: string | undefined, studyLevelNameFilter: string | undefined, questionQuestionHelperFilter: string | undefined): Observable<FileDto> {
         let url_ = this.baseUrl + "/api/services/app/QuestionLevels/GetQuestionLevelsToExcel?";
         if (filter === null)
             throw new Error("The parameter 'filter' cannot be null.");
@@ -15133,10 +16054,10 @@ export class QuestionLevelsServiceProxy {
             throw new Error("The parameter 'noteFilter' cannot be null.");
         else if (noteFilter !== undefined)
             url_ += "NoteFilter=" + encodeURIComponent("" + noteFilter) + "&";
-        if (studyLevelValueFilter === null)
-            throw new Error("The parameter 'studyLevelValueFilter' cannot be null.");
-        else if (studyLevelValueFilter !== undefined)
-            url_ += "StudyLevelValueFilter=" + encodeURIComponent("" + studyLevelValueFilter) + "&";
+        if (studyLevelNameFilter === null)
+            throw new Error("The parameter 'studyLevelNameFilter' cannot be null.");
+        else if (studyLevelNameFilter !== undefined)
+            url_ += "StudyLevelNameFilter=" + encodeURIComponent("" + studyLevelNameFilter) + "&";
         if (questionQuestionHelperFilter === null)
             throw new Error("The parameter 'questionQuestionHelperFilter' cannot be null.");
         else if (questionQuestionHelperFilter !== undefined)
@@ -15331,6 +16252,552 @@ export class QuestionLevelsServiceProxy {
 }
 
 @Injectable()
+export class QuestionOptionsServiceProxy {
+    private http: HttpClient;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        this.http = http;
+        this.baseUrl = baseUrl ?? "";
+    }
+
+    /**
+     * @param filter (optional) 
+     * @param valueFilter (optional) 
+     * @param isRequiredFilter (optional) 
+     * @param maxWeightFilter (optional) 
+     * @param minWeightFilter (optional) 
+     * @param maxMinWeightFilter (optional) 
+     * @param minMinWeightFilter (optional) 
+     * @param maxMaxWeightFilter (optional) 
+     * @param minMaxWeightFilter (optional) 
+     * @param optionTypeFilter (optional) 
+     * @param maxOrderFilter (optional) 
+     * @param minOrderFilter (optional) 
+     * @param questionQuestionHelperFilter (optional) 
+     * @param sorting (optional) 
+     * @param skipCount (optional) 
+     * @param maxResultCount (optional) 
+     * @return Success
+     */
+    getAll(filter: string | undefined, valueFilter: string | undefined, isRequiredFilter: number | undefined, maxWeightFilter: number | undefined, minWeightFilter: number | undefined, maxMinWeightFilter: number | undefined, minMinWeightFilter: number | undefined, maxMaxWeightFilter: number | undefined, minMaxWeightFilter: number | undefined, optionTypeFilter: number | undefined, maxOrderFilter: number | undefined, minOrderFilter: number | undefined, questionQuestionHelperFilter: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfGetQuestionOptionForViewDto> {
+        let url_ = this.baseUrl + "/api/services/app/QuestionOptions/GetAll?";
+        if (filter === null)
+            throw new Error("The parameter 'filter' cannot be null.");
+        else if (filter !== undefined)
+            url_ += "Filter=" + encodeURIComponent("" + filter) + "&";
+        if (valueFilter === null)
+            throw new Error("The parameter 'valueFilter' cannot be null.");
+        else if (valueFilter !== undefined)
+            url_ += "ValueFilter=" + encodeURIComponent("" + valueFilter) + "&";
+        if (isRequiredFilter === null)
+            throw new Error("The parameter 'isRequiredFilter' cannot be null.");
+        else if (isRequiredFilter !== undefined)
+            url_ += "IsRequiredFilter=" + encodeURIComponent("" + isRequiredFilter) + "&";
+        if (maxWeightFilter === null)
+            throw new Error("The parameter 'maxWeightFilter' cannot be null.");
+        else if (maxWeightFilter !== undefined)
+            url_ += "MaxWeightFilter=" + encodeURIComponent("" + maxWeightFilter) + "&";
+        if (minWeightFilter === null)
+            throw new Error("The parameter 'minWeightFilter' cannot be null.");
+        else if (minWeightFilter !== undefined)
+            url_ += "MinWeightFilter=" + encodeURIComponent("" + minWeightFilter) + "&";
+        if (maxMinWeightFilter === null)
+            throw new Error("The parameter 'maxMinWeightFilter' cannot be null.");
+        else if (maxMinWeightFilter !== undefined)
+            url_ += "MaxMinWeightFilter=" + encodeURIComponent("" + maxMinWeightFilter) + "&";
+        if (minMinWeightFilter === null)
+            throw new Error("The parameter 'minMinWeightFilter' cannot be null.");
+        else if (minMinWeightFilter !== undefined)
+            url_ += "MinMinWeightFilter=" + encodeURIComponent("" + minMinWeightFilter) + "&";
+        if (maxMaxWeightFilter === null)
+            throw new Error("The parameter 'maxMaxWeightFilter' cannot be null.");
+        else if (maxMaxWeightFilter !== undefined)
+            url_ += "MaxMaxWeightFilter=" + encodeURIComponent("" + maxMaxWeightFilter) + "&";
+        if (minMaxWeightFilter === null)
+            throw new Error("The parameter 'minMaxWeightFilter' cannot be null.");
+        else if (minMaxWeightFilter !== undefined)
+            url_ += "MinMaxWeightFilter=" + encodeURIComponent("" + minMaxWeightFilter) + "&";
+        if (optionTypeFilter === null)
+            throw new Error("The parameter 'optionTypeFilter' cannot be null.");
+        else if (optionTypeFilter !== undefined)
+            url_ += "OptionTypeFilter=" + encodeURIComponent("" + optionTypeFilter) + "&";
+        if (maxOrderFilter === null)
+            throw new Error("The parameter 'maxOrderFilter' cannot be null.");
+        else if (maxOrderFilter !== undefined)
+            url_ += "MaxOrderFilter=" + encodeURIComponent("" + maxOrderFilter) + "&";
+        if (minOrderFilter === null)
+            throw new Error("The parameter 'minOrderFilter' cannot be null.");
+        else if (minOrderFilter !== undefined)
+            url_ += "MinOrderFilter=" + encodeURIComponent("" + minOrderFilter) + "&";
+        if (questionQuestionHelperFilter === null)
+            throw new Error("The parameter 'questionQuestionHelperFilter' cannot be null.");
+        else if (questionQuestionHelperFilter !== undefined)
+            url_ += "QuestionQuestionHelperFilter=" + encodeURIComponent("" + questionQuestionHelperFilter) + "&";
+        if (sorting === null)
+            throw new Error("The parameter 'sorting' cannot be null.");
+        else if (sorting !== undefined)
+            url_ += "Sorting=" + encodeURIComponent("" + sorting) + "&";
+        if (skipCount === null)
+            throw new Error("The parameter 'skipCount' cannot be null.");
+        else if (skipCount !== undefined)
+            url_ += "SkipCount=" + encodeURIComponent("" + skipCount) + "&";
+        if (maxResultCount === null)
+            throw new Error("The parameter 'maxResultCount' cannot be null.");
+        else if (maxResultCount !== undefined)
+            url_ += "MaxResultCount=" + encodeURIComponent("" + maxResultCount) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetAll(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetAll(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<PagedResultDtoOfGetQuestionOptionForViewDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<PagedResultDtoOfGetQuestionOptionForViewDto>;
+        }));
+    }
+
+    protected processGetAll(response: HttpResponseBase): Observable<PagedResultDtoOfGetQuestionOptionForViewDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = PagedResultDtoOfGetQuestionOptionForViewDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param id (optional) 
+     * @return Success
+     */
+    getQuestionOptionForView(id: number | undefined): Observable<GetQuestionOptionForViewDto> {
+        let url_ = this.baseUrl + "/api/services/app/QuestionOptions/GetQuestionOptionForView?";
+        if (id === null)
+            throw new Error("The parameter 'id' cannot be null.");
+        else if (id !== undefined)
+            url_ += "id=" + encodeURIComponent("" + id) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetQuestionOptionForView(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetQuestionOptionForView(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<GetQuestionOptionForViewDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<GetQuestionOptionForViewDto>;
+        }));
+    }
+
+    protected processGetQuestionOptionForView(response: HttpResponseBase): Observable<GetQuestionOptionForViewDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = GetQuestionOptionForViewDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param id (optional) 
+     * @return Success
+     */
+    getQuestionOptionForEdit(id: number | undefined): Observable<GetQuestionOptionForEditOutput> {
+        let url_ = this.baseUrl + "/api/services/app/QuestionOptions/GetQuestionOptionForEdit?";
+        if (id === null)
+            throw new Error("The parameter 'id' cannot be null.");
+        else if (id !== undefined)
+            url_ += "Id=" + encodeURIComponent("" + id) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetQuestionOptionForEdit(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetQuestionOptionForEdit(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<GetQuestionOptionForEditOutput>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<GetQuestionOptionForEditOutput>;
+        }));
+    }
+
+    protected processGetQuestionOptionForEdit(response: HttpResponseBase): Observable<GetQuestionOptionForEditOutput> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = GetQuestionOptionForEditOutput.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param body (optional) 
+     * @return Success
+     */
+    createOrEdit(body: CreateOrEditQuestionOptionDto | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/QuestionOptions/CreateOrEdit";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json",
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processCreateOrEdit(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processCreateOrEdit(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<void>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<void>;
+        }));
+    }
+
+    protected processCreateOrEdit(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return _observableOf(null as any);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param id (optional) 
+     * @return Success
+     */
+    delete(id: number | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/QuestionOptions/Delete?";
+        if (id === null)
+            throw new Error("The parameter 'id' cannot be null.");
+        else if (id !== undefined)
+            url_ += "Id=" + encodeURIComponent("" + id) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+            })
+        };
+
+        return this.http.request("delete", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processDelete(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processDelete(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<void>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<void>;
+        }));
+    }
+
+    protected processDelete(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return _observableOf(null as any);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param filter (optional) 
+     * @param valueFilter (optional) 
+     * @param isRequiredFilter (optional) 
+     * @param maxWeightFilter (optional) 
+     * @param minWeightFilter (optional) 
+     * @param maxMinWeightFilter (optional) 
+     * @param minMinWeightFilter (optional) 
+     * @param maxMaxWeightFilter (optional) 
+     * @param minMaxWeightFilter (optional) 
+     * @param optionTypeFilter (optional) 
+     * @param maxOrderFilter (optional) 
+     * @param minOrderFilter (optional) 
+     * @param questionQuestionHelperFilter (optional) 
+     * @return Success
+     */
+    getQuestionOptionsToExcel(filter: string | undefined, valueFilter: string | undefined, isRequiredFilter: number | undefined, maxWeightFilter: number | undefined, minWeightFilter: number | undefined, maxMinWeightFilter: number | undefined, minMinWeightFilter: number | undefined, maxMaxWeightFilter: number | undefined, minMaxWeightFilter: number | undefined, optionTypeFilter: number | undefined, maxOrderFilter: number | undefined, minOrderFilter: number | undefined, questionQuestionHelperFilter: string | undefined): Observable<FileDto> {
+        let url_ = this.baseUrl + "/api/services/app/QuestionOptions/GetQuestionOptionsToExcel?";
+        if (filter === null)
+            throw new Error("The parameter 'filter' cannot be null.");
+        else if (filter !== undefined)
+            url_ += "Filter=" + encodeURIComponent("" + filter) + "&";
+        if (valueFilter === null)
+            throw new Error("The parameter 'valueFilter' cannot be null.");
+        else if (valueFilter !== undefined)
+            url_ += "ValueFilter=" + encodeURIComponent("" + valueFilter) + "&";
+        if (isRequiredFilter === null)
+            throw new Error("The parameter 'isRequiredFilter' cannot be null.");
+        else if (isRequiredFilter !== undefined)
+            url_ += "IsRequiredFilter=" + encodeURIComponent("" + isRequiredFilter) + "&";
+        if (maxWeightFilter === null)
+            throw new Error("The parameter 'maxWeightFilter' cannot be null.");
+        else if (maxWeightFilter !== undefined)
+            url_ += "MaxWeightFilter=" + encodeURIComponent("" + maxWeightFilter) + "&";
+        if (minWeightFilter === null)
+            throw new Error("The parameter 'minWeightFilter' cannot be null.");
+        else if (minWeightFilter !== undefined)
+            url_ += "MinWeightFilter=" + encodeURIComponent("" + minWeightFilter) + "&";
+        if (maxMinWeightFilter === null)
+            throw new Error("The parameter 'maxMinWeightFilter' cannot be null.");
+        else if (maxMinWeightFilter !== undefined)
+            url_ += "MaxMinWeightFilter=" + encodeURIComponent("" + maxMinWeightFilter) + "&";
+        if (minMinWeightFilter === null)
+            throw new Error("The parameter 'minMinWeightFilter' cannot be null.");
+        else if (minMinWeightFilter !== undefined)
+            url_ += "MinMinWeightFilter=" + encodeURIComponent("" + minMinWeightFilter) + "&";
+        if (maxMaxWeightFilter === null)
+            throw new Error("The parameter 'maxMaxWeightFilter' cannot be null.");
+        else if (maxMaxWeightFilter !== undefined)
+            url_ += "MaxMaxWeightFilter=" + encodeURIComponent("" + maxMaxWeightFilter) + "&";
+        if (minMaxWeightFilter === null)
+            throw new Error("The parameter 'minMaxWeightFilter' cannot be null.");
+        else if (minMaxWeightFilter !== undefined)
+            url_ += "MinMaxWeightFilter=" + encodeURIComponent("" + minMaxWeightFilter) + "&";
+        if (optionTypeFilter === null)
+            throw new Error("The parameter 'optionTypeFilter' cannot be null.");
+        else if (optionTypeFilter !== undefined)
+            url_ += "OptionTypeFilter=" + encodeURIComponent("" + optionTypeFilter) + "&";
+        if (maxOrderFilter === null)
+            throw new Error("The parameter 'maxOrderFilter' cannot be null.");
+        else if (maxOrderFilter !== undefined)
+            url_ += "MaxOrderFilter=" + encodeURIComponent("" + maxOrderFilter) + "&";
+        if (minOrderFilter === null)
+            throw new Error("The parameter 'minOrderFilter' cannot be null.");
+        else if (minOrderFilter !== undefined)
+            url_ += "MinOrderFilter=" + encodeURIComponent("" + minOrderFilter) + "&";
+        if (questionQuestionHelperFilter === null)
+            throw new Error("The parameter 'questionQuestionHelperFilter' cannot be null.");
+        else if (questionQuestionHelperFilter !== undefined)
+            url_ += "QuestionQuestionHelperFilter=" + encodeURIComponent("" + questionQuestionHelperFilter) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetQuestionOptionsToExcel(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetQuestionOptionsToExcel(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<FileDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<FileDto>;
+        }));
+    }
+
+    protected processGetQuestionOptionsToExcel(response: HttpResponseBase): Observable<FileDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = FileDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param filter (optional) 
+     * @param sorting (optional) 
+     * @param skipCount (optional) 
+     * @param maxResultCount (optional) 
+     * @return Success
+     */
+    getAllQuestionForLookupTable(filter: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfQuestionOptionQuestionLookupTableDto> {
+        let url_ = this.baseUrl + "/api/services/app/QuestionOptions/GetAllQuestionForLookupTable?";
+        if (filter === null)
+            throw new Error("The parameter 'filter' cannot be null.");
+        else if (filter !== undefined)
+            url_ += "Filter=" + encodeURIComponent("" + filter) + "&";
+        if (sorting === null)
+            throw new Error("The parameter 'sorting' cannot be null.");
+        else if (sorting !== undefined)
+            url_ += "Sorting=" + encodeURIComponent("" + sorting) + "&";
+        if (skipCount === null)
+            throw new Error("The parameter 'skipCount' cannot be null.");
+        else if (skipCount !== undefined)
+            url_ += "SkipCount=" + encodeURIComponent("" + skipCount) + "&";
+        if (maxResultCount === null)
+            throw new Error("The parameter 'maxResultCount' cannot be null.");
+        else if (maxResultCount !== undefined)
+            url_ += "MaxResultCount=" + encodeURIComponent("" + maxResultCount) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetAllQuestionForLookupTable(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetAllQuestionForLookupTable(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<PagedResultDtoOfQuestionOptionQuestionLookupTableDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<PagedResultDtoOfQuestionOptionQuestionLookupTableDto>;
+        }));
+    }
+
+    protected processGetAllQuestionForLookupTable(response: HttpResponseBase): Observable<PagedResultDtoOfQuestionOptionQuestionLookupTableDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = PagedResultDtoOfQuestionOptionQuestionLookupTableDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+}
+
+@Injectable()
 export class QuestionsServiceProxy {
     private http: HttpClient;
     private baseUrl: string;
@@ -15345,7 +16812,9 @@ export class QuestionsServiceProxy {
      * @param filter (optional) 
      * @param bodyFilter (optional) 
      * @param typeFilter (optional) 
+     * @param instructionsFilter (optional) 
      * @param languageFilter (optional) 
+     * @param questionHelperFilter (optional) 
      * @param isActiveFilter (optional) 
      * @param autoCorrectionFilter (optional) 
      * @param maxPointFilter (optional) 
@@ -15354,19 +16823,18 @@ export class QuestionsServiceProxy {
      * @param minMinPointsFilter (optional) 
      * @param maxMaxPointsFilter (optional) 
      * @param minMaxPointsFilter (optional) 
-     * @param maxUpdatedByQuestionIdFilter (optional) 
-     * @param minUpdatedByQuestionIdFilter (optional) 
+     * @param questionBodyFilter (optional) 
      * @param examId (optional) 
      * @param subjectId (optional) 
      * @param levelId (optional) 
-     * @param targetId (optional) 
+     * @param subjectUnitId (optional) 
      * @param complexityId (optional) 
      * @param sorting (optional) 
      * @param skipCount (optional) 
      * @param maxResultCount (optional) 
      * @return Success
      */
-    getAll(filter: string | undefined, bodyFilter: string | undefined, typeFilter: QuestionTypeEnum | undefined, languageFilter: number | undefined, isActiveFilter: boolean | undefined, autoCorrectionFilter: number | undefined, maxPointFilter: number | undefined, minPointFilter: number | undefined, maxMinPointsFilter: number | undefined, minMinPointsFilter: number | undefined, maxMaxPointsFilter: number | undefined, minMaxPointsFilter: number | undefined, maxUpdatedByQuestionIdFilter: number | undefined, minUpdatedByQuestionIdFilter: number | undefined, examId: number | undefined, subjectId: number | undefined, levelId: number | undefined, targetId: number | undefined, complexityId: number | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfGetQuestionForViewDto> {
+    getAll(filter: string | undefined, bodyFilter: string | undefined, typeFilter: QuestionTypeEnum | undefined, instructionsFilter: string | undefined, languageFilter: QuestionLanguageEnum | undefined, questionHelperFilter: string | undefined, isActiveFilter: boolean | undefined, autoCorrectionFilter: number | undefined, maxPointFilter: number | undefined, minPointFilter: number | undefined, maxMinPointsFilter: number | undefined, minMinPointsFilter: number | undefined, maxMaxPointsFilter: number | undefined, minMaxPointsFilter: number | undefined, questionBodyFilter: string | undefined, examId: number | undefined, subjectId: number | undefined, levelId: number | undefined, subjectUnitId: number | undefined, complexityId: number | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfGetQuestionForViewDto> {
         let url_ = this.baseUrl + "/api/services/app/Questions/GetAll?";
         if (filter === null)
             throw new Error("The parameter 'filter' cannot be null.");
@@ -15380,10 +16848,18 @@ export class QuestionsServiceProxy {
             throw new Error("The parameter 'typeFilter' cannot be null.");
         else if (typeFilter !== undefined)
             url_ += "TypeFilter=" + encodeURIComponent("" + typeFilter) + "&";
+        if (instructionsFilter === null)
+            throw new Error("The parameter 'instructionsFilter' cannot be null.");
+        else if (instructionsFilter !== undefined)
+            url_ += "InstructionsFilter=" + encodeURIComponent("" + instructionsFilter) + "&";
         if (languageFilter === null)
             throw new Error("The parameter 'languageFilter' cannot be null.");
         else if (languageFilter !== undefined)
             url_ += "LanguageFilter=" + encodeURIComponent("" + languageFilter) + "&";
+        if (questionHelperFilter === null)
+            throw new Error("The parameter 'questionHelperFilter' cannot be null.");
+        else if (questionHelperFilter !== undefined)
+            url_ += "QuestionHelperFilter=" + encodeURIComponent("" + questionHelperFilter) + "&";
         if (isActiveFilter === null)
             throw new Error("The parameter 'isActiveFilter' cannot be null.");
         else if (isActiveFilter !== undefined)
@@ -15416,14 +16892,10 @@ export class QuestionsServiceProxy {
             throw new Error("The parameter 'minMaxPointsFilter' cannot be null.");
         else if (minMaxPointsFilter !== undefined)
             url_ += "MinMaxPointsFilter=" + encodeURIComponent("" + minMaxPointsFilter) + "&";
-        if (maxUpdatedByQuestionIdFilter === null)
-            throw new Error("The parameter 'maxUpdatedByQuestionIdFilter' cannot be null.");
-        else if (maxUpdatedByQuestionIdFilter !== undefined)
-            url_ += "MaxUpdatedByQuestionIdFilter=" + encodeURIComponent("" + maxUpdatedByQuestionIdFilter) + "&";
-        if (minUpdatedByQuestionIdFilter === null)
-            throw new Error("The parameter 'minUpdatedByQuestionIdFilter' cannot be null.");
-        else if (minUpdatedByQuestionIdFilter !== undefined)
-            url_ += "MinUpdatedByQuestionIdFilter=" + encodeURIComponent("" + minUpdatedByQuestionIdFilter) + "&";
+        if (questionBodyFilter === null)
+            throw new Error("The parameter 'questionBodyFilter' cannot be null.");
+        else if (questionBodyFilter !== undefined)
+            url_ += "QuestionBodyFilter=" + encodeURIComponent("" + questionBodyFilter) + "&";
         if (examId === null)
             throw new Error("The parameter 'examId' cannot be null.");
         else if (examId !== undefined)
@@ -15436,10 +16908,10 @@ export class QuestionsServiceProxy {
             throw new Error("The parameter 'levelId' cannot be null.");
         else if (levelId !== undefined)
             url_ += "LevelId=" + encodeURIComponent("" + levelId) + "&";
-        if (targetId === null)
-            throw new Error("The parameter 'targetId' cannot be null.");
-        else if (targetId !== undefined)
-            url_ += "TargetId=" + encodeURIComponent("" + targetId) + "&";
+        if (subjectUnitId === null)
+            throw new Error("The parameter 'subjectUnitId' cannot be null.");
+        else if (subjectUnitId !== undefined)
+            url_ += "SubjectUnitId=" + encodeURIComponent("" + subjectUnitId) + "&";
         if (complexityId === null)
             throw new Error("The parameter 'complexityId' cannot be null.");
         else if (complexityId !== undefined)
@@ -15722,8 +17194,6 @@ export class QuestionsServiceProxy {
      * @param filter (optional) 
      * @param bodyFilter (optional) 
      * @param typeFilter (optional) 
-     * @param maxParentIdFilter (optional) 
-     * @param minParentIdFilter (optional) 
      * @param instructionsFilter (optional) 
      * @param languageFilter (optional) 
      * @param questionHelperFilter (optional) 
@@ -15735,12 +17205,11 @@ export class QuestionsServiceProxy {
      * @param minMinPointsFilter (optional) 
      * @param maxMaxPointsFilter (optional) 
      * @param minMaxPointsFilter (optional) 
-     * @param maxUpdatedByQuestionIdFilter (optional) 
-     * @param minUpdatedByQuestionIdFilter (optional) 
-     * @param supportGroupNameLFilter (optional) 
+     * @param questionBodyFilter (optional) 
+     * @param questionBody2Filter (optional) 
      * @return Success
      */
-    getQuestionsToExcel(filter: string | undefined, bodyFilter: string | undefined, typeFilter: number | undefined, maxParentIdFilter: number | undefined, minParentIdFilter: number | undefined, instructionsFilter: string | undefined, languageFilter: number | undefined, questionHelperFilter: string | undefined, isActiveFilter: number | undefined, autoCorrectionFilter: number | undefined, maxPointFilter: number | undefined, minPointFilter: number | undefined, maxMinPointsFilter: number | undefined, minMinPointsFilter: number | undefined, maxMaxPointsFilter: number | undefined, minMaxPointsFilter: number | undefined, maxUpdatedByQuestionIdFilter: number | undefined, minUpdatedByQuestionIdFilter: number | undefined, supportGroupNameLFilter: string | undefined): Observable<FileDto> {
+    getQuestionsToExcel(filter: string | undefined, bodyFilter: string | undefined, typeFilter: number | undefined, instructionsFilter: string | undefined, languageFilter: number | undefined, questionHelperFilter: string | undefined, isActiveFilter: number | undefined, autoCorrectionFilter: number | undefined, maxPointFilter: number | undefined, minPointFilter: number | undefined, maxMinPointsFilter: number | undefined, minMinPointsFilter: number | undefined, maxMaxPointsFilter: number | undefined, minMaxPointsFilter: number | undefined, questionBodyFilter: string | undefined, questionBody2Filter: string | undefined): Observable<FileDto> {
         let url_ = this.baseUrl + "/api/services/app/Questions/GetQuestionsToExcel?";
         if (filter === null)
             throw new Error("The parameter 'filter' cannot be null.");
@@ -15754,14 +17223,6 @@ export class QuestionsServiceProxy {
             throw new Error("The parameter 'typeFilter' cannot be null.");
         else if (typeFilter !== undefined)
             url_ += "TypeFilter=" + encodeURIComponent("" + typeFilter) + "&";
-        if (maxParentIdFilter === null)
-            throw new Error("The parameter 'maxParentIdFilter' cannot be null.");
-        else if (maxParentIdFilter !== undefined)
-            url_ += "MaxParentIdFilter=" + encodeURIComponent("" + maxParentIdFilter) + "&";
-        if (minParentIdFilter === null)
-            throw new Error("The parameter 'minParentIdFilter' cannot be null.");
-        else if (minParentIdFilter !== undefined)
-            url_ += "MinParentIdFilter=" + encodeURIComponent("" + minParentIdFilter) + "&";
         if (instructionsFilter === null)
             throw new Error("The parameter 'instructionsFilter' cannot be null.");
         else if (instructionsFilter !== undefined)
@@ -15806,18 +17267,14 @@ export class QuestionsServiceProxy {
             throw new Error("The parameter 'minMaxPointsFilter' cannot be null.");
         else if (minMaxPointsFilter !== undefined)
             url_ += "MinMaxPointsFilter=" + encodeURIComponent("" + minMaxPointsFilter) + "&";
-        if (maxUpdatedByQuestionIdFilter === null)
-            throw new Error("The parameter 'maxUpdatedByQuestionIdFilter' cannot be null.");
-        else if (maxUpdatedByQuestionIdFilter !== undefined)
-            url_ += "MaxUpdatedByQuestionIdFilter=" + encodeURIComponent("" + maxUpdatedByQuestionIdFilter) + "&";
-        if (minUpdatedByQuestionIdFilter === null)
-            throw new Error("The parameter 'minUpdatedByQuestionIdFilter' cannot be null.");
-        else if (minUpdatedByQuestionIdFilter !== undefined)
-            url_ += "MinUpdatedByQuestionIdFilter=" + encodeURIComponent("" + minUpdatedByQuestionIdFilter) + "&";
-        if (supportGroupNameLFilter === null)
-            throw new Error("The parameter 'supportGroupNameLFilter' cannot be null.");
-        else if (supportGroupNameLFilter !== undefined)
-            url_ += "SupportGroupNameLFilter=" + encodeURIComponent("" + supportGroupNameLFilter) + "&";
+        if (questionBodyFilter === null)
+            throw new Error("The parameter 'questionBodyFilter' cannot be null.");
+        else if (questionBodyFilter !== undefined)
+            url_ += "QuestionBodyFilter=" + encodeURIComponent("" + questionBodyFilter) + "&";
+        if (questionBody2Filter === null)
+            throw new Error("The parameter 'questionBody2Filter' cannot be null.");
+        else if (questionBody2Filter !== undefined)
+            url_ += "QuestionBody2Filter=" + encodeURIComponent("" + questionBody2Filter) + "&";
         url_ = url_.replace(/[?&]$/, "");
 
         let options_ : any = {
@@ -15854,6 +17311,135 @@ export class QuestionsServiceProxy {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
             result200 = FileDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @return Success
+     */
+    getAllQuestionForTableDropdown(): Observable<QuestionQuestionLookupTableDto[]> {
+        let url_ = this.baseUrl + "/api/services/app/Questions/GetAllQuestionForTableDropdown";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetAllQuestionForTableDropdown(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetAllQuestionForTableDropdown(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<QuestionQuestionLookupTableDto[]>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<QuestionQuestionLookupTableDto[]>;
+        }));
+    }
+
+    protected processGetAllQuestionForTableDropdown(response: HttpResponseBase): Observable<QuestionQuestionLookupTableDto[]> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(QuestionQuestionLookupTableDto.fromJS(item));
+            }
+            else {
+                result200 = <any>null;
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param filter (optional) 
+     * @param sorting (optional) 
+     * @param skipCount (optional) 
+     * @param maxResultCount (optional) 
+     * @return Success
+     */
+    getAllQuestionForLookupTable(filter: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfQuestionQuestionLookupTableDto> {
+        let url_ = this.baseUrl + "/api/services/app/Questions/GetAllQuestionForLookupTable?";
+        if (filter === null)
+            throw new Error("The parameter 'filter' cannot be null.");
+        else if (filter !== undefined)
+            url_ += "Filter=" + encodeURIComponent("" + filter) + "&";
+        if (sorting === null)
+            throw new Error("The parameter 'sorting' cannot be null.");
+        else if (sorting !== undefined)
+            url_ += "Sorting=" + encodeURIComponent("" + sorting) + "&";
+        if (skipCount === null)
+            throw new Error("The parameter 'skipCount' cannot be null.");
+        else if (skipCount !== undefined)
+            url_ += "SkipCount=" + encodeURIComponent("" + skipCount) + "&";
+        if (maxResultCount === null)
+            throw new Error("The parameter 'maxResultCount' cannot be null.");
+        else if (maxResultCount !== undefined)
+            url_ += "MaxResultCount=" + encodeURIComponent("" + maxResultCount) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetAllQuestionForLookupTable(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetAllQuestionForLookupTable(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<PagedResultDtoOfQuestionQuestionLookupTableDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<PagedResultDtoOfQuestionQuestionLookupTableDto>;
+        }));
+    }
+
+    protected processGetAllQuestionForLookupTable(response: HttpResponseBase): Observable<PagedResultDtoOfQuestionQuestionLookupTableDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = PagedResultDtoOfQuestionQuestionLookupTableDto.fromJS(resultData200);
             return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
@@ -15951,13 +17537,13 @@ export class QuestionSubjectsServiceProxy {
      * @param filter (optional) 
      * @param noteFilter (optional) 
      * @param questionQuestionHelperFilter (optional) 
-     * @param studySubjectValueFilter (optional) 
+     * @param studySubjectNameFilter (optional) 
      * @param sorting (optional) 
      * @param skipCount (optional) 
      * @param maxResultCount (optional) 
      * @return Success
      */
-    getAll(filter: string | undefined, noteFilter: string | undefined, questionQuestionHelperFilter: string | undefined, studySubjectValueFilter: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfGetQuestionSubjectForViewDto> {
+    getAll(filter: string | undefined, noteFilter: string | undefined, questionQuestionHelperFilter: string | undefined, studySubjectNameFilter: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfGetQuestionSubjectForViewDto> {
         let url_ = this.baseUrl + "/api/services/app/QuestionSubjects/GetAll?";
         if (filter === null)
             throw new Error("The parameter 'filter' cannot be null.");
@@ -15971,10 +17557,10 @@ export class QuestionSubjectsServiceProxy {
             throw new Error("The parameter 'questionQuestionHelperFilter' cannot be null.");
         else if (questionQuestionHelperFilter !== undefined)
             url_ += "QuestionQuestionHelperFilter=" + encodeURIComponent("" + questionQuestionHelperFilter) + "&";
-        if (studySubjectValueFilter === null)
-            throw new Error("The parameter 'studySubjectValueFilter' cannot be null.");
-        else if (studySubjectValueFilter !== undefined)
-            url_ += "StudySubjectValueFilter=" + encodeURIComponent("" + studySubjectValueFilter) + "&";
+        if (studySubjectNameFilter === null)
+            throw new Error("The parameter 'studySubjectNameFilter' cannot be null.");
+        else if (studySubjectNameFilter !== undefined)
+            url_ += "StudySubjectNameFilter=" + encodeURIComponent("" + studySubjectNameFilter) + "&";
         if (sorting === null)
             throw new Error("The parameter 'sorting' cannot be null.");
         else if (sorting !== undefined)
@@ -16253,10 +17839,10 @@ export class QuestionSubjectsServiceProxy {
      * @param filter (optional) 
      * @param noteFilter (optional) 
      * @param questionQuestionHelperFilter (optional) 
-     * @param studySubjectValueFilter (optional) 
+     * @param studySubjectNameFilter (optional) 
      * @return Success
      */
-    getQuestionSubjectsToExcel(filter: string | undefined, noteFilter: string | undefined, questionQuestionHelperFilter: string | undefined, studySubjectValueFilter: string | undefined): Observable<FileDto> {
+    getQuestionSubjectsToExcel(filter: string | undefined, noteFilter: string | undefined, questionQuestionHelperFilter: string | undefined, studySubjectNameFilter: string | undefined): Observable<FileDto> {
         let url_ = this.baseUrl + "/api/services/app/QuestionSubjects/GetQuestionSubjectsToExcel?";
         if (filter === null)
             throw new Error("The parameter 'filter' cannot be null.");
@@ -16270,10 +17856,10 @@ export class QuestionSubjectsServiceProxy {
             throw new Error("The parameter 'questionQuestionHelperFilter' cannot be null.");
         else if (questionQuestionHelperFilter !== undefined)
             url_ += "QuestionQuestionHelperFilter=" + encodeURIComponent("" + questionQuestionHelperFilter) + "&";
-        if (studySubjectValueFilter === null)
-            throw new Error("The parameter 'studySubjectValueFilter' cannot be null.");
-        else if (studySubjectValueFilter !== undefined)
-            url_ += "StudySubjectValueFilter=" + encodeURIComponent("" + studySubjectValueFilter) + "&";
+        if (studySubjectNameFilter === null)
+            throw new Error("The parameter 'studySubjectNameFilter' cannot be null.");
+        else if (studySubjectNameFilter !== undefined)
+            url_ += "StudySubjectNameFilter=" + encodeURIComponent("" + studySubjectNameFilter) + "&";
         url_ = url_.replace(/[?&]$/, "");
 
         let options_ : any = {
@@ -16464,7 +18050,7 @@ export class QuestionSubjectsServiceProxy {
 }
 
 @Injectable()
-export class QuestionTargetsServiceProxy {
+export class QuestionSubjectUnitsServiceProxy {
     private http: HttpClient;
     private baseUrl: string;
     protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
@@ -16477,15 +18063,15 @@ export class QuestionTargetsServiceProxy {
     /**
      * @param filter (optional) 
      * @param noteFilter (optional) 
-     * @param targetCodeFilter (optional) 
+     * @param subjectUnitCodeFilter (optional) 
      * @param questionQuestionHelperFilter (optional) 
      * @param sorting (optional) 
      * @param skipCount (optional) 
      * @param maxResultCount (optional) 
      * @return Success
      */
-    getAll(filter: string | undefined, noteFilter: string | undefined, targetCodeFilter: string | undefined, questionQuestionHelperFilter: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfGetQuestionTargetForViewDto> {
-        let url_ = this.baseUrl + "/api/services/app/QuestionTargets/GetAll?";
+    getAll(filter: string | undefined, noteFilter: string | undefined, subjectUnitCodeFilter: string | undefined, questionQuestionHelperFilter: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfGetQuestionSubjectUnitForViewDto> {
+        let url_ = this.baseUrl + "/api/services/app/QuestionSubjectUnits/GetAll?";
         if (filter === null)
             throw new Error("The parameter 'filter' cannot be null.");
         else if (filter !== undefined)
@@ -16494,10 +18080,10 @@ export class QuestionTargetsServiceProxy {
             throw new Error("The parameter 'noteFilter' cannot be null.");
         else if (noteFilter !== undefined)
             url_ += "NoteFilter=" + encodeURIComponent("" + noteFilter) + "&";
-        if (targetCodeFilter === null)
-            throw new Error("The parameter 'targetCodeFilter' cannot be null.");
-        else if (targetCodeFilter !== undefined)
-            url_ += "TargetCodeFilter=" + encodeURIComponent("" + targetCodeFilter) + "&";
+        if (subjectUnitCodeFilter === null)
+            throw new Error("The parameter 'subjectUnitCodeFilter' cannot be null.");
+        else if (subjectUnitCodeFilter !== undefined)
+            url_ += "SubjectUnitCodeFilter=" + encodeURIComponent("" + subjectUnitCodeFilter) + "&";
         if (questionQuestionHelperFilter === null)
             throw new Error("The parameter 'questionQuestionHelperFilter' cannot be null.");
         else if (questionQuestionHelperFilter !== undefined)
@@ -16531,14 +18117,14 @@ export class QuestionTargetsServiceProxy {
                 try {
                     return this.processGetAll(response_ as any);
                 } catch (e) {
-                    return _observableThrow(e) as any as Observable<PagedResultDtoOfGetQuestionTargetForViewDto>;
+                    return _observableThrow(e) as any as Observable<PagedResultDtoOfGetQuestionSubjectUnitForViewDto>;
                 }
             } else
-                return _observableThrow(response_) as any as Observable<PagedResultDtoOfGetQuestionTargetForViewDto>;
+                return _observableThrow(response_) as any as Observable<PagedResultDtoOfGetQuestionSubjectUnitForViewDto>;
         }));
     }
 
-    protected processGetAll(response: HttpResponseBase): Observable<PagedResultDtoOfGetQuestionTargetForViewDto> {
+    protected processGetAll(response: HttpResponseBase): Observable<PagedResultDtoOfGetQuestionSubjectUnitForViewDto> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -16549,7 +18135,7 @@ export class QuestionTargetsServiceProxy {
             return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = PagedResultDtoOfGetQuestionTargetForViewDto.fromJS(resultData200);
+            result200 = PagedResultDtoOfGetQuestionSubjectUnitForViewDto.fromJS(resultData200);
             return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
@@ -16564,8 +18150,8 @@ export class QuestionTargetsServiceProxy {
      * @param id (optional) 
      * @return Success
      */
-    getQuestionTargetForView(id: number | undefined): Observable<GetQuestionTargetForViewDto> {
-        let url_ = this.baseUrl + "/api/services/app/QuestionTargets/GetQuestionTargetForView?";
+    getQuestionSubjectUnitForView(id: number | undefined): Observable<GetQuestionSubjectUnitForViewDto> {
+        let url_ = this.baseUrl + "/api/services/app/QuestionSubjectUnits/GetQuestionSubjectUnitForView?";
         if (id === null)
             throw new Error("The parameter 'id' cannot be null.");
         else if (id !== undefined)
@@ -16581,20 +18167,20 @@ export class QuestionTargetsServiceProxy {
         };
 
         return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGetQuestionTargetForView(response_);
+            return this.processGetQuestionSubjectUnitForView(response_);
         })).pipe(_observableCatch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
-                    return this.processGetQuestionTargetForView(response_ as any);
+                    return this.processGetQuestionSubjectUnitForView(response_ as any);
                 } catch (e) {
-                    return _observableThrow(e) as any as Observable<GetQuestionTargetForViewDto>;
+                    return _observableThrow(e) as any as Observable<GetQuestionSubjectUnitForViewDto>;
                 }
             } else
-                return _observableThrow(response_) as any as Observable<GetQuestionTargetForViewDto>;
+                return _observableThrow(response_) as any as Observable<GetQuestionSubjectUnitForViewDto>;
         }));
     }
 
-    protected processGetQuestionTargetForView(response: HttpResponseBase): Observable<GetQuestionTargetForViewDto> {
+    protected processGetQuestionSubjectUnitForView(response: HttpResponseBase): Observable<GetQuestionSubjectUnitForViewDto> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -16605,7 +18191,7 @@ export class QuestionTargetsServiceProxy {
             return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = GetQuestionTargetForViewDto.fromJS(resultData200);
+            result200 = GetQuestionSubjectUnitForViewDto.fromJS(resultData200);
             return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
@@ -16620,8 +18206,8 @@ export class QuestionTargetsServiceProxy {
      * @param id (optional) 
      * @return Success
      */
-    getQuestionTargetForEdit(id: number | undefined): Observable<GetQuestionTargetForEditOutput> {
-        let url_ = this.baseUrl + "/api/services/app/QuestionTargets/GetQuestionTargetForEdit?";
+    getQuestionSubjectUnitForEdit(id: number | undefined): Observable<GetQuestionSubjectUnitForEditOutput> {
+        let url_ = this.baseUrl + "/api/services/app/QuestionSubjectUnits/GetQuestionSubjectUnitForEdit?";
         if (id === null)
             throw new Error("The parameter 'id' cannot be null.");
         else if (id !== undefined)
@@ -16637,20 +18223,20 @@ export class QuestionTargetsServiceProxy {
         };
 
         return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGetQuestionTargetForEdit(response_);
+            return this.processGetQuestionSubjectUnitForEdit(response_);
         })).pipe(_observableCatch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
-                    return this.processGetQuestionTargetForEdit(response_ as any);
+                    return this.processGetQuestionSubjectUnitForEdit(response_ as any);
                 } catch (e) {
-                    return _observableThrow(e) as any as Observable<GetQuestionTargetForEditOutput>;
+                    return _observableThrow(e) as any as Observable<GetQuestionSubjectUnitForEditOutput>;
                 }
             } else
-                return _observableThrow(response_) as any as Observable<GetQuestionTargetForEditOutput>;
+                return _observableThrow(response_) as any as Observable<GetQuestionSubjectUnitForEditOutput>;
         }));
     }
 
-    protected processGetQuestionTargetForEdit(response: HttpResponseBase): Observable<GetQuestionTargetForEditOutput> {
+    protected processGetQuestionSubjectUnitForEdit(response: HttpResponseBase): Observable<GetQuestionSubjectUnitForEditOutput> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -16661,7 +18247,7 @@ export class QuestionTargetsServiceProxy {
             return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = GetQuestionTargetForEditOutput.fromJS(resultData200);
+            result200 = GetQuestionSubjectUnitForEditOutput.fromJS(resultData200);
             return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
@@ -16676,8 +18262,8 @@ export class QuestionTargetsServiceProxy {
      * @param body (optional) 
      * @return Success
      */
-    createOrEdit(body: CreateOrEditQuestionTargetDto | undefined): Observable<void> {
-        let url_ = this.baseUrl + "/api/services/app/QuestionTargets/CreateOrEdit";
+    createOrEdit(body: CreateOrEditQuestionSubjectUnitDto | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/QuestionSubjectUnits/CreateOrEdit";
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(body);
@@ -16729,7 +18315,7 @@ export class QuestionTargetsServiceProxy {
      * @return Success
      */
     delete(id: number | undefined): Observable<void> {
-        let url_ = this.baseUrl + "/api/services/app/QuestionTargets/Delete?";
+        let url_ = this.baseUrl + "/api/services/app/QuestionSubjectUnits/Delete?";
         if (id === null)
             throw new Error("The parameter 'id' cannot be null.");
         else if (id !== undefined)
@@ -16779,12 +18365,12 @@ export class QuestionTargetsServiceProxy {
     /**
      * @param filter (optional) 
      * @param noteFilter (optional) 
-     * @param targetCodeFilter (optional) 
+     * @param subjectUnitCodeFilter (optional) 
      * @param questionQuestionHelperFilter (optional) 
      * @return Success
      */
-    getQuestionTargetsToExcel(filter: string | undefined, noteFilter: string | undefined, targetCodeFilter: string | undefined, questionQuestionHelperFilter: string | undefined): Observable<FileDto> {
-        let url_ = this.baseUrl + "/api/services/app/QuestionTargets/GetQuestionTargetsToExcel?";
+    getQuestionSubjectUnitsToExcel(filter: string | undefined, noteFilter: string | undefined, subjectUnitCodeFilter: string | undefined, questionQuestionHelperFilter: string | undefined): Observable<FileDto> {
+        let url_ = this.baseUrl + "/api/services/app/QuestionSubjectUnits/GetQuestionSubjectUnitsToExcel?";
         if (filter === null)
             throw new Error("The parameter 'filter' cannot be null.");
         else if (filter !== undefined)
@@ -16793,10 +18379,10 @@ export class QuestionTargetsServiceProxy {
             throw new Error("The parameter 'noteFilter' cannot be null.");
         else if (noteFilter !== undefined)
             url_ += "NoteFilter=" + encodeURIComponent("" + noteFilter) + "&";
-        if (targetCodeFilter === null)
-            throw new Error("The parameter 'targetCodeFilter' cannot be null.");
-        else if (targetCodeFilter !== undefined)
-            url_ += "TargetCodeFilter=" + encodeURIComponent("" + targetCodeFilter) + "&";
+        if (subjectUnitCodeFilter === null)
+            throw new Error("The parameter 'subjectUnitCodeFilter' cannot be null.");
+        else if (subjectUnitCodeFilter !== undefined)
+            url_ += "SubjectUnitCodeFilter=" + encodeURIComponent("" + subjectUnitCodeFilter) + "&";
         if (questionQuestionHelperFilter === null)
             throw new Error("The parameter 'questionQuestionHelperFilter' cannot be null.");
         else if (questionQuestionHelperFilter !== undefined)
@@ -16812,11 +18398,11 @@ export class QuestionTargetsServiceProxy {
         };
 
         return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGetQuestionTargetsToExcel(response_);
+            return this.processGetQuestionSubjectUnitsToExcel(response_);
         })).pipe(_observableCatch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
-                    return this.processGetQuestionTargetsToExcel(response_ as any);
+                    return this.processGetQuestionSubjectUnitsToExcel(response_ as any);
                 } catch (e) {
                     return _observableThrow(e) as any as Observable<FileDto>;
                 }
@@ -16825,7 +18411,7 @@ export class QuestionTargetsServiceProxy {
         }));
     }
 
-    protected processGetQuestionTargetsToExcel(response: HttpResponseBase): Observable<FileDto> {
+    protected processGetQuestionSubjectUnitsToExcel(response: HttpResponseBase): Observable<FileDto> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -16854,8 +18440,8 @@ export class QuestionTargetsServiceProxy {
      * @param maxResultCount (optional) 
      * @return Success
      */
-    getAllTargetForLookupTable(filter: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfQuestionTargetTargetLookupTableDto> {
-        let url_ = this.baseUrl + "/api/services/app/QuestionTargets/GetAllTargetForLookupTable?";
+    getAllSubjectUnitForLookupTable(filter: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfQuestionSubjectUnitSubjectUnitLookupTableDto> {
+        let url_ = this.baseUrl + "/api/services/app/QuestionSubjectUnits/GetAllSubjectUnitForLookupTable?";
         if (filter === null)
             throw new Error("The parameter 'filter' cannot be null.");
         else if (filter !== undefined)
@@ -16883,20 +18469,20 @@ export class QuestionTargetsServiceProxy {
         };
 
         return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGetAllTargetForLookupTable(response_);
+            return this.processGetAllSubjectUnitForLookupTable(response_);
         })).pipe(_observableCatch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
-                    return this.processGetAllTargetForLookupTable(response_ as any);
+                    return this.processGetAllSubjectUnitForLookupTable(response_ as any);
                 } catch (e) {
-                    return _observableThrow(e) as any as Observable<PagedResultDtoOfQuestionTargetTargetLookupTableDto>;
+                    return _observableThrow(e) as any as Observable<PagedResultDtoOfQuestionSubjectUnitSubjectUnitLookupTableDto>;
                 }
             } else
-                return _observableThrow(response_) as any as Observable<PagedResultDtoOfQuestionTargetTargetLookupTableDto>;
+                return _observableThrow(response_) as any as Observable<PagedResultDtoOfQuestionSubjectUnitSubjectUnitLookupTableDto>;
         }));
     }
 
-    protected processGetAllTargetForLookupTable(response: HttpResponseBase): Observable<PagedResultDtoOfQuestionTargetTargetLookupTableDto> {
+    protected processGetAllSubjectUnitForLookupTable(response: HttpResponseBase): Observable<PagedResultDtoOfQuestionSubjectUnitSubjectUnitLookupTableDto> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -16907,7 +18493,7 @@ export class QuestionTargetsServiceProxy {
             return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = PagedResultDtoOfQuestionTargetTargetLookupTableDto.fromJS(resultData200);
+            result200 = PagedResultDtoOfQuestionSubjectUnitSubjectUnitLookupTableDto.fromJS(resultData200);
             return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
@@ -16925,8 +18511,8 @@ export class QuestionTargetsServiceProxy {
      * @param maxResultCount (optional) 
      * @return Success
      */
-    getAllQuestionForLookupTable(filter: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfQuestionTargetQuestionLookupTableDto> {
-        let url_ = this.baseUrl + "/api/services/app/QuestionTargets/GetAllQuestionForLookupTable?";
+    getAllQuestionForLookupTable(filter: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfQuestionSubjectUnitQuestionLookupTableDto> {
+        let url_ = this.baseUrl + "/api/services/app/QuestionSubjectUnits/GetAllQuestionForLookupTable?";
         if (filter === null)
             throw new Error("The parameter 'filter' cannot be null.");
         else if (filter !== undefined)
@@ -16960,14 +18546,14 @@ export class QuestionTargetsServiceProxy {
                 try {
                     return this.processGetAllQuestionForLookupTable(response_ as any);
                 } catch (e) {
-                    return _observableThrow(e) as any as Observable<PagedResultDtoOfQuestionTargetQuestionLookupTableDto>;
+                    return _observableThrow(e) as any as Observable<PagedResultDtoOfQuestionSubjectUnitQuestionLookupTableDto>;
                 }
             } else
-                return _observableThrow(response_) as any as Observable<PagedResultDtoOfQuestionTargetQuestionLookupTableDto>;
+                return _observableThrow(response_) as any as Observable<PagedResultDtoOfQuestionSubjectUnitQuestionLookupTableDto>;
         }));
     }
 
-    protected processGetAllQuestionForLookupTable(response: HttpResponseBase): Observable<PagedResultDtoOfQuestionTargetQuestionLookupTableDto> {
+    protected processGetAllQuestionForLookupTable(response: HttpResponseBase): Observable<PagedResultDtoOfQuestionSubjectUnitQuestionLookupTableDto> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -16978,7 +18564,7 @@ export class QuestionTargetsServiceProxy {
             return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = PagedResultDtoOfQuestionTargetQuestionLookupTableDto.fromJS(resultData200);
+            result200 = PagedResultDtoOfQuestionSubjectUnitQuestionLookupTableDto.fromJS(resultData200);
             return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
@@ -17232,14 +18818,12 @@ export class SchoolsServiceProxy {
     /**
      * @param filter (optional) 
      * @param schoolNoFilter (optional) 
-     * @param nameLFilter (optional) 
-     * @param nameFFilter (optional) 
      * @param sorting (optional) 
      * @param skipCount (optional) 
      * @param maxResultCount (optional) 
      * @return Success
      */
-    getAll(filter: string | undefined, schoolNoFilter: string | undefined, nameLFilter: string | undefined, nameFFilter: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfGetSchoolForViewDto> {
+    getAll(filter: string | undefined, schoolNoFilter: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfGetSchoolForViewDto> {
         let url_ = this.baseUrl + "/api/services/app/Schools/GetAll?";
         if (filter === null)
             throw new Error("The parameter 'filter' cannot be null.");
@@ -17249,14 +18833,6 @@ export class SchoolsServiceProxy {
             throw new Error("The parameter 'schoolNoFilter' cannot be null.");
         else if (schoolNoFilter !== undefined)
             url_ += "SchoolNoFilter=" + encodeURIComponent("" + schoolNoFilter) + "&";
-        if (nameLFilter === null)
-            throw new Error("The parameter 'nameLFilter' cannot be null.");
-        else if (nameLFilter !== undefined)
-            url_ += "NameLFilter=" + encodeURIComponent("" + nameLFilter) + "&";
-        if (nameFFilter === null)
-            throw new Error("The parameter 'nameFFilter' cannot be null.");
-        else if (nameFFilter !== undefined)
-            url_ += "NameFFilter=" + encodeURIComponent("" + nameFFilter) + "&";
         if (sorting === null)
             throw new Error("The parameter 'sorting' cannot be null.");
         else if (sorting !== undefined)
@@ -17534,11 +19110,9 @@ export class SchoolsServiceProxy {
     /**
      * @param filter (optional) 
      * @param schoolNoFilter (optional) 
-     * @param nameLFilter (optional) 
-     * @param nameFFilter (optional) 
      * @return Success
      */
-    getSchoolsToExcel(filter: string | undefined, schoolNoFilter: string | undefined, nameLFilter: string | undefined, nameFFilter: string | undefined): Observable<FileDto> {
+    getSchoolsToExcel(filter: string | undefined, schoolNoFilter: string | undefined): Observable<FileDto> {
         let url_ = this.baseUrl + "/api/services/app/Schools/GetSchoolsToExcel?";
         if (filter === null)
             throw new Error("The parameter 'filter' cannot be null.");
@@ -17548,14 +19122,6 @@ export class SchoolsServiceProxy {
             throw new Error("The parameter 'schoolNoFilter' cannot be null.");
         else if (schoolNoFilter !== undefined)
             url_ += "SchoolNoFilter=" + encodeURIComponent("" + schoolNoFilter) + "&";
-        if (nameLFilter === null)
-            throw new Error("The parameter 'nameLFilter' cannot be null.");
-        else if (nameLFilter !== undefined)
-            url_ += "NameLFilter=" + encodeURIComponent("" + nameLFilter) + "&";
-        if (nameFFilter === null)
-            throw new Error("The parameter 'nameFFilter' cannot be null.");
-        else if (nameFFilter !== undefined)
-            url_ += "NameFFilter=" + encodeURIComponent("" + nameFFilter) + "&";
         url_ = url_.replace(/[?&]$/, "");
 
         let options_ : any = {
@@ -17592,522 +19158,6 @@ export class SchoolsServiceProxy {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
             result200 = FileDto.fromJS(resultData200);
-            return _observableOf(result200);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf(null as any);
-    }
-}
-
-@Injectable()
-export class SectionsServiceProxy {
-    private http: HttpClient;
-    private baseUrl: string;
-    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
-
-    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
-        this.http = http;
-        this.baseUrl = baseUrl ?? "";
-    }
-
-    /**
-     * @param filter (optional) 
-     * @param maxDurationTimeFilter (optional) 
-     * @param minDurationTimeFilter (optional) 
-     * @param maxOrderFilter (optional) 
-     * @param minOrderFilter (optional) 
-     * @param instructionsFilter (optional) 
-     * @param nameLFilter (optional) 
-     * @param nameFFilter (optional) 
-     * @param typeFilter (optional) 
-     * @param examTitleFilter (optional) 
-     * @param sorting (optional) 
-     * @param skipCount (optional) 
-     * @param maxResultCount (optional) 
-     * @return Success
-     */
-    getAll(filter: string | undefined, maxDurationTimeFilter: DateTime | undefined, minDurationTimeFilter: DateTime | undefined, maxOrderFilter: number | undefined, minOrderFilter: number | undefined, instructionsFilter: string | undefined, nameLFilter: string | undefined, nameFFilter: string | undefined, typeFilter: number | undefined, examTitleFilter: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfGetSectionForViewDto> {
-        let url_ = this.baseUrl + "/api/services/app/Sections/GetAll?";
-        if (filter === null)
-            throw new Error("The parameter 'filter' cannot be null.");
-        else if (filter !== undefined)
-            url_ += "Filter=" + encodeURIComponent("" + filter) + "&";
-        if (maxDurationTimeFilter === null)
-            throw new Error("The parameter 'maxDurationTimeFilter' cannot be null.");
-        else if (maxDurationTimeFilter !== undefined)
-            url_ += "MaxDurationTimeFilter=" + encodeURIComponent(maxDurationTimeFilter ? "" + maxDurationTimeFilter.toString() : "") + "&";
-        if (minDurationTimeFilter === null)
-            throw new Error("The parameter 'minDurationTimeFilter' cannot be null.");
-        else if (minDurationTimeFilter !== undefined)
-            url_ += "MinDurationTimeFilter=" + encodeURIComponent(minDurationTimeFilter ? "" + minDurationTimeFilter.toString() : "") + "&";
-        if (maxOrderFilter === null)
-            throw new Error("The parameter 'maxOrderFilter' cannot be null.");
-        else if (maxOrderFilter !== undefined)
-            url_ += "MaxOrderFilter=" + encodeURIComponent("" + maxOrderFilter) + "&";
-        if (minOrderFilter === null)
-            throw new Error("The parameter 'minOrderFilter' cannot be null.");
-        else if (minOrderFilter !== undefined)
-            url_ += "MinOrderFilter=" + encodeURIComponent("" + minOrderFilter) + "&";
-        if (instructionsFilter === null)
-            throw new Error("The parameter 'instructionsFilter' cannot be null.");
-        else if (instructionsFilter !== undefined)
-            url_ += "InstructionsFilter=" + encodeURIComponent("" + instructionsFilter) + "&";
-        if (nameLFilter === null)
-            throw new Error("The parameter 'nameLFilter' cannot be null.");
-        else if (nameLFilter !== undefined)
-            url_ += "NameLFilter=" + encodeURIComponent("" + nameLFilter) + "&";
-        if (nameFFilter === null)
-            throw new Error("The parameter 'nameFFilter' cannot be null.");
-        else if (nameFFilter !== undefined)
-            url_ += "NameFFilter=" + encodeURIComponent("" + nameFFilter) + "&";
-        if (typeFilter === null)
-            throw new Error("The parameter 'typeFilter' cannot be null.");
-        else if (typeFilter !== undefined)
-            url_ += "TypeFilter=" + encodeURIComponent("" + typeFilter) + "&";
-        if (examTitleFilter === null)
-            throw new Error("The parameter 'examTitleFilter' cannot be null.");
-        else if (examTitleFilter !== undefined)
-            url_ += "ExamTitleFilter=" + encodeURIComponent("" + examTitleFilter) + "&";
-        if (sorting === null)
-            throw new Error("The parameter 'sorting' cannot be null.");
-        else if (sorting !== undefined)
-            url_ += "Sorting=" + encodeURIComponent("" + sorting) + "&";
-        if (skipCount === null)
-            throw new Error("The parameter 'skipCount' cannot be null.");
-        else if (skipCount !== undefined)
-            url_ += "SkipCount=" + encodeURIComponent("" + skipCount) + "&";
-        if (maxResultCount === null)
-            throw new Error("The parameter 'maxResultCount' cannot be null.");
-        else if (maxResultCount !== undefined)
-            url_ += "MaxResultCount=" + encodeURIComponent("" + maxResultCount) + "&";
-        url_ = url_.replace(/[?&]$/, "");
-
-        let options_ : any = {
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Accept": "text/plain"
-            })
-        };
-
-        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGetAll(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processGetAll(response_ as any);
-                } catch (e) {
-                    return _observableThrow(e) as any as Observable<PagedResultDtoOfGetSectionForViewDto>;
-                }
-            } else
-                return _observableThrow(response_) as any as Observable<PagedResultDtoOfGetSectionForViewDto>;
-        }));
-    }
-
-    protected processGetAll(response: HttpResponseBase): Observable<PagedResultDtoOfGetSectionForViewDto> {
-        const status = response.status;
-        const responseBlob =
-            response instanceof HttpResponse ? response.body :
-            (response as any).error instanceof Blob ? (response as any).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = PagedResultDtoOfGetSectionForViewDto.fromJS(resultData200);
-            return _observableOf(result200);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf(null as any);
-    }
-
-    /**
-     * @param id (optional) 
-     * @return Success
-     */
-    getSectionForView(id: number | undefined): Observable<GetSectionForViewDto> {
-        let url_ = this.baseUrl + "/api/services/app/Sections/GetSectionForView?";
-        if (id === null)
-            throw new Error("The parameter 'id' cannot be null.");
-        else if (id !== undefined)
-            url_ += "id=" + encodeURIComponent("" + id) + "&";
-        url_ = url_.replace(/[?&]$/, "");
-
-        let options_ : any = {
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Accept": "text/plain"
-            })
-        };
-
-        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGetSectionForView(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processGetSectionForView(response_ as any);
-                } catch (e) {
-                    return _observableThrow(e) as any as Observable<GetSectionForViewDto>;
-                }
-            } else
-                return _observableThrow(response_) as any as Observable<GetSectionForViewDto>;
-        }));
-    }
-
-    protected processGetSectionForView(response: HttpResponseBase): Observable<GetSectionForViewDto> {
-        const status = response.status;
-        const responseBlob =
-            response instanceof HttpResponse ? response.body :
-            (response as any).error instanceof Blob ? (response as any).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = GetSectionForViewDto.fromJS(resultData200);
-            return _observableOf(result200);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf(null as any);
-    }
-
-    /**
-     * @param id (optional) 
-     * @return Success
-     */
-    getSectionForEdit(id: number | undefined): Observable<GetSectionForEditOutput> {
-        let url_ = this.baseUrl + "/api/services/app/Sections/GetSectionForEdit?";
-        if (id === null)
-            throw new Error("The parameter 'id' cannot be null.");
-        else if (id !== undefined)
-            url_ += "Id=" + encodeURIComponent("" + id) + "&";
-        url_ = url_.replace(/[?&]$/, "");
-
-        let options_ : any = {
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Accept": "text/plain"
-            })
-        };
-
-        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGetSectionForEdit(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processGetSectionForEdit(response_ as any);
-                } catch (e) {
-                    return _observableThrow(e) as any as Observable<GetSectionForEditOutput>;
-                }
-            } else
-                return _observableThrow(response_) as any as Observable<GetSectionForEditOutput>;
-        }));
-    }
-
-    protected processGetSectionForEdit(response: HttpResponseBase): Observable<GetSectionForEditOutput> {
-        const status = response.status;
-        const responseBlob =
-            response instanceof HttpResponse ? response.body :
-            (response as any).error instanceof Blob ? (response as any).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = GetSectionForEditOutput.fromJS(resultData200);
-            return _observableOf(result200);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf(null as any);
-    }
-
-    /**
-     * @param body (optional) 
-     * @return Success
-     */
-    createOrEdit(body: CreateOrEditSectionDto | undefined): Observable<void> {
-        let url_ = this.baseUrl + "/api/services/app/Sections/CreateOrEdit";
-        url_ = url_.replace(/[?&]$/, "");
-
-        const content_ = JSON.stringify(body);
-
-        let options_ : any = {
-            body: content_,
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Content-Type": "application/json",
-            })
-        };
-
-        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processCreateOrEdit(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processCreateOrEdit(response_ as any);
-                } catch (e) {
-                    return _observableThrow(e) as any as Observable<void>;
-                }
-            } else
-                return _observableThrow(response_) as any as Observable<void>;
-        }));
-    }
-
-    protected processCreateOrEdit(response: HttpResponseBase): Observable<void> {
-        const status = response.status;
-        const responseBlob =
-            response instanceof HttpResponse ? response.body :
-            (response as any).error instanceof Blob ? (response as any).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            return _observableOf(null as any);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf(null as any);
-    }
-
-    /**
-     * @param id (optional) 
-     * @return Success
-     */
-    delete(id: number | undefined): Observable<void> {
-        let url_ = this.baseUrl + "/api/services/app/Sections/Delete?";
-        if (id === null)
-            throw new Error("The parameter 'id' cannot be null.");
-        else if (id !== undefined)
-            url_ += "Id=" + encodeURIComponent("" + id) + "&";
-        url_ = url_.replace(/[?&]$/, "");
-
-        let options_ : any = {
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-            })
-        };
-
-        return this.http.request("delete", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processDelete(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processDelete(response_ as any);
-                } catch (e) {
-                    return _observableThrow(e) as any as Observable<void>;
-                }
-            } else
-                return _observableThrow(response_) as any as Observable<void>;
-        }));
-    }
-
-    protected processDelete(response: HttpResponseBase): Observable<void> {
-        const status = response.status;
-        const responseBlob =
-            response instanceof HttpResponse ? response.body :
-            (response as any).error instanceof Blob ? (response as any).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            return _observableOf(null as any);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf(null as any);
-    }
-
-    /**
-     * @param filter (optional) 
-     * @param maxDurationTimeFilter (optional) 
-     * @param minDurationTimeFilter (optional) 
-     * @param maxOrderFilter (optional) 
-     * @param minOrderFilter (optional) 
-     * @param instructionsFilter (optional) 
-     * @param nameLFilter (optional) 
-     * @param nameFFilter (optional) 
-     * @param typeFilter (optional) 
-     * @param examTitleFilter (optional) 
-     * @return Success
-     */
-    getSectionsToExcel(filter: string | undefined, maxDurationTimeFilter: DateTime | undefined, minDurationTimeFilter: DateTime | undefined, maxOrderFilter: number | undefined, minOrderFilter: number | undefined, instructionsFilter: string | undefined, nameLFilter: string | undefined, nameFFilter: string | undefined, typeFilter: number | undefined, examTitleFilter: string | undefined): Observable<FileDto> {
-        let url_ = this.baseUrl + "/api/services/app/Sections/GetSectionsToExcel?";
-        if (filter === null)
-            throw new Error("The parameter 'filter' cannot be null.");
-        else if (filter !== undefined)
-            url_ += "Filter=" + encodeURIComponent("" + filter) + "&";
-        if (maxDurationTimeFilter === null)
-            throw new Error("The parameter 'maxDurationTimeFilter' cannot be null.");
-        else if (maxDurationTimeFilter !== undefined)
-            url_ += "MaxDurationTimeFilter=" + encodeURIComponent(maxDurationTimeFilter ? "" + maxDurationTimeFilter.toString() : "") + "&";
-        if (minDurationTimeFilter === null)
-            throw new Error("The parameter 'minDurationTimeFilter' cannot be null.");
-        else if (minDurationTimeFilter !== undefined)
-            url_ += "MinDurationTimeFilter=" + encodeURIComponent(minDurationTimeFilter ? "" + minDurationTimeFilter.toString() : "") + "&";
-        if (maxOrderFilter === null)
-            throw new Error("The parameter 'maxOrderFilter' cannot be null.");
-        else if (maxOrderFilter !== undefined)
-            url_ += "MaxOrderFilter=" + encodeURIComponent("" + maxOrderFilter) + "&";
-        if (minOrderFilter === null)
-            throw new Error("The parameter 'minOrderFilter' cannot be null.");
-        else if (minOrderFilter !== undefined)
-            url_ += "MinOrderFilter=" + encodeURIComponent("" + minOrderFilter) + "&";
-        if (instructionsFilter === null)
-            throw new Error("The parameter 'instructionsFilter' cannot be null.");
-        else if (instructionsFilter !== undefined)
-            url_ += "InstructionsFilter=" + encodeURIComponent("" + instructionsFilter) + "&";
-        if (nameLFilter === null)
-            throw new Error("The parameter 'nameLFilter' cannot be null.");
-        else if (nameLFilter !== undefined)
-            url_ += "NameLFilter=" + encodeURIComponent("" + nameLFilter) + "&";
-        if (nameFFilter === null)
-            throw new Error("The parameter 'nameFFilter' cannot be null.");
-        else if (nameFFilter !== undefined)
-            url_ += "NameFFilter=" + encodeURIComponent("" + nameFFilter) + "&";
-        if (typeFilter === null)
-            throw new Error("The parameter 'typeFilter' cannot be null.");
-        else if (typeFilter !== undefined)
-            url_ += "TypeFilter=" + encodeURIComponent("" + typeFilter) + "&";
-        if (examTitleFilter === null)
-            throw new Error("The parameter 'examTitleFilter' cannot be null.");
-        else if (examTitleFilter !== undefined)
-            url_ += "ExamTitleFilter=" + encodeURIComponent("" + examTitleFilter) + "&";
-        url_ = url_.replace(/[?&]$/, "");
-
-        let options_ : any = {
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Accept": "text/plain"
-            })
-        };
-
-        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGetSectionsToExcel(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processGetSectionsToExcel(response_ as any);
-                } catch (e) {
-                    return _observableThrow(e) as any as Observable<FileDto>;
-                }
-            } else
-                return _observableThrow(response_) as any as Observable<FileDto>;
-        }));
-    }
-
-    protected processGetSectionsToExcel(response: HttpResponseBase): Observable<FileDto> {
-        const status = response.status;
-        const responseBlob =
-            response instanceof HttpResponse ? response.body :
-            (response as any).error instanceof Blob ? (response as any).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = FileDto.fromJS(resultData200);
-            return _observableOf(result200);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf(null as any);
-    }
-
-    /**
-     * @param filter (optional) 
-     * @param sorting (optional) 
-     * @param skipCount (optional) 
-     * @param maxResultCount (optional) 
-     * @return Success
-     */
-    getAllExamForLookupTable(filter: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfSectionExamLookupTableDto> {
-        let url_ = this.baseUrl + "/api/services/app/Sections/GetAllExamForLookupTable?";
-        if (filter === null)
-            throw new Error("The parameter 'filter' cannot be null.");
-        else if (filter !== undefined)
-            url_ += "Filter=" + encodeURIComponent("" + filter) + "&";
-        if (sorting === null)
-            throw new Error("The parameter 'sorting' cannot be null.");
-        else if (sorting !== undefined)
-            url_ += "Sorting=" + encodeURIComponent("" + sorting) + "&";
-        if (skipCount === null)
-            throw new Error("The parameter 'skipCount' cannot be null.");
-        else if (skipCount !== undefined)
-            url_ += "SkipCount=" + encodeURIComponent("" + skipCount) + "&";
-        if (maxResultCount === null)
-            throw new Error("The parameter 'maxResultCount' cannot be null.");
-        else if (maxResultCount !== undefined)
-            url_ += "MaxResultCount=" + encodeURIComponent("" + maxResultCount) + "&";
-        url_ = url_.replace(/[?&]$/, "");
-
-        let options_ : any = {
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Accept": "text/plain"
-            })
-        };
-
-        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGetAllExamForLookupTable(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processGetAllExamForLookupTable(response_ as any);
-                } catch (e) {
-                    return _observableThrow(e) as any as Observable<PagedResultDtoOfSectionExamLookupTableDto>;
-                }
-            } else
-                return _observableThrow(response_) as any as Observable<PagedResultDtoOfSectionExamLookupTableDto>;
-        }));
-    }
-
-    protected processGetAllExamForLookupTable(response: HttpResponseBase): Observable<PagedResultDtoOfSectionExamLookupTableDto> {
-        const status = response.status;
-        const responseBlob =
-            response instanceof HttpResponse ? response.body :
-            (response as any).error instanceof Blob ? (response as any).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = PagedResultDtoOfSectionExamLookupTableDto.fromJS(resultData200);
             return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
@@ -18246,8 +19296,6 @@ export class SessionsServiceProxy {
 
     /**
      * @param filter (optional) 
-     * @param nameLFilter (optional) 
-     * @param nameFFilter (optional) 
      * @param maxStartDateFilter (optional) 
      * @param minStartDateFilter (optional) 
      * @param maxActualStartDateFilter (optional) 
@@ -18260,20 +19308,12 @@ export class SessionsServiceProxy {
      * @param maxResultCount (optional) 
      * @return Success
      */
-    getAll(filter: string | undefined, nameLFilter: string | undefined, nameFFilter: string | undefined, maxStartDateFilter: DateTime | undefined, minStartDateFilter: DateTime | undefined, maxActualStartDateFilter: DateTime | undefined, minActualStartDateFilter: DateTime | undefined, endDateFilter: string | undefined, examGenerationTokenFilter: string | undefined, backgroundStartJobIdFilter: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfGetSessionForViewDto> {
+    getAll(filter: string | undefined, maxStartDateFilter: DateTime | undefined, minStartDateFilter: DateTime | undefined, maxActualStartDateFilter: DateTime | undefined, minActualStartDateFilter: DateTime | undefined, endDateFilter: string | undefined, examGenerationTokenFilter: string | undefined, backgroundStartJobIdFilter: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfGetSessionForViewDto> {
         let url_ = this.baseUrl + "/api/services/app/Sessions/GetAll?";
         if (filter === null)
             throw new Error("The parameter 'filter' cannot be null.");
         else if (filter !== undefined)
             url_ += "Filter=" + encodeURIComponent("" + filter) + "&";
-        if (nameLFilter === null)
-            throw new Error("The parameter 'nameLFilter' cannot be null.");
-        else if (nameLFilter !== undefined)
-            url_ += "NameLFilter=" + encodeURIComponent("" + nameLFilter) + "&";
-        if (nameFFilter === null)
-            throw new Error("The parameter 'nameFFilter' cannot be null.");
-        else if (nameFFilter !== undefined)
-            url_ += "NameFFilter=" + encodeURIComponent("" + nameFFilter) + "&";
         if (maxStartDateFilter === null)
             throw new Error("The parameter 'maxStartDateFilter' cannot be null.");
         else if (maxStartDateFilter !== undefined)
@@ -18578,8 +19618,6 @@ export class SessionsServiceProxy {
 
     /**
      * @param filter (optional) 
-     * @param nameLFilter (optional) 
-     * @param nameFFilter (optional) 
      * @param maxStartDateFilter (optional) 
      * @param minStartDateFilter (optional) 
      * @param maxActualStartDateFilter (optional) 
@@ -18589,20 +19627,12 @@ export class SessionsServiceProxy {
      * @param backgroundStartJobIdFilter (optional) 
      * @return Success
      */
-    getSessionsToExcel(filter: string | undefined, nameLFilter: string | undefined, nameFFilter: string | undefined, maxStartDateFilter: DateTime | undefined, minStartDateFilter: DateTime | undefined, maxActualStartDateFilter: DateTime | undefined, minActualStartDateFilter: DateTime | undefined, endDateFilter: string | undefined, examGenerationTokenFilter: string | undefined, backgroundStartJobIdFilter: string | undefined): Observable<FileDto> {
+    getSessionsToExcel(filter: string | undefined, maxStartDateFilter: DateTime | undefined, minStartDateFilter: DateTime | undefined, maxActualStartDateFilter: DateTime | undefined, minActualStartDateFilter: DateTime | undefined, endDateFilter: string | undefined, examGenerationTokenFilter: string | undefined, backgroundStartJobIdFilter: string | undefined): Observable<FileDto> {
         let url_ = this.baseUrl + "/api/services/app/Sessions/GetSessionsToExcel?";
         if (filter === null)
             throw new Error("The parameter 'filter' cannot be null.");
         else if (filter !== undefined)
             url_ += "Filter=" + encodeURIComponent("" + filter) + "&";
-        if (nameLFilter === null)
-            throw new Error("The parameter 'nameLFilter' cannot be null.");
-        else if (nameLFilter !== undefined)
-            url_ += "NameLFilter=" + encodeURIComponent("" + nameLFilter) + "&";
-        if (nameFFilter === null)
-            throw new Error("The parameter 'nameFFilter' cannot be null.");
-        else if (nameFFilter !== undefined)
-            url_ += "NameFFilter=" + encodeURIComponent("" + nameFFilter) + "&";
         if (maxStartDateFilter === null)
             throw new Error("The parameter 'maxStartDateFilter' cannot be null.");
         else if (maxStartDateFilter !== undefined)
@@ -20306,23 +21336,18 @@ export class StudyLevelsServiceProxy {
 
     /**
      * @param filter (optional) 
-     * @param valueFilter (optional) 
      * @param isActiveFilter (optional) 
      * @param sorting (optional) 
      * @param skipCount (optional) 
      * @param maxResultCount (optional) 
      * @return Success
      */
-    getAll(filter: string | undefined, valueFilter: string | undefined, isActiveFilter: number | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfGetStudyLevelForViewDto> {
+    getAll(filter: string | undefined, isActiveFilter: number | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfGetStudyLevelForViewDto> {
         let url_ = this.baseUrl + "/api/services/app/StudyLevels/GetAll?";
         if (filter === null)
             throw new Error("The parameter 'filter' cannot be null.");
         else if (filter !== undefined)
             url_ += "Filter=" + encodeURIComponent("" + filter) + "&";
-        if (valueFilter === null)
-            throw new Error("The parameter 'valueFilter' cannot be null.");
-        else if (valueFilter !== undefined)
-            url_ += "ValueFilter=" + encodeURIComponent("" + valueFilter) + "&";
         if (isActiveFilter === null)
             throw new Error("The parameter 'isActiveFilter' cannot be null.");
         else if (isActiveFilter !== undefined)
@@ -20603,20 +21628,15 @@ export class StudyLevelsServiceProxy {
 
     /**
      * @param filter (optional) 
-     * @param valueFilter (optional) 
      * @param isActiveFilter (optional) 
      * @return Success
      */
-    getStudyLevelsToExcel(filter: string | undefined, valueFilter: string | undefined, isActiveFilter: number | undefined): Observable<FileDto> {
+    getStudyLevelsToExcel(filter: string | undefined, isActiveFilter: number | undefined): Observable<FileDto> {
         let url_ = this.baseUrl + "/api/services/app/StudyLevels/GetStudyLevelsToExcel?";
         if (filter === null)
             throw new Error("The parameter 'filter' cannot be null.");
         else if (filter !== undefined)
             url_ += "Filter=" + encodeURIComponent("" + filter) + "&";
-        if (valueFilter === null)
-            throw new Error("The parameter 'valueFilter' cannot be null.");
-        else if (valueFilter !== undefined)
-            url_ += "ValueFilter=" + encodeURIComponent("" + valueFilter) + "&";
         if (isActiveFilter === null)
             throw new Error("The parameter 'isActiveFilter' cannot be null.");
         else if (isActiveFilter !== undefined)
@@ -20681,7 +21701,6 @@ export class StudySubjectsServiceProxy {
 
     /**
      * @param filter (optional) 
-     * @param valueFilter (optional) 
      * @param languageFilter (optional) 
      * @param isActiveFilter (optional) 
      * @param sorting (optional) 
@@ -20689,16 +21708,12 @@ export class StudySubjectsServiceProxy {
      * @param maxResultCount (optional) 
      * @return Success
      */
-    getAll(filter: string | undefined, valueFilter: string | undefined, languageFilter: number | undefined, isActiveFilter: number | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfGetStudySubjectForViewDto> {
+    getAll(filter: string | undefined, languageFilter: number | undefined, isActiveFilter: number | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfGetStudySubjectForViewDto> {
         let url_ = this.baseUrl + "/api/services/app/StudySubjects/GetAll?";
         if (filter === null)
             throw new Error("The parameter 'filter' cannot be null.");
         else if (filter !== undefined)
             url_ += "Filter=" + encodeURIComponent("" + filter) + "&";
-        if (valueFilter === null)
-            throw new Error("The parameter 'valueFilter' cannot be null.");
-        else if (valueFilter !== undefined)
-            url_ += "ValueFilter=" + encodeURIComponent("" + valueFilter) + "&";
         if (languageFilter === null)
             throw new Error("The parameter 'languageFilter' cannot be null.");
         else if (languageFilter !== undefined)
@@ -20983,21 +21998,16 @@ export class StudySubjectsServiceProxy {
 
     /**
      * @param filter (optional) 
-     * @param valueFilter (optional) 
      * @param languageFilter (optional) 
      * @param isActiveFilter (optional) 
      * @return Success
      */
-    getStudySubjectsToExcel(filter: string | undefined, valueFilter: string | undefined, languageFilter: number | undefined, isActiveFilter: number | undefined): Observable<FileDto> {
+    getStudySubjectsToExcel(filter: string | undefined, languageFilter: number | undefined, isActiveFilter: number | undefined): Observable<FileDto> {
         let url_ = this.baseUrl + "/api/services/app/StudySubjects/GetStudySubjectsToExcel?";
         if (filter === null)
             throw new Error("The parameter 'filter' cannot be null.");
         else if (filter !== undefined)
             url_ += "Filter=" + encodeURIComponent("" + filter) + "&";
-        if (valueFilter === null)
-            throw new Error("The parameter 'valueFilter' cannot be null.");
-        else if (valueFilter !== undefined)
-            url_ += "ValueFilter=" + encodeURIComponent("" + valueFilter) + "&";
         if (languageFilter === null)
             throw new Error("The parameter 'languageFilter' cannot be null.");
         else if (languageFilter !== undefined)
@@ -22096,6 +23106,543 @@ export class SubjectGroupsServiceProxy {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
             result200 = PagedResultDtoOfSubjectGroupSupportGroupLookupTableDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+}
+
+@Injectable()
+export class SubjectUnitsServiceProxy {
+    private http: HttpClient;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        this.http = http;
+        this.baseUrl = baseUrl ?? "";
+    }
+
+    /**
+     * @param filter (optional) 
+     * @param codeFilter (optional) 
+     * @param isActiveFilter (optional) 
+     * @param studyLevelValueFilter (optional) 
+     * @param studySubjectValueFilter (optional) 
+     * @param sorting (optional) 
+     * @param skipCount (optional) 
+     * @param maxResultCount (optional) 
+     * @return Success
+     */
+    getAll(filter: string | undefined, codeFilter: string | undefined, isActiveFilter: number | undefined, studyLevelValueFilter: string | undefined, studySubjectValueFilter: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfGetSubjectUnitForViewDto> {
+        let url_ = this.baseUrl + "/api/services/app/SubjectUnits/GetAll?";
+        if (filter === null)
+            throw new Error("The parameter 'filter' cannot be null.");
+        else if (filter !== undefined)
+            url_ += "Filter=" + encodeURIComponent("" + filter) + "&";
+        if (codeFilter === null)
+            throw new Error("The parameter 'codeFilter' cannot be null.");
+        else if (codeFilter !== undefined)
+            url_ += "CodeFilter=" + encodeURIComponent("" + codeFilter) + "&";
+        if (isActiveFilter === null)
+            throw new Error("The parameter 'isActiveFilter' cannot be null.");
+        else if (isActiveFilter !== undefined)
+            url_ += "IsActiveFilter=" + encodeURIComponent("" + isActiveFilter) + "&";
+        if (studyLevelValueFilter === null)
+            throw new Error("The parameter 'studyLevelValueFilter' cannot be null.");
+        else if (studyLevelValueFilter !== undefined)
+            url_ += "StudyLevelValueFilter=" + encodeURIComponent("" + studyLevelValueFilter) + "&";
+        if (studySubjectValueFilter === null)
+            throw new Error("The parameter 'studySubjectValueFilter' cannot be null.");
+        else if (studySubjectValueFilter !== undefined)
+            url_ += "StudySubjectValueFilter=" + encodeURIComponent("" + studySubjectValueFilter) + "&";
+        if (sorting === null)
+            throw new Error("The parameter 'sorting' cannot be null.");
+        else if (sorting !== undefined)
+            url_ += "Sorting=" + encodeURIComponent("" + sorting) + "&";
+        if (skipCount === null)
+            throw new Error("The parameter 'skipCount' cannot be null.");
+        else if (skipCount !== undefined)
+            url_ += "SkipCount=" + encodeURIComponent("" + skipCount) + "&";
+        if (maxResultCount === null)
+            throw new Error("The parameter 'maxResultCount' cannot be null.");
+        else if (maxResultCount !== undefined)
+            url_ += "MaxResultCount=" + encodeURIComponent("" + maxResultCount) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetAll(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetAll(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<PagedResultDtoOfGetSubjectUnitForViewDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<PagedResultDtoOfGetSubjectUnitForViewDto>;
+        }));
+    }
+
+    protected processGetAll(response: HttpResponseBase): Observable<PagedResultDtoOfGetSubjectUnitForViewDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = PagedResultDtoOfGetSubjectUnitForViewDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param id (optional) 
+     * @return Success
+     */
+    getSubjectUnitForView(id: number | undefined): Observable<GetSubjectUnitForViewDto> {
+        let url_ = this.baseUrl + "/api/services/app/SubjectUnits/GetSubjectUnitForView?";
+        if (id === null)
+            throw new Error("The parameter 'id' cannot be null.");
+        else if (id !== undefined)
+            url_ += "id=" + encodeURIComponent("" + id) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetSubjectUnitForView(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetSubjectUnitForView(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<GetSubjectUnitForViewDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<GetSubjectUnitForViewDto>;
+        }));
+    }
+
+    protected processGetSubjectUnitForView(response: HttpResponseBase): Observable<GetSubjectUnitForViewDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = GetSubjectUnitForViewDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param id (optional) 
+     * @return Success
+     */
+    getSubjectUnitForEdit(id: number | undefined): Observable<GetSubjectUnitForEditOutput> {
+        let url_ = this.baseUrl + "/api/services/app/SubjectUnits/GetSubjectUnitForEdit?";
+        if (id === null)
+            throw new Error("The parameter 'id' cannot be null.");
+        else if (id !== undefined)
+            url_ += "Id=" + encodeURIComponent("" + id) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetSubjectUnitForEdit(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetSubjectUnitForEdit(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<GetSubjectUnitForEditOutput>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<GetSubjectUnitForEditOutput>;
+        }));
+    }
+
+    protected processGetSubjectUnitForEdit(response: HttpResponseBase): Observable<GetSubjectUnitForEditOutput> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = GetSubjectUnitForEditOutput.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param body (optional) 
+     * @return Success
+     */
+    createOrEdit(body: CreateOrEditSubjectUnitDto | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/SubjectUnits/CreateOrEdit";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json",
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processCreateOrEdit(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processCreateOrEdit(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<void>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<void>;
+        }));
+    }
+
+    protected processCreateOrEdit(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return _observableOf(null as any);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param id (optional) 
+     * @return Success
+     */
+    delete(id: number | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/SubjectUnits/Delete?";
+        if (id === null)
+            throw new Error("The parameter 'id' cannot be null.");
+        else if (id !== undefined)
+            url_ += "Id=" + encodeURIComponent("" + id) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+            })
+        };
+
+        return this.http.request("delete", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processDelete(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processDelete(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<void>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<void>;
+        }));
+    }
+
+    protected processDelete(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return _observableOf(null as any);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param filter (optional) 
+     * @param codeFilter (optional) 
+     * @param isActiveFilter (optional) 
+     * @param studyLevelValueFilter (optional) 
+     * @param studySubjectValueFilter (optional) 
+     * @return Success
+     */
+    getSubjectUnitsToExcel(filter: string | undefined, codeFilter: string | undefined, isActiveFilter: number | undefined, studyLevelValueFilter: string | undefined, studySubjectValueFilter: string | undefined): Observable<FileDto> {
+        let url_ = this.baseUrl + "/api/services/app/SubjectUnits/GetSubjectUnitsToExcel?";
+        if (filter === null)
+            throw new Error("The parameter 'filter' cannot be null.");
+        else if (filter !== undefined)
+            url_ += "Filter=" + encodeURIComponent("" + filter) + "&";
+        if (codeFilter === null)
+            throw new Error("The parameter 'codeFilter' cannot be null.");
+        else if (codeFilter !== undefined)
+            url_ += "CodeFilter=" + encodeURIComponent("" + codeFilter) + "&";
+        if (isActiveFilter === null)
+            throw new Error("The parameter 'isActiveFilter' cannot be null.");
+        else if (isActiveFilter !== undefined)
+            url_ += "IsActiveFilter=" + encodeURIComponent("" + isActiveFilter) + "&";
+        if (studyLevelValueFilter === null)
+            throw new Error("The parameter 'studyLevelValueFilter' cannot be null.");
+        else if (studyLevelValueFilter !== undefined)
+            url_ += "StudyLevelValueFilter=" + encodeURIComponent("" + studyLevelValueFilter) + "&";
+        if (studySubjectValueFilter === null)
+            throw new Error("The parameter 'studySubjectValueFilter' cannot be null.");
+        else if (studySubjectValueFilter !== undefined)
+            url_ += "StudySubjectValueFilter=" + encodeURIComponent("" + studySubjectValueFilter) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetSubjectUnitsToExcel(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetSubjectUnitsToExcel(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<FileDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<FileDto>;
+        }));
+    }
+
+    protected processGetSubjectUnitsToExcel(response: HttpResponseBase): Observable<FileDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = FileDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param filter (optional) 
+     * @param sorting (optional) 
+     * @param skipCount (optional) 
+     * @param maxResultCount (optional) 
+     * @return Success
+     */
+    getAllStudyLevelForLookupTable(filter: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfSubjectUnitStudyLevelLookupTableDto> {
+        let url_ = this.baseUrl + "/api/services/app/SubjectUnits/GetAllStudyLevelForLookupTable?";
+        if (filter === null)
+            throw new Error("The parameter 'filter' cannot be null.");
+        else if (filter !== undefined)
+            url_ += "Filter=" + encodeURIComponent("" + filter) + "&";
+        if (sorting === null)
+            throw new Error("The parameter 'sorting' cannot be null.");
+        else if (sorting !== undefined)
+            url_ += "Sorting=" + encodeURIComponent("" + sorting) + "&";
+        if (skipCount === null)
+            throw new Error("The parameter 'skipCount' cannot be null.");
+        else if (skipCount !== undefined)
+            url_ += "SkipCount=" + encodeURIComponent("" + skipCount) + "&";
+        if (maxResultCount === null)
+            throw new Error("The parameter 'maxResultCount' cannot be null.");
+        else if (maxResultCount !== undefined)
+            url_ += "MaxResultCount=" + encodeURIComponent("" + maxResultCount) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetAllStudyLevelForLookupTable(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetAllStudyLevelForLookupTable(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<PagedResultDtoOfSubjectUnitStudyLevelLookupTableDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<PagedResultDtoOfSubjectUnitStudyLevelLookupTableDto>;
+        }));
+    }
+
+    protected processGetAllStudyLevelForLookupTable(response: HttpResponseBase): Observable<PagedResultDtoOfSubjectUnitStudyLevelLookupTableDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = PagedResultDtoOfSubjectUnitStudyLevelLookupTableDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param filter (optional) 
+     * @param sorting (optional) 
+     * @param skipCount (optional) 
+     * @param maxResultCount (optional) 
+     * @return Success
+     */
+    getAllStudySubjectForLookupTable(filter: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfSubjectUnitStudySubjectLookupTableDto> {
+        let url_ = this.baseUrl + "/api/services/app/SubjectUnits/GetAllStudySubjectForLookupTable?";
+        if (filter === null)
+            throw new Error("The parameter 'filter' cannot be null.");
+        else if (filter !== undefined)
+            url_ += "Filter=" + encodeURIComponent("" + filter) + "&";
+        if (sorting === null)
+            throw new Error("The parameter 'sorting' cannot be null.");
+        else if (sorting !== undefined)
+            url_ += "Sorting=" + encodeURIComponent("" + sorting) + "&";
+        if (skipCount === null)
+            throw new Error("The parameter 'skipCount' cannot be null.");
+        else if (skipCount !== undefined)
+            url_ += "SkipCount=" + encodeURIComponent("" + skipCount) + "&";
+        if (maxResultCount === null)
+            throw new Error("The parameter 'maxResultCount' cannot be null.");
+        else if (maxResultCount !== undefined)
+            url_ += "MaxResultCount=" + encodeURIComponent("" + maxResultCount) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetAllStudySubjectForLookupTable(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetAllStudySubjectForLookupTable(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<PagedResultDtoOfSubjectUnitStudySubjectLookupTableDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<PagedResultDtoOfSubjectUnitStudySubjectLookupTableDto>;
+        }));
+    }
+
+    protected processGetAllStudySubjectForLookupTable(response: HttpResponseBase): Observable<PagedResultDtoOfSubjectUnitStudySubjectLookupTableDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = PagedResultDtoOfSubjectUnitStudySubjectLookupTableDto.fromJS(resultData200);
             return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
@@ -23780,2395 +25327,6 @@ export class SupportGroupsServiceProxy {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
             result200 = FileDto.fromJS(resultData200);
-            return _observableOf(result200);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf(null as any);
-    }
-}
-
-@Injectable()
-export class TargetsServiceProxy {
-    private http: HttpClient;
-    private baseUrl: string;
-    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
-
-    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
-        this.http = http;
-        this.baseUrl = baseUrl ?? "";
-    }
-
-    /**
-     * @param filter (optional) 
-     * @param valueFilter (optional) 
-     * @param codeFilter (optional) 
-     * @param isActiveFilter (optional) 
-     * @param studyLevelValueFilter (optional) 
-     * @param studySubjectValueFilter (optional) 
-     * @param sorting (optional) 
-     * @param skipCount (optional) 
-     * @param maxResultCount (optional) 
-     * @return Success
-     */
-    getAll(filter: string | undefined, valueFilter: string | undefined, codeFilter: string | undefined, isActiveFilter: number | undefined, studyLevelValueFilter: string | undefined, studySubjectValueFilter: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfGetTargetForViewDto> {
-        let url_ = this.baseUrl + "/api/services/app/Targets/GetAll?";
-        if (filter === null)
-            throw new Error("The parameter 'filter' cannot be null.");
-        else if (filter !== undefined)
-            url_ += "Filter=" + encodeURIComponent("" + filter) + "&";
-        if (valueFilter === null)
-            throw new Error("The parameter 'valueFilter' cannot be null.");
-        else if (valueFilter !== undefined)
-            url_ += "ValueFilter=" + encodeURIComponent("" + valueFilter) + "&";
-        if (codeFilter === null)
-            throw new Error("The parameter 'codeFilter' cannot be null.");
-        else if (codeFilter !== undefined)
-            url_ += "CodeFilter=" + encodeURIComponent("" + codeFilter) + "&";
-        if (isActiveFilter === null)
-            throw new Error("The parameter 'isActiveFilter' cannot be null.");
-        else if (isActiveFilter !== undefined)
-            url_ += "IsActiveFilter=" + encodeURIComponent("" + isActiveFilter) + "&";
-        if (studyLevelValueFilter === null)
-            throw new Error("The parameter 'studyLevelValueFilter' cannot be null.");
-        else if (studyLevelValueFilter !== undefined)
-            url_ += "StudyLevelValueFilter=" + encodeURIComponent("" + studyLevelValueFilter) + "&";
-        if (studySubjectValueFilter === null)
-            throw new Error("The parameter 'studySubjectValueFilter' cannot be null.");
-        else if (studySubjectValueFilter !== undefined)
-            url_ += "StudySubjectValueFilter=" + encodeURIComponent("" + studySubjectValueFilter) + "&";
-        if (sorting === null)
-            throw new Error("The parameter 'sorting' cannot be null.");
-        else if (sorting !== undefined)
-            url_ += "Sorting=" + encodeURIComponent("" + sorting) + "&";
-        if (skipCount === null)
-            throw new Error("The parameter 'skipCount' cannot be null.");
-        else if (skipCount !== undefined)
-            url_ += "SkipCount=" + encodeURIComponent("" + skipCount) + "&";
-        if (maxResultCount === null)
-            throw new Error("The parameter 'maxResultCount' cannot be null.");
-        else if (maxResultCount !== undefined)
-            url_ += "MaxResultCount=" + encodeURIComponent("" + maxResultCount) + "&";
-        url_ = url_.replace(/[?&]$/, "");
-
-        let options_ : any = {
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Accept": "text/plain"
-            })
-        };
-
-        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGetAll(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processGetAll(response_ as any);
-                } catch (e) {
-                    return _observableThrow(e) as any as Observable<PagedResultDtoOfGetTargetForViewDto>;
-                }
-            } else
-                return _observableThrow(response_) as any as Observable<PagedResultDtoOfGetTargetForViewDto>;
-        }));
-    }
-
-    protected processGetAll(response: HttpResponseBase): Observable<PagedResultDtoOfGetTargetForViewDto> {
-        const status = response.status;
-        const responseBlob =
-            response instanceof HttpResponse ? response.body :
-            (response as any).error instanceof Blob ? (response as any).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = PagedResultDtoOfGetTargetForViewDto.fromJS(resultData200);
-            return _observableOf(result200);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf(null as any);
-    }
-
-    /**
-     * @param id (optional) 
-     * @return Success
-     */
-    getTargetForView(id: number | undefined): Observable<GetTargetForViewDto> {
-        let url_ = this.baseUrl + "/api/services/app/Targets/GetTargetForView?";
-        if (id === null)
-            throw new Error("The parameter 'id' cannot be null.");
-        else if (id !== undefined)
-            url_ += "id=" + encodeURIComponent("" + id) + "&";
-        url_ = url_.replace(/[?&]$/, "");
-
-        let options_ : any = {
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Accept": "text/plain"
-            })
-        };
-
-        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGetTargetForView(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processGetTargetForView(response_ as any);
-                } catch (e) {
-                    return _observableThrow(e) as any as Observable<GetTargetForViewDto>;
-                }
-            } else
-                return _observableThrow(response_) as any as Observable<GetTargetForViewDto>;
-        }));
-    }
-
-    protected processGetTargetForView(response: HttpResponseBase): Observable<GetTargetForViewDto> {
-        const status = response.status;
-        const responseBlob =
-            response instanceof HttpResponse ? response.body :
-            (response as any).error instanceof Blob ? (response as any).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = GetTargetForViewDto.fromJS(resultData200);
-            return _observableOf(result200);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf(null as any);
-    }
-
-    /**
-     * @param id (optional) 
-     * @return Success
-     */
-    getTargetForEdit(id: number | undefined): Observable<GetTargetForEditOutput> {
-        let url_ = this.baseUrl + "/api/services/app/Targets/GetTargetForEdit?";
-        if (id === null)
-            throw new Error("The parameter 'id' cannot be null.");
-        else if (id !== undefined)
-            url_ += "Id=" + encodeURIComponent("" + id) + "&";
-        url_ = url_.replace(/[?&]$/, "");
-
-        let options_ : any = {
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Accept": "text/plain"
-            })
-        };
-
-        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGetTargetForEdit(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processGetTargetForEdit(response_ as any);
-                } catch (e) {
-                    return _observableThrow(e) as any as Observable<GetTargetForEditOutput>;
-                }
-            } else
-                return _observableThrow(response_) as any as Observable<GetTargetForEditOutput>;
-        }));
-    }
-
-    protected processGetTargetForEdit(response: HttpResponseBase): Observable<GetTargetForEditOutput> {
-        const status = response.status;
-        const responseBlob =
-            response instanceof HttpResponse ? response.body :
-            (response as any).error instanceof Blob ? (response as any).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = GetTargetForEditOutput.fromJS(resultData200);
-            return _observableOf(result200);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf(null as any);
-    }
-
-    /**
-     * @param body (optional) 
-     * @return Success
-     */
-    createOrEdit(body: CreateOrEditTargetDto | undefined): Observable<void> {
-        let url_ = this.baseUrl + "/api/services/app/Targets/CreateOrEdit";
-        url_ = url_.replace(/[?&]$/, "");
-
-        const content_ = JSON.stringify(body);
-
-        let options_ : any = {
-            body: content_,
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Content-Type": "application/json",
-            })
-        };
-
-        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processCreateOrEdit(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processCreateOrEdit(response_ as any);
-                } catch (e) {
-                    return _observableThrow(e) as any as Observable<void>;
-                }
-            } else
-                return _observableThrow(response_) as any as Observable<void>;
-        }));
-    }
-
-    protected processCreateOrEdit(response: HttpResponseBase): Observable<void> {
-        const status = response.status;
-        const responseBlob =
-            response instanceof HttpResponse ? response.body :
-            (response as any).error instanceof Blob ? (response as any).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            return _observableOf(null as any);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf(null as any);
-    }
-
-    /**
-     * @param id (optional) 
-     * @return Success
-     */
-    delete(id: number | undefined): Observable<void> {
-        let url_ = this.baseUrl + "/api/services/app/Targets/Delete?";
-        if (id === null)
-            throw new Error("The parameter 'id' cannot be null.");
-        else if (id !== undefined)
-            url_ += "Id=" + encodeURIComponent("" + id) + "&";
-        url_ = url_.replace(/[?&]$/, "");
-
-        let options_ : any = {
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-            })
-        };
-
-        return this.http.request("delete", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processDelete(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processDelete(response_ as any);
-                } catch (e) {
-                    return _observableThrow(e) as any as Observable<void>;
-                }
-            } else
-                return _observableThrow(response_) as any as Observable<void>;
-        }));
-    }
-
-    protected processDelete(response: HttpResponseBase): Observable<void> {
-        const status = response.status;
-        const responseBlob =
-            response instanceof HttpResponse ? response.body :
-            (response as any).error instanceof Blob ? (response as any).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            return _observableOf(null as any);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf(null as any);
-    }
-
-    /**
-     * @param filter (optional) 
-     * @param valueFilter (optional) 
-     * @param codeFilter (optional) 
-     * @param isActiveFilter (optional) 
-     * @param studyLevelValueFilter (optional) 
-     * @param studySubjectValueFilter (optional) 
-     * @return Success
-     */
-    getTargetsToExcel(filter: string | undefined, valueFilter: string | undefined, codeFilter: string | undefined, isActiveFilter: number | undefined, studyLevelValueFilter: string | undefined, studySubjectValueFilter: string | undefined): Observable<FileDto> {
-        let url_ = this.baseUrl + "/api/services/app/Targets/GetTargetsToExcel?";
-        if (filter === null)
-            throw new Error("The parameter 'filter' cannot be null.");
-        else if (filter !== undefined)
-            url_ += "Filter=" + encodeURIComponent("" + filter) + "&";
-        if (valueFilter === null)
-            throw new Error("The parameter 'valueFilter' cannot be null.");
-        else if (valueFilter !== undefined)
-            url_ += "ValueFilter=" + encodeURIComponent("" + valueFilter) + "&";
-        if (codeFilter === null)
-            throw new Error("The parameter 'codeFilter' cannot be null.");
-        else if (codeFilter !== undefined)
-            url_ += "CodeFilter=" + encodeURIComponent("" + codeFilter) + "&";
-        if (isActiveFilter === null)
-            throw new Error("The parameter 'isActiveFilter' cannot be null.");
-        else if (isActiveFilter !== undefined)
-            url_ += "IsActiveFilter=" + encodeURIComponent("" + isActiveFilter) + "&";
-        if (studyLevelValueFilter === null)
-            throw new Error("The parameter 'studyLevelValueFilter' cannot be null.");
-        else if (studyLevelValueFilter !== undefined)
-            url_ += "StudyLevelValueFilter=" + encodeURIComponent("" + studyLevelValueFilter) + "&";
-        if (studySubjectValueFilter === null)
-            throw new Error("The parameter 'studySubjectValueFilter' cannot be null.");
-        else if (studySubjectValueFilter !== undefined)
-            url_ += "StudySubjectValueFilter=" + encodeURIComponent("" + studySubjectValueFilter) + "&";
-        url_ = url_.replace(/[?&]$/, "");
-
-        let options_ : any = {
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Accept": "text/plain"
-            })
-        };
-
-        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGetTargetsToExcel(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processGetTargetsToExcel(response_ as any);
-                } catch (e) {
-                    return _observableThrow(e) as any as Observable<FileDto>;
-                }
-            } else
-                return _observableThrow(response_) as any as Observable<FileDto>;
-        }));
-    }
-
-    protected processGetTargetsToExcel(response: HttpResponseBase): Observable<FileDto> {
-        const status = response.status;
-        const responseBlob =
-            response instanceof HttpResponse ? response.body :
-            (response as any).error instanceof Blob ? (response as any).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = FileDto.fromJS(resultData200);
-            return _observableOf(result200);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf(null as any);
-    }
-
-    /**
-     * @param filter (optional) 
-     * @param sorting (optional) 
-     * @param skipCount (optional) 
-     * @param maxResultCount (optional) 
-     * @return Success
-     */
-    getAllStudyLevelForLookupTable(filter: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfTargetStudyLevelLookupTableDto> {
-        let url_ = this.baseUrl + "/api/services/app/Targets/GetAllStudyLevelForLookupTable?";
-        if (filter === null)
-            throw new Error("The parameter 'filter' cannot be null.");
-        else if (filter !== undefined)
-            url_ += "Filter=" + encodeURIComponent("" + filter) + "&";
-        if (sorting === null)
-            throw new Error("The parameter 'sorting' cannot be null.");
-        else if (sorting !== undefined)
-            url_ += "Sorting=" + encodeURIComponent("" + sorting) + "&";
-        if (skipCount === null)
-            throw new Error("The parameter 'skipCount' cannot be null.");
-        else if (skipCount !== undefined)
-            url_ += "SkipCount=" + encodeURIComponent("" + skipCount) + "&";
-        if (maxResultCount === null)
-            throw new Error("The parameter 'maxResultCount' cannot be null.");
-        else if (maxResultCount !== undefined)
-            url_ += "MaxResultCount=" + encodeURIComponent("" + maxResultCount) + "&";
-        url_ = url_.replace(/[?&]$/, "");
-
-        let options_ : any = {
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Accept": "text/plain"
-            })
-        };
-
-        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGetAllStudyLevelForLookupTable(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processGetAllStudyLevelForLookupTable(response_ as any);
-                } catch (e) {
-                    return _observableThrow(e) as any as Observable<PagedResultDtoOfTargetStudyLevelLookupTableDto>;
-                }
-            } else
-                return _observableThrow(response_) as any as Observable<PagedResultDtoOfTargetStudyLevelLookupTableDto>;
-        }));
-    }
-
-    protected processGetAllStudyLevelForLookupTable(response: HttpResponseBase): Observable<PagedResultDtoOfTargetStudyLevelLookupTableDto> {
-        const status = response.status;
-        const responseBlob =
-            response instanceof HttpResponse ? response.body :
-            (response as any).error instanceof Blob ? (response as any).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = PagedResultDtoOfTargetStudyLevelLookupTableDto.fromJS(resultData200);
-            return _observableOf(result200);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf(null as any);
-    }
-
-    /**
-     * @param filter (optional) 
-     * @param sorting (optional) 
-     * @param skipCount (optional) 
-     * @param maxResultCount (optional) 
-     * @return Success
-     */
-    getAllStudySubjectForLookupTable(filter: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfTargetStudySubjectLookupTableDto> {
-        let url_ = this.baseUrl + "/api/services/app/Targets/GetAllStudySubjectForLookupTable?";
-        if (filter === null)
-            throw new Error("The parameter 'filter' cannot be null.");
-        else if (filter !== undefined)
-            url_ += "Filter=" + encodeURIComponent("" + filter) + "&";
-        if (sorting === null)
-            throw new Error("The parameter 'sorting' cannot be null.");
-        else if (sorting !== undefined)
-            url_ += "Sorting=" + encodeURIComponent("" + sorting) + "&";
-        if (skipCount === null)
-            throw new Error("The parameter 'skipCount' cannot be null.");
-        else if (skipCount !== undefined)
-            url_ += "SkipCount=" + encodeURIComponent("" + skipCount) + "&";
-        if (maxResultCount === null)
-            throw new Error("The parameter 'maxResultCount' cannot be null.");
-        else if (maxResultCount !== undefined)
-            url_ += "MaxResultCount=" + encodeURIComponent("" + maxResultCount) + "&";
-        url_ = url_.replace(/[?&]$/, "");
-
-        let options_ : any = {
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Accept": "text/plain"
-            })
-        };
-
-        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGetAllStudySubjectForLookupTable(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processGetAllStudySubjectForLookupTable(response_ as any);
-                } catch (e) {
-                    return _observableThrow(e) as any as Observable<PagedResultDtoOfTargetStudySubjectLookupTableDto>;
-                }
-            } else
-                return _observableThrow(response_) as any as Observable<PagedResultDtoOfTargetStudySubjectLookupTableDto>;
-        }));
-    }
-
-    protected processGetAllStudySubjectForLookupTable(response: HttpResponseBase): Observable<PagedResultDtoOfTargetStudySubjectLookupTableDto> {
-        const status = response.status;
-        const responseBlob =
-            response instanceof HttpResponse ? response.body :
-            (response as any).error instanceof Blob ? (response as any).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = PagedResultDtoOfTargetStudySubjectLookupTableDto.fromJS(resultData200);
-            return _observableOf(result200);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf(null as any);
-    }
-}
-
-@Injectable()
-export class TemplatesServiceProxy {
-    private http: HttpClient;
-    private baseUrl: string;
-    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
-
-    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
-        this.http = http;
-        this.baseUrl = baseUrl ?? "";
-    }
-
-    /**
-     * @param filter (optional) 
-     * @param nameLFilter (optional) 
-     * @param nameFFilter (optional) 
-     * @param instructionsFilter (optional) 
-     * @param isActiveFilter (optional) 
-     * @param maxVersionCountFilter (optional) 
-     * @param minVersionCountFilter (optional) 
-     * @param studyLevelValueFilter (optional) 
-     * @param studySubjectValueFilter (optional) 
-     * @param sorting (optional) 
-     * @param skipCount (optional) 
-     * @param maxResultCount (optional) 
-     * @return Success
-     */
-    getAll(filter: string | undefined, nameLFilter: string | undefined, nameFFilter: string | undefined, instructionsFilter: string | undefined, isActiveFilter: number | undefined, maxVersionCountFilter: number | undefined, minVersionCountFilter: number | undefined, studyLevelValueFilter: string | undefined, studySubjectValueFilter: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfGetTemplateForViewDto> {
-        let url_ = this.baseUrl + "/api/services/app/Templates/GetAll?";
-        if (filter === null)
-            throw new Error("The parameter 'filter' cannot be null.");
-        else if (filter !== undefined)
-            url_ += "Filter=" + encodeURIComponent("" + filter) + "&";
-        if (nameLFilter === null)
-            throw new Error("The parameter 'nameLFilter' cannot be null.");
-        else if (nameLFilter !== undefined)
-            url_ += "NameLFilter=" + encodeURIComponent("" + nameLFilter) + "&";
-        if (nameFFilter === null)
-            throw new Error("The parameter 'nameFFilter' cannot be null.");
-        else if (nameFFilter !== undefined)
-            url_ += "NameFFilter=" + encodeURIComponent("" + nameFFilter) + "&";
-        if (instructionsFilter === null)
-            throw new Error("The parameter 'instructionsFilter' cannot be null.");
-        else if (instructionsFilter !== undefined)
-            url_ += "InstructionsFilter=" + encodeURIComponent("" + instructionsFilter) + "&";
-        if (isActiveFilter === null)
-            throw new Error("The parameter 'isActiveFilter' cannot be null.");
-        else if (isActiveFilter !== undefined)
-            url_ += "IsActiveFilter=" + encodeURIComponent("" + isActiveFilter) + "&";
-        if (maxVersionCountFilter === null)
-            throw new Error("The parameter 'maxVersionCountFilter' cannot be null.");
-        else if (maxVersionCountFilter !== undefined)
-            url_ += "MaxVersionCountFilter=" + encodeURIComponent("" + maxVersionCountFilter) + "&";
-        if (minVersionCountFilter === null)
-            throw new Error("The parameter 'minVersionCountFilter' cannot be null.");
-        else if (minVersionCountFilter !== undefined)
-            url_ += "MinVersionCountFilter=" + encodeURIComponent("" + minVersionCountFilter) + "&";
-        if (studyLevelValueFilter === null)
-            throw new Error("The parameter 'studyLevelValueFilter' cannot be null.");
-        else if (studyLevelValueFilter !== undefined)
-            url_ += "StudyLevelValueFilter=" + encodeURIComponent("" + studyLevelValueFilter) + "&";
-        if (studySubjectValueFilter === null)
-            throw new Error("The parameter 'studySubjectValueFilter' cannot be null.");
-        else if (studySubjectValueFilter !== undefined)
-            url_ += "StudySubjectValueFilter=" + encodeURIComponent("" + studySubjectValueFilter) + "&";
-        if (sorting === null)
-            throw new Error("The parameter 'sorting' cannot be null.");
-        else if (sorting !== undefined)
-            url_ += "Sorting=" + encodeURIComponent("" + sorting) + "&";
-        if (skipCount === null)
-            throw new Error("The parameter 'skipCount' cannot be null.");
-        else if (skipCount !== undefined)
-            url_ += "SkipCount=" + encodeURIComponent("" + skipCount) + "&";
-        if (maxResultCount === null)
-            throw new Error("The parameter 'maxResultCount' cannot be null.");
-        else if (maxResultCount !== undefined)
-            url_ += "MaxResultCount=" + encodeURIComponent("" + maxResultCount) + "&";
-        url_ = url_.replace(/[?&]$/, "");
-
-        let options_ : any = {
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Accept": "text/plain"
-            })
-        };
-
-        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGetAll(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processGetAll(response_ as any);
-                } catch (e) {
-                    return _observableThrow(e) as any as Observable<PagedResultDtoOfGetTemplateForViewDto>;
-                }
-            } else
-                return _observableThrow(response_) as any as Observable<PagedResultDtoOfGetTemplateForViewDto>;
-        }));
-    }
-
-    protected processGetAll(response: HttpResponseBase): Observable<PagedResultDtoOfGetTemplateForViewDto> {
-        const status = response.status;
-        const responseBlob =
-            response instanceof HttpResponse ? response.body :
-            (response as any).error instanceof Blob ? (response as any).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = PagedResultDtoOfGetTemplateForViewDto.fromJS(resultData200);
-            return _observableOf(result200);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf(null as any);
-    }
-
-    /**
-     * @param id (optional) 
-     * @return Success
-     */
-    getTemplateForView(id: number | undefined): Observable<GetTemplateForViewDto> {
-        let url_ = this.baseUrl + "/api/services/app/Templates/GetTemplateForView?";
-        if (id === null)
-            throw new Error("The parameter 'id' cannot be null.");
-        else if (id !== undefined)
-            url_ += "id=" + encodeURIComponent("" + id) + "&";
-        url_ = url_.replace(/[?&]$/, "");
-
-        let options_ : any = {
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Accept": "text/plain"
-            })
-        };
-
-        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGetTemplateForView(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processGetTemplateForView(response_ as any);
-                } catch (e) {
-                    return _observableThrow(e) as any as Observable<GetTemplateForViewDto>;
-                }
-            } else
-                return _observableThrow(response_) as any as Observable<GetTemplateForViewDto>;
-        }));
-    }
-
-    protected processGetTemplateForView(response: HttpResponseBase): Observable<GetTemplateForViewDto> {
-        const status = response.status;
-        const responseBlob =
-            response instanceof HttpResponse ? response.body :
-            (response as any).error instanceof Blob ? (response as any).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = GetTemplateForViewDto.fromJS(resultData200);
-            return _observableOf(result200);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf(null as any);
-    }
-
-    /**
-     * @param id (optional) 
-     * @return Success
-     */
-    getTemplateForEdit(id: number | undefined): Observable<GetTemplateForEditOutput> {
-        let url_ = this.baseUrl + "/api/services/app/Templates/GetTemplateForEdit?";
-        if (id === null)
-            throw new Error("The parameter 'id' cannot be null.");
-        else if (id !== undefined)
-            url_ += "Id=" + encodeURIComponent("" + id) + "&";
-        url_ = url_.replace(/[?&]$/, "");
-
-        let options_ : any = {
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Accept": "text/plain"
-            })
-        };
-
-        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGetTemplateForEdit(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processGetTemplateForEdit(response_ as any);
-                } catch (e) {
-                    return _observableThrow(e) as any as Observable<GetTemplateForEditOutput>;
-                }
-            } else
-                return _observableThrow(response_) as any as Observable<GetTemplateForEditOutput>;
-        }));
-    }
-
-    protected processGetTemplateForEdit(response: HttpResponseBase): Observable<GetTemplateForEditOutput> {
-        const status = response.status;
-        const responseBlob =
-            response instanceof HttpResponse ? response.body :
-            (response as any).error instanceof Blob ? (response as any).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = GetTemplateForEditOutput.fromJS(resultData200);
-            return _observableOf(result200);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf(null as any);
-    }
-
-    /**
-     * @param body (optional) 
-     * @return Success
-     */
-    createOrEdit(body: CreateOrEditTemplateDto | undefined): Observable<void> {
-        let url_ = this.baseUrl + "/api/services/app/Templates/CreateOrEdit";
-        url_ = url_.replace(/[?&]$/, "");
-
-        const content_ = JSON.stringify(body);
-
-        let options_ : any = {
-            body: content_,
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Content-Type": "application/json",
-            })
-        };
-
-        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processCreateOrEdit(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processCreateOrEdit(response_ as any);
-                } catch (e) {
-                    return _observableThrow(e) as any as Observable<void>;
-                }
-            } else
-                return _observableThrow(response_) as any as Observable<void>;
-        }));
-    }
-
-    protected processCreateOrEdit(response: HttpResponseBase): Observable<void> {
-        const status = response.status;
-        const responseBlob =
-            response instanceof HttpResponse ? response.body :
-            (response as any).error instanceof Blob ? (response as any).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            return _observableOf(null as any);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf(null as any);
-    }
-
-    /**
-     * @param id (optional) 
-     * @return Success
-     */
-    delete(id: number | undefined): Observable<void> {
-        let url_ = this.baseUrl + "/api/services/app/Templates/Delete?";
-        if (id === null)
-            throw new Error("The parameter 'id' cannot be null.");
-        else if (id !== undefined)
-            url_ += "Id=" + encodeURIComponent("" + id) + "&";
-        url_ = url_.replace(/[?&]$/, "");
-
-        let options_ : any = {
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-            })
-        };
-
-        return this.http.request("delete", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processDelete(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processDelete(response_ as any);
-                } catch (e) {
-                    return _observableThrow(e) as any as Observable<void>;
-                }
-            } else
-                return _observableThrow(response_) as any as Observable<void>;
-        }));
-    }
-
-    protected processDelete(response: HttpResponseBase): Observable<void> {
-        const status = response.status;
-        const responseBlob =
-            response instanceof HttpResponse ? response.body :
-            (response as any).error instanceof Blob ? (response as any).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            return _observableOf(null as any);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf(null as any);
-    }
-
-    /**
-     * @param filter (optional) 
-     * @param nameLFilter (optional) 
-     * @param nameFFilter (optional) 
-     * @param instructionsFilter (optional) 
-     * @param isActiveFilter (optional) 
-     * @param maxVersionCountFilter (optional) 
-     * @param minVersionCountFilter (optional) 
-     * @param studyLevelValueFilter (optional) 
-     * @param studySubjectValueFilter (optional) 
-     * @return Success
-     */
-    getTemplatesToExcel(filter: string | undefined, nameLFilter: string | undefined, nameFFilter: string | undefined, instructionsFilter: string | undefined, isActiveFilter: number | undefined, maxVersionCountFilter: number | undefined, minVersionCountFilter: number | undefined, studyLevelValueFilter: string | undefined, studySubjectValueFilter: string | undefined): Observable<FileDto> {
-        let url_ = this.baseUrl + "/api/services/app/Templates/GetTemplatesToExcel?";
-        if (filter === null)
-            throw new Error("The parameter 'filter' cannot be null.");
-        else if (filter !== undefined)
-            url_ += "Filter=" + encodeURIComponent("" + filter) + "&";
-        if (nameLFilter === null)
-            throw new Error("The parameter 'nameLFilter' cannot be null.");
-        else if (nameLFilter !== undefined)
-            url_ += "NameLFilter=" + encodeURIComponent("" + nameLFilter) + "&";
-        if (nameFFilter === null)
-            throw new Error("The parameter 'nameFFilter' cannot be null.");
-        else if (nameFFilter !== undefined)
-            url_ += "NameFFilter=" + encodeURIComponent("" + nameFFilter) + "&";
-        if (instructionsFilter === null)
-            throw new Error("The parameter 'instructionsFilter' cannot be null.");
-        else if (instructionsFilter !== undefined)
-            url_ += "InstructionsFilter=" + encodeURIComponent("" + instructionsFilter) + "&";
-        if (isActiveFilter === null)
-            throw new Error("The parameter 'isActiveFilter' cannot be null.");
-        else if (isActiveFilter !== undefined)
-            url_ += "IsActiveFilter=" + encodeURIComponent("" + isActiveFilter) + "&";
-        if (maxVersionCountFilter === null)
-            throw new Error("The parameter 'maxVersionCountFilter' cannot be null.");
-        else if (maxVersionCountFilter !== undefined)
-            url_ += "MaxVersionCountFilter=" + encodeURIComponent("" + maxVersionCountFilter) + "&";
-        if (minVersionCountFilter === null)
-            throw new Error("The parameter 'minVersionCountFilter' cannot be null.");
-        else if (minVersionCountFilter !== undefined)
-            url_ += "MinVersionCountFilter=" + encodeURIComponent("" + minVersionCountFilter) + "&";
-        if (studyLevelValueFilter === null)
-            throw new Error("The parameter 'studyLevelValueFilter' cannot be null.");
-        else if (studyLevelValueFilter !== undefined)
-            url_ += "StudyLevelValueFilter=" + encodeURIComponent("" + studyLevelValueFilter) + "&";
-        if (studySubjectValueFilter === null)
-            throw new Error("The parameter 'studySubjectValueFilter' cannot be null.");
-        else if (studySubjectValueFilter !== undefined)
-            url_ += "StudySubjectValueFilter=" + encodeURIComponent("" + studySubjectValueFilter) + "&";
-        url_ = url_.replace(/[?&]$/, "");
-
-        let options_ : any = {
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Accept": "text/plain"
-            })
-        };
-
-        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGetTemplatesToExcel(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processGetTemplatesToExcel(response_ as any);
-                } catch (e) {
-                    return _observableThrow(e) as any as Observable<FileDto>;
-                }
-            } else
-                return _observableThrow(response_) as any as Observable<FileDto>;
-        }));
-    }
-
-    protected processGetTemplatesToExcel(response: HttpResponseBase): Observable<FileDto> {
-        const status = response.status;
-        const responseBlob =
-            response instanceof HttpResponse ? response.body :
-            (response as any).error instanceof Blob ? (response as any).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = FileDto.fromJS(resultData200);
-            return _observableOf(result200);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf(null as any);
-    }
-
-    /**
-     * @param filter (optional) 
-     * @param sorting (optional) 
-     * @param skipCount (optional) 
-     * @param maxResultCount (optional) 
-     * @return Success
-     */
-    getAllStudyLevelForLookupTable(filter: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfTemplateStudyLevelLookupTableDto> {
-        let url_ = this.baseUrl + "/api/services/app/Templates/GetAllStudyLevelForLookupTable?";
-        if (filter === null)
-            throw new Error("The parameter 'filter' cannot be null.");
-        else if (filter !== undefined)
-            url_ += "Filter=" + encodeURIComponent("" + filter) + "&";
-        if (sorting === null)
-            throw new Error("The parameter 'sorting' cannot be null.");
-        else if (sorting !== undefined)
-            url_ += "Sorting=" + encodeURIComponent("" + sorting) + "&";
-        if (skipCount === null)
-            throw new Error("The parameter 'skipCount' cannot be null.");
-        else if (skipCount !== undefined)
-            url_ += "SkipCount=" + encodeURIComponent("" + skipCount) + "&";
-        if (maxResultCount === null)
-            throw new Error("The parameter 'maxResultCount' cannot be null.");
-        else if (maxResultCount !== undefined)
-            url_ += "MaxResultCount=" + encodeURIComponent("" + maxResultCount) + "&";
-        url_ = url_.replace(/[?&]$/, "");
-
-        let options_ : any = {
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Accept": "text/plain"
-            })
-        };
-
-        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGetAllStudyLevelForLookupTable(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processGetAllStudyLevelForLookupTable(response_ as any);
-                } catch (e) {
-                    return _observableThrow(e) as any as Observable<PagedResultDtoOfTemplateStudyLevelLookupTableDto>;
-                }
-            } else
-                return _observableThrow(response_) as any as Observable<PagedResultDtoOfTemplateStudyLevelLookupTableDto>;
-        }));
-    }
-
-    protected processGetAllStudyLevelForLookupTable(response: HttpResponseBase): Observable<PagedResultDtoOfTemplateStudyLevelLookupTableDto> {
-        const status = response.status;
-        const responseBlob =
-            response instanceof HttpResponse ? response.body :
-            (response as any).error instanceof Blob ? (response as any).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = PagedResultDtoOfTemplateStudyLevelLookupTableDto.fromJS(resultData200);
-            return _observableOf(result200);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf(null as any);
-    }
-
-    /**
-     * @param filter (optional) 
-     * @param sorting (optional) 
-     * @param skipCount (optional) 
-     * @param maxResultCount (optional) 
-     * @return Success
-     */
-    getAllStudySubjectForLookupTable(filter: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfTemplateStudySubjectLookupTableDto> {
-        let url_ = this.baseUrl + "/api/services/app/Templates/GetAllStudySubjectForLookupTable?";
-        if (filter === null)
-            throw new Error("The parameter 'filter' cannot be null.");
-        else if (filter !== undefined)
-            url_ += "Filter=" + encodeURIComponent("" + filter) + "&";
-        if (sorting === null)
-            throw new Error("The parameter 'sorting' cannot be null.");
-        else if (sorting !== undefined)
-            url_ += "Sorting=" + encodeURIComponent("" + sorting) + "&";
-        if (skipCount === null)
-            throw new Error("The parameter 'skipCount' cannot be null.");
-        else if (skipCount !== undefined)
-            url_ += "SkipCount=" + encodeURIComponent("" + skipCount) + "&";
-        if (maxResultCount === null)
-            throw new Error("The parameter 'maxResultCount' cannot be null.");
-        else if (maxResultCount !== undefined)
-            url_ += "MaxResultCount=" + encodeURIComponent("" + maxResultCount) + "&";
-        url_ = url_.replace(/[?&]$/, "");
-
-        let options_ : any = {
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Accept": "text/plain"
-            })
-        };
-
-        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGetAllStudySubjectForLookupTable(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processGetAllStudySubjectForLookupTable(response_ as any);
-                } catch (e) {
-                    return _observableThrow(e) as any as Observable<PagedResultDtoOfTemplateStudySubjectLookupTableDto>;
-                }
-            } else
-                return _observableThrow(response_) as any as Observable<PagedResultDtoOfTemplateStudySubjectLookupTableDto>;
-        }));
-    }
-
-    protected processGetAllStudySubjectForLookupTable(response: HttpResponseBase): Observable<PagedResultDtoOfTemplateStudySubjectLookupTableDto> {
-        const status = response.status;
-        const responseBlob =
-            response instanceof HttpResponse ? response.body :
-            (response as any).error instanceof Blob ? (response as any).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = PagedResultDtoOfTemplateStudySubjectLookupTableDto.fromJS(resultData200);
-            return _observableOf(result200);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf(null as any);
-    }
-}
-
-@Injectable()
-export class TemplateSectionsServiceProxy {
-    private http: HttpClient;
-    private baseUrl: string;
-    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
-
-    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
-        this.http = http;
-        this.baseUrl = baseUrl ?? "";
-    }
-
-    /**
-     * @param filter (optional) 
-     * @param maxDurationTimeFilter (optional) 
-     * @param minDurationTimeFilter (optional) 
-     * @param maxOrderFilter (optional) 
-     * @param minOrderFilter (optional) 
-     * @param instructionsFilter (optional) 
-     * @param isActiveFilter (optional) 
-     * @param nameLFilter (optional) 
-     * @param nameFFilter (optional) 
-     * @param sectionTypeFilter (optional) 
-     * @param templateNameLFilter (optional) 
-     * @param sorting (optional) 
-     * @param skipCount (optional) 
-     * @param maxResultCount (optional) 
-     * @return Success
-     */
-    getAll(filter: string | undefined, maxDurationTimeFilter: DateTime | undefined, minDurationTimeFilter: DateTime | undefined, maxOrderFilter: number | undefined, minOrderFilter: number | undefined, instructionsFilter: string | undefined, isActiveFilter: number | undefined, nameLFilter: string | undefined, nameFFilter: string | undefined, sectionTypeFilter: number | undefined, templateNameLFilter: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfGetTemplateSectionForViewDto> {
-        let url_ = this.baseUrl + "/api/services/app/TemplateSections/GetAll?";
-        if (filter === null)
-            throw new Error("The parameter 'filter' cannot be null.");
-        else if (filter !== undefined)
-            url_ += "Filter=" + encodeURIComponent("" + filter) + "&";
-        if (maxDurationTimeFilter === null)
-            throw new Error("The parameter 'maxDurationTimeFilter' cannot be null.");
-        else if (maxDurationTimeFilter !== undefined)
-            url_ += "MaxDurationTimeFilter=" + encodeURIComponent(maxDurationTimeFilter ? "" + maxDurationTimeFilter.toString() : "") + "&";
-        if (minDurationTimeFilter === null)
-            throw new Error("The parameter 'minDurationTimeFilter' cannot be null.");
-        else if (minDurationTimeFilter !== undefined)
-            url_ += "MinDurationTimeFilter=" + encodeURIComponent(minDurationTimeFilter ? "" + minDurationTimeFilter.toString() : "") + "&";
-        if (maxOrderFilter === null)
-            throw new Error("The parameter 'maxOrderFilter' cannot be null.");
-        else if (maxOrderFilter !== undefined)
-            url_ += "MaxOrderFilter=" + encodeURIComponent("" + maxOrderFilter) + "&";
-        if (minOrderFilter === null)
-            throw new Error("The parameter 'minOrderFilter' cannot be null.");
-        else if (minOrderFilter !== undefined)
-            url_ += "MinOrderFilter=" + encodeURIComponent("" + minOrderFilter) + "&";
-        if (instructionsFilter === null)
-            throw new Error("The parameter 'instructionsFilter' cannot be null.");
-        else if (instructionsFilter !== undefined)
-            url_ += "InstructionsFilter=" + encodeURIComponent("" + instructionsFilter) + "&";
-        if (isActiveFilter === null)
-            throw new Error("The parameter 'isActiveFilter' cannot be null.");
-        else if (isActiveFilter !== undefined)
-            url_ += "IsActiveFilter=" + encodeURIComponent("" + isActiveFilter) + "&";
-        if (nameLFilter === null)
-            throw new Error("The parameter 'nameLFilter' cannot be null.");
-        else if (nameLFilter !== undefined)
-            url_ += "NameLFilter=" + encodeURIComponent("" + nameLFilter) + "&";
-        if (nameFFilter === null)
-            throw new Error("The parameter 'nameFFilter' cannot be null.");
-        else if (nameFFilter !== undefined)
-            url_ += "NameFFilter=" + encodeURIComponent("" + nameFFilter) + "&";
-        if (sectionTypeFilter === null)
-            throw new Error("The parameter 'sectionTypeFilter' cannot be null.");
-        else if (sectionTypeFilter !== undefined)
-            url_ += "SectionTypeFilter=" + encodeURIComponent("" + sectionTypeFilter) + "&";
-        if (templateNameLFilter === null)
-            throw new Error("The parameter 'templateNameLFilter' cannot be null.");
-        else if (templateNameLFilter !== undefined)
-            url_ += "TemplateNameLFilter=" + encodeURIComponent("" + templateNameLFilter) + "&";
-        if (sorting === null)
-            throw new Error("The parameter 'sorting' cannot be null.");
-        else if (sorting !== undefined)
-            url_ += "Sorting=" + encodeURIComponent("" + sorting) + "&";
-        if (skipCount === null)
-            throw new Error("The parameter 'skipCount' cannot be null.");
-        else if (skipCount !== undefined)
-            url_ += "SkipCount=" + encodeURIComponent("" + skipCount) + "&";
-        if (maxResultCount === null)
-            throw new Error("The parameter 'maxResultCount' cannot be null.");
-        else if (maxResultCount !== undefined)
-            url_ += "MaxResultCount=" + encodeURIComponent("" + maxResultCount) + "&";
-        url_ = url_.replace(/[?&]$/, "");
-
-        let options_ : any = {
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Accept": "text/plain"
-            })
-        };
-
-        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGetAll(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processGetAll(response_ as any);
-                } catch (e) {
-                    return _observableThrow(e) as any as Observable<PagedResultDtoOfGetTemplateSectionForViewDto>;
-                }
-            } else
-                return _observableThrow(response_) as any as Observable<PagedResultDtoOfGetTemplateSectionForViewDto>;
-        }));
-    }
-
-    protected processGetAll(response: HttpResponseBase): Observable<PagedResultDtoOfGetTemplateSectionForViewDto> {
-        const status = response.status;
-        const responseBlob =
-            response instanceof HttpResponse ? response.body :
-            (response as any).error instanceof Blob ? (response as any).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = PagedResultDtoOfGetTemplateSectionForViewDto.fromJS(resultData200);
-            return _observableOf(result200);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf(null as any);
-    }
-
-    /**
-     * @param id (optional) 
-     * @return Success
-     */
-    getTemplateSectionForView(id: number | undefined): Observable<GetTemplateSectionForViewDto> {
-        let url_ = this.baseUrl + "/api/services/app/TemplateSections/GetTemplateSectionForView?";
-        if (id === null)
-            throw new Error("The parameter 'id' cannot be null.");
-        else if (id !== undefined)
-            url_ += "id=" + encodeURIComponent("" + id) + "&";
-        url_ = url_.replace(/[?&]$/, "");
-
-        let options_ : any = {
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Accept": "text/plain"
-            })
-        };
-
-        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGetTemplateSectionForView(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processGetTemplateSectionForView(response_ as any);
-                } catch (e) {
-                    return _observableThrow(e) as any as Observable<GetTemplateSectionForViewDto>;
-                }
-            } else
-                return _observableThrow(response_) as any as Observable<GetTemplateSectionForViewDto>;
-        }));
-    }
-
-    protected processGetTemplateSectionForView(response: HttpResponseBase): Observable<GetTemplateSectionForViewDto> {
-        const status = response.status;
-        const responseBlob =
-            response instanceof HttpResponse ? response.body :
-            (response as any).error instanceof Blob ? (response as any).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = GetTemplateSectionForViewDto.fromJS(resultData200);
-            return _observableOf(result200);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf(null as any);
-    }
-
-    /**
-     * @param id (optional) 
-     * @return Success
-     */
-    getTemplateSectionForEdit(id: number | undefined): Observable<GetTemplateSectionForEditOutput> {
-        let url_ = this.baseUrl + "/api/services/app/TemplateSections/GetTemplateSectionForEdit?";
-        if (id === null)
-            throw new Error("The parameter 'id' cannot be null.");
-        else if (id !== undefined)
-            url_ += "Id=" + encodeURIComponent("" + id) + "&";
-        url_ = url_.replace(/[?&]$/, "");
-
-        let options_ : any = {
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Accept": "text/plain"
-            })
-        };
-
-        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGetTemplateSectionForEdit(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processGetTemplateSectionForEdit(response_ as any);
-                } catch (e) {
-                    return _observableThrow(e) as any as Observable<GetTemplateSectionForEditOutput>;
-                }
-            } else
-                return _observableThrow(response_) as any as Observable<GetTemplateSectionForEditOutput>;
-        }));
-    }
-
-    protected processGetTemplateSectionForEdit(response: HttpResponseBase): Observable<GetTemplateSectionForEditOutput> {
-        const status = response.status;
-        const responseBlob =
-            response instanceof HttpResponse ? response.body :
-            (response as any).error instanceof Blob ? (response as any).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = GetTemplateSectionForEditOutput.fromJS(resultData200);
-            return _observableOf(result200);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf(null as any);
-    }
-
-    /**
-     * @param body (optional) 
-     * @return Success
-     */
-    createOrEdit(body: CreateOrEditTemplateSectionDto | undefined): Observable<void> {
-        let url_ = this.baseUrl + "/api/services/app/TemplateSections/CreateOrEdit";
-        url_ = url_.replace(/[?&]$/, "");
-
-        const content_ = JSON.stringify(body);
-
-        let options_ : any = {
-            body: content_,
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Content-Type": "application/json",
-            })
-        };
-
-        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processCreateOrEdit(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processCreateOrEdit(response_ as any);
-                } catch (e) {
-                    return _observableThrow(e) as any as Observable<void>;
-                }
-            } else
-                return _observableThrow(response_) as any as Observable<void>;
-        }));
-    }
-
-    protected processCreateOrEdit(response: HttpResponseBase): Observable<void> {
-        const status = response.status;
-        const responseBlob =
-            response instanceof HttpResponse ? response.body :
-            (response as any).error instanceof Blob ? (response as any).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            return _observableOf(null as any);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf(null as any);
-    }
-
-    /**
-     * @param id (optional) 
-     * @return Success
-     */
-    delete(id: number | undefined): Observable<void> {
-        let url_ = this.baseUrl + "/api/services/app/TemplateSections/Delete?";
-        if (id === null)
-            throw new Error("The parameter 'id' cannot be null.");
-        else if (id !== undefined)
-            url_ += "Id=" + encodeURIComponent("" + id) + "&";
-        url_ = url_.replace(/[?&]$/, "");
-
-        let options_ : any = {
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-            })
-        };
-
-        return this.http.request("delete", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processDelete(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processDelete(response_ as any);
-                } catch (e) {
-                    return _observableThrow(e) as any as Observable<void>;
-                }
-            } else
-                return _observableThrow(response_) as any as Observable<void>;
-        }));
-    }
-
-    protected processDelete(response: HttpResponseBase): Observable<void> {
-        const status = response.status;
-        const responseBlob =
-            response instanceof HttpResponse ? response.body :
-            (response as any).error instanceof Blob ? (response as any).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            return _observableOf(null as any);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf(null as any);
-    }
-
-    /**
-     * @param filter (optional) 
-     * @param maxDurationTimeFilter (optional) 
-     * @param minDurationTimeFilter (optional) 
-     * @param maxOrderFilter (optional) 
-     * @param minOrderFilter (optional) 
-     * @param instructionsFilter (optional) 
-     * @param isActiveFilter (optional) 
-     * @param nameLFilter (optional) 
-     * @param nameFFilter (optional) 
-     * @param sectionTypeFilter (optional) 
-     * @param templateNameLFilter (optional) 
-     * @return Success
-     */
-    getTemplateSectionsToExcel(filter: string | undefined, maxDurationTimeFilter: DateTime | undefined, minDurationTimeFilter: DateTime | undefined, maxOrderFilter: number | undefined, minOrderFilter: number | undefined, instructionsFilter: string | undefined, isActiveFilter: number | undefined, nameLFilter: string | undefined, nameFFilter: string | undefined, sectionTypeFilter: number | undefined, templateNameLFilter: string | undefined): Observable<FileDto> {
-        let url_ = this.baseUrl + "/api/services/app/TemplateSections/GetTemplateSectionsToExcel?";
-        if (filter === null)
-            throw new Error("The parameter 'filter' cannot be null.");
-        else if (filter !== undefined)
-            url_ += "Filter=" + encodeURIComponent("" + filter) + "&";
-        if (maxDurationTimeFilter === null)
-            throw new Error("The parameter 'maxDurationTimeFilter' cannot be null.");
-        else if (maxDurationTimeFilter !== undefined)
-            url_ += "MaxDurationTimeFilter=" + encodeURIComponent(maxDurationTimeFilter ? "" + maxDurationTimeFilter.toString() : "") + "&";
-        if (minDurationTimeFilter === null)
-            throw new Error("The parameter 'minDurationTimeFilter' cannot be null.");
-        else if (minDurationTimeFilter !== undefined)
-            url_ += "MinDurationTimeFilter=" + encodeURIComponent(minDurationTimeFilter ? "" + minDurationTimeFilter.toString() : "") + "&";
-        if (maxOrderFilter === null)
-            throw new Error("The parameter 'maxOrderFilter' cannot be null.");
-        else if (maxOrderFilter !== undefined)
-            url_ += "MaxOrderFilter=" + encodeURIComponent("" + maxOrderFilter) + "&";
-        if (minOrderFilter === null)
-            throw new Error("The parameter 'minOrderFilter' cannot be null.");
-        else if (minOrderFilter !== undefined)
-            url_ += "MinOrderFilter=" + encodeURIComponent("" + minOrderFilter) + "&";
-        if (instructionsFilter === null)
-            throw new Error("The parameter 'instructionsFilter' cannot be null.");
-        else if (instructionsFilter !== undefined)
-            url_ += "InstructionsFilter=" + encodeURIComponent("" + instructionsFilter) + "&";
-        if (isActiveFilter === null)
-            throw new Error("The parameter 'isActiveFilter' cannot be null.");
-        else if (isActiveFilter !== undefined)
-            url_ += "IsActiveFilter=" + encodeURIComponent("" + isActiveFilter) + "&";
-        if (nameLFilter === null)
-            throw new Error("The parameter 'nameLFilter' cannot be null.");
-        else if (nameLFilter !== undefined)
-            url_ += "NameLFilter=" + encodeURIComponent("" + nameLFilter) + "&";
-        if (nameFFilter === null)
-            throw new Error("The parameter 'nameFFilter' cannot be null.");
-        else if (nameFFilter !== undefined)
-            url_ += "NameFFilter=" + encodeURIComponent("" + nameFFilter) + "&";
-        if (sectionTypeFilter === null)
-            throw new Error("The parameter 'sectionTypeFilter' cannot be null.");
-        else if (sectionTypeFilter !== undefined)
-            url_ += "SectionTypeFilter=" + encodeURIComponent("" + sectionTypeFilter) + "&";
-        if (templateNameLFilter === null)
-            throw new Error("The parameter 'templateNameLFilter' cannot be null.");
-        else if (templateNameLFilter !== undefined)
-            url_ += "TemplateNameLFilter=" + encodeURIComponent("" + templateNameLFilter) + "&";
-        url_ = url_.replace(/[?&]$/, "");
-
-        let options_ : any = {
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Accept": "text/plain"
-            })
-        };
-
-        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGetTemplateSectionsToExcel(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processGetTemplateSectionsToExcel(response_ as any);
-                } catch (e) {
-                    return _observableThrow(e) as any as Observable<FileDto>;
-                }
-            } else
-                return _observableThrow(response_) as any as Observable<FileDto>;
-        }));
-    }
-
-    protected processGetTemplateSectionsToExcel(response: HttpResponseBase): Observable<FileDto> {
-        const status = response.status;
-        const responseBlob =
-            response instanceof HttpResponse ? response.body :
-            (response as any).error instanceof Blob ? (response as any).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = FileDto.fromJS(resultData200);
-            return _observableOf(result200);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf(null as any);
-    }
-
-    /**
-     * @param filter (optional) 
-     * @param sorting (optional) 
-     * @param skipCount (optional) 
-     * @param maxResultCount (optional) 
-     * @return Success
-     */
-    getAllTemplateForLookupTable(filter: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfTemplateSectionTemplateLookupTableDto> {
-        let url_ = this.baseUrl + "/api/services/app/TemplateSections/GetAllTemplateForLookupTable?";
-        if (filter === null)
-            throw new Error("The parameter 'filter' cannot be null.");
-        else if (filter !== undefined)
-            url_ += "Filter=" + encodeURIComponent("" + filter) + "&";
-        if (sorting === null)
-            throw new Error("The parameter 'sorting' cannot be null.");
-        else if (sorting !== undefined)
-            url_ += "Sorting=" + encodeURIComponent("" + sorting) + "&";
-        if (skipCount === null)
-            throw new Error("The parameter 'skipCount' cannot be null.");
-        else if (skipCount !== undefined)
-            url_ += "SkipCount=" + encodeURIComponent("" + skipCount) + "&";
-        if (maxResultCount === null)
-            throw new Error("The parameter 'maxResultCount' cannot be null.");
-        else if (maxResultCount !== undefined)
-            url_ += "MaxResultCount=" + encodeURIComponent("" + maxResultCount) + "&";
-        url_ = url_.replace(/[?&]$/, "");
-
-        let options_ : any = {
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Accept": "text/plain"
-            })
-        };
-
-        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGetAllTemplateForLookupTable(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processGetAllTemplateForLookupTable(response_ as any);
-                } catch (e) {
-                    return _observableThrow(e) as any as Observable<PagedResultDtoOfTemplateSectionTemplateLookupTableDto>;
-                }
-            } else
-                return _observableThrow(response_) as any as Observable<PagedResultDtoOfTemplateSectionTemplateLookupTableDto>;
-        }));
-    }
-
-    protected processGetAllTemplateForLookupTable(response: HttpResponseBase): Observable<PagedResultDtoOfTemplateSectionTemplateLookupTableDto> {
-        const status = response.status;
-        const responseBlob =
-            response instanceof HttpResponse ? response.body :
-            (response as any).error instanceof Blob ? (response as any).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = PagedResultDtoOfTemplateSectionTemplateLookupTableDto.fromJS(resultData200);
-            return _observableOf(result200);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf(null as any);
-    }
-}
-
-@Injectable()
-export class TemplateTypeDetailsServiceProxy {
-    private http: HttpClient;
-    private baseUrl: string;
-    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
-
-    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
-        this.http = http;
-        this.baseUrl = baseUrl ?? "";
-    }
-
-    /**
-     * @param filter (optional) 
-     * @param questionTypeFilter (optional) 
-     * @param maxGroupQuestionCountFilter (optional) 
-     * @param minGroupQuestionCountFilter (optional) 
-     * @param maxOrderFilter (optional) 
-     * @param minOrderFilter (optional) 
-     * @param isActiveFilter (optional) 
-     * @param templateSectionNameLFilter (optional) 
-     * @param categoryValueFilter (optional) 
-     * @param questionTargetNoteFilter (optional) 
-     * @param complexityValueFilter (optional) 
-     * @param sorting (optional) 
-     * @param skipCount (optional) 
-     * @param maxResultCount (optional) 
-     * @return Success
-     */
-    getAll(filter: string | undefined, questionTypeFilter: number | undefined, maxGroupQuestionCountFilter: number | undefined, minGroupQuestionCountFilter: number | undefined, maxOrderFilter: number | undefined, minOrderFilter: number | undefined, isActiveFilter: number | undefined, templateSectionNameLFilter: string | undefined, categoryValueFilter: string | undefined, questionTargetNoteFilter: string | undefined, complexityValueFilter: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfGetTemplateTypeDetailForViewDto> {
-        let url_ = this.baseUrl + "/api/services/app/TemplateTypeDetails/GetAll?";
-        if (filter === null)
-            throw new Error("The parameter 'filter' cannot be null.");
-        else if (filter !== undefined)
-            url_ += "Filter=" + encodeURIComponent("" + filter) + "&";
-        if (questionTypeFilter === null)
-            throw new Error("The parameter 'questionTypeFilter' cannot be null.");
-        else if (questionTypeFilter !== undefined)
-            url_ += "QuestionTypeFilter=" + encodeURIComponent("" + questionTypeFilter) + "&";
-        if (maxGroupQuestionCountFilter === null)
-            throw new Error("The parameter 'maxGroupQuestionCountFilter' cannot be null.");
-        else if (maxGroupQuestionCountFilter !== undefined)
-            url_ += "MaxGroupQuestionCountFilter=" + encodeURIComponent("" + maxGroupQuestionCountFilter) + "&";
-        if (minGroupQuestionCountFilter === null)
-            throw new Error("The parameter 'minGroupQuestionCountFilter' cannot be null.");
-        else if (minGroupQuestionCountFilter !== undefined)
-            url_ += "MinGroupQuestionCountFilter=" + encodeURIComponent("" + minGroupQuestionCountFilter) + "&";
-        if (maxOrderFilter === null)
-            throw new Error("The parameter 'maxOrderFilter' cannot be null.");
-        else if (maxOrderFilter !== undefined)
-            url_ += "MaxOrderFilter=" + encodeURIComponent("" + maxOrderFilter) + "&";
-        if (minOrderFilter === null)
-            throw new Error("The parameter 'minOrderFilter' cannot be null.");
-        else if (minOrderFilter !== undefined)
-            url_ += "MinOrderFilter=" + encodeURIComponent("" + minOrderFilter) + "&";
-        if (isActiveFilter === null)
-            throw new Error("The parameter 'isActiveFilter' cannot be null.");
-        else if (isActiveFilter !== undefined)
-            url_ += "IsActiveFilter=" + encodeURIComponent("" + isActiveFilter) + "&";
-        if (templateSectionNameLFilter === null)
-            throw new Error("The parameter 'templateSectionNameLFilter' cannot be null.");
-        else if (templateSectionNameLFilter !== undefined)
-            url_ += "TemplateSectionNameLFilter=" + encodeURIComponent("" + templateSectionNameLFilter) + "&";
-        if (categoryValueFilter === null)
-            throw new Error("The parameter 'categoryValueFilter' cannot be null.");
-        else if (categoryValueFilter !== undefined)
-            url_ += "CategoryValueFilter=" + encodeURIComponent("" + categoryValueFilter) + "&";
-        if (questionTargetNoteFilter === null)
-            throw new Error("The parameter 'questionTargetNoteFilter' cannot be null.");
-        else if (questionTargetNoteFilter !== undefined)
-            url_ += "QuestionTargetNoteFilter=" + encodeURIComponent("" + questionTargetNoteFilter) + "&";
-        if (complexityValueFilter === null)
-            throw new Error("The parameter 'complexityValueFilter' cannot be null.");
-        else if (complexityValueFilter !== undefined)
-            url_ += "ComplexityValueFilter=" + encodeURIComponent("" + complexityValueFilter) + "&";
-        if (sorting === null)
-            throw new Error("The parameter 'sorting' cannot be null.");
-        else if (sorting !== undefined)
-            url_ += "Sorting=" + encodeURIComponent("" + sorting) + "&";
-        if (skipCount === null)
-            throw new Error("The parameter 'skipCount' cannot be null.");
-        else if (skipCount !== undefined)
-            url_ += "SkipCount=" + encodeURIComponent("" + skipCount) + "&";
-        if (maxResultCount === null)
-            throw new Error("The parameter 'maxResultCount' cannot be null.");
-        else if (maxResultCount !== undefined)
-            url_ += "MaxResultCount=" + encodeURIComponent("" + maxResultCount) + "&";
-        url_ = url_.replace(/[?&]$/, "");
-
-        let options_ : any = {
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Accept": "text/plain"
-            })
-        };
-
-        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGetAll(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processGetAll(response_ as any);
-                } catch (e) {
-                    return _observableThrow(e) as any as Observable<PagedResultDtoOfGetTemplateTypeDetailForViewDto>;
-                }
-            } else
-                return _observableThrow(response_) as any as Observable<PagedResultDtoOfGetTemplateTypeDetailForViewDto>;
-        }));
-    }
-
-    protected processGetAll(response: HttpResponseBase): Observable<PagedResultDtoOfGetTemplateTypeDetailForViewDto> {
-        const status = response.status;
-        const responseBlob =
-            response instanceof HttpResponse ? response.body :
-            (response as any).error instanceof Blob ? (response as any).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = PagedResultDtoOfGetTemplateTypeDetailForViewDto.fromJS(resultData200);
-            return _observableOf(result200);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf(null as any);
-    }
-
-    /**
-     * @param id (optional) 
-     * @return Success
-     */
-    getTemplateTypeDetailForView(id: number | undefined): Observable<GetTemplateTypeDetailForViewDto> {
-        let url_ = this.baseUrl + "/api/services/app/TemplateTypeDetails/GetTemplateTypeDetailForView?";
-        if (id === null)
-            throw new Error("The parameter 'id' cannot be null.");
-        else if (id !== undefined)
-            url_ += "id=" + encodeURIComponent("" + id) + "&";
-        url_ = url_.replace(/[?&]$/, "");
-
-        let options_ : any = {
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Accept": "text/plain"
-            })
-        };
-
-        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGetTemplateTypeDetailForView(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processGetTemplateTypeDetailForView(response_ as any);
-                } catch (e) {
-                    return _observableThrow(e) as any as Observable<GetTemplateTypeDetailForViewDto>;
-                }
-            } else
-                return _observableThrow(response_) as any as Observable<GetTemplateTypeDetailForViewDto>;
-        }));
-    }
-
-    protected processGetTemplateTypeDetailForView(response: HttpResponseBase): Observable<GetTemplateTypeDetailForViewDto> {
-        const status = response.status;
-        const responseBlob =
-            response instanceof HttpResponse ? response.body :
-            (response as any).error instanceof Blob ? (response as any).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = GetTemplateTypeDetailForViewDto.fromJS(resultData200);
-            return _observableOf(result200);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf(null as any);
-    }
-
-    /**
-     * @param id (optional) 
-     * @return Success
-     */
-    getTemplateTypeDetailForEdit(id: number | undefined): Observable<GetTemplateTypeDetailForEditOutput> {
-        let url_ = this.baseUrl + "/api/services/app/TemplateTypeDetails/GetTemplateTypeDetailForEdit?";
-        if (id === null)
-            throw new Error("The parameter 'id' cannot be null.");
-        else if (id !== undefined)
-            url_ += "Id=" + encodeURIComponent("" + id) + "&";
-        url_ = url_.replace(/[?&]$/, "");
-
-        let options_ : any = {
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Accept": "text/plain"
-            })
-        };
-
-        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGetTemplateTypeDetailForEdit(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processGetTemplateTypeDetailForEdit(response_ as any);
-                } catch (e) {
-                    return _observableThrow(e) as any as Observable<GetTemplateTypeDetailForEditOutput>;
-                }
-            } else
-                return _observableThrow(response_) as any as Observable<GetTemplateTypeDetailForEditOutput>;
-        }));
-    }
-
-    protected processGetTemplateTypeDetailForEdit(response: HttpResponseBase): Observable<GetTemplateTypeDetailForEditOutput> {
-        const status = response.status;
-        const responseBlob =
-            response instanceof HttpResponse ? response.body :
-            (response as any).error instanceof Blob ? (response as any).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = GetTemplateTypeDetailForEditOutput.fromJS(resultData200);
-            return _observableOf(result200);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf(null as any);
-    }
-
-    /**
-     * @param body (optional) 
-     * @return Success
-     */
-    createOrEdit(body: CreateOrEditTemplateTypeDetailDto | undefined): Observable<void> {
-        let url_ = this.baseUrl + "/api/services/app/TemplateTypeDetails/CreateOrEdit";
-        url_ = url_.replace(/[?&]$/, "");
-
-        const content_ = JSON.stringify(body);
-
-        let options_ : any = {
-            body: content_,
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Content-Type": "application/json",
-            })
-        };
-
-        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processCreateOrEdit(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processCreateOrEdit(response_ as any);
-                } catch (e) {
-                    return _observableThrow(e) as any as Observable<void>;
-                }
-            } else
-                return _observableThrow(response_) as any as Observable<void>;
-        }));
-    }
-
-    protected processCreateOrEdit(response: HttpResponseBase): Observable<void> {
-        const status = response.status;
-        const responseBlob =
-            response instanceof HttpResponse ? response.body :
-            (response as any).error instanceof Blob ? (response as any).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            return _observableOf(null as any);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf(null as any);
-    }
-
-    /**
-     * @param id (optional) 
-     * @return Success
-     */
-    delete(id: number | undefined): Observable<void> {
-        let url_ = this.baseUrl + "/api/services/app/TemplateTypeDetails/Delete?";
-        if (id === null)
-            throw new Error("The parameter 'id' cannot be null.");
-        else if (id !== undefined)
-            url_ += "Id=" + encodeURIComponent("" + id) + "&";
-        url_ = url_.replace(/[?&]$/, "");
-
-        let options_ : any = {
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-            })
-        };
-
-        return this.http.request("delete", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processDelete(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processDelete(response_ as any);
-                } catch (e) {
-                    return _observableThrow(e) as any as Observable<void>;
-                }
-            } else
-                return _observableThrow(response_) as any as Observable<void>;
-        }));
-    }
-
-    protected processDelete(response: HttpResponseBase): Observable<void> {
-        const status = response.status;
-        const responseBlob =
-            response instanceof HttpResponse ? response.body :
-            (response as any).error instanceof Blob ? (response as any).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            return _observableOf(null as any);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf(null as any);
-    }
-
-    /**
-     * @param filter (optional) 
-     * @param questionTypeFilter (optional) 
-     * @param maxGroupQuestionCountFilter (optional) 
-     * @param minGroupQuestionCountFilter (optional) 
-     * @param maxOrderFilter (optional) 
-     * @param minOrderFilter (optional) 
-     * @param isActiveFilter (optional) 
-     * @param templateSectionNameLFilter (optional) 
-     * @param categoryValueFilter (optional) 
-     * @param questionTargetNoteFilter (optional) 
-     * @param complexityValueFilter (optional) 
-     * @return Success
-     */
-    getTemplateTypeDetailsToExcel(filter: string | undefined, questionTypeFilter: number | undefined, maxGroupQuestionCountFilter: number | undefined, minGroupQuestionCountFilter: number | undefined, maxOrderFilter: number | undefined, minOrderFilter: number | undefined, isActiveFilter: number | undefined, templateSectionNameLFilter: string | undefined, categoryValueFilter: string | undefined, questionTargetNoteFilter: string | undefined, complexityValueFilter: string | undefined): Observable<FileDto> {
-        let url_ = this.baseUrl + "/api/services/app/TemplateTypeDetails/GetTemplateTypeDetailsToExcel?";
-        if (filter === null)
-            throw new Error("The parameter 'filter' cannot be null.");
-        else if (filter !== undefined)
-            url_ += "Filter=" + encodeURIComponent("" + filter) + "&";
-        if (questionTypeFilter === null)
-            throw new Error("The parameter 'questionTypeFilter' cannot be null.");
-        else if (questionTypeFilter !== undefined)
-            url_ += "QuestionTypeFilter=" + encodeURIComponent("" + questionTypeFilter) + "&";
-        if (maxGroupQuestionCountFilter === null)
-            throw new Error("The parameter 'maxGroupQuestionCountFilter' cannot be null.");
-        else if (maxGroupQuestionCountFilter !== undefined)
-            url_ += "MaxGroupQuestionCountFilter=" + encodeURIComponent("" + maxGroupQuestionCountFilter) + "&";
-        if (minGroupQuestionCountFilter === null)
-            throw new Error("The parameter 'minGroupQuestionCountFilter' cannot be null.");
-        else if (minGroupQuestionCountFilter !== undefined)
-            url_ += "MinGroupQuestionCountFilter=" + encodeURIComponent("" + minGroupQuestionCountFilter) + "&";
-        if (maxOrderFilter === null)
-            throw new Error("The parameter 'maxOrderFilter' cannot be null.");
-        else if (maxOrderFilter !== undefined)
-            url_ += "MaxOrderFilter=" + encodeURIComponent("" + maxOrderFilter) + "&";
-        if (minOrderFilter === null)
-            throw new Error("The parameter 'minOrderFilter' cannot be null.");
-        else if (minOrderFilter !== undefined)
-            url_ += "MinOrderFilter=" + encodeURIComponent("" + minOrderFilter) + "&";
-        if (isActiveFilter === null)
-            throw new Error("The parameter 'isActiveFilter' cannot be null.");
-        else if (isActiveFilter !== undefined)
-            url_ += "IsActiveFilter=" + encodeURIComponent("" + isActiveFilter) + "&";
-        if (templateSectionNameLFilter === null)
-            throw new Error("The parameter 'templateSectionNameLFilter' cannot be null.");
-        else if (templateSectionNameLFilter !== undefined)
-            url_ += "TemplateSectionNameLFilter=" + encodeURIComponent("" + templateSectionNameLFilter) + "&";
-        if (categoryValueFilter === null)
-            throw new Error("The parameter 'categoryValueFilter' cannot be null.");
-        else if (categoryValueFilter !== undefined)
-            url_ += "CategoryValueFilter=" + encodeURIComponent("" + categoryValueFilter) + "&";
-        if (questionTargetNoteFilter === null)
-            throw new Error("The parameter 'questionTargetNoteFilter' cannot be null.");
-        else if (questionTargetNoteFilter !== undefined)
-            url_ += "QuestionTargetNoteFilter=" + encodeURIComponent("" + questionTargetNoteFilter) + "&";
-        if (complexityValueFilter === null)
-            throw new Error("The parameter 'complexityValueFilter' cannot be null.");
-        else if (complexityValueFilter !== undefined)
-            url_ += "ComplexityValueFilter=" + encodeURIComponent("" + complexityValueFilter) + "&";
-        url_ = url_.replace(/[?&]$/, "");
-
-        let options_ : any = {
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Accept": "text/plain"
-            })
-        };
-
-        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGetTemplateTypeDetailsToExcel(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processGetTemplateTypeDetailsToExcel(response_ as any);
-                } catch (e) {
-                    return _observableThrow(e) as any as Observable<FileDto>;
-                }
-            } else
-                return _observableThrow(response_) as any as Observable<FileDto>;
-        }));
-    }
-
-    protected processGetTemplateTypeDetailsToExcel(response: HttpResponseBase): Observable<FileDto> {
-        const status = response.status;
-        const responseBlob =
-            response instanceof HttpResponse ? response.body :
-            (response as any).error instanceof Blob ? (response as any).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = FileDto.fromJS(resultData200);
-            return _observableOf(result200);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf(null as any);
-    }
-
-    /**
-     * @param filter (optional) 
-     * @param sorting (optional) 
-     * @param skipCount (optional) 
-     * @param maxResultCount (optional) 
-     * @return Success
-     */
-    getAllTemplateSectionForLookupTable(filter: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfTemplateTypeDetailTemplateSectionLookupTableDto> {
-        let url_ = this.baseUrl + "/api/services/app/TemplateTypeDetails/GetAllTemplateSectionForLookupTable?";
-        if (filter === null)
-            throw new Error("The parameter 'filter' cannot be null.");
-        else if (filter !== undefined)
-            url_ += "Filter=" + encodeURIComponent("" + filter) + "&";
-        if (sorting === null)
-            throw new Error("The parameter 'sorting' cannot be null.");
-        else if (sorting !== undefined)
-            url_ += "Sorting=" + encodeURIComponent("" + sorting) + "&";
-        if (skipCount === null)
-            throw new Error("The parameter 'skipCount' cannot be null.");
-        else if (skipCount !== undefined)
-            url_ += "SkipCount=" + encodeURIComponent("" + skipCount) + "&";
-        if (maxResultCount === null)
-            throw new Error("The parameter 'maxResultCount' cannot be null.");
-        else if (maxResultCount !== undefined)
-            url_ += "MaxResultCount=" + encodeURIComponent("" + maxResultCount) + "&";
-        url_ = url_.replace(/[?&]$/, "");
-
-        let options_ : any = {
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Accept": "text/plain"
-            })
-        };
-
-        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGetAllTemplateSectionForLookupTable(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processGetAllTemplateSectionForLookupTable(response_ as any);
-                } catch (e) {
-                    return _observableThrow(e) as any as Observable<PagedResultDtoOfTemplateTypeDetailTemplateSectionLookupTableDto>;
-                }
-            } else
-                return _observableThrow(response_) as any as Observable<PagedResultDtoOfTemplateTypeDetailTemplateSectionLookupTableDto>;
-        }));
-    }
-
-    protected processGetAllTemplateSectionForLookupTable(response: HttpResponseBase): Observable<PagedResultDtoOfTemplateTypeDetailTemplateSectionLookupTableDto> {
-        const status = response.status;
-        const responseBlob =
-            response instanceof HttpResponse ? response.body :
-            (response as any).error instanceof Blob ? (response as any).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = PagedResultDtoOfTemplateTypeDetailTemplateSectionLookupTableDto.fromJS(resultData200);
-            return _observableOf(result200);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf(null as any);
-    }
-
-    /**
-     * @param filter (optional) 
-     * @param sorting (optional) 
-     * @param skipCount (optional) 
-     * @param maxResultCount (optional) 
-     * @return Success
-     */
-    getAllCategoryForLookupTable(filter: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfTemplateTypeDetailCategoryLookupTableDto> {
-        let url_ = this.baseUrl + "/api/services/app/TemplateTypeDetails/GetAllCategoryForLookupTable?";
-        if (filter === null)
-            throw new Error("The parameter 'filter' cannot be null.");
-        else if (filter !== undefined)
-            url_ += "Filter=" + encodeURIComponent("" + filter) + "&";
-        if (sorting === null)
-            throw new Error("The parameter 'sorting' cannot be null.");
-        else if (sorting !== undefined)
-            url_ += "Sorting=" + encodeURIComponent("" + sorting) + "&";
-        if (skipCount === null)
-            throw new Error("The parameter 'skipCount' cannot be null.");
-        else if (skipCount !== undefined)
-            url_ += "SkipCount=" + encodeURIComponent("" + skipCount) + "&";
-        if (maxResultCount === null)
-            throw new Error("The parameter 'maxResultCount' cannot be null.");
-        else if (maxResultCount !== undefined)
-            url_ += "MaxResultCount=" + encodeURIComponent("" + maxResultCount) + "&";
-        url_ = url_.replace(/[?&]$/, "");
-
-        let options_ : any = {
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Accept": "text/plain"
-            })
-        };
-
-        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGetAllCategoryForLookupTable(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processGetAllCategoryForLookupTable(response_ as any);
-                } catch (e) {
-                    return _observableThrow(e) as any as Observable<PagedResultDtoOfTemplateTypeDetailCategoryLookupTableDto>;
-                }
-            } else
-                return _observableThrow(response_) as any as Observable<PagedResultDtoOfTemplateTypeDetailCategoryLookupTableDto>;
-        }));
-    }
-
-    protected processGetAllCategoryForLookupTable(response: HttpResponseBase): Observable<PagedResultDtoOfTemplateTypeDetailCategoryLookupTableDto> {
-        const status = response.status;
-        const responseBlob =
-            response instanceof HttpResponse ? response.body :
-            (response as any).error instanceof Blob ? (response as any).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = PagedResultDtoOfTemplateTypeDetailCategoryLookupTableDto.fromJS(resultData200);
-            return _observableOf(result200);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf(null as any);
-    }
-
-    /**
-     * @param filter (optional) 
-     * @param sorting (optional) 
-     * @param skipCount (optional) 
-     * @param maxResultCount (optional) 
-     * @return Success
-     */
-    getAllQuestionTargetForLookupTable(filter: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfTemplateTypeDetailQuestionTargetLookupTableDto> {
-        let url_ = this.baseUrl + "/api/services/app/TemplateTypeDetails/GetAllQuestionTargetForLookupTable?";
-        if (filter === null)
-            throw new Error("The parameter 'filter' cannot be null.");
-        else if (filter !== undefined)
-            url_ += "Filter=" + encodeURIComponent("" + filter) + "&";
-        if (sorting === null)
-            throw new Error("The parameter 'sorting' cannot be null.");
-        else if (sorting !== undefined)
-            url_ += "Sorting=" + encodeURIComponent("" + sorting) + "&";
-        if (skipCount === null)
-            throw new Error("The parameter 'skipCount' cannot be null.");
-        else if (skipCount !== undefined)
-            url_ += "SkipCount=" + encodeURIComponent("" + skipCount) + "&";
-        if (maxResultCount === null)
-            throw new Error("The parameter 'maxResultCount' cannot be null.");
-        else if (maxResultCount !== undefined)
-            url_ += "MaxResultCount=" + encodeURIComponent("" + maxResultCount) + "&";
-        url_ = url_.replace(/[?&]$/, "");
-
-        let options_ : any = {
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Accept": "text/plain"
-            })
-        };
-
-        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGetAllQuestionTargetForLookupTable(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processGetAllQuestionTargetForLookupTable(response_ as any);
-                } catch (e) {
-                    return _observableThrow(e) as any as Observable<PagedResultDtoOfTemplateTypeDetailQuestionTargetLookupTableDto>;
-                }
-            } else
-                return _observableThrow(response_) as any as Observable<PagedResultDtoOfTemplateTypeDetailQuestionTargetLookupTableDto>;
-        }));
-    }
-
-    protected processGetAllQuestionTargetForLookupTable(response: HttpResponseBase): Observable<PagedResultDtoOfTemplateTypeDetailQuestionTargetLookupTableDto> {
-        const status = response.status;
-        const responseBlob =
-            response instanceof HttpResponse ? response.body :
-            (response as any).error instanceof Blob ? (response as any).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = PagedResultDtoOfTemplateTypeDetailQuestionTargetLookupTableDto.fromJS(resultData200);
-            return _observableOf(result200);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf(null as any);
-    }
-
-    /**
-     * @param filter (optional) 
-     * @param sorting (optional) 
-     * @param skipCount (optional) 
-     * @param maxResultCount (optional) 
-     * @return Success
-     */
-    getAllComplexityForLookupTable(filter: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfTemplateTypeDetailComplexityLookupTableDto> {
-        let url_ = this.baseUrl + "/api/services/app/TemplateTypeDetails/GetAllComplexityForLookupTable?";
-        if (filter === null)
-            throw new Error("The parameter 'filter' cannot be null.");
-        else if (filter !== undefined)
-            url_ += "Filter=" + encodeURIComponent("" + filter) + "&";
-        if (sorting === null)
-            throw new Error("The parameter 'sorting' cannot be null.");
-        else if (sorting !== undefined)
-            url_ += "Sorting=" + encodeURIComponent("" + sorting) + "&";
-        if (skipCount === null)
-            throw new Error("The parameter 'skipCount' cannot be null.");
-        else if (skipCount !== undefined)
-            url_ += "SkipCount=" + encodeURIComponent("" + skipCount) + "&";
-        if (maxResultCount === null)
-            throw new Error("The parameter 'maxResultCount' cannot be null.");
-        else if (maxResultCount !== undefined)
-            url_ += "MaxResultCount=" + encodeURIComponent("" + maxResultCount) + "&";
-        url_ = url_.replace(/[?&]$/, "");
-
-        let options_ : any = {
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Accept": "text/plain"
-            })
-        };
-
-        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGetAllComplexityForLookupTable(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processGetAllComplexityForLookupTable(response_ as any);
-                } catch (e) {
-                    return _observableThrow(e) as any as Observable<PagedResultDtoOfTemplateTypeDetailComplexityLookupTableDto>;
-                }
-            } else
-                return _observableThrow(response_) as any as Observable<PagedResultDtoOfTemplateTypeDetailComplexityLookupTableDto>;
-        }));
-    }
-
-    protected processGetAllComplexityForLookupTable(response: HttpResponseBase): Observable<PagedResultDtoOfTemplateTypeDetailComplexityLookupTableDto> {
-        const status = response.status;
-        const responseBlob =
-            response instanceof HttpResponse ? response.body :
-            (response as any).error instanceof Blob ? (response as any).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = PagedResultDtoOfTemplateTypeDetailComplexityLookupTableDto.fromJS(resultData200);
             return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
@@ -31593,46 +30751,6 @@ export interface IAnswerDto {
     attemptId: string;
 }
 
-export class AnswerOptionLookupTableDto implements IAnswerOptionLookupTableDto {
-    id!: number;
-    displayName!: string | undefined;
-
-    constructor(data?: IAnswerOptionLookupTableDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.id = _data["id"];
-            this.displayName = _data["displayName"];
-        }
-    }
-
-    static fromJS(data: any): AnswerOptionLookupTableDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new AnswerOptionLookupTableDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["id"] = this.id;
-        data["displayName"] = this.displayName;
-        return data;
-    }
-}
-
-export interface IAnswerOptionLookupTableDto {
-    id: number;
-    displayName: string | undefined;
-}
-
 export class AnswerQuestionLookupTableDto implements IAnswerQuestionLookupTableDto {
     id!: number;
     displayName!: string | undefined;
@@ -31669,6 +30787,46 @@ export class AnswerQuestionLookupTableDto implements IAnswerQuestionLookupTableD
 }
 
 export interface IAnswerQuestionLookupTableDto {
+    id: number;
+    displayName: string | undefined;
+}
+
+export class AnswerQuestionOptionLookupTableDto implements IAnswerQuestionOptionLookupTableDto {
+    id!: number;
+    displayName!: string | undefined;
+
+    constructor(data?: IAnswerQuestionOptionLookupTableDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.displayName = _data["displayName"];
+        }
+    }
+
+    static fromJS(data: any): AnswerQuestionOptionLookupTableDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new AnswerQuestionOptionLookupTableDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["displayName"] = this.displayName;
+        return data;
+    }
+}
+
+export interface IAnswerQuestionOptionLookupTableDto {
     id: number;
     displayName: string | undefined;
 }
@@ -32687,7 +31845,7 @@ export interface ICancelPaymentDto {
 
 export class CategoryDto implements ICategoryDto {
     id!: number;
-    value!: string | undefined;
+    name!: string | undefined;
     isActive!: boolean;
 
     constructor(data?: ICategoryDto) {
@@ -32702,7 +31860,7 @@ export class CategoryDto implements ICategoryDto {
     init(_data?: any) {
         if (_data) {
             this.id = _data["id"];
-            this.value = _data["value"];
+            this.name = _data["name"];
             this.isActive = _data["isActive"];
         }
     }
@@ -32717,7 +31875,7 @@ export class CategoryDto implements ICategoryDto {
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["id"] = this.id;
-        data["value"] = this.value;
+        data["name"] = this.name;
         data["isActive"] = this.isActive;
         return data;
     }
@@ -32725,7 +31883,7 @@ export class CategoryDto implements ICategoryDto {
 
 export interface ICategoryDto {
     id: number;
-    value: string | undefined;
+    name: string | undefined;
     isActive: boolean;
 }
 
@@ -33055,8 +32213,8 @@ export interface IComboboxItemDto {
 
 export class ComplexityDto implements IComplexityDto {
     id!: number;
-    value!: string | undefined;
     isActive!: boolean;
+    name!: string | undefined;
 
     constructor(data?: IComplexityDto) {
         if (data) {
@@ -33070,8 +32228,8 @@ export class ComplexityDto implements IComplexityDto {
     init(_data?: any) {
         if (_data) {
             this.id = _data["id"];
-            this.value = _data["value"];
             this.isActive = _data["isActive"];
+            this.name = _data["name"];
         }
     }
 
@@ -33085,16 +32243,16 @@ export class ComplexityDto implements IComplexityDto {
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["id"] = this.id;
-        data["value"] = this.value;
         data["isActive"] = this.isActive;
+        data["name"] = this.name;
         return data;
     }
 }
 
 export interface IComplexityDto {
     id: number;
-    value: string | undefined;
     isActive: boolean;
+    name: string | undefined;
 }
 
 export class ConstructorInfo implements IConstructorInfo {
@@ -33263,6 +32421,46 @@ export interface IConstructorInfo {
     isSecuritySafeCritical: boolean;
     isSecurityTransparent: boolean;
     memberType: MemberTypes;
+}
+
+export class CreateComplexityItemDto implements ICreateComplexityItemDto {
+    complexity!: number;
+    number!: number;
+
+    constructor(data?: ICreateComplexityItemDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.complexity = _data["complexity"];
+            this.number = _data["number"];
+        }
+    }
+
+    static fromJS(data: any): CreateComplexityItemDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new CreateComplexityItemDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["complexity"] = this.complexity;
+        data["number"] = this.number;
+        return data;
+    }
+}
+
+export interface ICreateComplexityItemDto {
+    complexity: number;
+    number: number;
 }
 
 export class CreateEditionDto implements ICreateEditionDto {
@@ -33699,7 +32897,8 @@ export interface ICreateOrEditAttemptDto {
 
 export class CreateOrEditCategoryDto implements ICreateOrEditCategoryDto {
     id!: number | undefined;
-    value!: string | undefined;
+    nameF!: string;
+    nameL!: string;
     isActive!: boolean;
 
     constructor(data?: ICreateOrEditCategoryDto) {
@@ -33714,7 +32913,8 @@ export class CreateOrEditCategoryDto implements ICreateOrEditCategoryDto {
     init(_data?: any) {
         if (_data) {
             this.id = _data["id"];
-            this.value = _data["value"];
+            this.nameF = _data["nameF"];
+            this.nameL = _data["nameL"];
             this.isActive = _data["isActive"];
         }
     }
@@ -33729,7 +32929,8 @@ export class CreateOrEditCategoryDto implements ICreateOrEditCategoryDto {
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["id"] = this.id;
-        data["value"] = this.value;
+        data["nameF"] = this.nameF;
+        data["nameL"] = this.nameL;
         data["isActive"] = this.isActive;
         return data;
     }
@@ -33737,7 +32938,8 @@ export class CreateOrEditCategoryDto implements ICreateOrEditCategoryDto {
 
 export interface ICreateOrEditCategoryDto {
     id: number | undefined;
-    value: string | undefined;
+    nameF: string;
+    nameL: string;
     isActive: boolean;
 }
 
@@ -33795,8 +32997,9 @@ export interface ICreateOrEditChoiceQuestionDto {
 
 export class CreateOrEditComplexityDto implements ICreateOrEditComplexityDto {
     id!: number | undefined;
-    value!: string | undefined;
+    nameF!: string;
     isActive!: boolean;
+    nameL!: string;
 
     constructor(data?: ICreateOrEditComplexityDto) {
         if (data) {
@@ -33810,8 +33013,9 @@ export class CreateOrEditComplexityDto implements ICreateOrEditComplexityDto {
     init(_data?: any) {
         if (_data) {
             this.id = _data["id"];
-            this.value = _data["value"];
+            this.nameF = _data["nameF"];
             this.isActive = _data["isActive"];
+            this.nameL = _data["nameL"];
         }
     }
 
@@ -33825,16 +33029,18 @@ export class CreateOrEditComplexityDto implements ICreateOrEditComplexityDto {
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["id"] = this.id;
-        data["value"] = this.value;
+        data["nameF"] = this.nameF;
         data["isActive"] = this.isActive;
+        data["nameL"] = this.nameL;
         return data;
     }
 }
 
 export interface ICreateOrEditComplexityDto {
     id: number | undefined;
-    value: string | undefined;
+    nameF: string;
     isActive: boolean;
+    nameL: string;
 }
 
 export class CreateOrEditDragFormQuestionDto implements ICreateOrEditDragFormQuestionDto {
@@ -33911,7 +33117,7 @@ export class CreateOrEditExamDto implements ICreateOrEditExamDto {
     isActive!: boolean;
     generationToken!: string;
     title!: string | undefined;
-    templateId!: number;
+    examTemplateId!: number;
 
     constructor(data?: ICreateOrEditExamDto) {
         if (data) {
@@ -33929,7 +33135,7 @@ export class CreateOrEditExamDto implements ICreateOrEditExamDto {
             this.isActive = _data["isActive"];
             this.generationToken = _data["generationToken"];
             this.title = _data["title"];
-            this.templateId = _data["templateId"];
+            this.examTemplateId = _data["examTemplateId"];
         }
     }
 
@@ -33947,7 +33153,7 @@ export class CreateOrEditExamDto implements ICreateOrEditExamDto {
         data["isActive"] = this.isActive;
         data["generationToken"] = this.generationToken;
         data["title"] = this.title;
-        data["templateId"] = this.templateId;
+        data["examTemplateId"] = this.examTemplateId;
         return data;
     }
 }
@@ -33958,7 +33164,7 @@ export interface ICreateOrEditExamDto {
     isActive: boolean;
     generationToken: string;
     title: string | undefined;
-    templateId: number;
+    examTemplateId: number;
 }
 
 export class CreateOrEditExamQuestionDto implements ICreateOrEditExamQuestionDto {
@@ -34017,6 +33223,142 @@ export interface ICreateOrEditExamQuestionDto {
     sectionId: number;
 }
 
+export class CreateOrEditExamSectionDto implements ICreateOrEditExamSectionDto {
+    id!: number | undefined;
+    durationTime!: DateTime;
+    order!: number;
+    instructions!: string | undefined;
+    nameL!: string | undefined;
+    nameF!: string | undefined;
+    type!: SectionTypeEnum;
+    examId!: number;
+
+    constructor(data?: ICreateOrEditExamSectionDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.durationTime = _data["durationTime"] ? DateTime.fromISO(_data["durationTime"].toString()) : <any>undefined;
+            this.order = _data["order"];
+            this.instructions = _data["instructions"];
+            this.nameL = _data["nameL"];
+            this.nameF = _data["nameF"];
+            this.type = _data["type"];
+            this.examId = _data["examId"];
+        }
+    }
+
+    static fromJS(data: any): CreateOrEditExamSectionDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new CreateOrEditExamSectionDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["durationTime"] = this.durationTime ? this.durationTime.toString() : <any>undefined;
+        data["order"] = this.order;
+        data["instructions"] = this.instructions;
+        data["nameL"] = this.nameL;
+        data["nameF"] = this.nameF;
+        data["type"] = this.type;
+        data["examId"] = this.examId;
+        return data;
+    }
+}
+
+export interface ICreateOrEditExamSectionDto {
+    id: number | undefined;
+    durationTime: DateTime;
+    order: number;
+    instructions: string | undefined;
+    nameL: string | undefined;
+    nameF: string | undefined;
+    type: SectionTypeEnum;
+    examId: number;
+}
+
+export class CreateOrEditExamTemplateDto implements ICreateOrEditExamTemplateDto {
+    id!: number | undefined;
+    name!: string;
+    instructions!: string | undefined;
+    hasInstructions!: boolean;
+    versionCount!: number;
+    studyLevelId!: number;
+    studySubjectId!: number;
+    templateSections!: CreateOrEditTemplateSectionDto[] | undefined;
+
+    constructor(data?: ICreateOrEditExamTemplateDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.name = _data["name"];
+            this.instructions = _data["instructions"];
+            this.hasInstructions = _data["hasInstructions"];
+            this.versionCount = _data["versionCount"];
+            this.studyLevelId = _data["studyLevelId"];
+            this.studySubjectId = _data["studySubjectId"];
+            if (Array.isArray(_data["templateSections"])) {
+                this.templateSections = [] as any;
+                for (let item of _data["templateSections"])
+                    this.templateSections!.push(CreateOrEditTemplateSectionDto.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): CreateOrEditExamTemplateDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new CreateOrEditExamTemplateDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["name"] = this.name;
+        data["instructions"] = this.instructions;
+        data["hasInstructions"] = this.hasInstructions;
+        data["versionCount"] = this.versionCount;
+        data["studyLevelId"] = this.studyLevelId;
+        data["studySubjectId"] = this.studySubjectId;
+        if (Array.isArray(this.templateSections)) {
+            data["templateSections"] = [];
+            for (let item of this.templateSections)
+                data["templateSections"].push(item.toJSON());
+        }
+        return data;
+    }
+}
+
+export interface ICreateOrEditExamTemplateDto {
+    id: number | undefined;
+    name: string;
+    instructions: string | undefined;
+    hasInstructions: boolean;
+    versionCount: number;
+    studyLevelId: number;
+    studySubjectId: number;
+    templateSections: CreateOrEditTemplateSectionDto[] | undefined;
+}
+
 export class CreateOrEditMatchQuestionDto implements ICreateOrEditMatchQuestionDto {
     word!: string | undefined;
     matchedWord!: string | undefined;
@@ -34063,74 +33405,6 @@ export interface ICreateOrEditMatchQuestionDto {
     matchedWord: string | undefined;
     matchedFakeWord: string | undefined;
     point: number;
-}
-
-export class CreateOrEditOptionDto implements ICreateOrEditOptionDto {
-    id!: number | undefined;
-    value!: string | undefined;
-    isRequired!: boolean;
-    weight!: number;
-    minWeight!: number;
-    maxWeight!: number;
-    optionType!: QuestionOptionTypeEnum;
-    order!: number | undefined;
-    questionId!: number;
-
-    constructor(data?: ICreateOrEditOptionDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.id = _data["id"];
-            this.value = _data["value"];
-            this.isRequired = _data["isRequired"];
-            this.weight = _data["weight"];
-            this.minWeight = _data["minWeight"];
-            this.maxWeight = _data["maxWeight"];
-            this.optionType = _data["optionType"];
-            this.order = _data["order"];
-            this.questionId = _data["questionId"];
-        }
-    }
-
-    static fromJS(data: any): CreateOrEditOptionDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new CreateOrEditOptionDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["id"] = this.id;
-        data["value"] = this.value;
-        data["isRequired"] = this.isRequired;
-        data["weight"] = this.weight;
-        data["minWeight"] = this.minWeight;
-        data["maxWeight"] = this.maxWeight;
-        data["optionType"] = this.optionType;
-        data["order"] = this.order;
-        data["questionId"] = this.questionId;
-        return data;
-    }
-}
-
-export interface ICreateOrEditOptionDto {
-    id: number | undefined;
-    value: string | undefined;
-    isRequired: boolean;
-    weight: number;
-    minWeight: number;
-    maxWeight: number;
-    optionType: QuestionOptionTypeEnum;
-    order: number | undefined;
-    questionId: number;
 }
 
 export class CreateOrEditQuestionCategoryDto implements ICreateOrEditQuestionCategoryDto {
@@ -34181,11 +33455,58 @@ export interface ICreateOrEditQuestionCategoryDto {
     questionId: number;
 }
 
+export class CreateOrEditQuestionComplexitiyDto implements ICreateOrEditQuestionComplexitiyDto {
+    id!: number | undefined;
+    note!: string | undefined;
+    complexityId!: number;
+    questionId!: number;
+
+    constructor(data?: ICreateOrEditQuestionComplexitiyDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.note = _data["note"];
+            this.complexityId = _data["complexityId"];
+            this.questionId = _data["questionId"];
+        }
+    }
+
+    static fromJS(data: any): CreateOrEditQuestionComplexitiyDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new CreateOrEditQuestionComplexitiyDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["note"] = this.note;
+        data["complexityId"] = this.complexityId;
+        data["questionId"] = this.questionId;
+        return data;
+    }
+}
+
+export interface ICreateOrEditQuestionComplexitiyDto {
+    id: number | undefined;
+    note: string | undefined;
+    complexityId: number;
+    questionId: number;
+}
+
 export class CreateOrEditQuestionDto implements ICreateOrEditQuestionDto {
     id!: number | undefined;
     body!: string;
     type!: QuestionTypeEnum;
-    parentId!: number | undefined;
     instructions!: string | undefined;
     language!: QuestionLanguageEnum;
     questionHelper!: string | undefined;
@@ -34194,13 +33515,15 @@ export class CreateOrEditQuestionDto implements ICreateOrEditQuestionDto {
     point!: number | undefined;
     minPoints!: number | undefined;
     maxPoints!: number | undefined;
-    updatedByQuestionId!: number | undefined;
-    value!: QuestionValue;
+    pageNumber!: number | undefined;
+    parentQuestionId!: number | undefined;
+    updateFromQuestionId!: number | undefined;
+    payload!: QuestionPayloadDto;
     studySubjectId!: number;
     studyLevelId!: number;
-    questionComplexityId!: number;
+    complexityId!: number;
     questionCategoryId!: number;
-    questionTargetId!: number;
+    subjectUnitId!: number;
 
     constructor(data?: ICreateOrEditQuestionDto) {
         if (data) {
@@ -34216,7 +33539,6 @@ export class CreateOrEditQuestionDto implements ICreateOrEditQuestionDto {
             this.id = _data["id"];
             this.body = _data["body"];
             this.type = _data["type"];
-            this.parentId = _data["parentId"];
             this.instructions = _data["instructions"];
             this.language = _data["language"];
             this.questionHelper = _data["questionHelper"];
@@ -34225,13 +33547,15 @@ export class CreateOrEditQuestionDto implements ICreateOrEditQuestionDto {
             this.point = _data["point"];
             this.minPoints = _data["minPoints"];
             this.maxPoints = _data["maxPoints"];
-            this.updatedByQuestionId = _data["updatedByQuestionId"];
-            this.value = _data["value"] ? QuestionValue.fromJS(_data["value"]) : <any>undefined;
+            this.pageNumber = _data["pageNumber"];
+            this.parentQuestionId = _data["parentQuestionId"];
+            this.updateFromQuestionId = _data["updateFromQuestionId"];
+            this.payload = _data["payload"] ? QuestionPayloadDto.fromJS(_data["payload"]) : <any>undefined;
             this.studySubjectId = _data["studySubjectId"];
             this.studyLevelId = _data["studyLevelId"];
-            this.questionComplexityId = _data["questionComplexityId"];
+            this.complexityId = _data["complexityId"];
             this.questionCategoryId = _data["questionCategoryId"];
-            this.questionTargetId = _data["questionTargetId"];
+            this.subjectUnitId = _data["subjectUnitId"];
         }
     }
 
@@ -34247,7 +33571,6 @@ export class CreateOrEditQuestionDto implements ICreateOrEditQuestionDto {
         data["id"] = this.id;
         data["body"] = this.body;
         data["type"] = this.type;
-        data["parentId"] = this.parentId;
         data["instructions"] = this.instructions;
         data["language"] = this.language;
         data["questionHelper"] = this.questionHelper;
@@ -34256,13 +33579,15 @@ export class CreateOrEditQuestionDto implements ICreateOrEditQuestionDto {
         data["point"] = this.point;
         data["minPoints"] = this.minPoints;
         data["maxPoints"] = this.maxPoints;
-        data["updatedByQuestionId"] = this.updatedByQuestionId;
-        data["value"] = this.value ? this.value.toJSON() : <any>undefined;
+        data["pageNumber"] = this.pageNumber;
+        data["parentQuestionId"] = this.parentQuestionId;
+        data["updateFromQuestionId"] = this.updateFromQuestionId;
+        data["payload"] = this.payload ? this.payload.toJSON() : <any>undefined;
         data["studySubjectId"] = this.studySubjectId;
         data["studyLevelId"] = this.studyLevelId;
-        data["questionComplexityId"] = this.questionComplexityId;
+        data["complexityId"] = this.complexityId;
         data["questionCategoryId"] = this.questionCategoryId;
-        data["questionTargetId"] = this.questionTargetId;
+        data["subjectUnitId"] = this.subjectUnitId;
         return data;
     }
 }
@@ -34271,7 +33596,6 @@ export interface ICreateOrEditQuestionDto {
     id: number | undefined;
     body: string;
     type: QuestionTypeEnum;
-    parentId: number | undefined;
     instructions: string | undefined;
     language: QuestionLanguageEnum;
     questionHelper: string | undefined;
@@ -34280,13 +33604,15 @@ export interface ICreateOrEditQuestionDto {
     point: number | undefined;
     minPoints: number | undefined;
     maxPoints: number | undefined;
-    updatedByQuestionId: number | undefined;
-    value: QuestionValue;
+    pageNumber: number | undefined;
+    parentQuestionId: number | undefined;
+    updateFromQuestionId: number | undefined;
+    payload: QuestionPayloadDto;
     studySubjectId: number;
     studyLevelId: number;
-    questionComplexityId: number;
+    complexityId: number;
     questionCategoryId: number;
-    questionTargetId: number;
+    subjectUnitId: number;
 }
 
 export class CreateOrEditQuestionGroupItemDto implements ICreateOrEditQuestionGroupItemDto {
@@ -34385,6 +33711,74 @@ export interface ICreateOrEditQuestionLevelDto {
     questionId: number;
 }
 
+export class CreateOrEditQuestionOptionDto implements ICreateOrEditQuestionOptionDto {
+    id!: number | undefined;
+    value!: string | undefined;
+    isRequired!: boolean;
+    weight!: number;
+    minWeight!: number;
+    maxWeight!: number;
+    optionType!: QuestionOptionTypeEnum;
+    order!: number | undefined;
+    questionId!: number;
+
+    constructor(data?: ICreateOrEditQuestionOptionDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.value = _data["value"];
+            this.isRequired = _data["isRequired"];
+            this.weight = _data["weight"];
+            this.minWeight = _data["minWeight"];
+            this.maxWeight = _data["maxWeight"];
+            this.optionType = _data["optionType"];
+            this.order = _data["order"];
+            this.questionId = _data["questionId"];
+        }
+    }
+
+    static fromJS(data: any): CreateOrEditQuestionOptionDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new CreateOrEditQuestionOptionDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["value"] = this.value;
+        data["isRequired"] = this.isRequired;
+        data["weight"] = this.weight;
+        data["minWeight"] = this.minWeight;
+        data["maxWeight"] = this.maxWeight;
+        data["optionType"] = this.optionType;
+        data["order"] = this.order;
+        data["questionId"] = this.questionId;
+        return data;
+    }
+}
+
+export interface ICreateOrEditQuestionOptionDto {
+    id: number | undefined;
+    value: string | undefined;
+    isRequired: boolean;
+    weight: number;
+    minWeight: number;
+    maxWeight: number;
+    optionType: QuestionOptionTypeEnum;
+    order: number | undefined;
+    questionId: number;
+}
+
 export class CreateOrEditQuestionSubjectDto implements ICreateOrEditQuestionSubjectDto {
     id!: number | undefined;
     note!: string | undefined;
@@ -34433,13 +33827,13 @@ export interface ICreateOrEditQuestionSubjectDto {
     studySubjectId: number;
 }
 
-export class CreateOrEditQuestionTargetDto implements ICreateOrEditQuestionTargetDto {
+export class CreateOrEditQuestionSubjectUnitDto implements ICreateOrEditQuestionSubjectUnitDto {
     id!: number | undefined;
     note!: string | undefined;
-    targetId!: number;
+    subjectUnitId!: number;
     questionId!: number;
 
-    constructor(data?: ICreateOrEditQuestionTargetDto) {
+    constructor(data?: ICreateOrEditQuestionSubjectUnitDto) {
         if (data) {
             for (var property in data) {
                 if (data.hasOwnProperty(property))
@@ -34452,14 +33846,14 @@ export class CreateOrEditQuestionTargetDto implements ICreateOrEditQuestionTarge
         if (_data) {
             this.id = _data["id"];
             this.note = _data["note"];
-            this.targetId = _data["targetId"];
+            this.subjectUnitId = _data["subjectUnitId"];
             this.questionId = _data["questionId"];
         }
     }
 
-    static fromJS(data: any): CreateOrEditQuestionTargetDto {
+    static fromJS(data: any): CreateOrEditQuestionSubjectUnitDto {
         data = typeof data === 'object' ? data : {};
-        let result = new CreateOrEditQuestionTargetDto();
+        let result = new CreateOrEditQuestionSubjectUnitDto();
         result.init(data);
         return result;
     }
@@ -34468,16 +33862,16 @@ export class CreateOrEditQuestionTargetDto implements ICreateOrEditQuestionTarge
         data = typeof data === 'object' ? data : {};
         data["id"] = this.id;
         data["note"] = this.note;
-        data["targetId"] = this.targetId;
+        data["subjectUnitId"] = this.subjectUnitId;
         data["questionId"] = this.questionId;
         return data;
     }
 }
 
-export interface ICreateOrEditQuestionTargetDto {
+export interface ICreateOrEditQuestionSubjectUnitDto {
     id: number | undefined;
     note: string | undefined;
-    targetId: number;
+    subjectUnitId: number;
     questionId: number;
 }
 
@@ -34528,8 +33922,8 @@ export interface ICreateOrEditRearrangeQuestionDto {
 export class CreateOrEditSchoolDto implements ICreateOrEditSchoolDto {
     id!: number | undefined;
     schoolNo!: string | undefined;
-    nameL!: string | undefined;
-    nameF!: string | undefined;
+    nameL!: string;
+    nameF!: string;
 
     constructor(data?: ICreateOrEditSchoolDto) {
         if (data) {
@@ -34569,78 +33963,14 @@ export class CreateOrEditSchoolDto implements ICreateOrEditSchoolDto {
 export interface ICreateOrEditSchoolDto {
     id: number | undefined;
     schoolNo: string | undefined;
-    nameL: string | undefined;
-    nameF: string | undefined;
-}
-
-export class CreateOrEditSectionDto implements ICreateOrEditSectionDto {
-    id!: number | undefined;
-    durationTime!: DateTime;
-    order!: number;
-    instructions!: string | undefined;
-    nameL!: string | undefined;
-    nameF!: string | undefined;
-    type!: SectionTypeEnum;
-    examId!: number;
-
-    constructor(data?: ICreateOrEditSectionDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.id = _data["id"];
-            this.durationTime = _data["durationTime"] ? DateTime.fromISO(_data["durationTime"].toString()) : <any>undefined;
-            this.order = _data["order"];
-            this.instructions = _data["instructions"];
-            this.nameL = _data["nameL"];
-            this.nameF = _data["nameF"];
-            this.type = _data["type"];
-            this.examId = _data["examId"];
-        }
-    }
-
-    static fromJS(data: any): CreateOrEditSectionDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new CreateOrEditSectionDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["id"] = this.id;
-        data["durationTime"] = this.durationTime ? this.durationTime.toString() : <any>undefined;
-        data["order"] = this.order;
-        data["instructions"] = this.instructions;
-        data["nameL"] = this.nameL;
-        data["nameF"] = this.nameF;
-        data["type"] = this.type;
-        data["examId"] = this.examId;
-        return data;
-    }
-}
-
-export interface ICreateOrEditSectionDto {
-    id: number | undefined;
-    durationTime: DateTime;
-    order: number;
-    instructions: string | undefined;
-    nameL: string | undefined;
-    nameF: string | undefined;
-    type: SectionTypeEnum;
-    examId: number;
+    nameL: string;
+    nameF: string;
 }
 
 export class CreateOrEditSessionDto implements ICreateOrEditSessionDto {
     id!: number | undefined;
-    nameL!: string | undefined;
-    nameF!: string | undefined;
+    nameL!: string;
+    nameF!: string;
     startDate!: DateTime;
     actualStartDate!: DateTime;
     endDate!: string | undefined;
@@ -34692,8 +34022,8 @@ export class CreateOrEditSessionDto implements ICreateOrEditSessionDto {
 
 export interface ICreateOrEditSessionDto {
     id: number | undefined;
-    nameL: string | undefined;
-    nameF: string | undefined;
+    nameL: string;
+    nameF: string;
     startDate: DateTime;
     actualStartDate: DateTime;
     endDate: string | undefined;
@@ -34847,7 +34177,8 @@ export interface ICreateOrEditStudentDto {
 
 export class CreateOrEditStudyLevelDto implements ICreateOrEditStudyLevelDto {
     id!: number | undefined;
-    value!: string | undefined;
+    nameF!: string;
+    nameL!: string;
     isActive!: boolean;
 
     constructor(data?: ICreateOrEditStudyLevelDto) {
@@ -34862,7 +34193,8 @@ export class CreateOrEditStudyLevelDto implements ICreateOrEditStudyLevelDto {
     init(_data?: any) {
         if (_data) {
             this.id = _data["id"];
-            this.value = _data["value"];
+            this.nameF = _data["nameF"];
+            this.nameL = _data["nameL"];
             this.isActive = _data["isActive"];
         }
     }
@@ -34877,7 +34209,8 @@ export class CreateOrEditStudyLevelDto implements ICreateOrEditStudyLevelDto {
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["id"] = this.id;
-        data["value"] = this.value;
+        data["nameF"] = this.nameF;
+        data["nameL"] = this.nameL;
         data["isActive"] = this.isActive;
         return data;
     }
@@ -34885,13 +34218,15 @@ export class CreateOrEditStudyLevelDto implements ICreateOrEditStudyLevelDto {
 
 export interface ICreateOrEditStudyLevelDto {
     id: number | undefined;
-    value: string | undefined;
+    nameF: string;
+    nameL: string;
     isActive: boolean;
 }
 
 export class CreateOrEditStudySubjectDto implements ICreateOrEditStudySubjectDto {
     id!: number | undefined;
-    value!: string | undefined;
+    nameF!: string;
+    nameL!: string;
     language!: QuestionLanguageEnum;
     isActive!: boolean;
 
@@ -34907,7 +34242,8 @@ export class CreateOrEditStudySubjectDto implements ICreateOrEditStudySubjectDto
     init(_data?: any) {
         if (_data) {
             this.id = _data["id"];
-            this.value = _data["value"];
+            this.nameF = _data["nameF"];
+            this.nameL = _data["nameL"];
             this.language = _data["language"];
             this.isActive = _data["isActive"];
         }
@@ -34923,7 +34259,8 @@ export class CreateOrEditStudySubjectDto implements ICreateOrEditStudySubjectDto
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["id"] = this.id;
-        data["value"] = this.value;
+        data["nameF"] = this.nameF;
+        data["nameL"] = this.nameL;
         data["language"] = this.language;
         data["isActive"] = this.isActive;
         return data;
@@ -34932,7 +34269,8 @@ export class CreateOrEditStudySubjectDto implements ICreateOrEditStudySubjectDto
 
 export interface ICreateOrEditStudySubjectDto {
     id: number | undefined;
-    value: string | undefined;
+    nameF: string;
+    nameL: string;
     language: QuestionLanguageEnum;
     isActive: boolean;
 }
@@ -35031,6 +34369,66 @@ export interface ICreateOrEditSubjectGroupDto {
     note: string | undefined;
     studySubjectId: number;
     supportGroupId: number;
+}
+
+export class CreateOrEditSubjectUnitDto implements ICreateOrEditSubjectUnitDto {
+    id!: number | undefined;
+    nameF!: string;
+    nameL!: string;
+    code!: string | undefined;
+    isActive!: boolean;
+    studyLevelId!: number | undefined;
+    studySubjectId!: number | undefined;
+
+    constructor(data?: ICreateOrEditSubjectUnitDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.nameF = _data["nameF"];
+            this.nameL = _data["nameL"];
+            this.code = _data["code"];
+            this.isActive = _data["isActive"];
+            this.studyLevelId = _data["studyLevelId"];
+            this.studySubjectId = _data["studySubjectId"];
+        }
+    }
+
+    static fromJS(data: any): CreateOrEditSubjectUnitDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new CreateOrEditSubjectUnitDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["nameF"] = this.nameF;
+        data["nameL"] = this.nameL;
+        data["code"] = this.code;
+        data["isActive"] = this.isActive;
+        data["studyLevelId"] = this.studyLevelId;
+        data["studySubjectId"] = this.studySubjectId;
+        return data;
+    }
+}
+
+export interface ICreateOrEditSubjectUnitDto {
+    id: number | undefined;
+    nameF: string;
+    nameL: string;
+    code: string | undefined;
+    isActive: boolean;
+    studyLevelId: number | undefined;
+    studySubjectId: number | undefined;
 }
 
 export class CreateOrEditSupervisorDto implements ICreateOrEditSupervisorDto {
@@ -35285,136 +34683,15 @@ export interface ICreateOrEditTableDragQuestionDto {
     dragDropTableItems: CreateOrEditTableDragItemDto[] | undefined;
 }
 
-export class CreateOrEditTargetDto implements ICreateOrEditTargetDto {
-    id!: number | undefined;
-    value!: string | undefined;
-    code!: string | undefined;
-    isActive!: boolean;
-    studyLevelId!: number | undefined;
-    studySubjectId!: number | undefined;
-
-    constructor(data?: ICreateOrEditTargetDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.id = _data["id"];
-            this.value = _data["value"];
-            this.code = _data["code"];
-            this.isActive = _data["isActive"];
-            this.studyLevelId = _data["studyLevelId"];
-            this.studySubjectId = _data["studySubjectId"];
-        }
-    }
-
-    static fromJS(data: any): CreateOrEditTargetDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new CreateOrEditTargetDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["id"] = this.id;
-        data["value"] = this.value;
-        data["code"] = this.code;
-        data["isActive"] = this.isActive;
-        data["studyLevelId"] = this.studyLevelId;
-        data["studySubjectId"] = this.studySubjectId;
-        return data;
-    }
-}
-
-export interface ICreateOrEditTargetDto {
-    id: number | undefined;
-    value: string | undefined;
-    code: string | undefined;
-    isActive: boolean;
-    studyLevelId: number | undefined;
-    studySubjectId: number | undefined;
-}
-
-export class CreateOrEditTemplateDto implements ICreateOrEditTemplateDto {
-    id!: number | undefined;
-    nameL!: string | undefined;
-    nameF!: string | undefined;
-    instructions!: string | undefined;
-    isActive!: boolean;
-    versionCount!: number;
-    studyLevelId!: number | undefined;
-    studySubjectId!: number;
-
-    constructor(data?: ICreateOrEditTemplateDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.id = _data["id"];
-            this.nameL = _data["nameL"];
-            this.nameF = _data["nameF"];
-            this.instructions = _data["instructions"];
-            this.isActive = _data["isActive"];
-            this.versionCount = _data["versionCount"];
-            this.studyLevelId = _data["studyLevelId"];
-            this.studySubjectId = _data["studySubjectId"];
-        }
-    }
-
-    static fromJS(data: any): CreateOrEditTemplateDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new CreateOrEditTemplateDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["id"] = this.id;
-        data["nameL"] = this.nameL;
-        data["nameF"] = this.nameF;
-        data["instructions"] = this.instructions;
-        data["isActive"] = this.isActive;
-        data["versionCount"] = this.versionCount;
-        data["studyLevelId"] = this.studyLevelId;
-        data["studySubjectId"] = this.studySubjectId;
-        return data;
-    }
-}
-
-export interface ICreateOrEditTemplateDto {
-    id: number | undefined;
-    nameL: string | undefined;
-    nameF: string | undefined;
-    instructions: string | undefined;
-    isActive: boolean;
-    versionCount: number;
-    studyLevelId: number | undefined;
-    studySubjectId: number;
-}
-
 export class CreateOrEditTemplateSectionDto implements ICreateOrEditTemplateSectionDto {
     id!: number | undefined;
     durationTime!: DateTime;
     order!: number;
     instructions!: string | undefined;
-    isActive!: boolean;
-    nameL!: string | undefined;
-    nameF!: string | undefined;
+    name!: string;
     sectionType!: SectionTypeEnum;
-    templateId!: number;
+    examTemplateId!: number;
+    difficultyCriteria!: CreateSectionDifficultyCriteriaDto[] | undefined;
 
     constructor(data?: ICreateOrEditTemplateSectionDto) {
         if (data) {
@@ -35431,11 +34708,14 @@ export class CreateOrEditTemplateSectionDto implements ICreateOrEditTemplateSect
             this.durationTime = _data["durationTime"] ? DateTime.fromISO(_data["durationTime"].toString()) : <any>undefined;
             this.order = _data["order"];
             this.instructions = _data["instructions"];
-            this.isActive = _data["isActive"];
-            this.nameL = _data["nameL"];
-            this.nameF = _data["nameF"];
+            this.name = _data["name"];
             this.sectionType = _data["sectionType"];
-            this.templateId = _data["templateId"];
+            this.examTemplateId = _data["examTemplateId"];
+            if (Array.isArray(_data["difficultyCriteria"])) {
+                this.difficultyCriteria = [] as any;
+                for (let item of _data["difficultyCriteria"])
+                    this.difficultyCriteria!.push(CreateSectionDifficultyCriteriaDto.fromJS(item));
+            }
         }
     }
 
@@ -35452,11 +34732,14 @@ export class CreateOrEditTemplateSectionDto implements ICreateOrEditTemplateSect
         data["durationTime"] = this.durationTime ? this.durationTime.toString() : <any>undefined;
         data["order"] = this.order;
         data["instructions"] = this.instructions;
-        data["isActive"] = this.isActive;
-        data["nameL"] = this.nameL;
-        data["nameF"] = this.nameF;
+        data["name"] = this.name;
         data["sectionType"] = this.sectionType;
-        data["templateId"] = this.templateId;
+        data["examTemplateId"] = this.examTemplateId;
+        if (Array.isArray(this.difficultyCriteria)) {
+            data["difficultyCriteria"] = [];
+            for (let item of this.difficultyCriteria)
+                data["difficultyCriteria"].push(item.toJSON());
+        }
         return data;
     }
 }
@@ -35466,79 +34749,10 @@ export interface ICreateOrEditTemplateSectionDto {
     durationTime: DateTime;
     order: number;
     instructions: string | undefined;
-    isActive: boolean;
-    nameL: string | undefined;
-    nameF: string | undefined;
+    name: string;
     sectionType: SectionTypeEnum;
-    templateId: number;
-}
-
-export class CreateOrEditTemplateTypeDetailDto implements ICreateOrEditTemplateTypeDetailDto {
-    id!: number | undefined;
-    questionType!: QuestionTypeEnum;
-    groupQuestionCount!: number;
-    order!: number;
-    isActive!: boolean;
-    templateSectionId!: number;
-    categoryId!: number;
-    questionTargetId!: number;
-    complexityId!: number | undefined;
-
-    constructor(data?: ICreateOrEditTemplateTypeDetailDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.id = _data["id"];
-            this.questionType = _data["questionType"];
-            this.groupQuestionCount = _data["groupQuestionCount"];
-            this.order = _data["order"];
-            this.isActive = _data["isActive"];
-            this.templateSectionId = _data["templateSectionId"];
-            this.categoryId = _data["categoryId"];
-            this.questionTargetId = _data["questionTargetId"];
-            this.complexityId = _data["complexityId"];
-        }
-    }
-
-    static fromJS(data: any): CreateOrEditTemplateTypeDetailDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new CreateOrEditTemplateTypeDetailDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["id"] = this.id;
-        data["questionType"] = this.questionType;
-        data["groupQuestionCount"] = this.groupQuestionCount;
-        data["order"] = this.order;
-        data["isActive"] = this.isActive;
-        data["templateSectionId"] = this.templateSectionId;
-        data["categoryId"] = this.categoryId;
-        data["questionTargetId"] = this.questionTargetId;
-        data["complexityId"] = this.complexityId;
-        return data;
-    }
-}
-
-export interface ICreateOrEditTemplateTypeDetailDto {
-    id: number | undefined;
-    questionType: QuestionTypeEnum;
-    groupQuestionCount: number;
-    order: number;
-    isActive: boolean;
-    templateSectionId: number;
-    categoryId: number;
-    questionTargetId: number;
-    complexityId: number | undefined;
+    examTemplateId: number;
+    difficultyCriteria: CreateSectionDifficultyCriteriaDto[] | undefined;
 }
 
 export class CreateOrUpdateLanguageInput implements ICreateOrUpdateLanguageInput {
@@ -35890,6 +35104,62 @@ export interface ICreatePaymentProductDto {
     amount: number;
     count: number;
     extraProperties: { [key: string]: any; } | undefined;
+}
+
+export class CreateSectionDifficultyCriteriaDto implements ICreateSectionDifficultyCriteriaDto {
+    questionType!: QuestionTypeEnum;
+    subjectUnitId!: number;
+    categoryId!: number | undefined;
+    items!: CreateComplexityItemDto[] | undefined;
+
+    constructor(data?: ICreateSectionDifficultyCriteriaDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.questionType = _data["questionType"];
+            this.subjectUnitId = _data["subjectUnitId"];
+            this.categoryId = _data["categoryId"];
+            if (Array.isArray(_data["items"])) {
+                this.items = [] as any;
+                for (let item of _data["items"])
+                    this.items!.push(CreateComplexityItemDto.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): CreateSectionDifficultyCriteriaDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new CreateSectionDifficultyCriteriaDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["questionType"] = this.questionType;
+        data["subjectUnitId"] = this.subjectUnitId;
+        data["categoryId"] = this.categoryId;
+        if (Array.isArray(this.items)) {
+            data["items"] = [];
+            for (let item of this.items)
+                data["items"].push(item.toJSON());
+        }
+        return data;
+    }
+}
+
+export interface ICreateSectionDifficultyCriteriaDto {
+    questionType: QuestionTypeEnum;
+    subjectUnitId: number;
+    categoryId: number | undefined;
+    items: CreateComplexityItemDto[] | undefined;
 }
 
 export class CreateTenantInput implements ICreateTenantInput {
@@ -37546,7 +36816,7 @@ export class ExamDto implements IExamDto {
     isActive!: boolean;
     generationToken!: string;
     title!: string | undefined;
-    templateId!: number;
+    examTemplateId!: number;
 
     constructor(data?: IExamDto) {
         if (data) {
@@ -37564,7 +36834,7 @@ export class ExamDto implements IExamDto {
             this.isActive = _data["isActive"];
             this.generationToken = _data["generationToken"];
             this.title = _data["title"];
-            this.templateId = _data["templateId"];
+            this.examTemplateId = _data["examTemplateId"];
         }
     }
 
@@ -37582,7 +36852,7 @@ export class ExamDto implements IExamDto {
         data["isActive"] = this.isActive;
         data["generationToken"] = this.generationToken;
         data["title"] = this.title;
-        data["templateId"] = this.templateId;
+        data["examTemplateId"] = this.examTemplateId;
         return data;
     }
 }
@@ -37593,7 +36863,47 @@ export interface IExamDto {
     isActive: boolean;
     generationToken: string;
     title: string | undefined;
-    templateId: number;
+    examTemplateId: number;
+}
+
+export class ExamExamTemplateLookupTableDto implements IExamExamTemplateLookupTableDto {
+    id!: number;
+    displayName!: string | undefined;
+
+    constructor(data?: IExamExamTemplateLookupTableDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.displayName = _data["displayName"];
+        }
+    }
+
+    static fromJS(data: any): ExamExamTemplateLookupTableDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new ExamExamTemplateLookupTableDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["displayName"] = this.displayName;
+        return data;
+    }
+}
+
+export interface IExamExamTemplateLookupTableDto {
+    id: number;
+    displayName: string | undefined;
 }
 
 export class ExamQuestionDto implements IExamQuestionDto {
@@ -37652,6 +36962,46 @@ export interface IExamQuestionDto {
     sectionId: number;
 }
 
+export class ExamQuestionExamSectionLookupTableDto implements IExamQuestionExamSectionLookupTableDto {
+    id!: number;
+    displayName!: string | undefined;
+
+    constructor(data?: IExamQuestionExamSectionLookupTableDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.displayName = _data["displayName"];
+        }
+    }
+
+    static fromJS(data: any): ExamQuestionExamSectionLookupTableDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new ExamQuestionExamSectionLookupTableDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["displayName"] = this.displayName;
+        return data;
+    }
+}
+
+export interface IExamQuestionExamSectionLookupTableDto {
+    id: number;
+    displayName: string | undefined;
+}
+
 export class ExamQuestionQuestionLookupTableDto implements IExamQuestionQuestionLookupTableDto {
     id!: number;
     displayName!: string | undefined;
@@ -37692,11 +37042,71 @@ export interface IExamQuestionQuestionLookupTableDto {
     displayName: string | undefined;
 }
 
-export class ExamQuestionSectionLookupTableDto implements IExamQuestionSectionLookupTableDto {
+export class ExamSectionDto implements IExamSectionDto {
+    id!: number;
+    durationTime!: DateTime;
+    order!: number;
+    instructions!: string | undefined;
+    name!: string | undefined;
+    type!: SectionTypeEnum;
+    examId!: number;
+
+    constructor(data?: IExamSectionDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.durationTime = _data["durationTime"] ? DateTime.fromISO(_data["durationTime"].toString()) : <any>undefined;
+            this.order = _data["order"];
+            this.instructions = _data["instructions"];
+            this.name = _data["name"];
+            this.type = _data["type"];
+            this.examId = _data["examId"];
+        }
+    }
+
+    static fromJS(data: any): ExamSectionDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new ExamSectionDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["durationTime"] = this.durationTime ? this.durationTime.toString() : <any>undefined;
+        data["order"] = this.order;
+        data["instructions"] = this.instructions;
+        data["name"] = this.name;
+        data["type"] = this.type;
+        data["examId"] = this.examId;
+        return data;
+    }
+}
+
+export interface IExamSectionDto {
+    id: number;
+    durationTime: DateTime;
+    order: number;
+    instructions: string | undefined;
+    name: string | undefined;
+    type: SectionTypeEnum;
+    examId: number;
+}
+
+export class ExamSectionExamLookupTableDto implements IExamSectionExamLookupTableDto {
     id!: number;
     displayName!: string | undefined;
 
-    constructor(data?: IExamQuestionSectionLookupTableDto) {
+    constructor(data?: IExamSectionExamLookupTableDto) {
         if (data) {
             for (var property in data) {
                 if (data.hasOwnProperty(property))
@@ -37712,9 +37122,9 @@ export class ExamQuestionSectionLookupTableDto implements IExamQuestionSectionLo
         }
     }
 
-    static fromJS(data: any): ExamQuestionSectionLookupTableDto {
+    static fromJS(data: any): ExamSectionExamLookupTableDto {
         data = typeof data === 'object' ? data : {};
-        let result = new ExamQuestionSectionLookupTableDto();
+        let result = new ExamSectionExamLookupTableDto();
         result.init(data);
         return result;
     }
@@ -37727,16 +37137,23 @@ export class ExamQuestionSectionLookupTableDto implements IExamQuestionSectionLo
     }
 }
 
-export interface IExamQuestionSectionLookupTableDto {
+export interface IExamSectionExamLookupTableDto {
     id: number;
     displayName: string | undefined;
 }
 
-export class ExamTemplateLookupTableDto implements IExamTemplateLookupTableDto {
+export class ExamTemplateDto implements IExamTemplateDto {
     id!: number;
-    displayName!: string | undefined;
+    nameL!: string | undefined;
+    nameF!: string | undefined;
+    name!: string | undefined;
+    instructions!: string | undefined;
+    isActive!: boolean;
+    versionCount!: number;
+    studyLevelId!: number | undefined;
+    studySubjectId!: number;
 
-    constructor(data?: IExamTemplateLookupTableDto) {
+    constructor(data?: IExamTemplateDto) {
         if (data) {
             for (var property in data) {
                 if (data.hasOwnProperty(property))
@@ -37748,13 +37165,20 @@ export class ExamTemplateLookupTableDto implements IExamTemplateLookupTableDto {
     init(_data?: any) {
         if (_data) {
             this.id = _data["id"];
-            this.displayName = _data["displayName"];
+            this.nameL = _data["nameL"];
+            this.nameF = _data["nameF"];
+            this.name = _data["name"];
+            this.instructions = _data["instructions"];
+            this.isActive = _data["isActive"];
+            this.versionCount = _data["versionCount"];
+            this.studyLevelId = _data["studyLevelId"];
+            this.studySubjectId = _data["studySubjectId"];
         }
     }
 
-    static fromJS(data: any): ExamTemplateLookupTableDto {
+    static fromJS(data: any): ExamTemplateDto {
         data = typeof data === 'object' ? data : {};
-        let result = new ExamTemplateLookupTableDto();
+        let result = new ExamTemplateDto();
         result.init(data);
         return result;
     }
@@ -37762,14 +37186,28 @@ export class ExamTemplateLookupTableDto implements IExamTemplateLookupTableDto {
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["id"] = this.id;
-        data["displayName"] = this.displayName;
+        data["nameL"] = this.nameL;
+        data["nameF"] = this.nameF;
+        data["name"] = this.name;
+        data["instructions"] = this.instructions;
+        data["isActive"] = this.isActive;
+        data["versionCount"] = this.versionCount;
+        data["studyLevelId"] = this.studyLevelId;
+        data["studySubjectId"] = this.studySubjectId;
         return data;
     }
 }
 
-export interface IExamTemplateLookupTableDto {
+export interface IExamTemplateDto {
     id: number;
-    displayName: string | undefined;
+    nameL: string | undefined;
+    nameF: string | undefined;
+    name: string | undefined;
+    instructions: string | undefined;
+    isActive: boolean;
+    versionCount: number;
+    studyLevelId: number | undefined;
+    studySubjectId: number;
 }
 
 export class ExpiringTenant implements IExpiringTenant {
@@ -39437,7 +38875,7 @@ export interface IGetAllSubscriptionsOutput {
 export class GetAnswerForEditOutput implements IGetAnswerForEditOutput {
     answer!: CreateOrEditAnswerDto;
     questionQuestionHelper!: string | undefined;
-    optionValue!: string | undefined;
+    questionOptionValue!: string | undefined;
     questionQuestionHelper2!: string | undefined;
     attemptNote!: string | undefined;
 
@@ -39454,7 +38892,7 @@ export class GetAnswerForEditOutput implements IGetAnswerForEditOutput {
         if (_data) {
             this.answer = _data["answer"] ? CreateOrEditAnswerDto.fromJS(_data["answer"]) : <any>undefined;
             this.questionQuestionHelper = _data["questionQuestionHelper"];
-            this.optionValue = _data["optionValue"];
+            this.questionOptionValue = _data["questionOptionValue"];
             this.questionQuestionHelper2 = _data["questionQuestionHelper2"];
             this.attemptNote = _data["attemptNote"];
         }
@@ -39471,7 +38909,7 @@ export class GetAnswerForEditOutput implements IGetAnswerForEditOutput {
         data = typeof data === 'object' ? data : {};
         data["answer"] = this.answer ? this.answer.toJSON() : <any>undefined;
         data["questionQuestionHelper"] = this.questionQuestionHelper;
-        data["optionValue"] = this.optionValue;
+        data["questionOptionValue"] = this.questionOptionValue;
         data["questionQuestionHelper2"] = this.questionQuestionHelper2;
         data["attemptNote"] = this.attemptNote;
         return data;
@@ -39481,7 +38919,7 @@ export class GetAnswerForEditOutput implements IGetAnswerForEditOutput {
 export interface IGetAnswerForEditOutput {
     answer: CreateOrEditAnswerDto;
     questionQuestionHelper: string | undefined;
-    optionValue: string | undefined;
+    questionOptionValue: string | undefined;
     questionQuestionHelper2: string | undefined;
     attemptNote: string | undefined;
 }
@@ -39489,7 +38927,7 @@ export interface IGetAnswerForEditOutput {
 export class GetAnswerForViewDto implements IGetAnswerForViewDto {
     answer!: AnswerDto;
     questionQuestionHelper!: string | undefined;
-    optionValue!: string | undefined;
+    questionOptionValue!: string | undefined;
     questionQuestionHelper2!: string | undefined;
     attemptNote!: string | undefined;
 
@@ -39506,7 +38944,7 @@ export class GetAnswerForViewDto implements IGetAnswerForViewDto {
         if (_data) {
             this.answer = _data["answer"] ? AnswerDto.fromJS(_data["answer"]) : <any>undefined;
             this.questionQuestionHelper = _data["questionQuestionHelper"];
-            this.optionValue = _data["optionValue"];
+            this.questionOptionValue = _data["questionOptionValue"];
             this.questionQuestionHelper2 = _data["questionQuestionHelper2"];
             this.attemptNote = _data["attemptNote"];
         }
@@ -39523,7 +38961,7 @@ export class GetAnswerForViewDto implements IGetAnswerForViewDto {
         data = typeof data === 'object' ? data : {};
         data["answer"] = this.answer ? this.answer.toJSON() : <any>undefined;
         data["questionQuestionHelper"] = this.questionQuestionHelper;
-        data["optionValue"] = this.optionValue;
+        data["questionOptionValue"] = this.questionOptionValue;
         data["questionQuestionHelper2"] = this.questionQuestionHelper2;
         data["attemptNote"] = this.attemptNote;
         return data;
@@ -39533,7 +38971,7 @@ export class GetAnswerForViewDto implements IGetAnswerForViewDto {
 export interface IGetAnswerForViewDto {
     answer: AnswerDto;
     questionQuestionHelper: string | undefined;
-    optionValue: string | undefined;
+    questionOptionValue: string | undefined;
     questionQuestionHelper2: string | undefined;
     attemptNote: string | undefined;
 }
@@ -40148,7 +39586,7 @@ export interface IGetEditionTenantStatisticsOutput {
 
 export class GetExamForEditOutput implements IGetExamForEditOutput {
     exam!: CreateOrEditExamDto;
-    templateInstructions!: string | undefined;
+    examTemplateInstructions!: string | undefined;
 
     constructor(data?: IGetExamForEditOutput) {
         if (data) {
@@ -40162,7 +39600,7 @@ export class GetExamForEditOutput implements IGetExamForEditOutput {
     init(_data?: any) {
         if (_data) {
             this.exam = _data["exam"] ? CreateOrEditExamDto.fromJS(_data["exam"]) : <any>undefined;
-            this.templateInstructions = _data["templateInstructions"];
+            this.examTemplateInstructions = _data["examTemplateInstructions"];
         }
     }
 
@@ -40176,19 +39614,19 @@ export class GetExamForEditOutput implements IGetExamForEditOutput {
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["exam"] = this.exam ? this.exam.toJSON() : <any>undefined;
-        data["templateInstructions"] = this.templateInstructions;
+        data["examTemplateInstructions"] = this.examTemplateInstructions;
         return data;
     }
 }
 
 export interface IGetExamForEditOutput {
     exam: CreateOrEditExamDto;
-    templateInstructions: string | undefined;
+    examTemplateInstructions: string | undefined;
 }
 
 export class GetExamForViewDto implements IGetExamForViewDto {
     exam!: ExamDto;
-    templateInstructions!: string | undefined;
+    examTemplateInstructions!: string | undefined;
 
     constructor(data?: IGetExamForViewDto) {
         if (data) {
@@ -40202,7 +39640,7 @@ export class GetExamForViewDto implements IGetExamForViewDto {
     init(_data?: any) {
         if (_data) {
             this.exam = _data["exam"] ? ExamDto.fromJS(_data["exam"]) : <any>undefined;
-            this.templateInstructions = _data["templateInstructions"];
+            this.examTemplateInstructions = _data["examTemplateInstructions"];
         }
     }
 
@@ -40216,20 +39654,20 @@ export class GetExamForViewDto implements IGetExamForViewDto {
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["exam"] = this.exam ? this.exam.toJSON() : <any>undefined;
-        data["templateInstructions"] = this.templateInstructions;
+        data["examTemplateInstructions"] = this.examTemplateInstructions;
         return data;
     }
 }
 
 export interface IGetExamForViewDto {
     exam: ExamDto;
-    templateInstructions: string | undefined;
+    examTemplateInstructions: string | undefined;
 }
 
 export class GetExamQuestionForEditOutput implements IGetExamQuestionForEditOutput {
     examQuestion!: CreateOrEditExamQuestionDto;
     questionQuestionHelper!: string | undefined;
-    sectionNameL!: string | undefined;
+    examSectionName!: string | undefined;
 
     constructor(data?: IGetExamQuestionForEditOutput) {
         if (data) {
@@ -40244,7 +39682,7 @@ export class GetExamQuestionForEditOutput implements IGetExamQuestionForEditOutp
         if (_data) {
             this.examQuestion = _data["examQuestion"] ? CreateOrEditExamQuestionDto.fromJS(_data["examQuestion"]) : <any>undefined;
             this.questionQuestionHelper = _data["questionQuestionHelper"];
-            this.sectionNameL = _data["sectionNameL"];
+            this.examSectionName = _data["examSectionName"];
         }
     }
 
@@ -40259,7 +39697,7 @@ export class GetExamQuestionForEditOutput implements IGetExamQuestionForEditOutp
         data = typeof data === 'object' ? data : {};
         data["examQuestion"] = this.examQuestion ? this.examQuestion.toJSON() : <any>undefined;
         data["questionQuestionHelper"] = this.questionQuestionHelper;
-        data["sectionNameL"] = this.sectionNameL;
+        data["examSectionName"] = this.examSectionName;
         return data;
     }
 }
@@ -40267,13 +39705,13 @@ export class GetExamQuestionForEditOutput implements IGetExamQuestionForEditOutp
 export interface IGetExamQuestionForEditOutput {
     examQuestion: CreateOrEditExamQuestionDto;
     questionQuestionHelper: string | undefined;
-    sectionNameL: string | undefined;
+    examSectionName: string | undefined;
 }
 
 export class GetExamQuestionForViewDto implements IGetExamQuestionForViewDto {
     examQuestion!: ExamQuestionDto;
     questionQuestionHelper!: string | undefined;
-    sectionNameL!: string | undefined;
+    examSectionName!: string | undefined;
 
     constructor(data?: IGetExamQuestionForViewDto) {
         if (data) {
@@ -40288,7 +39726,7 @@ export class GetExamQuestionForViewDto implements IGetExamQuestionForViewDto {
         if (_data) {
             this.examQuestion = _data["examQuestion"] ? ExamQuestionDto.fromJS(_data["examQuestion"]) : <any>undefined;
             this.questionQuestionHelper = _data["questionQuestionHelper"];
-            this.sectionNameL = _data["sectionNameL"];
+            this.examSectionName = _data["examSectionName"];
         }
     }
 
@@ -40303,7 +39741,7 @@ export class GetExamQuestionForViewDto implements IGetExamQuestionForViewDto {
         data = typeof data === 'object' ? data : {};
         data["examQuestion"] = this.examQuestion ? this.examQuestion.toJSON() : <any>undefined;
         data["questionQuestionHelper"] = this.questionQuestionHelper;
-        data["sectionNameL"] = this.sectionNameL;
+        data["examSectionName"] = this.examSectionName;
         return data;
     }
 }
@@ -40311,7 +39749,191 @@ export class GetExamQuestionForViewDto implements IGetExamQuestionForViewDto {
 export interface IGetExamQuestionForViewDto {
     examQuestion: ExamQuestionDto;
     questionQuestionHelper: string | undefined;
-    sectionNameL: string | undefined;
+    examSectionName: string | undefined;
+}
+
+export class GetExamSectionForEditOutput implements IGetExamSectionForEditOutput {
+    examSection!: CreateOrEditExamSectionDto;
+    examTitle!: string | undefined;
+
+    constructor(data?: IGetExamSectionForEditOutput) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.examSection = _data["examSection"] ? CreateOrEditExamSectionDto.fromJS(_data["examSection"]) : <any>undefined;
+            this.examTitle = _data["examTitle"];
+        }
+    }
+
+    static fromJS(data: any): GetExamSectionForEditOutput {
+        data = typeof data === 'object' ? data : {};
+        let result = new GetExamSectionForEditOutput();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["examSection"] = this.examSection ? this.examSection.toJSON() : <any>undefined;
+        data["examTitle"] = this.examTitle;
+        return data;
+    }
+}
+
+export interface IGetExamSectionForEditOutput {
+    examSection: CreateOrEditExamSectionDto;
+    examTitle: string | undefined;
+}
+
+export class GetExamSectionForViewDto implements IGetExamSectionForViewDto {
+    examSection!: ExamSectionDto;
+    examTitle!: string | undefined;
+
+    constructor(data?: IGetExamSectionForViewDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.examSection = _data["examSection"] ? ExamSectionDto.fromJS(_data["examSection"]) : <any>undefined;
+            this.examTitle = _data["examTitle"];
+        }
+    }
+
+    static fromJS(data: any): GetExamSectionForViewDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new GetExamSectionForViewDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["examSection"] = this.examSection ? this.examSection.toJSON() : <any>undefined;
+        data["examTitle"] = this.examTitle;
+        return data;
+    }
+}
+
+export interface IGetExamSectionForViewDto {
+    examSection: ExamSectionDto;
+    examTitle: string | undefined;
+}
+
+export class GetExamTemplateForEditOutput implements IGetExamTemplateForEditOutput {
+    examTemplate!: CreateOrEditExamTemplateDto;
+    studyLevelValue!: string | undefined;
+    studySubjectValue!: string | undefined;
+
+    constructor(data?: IGetExamTemplateForEditOutput) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.examTemplate = _data["examTemplate"] ? CreateOrEditExamTemplateDto.fromJS(_data["examTemplate"]) : <any>undefined;
+            this.studyLevelValue = _data["studyLevelValue"];
+            this.studySubjectValue = _data["studySubjectValue"];
+        }
+    }
+
+    static fromJS(data: any): GetExamTemplateForEditOutput {
+        data = typeof data === 'object' ? data : {};
+        let result = new GetExamTemplateForEditOutput();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["examTemplate"] = this.examTemplate ? this.examTemplate.toJSON() : <any>undefined;
+        data["studyLevelValue"] = this.studyLevelValue;
+        data["studySubjectValue"] = this.studySubjectValue;
+        return data;
+    }
+}
+
+export interface IGetExamTemplateForEditOutput {
+    examTemplate: CreateOrEditExamTemplateDto;
+    studyLevelValue: string | undefined;
+    studySubjectValue: string | undefined;
+}
+
+export class GetExamTemplateForViewDto implements IGetExamTemplateForViewDto {
+    examTemplate!: ExamTemplateDto;
+    studyLevel!: string | undefined;
+    studySubject!: string | undefined;
+    creationTime!: DateTime;
+    lastModificationTime!: DateTime;
+    createdBy!: string | undefined;
+    enableDelete!: boolean;
+
+    constructor(data?: IGetExamTemplateForViewDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.examTemplate = _data["examTemplate"] ? ExamTemplateDto.fromJS(_data["examTemplate"]) : <any>undefined;
+            this.studyLevel = _data["studyLevel"];
+            this.studySubject = _data["studySubject"];
+            this.creationTime = _data["creationTime"] ? DateTime.fromISO(_data["creationTime"].toString()) : <any>undefined;
+            this.lastModificationTime = _data["lastModificationTime"] ? DateTime.fromISO(_data["lastModificationTime"].toString()) : <any>undefined;
+            this.createdBy = _data["createdBy"];
+            this.enableDelete = _data["enableDelete"];
+        }
+    }
+
+    static fromJS(data: any): GetExamTemplateForViewDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new GetExamTemplateForViewDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["examTemplate"] = this.examTemplate ? this.examTemplate.toJSON() : <any>undefined;
+        data["studyLevel"] = this.studyLevel;
+        data["studySubject"] = this.studySubject;
+        data["creationTime"] = this.creationTime ? this.creationTime.toString() : <any>undefined;
+        data["lastModificationTime"] = this.lastModificationTime ? this.lastModificationTime.toString() : <any>undefined;
+        data["createdBy"] = this.createdBy;
+        data["enableDelete"] = this.enableDelete;
+        return data;
+    }
+}
+
+export interface IGetExamTemplateForViewDto {
+    examTemplate: ExamTemplateDto;
+    studyLevel: string | undefined;
+    studySubject: string | undefined;
+    creationTime: DateTime;
+    lastModificationTime: DateTime;
+    createdBy: string | undefined;
+    enableDelete: boolean;
 }
 
 export class GetExpiringTenantsOutput implements IGetExpiringTenantsOutput {
@@ -40814,86 +40436,6 @@ export interface IGetNotificationsOutput {
     unreadCount: number;
 }
 
-export class GetOptionForEditOutput implements IGetOptionForEditOutput {
-    option!: CreateOrEditOptionDto;
-    questionQuestionHelper!: string | undefined;
-
-    constructor(data?: IGetOptionForEditOutput) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.option = _data["option"] ? CreateOrEditOptionDto.fromJS(_data["option"]) : <any>undefined;
-            this.questionQuestionHelper = _data["questionQuestionHelper"];
-        }
-    }
-
-    static fromJS(data: any): GetOptionForEditOutput {
-        data = typeof data === 'object' ? data : {};
-        let result = new GetOptionForEditOutput();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["option"] = this.option ? this.option.toJSON() : <any>undefined;
-        data["questionQuestionHelper"] = this.questionQuestionHelper;
-        return data;
-    }
-}
-
-export interface IGetOptionForEditOutput {
-    option: CreateOrEditOptionDto;
-    questionQuestionHelper: string | undefined;
-}
-
-export class GetOptionForViewDto implements IGetOptionForViewDto {
-    option!: OptionDto;
-    questionQuestionHelper!: string | undefined;
-
-    constructor(data?: IGetOptionForViewDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.option = _data["option"] ? OptionDto.fromJS(_data["option"]) : <any>undefined;
-            this.questionQuestionHelper = _data["questionQuestionHelper"];
-        }
-    }
-
-    static fromJS(data: any): GetOptionForViewDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new GetOptionForViewDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["option"] = this.option ? this.option.toJSON() : <any>undefined;
-        data["questionQuestionHelper"] = this.questionQuestionHelper;
-        return data;
-    }
-}
-
-export interface IGetOptionForViewDto {
-    option: OptionDto;
-    questionQuestionHelper: string | undefined;
-}
-
 export class GetPasswordComplexitySettingOutput implements IGetPasswordComplexitySettingOutput {
     setting!: PasswordComplexitySetting;
 
@@ -41060,7 +40602,7 @@ export interface IGetPublishedNotificationsOutput {
 
 export class GetQuestionCategoryForEditOutput implements IGetQuestionCategoryForEditOutput {
     questionCategory!: CreateOrEditQuestionCategoryDto;
-    categoryValue!: string | undefined;
+    categoryName!: string | undefined;
     questionQuestionHelper!: string | undefined;
 
     constructor(data?: IGetQuestionCategoryForEditOutput) {
@@ -41075,7 +40617,7 @@ export class GetQuestionCategoryForEditOutput implements IGetQuestionCategoryFor
     init(_data?: any) {
         if (_data) {
             this.questionCategory = _data["questionCategory"] ? CreateOrEditQuestionCategoryDto.fromJS(_data["questionCategory"]) : <any>undefined;
-            this.categoryValue = _data["categoryValue"];
+            this.categoryName = _data["categoryName"];
             this.questionQuestionHelper = _data["questionQuestionHelper"];
         }
     }
@@ -41090,7 +40632,7 @@ export class GetQuestionCategoryForEditOutput implements IGetQuestionCategoryFor
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["questionCategory"] = this.questionCategory ? this.questionCategory.toJSON() : <any>undefined;
-        data["categoryValue"] = this.categoryValue;
+        data["categoryName"] = this.categoryName;
         data["questionQuestionHelper"] = this.questionQuestionHelper;
         return data;
     }
@@ -41098,13 +40640,13 @@ export class GetQuestionCategoryForEditOutput implements IGetQuestionCategoryFor
 
 export interface IGetQuestionCategoryForEditOutput {
     questionCategory: CreateOrEditQuestionCategoryDto;
-    categoryValue: string | undefined;
+    categoryName: string | undefined;
     questionQuestionHelper: string | undefined;
 }
 
 export class GetQuestionCategoryForViewDto implements IGetQuestionCategoryForViewDto {
     questionCategory!: QuestionCategoryDto;
-    categoryValue!: string | undefined;
+    categoryName!: string | undefined;
     questionQuestionHelper!: string | undefined;
 
     constructor(data?: IGetQuestionCategoryForViewDto) {
@@ -41119,7 +40661,7 @@ export class GetQuestionCategoryForViewDto implements IGetQuestionCategoryForVie
     init(_data?: any) {
         if (_data) {
             this.questionCategory = _data["questionCategory"] ? QuestionCategoryDto.fromJS(_data["questionCategory"]) : <any>undefined;
-            this.categoryValue = _data["categoryValue"];
+            this.categoryName = _data["categoryName"];
             this.questionQuestionHelper = _data["questionQuestionHelper"];
         }
     }
@@ -41134,7 +40676,7 @@ export class GetQuestionCategoryForViewDto implements IGetQuestionCategoryForVie
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["questionCategory"] = this.questionCategory ? this.questionCategory.toJSON() : <any>undefined;
-        data["categoryValue"] = this.categoryValue;
+        data["categoryName"] = this.categoryName;
         data["questionQuestionHelper"] = this.questionQuestionHelper;
         return data;
     }
@@ -41142,13 +40684,106 @@ export class GetQuestionCategoryForViewDto implements IGetQuestionCategoryForVie
 
 export interface IGetQuestionCategoryForViewDto {
     questionCategory: QuestionCategoryDto;
-    categoryValue: string | undefined;
+    categoryName: string | undefined;
+    questionQuestionHelper: string | undefined;
+}
+
+export class GetQuestionComplexitiyForEditOutput implements IGetQuestionComplexitiyForEditOutput {
+    questionComplexitiy!: CreateOrEditQuestionComplexitiyDto;
+    complexityName!: string | undefined;
+    questionQuestionHelper!: string | undefined;
+
+    constructor(data?: IGetQuestionComplexitiyForEditOutput) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.questionComplexitiy = _data["questionComplexitiy"] ? CreateOrEditQuestionComplexitiyDto.fromJS(_data["questionComplexitiy"]) : <any>undefined;
+            this.complexityName = _data["complexityName"];
+            this.questionQuestionHelper = _data["questionQuestionHelper"];
+        }
+    }
+
+    static fromJS(data: any): GetQuestionComplexitiyForEditOutput {
+        data = typeof data === 'object' ? data : {};
+        let result = new GetQuestionComplexitiyForEditOutput();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["questionComplexitiy"] = this.questionComplexitiy ? this.questionComplexitiy.toJSON() : <any>undefined;
+        data["complexityName"] = this.complexityName;
+        data["questionQuestionHelper"] = this.questionQuestionHelper;
+        return data;
+    }
+}
+
+export interface IGetQuestionComplexitiyForEditOutput {
+    questionComplexitiy: CreateOrEditQuestionComplexitiyDto;
+    complexityName: string | undefined;
+    questionQuestionHelper: string | undefined;
+}
+
+export class GetQuestionComplexitiyForViewDto implements IGetQuestionComplexitiyForViewDto {
+    questionComplexitiy!: QuestionComplexitiyDto;
+    complexityName!: string | undefined;
+    questionQuestionHelper!: string | undefined;
+
+    constructor(data?: IGetQuestionComplexitiyForViewDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.questionComplexitiy = _data["questionComplexitiy"] ? QuestionComplexitiyDto.fromJS(_data["questionComplexitiy"]) : <any>undefined;
+            this.complexityName = _data["complexityName"];
+            this.questionQuestionHelper = _data["questionQuestionHelper"];
+        }
+    }
+
+    static fromJS(data: any): GetQuestionComplexitiyForViewDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new GetQuestionComplexitiyForViewDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["questionComplexitiy"] = this.questionComplexitiy ? this.questionComplexitiy.toJSON() : <any>undefined;
+        data["complexityName"] = this.complexityName;
+        data["questionQuestionHelper"] = this.questionQuestionHelper;
+        return data;
+    }
+}
+
+export interface IGetQuestionComplexitiyForViewDto {
+    questionComplexitiy: QuestionComplexitiyDto;
+    complexityName: string | undefined;
     questionQuestionHelper: string | undefined;
 }
 
 export class GetQuestionForEditOutput implements IGetQuestionForEditOutput {
     question!: CreateOrEditQuestionDto;
-    supportGroupNameL!: string | undefined;
+    questionBody!: string | undefined;
+    studySubjectName!: string | undefined;
+    studyLevelName!: string | undefined;
+    complexityName!: string | undefined;
+    questionCategoryName!: string | undefined;
+    subjectUnitName!: string | undefined;
 
     constructor(data?: IGetQuestionForEditOutput) {
         if (data) {
@@ -41162,7 +40797,12 @@ export class GetQuestionForEditOutput implements IGetQuestionForEditOutput {
     init(_data?: any) {
         if (_data) {
             this.question = _data["question"] ? CreateOrEditQuestionDto.fromJS(_data["question"]) : <any>undefined;
-            this.supportGroupNameL = _data["supportGroupNameL"];
+            this.questionBody = _data["questionBody"];
+            this.studySubjectName = _data["studySubjectName"];
+            this.studyLevelName = _data["studyLevelName"];
+            this.complexityName = _data["complexityName"];
+            this.questionCategoryName = _data["questionCategoryName"];
+            this.subjectUnitName = _data["subjectUnitName"];
         }
     }
 
@@ -41176,18 +40816,29 @@ export class GetQuestionForEditOutput implements IGetQuestionForEditOutput {
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["question"] = this.question ? this.question.toJSON() : <any>undefined;
-        data["supportGroupNameL"] = this.supportGroupNameL;
+        data["questionBody"] = this.questionBody;
+        data["studySubjectName"] = this.studySubjectName;
+        data["studyLevelName"] = this.studyLevelName;
+        data["complexityName"] = this.complexityName;
+        data["questionCategoryName"] = this.questionCategoryName;
+        data["subjectUnitName"] = this.subjectUnitName;
         return data;
     }
 }
 
 export interface IGetQuestionForEditOutput {
     question: CreateOrEditQuestionDto;
-    supportGroupNameL: string | undefined;
+    questionBody: string | undefined;
+    studySubjectName: string | undefined;
+    studyLevelName: string | undefined;
+    complexityName: string | undefined;
+    questionCategoryName: string | undefined;
+    subjectUnitName: string | undefined;
 }
 
 export class GetQuestionForViewDto implements IGetQuestionForViewDto {
     question!: QuestionDto;
+    questionBody!: string | undefined;
 
     constructor(data?: IGetQuestionForViewDto) {
         if (data) {
@@ -41201,6 +40852,7 @@ export class GetQuestionForViewDto implements IGetQuestionForViewDto {
     init(_data?: any) {
         if (_data) {
             this.question = _data["question"] ? QuestionDto.fromJS(_data["question"]) : <any>undefined;
+            this.questionBody = _data["questionBody"];
         }
     }
 
@@ -41214,12 +40866,14 @@ export class GetQuestionForViewDto implements IGetQuestionForViewDto {
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["question"] = this.question ? this.question.toJSON() : <any>undefined;
+        data["questionBody"] = this.questionBody;
         return data;
     }
 }
 
 export interface IGetQuestionForViewDto {
     question: QuestionDto;
+    questionBody: string | undefined;
 }
 
 export class GetQuestionGroupItemForEditOutput implements IGetQuestionGroupItemForEditOutput {
@@ -41312,7 +40966,7 @@ export interface IGetQuestionGroupItemForViewDto {
 
 export class GetQuestionLevelForEditOutput implements IGetQuestionLevelForEditOutput {
     questionLevel!: CreateOrEditQuestionLevelDto;
-    studyLevelValue!: string | undefined;
+    studyLevelName!: string | undefined;
     questionQuestionHelper!: string | undefined;
 
     constructor(data?: IGetQuestionLevelForEditOutput) {
@@ -41327,7 +40981,7 @@ export class GetQuestionLevelForEditOutput implements IGetQuestionLevelForEditOu
     init(_data?: any) {
         if (_data) {
             this.questionLevel = _data["questionLevel"] ? CreateOrEditQuestionLevelDto.fromJS(_data["questionLevel"]) : <any>undefined;
-            this.studyLevelValue = _data["studyLevelValue"];
+            this.studyLevelName = _data["studyLevelName"];
             this.questionQuestionHelper = _data["questionQuestionHelper"];
         }
     }
@@ -41342,7 +40996,7 @@ export class GetQuestionLevelForEditOutput implements IGetQuestionLevelForEditOu
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["questionLevel"] = this.questionLevel ? this.questionLevel.toJSON() : <any>undefined;
-        data["studyLevelValue"] = this.studyLevelValue;
+        data["studyLevelName"] = this.studyLevelName;
         data["questionQuestionHelper"] = this.questionQuestionHelper;
         return data;
     }
@@ -41350,13 +41004,13 @@ export class GetQuestionLevelForEditOutput implements IGetQuestionLevelForEditOu
 
 export interface IGetQuestionLevelForEditOutput {
     questionLevel: CreateOrEditQuestionLevelDto;
-    studyLevelValue: string | undefined;
+    studyLevelName: string | undefined;
     questionQuestionHelper: string | undefined;
 }
 
 export class GetQuestionLevelForViewDto implements IGetQuestionLevelForViewDto {
     questionLevel!: QuestionLevelDto;
-    studyLevelValue!: string | undefined;
+    studyLevelName!: string | undefined;
     questionQuestionHelper!: string | undefined;
 
     constructor(data?: IGetQuestionLevelForViewDto) {
@@ -41371,7 +41025,7 @@ export class GetQuestionLevelForViewDto implements IGetQuestionLevelForViewDto {
     init(_data?: any) {
         if (_data) {
             this.questionLevel = _data["questionLevel"] ? QuestionLevelDto.fromJS(_data["questionLevel"]) : <any>undefined;
-            this.studyLevelValue = _data["studyLevelValue"];
+            this.studyLevelName = _data["studyLevelName"];
             this.questionQuestionHelper = _data["questionQuestionHelper"];
         }
     }
@@ -41386,7 +41040,7 @@ export class GetQuestionLevelForViewDto implements IGetQuestionLevelForViewDto {
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["questionLevel"] = this.questionLevel ? this.questionLevel.toJSON() : <any>undefined;
-        data["studyLevelValue"] = this.studyLevelValue;
+        data["studyLevelName"] = this.studyLevelName;
         data["questionQuestionHelper"] = this.questionQuestionHelper;
         return data;
     }
@@ -41394,14 +41048,94 @@ export class GetQuestionLevelForViewDto implements IGetQuestionLevelForViewDto {
 
 export interface IGetQuestionLevelForViewDto {
     questionLevel: QuestionLevelDto;
-    studyLevelValue: string | undefined;
+    studyLevelName: string | undefined;
+    questionQuestionHelper: string | undefined;
+}
+
+export class GetQuestionOptionForEditOutput implements IGetQuestionOptionForEditOutput {
+    questionOption!: CreateOrEditQuestionOptionDto;
+    questionQuestionHelper!: string | undefined;
+
+    constructor(data?: IGetQuestionOptionForEditOutput) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.questionOption = _data["questionOption"] ? CreateOrEditQuestionOptionDto.fromJS(_data["questionOption"]) : <any>undefined;
+            this.questionQuestionHelper = _data["questionQuestionHelper"];
+        }
+    }
+
+    static fromJS(data: any): GetQuestionOptionForEditOutput {
+        data = typeof data === 'object' ? data : {};
+        let result = new GetQuestionOptionForEditOutput();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["questionOption"] = this.questionOption ? this.questionOption.toJSON() : <any>undefined;
+        data["questionQuestionHelper"] = this.questionQuestionHelper;
+        return data;
+    }
+}
+
+export interface IGetQuestionOptionForEditOutput {
+    questionOption: CreateOrEditQuestionOptionDto;
+    questionQuestionHelper: string | undefined;
+}
+
+export class GetQuestionOptionForViewDto implements IGetQuestionOptionForViewDto {
+    questionOption!: QuestionOptionDto;
+    questionQuestionHelper!: string | undefined;
+
+    constructor(data?: IGetQuestionOptionForViewDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.questionOption = _data["questionOption"] ? QuestionOptionDto.fromJS(_data["questionOption"]) : <any>undefined;
+            this.questionQuestionHelper = _data["questionQuestionHelper"];
+        }
+    }
+
+    static fromJS(data: any): GetQuestionOptionForViewDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new GetQuestionOptionForViewDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["questionOption"] = this.questionOption ? this.questionOption.toJSON() : <any>undefined;
+        data["questionQuestionHelper"] = this.questionQuestionHelper;
+        return data;
+    }
+}
+
+export interface IGetQuestionOptionForViewDto {
+    questionOption: QuestionOptionDto;
     questionQuestionHelper: string | undefined;
 }
 
 export class GetQuestionSubjectForEditOutput implements IGetQuestionSubjectForEditOutput {
     questionSubject!: CreateOrEditQuestionSubjectDto;
     questionQuestionHelper!: string | undefined;
-    studySubjectValue!: string | undefined;
+    studySubjectName!: string | undefined;
 
     constructor(data?: IGetQuestionSubjectForEditOutput) {
         if (data) {
@@ -41416,7 +41150,7 @@ export class GetQuestionSubjectForEditOutput implements IGetQuestionSubjectForEd
         if (_data) {
             this.questionSubject = _data["questionSubject"] ? CreateOrEditQuestionSubjectDto.fromJS(_data["questionSubject"]) : <any>undefined;
             this.questionQuestionHelper = _data["questionQuestionHelper"];
-            this.studySubjectValue = _data["studySubjectValue"];
+            this.studySubjectName = _data["studySubjectName"];
         }
     }
 
@@ -41431,7 +41165,7 @@ export class GetQuestionSubjectForEditOutput implements IGetQuestionSubjectForEd
         data = typeof data === 'object' ? data : {};
         data["questionSubject"] = this.questionSubject ? this.questionSubject.toJSON() : <any>undefined;
         data["questionQuestionHelper"] = this.questionQuestionHelper;
-        data["studySubjectValue"] = this.studySubjectValue;
+        data["studySubjectName"] = this.studySubjectName;
         return data;
     }
 }
@@ -41439,13 +41173,13 @@ export class GetQuestionSubjectForEditOutput implements IGetQuestionSubjectForEd
 export interface IGetQuestionSubjectForEditOutput {
     questionSubject: CreateOrEditQuestionSubjectDto;
     questionQuestionHelper: string | undefined;
-    studySubjectValue: string | undefined;
+    studySubjectName: string | undefined;
 }
 
 export class GetQuestionSubjectForViewDto implements IGetQuestionSubjectForViewDto {
     questionSubject!: QuestionSubjectDto;
     questionQuestionHelper!: string | undefined;
-    studySubjectValue!: string | undefined;
+    studySubjectName!: string | undefined;
 
     constructor(data?: IGetQuestionSubjectForViewDto) {
         if (data) {
@@ -41460,7 +41194,7 @@ export class GetQuestionSubjectForViewDto implements IGetQuestionSubjectForViewD
         if (_data) {
             this.questionSubject = _data["questionSubject"] ? QuestionSubjectDto.fromJS(_data["questionSubject"]) : <any>undefined;
             this.questionQuestionHelper = _data["questionQuestionHelper"];
-            this.studySubjectValue = _data["studySubjectValue"];
+            this.studySubjectName = _data["studySubjectName"];
         }
     }
 
@@ -41475,7 +41209,7 @@ export class GetQuestionSubjectForViewDto implements IGetQuestionSubjectForViewD
         data = typeof data === 'object' ? data : {};
         data["questionSubject"] = this.questionSubject ? this.questionSubject.toJSON() : <any>undefined;
         data["questionQuestionHelper"] = this.questionQuestionHelper;
-        data["studySubjectValue"] = this.studySubjectValue;
+        data["studySubjectName"] = this.studySubjectName;
         return data;
     }
 }
@@ -41483,15 +41217,15 @@ export class GetQuestionSubjectForViewDto implements IGetQuestionSubjectForViewD
 export interface IGetQuestionSubjectForViewDto {
     questionSubject: QuestionSubjectDto;
     questionQuestionHelper: string | undefined;
-    studySubjectValue: string | undefined;
+    studySubjectName: string | undefined;
 }
 
-export class GetQuestionTargetForEditOutput implements IGetQuestionTargetForEditOutput {
-    questionTarget!: CreateOrEditQuestionTargetDto;
-    targetCode!: string | undefined;
+export class GetQuestionSubjectUnitForEditOutput implements IGetQuestionSubjectUnitForEditOutput {
+    questionSubjectUnit!: CreateOrEditQuestionSubjectUnitDto;
+    subjectUnitCode!: string | undefined;
     questionQuestionHelper!: string | undefined;
 
-    constructor(data?: IGetQuestionTargetForEditOutput) {
+    constructor(data?: IGetQuestionSubjectUnitForEditOutput) {
         if (data) {
             for (var property in data) {
                 if (data.hasOwnProperty(property))
@@ -41502,40 +41236,40 @@ export class GetQuestionTargetForEditOutput implements IGetQuestionTargetForEdit
 
     init(_data?: any) {
         if (_data) {
-            this.questionTarget = _data["questionTarget"] ? CreateOrEditQuestionTargetDto.fromJS(_data["questionTarget"]) : <any>undefined;
-            this.targetCode = _data["targetCode"];
+            this.questionSubjectUnit = _data["questionSubjectUnit"] ? CreateOrEditQuestionSubjectUnitDto.fromJS(_data["questionSubjectUnit"]) : <any>undefined;
+            this.subjectUnitCode = _data["subjectUnitCode"];
             this.questionQuestionHelper = _data["questionQuestionHelper"];
         }
     }
 
-    static fromJS(data: any): GetQuestionTargetForEditOutput {
+    static fromJS(data: any): GetQuestionSubjectUnitForEditOutput {
         data = typeof data === 'object' ? data : {};
-        let result = new GetQuestionTargetForEditOutput();
+        let result = new GetQuestionSubjectUnitForEditOutput();
         result.init(data);
         return result;
     }
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
-        data["questionTarget"] = this.questionTarget ? this.questionTarget.toJSON() : <any>undefined;
-        data["targetCode"] = this.targetCode;
+        data["questionSubjectUnit"] = this.questionSubjectUnit ? this.questionSubjectUnit.toJSON() : <any>undefined;
+        data["subjectUnitCode"] = this.subjectUnitCode;
         data["questionQuestionHelper"] = this.questionQuestionHelper;
         return data;
     }
 }
 
-export interface IGetQuestionTargetForEditOutput {
-    questionTarget: CreateOrEditQuestionTargetDto;
-    targetCode: string | undefined;
+export interface IGetQuestionSubjectUnitForEditOutput {
+    questionSubjectUnit: CreateOrEditQuestionSubjectUnitDto;
+    subjectUnitCode: string | undefined;
     questionQuestionHelper: string | undefined;
 }
 
-export class GetQuestionTargetForViewDto implements IGetQuestionTargetForViewDto {
-    questionTarget!: QuestionTargetDto;
-    targetCode!: string | undefined;
+export class GetQuestionSubjectUnitForViewDto implements IGetQuestionSubjectUnitForViewDto {
+    questionSubjectUnit!: QuestionSubjectUnitDto;
+    subjectUnitCode!: string | undefined;
     questionQuestionHelper!: string | undefined;
 
-    constructor(data?: IGetQuestionTargetForViewDto) {
+    constructor(data?: IGetQuestionSubjectUnitForViewDto) {
         if (data) {
             for (var property in data) {
                 if (data.hasOwnProperty(property))
@@ -41546,31 +41280,31 @@ export class GetQuestionTargetForViewDto implements IGetQuestionTargetForViewDto
 
     init(_data?: any) {
         if (_data) {
-            this.questionTarget = _data["questionTarget"] ? QuestionTargetDto.fromJS(_data["questionTarget"]) : <any>undefined;
-            this.targetCode = _data["targetCode"];
+            this.questionSubjectUnit = _data["questionSubjectUnit"] ? QuestionSubjectUnitDto.fromJS(_data["questionSubjectUnit"]) : <any>undefined;
+            this.subjectUnitCode = _data["subjectUnitCode"];
             this.questionQuestionHelper = _data["questionQuestionHelper"];
         }
     }
 
-    static fromJS(data: any): GetQuestionTargetForViewDto {
+    static fromJS(data: any): GetQuestionSubjectUnitForViewDto {
         data = typeof data === 'object' ? data : {};
-        let result = new GetQuestionTargetForViewDto();
+        let result = new GetQuestionSubjectUnitForViewDto();
         result.init(data);
         return result;
     }
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
-        data["questionTarget"] = this.questionTarget ? this.questionTarget.toJSON() : <any>undefined;
-        data["targetCode"] = this.targetCode;
+        data["questionSubjectUnit"] = this.questionSubjectUnit ? this.questionSubjectUnit.toJSON() : <any>undefined;
+        data["subjectUnitCode"] = this.subjectUnitCode;
         data["questionQuestionHelper"] = this.questionQuestionHelper;
         return data;
     }
 }
 
-export interface IGetQuestionTargetForViewDto {
-    questionTarget: QuestionTargetDto;
-    targetCode: string | undefined;
+export interface IGetQuestionSubjectUnitForViewDto {
+    questionSubjectUnit: QuestionSubjectUnitDto;
+    subjectUnitCode: string | undefined;
     questionQuestionHelper: string | undefined;
 }
 
@@ -41908,86 +41642,6 @@ export class GetSchoolForViewDto implements IGetSchoolForViewDto {
 
 export interface IGetSchoolForViewDto {
     school: SchoolDto;
-}
-
-export class GetSectionForEditOutput implements IGetSectionForEditOutput {
-    section!: CreateOrEditSectionDto;
-    examTitle!: string | undefined;
-
-    constructor(data?: IGetSectionForEditOutput) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.section = _data["section"] ? CreateOrEditSectionDto.fromJS(_data["section"]) : <any>undefined;
-            this.examTitle = _data["examTitle"];
-        }
-    }
-
-    static fromJS(data: any): GetSectionForEditOutput {
-        data = typeof data === 'object' ? data : {};
-        let result = new GetSectionForEditOutput();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["section"] = this.section ? this.section.toJSON() : <any>undefined;
-        data["examTitle"] = this.examTitle;
-        return data;
-    }
-}
-
-export interface IGetSectionForEditOutput {
-    section: CreateOrEditSectionDto;
-    examTitle: string | undefined;
-}
-
-export class GetSectionForViewDto implements IGetSectionForViewDto {
-    section!: SectionDto;
-    examTitle!: string | undefined;
-
-    constructor(data?: IGetSectionForViewDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.section = _data["section"] ? SectionDto.fromJS(_data["section"]) : <any>undefined;
-            this.examTitle = _data["examTitle"];
-        }
-    }
-
-    static fromJS(data: any): GetSectionForViewDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new GetSectionForViewDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["section"] = this.section ? this.section.toJSON() : <any>undefined;
-        data["examTitle"] = this.examTitle;
-        return data;
-    }
-}
-
-export interface IGetSectionForViewDto {
-    section: SectionDto;
-    examTitle: string | undefined;
 }
 
 export class GetSessionForEditOutput implements IGetSessionForEditOutput {
@@ -42545,7 +42199,7 @@ export interface IGetSubjectCategoryForViewDto {
 export class GetSubjectGroupForEditOutput implements IGetSubjectGroupForEditOutput {
     subjectGroup!: CreateOrEditSubjectGroupDto;
     studySubjectValue!: string | undefined;
-    supportGroupNameL!: string | undefined;
+    supportGroupName!: string | undefined;
 
     constructor(data?: IGetSubjectGroupForEditOutput) {
         if (data) {
@@ -42560,7 +42214,7 @@ export class GetSubjectGroupForEditOutput implements IGetSubjectGroupForEditOutp
         if (_data) {
             this.subjectGroup = _data["subjectGroup"] ? CreateOrEditSubjectGroupDto.fromJS(_data["subjectGroup"]) : <any>undefined;
             this.studySubjectValue = _data["studySubjectValue"];
-            this.supportGroupNameL = _data["supportGroupNameL"];
+            this.supportGroupName = _data["supportGroupName"];
         }
     }
 
@@ -42575,7 +42229,7 @@ export class GetSubjectGroupForEditOutput implements IGetSubjectGroupForEditOutp
         data = typeof data === 'object' ? data : {};
         data["subjectGroup"] = this.subjectGroup ? this.subjectGroup.toJSON() : <any>undefined;
         data["studySubjectValue"] = this.studySubjectValue;
-        data["supportGroupNameL"] = this.supportGroupNameL;
+        data["supportGroupName"] = this.supportGroupName;
         return data;
     }
 }
@@ -42583,13 +42237,13 @@ export class GetSubjectGroupForEditOutput implements IGetSubjectGroupForEditOutp
 export interface IGetSubjectGroupForEditOutput {
     subjectGroup: CreateOrEditSubjectGroupDto;
     studySubjectValue: string | undefined;
-    supportGroupNameL: string | undefined;
+    supportGroupName: string | undefined;
 }
 
 export class GetSubjectGroupForViewDto implements IGetSubjectGroupForViewDto {
     subjectGroup!: SubjectGroupDto;
     studySubjectValue!: string | undefined;
-    supportGroupNameL!: string | undefined;
+    supportGroupName!: string | undefined;
 
     constructor(data?: IGetSubjectGroupForViewDto) {
         if (data) {
@@ -42604,7 +42258,7 @@ export class GetSubjectGroupForViewDto implements IGetSubjectGroupForViewDto {
         if (_data) {
             this.subjectGroup = _data["subjectGroup"] ? SubjectGroupDto.fromJS(_data["subjectGroup"]) : <any>undefined;
             this.studySubjectValue = _data["studySubjectValue"];
-            this.supportGroupNameL = _data["supportGroupNameL"];
+            this.supportGroupName = _data["supportGroupName"];
         }
     }
 
@@ -42619,7 +42273,7 @@ export class GetSubjectGroupForViewDto implements IGetSubjectGroupForViewDto {
         data = typeof data === 'object' ? data : {};
         data["subjectGroup"] = this.subjectGroup ? this.subjectGroup.toJSON() : <any>undefined;
         data["studySubjectValue"] = this.studySubjectValue;
-        data["supportGroupNameL"] = this.supportGroupNameL;
+        data["supportGroupName"] = this.supportGroupName;
         return data;
     }
 }
@@ -42627,7 +42281,95 @@ export class GetSubjectGroupForViewDto implements IGetSubjectGroupForViewDto {
 export interface IGetSubjectGroupForViewDto {
     subjectGroup: SubjectGroupDto;
     studySubjectValue: string | undefined;
-    supportGroupNameL: string | undefined;
+    supportGroupName: string | undefined;
+}
+
+export class GetSubjectUnitForEditOutput implements IGetSubjectUnitForEditOutput {
+    subjectUnit!: CreateOrEditSubjectUnitDto;
+    studyLevelValue!: string | undefined;
+    studySubjectValue!: string | undefined;
+
+    constructor(data?: IGetSubjectUnitForEditOutput) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.subjectUnit = _data["subjectUnit"] ? CreateOrEditSubjectUnitDto.fromJS(_data["subjectUnit"]) : <any>undefined;
+            this.studyLevelValue = _data["studyLevelValue"];
+            this.studySubjectValue = _data["studySubjectValue"];
+        }
+    }
+
+    static fromJS(data: any): GetSubjectUnitForEditOutput {
+        data = typeof data === 'object' ? data : {};
+        let result = new GetSubjectUnitForEditOutput();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["subjectUnit"] = this.subjectUnit ? this.subjectUnit.toJSON() : <any>undefined;
+        data["studyLevelValue"] = this.studyLevelValue;
+        data["studySubjectValue"] = this.studySubjectValue;
+        return data;
+    }
+}
+
+export interface IGetSubjectUnitForEditOutput {
+    subjectUnit: CreateOrEditSubjectUnitDto;
+    studyLevelValue: string | undefined;
+    studySubjectValue: string | undefined;
+}
+
+export class GetSubjectUnitForViewDto implements IGetSubjectUnitForViewDto {
+    subjectUnit!: SubjectUnitDto;
+    studyLevelValue!: string | undefined;
+    studySubjectValue!: string | undefined;
+
+    constructor(data?: IGetSubjectUnitForViewDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.subjectUnit = _data["subjectUnit"] ? SubjectUnitDto.fromJS(_data["subjectUnit"]) : <any>undefined;
+            this.studyLevelValue = _data["studyLevelValue"];
+            this.studySubjectValue = _data["studySubjectValue"];
+        }
+    }
+
+    static fromJS(data: any): GetSubjectUnitForViewDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new GetSubjectUnitForViewDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["subjectUnit"] = this.subjectUnit ? this.subjectUnit.toJSON() : <any>undefined;
+        data["studyLevelValue"] = this.studyLevelValue;
+        data["studySubjectValue"] = this.studySubjectValue;
+        return data;
+    }
+}
+
+export interface IGetSubjectUnitForViewDto {
+    subjectUnit: SubjectUnitDto;
+    studyLevelValue: string | undefined;
+    studySubjectValue: string | undefined;
 }
 
 export class GetSupervisorForEditOutput implements IGetSupervisorForEditOutput {
@@ -42868,366 +42610,6 @@ export class GetSupportGroupItemForViewDto implements IGetSupportGroupItemForVie
 export interface IGetSupportGroupItemForViewDto {
     supportGroupItem: SupportGroupItemDto;
     supportGroupNameL: string | undefined;
-}
-
-export class GetTargetForEditOutput implements IGetTargetForEditOutput {
-    target!: CreateOrEditTargetDto;
-    studyLevelValue!: string | undefined;
-    studySubjectValue!: string | undefined;
-
-    constructor(data?: IGetTargetForEditOutput) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.target = _data["target"] ? CreateOrEditTargetDto.fromJS(_data["target"]) : <any>undefined;
-            this.studyLevelValue = _data["studyLevelValue"];
-            this.studySubjectValue = _data["studySubjectValue"];
-        }
-    }
-
-    static fromJS(data: any): GetTargetForEditOutput {
-        data = typeof data === 'object' ? data : {};
-        let result = new GetTargetForEditOutput();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["target"] = this.target ? this.target.toJSON() : <any>undefined;
-        data["studyLevelValue"] = this.studyLevelValue;
-        data["studySubjectValue"] = this.studySubjectValue;
-        return data;
-    }
-}
-
-export interface IGetTargetForEditOutput {
-    target: CreateOrEditTargetDto;
-    studyLevelValue: string | undefined;
-    studySubjectValue: string | undefined;
-}
-
-export class GetTargetForViewDto implements IGetTargetForViewDto {
-    target!: TargetDto;
-    studyLevelValue!: string | undefined;
-    studySubjectValue!: string | undefined;
-
-    constructor(data?: IGetTargetForViewDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.target = _data["target"] ? TargetDto.fromJS(_data["target"]) : <any>undefined;
-            this.studyLevelValue = _data["studyLevelValue"];
-            this.studySubjectValue = _data["studySubjectValue"];
-        }
-    }
-
-    static fromJS(data: any): GetTargetForViewDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new GetTargetForViewDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["target"] = this.target ? this.target.toJSON() : <any>undefined;
-        data["studyLevelValue"] = this.studyLevelValue;
-        data["studySubjectValue"] = this.studySubjectValue;
-        return data;
-    }
-}
-
-export interface IGetTargetForViewDto {
-    target: TargetDto;
-    studyLevelValue: string | undefined;
-    studySubjectValue: string | undefined;
-}
-
-export class GetTemplateForEditOutput implements IGetTemplateForEditOutput {
-    template!: CreateOrEditTemplateDto;
-    studyLevelValue!: string | undefined;
-    studySubjectValue!: string | undefined;
-
-    constructor(data?: IGetTemplateForEditOutput) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.template = _data["template"] ? CreateOrEditTemplateDto.fromJS(_data["template"]) : <any>undefined;
-            this.studyLevelValue = _data["studyLevelValue"];
-            this.studySubjectValue = _data["studySubjectValue"];
-        }
-    }
-
-    static fromJS(data: any): GetTemplateForEditOutput {
-        data = typeof data === 'object' ? data : {};
-        let result = new GetTemplateForEditOutput();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["template"] = this.template ? this.template.toJSON() : <any>undefined;
-        data["studyLevelValue"] = this.studyLevelValue;
-        data["studySubjectValue"] = this.studySubjectValue;
-        return data;
-    }
-}
-
-export interface IGetTemplateForEditOutput {
-    template: CreateOrEditTemplateDto;
-    studyLevelValue: string | undefined;
-    studySubjectValue: string | undefined;
-}
-
-export class GetTemplateForViewDto implements IGetTemplateForViewDto {
-    template!: TemplateDto;
-    studyLevelValue!: string | undefined;
-    studySubjectValue!: string | undefined;
-
-    constructor(data?: IGetTemplateForViewDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.template = _data["template"] ? TemplateDto.fromJS(_data["template"]) : <any>undefined;
-            this.studyLevelValue = _data["studyLevelValue"];
-            this.studySubjectValue = _data["studySubjectValue"];
-        }
-    }
-
-    static fromJS(data: any): GetTemplateForViewDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new GetTemplateForViewDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["template"] = this.template ? this.template.toJSON() : <any>undefined;
-        data["studyLevelValue"] = this.studyLevelValue;
-        data["studySubjectValue"] = this.studySubjectValue;
-        return data;
-    }
-}
-
-export interface IGetTemplateForViewDto {
-    template: TemplateDto;
-    studyLevelValue: string | undefined;
-    studySubjectValue: string | undefined;
-}
-
-export class GetTemplateSectionForEditOutput implements IGetTemplateSectionForEditOutput {
-    templateSection!: CreateOrEditTemplateSectionDto;
-    templateNameL!: string | undefined;
-
-    constructor(data?: IGetTemplateSectionForEditOutput) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.templateSection = _data["templateSection"] ? CreateOrEditTemplateSectionDto.fromJS(_data["templateSection"]) : <any>undefined;
-            this.templateNameL = _data["templateNameL"];
-        }
-    }
-
-    static fromJS(data: any): GetTemplateSectionForEditOutput {
-        data = typeof data === 'object' ? data : {};
-        let result = new GetTemplateSectionForEditOutput();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["templateSection"] = this.templateSection ? this.templateSection.toJSON() : <any>undefined;
-        data["templateNameL"] = this.templateNameL;
-        return data;
-    }
-}
-
-export interface IGetTemplateSectionForEditOutput {
-    templateSection: CreateOrEditTemplateSectionDto;
-    templateNameL: string | undefined;
-}
-
-export class GetTemplateSectionForViewDto implements IGetTemplateSectionForViewDto {
-    templateSection!: TemplateSectionDto;
-    templateNameL!: string | undefined;
-
-    constructor(data?: IGetTemplateSectionForViewDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.templateSection = _data["templateSection"] ? TemplateSectionDto.fromJS(_data["templateSection"]) : <any>undefined;
-            this.templateNameL = _data["templateNameL"];
-        }
-    }
-
-    static fromJS(data: any): GetTemplateSectionForViewDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new GetTemplateSectionForViewDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["templateSection"] = this.templateSection ? this.templateSection.toJSON() : <any>undefined;
-        data["templateNameL"] = this.templateNameL;
-        return data;
-    }
-}
-
-export interface IGetTemplateSectionForViewDto {
-    templateSection: TemplateSectionDto;
-    templateNameL: string | undefined;
-}
-
-export class GetTemplateTypeDetailForEditOutput implements IGetTemplateTypeDetailForEditOutput {
-    templateTypeDetail!: CreateOrEditTemplateTypeDetailDto;
-    templateSectionNameL!: string | undefined;
-    categoryValue!: string | undefined;
-    questionTargetNote!: string | undefined;
-    complexityValue!: string | undefined;
-
-    constructor(data?: IGetTemplateTypeDetailForEditOutput) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.templateTypeDetail = _data["templateTypeDetail"] ? CreateOrEditTemplateTypeDetailDto.fromJS(_data["templateTypeDetail"]) : <any>undefined;
-            this.templateSectionNameL = _data["templateSectionNameL"];
-            this.categoryValue = _data["categoryValue"];
-            this.questionTargetNote = _data["questionTargetNote"];
-            this.complexityValue = _data["complexityValue"];
-        }
-    }
-
-    static fromJS(data: any): GetTemplateTypeDetailForEditOutput {
-        data = typeof data === 'object' ? data : {};
-        let result = new GetTemplateTypeDetailForEditOutput();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["templateTypeDetail"] = this.templateTypeDetail ? this.templateTypeDetail.toJSON() : <any>undefined;
-        data["templateSectionNameL"] = this.templateSectionNameL;
-        data["categoryValue"] = this.categoryValue;
-        data["questionTargetNote"] = this.questionTargetNote;
-        data["complexityValue"] = this.complexityValue;
-        return data;
-    }
-}
-
-export interface IGetTemplateTypeDetailForEditOutput {
-    templateTypeDetail: CreateOrEditTemplateTypeDetailDto;
-    templateSectionNameL: string | undefined;
-    categoryValue: string | undefined;
-    questionTargetNote: string | undefined;
-    complexityValue: string | undefined;
-}
-
-export class GetTemplateTypeDetailForViewDto implements IGetTemplateTypeDetailForViewDto {
-    templateTypeDetail!: TemplateTypeDetailDto;
-    templateSectionNameL!: string | undefined;
-    categoryValue!: string | undefined;
-    questionTargetNote!: string | undefined;
-    complexityValue!: string | undefined;
-
-    constructor(data?: IGetTemplateTypeDetailForViewDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.templateTypeDetail = _data["templateTypeDetail"] ? TemplateTypeDetailDto.fromJS(_data["templateTypeDetail"]) : <any>undefined;
-            this.templateSectionNameL = _data["templateSectionNameL"];
-            this.categoryValue = _data["categoryValue"];
-            this.questionTargetNote = _data["questionTargetNote"];
-            this.complexityValue = _data["complexityValue"];
-        }
-    }
-
-    static fromJS(data: any): GetTemplateTypeDetailForViewDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new GetTemplateTypeDetailForViewDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["templateTypeDetail"] = this.templateTypeDetail ? this.templateTypeDetail.toJSON() : <any>undefined;
-        data["templateSectionNameL"] = this.templateSectionNameL;
-        data["categoryValue"] = this.categoryValue;
-        data["questionTargetNote"] = this.questionTargetNote;
-        data["complexityValue"] = this.complexityValue;
-        return data;
-    }
-}
-
-export interface IGetTemplateTypeDetailForViewDto {
-    templateTypeDetail: TemplateTypeDetailDto;
-    templateSectionNameL: string | undefined;
-    categoryValue: string | undefined;
-    questionTargetNote: string | undefined;
-    complexityValue: string | undefined;
 }
 
 export class GetTenantFeaturesEditOutput implements IGetTenantFeaturesEditOutput {
@@ -46853,114 +46235,6 @@ export interface IOpenIdConnectExternalLoginProviderSettings {
     responseType: string | undefined;
 }
 
-export class OptionDto implements IOptionDto {
-    id!: number;
-    value!: string | undefined;
-    isRequired!: boolean;
-    weight!: number;
-    minWeight!: number;
-    maxWeight!: number;
-    optionType!: QuestionOptionTypeEnum;
-    order!: number | undefined;
-    questionId!: number;
-
-    constructor(data?: IOptionDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.id = _data["id"];
-            this.value = _data["value"];
-            this.isRequired = _data["isRequired"];
-            this.weight = _data["weight"];
-            this.minWeight = _data["minWeight"];
-            this.maxWeight = _data["maxWeight"];
-            this.optionType = _data["optionType"];
-            this.order = _data["order"];
-            this.questionId = _data["questionId"];
-        }
-    }
-
-    static fromJS(data: any): OptionDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new OptionDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["id"] = this.id;
-        data["value"] = this.value;
-        data["isRequired"] = this.isRequired;
-        data["weight"] = this.weight;
-        data["minWeight"] = this.minWeight;
-        data["maxWeight"] = this.maxWeight;
-        data["optionType"] = this.optionType;
-        data["order"] = this.order;
-        data["questionId"] = this.questionId;
-        return data;
-    }
-}
-
-export interface IOptionDto {
-    id: number;
-    value: string | undefined;
-    isRequired: boolean;
-    weight: number;
-    minWeight: number;
-    maxWeight: number;
-    optionType: QuestionOptionTypeEnum;
-    order: number | undefined;
-    questionId: number;
-}
-
-export class OptionQuestionLookupTableDto implements IOptionQuestionLookupTableDto {
-    id!: number;
-    displayName!: string | undefined;
-
-    constructor(data?: IOptionQuestionLookupTableDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.id = _data["id"];
-            this.displayName = _data["displayName"];
-        }
-    }
-
-    static fromJS(data: any): OptionQuestionLookupTableDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new OptionQuestionLookupTableDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["id"] = this.id;
-        data["displayName"] = this.displayName;
-        return data;
-    }
-}
-
-export interface IOptionQuestionLookupTableDto {
-    id: number;
-    displayName: string | undefined;
-}
-
 export class OrganizationUnitDto implements IOrganizationUnitDto {
     id!: number;
     creationTime!: DateTime;
@@ -47277,54 +46551,6 @@ export interface IPagedResultDtoOfAnswerAttemptLookupTableDto {
     totalCount: number;
 }
 
-export class PagedResultDtoOfAnswerOptionLookupTableDto implements IPagedResultDtoOfAnswerOptionLookupTableDto {
-    items!: AnswerOptionLookupTableDto[] | undefined;
-    totalCount!: number;
-
-    constructor(data?: IPagedResultDtoOfAnswerOptionLookupTableDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            if (Array.isArray(_data["items"])) {
-                this.items = [] as any;
-                for (let item of _data["items"])
-                    this.items!.push(AnswerOptionLookupTableDto.fromJS(item));
-            }
-            this.totalCount = _data["totalCount"];
-        }
-    }
-
-    static fromJS(data: any): PagedResultDtoOfAnswerOptionLookupTableDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new PagedResultDtoOfAnswerOptionLookupTableDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        if (Array.isArray(this.items)) {
-            data["items"] = [];
-            for (let item of this.items)
-                data["items"].push(item.toJSON());
-        }
-        data["totalCount"] = this.totalCount;
-        return data;
-    }
-}
-
-export interface IPagedResultDtoOfAnswerOptionLookupTableDto {
-    items: AnswerOptionLookupTableDto[] | undefined;
-    totalCount: number;
-}
-
 export class PagedResultDtoOfAnswerQuestionLookupTableDto implements IPagedResultDtoOfAnswerQuestionLookupTableDto {
     items!: AnswerQuestionLookupTableDto[] | undefined;
     totalCount!: number;
@@ -47370,6 +46596,54 @@ export class PagedResultDtoOfAnswerQuestionLookupTableDto implements IPagedResul
 
 export interface IPagedResultDtoOfAnswerQuestionLookupTableDto {
     items: AnswerQuestionLookupTableDto[] | undefined;
+    totalCount: number;
+}
+
+export class PagedResultDtoOfAnswerQuestionOptionLookupTableDto implements IPagedResultDtoOfAnswerQuestionOptionLookupTableDto {
+    items!: AnswerQuestionOptionLookupTableDto[] | undefined;
+    totalCount!: number;
+
+    constructor(data?: IPagedResultDtoOfAnswerQuestionOptionLookupTableDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            if (Array.isArray(_data["items"])) {
+                this.items = [] as any;
+                for (let item of _data["items"])
+                    this.items!.push(AnswerQuestionOptionLookupTableDto.fromJS(item));
+            }
+            this.totalCount = _data["totalCount"];
+        }
+    }
+
+    static fromJS(data: any): PagedResultDtoOfAnswerQuestionOptionLookupTableDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new PagedResultDtoOfAnswerQuestionOptionLookupTableDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        if (Array.isArray(this.items)) {
+            data["items"] = [];
+            for (let item of this.items)
+                data["items"].push(item.toJSON());
+        }
+        data["totalCount"] = this.totalCount;
+        return data;
+    }
+}
+
+export interface IPagedResultDtoOfAnswerQuestionOptionLookupTableDto {
+    items: AnswerQuestionOptionLookupTableDto[] | undefined;
     totalCount: number;
 }
 
@@ -47661,6 +46935,102 @@ export interface IPagedResultDtoOfEntityChangeListDto {
     totalCount: number;
 }
 
+export class PagedResultDtoOfExamExamTemplateLookupTableDto implements IPagedResultDtoOfExamExamTemplateLookupTableDto {
+    items!: ExamExamTemplateLookupTableDto[] | undefined;
+    totalCount!: number;
+
+    constructor(data?: IPagedResultDtoOfExamExamTemplateLookupTableDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            if (Array.isArray(_data["items"])) {
+                this.items = [] as any;
+                for (let item of _data["items"])
+                    this.items!.push(ExamExamTemplateLookupTableDto.fromJS(item));
+            }
+            this.totalCount = _data["totalCount"];
+        }
+    }
+
+    static fromJS(data: any): PagedResultDtoOfExamExamTemplateLookupTableDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new PagedResultDtoOfExamExamTemplateLookupTableDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        if (Array.isArray(this.items)) {
+            data["items"] = [];
+            for (let item of this.items)
+                data["items"].push(item.toJSON());
+        }
+        data["totalCount"] = this.totalCount;
+        return data;
+    }
+}
+
+export interface IPagedResultDtoOfExamExamTemplateLookupTableDto {
+    items: ExamExamTemplateLookupTableDto[] | undefined;
+    totalCount: number;
+}
+
+export class PagedResultDtoOfExamQuestionExamSectionLookupTableDto implements IPagedResultDtoOfExamQuestionExamSectionLookupTableDto {
+    items!: ExamQuestionExamSectionLookupTableDto[] | undefined;
+    totalCount!: number;
+
+    constructor(data?: IPagedResultDtoOfExamQuestionExamSectionLookupTableDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            if (Array.isArray(_data["items"])) {
+                this.items = [] as any;
+                for (let item of _data["items"])
+                    this.items!.push(ExamQuestionExamSectionLookupTableDto.fromJS(item));
+            }
+            this.totalCount = _data["totalCount"];
+        }
+    }
+
+    static fromJS(data: any): PagedResultDtoOfExamQuestionExamSectionLookupTableDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new PagedResultDtoOfExamQuestionExamSectionLookupTableDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        if (Array.isArray(this.items)) {
+            data["items"] = [];
+            for (let item of this.items)
+                data["items"].push(item.toJSON());
+        }
+        data["totalCount"] = this.totalCount;
+        return data;
+    }
+}
+
+export interface IPagedResultDtoOfExamQuestionExamSectionLookupTableDto {
+    items: ExamQuestionExamSectionLookupTableDto[] | undefined;
+    totalCount: number;
+}
+
 export class PagedResultDtoOfExamQuestionQuestionLookupTableDto implements IPagedResultDtoOfExamQuestionQuestionLookupTableDto {
     items!: ExamQuestionQuestionLookupTableDto[] | undefined;
     totalCount!: number;
@@ -47709,11 +47079,11 @@ export interface IPagedResultDtoOfExamQuestionQuestionLookupTableDto {
     totalCount: number;
 }
 
-export class PagedResultDtoOfExamQuestionSectionLookupTableDto implements IPagedResultDtoOfExamQuestionSectionLookupTableDto {
-    items!: ExamQuestionSectionLookupTableDto[] | undefined;
+export class PagedResultDtoOfExamSectionExamLookupTableDto implements IPagedResultDtoOfExamSectionExamLookupTableDto {
+    items!: ExamSectionExamLookupTableDto[] | undefined;
     totalCount!: number;
 
-    constructor(data?: IPagedResultDtoOfExamQuestionSectionLookupTableDto) {
+    constructor(data?: IPagedResultDtoOfExamSectionExamLookupTableDto) {
         if (data) {
             for (var property in data) {
                 if (data.hasOwnProperty(property))
@@ -47727,15 +47097,15 @@ export class PagedResultDtoOfExamQuestionSectionLookupTableDto implements IPaged
             if (Array.isArray(_data["items"])) {
                 this.items = [] as any;
                 for (let item of _data["items"])
-                    this.items!.push(ExamQuestionSectionLookupTableDto.fromJS(item));
+                    this.items!.push(ExamSectionExamLookupTableDto.fromJS(item));
             }
             this.totalCount = _data["totalCount"];
         }
     }
 
-    static fromJS(data: any): PagedResultDtoOfExamQuestionSectionLookupTableDto {
+    static fromJS(data: any): PagedResultDtoOfExamSectionExamLookupTableDto {
         data = typeof data === 'object' ? data : {};
-        let result = new PagedResultDtoOfExamQuestionSectionLookupTableDto();
+        let result = new PagedResultDtoOfExamSectionExamLookupTableDto();
         result.init(data);
         return result;
     }
@@ -47752,56 +47122,8 @@ export class PagedResultDtoOfExamQuestionSectionLookupTableDto implements IPaged
     }
 }
 
-export interface IPagedResultDtoOfExamQuestionSectionLookupTableDto {
-    items: ExamQuestionSectionLookupTableDto[] | undefined;
-    totalCount: number;
-}
-
-export class PagedResultDtoOfExamTemplateLookupTableDto implements IPagedResultDtoOfExamTemplateLookupTableDto {
-    items!: ExamTemplateLookupTableDto[] | undefined;
-    totalCount!: number;
-
-    constructor(data?: IPagedResultDtoOfExamTemplateLookupTableDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            if (Array.isArray(_data["items"])) {
-                this.items = [] as any;
-                for (let item of _data["items"])
-                    this.items!.push(ExamTemplateLookupTableDto.fromJS(item));
-            }
-            this.totalCount = _data["totalCount"];
-        }
-    }
-
-    static fromJS(data: any): PagedResultDtoOfExamTemplateLookupTableDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new PagedResultDtoOfExamTemplateLookupTableDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        if (Array.isArray(this.items)) {
-            data["items"] = [];
-            for (let item of this.items)
-                data["items"].push(item.toJSON());
-        }
-        data["totalCount"] = this.totalCount;
-        return data;
-    }
-}
-
-export interface IPagedResultDtoOfExamTemplateLookupTableDto {
-    items: ExamTemplateLookupTableDto[] | undefined;
+export interface IPagedResultDtoOfExamSectionExamLookupTableDto {
+    items: ExamSectionExamLookupTableDto[] | undefined;
     totalCount: number;
 }
 
@@ -48237,11 +47559,11 @@ export interface IPagedResultDtoOfGetExamQuestionForViewDto {
     totalCount: number;
 }
 
-export class PagedResultDtoOfGetOptionForViewDto implements IPagedResultDtoOfGetOptionForViewDto {
-    items!: GetOptionForViewDto[] | undefined;
+export class PagedResultDtoOfGetExamSectionForViewDto implements IPagedResultDtoOfGetExamSectionForViewDto {
+    items!: GetExamSectionForViewDto[] | undefined;
     totalCount!: number;
 
-    constructor(data?: IPagedResultDtoOfGetOptionForViewDto) {
+    constructor(data?: IPagedResultDtoOfGetExamSectionForViewDto) {
         if (data) {
             for (var property in data) {
                 if (data.hasOwnProperty(property))
@@ -48255,15 +47577,15 @@ export class PagedResultDtoOfGetOptionForViewDto implements IPagedResultDtoOfGet
             if (Array.isArray(_data["items"])) {
                 this.items = [] as any;
                 for (let item of _data["items"])
-                    this.items!.push(GetOptionForViewDto.fromJS(item));
+                    this.items!.push(GetExamSectionForViewDto.fromJS(item));
             }
             this.totalCount = _data["totalCount"];
         }
     }
 
-    static fromJS(data: any): PagedResultDtoOfGetOptionForViewDto {
+    static fromJS(data: any): PagedResultDtoOfGetExamSectionForViewDto {
         data = typeof data === 'object' ? data : {};
-        let result = new PagedResultDtoOfGetOptionForViewDto();
+        let result = new PagedResultDtoOfGetExamSectionForViewDto();
         result.init(data);
         return result;
     }
@@ -48280,8 +47602,56 @@ export class PagedResultDtoOfGetOptionForViewDto implements IPagedResultDtoOfGet
     }
 }
 
-export interface IPagedResultDtoOfGetOptionForViewDto {
-    items: GetOptionForViewDto[] | undefined;
+export interface IPagedResultDtoOfGetExamSectionForViewDto {
+    items: GetExamSectionForViewDto[] | undefined;
+    totalCount: number;
+}
+
+export class PagedResultDtoOfGetExamTemplateForViewDto implements IPagedResultDtoOfGetExamTemplateForViewDto {
+    items!: GetExamTemplateForViewDto[] | undefined;
+    totalCount!: number;
+
+    constructor(data?: IPagedResultDtoOfGetExamTemplateForViewDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            if (Array.isArray(_data["items"])) {
+                this.items = [] as any;
+                for (let item of _data["items"])
+                    this.items!.push(GetExamTemplateForViewDto.fromJS(item));
+            }
+            this.totalCount = _data["totalCount"];
+        }
+    }
+
+    static fromJS(data: any): PagedResultDtoOfGetExamTemplateForViewDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new PagedResultDtoOfGetExamTemplateForViewDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        if (Array.isArray(this.items)) {
+            data["items"] = [];
+            for (let item of this.items)
+                data["items"].push(item.toJSON());
+        }
+        data["totalCount"] = this.totalCount;
+        return data;
+    }
+}
+
+export interface IPagedResultDtoOfGetExamTemplateForViewDto {
+    items: GetExamTemplateForViewDto[] | undefined;
     totalCount: number;
 }
 
@@ -48330,6 +47700,54 @@ export class PagedResultDtoOfGetQuestionCategoryForViewDto implements IPagedResu
 
 export interface IPagedResultDtoOfGetQuestionCategoryForViewDto {
     items: GetQuestionCategoryForViewDto[] | undefined;
+    totalCount: number;
+}
+
+export class PagedResultDtoOfGetQuestionComplexitiyForViewDto implements IPagedResultDtoOfGetQuestionComplexitiyForViewDto {
+    items!: GetQuestionComplexitiyForViewDto[] | undefined;
+    totalCount!: number;
+
+    constructor(data?: IPagedResultDtoOfGetQuestionComplexitiyForViewDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            if (Array.isArray(_data["items"])) {
+                this.items = [] as any;
+                for (let item of _data["items"])
+                    this.items!.push(GetQuestionComplexitiyForViewDto.fromJS(item));
+            }
+            this.totalCount = _data["totalCount"];
+        }
+    }
+
+    static fromJS(data: any): PagedResultDtoOfGetQuestionComplexitiyForViewDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new PagedResultDtoOfGetQuestionComplexitiyForViewDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        if (Array.isArray(this.items)) {
+            data["items"] = [];
+            for (let item of this.items)
+                data["items"].push(item.toJSON());
+        }
+        data["totalCount"] = this.totalCount;
+        return data;
+    }
+}
+
+export interface IPagedResultDtoOfGetQuestionComplexitiyForViewDto {
+    items: GetQuestionComplexitiyForViewDto[] | undefined;
     totalCount: number;
 }
 
@@ -48477,6 +47895,54 @@ export interface IPagedResultDtoOfGetQuestionLevelForViewDto {
     totalCount: number;
 }
 
+export class PagedResultDtoOfGetQuestionOptionForViewDto implements IPagedResultDtoOfGetQuestionOptionForViewDto {
+    items!: GetQuestionOptionForViewDto[] | undefined;
+    totalCount!: number;
+
+    constructor(data?: IPagedResultDtoOfGetQuestionOptionForViewDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            if (Array.isArray(_data["items"])) {
+                this.items = [] as any;
+                for (let item of _data["items"])
+                    this.items!.push(GetQuestionOptionForViewDto.fromJS(item));
+            }
+            this.totalCount = _data["totalCount"];
+        }
+    }
+
+    static fromJS(data: any): PagedResultDtoOfGetQuestionOptionForViewDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new PagedResultDtoOfGetQuestionOptionForViewDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        if (Array.isArray(this.items)) {
+            data["items"] = [];
+            for (let item of this.items)
+                data["items"].push(item.toJSON());
+        }
+        data["totalCount"] = this.totalCount;
+        return data;
+    }
+}
+
+export interface IPagedResultDtoOfGetQuestionOptionForViewDto {
+    items: GetQuestionOptionForViewDto[] | undefined;
+    totalCount: number;
+}
+
 export class PagedResultDtoOfGetQuestionSubjectForViewDto implements IPagedResultDtoOfGetQuestionSubjectForViewDto {
     items!: GetQuestionSubjectForViewDto[] | undefined;
     totalCount!: number;
@@ -48525,11 +47991,11 @@ export interface IPagedResultDtoOfGetQuestionSubjectForViewDto {
     totalCount: number;
 }
 
-export class PagedResultDtoOfGetQuestionTargetForViewDto implements IPagedResultDtoOfGetQuestionTargetForViewDto {
-    items!: GetQuestionTargetForViewDto[] | undefined;
+export class PagedResultDtoOfGetQuestionSubjectUnitForViewDto implements IPagedResultDtoOfGetQuestionSubjectUnitForViewDto {
+    items!: GetQuestionSubjectUnitForViewDto[] | undefined;
     totalCount!: number;
 
-    constructor(data?: IPagedResultDtoOfGetQuestionTargetForViewDto) {
+    constructor(data?: IPagedResultDtoOfGetQuestionSubjectUnitForViewDto) {
         if (data) {
             for (var property in data) {
                 if (data.hasOwnProperty(property))
@@ -48543,15 +48009,15 @@ export class PagedResultDtoOfGetQuestionTargetForViewDto implements IPagedResult
             if (Array.isArray(_data["items"])) {
                 this.items = [] as any;
                 for (let item of _data["items"])
-                    this.items!.push(GetQuestionTargetForViewDto.fromJS(item));
+                    this.items!.push(GetQuestionSubjectUnitForViewDto.fromJS(item));
             }
             this.totalCount = _data["totalCount"];
         }
     }
 
-    static fromJS(data: any): PagedResultDtoOfGetQuestionTargetForViewDto {
+    static fromJS(data: any): PagedResultDtoOfGetQuestionSubjectUnitForViewDto {
         data = typeof data === 'object' ? data : {};
-        let result = new PagedResultDtoOfGetQuestionTargetForViewDto();
+        let result = new PagedResultDtoOfGetQuestionSubjectUnitForViewDto();
         result.init(data);
         return result;
     }
@@ -48568,8 +48034,8 @@ export class PagedResultDtoOfGetQuestionTargetForViewDto implements IPagedResult
     }
 }
 
-export interface IPagedResultDtoOfGetQuestionTargetForViewDto {
-    items: GetQuestionTargetForViewDto[] | undefined;
+export interface IPagedResultDtoOfGetQuestionSubjectUnitForViewDto {
+    items: GetQuestionSubjectUnitForViewDto[] | undefined;
     totalCount: number;
 }
 
@@ -48618,54 +48084,6 @@ export class PagedResultDtoOfGetSchoolForViewDto implements IPagedResultDtoOfGet
 
 export interface IPagedResultDtoOfGetSchoolForViewDto {
     items: GetSchoolForViewDto[] | undefined;
-    totalCount: number;
-}
-
-export class PagedResultDtoOfGetSectionForViewDto implements IPagedResultDtoOfGetSectionForViewDto {
-    items!: GetSectionForViewDto[] | undefined;
-    totalCount!: number;
-
-    constructor(data?: IPagedResultDtoOfGetSectionForViewDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            if (Array.isArray(_data["items"])) {
-                this.items = [] as any;
-                for (let item of _data["items"])
-                    this.items!.push(GetSectionForViewDto.fromJS(item));
-            }
-            this.totalCount = _data["totalCount"];
-        }
-    }
-
-    static fromJS(data: any): PagedResultDtoOfGetSectionForViewDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new PagedResultDtoOfGetSectionForViewDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        if (Array.isArray(this.items)) {
-            data["items"] = [];
-            for (let item of this.items)
-                data["items"].push(item.toJSON());
-        }
-        data["totalCount"] = this.totalCount;
-        return data;
-    }
-}
-
-export interface IPagedResultDtoOfGetSectionForViewDto {
-    items: GetSectionForViewDto[] | undefined;
     totalCount: number;
 }
 
@@ -49053,6 +48471,54 @@ export interface IPagedResultDtoOfGetSubjectGroupForViewDto {
     totalCount: number;
 }
 
+export class PagedResultDtoOfGetSubjectUnitForViewDto implements IPagedResultDtoOfGetSubjectUnitForViewDto {
+    items!: GetSubjectUnitForViewDto[] | undefined;
+    totalCount!: number;
+
+    constructor(data?: IPagedResultDtoOfGetSubjectUnitForViewDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            if (Array.isArray(_data["items"])) {
+                this.items = [] as any;
+                for (let item of _data["items"])
+                    this.items!.push(GetSubjectUnitForViewDto.fromJS(item));
+            }
+            this.totalCount = _data["totalCount"];
+        }
+    }
+
+    static fromJS(data: any): PagedResultDtoOfGetSubjectUnitForViewDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new PagedResultDtoOfGetSubjectUnitForViewDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        if (Array.isArray(this.items)) {
+            data["items"] = [];
+            for (let item of this.items)
+                data["items"].push(item.toJSON());
+        }
+        data["totalCount"] = this.totalCount;
+        return data;
+    }
+}
+
+export interface IPagedResultDtoOfGetSubjectUnitForViewDto {
+    items: GetSubjectUnitForViewDto[] | undefined;
+    totalCount: number;
+}
+
 export class PagedResultDtoOfGetSupervisorForViewDto implements IPagedResultDtoOfGetSupervisorForViewDto {
     items!: GetSupervisorForViewDto[] | undefined;
     totalCount!: number;
@@ -49194,198 +48660,6 @@ export class PagedResultDtoOfGetSupportGroupItemForViewDto implements IPagedResu
 
 export interface IPagedResultDtoOfGetSupportGroupItemForViewDto {
     items: GetSupportGroupItemForViewDto[] | undefined;
-    totalCount: number;
-}
-
-export class PagedResultDtoOfGetTargetForViewDto implements IPagedResultDtoOfGetTargetForViewDto {
-    items!: GetTargetForViewDto[] | undefined;
-    totalCount!: number;
-
-    constructor(data?: IPagedResultDtoOfGetTargetForViewDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            if (Array.isArray(_data["items"])) {
-                this.items = [] as any;
-                for (let item of _data["items"])
-                    this.items!.push(GetTargetForViewDto.fromJS(item));
-            }
-            this.totalCount = _data["totalCount"];
-        }
-    }
-
-    static fromJS(data: any): PagedResultDtoOfGetTargetForViewDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new PagedResultDtoOfGetTargetForViewDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        if (Array.isArray(this.items)) {
-            data["items"] = [];
-            for (let item of this.items)
-                data["items"].push(item.toJSON());
-        }
-        data["totalCount"] = this.totalCount;
-        return data;
-    }
-}
-
-export interface IPagedResultDtoOfGetTargetForViewDto {
-    items: GetTargetForViewDto[] | undefined;
-    totalCount: number;
-}
-
-export class PagedResultDtoOfGetTemplateForViewDto implements IPagedResultDtoOfGetTemplateForViewDto {
-    items!: GetTemplateForViewDto[] | undefined;
-    totalCount!: number;
-
-    constructor(data?: IPagedResultDtoOfGetTemplateForViewDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            if (Array.isArray(_data["items"])) {
-                this.items = [] as any;
-                for (let item of _data["items"])
-                    this.items!.push(GetTemplateForViewDto.fromJS(item));
-            }
-            this.totalCount = _data["totalCount"];
-        }
-    }
-
-    static fromJS(data: any): PagedResultDtoOfGetTemplateForViewDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new PagedResultDtoOfGetTemplateForViewDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        if (Array.isArray(this.items)) {
-            data["items"] = [];
-            for (let item of this.items)
-                data["items"].push(item.toJSON());
-        }
-        data["totalCount"] = this.totalCount;
-        return data;
-    }
-}
-
-export interface IPagedResultDtoOfGetTemplateForViewDto {
-    items: GetTemplateForViewDto[] | undefined;
-    totalCount: number;
-}
-
-export class PagedResultDtoOfGetTemplateSectionForViewDto implements IPagedResultDtoOfGetTemplateSectionForViewDto {
-    items!: GetTemplateSectionForViewDto[] | undefined;
-    totalCount!: number;
-
-    constructor(data?: IPagedResultDtoOfGetTemplateSectionForViewDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            if (Array.isArray(_data["items"])) {
-                this.items = [] as any;
-                for (let item of _data["items"])
-                    this.items!.push(GetTemplateSectionForViewDto.fromJS(item));
-            }
-            this.totalCount = _data["totalCount"];
-        }
-    }
-
-    static fromJS(data: any): PagedResultDtoOfGetTemplateSectionForViewDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new PagedResultDtoOfGetTemplateSectionForViewDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        if (Array.isArray(this.items)) {
-            data["items"] = [];
-            for (let item of this.items)
-                data["items"].push(item.toJSON());
-        }
-        data["totalCount"] = this.totalCount;
-        return data;
-    }
-}
-
-export interface IPagedResultDtoOfGetTemplateSectionForViewDto {
-    items: GetTemplateSectionForViewDto[] | undefined;
-    totalCount: number;
-}
-
-export class PagedResultDtoOfGetTemplateTypeDetailForViewDto implements IPagedResultDtoOfGetTemplateTypeDetailForViewDto {
-    items!: GetTemplateTypeDetailForViewDto[] | undefined;
-    totalCount!: number;
-
-    constructor(data?: IPagedResultDtoOfGetTemplateTypeDetailForViewDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            if (Array.isArray(_data["items"])) {
-                this.items = [] as any;
-                for (let item of _data["items"])
-                    this.items!.push(GetTemplateTypeDetailForViewDto.fromJS(item));
-            }
-            this.totalCount = _data["totalCount"];
-        }
-    }
-
-    static fromJS(data: any): PagedResultDtoOfGetTemplateTypeDetailForViewDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new PagedResultDtoOfGetTemplateTypeDetailForViewDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        if (Array.isArray(this.items)) {
-            data["items"] = [];
-            for (let item of this.items)
-                data["items"].push(item.toJSON());
-        }
-        data["totalCount"] = this.totalCount;
-        return data;
-    }
-}
-
-export interface IPagedResultDtoOfGetTemplateTypeDetailForViewDto {
-    items: GetTemplateTypeDetailForViewDto[] | undefined;
     totalCount: number;
 }
 
@@ -49629,54 +48903,6 @@ export interface IPagedResultDtoOfNameValueDto {
     totalCount: number;
 }
 
-export class PagedResultDtoOfOptionQuestionLookupTableDto implements IPagedResultDtoOfOptionQuestionLookupTableDto {
-    items!: OptionQuestionLookupTableDto[] | undefined;
-    totalCount!: number;
-
-    constructor(data?: IPagedResultDtoOfOptionQuestionLookupTableDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            if (Array.isArray(_data["items"])) {
-                this.items = [] as any;
-                for (let item of _data["items"])
-                    this.items!.push(OptionQuestionLookupTableDto.fromJS(item));
-            }
-            this.totalCount = _data["totalCount"];
-        }
-    }
-
-    static fromJS(data: any): PagedResultDtoOfOptionQuestionLookupTableDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new PagedResultDtoOfOptionQuestionLookupTableDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        if (Array.isArray(this.items)) {
-            data["items"] = [];
-            for (let item of this.items)
-                data["items"].push(item.toJSON());
-        }
-        data["totalCount"] = this.totalCount;
-        return data;
-    }
-}
-
-export interface IPagedResultDtoOfOptionQuestionLookupTableDto {
-    items: OptionQuestionLookupTableDto[] | undefined;
-    totalCount: number;
-}
-
 export class PagedResultDtoOfOrganizationUnitRoleListDto implements IPagedResultDtoOfOrganizationUnitRoleListDto {
     items!: OrganizationUnitRoleListDto[] | undefined;
     totalCount!: number;
@@ -49866,6 +49092,102 @@ export class PagedResultDtoOfQuestionCategoryQuestionLookupTableDto implements I
 
 export interface IPagedResultDtoOfQuestionCategoryQuestionLookupTableDto {
     items: QuestionCategoryQuestionLookupTableDto[] | undefined;
+    totalCount: number;
+}
+
+export class PagedResultDtoOfQuestionComplexitiyComplexityLookupTableDto implements IPagedResultDtoOfQuestionComplexitiyComplexityLookupTableDto {
+    items!: QuestionComplexitiyComplexityLookupTableDto[] | undefined;
+    totalCount!: number;
+
+    constructor(data?: IPagedResultDtoOfQuestionComplexitiyComplexityLookupTableDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            if (Array.isArray(_data["items"])) {
+                this.items = [] as any;
+                for (let item of _data["items"])
+                    this.items!.push(QuestionComplexitiyComplexityLookupTableDto.fromJS(item));
+            }
+            this.totalCount = _data["totalCount"];
+        }
+    }
+
+    static fromJS(data: any): PagedResultDtoOfQuestionComplexitiyComplexityLookupTableDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new PagedResultDtoOfQuestionComplexitiyComplexityLookupTableDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        if (Array.isArray(this.items)) {
+            data["items"] = [];
+            for (let item of this.items)
+                data["items"].push(item.toJSON());
+        }
+        data["totalCount"] = this.totalCount;
+        return data;
+    }
+}
+
+export interface IPagedResultDtoOfQuestionComplexitiyComplexityLookupTableDto {
+    items: QuestionComplexitiyComplexityLookupTableDto[] | undefined;
+    totalCount: number;
+}
+
+export class PagedResultDtoOfQuestionComplexitiyQuestionLookupTableDto implements IPagedResultDtoOfQuestionComplexitiyQuestionLookupTableDto {
+    items!: QuestionComplexitiyQuestionLookupTableDto[] | undefined;
+    totalCount!: number;
+
+    constructor(data?: IPagedResultDtoOfQuestionComplexitiyQuestionLookupTableDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            if (Array.isArray(_data["items"])) {
+                this.items = [] as any;
+                for (let item of _data["items"])
+                    this.items!.push(QuestionComplexitiyQuestionLookupTableDto.fromJS(item));
+            }
+            this.totalCount = _data["totalCount"];
+        }
+    }
+
+    static fromJS(data: any): PagedResultDtoOfQuestionComplexitiyQuestionLookupTableDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new PagedResultDtoOfQuestionComplexitiyQuestionLookupTableDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        if (Array.isArray(this.items)) {
+            data["items"] = [];
+            for (let item of this.items)
+                data["items"].push(item.toJSON());
+        }
+        data["totalCount"] = this.totalCount;
+        return data;
+    }
+}
+
+export interface IPagedResultDtoOfQuestionComplexitiyQuestionLookupTableDto {
+    items: QuestionComplexitiyQuestionLookupTableDto[] | undefined;
     totalCount: number;
 }
 
@@ -50061,6 +49383,102 @@ export interface IPagedResultDtoOfQuestionLevelStudyLevelLookupTableDto {
     totalCount: number;
 }
 
+export class PagedResultDtoOfQuestionOptionQuestionLookupTableDto implements IPagedResultDtoOfQuestionOptionQuestionLookupTableDto {
+    items!: QuestionOptionQuestionLookupTableDto[] | undefined;
+    totalCount!: number;
+
+    constructor(data?: IPagedResultDtoOfQuestionOptionQuestionLookupTableDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            if (Array.isArray(_data["items"])) {
+                this.items = [] as any;
+                for (let item of _data["items"])
+                    this.items!.push(QuestionOptionQuestionLookupTableDto.fromJS(item));
+            }
+            this.totalCount = _data["totalCount"];
+        }
+    }
+
+    static fromJS(data: any): PagedResultDtoOfQuestionOptionQuestionLookupTableDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new PagedResultDtoOfQuestionOptionQuestionLookupTableDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        if (Array.isArray(this.items)) {
+            data["items"] = [];
+            for (let item of this.items)
+                data["items"].push(item.toJSON());
+        }
+        data["totalCount"] = this.totalCount;
+        return data;
+    }
+}
+
+export interface IPagedResultDtoOfQuestionOptionQuestionLookupTableDto {
+    items: QuestionOptionQuestionLookupTableDto[] | undefined;
+    totalCount: number;
+}
+
+export class PagedResultDtoOfQuestionQuestionLookupTableDto implements IPagedResultDtoOfQuestionQuestionLookupTableDto {
+    items!: QuestionQuestionLookupTableDto[] | undefined;
+    totalCount!: number;
+
+    constructor(data?: IPagedResultDtoOfQuestionQuestionLookupTableDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            if (Array.isArray(_data["items"])) {
+                this.items = [] as any;
+                for (let item of _data["items"])
+                    this.items!.push(QuestionQuestionLookupTableDto.fromJS(item));
+            }
+            this.totalCount = _data["totalCount"];
+        }
+    }
+
+    static fromJS(data: any): PagedResultDtoOfQuestionQuestionLookupTableDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new PagedResultDtoOfQuestionQuestionLookupTableDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        if (Array.isArray(this.items)) {
+            data["items"] = [];
+            for (let item of this.items)
+                data["items"].push(item.toJSON());
+        }
+        data["totalCount"] = this.totalCount;
+        return data;
+    }
+}
+
+export interface IPagedResultDtoOfQuestionQuestionLookupTableDto {
+    items: QuestionQuestionLookupTableDto[] | undefined;
+    totalCount: number;
+}
+
 export class PagedResultDtoOfQuestionSubjectQuestionLookupTableDto implements IPagedResultDtoOfQuestionSubjectQuestionLookupTableDto {
     items!: QuestionSubjectQuestionLookupTableDto[] | undefined;
     totalCount!: number;
@@ -50157,6 +49575,102 @@ export interface IPagedResultDtoOfQuestionSubjectStudySubjectLookupTableDto {
     totalCount: number;
 }
 
+export class PagedResultDtoOfQuestionSubjectUnitQuestionLookupTableDto implements IPagedResultDtoOfQuestionSubjectUnitQuestionLookupTableDto {
+    items!: QuestionSubjectUnitQuestionLookupTableDto[] | undefined;
+    totalCount!: number;
+
+    constructor(data?: IPagedResultDtoOfQuestionSubjectUnitQuestionLookupTableDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            if (Array.isArray(_data["items"])) {
+                this.items = [] as any;
+                for (let item of _data["items"])
+                    this.items!.push(QuestionSubjectUnitQuestionLookupTableDto.fromJS(item));
+            }
+            this.totalCount = _data["totalCount"];
+        }
+    }
+
+    static fromJS(data: any): PagedResultDtoOfQuestionSubjectUnitQuestionLookupTableDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new PagedResultDtoOfQuestionSubjectUnitQuestionLookupTableDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        if (Array.isArray(this.items)) {
+            data["items"] = [];
+            for (let item of this.items)
+                data["items"].push(item.toJSON());
+        }
+        data["totalCount"] = this.totalCount;
+        return data;
+    }
+}
+
+export interface IPagedResultDtoOfQuestionSubjectUnitQuestionLookupTableDto {
+    items: QuestionSubjectUnitQuestionLookupTableDto[] | undefined;
+    totalCount: number;
+}
+
+export class PagedResultDtoOfQuestionSubjectUnitSubjectUnitLookupTableDto implements IPagedResultDtoOfQuestionSubjectUnitSubjectUnitLookupTableDto {
+    items!: QuestionSubjectUnitSubjectUnitLookupTableDto[] | undefined;
+    totalCount!: number;
+
+    constructor(data?: IPagedResultDtoOfQuestionSubjectUnitSubjectUnitLookupTableDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            if (Array.isArray(_data["items"])) {
+                this.items = [] as any;
+                for (let item of _data["items"])
+                    this.items!.push(QuestionSubjectUnitSubjectUnitLookupTableDto.fromJS(item));
+            }
+            this.totalCount = _data["totalCount"];
+        }
+    }
+
+    static fromJS(data: any): PagedResultDtoOfQuestionSubjectUnitSubjectUnitLookupTableDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new PagedResultDtoOfQuestionSubjectUnitSubjectUnitLookupTableDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        if (Array.isArray(this.items)) {
+            data["items"] = [];
+            for (let item of this.items)
+                data["items"].push(item.toJSON());
+        }
+        data["totalCount"] = this.totalCount;
+        return data;
+    }
+}
+
+export interface IPagedResultDtoOfQuestionSubjectUnitSubjectUnitLookupTableDto {
+    items: QuestionSubjectUnitSubjectUnitLookupTableDto[] | undefined;
+    totalCount: number;
+}
+
 export class PagedResultDtoOfQuestionSupportGroupLookupTableDto implements IPagedResultDtoOfQuestionSupportGroupLookupTableDto {
     items!: QuestionSupportGroupLookupTableDto[] | undefined;
     totalCount!: number;
@@ -50202,150 +49716,6 @@ export class PagedResultDtoOfQuestionSupportGroupLookupTableDto implements IPage
 
 export interface IPagedResultDtoOfQuestionSupportGroupLookupTableDto {
     items: QuestionSupportGroupLookupTableDto[] | undefined;
-    totalCount: number;
-}
-
-export class PagedResultDtoOfQuestionTargetQuestionLookupTableDto implements IPagedResultDtoOfQuestionTargetQuestionLookupTableDto {
-    items!: QuestionTargetQuestionLookupTableDto[] | undefined;
-    totalCount!: number;
-
-    constructor(data?: IPagedResultDtoOfQuestionTargetQuestionLookupTableDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            if (Array.isArray(_data["items"])) {
-                this.items = [] as any;
-                for (let item of _data["items"])
-                    this.items!.push(QuestionTargetQuestionLookupTableDto.fromJS(item));
-            }
-            this.totalCount = _data["totalCount"];
-        }
-    }
-
-    static fromJS(data: any): PagedResultDtoOfQuestionTargetQuestionLookupTableDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new PagedResultDtoOfQuestionTargetQuestionLookupTableDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        if (Array.isArray(this.items)) {
-            data["items"] = [];
-            for (let item of this.items)
-                data["items"].push(item.toJSON());
-        }
-        data["totalCount"] = this.totalCount;
-        return data;
-    }
-}
-
-export interface IPagedResultDtoOfQuestionTargetQuestionLookupTableDto {
-    items: QuestionTargetQuestionLookupTableDto[] | undefined;
-    totalCount: number;
-}
-
-export class PagedResultDtoOfQuestionTargetTargetLookupTableDto implements IPagedResultDtoOfQuestionTargetTargetLookupTableDto {
-    items!: QuestionTargetTargetLookupTableDto[] | undefined;
-    totalCount!: number;
-
-    constructor(data?: IPagedResultDtoOfQuestionTargetTargetLookupTableDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            if (Array.isArray(_data["items"])) {
-                this.items = [] as any;
-                for (let item of _data["items"])
-                    this.items!.push(QuestionTargetTargetLookupTableDto.fromJS(item));
-            }
-            this.totalCount = _data["totalCount"];
-        }
-    }
-
-    static fromJS(data: any): PagedResultDtoOfQuestionTargetTargetLookupTableDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new PagedResultDtoOfQuestionTargetTargetLookupTableDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        if (Array.isArray(this.items)) {
-            data["items"] = [];
-            for (let item of this.items)
-                data["items"].push(item.toJSON());
-        }
-        data["totalCount"] = this.totalCount;
-        return data;
-    }
-}
-
-export interface IPagedResultDtoOfQuestionTargetTargetLookupTableDto {
-    items: QuestionTargetTargetLookupTableDto[] | undefined;
-    totalCount: number;
-}
-
-export class PagedResultDtoOfSectionExamLookupTableDto implements IPagedResultDtoOfSectionExamLookupTableDto {
-    items!: SectionExamLookupTableDto[] | undefined;
-    totalCount!: number;
-
-    constructor(data?: IPagedResultDtoOfSectionExamLookupTableDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            if (Array.isArray(_data["items"])) {
-                this.items = [] as any;
-                for (let item of _data["items"])
-                    this.items!.push(SectionExamLookupTableDto.fromJS(item));
-            }
-            this.totalCount = _data["totalCount"];
-        }
-    }
-
-    static fromJS(data: any): PagedResultDtoOfSectionExamLookupTableDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new PagedResultDtoOfSectionExamLookupTableDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        if (Array.isArray(this.items)) {
-            data["items"] = [];
-            for (let item of this.items)
-                data["items"].push(item.toJSON());
-        }
-        data["totalCount"] = this.totalCount;
-        return data;
-    }
-}
-
-export interface IPagedResultDtoOfSectionExamLookupTableDto {
-    items: SectionExamLookupTableDto[] | undefined;
     totalCount: number;
 }
 
@@ -50733,6 +50103,102 @@ export interface IPagedResultDtoOfSubjectGroupSupportGroupLookupTableDto {
     totalCount: number;
 }
 
+export class PagedResultDtoOfSubjectUnitStudyLevelLookupTableDto implements IPagedResultDtoOfSubjectUnitStudyLevelLookupTableDto {
+    items!: SubjectUnitStudyLevelLookupTableDto[] | undefined;
+    totalCount!: number;
+
+    constructor(data?: IPagedResultDtoOfSubjectUnitStudyLevelLookupTableDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            if (Array.isArray(_data["items"])) {
+                this.items = [] as any;
+                for (let item of _data["items"])
+                    this.items!.push(SubjectUnitStudyLevelLookupTableDto.fromJS(item));
+            }
+            this.totalCount = _data["totalCount"];
+        }
+    }
+
+    static fromJS(data: any): PagedResultDtoOfSubjectUnitStudyLevelLookupTableDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new PagedResultDtoOfSubjectUnitStudyLevelLookupTableDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        if (Array.isArray(this.items)) {
+            data["items"] = [];
+            for (let item of this.items)
+                data["items"].push(item.toJSON());
+        }
+        data["totalCount"] = this.totalCount;
+        return data;
+    }
+}
+
+export interface IPagedResultDtoOfSubjectUnitStudyLevelLookupTableDto {
+    items: SubjectUnitStudyLevelLookupTableDto[] | undefined;
+    totalCount: number;
+}
+
+export class PagedResultDtoOfSubjectUnitStudySubjectLookupTableDto implements IPagedResultDtoOfSubjectUnitStudySubjectLookupTableDto {
+    items!: SubjectUnitStudySubjectLookupTableDto[] | undefined;
+    totalCount!: number;
+
+    constructor(data?: IPagedResultDtoOfSubjectUnitStudySubjectLookupTableDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            if (Array.isArray(_data["items"])) {
+                this.items = [] as any;
+                for (let item of _data["items"])
+                    this.items!.push(SubjectUnitStudySubjectLookupTableDto.fromJS(item));
+            }
+            this.totalCount = _data["totalCount"];
+        }
+    }
+
+    static fromJS(data: any): PagedResultDtoOfSubjectUnitStudySubjectLookupTableDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new PagedResultDtoOfSubjectUnitStudySubjectLookupTableDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        if (Array.isArray(this.items)) {
+            data["items"] = [];
+            for (let item of this.items)
+                data["items"].push(item.toJSON());
+        }
+        data["totalCount"] = this.totalCount;
+        return data;
+    }
+}
+
+export interface IPagedResultDtoOfSubjectUnitStudySubjectLookupTableDto {
+    items: SubjectUnitStudySubjectLookupTableDto[] | undefined;
+    totalCount: number;
+}
+
 export class PagedResultDtoOfSubscriptionPaymentListDto implements IPagedResultDtoOfSubscriptionPaymentListDto {
     items!: SubscriptionPaymentListDto[] | undefined;
     totalCount!: number;
@@ -50922,438 +50388,6 @@ export class PagedResultDtoOfSupportGroupItemSupportGroupLookupTableDto implemen
 
 export interface IPagedResultDtoOfSupportGroupItemSupportGroupLookupTableDto {
     items: SupportGroupItemSupportGroupLookupTableDto[] | undefined;
-    totalCount: number;
-}
-
-export class PagedResultDtoOfTargetStudyLevelLookupTableDto implements IPagedResultDtoOfTargetStudyLevelLookupTableDto {
-    items!: TargetStudyLevelLookupTableDto[] | undefined;
-    totalCount!: number;
-
-    constructor(data?: IPagedResultDtoOfTargetStudyLevelLookupTableDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            if (Array.isArray(_data["items"])) {
-                this.items = [] as any;
-                for (let item of _data["items"])
-                    this.items!.push(TargetStudyLevelLookupTableDto.fromJS(item));
-            }
-            this.totalCount = _data["totalCount"];
-        }
-    }
-
-    static fromJS(data: any): PagedResultDtoOfTargetStudyLevelLookupTableDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new PagedResultDtoOfTargetStudyLevelLookupTableDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        if (Array.isArray(this.items)) {
-            data["items"] = [];
-            for (let item of this.items)
-                data["items"].push(item.toJSON());
-        }
-        data["totalCount"] = this.totalCount;
-        return data;
-    }
-}
-
-export interface IPagedResultDtoOfTargetStudyLevelLookupTableDto {
-    items: TargetStudyLevelLookupTableDto[] | undefined;
-    totalCount: number;
-}
-
-export class PagedResultDtoOfTargetStudySubjectLookupTableDto implements IPagedResultDtoOfTargetStudySubjectLookupTableDto {
-    items!: TargetStudySubjectLookupTableDto[] | undefined;
-    totalCount!: number;
-
-    constructor(data?: IPagedResultDtoOfTargetStudySubjectLookupTableDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            if (Array.isArray(_data["items"])) {
-                this.items = [] as any;
-                for (let item of _data["items"])
-                    this.items!.push(TargetStudySubjectLookupTableDto.fromJS(item));
-            }
-            this.totalCount = _data["totalCount"];
-        }
-    }
-
-    static fromJS(data: any): PagedResultDtoOfTargetStudySubjectLookupTableDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new PagedResultDtoOfTargetStudySubjectLookupTableDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        if (Array.isArray(this.items)) {
-            data["items"] = [];
-            for (let item of this.items)
-                data["items"].push(item.toJSON());
-        }
-        data["totalCount"] = this.totalCount;
-        return data;
-    }
-}
-
-export interface IPagedResultDtoOfTargetStudySubjectLookupTableDto {
-    items: TargetStudySubjectLookupTableDto[] | undefined;
-    totalCount: number;
-}
-
-export class PagedResultDtoOfTemplateSectionTemplateLookupTableDto implements IPagedResultDtoOfTemplateSectionTemplateLookupTableDto {
-    items!: TemplateSectionTemplateLookupTableDto[] | undefined;
-    totalCount!: number;
-
-    constructor(data?: IPagedResultDtoOfTemplateSectionTemplateLookupTableDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            if (Array.isArray(_data["items"])) {
-                this.items = [] as any;
-                for (let item of _data["items"])
-                    this.items!.push(TemplateSectionTemplateLookupTableDto.fromJS(item));
-            }
-            this.totalCount = _data["totalCount"];
-        }
-    }
-
-    static fromJS(data: any): PagedResultDtoOfTemplateSectionTemplateLookupTableDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new PagedResultDtoOfTemplateSectionTemplateLookupTableDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        if (Array.isArray(this.items)) {
-            data["items"] = [];
-            for (let item of this.items)
-                data["items"].push(item.toJSON());
-        }
-        data["totalCount"] = this.totalCount;
-        return data;
-    }
-}
-
-export interface IPagedResultDtoOfTemplateSectionTemplateLookupTableDto {
-    items: TemplateSectionTemplateLookupTableDto[] | undefined;
-    totalCount: number;
-}
-
-export class PagedResultDtoOfTemplateStudyLevelLookupTableDto implements IPagedResultDtoOfTemplateStudyLevelLookupTableDto {
-    items!: TemplateStudyLevelLookupTableDto[] | undefined;
-    totalCount!: number;
-
-    constructor(data?: IPagedResultDtoOfTemplateStudyLevelLookupTableDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            if (Array.isArray(_data["items"])) {
-                this.items = [] as any;
-                for (let item of _data["items"])
-                    this.items!.push(TemplateStudyLevelLookupTableDto.fromJS(item));
-            }
-            this.totalCount = _data["totalCount"];
-        }
-    }
-
-    static fromJS(data: any): PagedResultDtoOfTemplateStudyLevelLookupTableDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new PagedResultDtoOfTemplateStudyLevelLookupTableDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        if (Array.isArray(this.items)) {
-            data["items"] = [];
-            for (let item of this.items)
-                data["items"].push(item.toJSON());
-        }
-        data["totalCount"] = this.totalCount;
-        return data;
-    }
-}
-
-export interface IPagedResultDtoOfTemplateStudyLevelLookupTableDto {
-    items: TemplateStudyLevelLookupTableDto[] | undefined;
-    totalCount: number;
-}
-
-export class PagedResultDtoOfTemplateStudySubjectLookupTableDto implements IPagedResultDtoOfTemplateStudySubjectLookupTableDto {
-    items!: TemplateStudySubjectLookupTableDto[] | undefined;
-    totalCount!: number;
-
-    constructor(data?: IPagedResultDtoOfTemplateStudySubjectLookupTableDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            if (Array.isArray(_data["items"])) {
-                this.items = [] as any;
-                for (let item of _data["items"])
-                    this.items!.push(TemplateStudySubjectLookupTableDto.fromJS(item));
-            }
-            this.totalCount = _data["totalCount"];
-        }
-    }
-
-    static fromJS(data: any): PagedResultDtoOfTemplateStudySubjectLookupTableDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new PagedResultDtoOfTemplateStudySubjectLookupTableDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        if (Array.isArray(this.items)) {
-            data["items"] = [];
-            for (let item of this.items)
-                data["items"].push(item.toJSON());
-        }
-        data["totalCount"] = this.totalCount;
-        return data;
-    }
-}
-
-export interface IPagedResultDtoOfTemplateStudySubjectLookupTableDto {
-    items: TemplateStudySubjectLookupTableDto[] | undefined;
-    totalCount: number;
-}
-
-export class PagedResultDtoOfTemplateTypeDetailCategoryLookupTableDto implements IPagedResultDtoOfTemplateTypeDetailCategoryLookupTableDto {
-    items!: TemplateTypeDetailCategoryLookupTableDto[] | undefined;
-    totalCount!: number;
-
-    constructor(data?: IPagedResultDtoOfTemplateTypeDetailCategoryLookupTableDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            if (Array.isArray(_data["items"])) {
-                this.items = [] as any;
-                for (let item of _data["items"])
-                    this.items!.push(TemplateTypeDetailCategoryLookupTableDto.fromJS(item));
-            }
-            this.totalCount = _data["totalCount"];
-        }
-    }
-
-    static fromJS(data: any): PagedResultDtoOfTemplateTypeDetailCategoryLookupTableDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new PagedResultDtoOfTemplateTypeDetailCategoryLookupTableDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        if (Array.isArray(this.items)) {
-            data["items"] = [];
-            for (let item of this.items)
-                data["items"].push(item.toJSON());
-        }
-        data["totalCount"] = this.totalCount;
-        return data;
-    }
-}
-
-export interface IPagedResultDtoOfTemplateTypeDetailCategoryLookupTableDto {
-    items: TemplateTypeDetailCategoryLookupTableDto[] | undefined;
-    totalCount: number;
-}
-
-export class PagedResultDtoOfTemplateTypeDetailComplexityLookupTableDto implements IPagedResultDtoOfTemplateTypeDetailComplexityLookupTableDto {
-    items!: TemplateTypeDetailComplexityLookupTableDto[] | undefined;
-    totalCount!: number;
-
-    constructor(data?: IPagedResultDtoOfTemplateTypeDetailComplexityLookupTableDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            if (Array.isArray(_data["items"])) {
-                this.items = [] as any;
-                for (let item of _data["items"])
-                    this.items!.push(TemplateTypeDetailComplexityLookupTableDto.fromJS(item));
-            }
-            this.totalCount = _data["totalCount"];
-        }
-    }
-
-    static fromJS(data: any): PagedResultDtoOfTemplateTypeDetailComplexityLookupTableDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new PagedResultDtoOfTemplateTypeDetailComplexityLookupTableDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        if (Array.isArray(this.items)) {
-            data["items"] = [];
-            for (let item of this.items)
-                data["items"].push(item.toJSON());
-        }
-        data["totalCount"] = this.totalCount;
-        return data;
-    }
-}
-
-export interface IPagedResultDtoOfTemplateTypeDetailComplexityLookupTableDto {
-    items: TemplateTypeDetailComplexityLookupTableDto[] | undefined;
-    totalCount: number;
-}
-
-export class PagedResultDtoOfTemplateTypeDetailQuestionTargetLookupTableDto implements IPagedResultDtoOfTemplateTypeDetailQuestionTargetLookupTableDto {
-    items!: TemplateTypeDetailQuestionTargetLookupTableDto[] | undefined;
-    totalCount!: number;
-
-    constructor(data?: IPagedResultDtoOfTemplateTypeDetailQuestionTargetLookupTableDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            if (Array.isArray(_data["items"])) {
-                this.items = [] as any;
-                for (let item of _data["items"])
-                    this.items!.push(TemplateTypeDetailQuestionTargetLookupTableDto.fromJS(item));
-            }
-            this.totalCount = _data["totalCount"];
-        }
-    }
-
-    static fromJS(data: any): PagedResultDtoOfTemplateTypeDetailQuestionTargetLookupTableDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new PagedResultDtoOfTemplateTypeDetailQuestionTargetLookupTableDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        if (Array.isArray(this.items)) {
-            data["items"] = [];
-            for (let item of this.items)
-                data["items"].push(item.toJSON());
-        }
-        data["totalCount"] = this.totalCount;
-        return data;
-    }
-}
-
-export interface IPagedResultDtoOfTemplateTypeDetailQuestionTargetLookupTableDto {
-    items: TemplateTypeDetailQuestionTargetLookupTableDto[] | undefined;
-    totalCount: number;
-}
-
-export class PagedResultDtoOfTemplateTypeDetailTemplateSectionLookupTableDto implements IPagedResultDtoOfTemplateTypeDetailTemplateSectionLookupTableDto {
-    items!: TemplateTypeDetailTemplateSectionLookupTableDto[] | undefined;
-    totalCount!: number;
-
-    constructor(data?: IPagedResultDtoOfTemplateTypeDetailTemplateSectionLookupTableDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            if (Array.isArray(_data["items"])) {
-                this.items = [] as any;
-                for (let item of _data["items"])
-                    this.items!.push(TemplateTypeDetailTemplateSectionLookupTableDto.fromJS(item));
-            }
-            this.totalCount = _data["totalCount"];
-        }
-    }
-
-    static fromJS(data: any): PagedResultDtoOfTemplateTypeDetailTemplateSectionLookupTableDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new PagedResultDtoOfTemplateTypeDetailTemplateSectionLookupTableDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        if (Array.isArray(this.items)) {
-            data["items"] = [];
-            for (let item of this.items)
-                data["items"].push(item.toJSON());
-        }
-        data["totalCount"] = this.totalCount;
-        return data;
-    }
-}
-
-export interface IPagedResultDtoOfTemplateTypeDetailTemplateSectionLookupTableDto {
-    items: TemplateTypeDetailTemplateSectionLookupTableDto[] | undefined;
     totalCount: number;
 }
 
@@ -52059,11 +51093,138 @@ export interface IQuestionCategoryQuestionLookupTableDto {
     displayName: string | undefined;
 }
 
+export class QuestionComplexitiyComplexityLookupTableDto implements IQuestionComplexitiyComplexityLookupTableDto {
+    id!: number;
+    displayName!: string | undefined;
+
+    constructor(data?: IQuestionComplexitiyComplexityLookupTableDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.displayName = _data["displayName"];
+        }
+    }
+
+    static fromJS(data: any): QuestionComplexitiyComplexityLookupTableDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new QuestionComplexitiyComplexityLookupTableDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["displayName"] = this.displayName;
+        return data;
+    }
+}
+
+export interface IQuestionComplexitiyComplexityLookupTableDto {
+    id: number;
+    displayName: string | undefined;
+}
+
+export class QuestionComplexitiyDto implements IQuestionComplexitiyDto {
+    id!: number;
+    note!: string | undefined;
+    complexityId!: number;
+    questionId!: number;
+
+    constructor(data?: IQuestionComplexitiyDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.note = _data["note"];
+            this.complexityId = _data["complexityId"];
+            this.questionId = _data["questionId"];
+        }
+    }
+
+    static fromJS(data: any): QuestionComplexitiyDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new QuestionComplexitiyDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["note"] = this.note;
+        data["complexityId"] = this.complexityId;
+        data["questionId"] = this.questionId;
+        return data;
+    }
+}
+
+export interface IQuestionComplexitiyDto {
+    id: number;
+    note: string | undefined;
+    complexityId: number;
+    questionId: number;
+}
+
+export class QuestionComplexitiyQuestionLookupTableDto implements IQuestionComplexitiyQuestionLookupTableDto {
+    id!: number;
+    displayName!: string | undefined;
+
+    constructor(data?: IQuestionComplexitiyQuestionLookupTableDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.displayName = _data["displayName"];
+        }
+    }
+
+    static fromJS(data: any): QuestionComplexitiyQuestionLookupTableDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new QuestionComplexitiyQuestionLookupTableDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["displayName"] = this.displayName;
+        return data;
+    }
+}
+
+export interface IQuestionComplexitiyQuestionLookupTableDto {
+    id: number;
+    displayName: string | undefined;
+}
+
 export class QuestionDto implements IQuestionDto {
     id!: number;
     body!: string | undefined;
     type!: QuestionTypeEnum;
-    parentId!: number | undefined;
     instructions!: string | undefined;
     language!: QuestionLanguageEnum;
     questionHelper!: string | undefined;
@@ -52072,7 +51233,8 @@ export class QuestionDto implements IQuestionDto {
     point!: number | undefined;
     minPoints!: number | undefined;
     maxPoints!: number | undefined;
-    updatedByQuestionId!: number | undefined;
+    parentQuestionId!: number | undefined;
+    updateFromQuestionId!: number | undefined;
 
     constructor(data?: IQuestionDto) {
         if (data) {
@@ -52088,7 +51250,6 @@ export class QuestionDto implements IQuestionDto {
             this.id = _data["id"];
             this.body = _data["body"];
             this.type = _data["type"];
-            this.parentId = _data["parentId"];
             this.instructions = _data["instructions"];
             this.language = _data["language"];
             this.questionHelper = _data["questionHelper"];
@@ -52097,7 +51258,8 @@ export class QuestionDto implements IQuestionDto {
             this.point = _data["point"];
             this.minPoints = _data["minPoints"];
             this.maxPoints = _data["maxPoints"];
-            this.updatedByQuestionId = _data["updatedByQuestionId"];
+            this.parentQuestionId = _data["parentQuestionId"];
+            this.updateFromQuestionId = _data["updateFromQuestionId"];
         }
     }
 
@@ -52113,7 +51275,6 @@ export class QuestionDto implements IQuestionDto {
         data["id"] = this.id;
         data["body"] = this.body;
         data["type"] = this.type;
-        data["parentId"] = this.parentId;
         data["instructions"] = this.instructions;
         data["language"] = this.language;
         data["questionHelper"] = this.questionHelper;
@@ -52122,7 +51283,8 @@ export class QuestionDto implements IQuestionDto {
         data["point"] = this.point;
         data["minPoints"] = this.minPoints;
         data["maxPoints"] = this.maxPoints;
-        data["updatedByQuestionId"] = this.updatedByQuestionId;
+        data["parentQuestionId"] = this.parentQuestionId;
+        data["updateFromQuestionId"] = this.updateFromQuestionId;
         return data;
     }
 }
@@ -52131,7 +51293,6 @@ export interface IQuestionDto {
     id: number;
     body: string | undefined;
     type: QuestionTypeEnum;
-    parentId: number | undefined;
     instructions: string | undefined;
     language: QuestionLanguageEnum;
     questionHelper: string | undefined;
@@ -52140,7 +51301,8 @@ export interface IQuestionDto {
     point: number | undefined;
     minPoints: number | undefined;
     maxPoints: number | undefined;
-    updatedByQuestionId: number | undefined;
+    parentQuestionId: number | undefined;
+    updateFromQuestionId: number | undefined;
 }
 
 export class QuestionGroupItemDto implements IQuestionGroupItemDto {
@@ -52404,10 +51566,262 @@ export interface IQuestionLevelStudyLevelLookupTableDto {
     displayName: string | undefined;
 }
 
+export class QuestionOptionDto implements IQuestionOptionDto {
+    id!: number;
+    value!: string | undefined;
+    isRequired!: boolean;
+    weight!: number;
+    minWeight!: number;
+    maxWeight!: number;
+    optionType!: QuestionOptionTypeEnum;
+    order!: number | undefined;
+    questionId!: number;
+
+    constructor(data?: IQuestionOptionDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.value = _data["value"];
+            this.isRequired = _data["isRequired"];
+            this.weight = _data["weight"];
+            this.minWeight = _data["minWeight"];
+            this.maxWeight = _data["maxWeight"];
+            this.optionType = _data["optionType"];
+            this.order = _data["order"];
+            this.questionId = _data["questionId"];
+        }
+    }
+
+    static fromJS(data: any): QuestionOptionDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new QuestionOptionDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["value"] = this.value;
+        data["isRequired"] = this.isRequired;
+        data["weight"] = this.weight;
+        data["minWeight"] = this.minWeight;
+        data["maxWeight"] = this.maxWeight;
+        data["optionType"] = this.optionType;
+        data["order"] = this.order;
+        data["questionId"] = this.questionId;
+        return data;
+    }
+}
+
+export interface IQuestionOptionDto {
+    id: number;
+    value: string | undefined;
+    isRequired: boolean;
+    weight: number;
+    minWeight: number;
+    maxWeight: number;
+    optionType: QuestionOptionTypeEnum;
+    order: number | undefined;
+    questionId: number;
+}
+
+export class QuestionOptionQuestionLookupTableDto implements IQuestionOptionQuestionLookupTableDto {
+    id!: number;
+    displayName!: string | undefined;
+
+    constructor(data?: IQuestionOptionQuestionLookupTableDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.displayName = _data["displayName"];
+        }
+    }
+
+    static fromJS(data: any): QuestionOptionQuestionLookupTableDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new QuestionOptionQuestionLookupTableDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["displayName"] = this.displayName;
+        return data;
+    }
+}
+
+export interface IQuestionOptionQuestionLookupTableDto {
+    id: number;
+    displayName: string | undefined;
+}
+
 export enum QuestionOptionTypeEnum {
     Normal = 0,
     Fake = 1,
     Pinned = 2,
+}
+
+export class QuestionPayloadDto implements IQuestionPayloadDto {
+    matchQuestions!: CreateOrEditMatchQuestionDto[] | undefined;
+    subQuestions!: CreateOrEditQuestionDto[] | undefined;
+    rearrangeQuestions!: CreateOrEditRearrangeQuestionDto[] | undefined;
+    dragFormQuestions!: CreateOrEditDragFormQuestionDto[] | undefined;
+    tableDragQuestions!: CreateOrEditTableDragQuestionDto[] | undefined;
+    choices!: CreateOrEditChoiceQuestionDto[] | undefined;
+
+    constructor(data?: IQuestionPayloadDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            if (Array.isArray(_data["matchQuestions"])) {
+                this.matchQuestions = [] as any;
+                for (let item of _data["matchQuestions"])
+                    this.matchQuestions!.push(CreateOrEditMatchQuestionDto.fromJS(item));
+            }
+            if (Array.isArray(_data["subQuestions"])) {
+                this.subQuestions = [] as any;
+                for (let item of _data["subQuestions"])
+                    this.subQuestions!.push(CreateOrEditQuestionDto.fromJS(item));
+            }
+            if (Array.isArray(_data["rearrangeQuestions"])) {
+                this.rearrangeQuestions = [] as any;
+                for (let item of _data["rearrangeQuestions"])
+                    this.rearrangeQuestions!.push(CreateOrEditRearrangeQuestionDto.fromJS(item));
+            }
+            if (Array.isArray(_data["dragFormQuestions"])) {
+                this.dragFormQuestions = [] as any;
+                for (let item of _data["dragFormQuestions"])
+                    this.dragFormQuestions!.push(CreateOrEditDragFormQuestionDto.fromJS(item));
+            }
+            if (Array.isArray(_data["tableDragQuestions"])) {
+                this.tableDragQuestions = [] as any;
+                for (let item of _data["tableDragQuestions"])
+                    this.tableDragQuestions!.push(CreateOrEditTableDragQuestionDto.fromJS(item));
+            }
+            if (Array.isArray(_data["choices"])) {
+                this.choices = [] as any;
+                for (let item of _data["choices"])
+                    this.choices!.push(CreateOrEditChoiceQuestionDto.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): QuestionPayloadDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new QuestionPayloadDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        if (Array.isArray(this.matchQuestions)) {
+            data["matchQuestions"] = [];
+            for (let item of this.matchQuestions)
+                data["matchQuestions"].push(item.toJSON());
+        }
+        if (Array.isArray(this.subQuestions)) {
+            data["subQuestions"] = [];
+            for (let item of this.subQuestions)
+                data["subQuestions"].push(item.toJSON());
+        }
+        if (Array.isArray(this.rearrangeQuestions)) {
+            data["rearrangeQuestions"] = [];
+            for (let item of this.rearrangeQuestions)
+                data["rearrangeQuestions"].push(item.toJSON());
+        }
+        if (Array.isArray(this.dragFormQuestions)) {
+            data["dragFormQuestions"] = [];
+            for (let item of this.dragFormQuestions)
+                data["dragFormQuestions"].push(item.toJSON());
+        }
+        if (Array.isArray(this.tableDragQuestions)) {
+            data["tableDragQuestions"] = [];
+            for (let item of this.tableDragQuestions)
+                data["tableDragQuestions"].push(item.toJSON());
+        }
+        if (Array.isArray(this.choices)) {
+            data["choices"] = [];
+            for (let item of this.choices)
+                data["choices"].push(item.toJSON());
+        }
+        return data;
+    }
+}
+
+export interface IQuestionPayloadDto {
+    matchQuestions: CreateOrEditMatchQuestionDto[] | undefined;
+    subQuestions: CreateOrEditQuestionDto[] | undefined;
+    rearrangeQuestions: CreateOrEditRearrangeQuestionDto[] | undefined;
+    dragFormQuestions: CreateOrEditDragFormQuestionDto[] | undefined;
+    tableDragQuestions: CreateOrEditTableDragQuestionDto[] | undefined;
+    choices: CreateOrEditChoiceQuestionDto[] | undefined;
+}
+
+export class QuestionQuestionLookupTableDto implements IQuestionQuestionLookupTableDto {
+    id!: number;
+    displayName!: string | undefined;
+
+    constructor(data?: IQuestionQuestionLookupTableDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.displayName = _data["displayName"];
+        }
+    }
+
+    static fromJS(data: any): QuestionQuestionLookupTableDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new QuestionQuestionLookupTableDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["displayName"] = this.displayName;
+        return data;
+    }
+}
+
+export interface IQuestionQuestionLookupTableDto {
+    id: number;
+    displayName: string | undefined;
 }
 
 export class QuestionSubjectDto implements IQuestionSubjectDto {
@@ -52538,6 +51952,134 @@ export interface IQuestionSubjectStudySubjectLookupTableDto {
     displayName: string | undefined;
 }
 
+export class QuestionSubjectUnitDto implements IQuestionSubjectUnitDto {
+    id!: number;
+    note!: string | undefined;
+    subjectUnitId!: number;
+    questionId!: number;
+
+    constructor(data?: IQuestionSubjectUnitDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.note = _data["note"];
+            this.subjectUnitId = _data["subjectUnitId"];
+            this.questionId = _data["questionId"];
+        }
+    }
+
+    static fromJS(data: any): QuestionSubjectUnitDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new QuestionSubjectUnitDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["note"] = this.note;
+        data["subjectUnitId"] = this.subjectUnitId;
+        data["questionId"] = this.questionId;
+        return data;
+    }
+}
+
+export interface IQuestionSubjectUnitDto {
+    id: number;
+    note: string | undefined;
+    subjectUnitId: number;
+    questionId: number;
+}
+
+export class QuestionSubjectUnitQuestionLookupTableDto implements IQuestionSubjectUnitQuestionLookupTableDto {
+    id!: number;
+    displayName!: string | undefined;
+
+    constructor(data?: IQuestionSubjectUnitQuestionLookupTableDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.displayName = _data["displayName"];
+        }
+    }
+
+    static fromJS(data: any): QuestionSubjectUnitQuestionLookupTableDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new QuestionSubjectUnitQuestionLookupTableDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["displayName"] = this.displayName;
+        return data;
+    }
+}
+
+export interface IQuestionSubjectUnitQuestionLookupTableDto {
+    id: number;
+    displayName: string | undefined;
+}
+
+export class QuestionSubjectUnitSubjectUnitLookupTableDto implements IQuestionSubjectUnitSubjectUnitLookupTableDto {
+    id!: number;
+    displayName!: string | undefined;
+
+    constructor(data?: IQuestionSubjectUnitSubjectUnitLookupTableDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.displayName = _data["displayName"];
+        }
+    }
+
+    static fromJS(data: any): QuestionSubjectUnitSubjectUnitLookupTableDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new QuestionSubjectUnitSubjectUnitLookupTableDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["displayName"] = this.displayName;
+        return data;
+    }
+}
+
+export interface IQuestionSubjectUnitSubjectUnitLookupTableDto {
+    id: number;
+    displayName: string | undefined;
+}
+
 export class QuestionSupportGroupLookupTableDto implements IQuestionSupportGroupLookupTableDto {
     id!: number;
     displayName!: string | undefined;
@@ -52578,134 +52120,6 @@ export interface IQuestionSupportGroupLookupTableDto {
     displayName: string | undefined;
 }
 
-export class QuestionTargetDto implements IQuestionTargetDto {
-    id!: number;
-    note!: string | undefined;
-    targetId!: number;
-    questionId!: number;
-
-    constructor(data?: IQuestionTargetDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.id = _data["id"];
-            this.note = _data["note"];
-            this.targetId = _data["targetId"];
-            this.questionId = _data["questionId"];
-        }
-    }
-
-    static fromJS(data: any): QuestionTargetDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new QuestionTargetDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["id"] = this.id;
-        data["note"] = this.note;
-        data["targetId"] = this.targetId;
-        data["questionId"] = this.questionId;
-        return data;
-    }
-}
-
-export interface IQuestionTargetDto {
-    id: number;
-    note: string | undefined;
-    targetId: number;
-    questionId: number;
-}
-
-export class QuestionTargetQuestionLookupTableDto implements IQuestionTargetQuestionLookupTableDto {
-    id!: number;
-    displayName!: string | undefined;
-
-    constructor(data?: IQuestionTargetQuestionLookupTableDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.id = _data["id"];
-            this.displayName = _data["displayName"];
-        }
-    }
-
-    static fromJS(data: any): QuestionTargetQuestionLookupTableDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new QuestionTargetQuestionLookupTableDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["id"] = this.id;
-        data["displayName"] = this.displayName;
-        return data;
-    }
-}
-
-export interface IQuestionTargetQuestionLookupTableDto {
-    id: number;
-    displayName: string | undefined;
-}
-
-export class QuestionTargetTargetLookupTableDto implements IQuestionTargetTargetLookupTableDto {
-    id!: number;
-    displayName!: string | undefined;
-
-    constructor(data?: IQuestionTargetTargetLookupTableDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.id = _data["id"];
-            this.displayName = _data["displayName"];
-        }
-    }
-
-    static fromJS(data: any): QuestionTargetTargetLookupTableDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new QuestionTargetTargetLookupTableDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["id"] = this.id;
-        data["displayName"] = this.displayName;
-        return data;
-    }
-}
-
-export interface IQuestionTargetTargetLookupTableDto {
-    id: number;
-    displayName: string | undefined;
-}
-
 export enum QuestionTypeEnum {
     MutliChoice = 1,
     SinglChoice = 2,
@@ -52717,110 +52131,6 @@ export enum QuestionTypeEnum {
     SA = 128,
     DargingForm = 256,
     DargingTable = 512,
-}
-
-export class QuestionValue implements IQuestionValue {
-    matchQuestions!: CreateOrEditMatchQuestionDto[] | undefined;
-    subQuestions!: CreateOrEditQuestionDto[] | undefined;
-    rearrangeQuestions!: CreateOrEditRearrangeQuestionDto[] | undefined;
-    dragFormQuestions!: CreateOrEditDragFormQuestionDto[] | undefined;
-    tableDragQuestions!: CreateOrEditTableDragQuestionDto[] | undefined;
-    choices!: CreateOrEditChoiceQuestionDto[] | undefined;
-
-    constructor(data?: IQuestionValue) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            if (Array.isArray(_data["matchQuestions"])) {
-                this.matchQuestions = [] as any;
-                for (let item of _data["matchQuestions"])
-                    this.matchQuestions!.push(CreateOrEditMatchQuestionDto.fromJS(item));
-            }
-            if (Array.isArray(_data["subQuestions"])) {
-                this.subQuestions = [] as any;
-                for (let item of _data["subQuestions"])
-                    this.subQuestions!.push(CreateOrEditQuestionDto.fromJS(item));
-            }
-            if (Array.isArray(_data["rearrangeQuestions"])) {
-                this.rearrangeQuestions = [] as any;
-                for (let item of _data["rearrangeQuestions"])
-                    this.rearrangeQuestions!.push(CreateOrEditRearrangeQuestionDto.fromJS(item));
-            }
-            if (Array.isArray(_data["dragFormQuestions"])) {
-                this.dragFormQuestions = [] as any;
-                for (let item of _data["dragFormQuestions"])
-                    this.dragFormQuestions!.push(CreateOrEditDragFormQuestionDto.fromJS(item));
-            }
-            if (Array.isArray(_data["tableDragQuestions"])) {
-                this.tableDragQuestions = [] as any;
-                for (let item of _data["tableDragQuestions"])
-                    this.tableDragQuestions!.push(CreateOrEditTableDragQuestionDto.fromJS(item));
-            }
-            if (Array.isArray(_data["choices"])) {
-                this.choices = [] as any;
-                for (let item of _data["choices"])
-                    this.choices!.push(CreateOrEditChoiceQuestionDto.fromJS(item));
-            }
-        }
-    }
-
-    static fromJS(data: any): QuestionValue {
-        data = typeof data === 'object' ? data : {};
-        let result = new QuestionValue();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        if (Array.isArray(this.matchQuestions)) {
-            data["matchQuestions"] = [];
-            for (let item of this.matchQuestions)
-                data["matchQuestions"].push(item.toJSON());
-        }
-        if (Array.isArray(this.subQuestions)) {
-            data["subQuestions"] = [];
-            for (let item of this.subQuestions)
-                data["subQuestions"].push(item.toJSON());
-        }
-        if (Array.isArray(this.rearrangeQuestions)) {
-            data["rearrangeQuestions"] = [];
-            for (let item of this.rearrangeQuestions)
-                data["rearrangeQuestions"].push(item.toJSON());
-        }
-        if (Array.isArray(this.dragFormQuestions)) {
-            data["dragFormQuestions"] = [];
-            for (let item of this.dragFormQuestions)
-                data["dragFormQuestions"].push(item.toJSON());
-        }
-        if (Array.isArray(this.tableDragQuestions)) {
-            data["tableDragQuestions"] = [];
-            for (let item of this.tableDragQuestions)
-                data["tableDragQuestions"].push(item.toJSON());
-        }
-        if (Array.isArray(this.choices)) {
-            data["choices"] = [];
-            for (let item of this.choices)
-                data["choices"].push(item.toJSON());
-        }
-        return data;
-    }
-}
-
-export interface IQuestionValue {
-    matchQuestions: CreateOrEditMatchQuestionDto[] | undefined;
-    subQuestions: CreateOrEditQuestionDto[] | undefined;
-    rearrangeQuestions: CreateOrEditRearrangeQuestionDto[] | undefined;
-    dragFormQuestions: CreateOrEditDragFormQuestionDto[] | undefined;
-    tableDragQuestions: CreateOrEditTableDragQuestionDto[] | undefined;
-    choices: CreateOrEditChoiceQuestionDto[] | undefined;
 }
 
 export class RecentTenant implements IRecentTenant {
@@ -53756,8 +53066,7 @@ export interface ISavePageInput {
 export class SchoolDto implements ISchoolDto {
     id!: number;
     schoolNo!: string | undefined;
-    nameL!: string | undefined;
-    nameF!: string | undefined;
+    name!: string | undefined;
 
     constructor(data?: ISchoolDto) {
         if (data) {
@@ -53772,8 +53081,7 @@ export class SchoolDto implements ISchoolDto {
         if (_data) {
             this.id = _data["id"];
             this.schoolNo = _data["schoolNo"];
-            this.nameL = _data["nameL"];
-            this.nameF = _data["nameF"];
+            this.name = _data["name"];
         }
     }
 
@@ -53788,8 +53096,7 @@ export class SchoolDto implements ISchoolDto {
         data = typeof data === 'object' ? data : {};
         data["id"] = this.id;
         data["schoolNo"] = this.schoolNo;
-        data["nameL"] = this.nameL;
-        data["nameF"] = this.nameF;
+        data["name"] = this.name;
         return data;
     }
 }
@@ -53797,112 +53104,7 @@ export class SchoolDto implements ISchoolDto {
 export interface ISchoolDto {
     id: number;
     schoolNo: string | undefined;
-    nameL: string | undefined;
-    nameF: string | undefined;
-}
-
-export class SectionDto implements ISectionDto {
-    id!: number;
-    durationTime!: DateTime;
-    order!: number;
-    instructions!: string | undefined;
-    nameL!: string | undefined;
-    nameF!: string | undefined;
-    type!: SectionTypeEnum;
-    examId!: number;
-
-    constructor(data?: ISectionDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.id = _data["id"];
-            this.durationTime = _data["durationTime"] ? DateTime.fromISO(_data["durationTime"].toString()) : <any>undefined;
-            this.order = _data["order"];
-            this.instructions = _data["instructions"];
-            this.nameL = _data["nameL"];
-            this.nameF = _data["nameF"];
-            this.type = _data["type"];
-            this.examId = _data["examId"];
-        }
-    }
-
-    static fromJS(data: any): SectionDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new SectionDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["id"] = this.id;
-        data["durationTime"] = this.durationTime ? this.durationTime.toString() : <any>undefined;
-        data["order"] = this.order;
-        data["instructions"] = this.instructions;
-        data["nameL"] = this.nameL;
-        data["nameF"] = this.nameF;
-        data["type"] = this.type;
-        data["examId"] = this.examId;
-        return data;
-    }
-}
-
-export interface ISectionDto {
-    id: number;
-    durationTime: DateTime;
-    order: number;
-    instructions: string | undefined;
-    nameL: string | undefined;
-    nameF: string | undefined;
-    type: SectionTypeEnum;
-    examId: number;
-}
-
-export class SectionExamLookupTableDto implements ISectionExamLookupTableDto {
-    id!: number;
-    displayName!: string | undefined;
-
-    constructor(data?: ISectionExamLookupTableDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.id = _data["id"];
-            this.displayName = _data["displayName"];
-        }
-    }
-
-    static fromJS(data: any): SectionExamLookupTableDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new SectionExamLookupTableDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["id"] = this.id;
-        data["displayName"] = this.displayName;
-        return data;
-    }
-}
-
-export interface ISectionExamLookupTableDto {
-    id: number;
-    displayName: string | undefined;
+    name: string | undefined;
 }
 
 export enum SectionTypeEnum {
@@ -54198,13 +53400,12 @@ export interface ISendVerificationSmsInputDto {
 
 export class SessionDto implements ISessionDto {
     id!: number;
-    nameL!: string | undefined;
-    nameF!: string | undefined;
     startDate!: DateTime;
     actualStartDate!: DateTime;
     endDate!: string | undefined;
     examGenerationToken!: string;
     backgroundStartJobId!: string | undefined;
+    name!: string | undefined;
 
     constructor(data?: ISessionDto) {
         if (data) {
@@ -54218,13 +53419,12 @@ export class SessionDto implements ISessionDto {
     init(_data?: any) {
         if (_data) {
             this.id = _data["id"];
-            this.nameL = _data["nameL"];
-            this.nameF = _data["nameF"];
             this.startDate = _data["startDate"] ? DateTime.fromISO(_data["startDate"].toString()) : <any>undefined;
             this.actualStartDate = _data["actualStartDate"] ? DateTime.fromISO(_data["actualStartDate"].toString()) : <any>undefined;
             this.endDate = _data["endDate"];
             this.examGenerationToken = _data["examGenerationToken"];
             this.backgroundStartJobId = _data["backgroundStartJobId"];
+            this.name = _data["name"];
         }
     }
 
@@ -54238,26 +53438,24 @@ export class SessionDto implements ISessionDto {
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["id"] = this.id;
-        data["nameL"] = this.nameL;
-        data["nameF"] = this.nameF;
         data["startDate"] = this.startDate ? this.startDate.toString() : <any>undefined;
         data["actualStartDate"] = this.actualStartDate ? this.actualStartDate.toString() : <any>undefined;
         data["endDate"] = this.endDate;
         data["examGenerationToken"] = this.examGenerationToken;
         data["backgroundStartJobId"] = this.backgroundStartJobId;
+        data["name"] = this.name;
         return data;
     }
 }
 
 export interface ISessionDto {
     id: number;
-    nameL: string | undefined;
-    nameF: string | undefined;
     startDate: DateTime;
     actualStartDate: DateTime;
     endDate: string | undefined;
     examGenerationToken: string;
     backgroundStartJobId: string | undefined;
+    name: string | undefined;
 }
 
 export class SessionSupervisorDto implements ISessionSupervisorDto {
@@ -55065,7 +54263,7 @@ export interface IStudentUserLookupTableDto {
 
 export class StudyLevelDto implements IStudyLevelDto {
     id!: number;
-    value!: string | undefined;
+    name!: string | undefined;
     isActive!: boolean;
 
     constructor(data?: IStudyLevelDto) {
@@ -55080,7 +54278,7 @@ export class StudyLevelDto implements IStudyLevelDto {
     init(_data?: any) {
         if (_data) {
             this.id = _data["id"];
-            this.value = _data["value"];
+            this.name = _data["name"];
             this.isActive = _data["isActive"];
         }
     }
@@ -55095,7 +54293,7 @@ export class StudyLevelDto implements IStudyLevelDto {
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["id"] = this.id;
-        data["value"] = this.value;
+        data["name"] = this.name;
         data["isActive"] = this.isActive;
         return data;
     }
@@ -55103,13 +54301,13 @@ export class StudyLevelDto implements IStudyLevelDto {
 
 export interface IStudyLevelDto {
     id: number;
-    value: string | undefined;
+    name: string | undefined;
     isActive: boolean;
 }
 
 export class StudySubjectDto implements IStudySubjectDto {
     id!: number;
-    value!: string | undefined;
+    name!: string | undefined;
     language!: QuestionLanguageEnum;
     isActive!: boolean;
 
@@ -55125,7 +54323,7 @@ export class StudySubjectDto implements IStudySubjectDto {
     init(_data?: any) {
         if (_data) {
             this.id = _data["id"];
-            this.value = _data["value"];
+            this.name = _data["name"];
             this.language = _data["language"];
             this.isActive = _data["isActive"];
         }
@@ -55141,7 +54339,7 @@ export class StudySubjectDto implements IStudySubjectDto {
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["id"] = this.id;
-        data["value"] = this.value;
+        data["name"] = this.name;
         data["language"] = this.language;
         data["isActive"] = this.isActive;
         return data;
@@ -55150,7 +54348,7 @@ export class StudySubjectDto implements IStudySubjectDto {
 
 export interface IStudySubjectDto {
     id: number;
-    value: string | undefined;
+    name: string | undefined;
     language: QuestionLanguageEnum;
     isActive: boolean;
 }
@@ -55407,6 +54605,142 @@ export class SubjectGroupSupportGroupLookupTableDto implements ISubjectGroupSupp
 }
 
 export interface ISubjectGroupSupportGroupLookupTableDto {
+    id: number;
+    displayName: string | undefined;
+}
+
+export class SubjectUnitDto implements ISubjectUnitDto {
+    id!: number;
+    name!: string | undefined;
+    code!: string | undefined;
+    isActive!: boolean;
+    studyLevelId!: number | undefined;
+    studySubjectId!: number | undefined;
+
+    constructor(data?: ISubjectUnitDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.name = _data["name"];
+            this.code = _data["code"];
+            this.isActive = _data["isActive"];
+            this.studyLevelId = _data["studyLevelId"];
+            this.studySubjectId = _data["studySubjectId"];
+        }
+    }
+
+    static fromJS(data: any): SubjectUnitDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new SubjectUnitDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["name"] = this.name;
+        data["code"] = this.code;
+        data["isActive"] = this.isActive;
+        data["studyLevelId"] = this.studyLevelId;
+        data["studySubjectId"] = this.studySubjectId;
+        return data;
+    }
+}
+
+export interface ISubjectUnitDto {
+    id: number;
+    name: string | undefined;
+    code: string | undefined;
+    isActive: boolean;
+    studyLevelId: number | undefined;
+    studySubjectId: number | undefined;
+}
+
+export class SubjectUnitStudyLevelLookupTableDto implements ISubjectUnitStudyLevelLookupTableDto {
+    id!: number;
+    displayName!: string | undefined;
+
+    constructor(data?: ISubjectUnitStudyLevelLookupTableDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.displayName = _data["displayName"];
+        }
+    }
+
+    static fromJS(data: any): SubjectUnitStudyLevelLookupTableDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new SubjectUnitStudyLevelLookupTableDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["displayName"] = this.displayName;
+        return data;
+    }
+}
+
+export interface ISubjectUnitStudyLevelLookupTableDto {
+    id: number;
+    displayName: string | undefined;
+}
+
+export class SubjectUnitStudySubjectLookupTableDto implements ISubjectUnitStudySubjectLookupTableDto {
+    id!: number;
+    displayName!: string | undefined;
+
+    constructor(data?: ISubjectUnitStudySubjectLookupTableDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.displayName = _data["displayName"];
+        }
+    }
+
+    static fromJS(data: any): SubjectUnitStudySubjectLookupTableDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new SubjectUnitStudySubjectLookupTableDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["displayName"] = this.displayName;
+        return data;
+    }
+}
+
+export interface ISubjectUnitStudySubjectLookupTableDto {
     id: number;
     displayName: string | undefined;
 }
@@ -56167,622 +55501,6 @@ export interface ISwitchedAccountAuthenticateResultModel {
     accessToken: string | undefined;
     encryptedAccessToken: string | undefined;
     expireInSeconds: number;
-}
-
-export class TargetDto implements ITargetDto {
-    id!: number;
-    value!: string | undefined;
-    code!: string | undefined;
-    isActive!: boolean;
-    studyLevelId!: number | undefined;
-    studySubjectId!: number | undefined;
-
-    constructor(data?: ITargetDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.id = _data["id"];
-            this.value = _data["value"];
-            this.code = _data["code"];
-            this.isActive = _data["isActive"];
-            this.studyLevelId = _data["studyLevelId"];
-            this.studySubjectId = _data["studySubjectId"];
-        }
-    }
-
-    static fromJS(data: any): TargetDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new TargetDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["id"] = this.id;
-        data["value"] = this.value;
-        data["code"] = this.code;
-        data["isActive"] = this.isActive;
-        data["studyLevelId"] = this.studyLevelId;
-        data["studySubjectId"] = this.studySubjectId;
-        return data;
-    }
-}
-
-export interface ITargetDto {
-    id: number;
-    value: string | undefined;
-    code: string | undefined;
-    isActive: boolean;
-    studyLevelId: number | undefined;
-    studySubjectId: number | undefined;
-}
-
-export class TargetStudyLevelLookupTableDto implements ITargetStudyLevelLookupTableDto {
-    id!: number;
-    displayName!: string | undefined;
-
-    constructor(data?: ITargetStudyLevelLookupTableDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.id = _data["id"];
-            this.displayName = _data["displayName"];
-        }
-    }
-
-    static fromJS(data: any): TargetStudyLevelLookupTableDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new TargetStudyLevelLookupTableDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["id"] = this.id;
-        data["displayName"] = this.displayName;
-        return data;
-    }
-}
-
-export interface ITargetStudyLevelLookupTableDto {
-    id: number;
-    displayName: string | undefined;
-}
-
-export class TargetStudySubjectLookupTableDto implements ITargetStudySubjectLookupTableDto {
-    id!: number;
-    displayName!: string | undefined;
-
-    constructor(data?: ITargetStudySubjectLookupTableDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.id = _data["id"];
-            this.displayName = _data["displayName"];
-        }
-    }
-
-    static fromJS(data: any): TargetStudySubjectLookupTableDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new TargetStudySubjectLookupTableDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["id"] = this.id;
-        data["displayName"] = this.displayName;
-        return data;
-    }
-}
-
-export interface ITargetStudySubjectLookupTableDto {
-    id: number;
-    displayName: string | undefined;
-}
-
-export class TemplateDto implements ITemplateDto {
-    id!: number;
-    nameL!: string | undefined;
-    nameF!: string | undefined;
-    instructions!: string | undefined;
-    isActive!: boolean;
-    versionCount!: number;
-    studyLevelId!: number | undefined;
-    studySubjectId!: number;
-
-    constructor(data?: ITemplateDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.id = _data["id"];
-            this.nameL = _data["nameL"];
-            this.nameF = _data["nameF"];
-            this.instructions = _data["instructions"];
-            this.isActive = _data["isActive"];
-            this.versionCount = _data["versionCount"];
-            this.studyLevelId = _data["studyLevelId"];
-            this.studySubjectId = _data["studySubjectId"];
-        }
-    }
-
-    static fromJS(data: any): TemplateDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new TemplateDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["id"] = this.id;
-        data["nameL"] = this.nameL;
-        data["nameF"] = this.nameF;
-        data["instructions"] = this.instructions;
-        data["isActive"] = this.isActive;
-        data["versionCount"] = this.versionCount;
-        data["studyLevelId"] = this.studyLevelId;
-        data["studySubjectId"] = this.studySubjectId;
-        return data;
-    }
-}
-
-export interface ITemplateDto {
-    id: number;
-    nameL: string | undefined;
-    nameF: string | undefined;
-    instructions: string | undefined;
-    isActive: boolean;
-    versionCount: number;
-    studyLevelId: number | undefined;
-    studySubjectId: number;
-}
-
-export class TemplateSectionDto implements ITemplateSectionDto {
-    id!: number;
-    durationTime!: DateTime;
-    order!: number;
-    instructions!: string | undefined;
-    isActive!: boolean;
-    nameL!: string | undefined;
-    nameF!: string | undefined;
-    sectionType!: SectionTypeEnum;
-    templateId!: number;
-
-    constructor(data?: ITemplateSectionDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.id = _data["id"];
-            this.durationTime = _data["durationTime"] ? DateTime.fromISO(_data["durationTime"].toString()) : <any>undefined;
-            this.order = _data["order"];
-            this.instructions = _data["instructions"];
-            this.isActive = _data["isActive"];
-            this.nameL = _data["nameL"];
-            this.nameF = _data["nameF"];
-            this.sectionType = _data["sectionType"];
-            this.templateId = _data["templateId"];
-        }
-    }
-
-    static fromJS(data: any): TemplateSectionDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new TemplateSectionDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["id"] = this.id;
-        data["durationTime"] = this.durationTime ? this.durationTime.toString() : <any>undefined;
-        data["order"] = this.order;
-        data["instructions"] = this.instructions;
-        data["isActive"] = this.isActive;
-        data["nameL"] = this.nameL;
-        data["nameF"] = this.nameF;
-        data["sectionType"] = this.sectionType;
-        data["templateId"] = this.templateId;
-        return data;
-    }
-}
-
-export interface ITemplateSectionDto {
-    id: number;
-    durationTime: DateTime;
-    order: number;
-    instructions: string | undefined;
-    isActive: boolean;
-    nameL: string | undefined;
-    nameF: string | undefined;
-    sectionType: SectionTypeEnum;
-    templateId: number;
-}
-
-export class TemplateSectionTemplateLookupTableDto implements ITemplateSectionTemplateLookupTableDto {
-    id!: number;
-    displayName!: string | undefined;
-
-    constructor(data?: ITemplateSectionTemplateLookupTableDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.id = _data["id"];
-            this.displayName = _data["displayName"];
-        }
-    }
-
-    static fromJS(data: any): TemplateSectionTemplateLookupTableDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new TemplateSectionTemplateLookupTableDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["id"] = this.id;
-        data["displayName"] = this.displayName;
-        return data;
-    }
-}
-
-export interface ITemplateSectionTemplateLookupTableDto {
-    id: number;
-    displayName: string | undefined;
-}
-
-export class TemplateStudyLevelLookupTableDto implements ITemplateStudyLevelLookupTableDto {
-    id!: number;
-    displayName!: string | undefined;
-
-    constructor(data?: ITemplateStudyLevelLookupTableDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.id = _data["id"];
-            this.displayName = _data["displayName"];
-        }
-    }
-
-    static fromJS(data: any): TemplateStudyLevelLookupTableDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new TemplateStudyLevelLookupTableDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["id"] = this.id;
-        data["displayName"] = this.displayName;
-        return data;
-    }
-}
-
-export interface ITemplateStudyLevelLookupTableDto {
-    id: number;
-    displayName: string | undefined;
-}
-
-export class TemplateStudySubjectLookupTableDto implements ITemplateStudySubjectLookupTableDto {
-    id!: number;
-    displayName!: string | undefined;
-
-    constructor(data?: ITemplateStudySubjectLookupTableDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.id = _data["id"];
-            this.displayName = _data["displayName"];
-        }
-    }
-
-    static fromJS(data: any): TemplateStudySubjectLookupTableDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new TemplateStudySubjectLookupTableDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["id"] = this.id;
-        data["displayName"] = this.displayName;
-        return data;
-    }
-}
-
-export interface ITemplateStudySubjectLookupTableDto {
-    id: number;
-    displayName: string | undefined;
-}
-
-export class TemplateTypeDetailCategoryLookupTableDto implements ITemplateTypeDetailCategoryLookupTableDto {
-    id!: number;
-    displayName!: string | undefined;
-
-    constructor(data?: ITemplateTypeDetailCategoryLookupTableDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.id = _data["id"];
-            this.displayName = _data["displayName"];
-        }
-    }
-
-    static fromJS(data: any): TemplateTypeDetailCategoryLookupTableDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new TemplateTypeDetailCategoryLookupTableDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["id"] = this.id;
-        data["displayName"] = this.displayName;
-        return data;
-    }
-}
-
-export interface ITemplateTypeDetailCategoryLookupTableDto {
-    id: number;
-    displayName: string | undefined;
-}
-
-export class TemplateTypeDetailComplexityLookupTableDto implements ITemplateTypeDetailComplexityLookupTableDto {
-    id!: number;
-    displayName!: string | undefined;
-
-    constructor(data?: ITemplateTypeDetailComplexityLookupTableDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.id = _data["id"];
-            this.displayName = _data["displayName"];
-        }
-    }
-
-    static fromJS(data: any): TemplateTypeDetailComplexityLookupTableDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new TemplateTypeDetailComplexityLookupTableDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["id"] = this.id;
-        data["displayName"] = this.displayName;
-        return data;
-    }
-}
-
-export interface ITemplateTypeDetailComplexityLookupTableDto {
-    id: number;
-    displayName: string | undefined;
-}
-
-export class TemplateTypeDetailDto implements ITemplateTypeDetailDto {
-    id!: number;
-    questionType!: QuestionTypeEnum;
-    groupQuestionCount!: number;
-    order!: number;
-    isActive!: boolean;
-    templateSectionId!: number;
-    categoryId!: number;
-    questionTargetId!: number;
-    complexityId!: number | undefined;
-
-    constructor(data?: ITemplateTypeDetailDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.id = _data["id"];
-            this.questionType = _data["questionType"];
-            this.groupQuestionCount = _data["groupQuestionCount"];
-            this.order = _data["order"];
-            this.isActive = _data["isActive"];
-            this.templateSectionId = _data["templateSectionId"];
-            this.categoryId = _data["categoryId"];
-            this.questionTargetId = _data["questionTargetId"];
-            this.complexityId = _data["complexityId"];
-        }
-    }
-
-    static fromJS(data: any): TemplateTypeDetailDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new TemplateTypeDetailDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["id"] = this.id;
-        data["questionType"] = this.questionType;
-        data["groupQuestionCount"] = this.groupQuestionCount;
-        data["order"] = this.order;
-        data["isActive"] = this.isActive;
-        data["templateSectionId"] = this.templateSectionId;
-        data["categoryId"] = this.categoryId;
-        data["questionTargetId"] = this.questionTargetId;
-        data["complexityId"] = this.complexityId;
-        return data;
-    }
-}
-
-export interface ITemplateTypeDetailDto {
-    id: number;
-    questionType: QuestionTypeEnum;
-    groupQuestionCount: number;
-    order: number;
-    isActive: boolean;
-    templateSectionId: number;
-    categoryId: number;
-    questionTargetId: number;
-    complexityId: number | undefined;
-}
-
-export class TemplateTypeDetailQuestionTargetLookupTableDto implements ITemplateTypeDetailQuestionTargetLookupTableDto {
-    id!: number;
-    displayName!: string | undefined;
-
-    constructor(data?: ITemplateTypeDetailQuestionTargetLookupTableDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.id = _data["id"];
-            this.displayName = _data["displayName"];
-        }
-    }
-
-    static fromJS(data: any): TemplateTypeDetailQuestionTargetLookupTableDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new TemplateTypeDetailQuestionTargetLookupTableDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["id"] = this.id;
-        data["displayName"] = this.displayName;
-        return data;
-    }
-}
-
-export interface ITemplateTypeDetailQuestionTargetLookupTableDto {
-    id: number;
-    displayName: string | undefined;
-}
-
-export class TemplateTypeDetailTemplateSectionLookupTableDto implements ITemplateTypeDetailTemplateSectionLookupTableDto {
-    id!: number;
-    displayName!: string | undefined;
-
-    constructor(data?: ITemplateTypeDetailTemplateSectionLookupTableDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.id = _data["id"];
-            this.displayName = _data["displayName"];
-        }
-    }
-
-    static fromJS(data: any): TemplateTypeDetailTemplateSectionLookupTableDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new TemplateTypeDetailTemplateSectionLookupTableDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["id"] = this.id;
-        data["displayName"] = this.displayName;
-        return data;
-    }
-}
-
-export interface ITemplateTypeDetailTemplateSectionLookupTableDto {
-    id: number;
-    displayName: string | undefined;
 }
 
 export enum TenantAvailabilityState {

@@ -1,0 +1,43 @@
+<ng-container [ngSwitch]="questionType">
+    <app-multiple-choice-one-option
+      *ngSwitchCase="QuestionTypeEnum.SinglChoice"
+      [(ngModel)]="value.choices"
+    >
+    </app-multiple-choice-one-option>
+
+    <app-multiple-choice-more-than-option
+      *ngSwitchCase="QuestionTypeEnum.MutliChoice"
+      [(ngModel)]="value.choices"
+    >
+    </app-multiple-choice-more-than-option>
+
+    <app-true-fase-question
+      *ngSwitchCase="QuestionTypeEnum.TrueAndFalse"
+      [(ngModel)]="value.choices"
+    >
+    </app-true-fase-question>
+
+    <app-connecting-sentences
+      *ngSwitchCase="QuestionTypeEnum.Match"
+      [(ngModel)]="value.matchQuestions"
+    >
+    </app-connecting-sentences>
+
+    <app-re-order
+      *ngSwitchCase="QuestionTypeEnum.Rearrange"
+      [(ngModel)]="value.rearrangeQuestions"
+    >
+    </app-re-order>
+
+    <app-drag-drop-words
+      *ngSwitchCase="QuestionTypeEnum.DargingForm"
+      [(ngModel)]="value.dragFormQuestions"
+    >
+    </app-drag-drop-words>
+
+    <app-drag-drop-table
+      *ngSwitchCase="QuestionTypeEnum.DargingTable"
+      [(ngModel)]="value.tableDragQuestions"
+    >
+    </app-drag-drop-table>
+  </ng-container>
