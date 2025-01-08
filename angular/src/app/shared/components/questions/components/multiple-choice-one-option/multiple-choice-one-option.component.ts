@@ -1,9 +1,10 @@
+import { ButtonModule } from 'primeng/button';
+import { InputNumberModule } from 'primeng/inputnumber';
 import { Component, forwardRef, Injector } from '@angular/core';
 import { ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { EditorComponent } from '@app/shared/components/editor/editor.component';
 import { DropdownFieldComponent } from '@app/shared/components/fields/dropdown-field/dropdown-field.component';
-import { ButtonModule } from '@node_modules/primeng/button';
-import { InputNumberModule } from '@node_modules/primeng/inputnumber';
+
 import { AppComponentBase } from '@shared/common/app-component-base';
 import { CreateOrEditChoiceQuestionDto, QuestionOptionTypeEnum } from '@shared/service-proxies/service-proxies';
 
