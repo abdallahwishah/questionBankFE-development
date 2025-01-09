@@ -22,17 +22,20 @@
 
     <!-- Editor or name field -->
     <div class="col-md-7 col-9 mb-md-0 mb-3">
-        <!-- If using a custom WYSIWYG Editor -->
-        <app-editor class="w-100" [(ngModel)]="choice.name" (ngModelChange)="notifyChange()"></app-editor>
-
-        <!-- Alternatively, just a plain input:
-      <input
-        class="form-control"
-        [(ngModel)]="choice.name"
-        (ngModelChange)="notifyChange()"
-        placeholder="Choice text..."
-      />
-      -->
+        <!-- Using a WYSIWYG editor for the choice text -->
+        <app-editor
+            *ngIf="choice.isEdit"
+            class="w-100"
+            [(ngModel)]="choice.name"
+            (ngModelChange)="notifyChange()"
+        ></app-editor>
+        <div class="d-flex">
+            <p class="mb-0" *ngIf="!choice.isEdit" [innerHtml]="choice.name"></p>
+            <!-- if this seleted need to show correct asswer -->
+            <span class="badge bg-success ms-2" *ngIf="choice.optionType === QuestionOptionTypeEnum.Pinned">
+                {{ l('CorrectAnswer') }}
+            </span>
+        </div>
     </div>
 
     <!-- Option type dropdown + points + delete -->
@@ -53,8 +56,14 @@
         ></p-inputNumber>
 
         <!-- Delete choice -->
+        <button class="btn btn-edit p-3 mx-2" *ngIf="!choice.isEdit" (click)="choice.isEdit = true">
+            <img src="assets/common/images/edit.svg" alt="" />
+        </button>
+        <button class="btn btn-edit p-3 mx-2" *ngIf="choice.isEdit" (click)="choice.isEdit = false">
+            <img src="assets/common/images/check.svg" alt="" />
+        </button>
         <button class="btn btn-delete p-3 m-0" (click)="removeChoice(i)">
-            <img src="assets/common/images/trash.svg" alt="delete" />
+            <img src="assets/common/images/trash.svg" alt="" />
         </button>
     </div>
 </div>

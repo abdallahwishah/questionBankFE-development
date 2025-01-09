@@ -1,87 +1,82 @@
 <div class="d-flex gap-3 mt-2 mb-6">
     <p class="mb-0 fw-medium">{{ l('Choices') }}</p>
     <span class="d-inline-block text-gray-700">
-      {{ l('ChooseTheCorrectAnswer') }}
+        {{ l('ChooseTheCorrectAnswer') }}
     </span>
-  </div>
+</div>
 
-  <!-- Loop through each choice in the array -->
-  <div
-    class="row question d-flex align-items-center mb-6"
-    *ngFor="let choice of value; let i = index"
-  >
+<!-- Loop through each choice in the array -->
+<div class="row question d-flex align-items-center mb-6" *ngFor="let choice of value; let i = index">
     <!-- Drag handle + checkbox -->
     <div class="col-md-1 col-3 d-flex align-items-center gap-5">
-      <img class="cursor-pointer" src="assets/common/images/menu.svg" alt="" />
+        <img class="cursor-pointer" src="assets/common/images/menu.svg" alt="" />
 
-      <!-- If using the enum for correctness -->
-      <!-- We check if it's pinned to decide if it's checked -->
-      <p-checkbox
-        [binary]="true"
-        [ngModel]="choice.optionType === QuestionOptionTypeEnum.Pinned"
-        (ngModelChange)="toggleCorrect(choice)"
-      ></p-checkbox>
+        <!-- If using the enum for correctness -->
+        <!-- We check if it's pinned to decide if it's checked -->
+        <p-checkbox
+            [binary]="true"
+            [ngModel]="choice.optionType === QuestionOptionTypeEnum.Pinned"
+            (ngModelChange)="toggleCorrect(choice)"
+        ></p-checkbox>
     </div>
 
     <!-- Display or edit the name -->
     <div class="col-md-7 col-9 mb-md-0 mb-3">
-      <!-- Using a WYSIWYG editor for the choice text -->
-      <app-editor
-        class="w-100"
-        [(ngModel)]="choice.name"
-        (ngModelChange)="notifyValueChange()"
-      ></app-editor>
+        <!-- Using a WYSIWYG editor for the choice text -->
+        <app-editor
+            *ngIf="choice.isEdit"
+            class="w-100"
+            [(ngModel)]="choice.name"
+            (ngModelChange)="notifyValueChange()"
+        ></app-editor>
+        <div class="d-flex">
+            <p class="mb-0" *ngIf="!choice.isEdit" [innerHtml]="choice.name"></p>
+            <!-- if this seleted need to show correct asswer -->
+            <span class="badge bg-success ms-2" *ngIf="choice.optionType === QuestionOptionTypeEnum.Pinned">
+                {{ l('CorrectAnswer') }}
+            </span>
+        </div>
     </div>
 
     <!-- Points + Edit + Delete buttons -->
     <div class="col-md-4 d-flex align-items-center justify-content-end">
-      <p-inputNumber
-        [(ngModel)]="choice.point"
-        (ngModelChange)="notifyValueChange()"
-        [showButtons]="true"
-        buttonLayout="horizontal"
-        inputId="horizontal"
-        spinnerMode="horizontal"
-        [step]="1"
-        decrementButtonClass="min"
-        incrementButtonClass="max"
-        incrementButtonIcon="pi pi-plus"
-        decrementButtonIcon="pi pi-minus"
-      >
-      </p-inputNumber>
+        <p-inputNumber
+            [(ngModel)]="choice.point"
+            (ngModelChange)="notifyValueChange()"
+            [showButtons]="true"
+            buttonLayout="horizontal"
+            inputId="horizontal"
+            spinnerMode="horizontal"
+            [step]="1"
+            decrementButtonClass="min"
+            incrementButtonClass="max"
+            incrementButtonIcon="pi pi-plus"
+            decrementButtonIcon="pi pi-minus"
+        ></p-inputNumber>
 
-      <button class="btn btn-edit p-3 mx-2">
-        <img src="assets/common/images/edit.svg" alt="" />
-      </button>
-
-      <button class="btn btn-delete p-3 m-0" (click)="removeChoice(i)">
-        <img src="assets/common/images/trash.svg" alt="" />
-      </button>
+        <button class="btn btn-edit p-3 mx-2" *ngIf="!choice.isEdit" (click)="choice.isEdit = true">
+            <img src="assets/common/images/edit.svg" alt="" />
+        </button>
+        <button class="btn btn-edit p-3 mx-2" *ngIf="choice.isEdit" (click)="choice.isEdit = false">
+            <img src="assets/common/images/check.svg" alt="" />
+        </button>
+        <button class="btn btn-delete p-3 m-0" (click)="removeChoice(i)">
+            <img src="assets/common/images/trash.svg" alt="" />
+        </button>
     </div>
-  </div>
+</div>
 
-
-
-  <!-- Or a simpler "Add New" button at the bottom -->
-  <h5
-    class="d-flex align-items-center justify-content-start gap-2 cursor-pointer"
-    (click)="addChoice()"
-  >
-    <svg
-      width="25"
-      height="24"
-      viewBox="0 0 25 24"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <path
-        d="M6.5 12.75C6.09 12.75 5.75 12.41 5.75 12C5.75 11.59 6.09 11.25 6.5 11.25H18.5C18.91 11.25 19.25 11.59 19.25 12C19.25 12.41 18.91 12.75 18.5 12.75H6.5Z"
-        fill="#6D31ED"
-      />
-      <path
-        d="M11.75 18V6C11.75 5.59 12.09 5.25 12.5 5.25C12.91 5.25 13.25 5.59 13.25 6V18C13.25 18.41 12.91 18.75 12.5 18.75C12.09 18.75 11.75 18.41 11.75 18Z"
-        fill="#6D31ED"
-      />
+<!-- Or a simpler "Add New" button at the bottom -->
+<h5 class="d-flex align-items-center justify-content-start gap-2 cursor-pointer" (click)="addChoice()">
+    <svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path
+            d="M6.5 12.75C6.09 12.75 5.75 12.41 5.75 12C5.75 11.59 6.09 11.25 6.5 11.25H18.5C18.91 11.25 19.25 11.59 19.25 12C19.25 12.41 18.91 12.75 18.5 12.75H6.5Z"
+            fill="#6D31ED"
+        />
+        <path
+            d="M11.75 18V6C11.75 5.59 12.09 5.25 12.5 5.25C12.91 5.25 13.25 5.59 13.25 6V18C13.25 18.41 12.91 18.75 12.5 18.75C12.09 18.75 11.75 18.41 11.75 18Z"
+            fill="#6D31ED"
+        />
     </svg>
     <span class="text-primary">{{ l('AddNewOption') }}</span>
-  </h5>
+</h5>

@@ -19,14 +19,7 @@ import {
   import { CheckboxModule } from 'primeng/checkbox';
   import { DragDropModule } from '@angular/cdk/drag-drop';
 import { CommonModule } from '@node_modules/@angular/common';
-
-  /** DTO for each match item */
-  export class CreateOrEditMatchQuestionDto {
-    word!: string | undefined;          // left word
-    matchedWord!: string | undefined;   // right word
-    matchedFakeWord!: string | undefined; // optional fake word
-    point!: number;
-  }
+import { CreateOrEditMatchQuestionDto } from '@shared/service-proxies/service-proxies';
 
   @Component({
     selector: 'app-connecting-sentences',
@@ -72,6 +65,8 @@ import { CommonModule } from '@node_modules/@angular/common';
     // --------------------------------
     writeValue(obj: CreateOrEditMatchQuestionDto[]): void {
       this.value = obj || [];
+    //   should handle addFakeAnswers true if there is fake option
+        this.addFakeAnswers = this.value.some(item => item.matchedFakeWord  );
     }
 
     registerOnChange(fn: (val: CreateOrEditMatchQuestionDto[]) => void): void {

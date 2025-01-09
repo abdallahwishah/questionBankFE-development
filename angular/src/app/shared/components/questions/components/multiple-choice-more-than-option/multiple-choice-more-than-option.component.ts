@@ -44,13 +44,6 @@ export class MultipleChoiceMoreThanOptionComponent extends AppComponentBase impl
 
     ngOnInit(): void {
         // If you want at least one choice by default:
-        if (!this.value || this.value.length === 0) {
-            const defaultChoice = new CreateOrEditChoiceQuestionDto();
-            defaultChoice.name = '';
-            defaultChoice.point = 1;
-            defaultChoice.optionType = QuestionOptionTypeEnum.Normal;
-            this.value.push(defaultChoice);
-        }
     }
 
     // ------------------------------------------
@@ -59,6 +52,14 @@ export class MultipleChoiceMoreThanOptionComponent extends AppComponentBase impl
     writeValue(obj: CreateOrEditChoiceQuestionDto[]): void {
         // Called by Angular when parent sets the value
         this.value = obj || [];
+        if (!this.value.length) {
+            const defaultChoice = new CreateOrEditChoiceQuestionDto();
+            defaultChoice.name = '';
+            defaultChoice.point = 1;
+            (defaultChoice as any).isEdit = true;
+            defaultChoice.optionType = QuestionOptionTypeEnum.Normal;
+            this.value.push(defaultChoice);
+        }
     }
 
     registerOnChange(fn: (val: CreateOrEditChoiceQuestionDto[]) => void): void {
@@ -106,6 +107,7 @@ export class MultipleChoiceMoreThanOptionComponent extends AppComponentBase impl
         const newChoice = new CreateOrEditChoiceQuestionDto();
         newChoice.name = '';
         newChoice.point = 1;
+        (newChoice as any).isEdit = true;
         newChoice.optionType = QuestionOptionTypeEnum.Normal;
         this.value.push(newChoice);
 

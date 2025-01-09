@@ -57,6 +57,14 @@ export class MultipleChoiceOneOptionComponent extends AppComponentBase implement
      */
     writeValue(value: CreateOrEditChoiceQuestionDto[]): void {
         this.value = value || [];
+        if (!this.value.length) {
+            const defaultChoice = new CreateOrEditChoiceQuestionDto();
+            defaultChoice.name = '';
+            defaultChoice.point = 1;
+            (defaultChoice as any).isEdit = true;
+            defaultChoice.optionType = QuestionOptionTypeEnum.Normal;
+            this.value.push(defaultChoice);
+        }
     }
 
     /**
@@ -110,6 +118,7 @@ export class MultipleChoiceOneOptionComponent extends AppComponentBase implement
         const newChoice = new CreateOrEditChoiceQuestionDto();
         newChoice.name = '';
         newChoice.point = 1;
+        (newChoice as any).isEdit = true;
         newChoice.optionType = QuestionOptionTypeEnum.Normal;
         this.value.push(newChoice);
         this.notifyChange();
