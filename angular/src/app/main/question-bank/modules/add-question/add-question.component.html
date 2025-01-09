@@ -241,21 +241,21 @@
                                 [labelField]="l('QuestionType')"
                             ></app-dropdown-field>
                         </div>
-                        <div class="col-md-3 mb-5 d-flex align-items-end">
+                        <div class="col-md-3 mb-5">
                             <label class="mb-2">{{ l('MinimumPoints') }}</label>
                             <input
                                 name="text"
                                 [(ngModel)]="_createOrEditQuestionDto.maxPoints"
-                                class="form-control m-input"
+                                class="form-control m-input d-block"
                                 type="text"
                             />
                         </div>
-                        <div class="col-md-3 mb-5 d-flex align-items-end">
+                        <div class="col-md-3 mb-5">
                             <label class="mb-2">{{ l('MaximumPoints') }}</label>
                             <input
                                 name="text"
                                 [(ngModel)]="_createOrEditQuestionDto.minPoints"
-                                class="form-control m-input"
+                                class="form-control m-input d-block "
                                 type="text"
                             />
                         </div>
