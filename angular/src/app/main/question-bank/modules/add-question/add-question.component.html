@@ -164,7 +164,6 @@
                                 name="text"
                                 [(ngModel)]="_createOrEditQuestionDto.pageNumber"
                                 class="form-control m-input"
-                                [placeholder]="l('EnterPageNumber')"
                                 type="text"
                             />
                         </div>
@@ -243,20 +242,20 @@
                             ></app-dropdown-field>
                         </div>
                         <div class="col-md-3 mb-5 d-flex align-items-end">
+                            <label class="mb-2">{{ l('MinimumPoints') }}</label>
                             <input
                                 name="text"
                                 [(ngModel)]="_createOrEditQuestionDto.maxPoints"
                                 class="form-control m-input"
-                                [placeholder]="l('MinimumPoints')"
                                 type="text"
                             />
                         </div>
                         <div class="col-md-3 mb-5 d-flex align-items-end">
+                            <label class="mb-2">{{ l('MaximumPoints') }}</label>
                             <input
                                 name="text"
                                 [(ngModel)]="_createOrEditQuestionDto.minPoints"
                                 class="form-control m-input"
-                                [placeholder]="l('MaximumPoints')"
                                 type="text"
                             />
                         </div>
