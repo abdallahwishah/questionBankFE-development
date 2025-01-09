@@ -6,14 +6,14 @@
                     <h4 class="modal-title">
                         <span *ngIf="studyLevel.id">{{l("EditStudyLevel")}}</span>
                         <span *ngIf="!studyLevel.id">{{l("CreateNewStudyLevel")}}</span>
-                    </h4>                    
-                    
-                    
+                    </h4>
+
+
                  <button type="button" class="btn-close" (click)="close()" aria-label="Close" [disabled]="saving"></button>
-             
+
                 </div>
                 <div class="modal-body">
-                 
+
 
 
 
@@ -23,19 +23,19 @@
 									<input type="text" #StudyLevel_NameF="ngModel" id="StudyLevel_NameF" class="form-control" [(ngModel)]="studyLevel.nameF" name="NameF"     required/>
 								    <validation-messages [formCtrl]="StudyLevel_NameF"></validation-messages>
 								</div>
-					
+
 								<div class="my-3">
 									<label class="form-label" for="StudyLevel_NameL">{{l("NameL")}} *</label>
 									<input type="text" #StudyLevel_NameL="ngModel" id="StudyLevel_NameL" class="form-control" [(ngModel)]="studyLevel.nameL" name="NameL"     required/>
 								    <validation-messages [formCtrl]="StudyLevel_NameL"></validation-messages>
 								</div>
-					
+
 								<br/>
 								<label class="form-check form-check-custom form-check-solid">
                                     <input
-                                        id="StudyLevel_IsActive" 
+                                        id="StudyLevel_IsActive"
                                         #StudyLevel_IsActive="ngModel"
-                                        name="IsActive" 
+                                        name="IsActive"
                                         [(ngModel)]="studyLevel.isActive"
                                         type="checkbox"
                                         class="form-check-input"
@@ -45,7 +45,7 @@
                                     </span>
                                 </label>
                                 <validation-messages [formCtrl]="StudyLevel_IsActive"></validation-messages>
-					
+
 
                 </div>
                 <div class="modal-footer">

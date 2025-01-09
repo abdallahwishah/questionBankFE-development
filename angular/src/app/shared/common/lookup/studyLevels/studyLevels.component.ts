@@ -1,6 +1,6 @@
 ﻿import {AppConsts} from '@shared/AppConsts';
 import { Component, Injector, ViewEncapsulation, ViewChild } from '@angular/core';
-import { ActivatedRoute , Router} from '@angular/router';
+import { ActivatedRoute , Router, RouterModule} from '@angular/router';
 import { StudyLevelsServiceProxy, StudyLevelDto  } from '@shared/service-proxies/service-proxies';
 import { NotifyService } from 'abp-ng2-module';
 import { AppComponentBase } from '@shared/common/app-component-base';
@@ -25,12 +25,12 @@ import { DateTime } from 'luxon';
     animations: [appModuleAnimation()]
 })
 export class StudyLevelsComponent extends AppComponentBase {
-    
-    
+
+
     @ViewChild('entityTypeHistoryModal', { static: true }) entityTypeHistoryModal: EntityTypeHistoryModalComponent;
     @ViewChild('createOrEditStudyLevelModal', { static: true }) createOrEditStudyLevelModal: CreateOrEditStudyLevelModalComponent;
-    @ViewChild('viewStudyLevelModal', { static: true }) viewStudyLevelModal: ViewStudyLevelModalComponent;   
-    
+    @ViewChild('viewStudyLevelModal', { static: true }) viewStudyLevelModal: ViewStudyLevelModalComponent;
+
     @ViewChild('dataTable', { static: true }) dataTable: Table;
     @ViewChild('paginator', { static: true }) paginator: Paginator;
 
@@ -50,6 +50,7 @@ export class StudyLevelsComponent extends AppComponentBase {
         private _notifyService: NotifyService,
         private _tokenAuth: TokenAuthServiceProxy,
         private _activatedRoute: ActivatedRoute,
+        private _route: Router,
         private _fileDownloadService: FileDownloadService,
              private _dateTimeService: DateTimeService
     ) {
@@ -94,7 +95,7 @@ export class StudyLevelsComponent extends AppComponentBase {
     }
 
     createStudyLevel(): void {
-        this.createOrEditStudyLevelModal.show();        
+        this.createOrEditStudyLevelModal.show();
     }
 
 
@@ -131,11 +132,15 @@ export class StudyLevelsComponent extends AppComponentBase {
             this._fileDownloadService.downloadTempFile(result);
          });
     }
-    
-    
-    
-    
-    
+
+
+    action(event: any, record: any) {
+        if (event == 'View') {
+
+        }
+    }
+
+
 
     resetFilters(): void {
         this.filterText = '';
