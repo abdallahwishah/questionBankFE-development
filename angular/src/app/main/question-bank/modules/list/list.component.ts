@@ -23,12 +23,11 @@ export class ListComponent extends AppComponentBase implements OnInit {
         private _injector: Injector,
         private _DialogSharedService: DialogSharedService,
         private _questionsServiceProxy: QuestionsServiceProxy,
-
     ) {
         super(_injector);
     }
 
-    ngOnInit() { }
+    ngOnInit() {}
 
     getQuestion(event?: LazyLoadEvent) {
         if (event) {
@@ -53,16 +52,7 @@ export class ListComponent extends AppComponentBase implements OnInit {
                 undefined,
                 undefined,
                 undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
+
                 undefined,
                 this.primengTableHelper.getSorting(this.dataTable),
                 this.primengTableHelper.getSkipCount(this.paginator, event),
@@ -76,7 +66,6 @@ export class ListComponent extends AppComponentBase implements OnInit {
             });
     }
 
-
     addFile() {
         this._DialogSharedService.showDialog(this.Add_File_dialog, {});
     }
@@ -86,7 +75,6 @@ export class ListComponent extends AppComponentBase implements OnInit {
                 console.log();
                 break;
             case 'Edit':
-
                 break;
         }
     }

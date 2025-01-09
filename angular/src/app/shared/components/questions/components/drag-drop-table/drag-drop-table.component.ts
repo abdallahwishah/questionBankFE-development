@@ -198,10 +198,10 @@ export class DragDropTableComponent extends AppComponentBase implements ControlV
         const rowDto = new CreateOrEditTableDragQuestionDto();
         rowDto.dragDropTableColumnIndex = rowIndex;
         // For convenience, set dragDropTableHeaders to identify row
-        rowDto.dragDropTableHeaders =
-            rowIndex === 0
-                ? this.l('HeaderRow') + ' ' + (rowIndex + 1)
-                : this.l('DataRow')   + ' ' + (rowIndex + 1);
+        // rowDto.dragDropTableHeaders =
+        //     rowIndex === 0
+        //         ? this.l('HeaderRow') + ' ' + (rowIndex + 1)
+        //         : this.l('DataRow')   + ' ' + (rowIndex + 1);
 
         rowDto.dragDropTableItems = [];
 
