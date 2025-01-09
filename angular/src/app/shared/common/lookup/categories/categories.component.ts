@@ -25,12 +25,12 @@ import { DateTime } from 'luxon';
     animations: [appModuleAnimation()]
 })
 export class CategoriesComponent extends AppComponentBase {
-    
-    
+
+
     @ViewChild('entityTypeHistoryModal', { static: true }) entityTypeHistoryModal: EntityTypeHistoryModalComponent;
     @ViewChild('createOrEditCategoryModal', { static: true }) createOrEditCategoryModal: CreateOrEditCategoryModalComponent;
-    @ViewChild('viewCategoryModal', { static: true }) viewCategoryModal: ViewCategoryModalComponent;   
-    
+    @ViewChild('viewCategoryModal', { static: true }) viewCategoryModal: ViewCategoryModalComponent;
+
     @ViewChild('dataTable', { static: true }) dataTable: Table;
     @ViewChild('paginator', { static: true }) paginator: Paginator;
 
@@ -94,7 +94,7 @@ export class CategoriesComponent extends AppComponentBase {
     }
 
     createCategory(): void {
-        this.createOrEditCategoryModal.show();        
+        this.createOrEditCategoryModal.show();
     }
 
 
@@ -131,11 +131,29 @@ export class CategoriesComponent extends AppComponentBase {
             this._fileDownloadService.downloadTempFile(result);
          });
     }
-    
-    
-    
-    
-    
+
+
+
+    action(event: any, record: any) {
+        switch (event) {
+            case 'View':
+                this.viewCategoryModal.show(record)
+                break;
+            case 'Edit':
+                this.createOrEditCategoryModal.show(record.complexity.id)
+                break;
+            case 'Delete':
+                this.deleteCategory(record.complexity)
+                break;
+            case 'History':
+                this.showHistory(record.category)
+                break;
+        }
+
+    }
+
+
+
 
     resetFilters(): void {
         this.filterText = '';

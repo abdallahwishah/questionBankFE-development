@@ -24,11 +24,11 @@ import { DateTime } from 'luxon';
     animations: [appModuleAnimation()]
 })
 export class SubjectUnitsComponent extends AppComponentBase {
-    
-    
+
+
     @ViewChild('createOrEditSubjectUnitModal', { static: true }) createOrEditSubjectUnitModal: CreateOrEditSubjectUnitModalComponent;
-    @ViewChild('viewSubjectUnitModal', { static: true }) viewSubjectUnitModal: ViewSubjectUnitModalComponent;   
-    
+    @ViewChild('viewSubjectUnitModal', { static: true }) viewSubjectUnitModal: ViewSubjectUnitModalComponent;
+
     @ViewChild('dataTable', { static: true }) dataTable: Table;
     @ViewChild('paginator', { static: true }) paginator: Paginator;
 
@@ -88,7 +88,7 @@ export class SubjectUnitsComponent extends AppComponentBase {
     }
 
     createSubjectUnit(): void {
-        this.createOrEditSubjectUnitModal.show();        
+        this.createOrEditSubjectUnitModal.show();
     }
 
 
@@ -120,11 +120,25 @@ export class SubjectUnitsComponent extends AppComponentBase {
             this._fileDownloadService.downloadTempFile(result);
          });
     }
-    
-    
-    
-    
-    
+
+
+    action(event: any, record: any) {
+        switch (event) {
+            case 'View':
+                this.viewSubjectUnitModal.show(record)
+                break;
+            case 'Edit':
+                this.createOrEditSubjectUnitModal.show(record.complexity.id)
+                break;
+            case 'Delete':
+                this.deleteSubjectUnit(record.complexity)
+                break;
+
+        }
+
+    }
+
+
 
     resetFilters(): void {
         this.filterText = '';
@@ -132,7 +146,7 @@ export class SubjectUnitsComponent extends AppComponentBase {
     this.isActiveFilter = -1;
 		this.studyLevelValueFilter = '';
 							this.studySubjectValueFilter = '';
-					
+
         this.getSubjectUnits();
     }
 }

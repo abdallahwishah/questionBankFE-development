@@ -7,7 +7,8 @@ import {CreateOrEditSubjectUnitModalComponent} from './create-or-edit-subjectUni
 import {ViewSubjectUnitModalComponent} from './view-subjectUnit-modal.component';
 import {SubjectUnitStudyLevelLookupTableModalComponent} from './subjectUnit-studyLevel-lookup-table-modal.component';
     					import {SubjectUnitStudySubjectLookupTableModalComponent} from './subjectUnit-studySubject-lookup-table-modal.component';
-    					
+import { ActionButtonComponent } from "../../../components/action-button/action-button.component";
+
 
 
 @NgModule({
@@ -15,12 +16,12 @@ import {SubjectUnitStudyLevelLookupTableModalComponent} from './subjectUnit-stud
         SubjectUnitsComponent,
         CreateOrEditSubjectUnitModalComponent,
         ViewSubjectUnitModalComponent,
-        
+
     					SubjectUnitStudyLevelLookupTableModalComponent,
     					SubjectUnitStudySubjectLookupTableModalComponent,
     ],
-    imports: [AppSharedModule, SubjectUnitRoutingModule , AdminSharedModule ],
-    
+    imports: [AppSharedModule, SubjectUnitRoutingModule, AdminSharedModule, ActionButtonComponent],
+
 })
 export class SubjectUnitModule {
 }

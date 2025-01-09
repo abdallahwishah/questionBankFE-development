@@ -1,11 +1,12 @@
 import { Component, EventEmitter, Injector, Input, OnInit, Output } from '@angular/core';
 import { RouterModule } from '@node_modules/@angular/router';
+import { OverlayPanelModule } from 'primeng/overlaypanel';
 import { AppComponentBase } from '@shared/common/app-component-base';
 
 @Component({
     selector: 'app-action-button',
     standalone:true,
-    imports:[RouterModule],
+    imports:[RouterModule , OverlayPanelModule],
     templateUrl: './action-button.component.html',
     styleUrls: ['./action-button.component.css'],
 })

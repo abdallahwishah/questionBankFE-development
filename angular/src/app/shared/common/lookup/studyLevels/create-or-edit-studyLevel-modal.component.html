@@ -24,13 +24,13 @@
 								    <validation-messages [formCtrl]="StudyLevel_NameF"></validation-messages>
 								</div>
 
-								<div class="my-3">
+								<div class="mt-3 mb-4">
 									<label class="form-label" for="StudyLevel_NameL">{{l("NameL")}} *</label>
 									<input type="text" #StudyLevel_NameL="ngModel" id="StudyLevel_NameL" class="form-control" [(ngModel)]="studyLevel.nameL" name="NameL"     required/>
 								    <validation-messages [formCtrl]="StudyLevel_NameL"></validation-messages>
 								</div>
 
-								<br/>
+
 								<label class="form-check form-check-custom form-check-solid">
                                     <input
                                         id="StudyLevel_IsActive"

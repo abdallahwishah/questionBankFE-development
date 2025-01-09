@@ -5,6 +5,7 @@ import {CategoryRoutingModule} from './category-routing.module';
 import {CategoriesComponent} from './categories.component';
 import {CreateOrEditCategoryModalComponent} from './create-or-edit-category-modal.component';
 import {ViewCategoryModalComponent} from './view-category-modal.component';
+import { ActionButtonComponent } from "../../../components/action-button/action-button.component";
 
 
 
@@ -13,10 +14,10 @@ import {ViewCategoryModalComponent} from './view-category-modal.component';
         CategoriesComponent,
         CreateOrEditCategoryModalComponent,
         ViewCategoryModalComponent,
-        
+
     ],
-    imports: [AppSharedModule, CategoryRoutingModule , AdminSharedModule ],
-    
+    imports: [AppSharedModule, CategoryRoutingModule, AdminSharedModule, ActionButtonComponent],
+
 })
 export class CategoryModule {
 }

@@ -135,9 +135,18 @@ export class StudyLevelsComponent extends AppComponentBase {
 
 
     action(event: any, record: any) {
-        if (event == 'View') {
-
+        switch (event) {
+            case 'View':
+                this.viewStudyLevelModal.show(record)
+                break;
+            case 'Edit':
+                this.createOrEditStudyLevelModal.show(record.studyLevel.id)
+                break;
+            case 'Delete':
+                this.deleteStudyLevel(record.studyLevel)
+                break;
         }
+
     }
 
 
