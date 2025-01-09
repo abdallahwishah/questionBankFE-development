@@ -29,8 +29,7 @@ export class AddQuestionComponent extends AppComponentBase implements OnInit {
     }
 
     ngOnInit() {
-         this._createOrEditQuestionDto.body = 'test'
-        this._studyLevelsServiceProxy.getAll(undefined , undefined , undefined ,undefined , undefined).subscribe(val=>{
+         this._studyLevelsServiceProxy.getAll(undefined , undefined , undefined ,undefined , undefined).subscribe(val=>{
             this.studyLevels = val.items.map(item => {
                 return {
                   id: item.studyLevel.id,
