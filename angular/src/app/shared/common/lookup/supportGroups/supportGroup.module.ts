@@ -5,6 +5,8 @@ import {SupportGroupRoutingModule} from './supportGroup-routing.module';
 import {SupportGroupsComponent} from './supportGroups.component';
 import {CreateOrEditSupportGroupModalComponent} from './create-or-edit-supportGroup-modal.component';
 import {ViewSupportGroupModalComponent} from './view-supportGroup-modal.component';
+import { ActionButtonComponent } from '@app/shared/components/action-button/action-button.component';
+import { InputSwitchModule } from 'primeng/inputswitch';
 
 
 
@@ -15,7 +17,7 @@ import {ViewSupportGroupModalComponent} from './view-supportGroup-modal.componen
         ViewSupportGroupModalComponent,
         
     ],
-    imports: [AppSharedModule, SupportGroupRoutingModule , AdminSharedModule ],
+    imports: [AppSharedModule, SupportGroupRoutingModule , AdminSharedModule,ActionButtonComponent,InputSwitchModule ],
     
 })
 export class SupportGroupModule {

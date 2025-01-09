@@ -88,4 +88,21 @@ export class RolesComponent extends AppComponentBase implements OnInit {
                 (entityType) => entityType === this._entityTypeFullName
             ).length === 1;
     }
+    action(event: any, record: any) {
+        switch (event) {
+            // case 'View':
+            //     this.viewCategoryModal.show(record)
+            //     break;
+            case 'Edit':
+                this.createOrEditRoleModal.show(record.id)
+                break;
+            case 'Delete':
+                this.deleteRole(record)
+                break;
+            case 'History':
+                this.showHistory(record)
+                break;
+        }
+
+    }
 }

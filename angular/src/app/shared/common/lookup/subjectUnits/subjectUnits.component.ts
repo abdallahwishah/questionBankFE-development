@@ -38,6 +38,7 @@ export class SubjectUnitsComponent extends AppComponentBase {
     isActiveFilter = -1;
         studyLevelValueFilter = '';
         studySubjectValueFilter = '';
+        checkedActive:boolean = true;
 
 
 
@@ -148,5 +149,12 @@ export class SubjectUnitsComponent extends AppComponentBase {
 							this.studySubjectValueFilter = '';
 
         this.getSubjectUnits();
+    }
+    getCheckedActive($event){
+        if(!$event.checked){
+            this.checkedActive = false
+        }else{
+            this.checkedActive = true
+        }
     }
 }

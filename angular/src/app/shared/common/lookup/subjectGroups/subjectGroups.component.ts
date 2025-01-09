@@ -81,6 +81,22 @@ export class SubjectGroupsComponent extends AppComponentBase {
         });
     }
 
+    action(event: any, record: any) {
+        switch (event) {
+            case 'View':
+                this.viewSubjectGroupModal.show(record)
+                break;
+            case 'Edit':
+                this.createOrEditSubjectGroupModal.show(record.subjectGroup.id)
+                break;
+            case 'Delete':
+                this.deleteSubjectGroup(record.subjectGroup)
+                break;
+
+        }
+
+    }
+
     reloadPage(): void {
         this.paginator.changePage(this.paginator.getPage());
     }

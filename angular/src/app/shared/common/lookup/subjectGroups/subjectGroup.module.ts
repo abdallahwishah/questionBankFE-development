@@ -7,6 +7,8 @@ import {CreateOrEditSubjectGroupModalComponent} from './create-or-edit-subjectGr
 import {ViewSubjectGroupModalComponent} from './view-subjectGroup-modal.component';
 import {SubjectGroupStudySubjectLookupTableModalComponent} from './subjectGroup-studySubject-lookup-table-modal.component';
     					import {SubjectGroupSupportGroupLookupTableModalComponent} from './subjectGroup-supportGroup-lookup-table-modal.component';
+import { InputSwitchModule } from 'primeng/inputswitch';
+import { ActionButtonComponent } from '@app/shared/components/action-button/action-button.component';
     					
 
 
@@ -19,7 +21,7 @@ import {SubjectGroupStudySubjectLookupTableModalComponent} from './subjectGroup-
     					SubjectGroupStudySubjectLookupTableModalComponent,
     					SubjectGroupSupportGroupLookupTableModalComponent,
     ],
-    imports: [AppSharedModule, SubjectGroupRoutingModule , AdminSharedModule ],
+    imports: [AppSharedModule, SubjectGroupRoutingModule , AdminSharedModule ,ActionButtonComponent,InputSwitchModule],
     
 })
 export class SubjectGroupModule {

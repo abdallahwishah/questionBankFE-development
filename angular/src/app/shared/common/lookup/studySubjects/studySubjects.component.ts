@@ -43,6 +43,7 @@ export class StudySubjectsComponent extends AppComponentBase {
 
     _entityTypeFullName = 'MIS.Lookups.StudySubject';
     entityHistoryEnabled = false;
+    checkedActive:boolean = true;
 
 
 
@@ -155,7 +156,13 @@ export class StudySubjectsComponent extends AppComponentBase {
 
     }
 
-
+    getCheckedActive($event){
+        if(!$event.checked){
+            this.checkedActive = false
+        }else{
+            this.checkedActive = true
+        }
+    }
 
 
     resetFilters(): void {

@@ -6,6 +6,7 @@ import {StudySubjectsComponent} from './studySubjects.component';
 import {CreateOrEditStudySubjectModalComponent} from './create-or-edit-studySubject-modal.component';
 import {ViewStudySubjectModalComponent} from './view-studySubject-modal.component';
 import { ActionButtonComponent } from "../../../components/action-button/action-button.component";
+import { InputSwitchModule } from 'primeng/inputswitch';
 
 
 
@@ -16,7 +17,7 @@ import { ActionButtonComponent } from "../../../components/action-button/action-
         ViewStudySubjectModalComponent,
 
     ],
-    imports: [AppSharedModule, StudySubjectRoutingModule, AdminSharedModule, ActionButtonComponent],
+    imports: [AppSharedModule, StudySubjectRoutingModule, AdminSharedModule, ActionButtonComponent,InputSwitchModule],
 
 })
 export class StudySubjectModule {

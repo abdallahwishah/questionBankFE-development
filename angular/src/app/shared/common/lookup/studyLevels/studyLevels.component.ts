@@ -38,6 +38,7 @@ export class StudyLevelsComponent extends AppComponentBase {
     filterText = '';
     isActiveFilter = -1;
 
+    checkedActive:boolean = true;
 
     _entityTypeFullName = 'MIS.Lookups.StudyLevel';
     entityHistoryEnabled = false;
@@ -156,5 +157,12 @@ export class StudyLevelsComponent extends AppComponentBase {
             this.isActiveFilter = -1;
 
         this.getStudyLevels();
+    }
+    getCheckedActive($event){
+        if(!$event.checked){
+            this.checkedActive = false
+        }else{
+            this.checkedActive = true
+        }
     }
 }

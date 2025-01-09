@@ -9,10 +9,12 @@ import { ImpersonationService } from '@app/admin/users/impersonation.service';
 import { DynamicEntityPropertyManagerModule } from '@app/shared/common/dynamic-entity-property-manager/dynamic-entity-property-manager.module';
 import { ChangeProfilePictureModalModule } from '@app/shared/layout/profile/change-profile-picture-modal.module';
 import { ExportExcelUserModalComponent } from './export-excel-user-modal.component';
+import { ActionButtonComponent } from '@app/shared/components/action-button/action-button.component';
+import { InputSwitchModule } from 'primeng/inputswitch';
 
 @NgModule({
     declarations: [UsersComponent, EditUserPermissionsModalComponent, CreateOrEditUserModalComponent, ExportExcelUserModalComponent],
-    imports: [AppSharedModule, AdminSharedModule, UsersRoutingModule, DynamicEntityPropertyManagerModule, ChangeProfilePictureModalModule],
+    imports: [AppSharedModule, AdminSharedModule, UsersRoutingModule, DynamicEntityPropertyManagerModule, ChangeProfilePictureModalModule,InputSwitchModule,ActionButtonComponent],
     providers: [ImpersonationService],
 })
 export class UsersModule {}

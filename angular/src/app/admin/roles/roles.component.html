@@ -1,11 +1,8 @@
 <div [@routerTransition]>
     <sub-header [title]="'Roles' | localize" [description]="'RolesHeaderInfo' | localize">
         <div role="actions">
-            <button
-                (click)="createRole()"
-                *ngIf="'Pages.Administration.Roles.Create' | permission"
-                class="btn btn-primary float-end"
-            >
+            <button (click)="createRole()" *ngIf="'Pages.Administration.Roles.Create' | permission"
+                class="btn btn-primary float-end">
                 <i class="fa fa-plus btn-md-icon"></i>
                 <span class="d-none d-md-inline-block">
                     {{ 'CreateNewRole' | localize }}
@@ -21,10 +18,8 @@
                     <div class="row">
                         <div class="col-6">
                             <div class="mb-5">
-                                <permission-tree-modal
-                                    #permissionFilterTreeModal
-                                    (onModalclose)="getRoles()"
-                                ></permission-tree-modal>
+                                <permission-tree-modal #permissionFilterTreeModal
+                                    (onModalclose)="getRoles()"></permission-tree-modal>
                             </div>
                         </div>
                         <div class="col-6 text-end">
@@ -40,121 +35,39 @@
                 <div class="row align-items-center">
                     <!--<Primeng-TurboTable-Start>-->
                     <div class="primeng-datatable-container" [busyIf]="primengTableHelper.isLoading">
-                        <p-table
-                            #dataTable
-                            (onLazyLoad)="getRoles()"
-                            [value]="primengTableHelper.records"
-                            rows="{{ primengTableHelper.defaultRecordsCountPerPage }}"
-                            [paginator]="false"
-                            [lazy]="true"
-                            [tableStyle]="{'min-width': '50rem'}"
-                        >
+                        <p-table #dataTable (onLazyLoad)="getRoles()" [value]="primengTableHelper.records"
+                            rows="{{ primengTableHelper.defaultRecordsCountPerPage }}" [paginator]="false" [lazy]="true"
+                            [tableStyle]="{'min-width': '50rem'}">
                             <ng-template pTemplate="header">
                                 <tr>
-                                    <th
-                                        style="width: 130px"
-                                        [hidden]="
-                                            !(
-                                                ['Pages.Administration.Roles.Edit', 'Pages.Administration.Roles.Delete']
-                                                | permissionAny
-                                            )
-                                        "
-                                    >
-                                        {{ 'Actions' | localize }}
-                                    </th>
+
                                     <th>{{ 'RoleName' | localize }}</th>
                                     <th>{{ 'CreationTime' | localize }}</th>
+                                    <th style="width: 130px" [hidden]="
+                                    !(
+                                        ['Pages.Administration.Roles.Edit', 'Pages.Administration.Roles.Delete']
+                                        | permissionAny
+                                    )
+                                ">
+                                        {{ 'Actions' | localize }}
+                                    </th>
                                 </tr>
                             </ng-template>
 
                             <ng-template pTemplate="body" let-record="$implicit">
                                 <tr>
-                                    <td
-                                        [hidden]="
-                                            !(
-                                                ([
-                                                    'Pages.Administration.Roles.Edit',
-                                                    'Pages.Administration.Roles.Delete'
-                                                ] | permissionAny) || entityHistoryEnabled
-                                            )
-                                        "
-                                    >
-                                        <div class="btn-group" dropdown placement="bottom left" container="body">
-                                            <button
-                                                id="dropdownButton"
-                                                type="button"
-                                                class="btn btn-primary btn-sm dropdown-toggle"
-                                                dropdownToggle
-                                                aria-controls="dropdownMenu"
-                                            >
-                                                <i class="fa fa-cog"></i>
-                                                <span class="caret"></span>
-                                                {{ 'Actions' | localize }}
-                                            </button>
-                                            <ul
-                                                id="dropdownMenu"
-                                                class="dropdown-menu"
-                                                role="menu"
-                                                *dropdownMenu
-                                                aria-labelledby="dropdownButton"
-                                            >
-                                                <li
-                                                    *ngIf="'Pages.Administration.Roles.Edit' | permission"
-                                                    role="menuitem"
-                                                >
-                                                    <a
-                                                        class="dropdown-item"
-                                                        href="javascript:;"
-                                                        (click)="createOrEditRoleModal.show(record.id)"
-                                                    >
-                                                        {{ 'Edit' | localize }}
-                                                    </a>
-                                                </li>
-                                                <li
-                                                    *ngIf="
-                                                        !record.isStatic &&
-                                                        ('Pages.Administration.Roles.Delete' | permission)
-                                                    "
-                                                    role="menuitem"
-                                                >
-                                                    <a
-                                                        class="dropdown-item"
-                                                        href="javascript:;"
-                                                        (click)="deleteRole(record)"
-                                                    >
-                                                        {{ 'Delete' | localize }}
-                                                    </a>
-                                                </li>
-                                                <li *ngIf="entityHistoryEnabled" role="menuitem">
-                                                    <a
-                                                        class="dropdown-item"
-                                                        href="javascript:;"
-                                                        (click)="showHistory(record)"
-                                                    >
-                                                        {{ 'History' | localize }}
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </td>
+
                                     <td>
                                         <span class="p-column-title">{{ 'RoleName' | localize }}</span>
                                         <span>
                                             {{ record.displayName }}
-                                            <span
-                                                *ngIf="record.isStatic"
-                                                class="badge badge-primary m-1"
-                                                tooltip="{{ 'StaticRole_Tooltip' | localize }}"
-                                                data-placement="top"
-                                            >
+                                            <span *ngIf="record.isStatic" class="badge badge-primary m-1"
+                                                tooltip="{{ 'StaticRole_Tooltip' | localize }}" data-placement="top">
                                                 {{ 'Static' | localize }}
                                             </span>
-                                            <span
-                                                *ngIf="record.isDefault"
-                                                class="badge badge-dark m-1"
+                                            <span *ngIf="record.isDefault" class="badge badge-dark m-1"
                                                 tooltip="{{ 'DefaultRole_Description' | localize }}"
-                                                data-placement="top"
-                                            >
+                                                data-placement="top">
                                                 {{ 'Default' | localize }}
                                             </span>
                                         </span>
@@ -162,6 +75,61 @@
                                     <td>
                                         <span class="p-column-title">{{ 'CreationTime' | localize }}</span>
                                         {{ record.creationTime | luxonFormat: 'F' }}
+                                    </td>
+                                    <td [hidden]="
+                                    !(
+                                        ([
+                                            'Pages.Administration.Roles.Edit',
+                                            'Pages.Administration.Roles.Delete'
+                                        ] | permissionAny) || entityHistoryEnabled
+                                    )
+                                ">
+                                        <app-action-button (action)="action($event, record)" [ActionsInfo]="[
+                               
+                                 {
+                                     label: 'Edit'
+                                 },
+                                 {
+                                     label: 'History'
+                                 },
+                                 {
+                                     label: 'Delete'
+                                 }
+                             ]"></app-action-button>
+                                        <!-- <div class="btn-group" dropdown placement="bottom left" container="body">
+                                    <button id="dropdownButton" type="button"
+                                        class="btn btn-primary btn-sm dropdown-toggle" dropdownToggle
+                                        aria-controls="dropdownMenu">
+                                        <i class="fa fa-cog"></i>
+                                        <span class="caret"></span>
+                                        {{ 'Actions' | localize }}
+                                    </button>
+                                    <ul id="dropdownMenu" class="dropdown-menu" role="menu" *dropdownMenu
+                                        aria-labelledby="dropdownButton">
+                                        <li *ngIf="'Pages.Administration.Roles.Edit' | permission"
+                                            role="menuitem">
+                                            <a class="dropdown-item" href="javascript:;"
+                                                (click)="createOrEditRoleModal.show(record.id)">
+                                                {{ 'Edit' | localize }}
+                                            </a>
+                                        </li>
+                                        <li *ngIf="
+                                                !record.isStatic &&
+                                                ('Pages.Administration.Roles.Delete' | permission)
+                                            " role="menuitem">
+                                            <a class="dropdown-item" href="javascript:;"
+                                                (click)="deleteRole(record)">
+                                                {{ 'Delete' | localize }}
+                                            </a>
+                                        </li>
+                                        <li *ngIf="entityHistoryEnabled" role="menuitem">
+                                            <a class="dropdown-item" href="javascript:;"
+                                                (click)="showHistory(record)">
+                                                {{ 'History' | localize }}
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div> -->
                                     </td>
                                 </tr>
                             </ng-template>

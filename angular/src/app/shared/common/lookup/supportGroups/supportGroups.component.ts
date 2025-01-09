@@ -45,6 +45,7 @@ export class SupportGroupsComponent extends AppComponentBase {
 
     _entityTypeFullName = 'MIS.Lookups.SupportGroup';
     entityHistoryEnabled = false;
+    checkedActive:boolean = true;
 
 
 
@@ -102,6 +103,31 @@ export class SupportGroupsComponent extends AppComponentBase {
 
     createSupportGroup(): void {
         this.createOrEditSupportGroupModal.show();        
+    }
+    action(event: any, record: any) {
+        switch (event) {
+            case 'View':
+                this.viewSupportGroupModal.show(record)
+                break;
+            case 'Edit':
+                this.createOrEditSupportGroupModal.show(record.supportGroup.id)
+                break;
+            case 'Delete':
+                this.deleteSupportGroup(record.supportGroup)
+                break;
+            case 'History':
+                this.showHistory(record.supportGroup)
+                break;
+
+        }
+
+    }
+    getCheckedActive($event){
+        if(!$event.checked){
+            this.checkedActive = false
+        }else{
+            this.checkedActive = true
+        }
     }
 
 

@@ -8,6 +8,7 @@ import {ViewSubjectUnitModalComponent} from './view-subjectUnit-modal.component'
 import {SubjectUnitStudyLevelLookupTableModalComponent} from './subjectUnit-studyLevel-lookup-table-modal.component';
     					import {SubjectUnitStudySubjectLookupTableModalComponent} from './subjectUnit-studySubject-lookup-table-modal.component';
 import { ActionButtonComponent } from "../../../components/action-button/action-button.component";
+import { InputSwitchModule } from 'primeng/inputswitch';
 
 
 
@@ -20,7 +21,7 @@ import { ActionButtonComponent } from "../../../components/action-button/action-
     					SubjectUnitStudyLevelLookupTableModalComponent,
     					SubjectUnitStudySubjectLookupTableModalComponent,
     ],
-    imports: [AppSharedModule, SubjectUnitRoutingModule, AdminSharedModule, ActionButtonComponent],
+    imports: [AppSharedModule, SubjectUnitRoutingModule, AdminSharedModule, ActionButtonComponent,InputSwitchModule],
 
 })
 export class SubjectUnitModule {

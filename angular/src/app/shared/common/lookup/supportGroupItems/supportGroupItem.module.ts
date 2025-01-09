@@ -6,6 +6,8 @@ import {SupportGroupItemsComponent} from './supportGroupItems.component';
 import {CreateOrEditSupportGroupItemModalComponent} from './create-or-edit-supportGroupItem-modal.component';
 import {ViewSupportGroupItemModalComponent} from './view-supportGroupItem-modal.component';
 import {SupportGroupItemSupportGroupLookupTableModalComponent} from './supportGroupItem-supportGroup-lookup-table-modal.component';
+import { InputSwitchModule } from 'primeng/inputswitch';
+import { ActionButtonComponent } from '@app/shared/components/action-button/action-button.component';
     					
 
 
@@ -17,7 +19,7 @@ import {SupportGroupItemSupportGroupLookupTableModalComponent} from './supportGr
         
     					SupportGroupItemSupportGroupLookupTableModalComponent,
     ],
-    imports: [AppSharedModule, SupportGroupItemRoutingModule , AdminSharedModule ],
+    imports: [AppSharedModule, SupportGroupItemRoutingModule , AdminSharedModule ,ActionButtonComponent,InputSwitchModule],
     
 })
 export class SupportGroupItemModule {

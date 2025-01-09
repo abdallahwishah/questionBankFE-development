@@ -35,6 +35,7 @@ export class ComplexitiesComponent extends AppComponentBase {
     advancedFiltersAreShown = false;
     filterText = '';
     isActiveFilter = -1;
+    checkedActive:boolean = true;
 
 
 
@@ -138,5 +139,12 @@ export class ComplexitiesComponent extends AppComponentBase {
             this.isActiveFilter = -1;
 
         this.getComplexities();
+    }
+    getCheckedActive($event){
+        if(!$event.checked){
+            this.checkedActive = false
+        }else{
+            this.checkedActive = true
+        }
     }
 }

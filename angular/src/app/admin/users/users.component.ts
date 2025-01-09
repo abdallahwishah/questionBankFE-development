@@ -49,6 +49,7 @@ export class UsersComponent extends AppComponentBase implements AfterViewInit {
     filterText = '';
     role = '';
     onlyLockedUsers = false;
+    checkedActive:boolean = true;
 
     constructor(
         injector: Injector,
@@ -161,6 +162,22 @@ export class UsersComponent extends AppComponentBase implements AfterViewInit {
                 }
             });
     }
+    action(event: any, record: any) {
+        switch (event) {
+           
+            case 'Edit':
+                this.createOrEditUserModal.show(record.id)
+                break;
+            case 'Permissions':
+                this.editUserPermissionsModal.show(record.id)
+                break;
+            case 'Delete':
+                this.deleteUser(record)
+                break;
+            
+        }
+
+    }
 
     onUploadExcelError(): void {
         this.notify.error(this.l('ImportUsersUploadFailed'));
@@ -212,5 +229,12 @@ export class UsersComponent extends AppComponentBase implements AfterViewInit {
 
         let lockoutEndDateUtc = this._dateTimeService.changeDateTimeZone(user.lockoutEndDateUtc, 'UTC');
         return lockoutEndDateUtc > this._dateTimeService.getUTCDate();
+    }
+    getCheckedActive($event){
+        if(!$event.checked){
+            this.checkedActive = false
+        }else{
+            this.checkedActive = true
+        }
     }
 }

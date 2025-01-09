@@ -113,6 +113,9 @@
                         >
                             <ng-template pTemplate="header">
                                 <tr>
+                                    <th pSortableColumn="caseCode">
+                                        {{ '#' }}
+                                    </th>
                                     <th class="text-center" style="width: 150px" pSortableColumn="name">
                                         {{ l('Name') }}
                                         <p-sortIcon field="studyLevel.name"></p-sortIcon>
@@ -132,18 +135,16 @@
                             </ng-template>
                             <ng-template pTemplate="body" let-record="$implicit" let-i="rowIndex">
                                 <tr>
+                                    <td class="text-center" style="width: 150px">
+                                        {{ i + 1  }}
+                                    </td>
                                     <td style="width: 150px" class="text-center">
                                         <span class="p-column-title">{{ l('Name') }}</span>
                                         {{ record.studyLevel.name }}
                                     </td>
                                     <td style="width: 150px" class="text-center">
-                                        <span class="p-column-title">{{ l('IsActive') }}</span>
-                                        <div *ngIf="record.studyLevel.isActive" class="text-center">
-                                            <i class="fa fa-check-circle text-success" title="True"></i>
-                                        </div>
-                                        <div *ngIf="!record.studyLevel.isActive" class="text-center">
-                                            <i class="fa fa-times-circle" title="False"></i>
-                                        </div>
+                                        <p-inputSwitch [(ngModel)]="checkedActive"
+                                    (onChange)="getCheckedActive($event)"></p-inputSwitch>
                                     </td>
                                     <td
                                         class="text-center"

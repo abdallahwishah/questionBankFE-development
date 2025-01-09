@@ -2,35 +2,20 @@
     <sub-header [title]="'Users' | localize" [description]="'UsersHeaderInfo' | localize">
         <div role="actions">
             <div class="btn-group" dropdown placement="button right">
-                <button
-                    id="dropdownButtonExcelOperations"
-                    dropdownToggle
-                    type="button"
+                <button id="dropdownButtonExcelOperations" dropdownToggle type="button"
                     class="btn btn-outline btn-outline-success btn-active-light-success dropdown-toggle me-1"
-                    data-toggle="dropdown"
-                    aria-haspopup="true"
-                    aria-expanded="false"
-                    aria-controls="dropdownMenuExcelOperations"
-                >
+                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                    aria-controls="dropdownMenuExcelOperations">
                     <i class="far fa-file-excel btn-md-icon"></i>
                     <span class="d-none d-md-inline-block">
                         {{ 'ExcelOperations' | localize }}
                     </span>
                 </button>
-                <ul
-                    id="dropdownMenuExcelOperations"
-                    class="dropdown-menu dropdown-menu-right dropdown-excel-operations"
-                    role="menu"
-                    *dropdownMenu
-                    aria-labelledby="dropdownButtonExcelOperations"
-                >
+                <ul id="dropdownMenuExcelOperations" class="dropdown-menu dropdown-menu-right dropdown-excel-operations"
+                    role="menu" *dropdownMenu aria-labelledby="dropdownButtonExcelOperations">
                     <li role="menuitem">
-                        <button
-                            type="button"
-                            class="dropdown-item text-dark"
-                            id="ExportUsersToExcelButton"
-                            (click)="exportExcelModal.show()"
-                        >
+                        <button type="button" class="dropdown-item text-dark" id="ExportUsersToExcelButton"
+                            (click)="exportExcelModal.show()">
                             <i class="fa fa-download me-2 mt-1 text-dark" style="font-size: 1rem"></i>
                             {{ 'ExportToExcel' | localize }}
                         </button>
@@ -38,43 +23,31 @@
                     <li *ngIf="'Pages.Administration.Users.Create' | permission" role="menuitem">
                         <button type="button" class="text-dark p-0 m-0 border-0">
                             <span class="fileinput-button">
-                                <p-fileUpload
-                                    customUpload="true"
-                                    name="ExcelFileUpload"
-                                    #ExcelFileUpload
-                                    maxFileSize="10000000"
-                                    auto="auto"
-                                    accept=".csv,.xls,.xlsx"
-                                    (uploadHandler)="uploadExcel($event)"
-                                    (onError)="onUploadExcelError()"
-                                    chooseLabel="{{ 'ImportFromExcel' | localize }}"
-                                ></p-fileUpload>
+                                <p-fileUpload customUpload="true" name="ExcelFileUpload" #ExcelFileUpload
+                                    maxFileSize="10000000" auto="auto" accept=".csv,.xls,.xlsx"
+                                    (uploadHandler)="uploadExcel($event)" (onError)="onUploadExcelError()"
+                                    chooseLabel="{{ 'ImportFromExcel' | localize }}"></p-fileUpload>
                             </span>
                         </button>
                     </li>
                     <li *ngIf="'Pages.Administration.Users.Create' | permission" class="divider dropdown-divider"></li>
                     <li *ngIf="'Pages.Administration.Users.Create' | permission" role="menuitem">
                         <span class="dropdown-item-text text-muted pl-3" href="#">
-                            <small
-                                [innerHTML]="
+                            <small [innerHTML]="
                                     l(
                                         'ImportToExcelSampleFileDownloadInfo',
                                         '<a href=/assets/sampleFiles/ImportUsersSampleFile.xlsx>' +
                                             l('ClickHere') +
                                             '</a>'
                                     )
-                                "
-                            ></small>
+                                "></small>
                         </span>
                     </li>
                 </ul>
             </div>
 
-            <button
-                (click)="createUser()"
-                *ngIf="'Pages.Administration.Users.Create' | permission"
-                class="btn btn-primary"
-            >
+            <button (click)="createUser()" *ngIf="'Pages.Administration.Users.Create' | permission"
+                class="btn btn-primary">
                 <i class="fa fa-plus btn-md-icon"></i>
                 <span class="d-none d-md-inline-block">
                     {{ 'CreateNewUser' | localize }}
@@ -91,14 +64,9 @@
                             <div class="col-xl-12">
                                 <div class="mb-5 m-form__group align-items-center">
                                     <div class="input-group">
-                                        <input
-                                            [(ngModel)]="filterText"
-                                            name="filterText"
-                                            autoFocus
-                                            class="form-control m-input"
-                                            [placeholder]="l('SearchWithThreeDot')"
-                                            type="text"
-                                        />
+                                        <input [(ngModel)]="filterText" name="filterText" autoFocus
+                                            class="form-control m-input" [placeholder]="l('SearchWithThreeDot')"
+                                            type="text" />
                                         <button (click)="getUsers()" class="btn btn-primary" type="submit">
                                             <i class="flaticon-search-1" [attr.aria-label]="l('Search')"></i>
                                         </button>
@@ -108,18 +76,13 @@
                         </div>
 
                         <div class="row mb-4" [hidden]="!advancedFiltersAreShown">
-                            <div
-                                [ngClass]="{
+                            <div [ngClass]="{
                                     'col-md-6': ('Pages.Administration.Roles' | permission),
                                     'col-md-12': !('Pages.Administration.Roles' | permission)
-                                }"
-                            >
+                                }">
                                 <div class="mb-5">
-                                    <permission-tree-modal
-                                        #permissionFilterTreeModal
-                                        (onModalclose)="getUsers()"
-                                        [disableCascade]="true"
-                                    ></permission-tree-modal>
+                                    <permission-tree-modal #permissionFilterTreeModal (onModalclose)="getUsers()"
+                                        [disableCascade]="true"></permission-tree-modal>
                                 </div>
                             </div>
                             <div class="col-md-6" *ngIf="'Pages.Administration.Roles' | permission">
@@ -129,13 +92,8 @@
                             </div>
                             <div class="col-md-6">
                                 <label class="form-check form-check-custom form-check-solid form-switch py-1">
-                                    <input
-                                        id="UsersTable_OnlyLockedUsers"
-                                        type="checkbox"
-                                        name="OnlyLockedUsers"
-                                        [(ngModel)]="onlyLockedUsers"
-                                        class="form-check-input"
-                                    />
+                                    <input id="UsersTable_OnlyLockedUsers" type="checkbox" name="OnlyLockedUsers"
+                                        [(ngModel)]="onlyLockedUsers" class="form-check-input" />
                                     <span class="form-check-label">
                                         {{ 'OnlyLockedUsers' | localize }}
                                     </span>
@@ -155,19 +113,13 @@
                         </div>
                         <div class="row mb-4">
                             <div class="col-sm-12">
-                                <span
-                                    class="clickable-item text-muted"
-                                    *ngIf="!advancedFiltersAreShown"
-                                    (click)="advancedFiltersAreShown = !advancedFiltersAreShown"
-                                >
+                                <span class="clickable-item text-muted" *ngIf="!advancedFiltersAreShown"
+                                    (click)="advancedFiltersAreShown = !advancedFiltersAreShown">
                                     <i class="fa fa-angle-down"></i>
                                     {{ 'ShowAdvancedFilters' | localize }}
                                 </span>
-                                <span
-                                    class="clickable-item text-muted"
-                                    *ngIf="advancedFiltersAreShown"
-                                    (click)="advancedFiltersAreShown = !advancedFiltersAreShown"
-                                >
+                                <span class="clickable-item text-muted" *ngIf="advancedFiltersAreShown"
+                                    (click)="advancedFiltersAreShown = !advancedFiltersAreShown">
                                     <i class="fa fa-angle-up"></i>
                                     {{ 'HideAdvancedFilters' | localize }}
                                 </span>
@@ -179,37 +131,19 @@
                 <div class="row align-items-center">
                     <!--<Primeng-TurboTable-Start>-->
                     <div class="primeng-datatable-container" [busyIf]="primengTableHelper.isLoading">
-                        <p-table
-                            #dataTable
-                            sortMode="multiple"
-                            (onLazyLoad)="getUsers($event)"
+                        <p-table #dataTable sortMode="multiple" (onLazyLoad)="getUsers($event)"
                             [value]="primengTableHelper.records"
-                            rows="{{ primengTableHelper.defaultRecordsCountPerPage }}"
-                            [paginator]="false"
-                            [lazy]="true"
-                            [scrollable]="true"
-                            ScrollWidth="100%"
-                            scrollDirection="horizontal"
+                            rows="{{ primengTableHelper.defaultRecordsCountPerPage }}" [paginator]="false" [lazy]="true"
+                            [scrollable]="true" ScrollWidth="100%" scrollDirection="horizontal"
                             [tableStyle]="{'min-width': '50rem'}"
-                            [resizableColumns]="primengTableHelper.resizableColumns"
-                        >
+                            [resizableColumns]="primengTableHelper.resizableColumns">
                             <ng-template pTemplate="header">
                                 <tr>
-                                    <th
-                                        style="min-width: 130px"
-                                        [hidden]="
-                                            !(
-                                                [
-                                                    'Pages.Administration.Users.Impersonation',
-                                                    'Pages.Administration.Users.Edit',
-                                                    'Pages.Administration.Users.ChangePermissions',
-                                                    'Pages.Administration.Users.Delete'
-                                                ] | permissionAny
-                                            )
-                                        "
-                                    >
-                                        {{ 'Actions' | localize }}
+
+                                    <th pSortableColumn="caseCode">
+                                        {{ '#' }}
                                     </th>
+                                 
                                     <th style="min-width: 150px" pSortableColumn="username">
                                         {{ 'UserName' | localize }}
                                         <p-sortIcon field="username"></p-sortIcon>
@@ -241,134 +175,26 @@
                                         {{ 'CreationTime' | localize }}
                                         <p-sortIcon field="creationTime"></p-sortIcon>
                                     </th>
+                                    <th style="min-width: 130px" [hidden]="
+                                    !(
+                                        [
+                                            'Pages.Administration.Users.Impersonation',
+                                            'Pages.Administration.Users.Edit',
+                                            'Pages.Administration.Users.ChangePermissions',
+                                            'Pages.Administration.Users.Delete'
+                                        ] | permissionAny
+                                    )
+                                ">
+                                {{ 'Actions' | localize }}
+                            </th>
                                 </tr>
                             </ng-template>
-                            <ng-template pTemplate="body" let-record="$implicit">
+                            <ng-template pTemplate="body" let-record="$implicit" let-i="rowIndex">
                                 <tr>
-                                    <td
-                                        style="min-width: 130px"
-                                        [hidden]="
-                                            !(
-                                                [
-                                                    'Pages.Administration.Users.Impersonation',
-                                                    'Pages.Administration.Users.Edit',
-                                                    'Pages.Administration.Users.ChangePermissions',
-                                                    'Pages.Administration.Users.Delete'
-                                                ] | permissionAny
-                                            )
-                                        "
-                                    >
-                                        <div class="btn-group" dropdown placement="bottom left" container="body">
-                                            <button
-                                                id="dropdownButton"
-                                                type="button"
-                                                class="btn btn-primary btn-sm dropdown-toggle"
-                                                dropdownToggle
-                                                aria-controls="dropdownMenu"
-                                            >
-                                                <i class="fa fa-cog"></i>
-                                                <span class="caret"></span>
-                                                {{ 'Actions' | localize }}
-                                            </button>
-                                            <ul
-                                                id="dropdownMenu"
-                                                class="dropdown-menu"
-                                                role="menu"
-                                                *dropdownMenu
-                                                aria-labelledby="dropdownButton"
-                                            >
-                                                <li
-                                                    *ngIf="
-                                                        ('Pages.Administration.Users.Impersonation' | permission) &&
-                                                        record.id !== appSession.userId
-                                                    "
-                                                    role="menuitem"
-                                                >
-                                                    <a
-                                                        href="javascript:;"
-                                                        class="dropdown-item"
-                                                        (click)="
-                                                            _impersonationService.impersonateUser(
-                                                                record.id,
-                                                                appSession.tenantId
-                                                            )
-                                                        "
-                                                    >
-                                                        {{ 'LoginAsThisUser' | localize }}
-                                                    </a>
-                                                </li>
-                                                <li
-                                                    *ngIf="'Pages.Administration.Users.Edit' | permission"
-                                                    role="menuitem"
-                                                >
-                                                    <a
-                                                        href="javascript:;"
-                                                        class="dropdown-item"
-                                                        (click)="createOrEditUserModal.show(record.id)"
-                                                    >
-                                                        {{ 'Edit' | localize }}
-                                                    </a>
-                                                </li>
-                                                <li
-                                                    *ngIf="'Pages.Administration.Users.ChangePermissions' | permission"
-                                                    role="menuitem"
-                                                >
-                                                    <a
-                                                        href="javascript:;"
-                                                        class="dropdown-item"
-                                                        (click)="
-                                                            editUserPermissionsModal.show(record.id, record.userName)
-                                                        "
-                                                    >
-                                                        {{ 'Permissions' | localize }}
-                                                    </a>
-                                                </li>
-                                                <li
-                                                    *ngIf="
-                                                        record.lockoutEndDateUtc && 'Pages.Administration.Users.Unlock'
-                                                            | permission
-                                                    "
-                                                    role="menuitem"
-                                                >
-                                                    <a
-                                                        href="javascript:;"
-                                                        class="dropdown-item"
-                                                        (click)="unlockUser(record)"
-                                                    >
-                                                        {{ 'Unlock' | localize }}
-                                                    </a>
-                                                </li>
-                                                <li
-                                                    *ngIf="
-                                                        dynamicEntityPropertyManager.canShow(
-                                                            'Wheels.Authorization.Users.User'
-                                                        )
-                                                    "
-                                                    role="menuitem"
-                                                >
-                                                    <a
-                                                        href="javascript:;"
-                                                        class="dropdown-item"
-                                                        (click)="showDynamicProperties(record)"
-                                                    >
-                                                        {{ 'DynamicProperties' | localize }}
-                                                    </a>
-                                                </li>
-                                                <li
-                                                    *ngIf="'Pages.Administration.Users.Delete' | permission"
-                                                    role="menuitem"
-                                                >
-                                                    <a
-                                                        href="javascript:;"
-                                                        class="dropdown-item"
-                                                        (click)="deleteUser(record)"
-                                                    >
-                                                        {{ 'Delete' | localize }}
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                        </div>
+                                    <td class="text-center" style="width: 150px">
+                                        {{ i + 1  }}
                                     </td>
+                                 
                                     <td style="min-width: 150px">
                                         <span class="p-column-title">{{ 'UserName' | localize }}</span>
                                         <div class="w-100">
@@ -407,18 +233,111 @@
                                         </span>
                                     </td>
                                     <td style="min-width: 100px">
-                                        <span class="p-column-title">{{ 'Active' | localize }}</span>
+                                        <!-- <span class="p-column-title">{{ 'Active' | localize }}</span>
                                         <span class="badge badge-success" *ngIf="record.isActive">
                                             {{ 'Yes' | localize }}
                                         </span>
                                         <span class="badge badge-dark" *ngIf="!record.isActive">
                                             {{ 'No' | localize }}
-                                        </span>
+                                        </span> -->
+                                        <p-inputSwitch [(ngModel)]="checkedActive"
+                                                (onChange)="getCheckedActive($event)"></p-inputSwitch>
                                     </td>
                                     <td style="min-width: 200px">
                                         <span class="p-column-title">{{ 'CreationTime' | localize }}</span>
                                         {{ record.creationTime | luxonFormat: 'F' }}
                                     </td>
+                                    <td style="min-width: 130px" [hidden]="
+                                    !(
+                                        [
+                                            'Pages.Administration.Users.Impersonation',
+                                            'Pages.Administration.Users.Edit',
+                                            'Pages.Administration.Users.ChangePermissions',
+                                            'Pages.Administration.Users.Delete'
+                                        ] | permissionAny
+                                    )
+                                ">
+                                <div class="btn-group" dropdown placement="bottom left" container="body">
+                                    <button id="dropdownButton" type="button"
+                                        class="btn btn-primary btn-sm dropdown-toggle" dropdownToggle
+                                        aria-controls="dropdownMenu">
+                                        <i class="fa fa-cog"></i>
+                                        <span class="caret"></span>
+                                        {{ 'Actions' | localize }}
+                                    </button>
+                                    <ul id="dropdownMenu" class="dropdown-menu" role="menu" *dropdownMenu
+                                        aria-labelledby="dropdownButton">
+                                        <li *ngIf="
+                                                ('Pages.Administration.Users.Impersonation' | permission) &&
+                                                record.id !== appSession.userId
+                                            " role="menuitem">
+                                            <a href="javascript:;" class="dropdown-item" (click)="
+                                                    _impersonationService.impersonateUser(
+                                                        record.id,
+                                                        appSession.tenantId
+                                                    )
+                                                ">
+                                                {{ 'LoginAsThisUser' | localize }}
+                                            </a>
+                                        </li>
+                                        <li *ngIf="'Pages.Administration.Users.Edit' | permission"
+                                            role="menuitem">
+                                            <a href="javascript:;" class="dropdown-item"
+                                                (click)="createOrEditUserModal.show(record.id)">
+                                                {{ 'Edit' | localize }}
+                                            </a>
+                                        </li>
+                                        <li *ngIf="'Pages.Administration.Users.ChangePermissions' | permission"
+                                            role="menuitem">
+                                            <a href="javascript:;" class="dropdown-item" (click)="
+                                                    editUserPermissionsModal.show(record.id, record.userName)
+                                                ">
+                                                {{ 'Permissions' | localize }}
+                                            </a>
+                                        </li>
+                                        <li *ngIf="
+                                                record.lockoutEndDateUtc && 'Pages.Administration.Users.Unlock'
+                                                    | permission
+                                            " role="menuitem">
+                                            <a href="javascript:;" class="dropdown-item"
+                                                (click)="unlockUser(record)">
+                                                {{ 'Unlock' | localize }}
+                                            </a>
+                                        </li>
+                                        <li *ngIf="
+                                                dynamicEntityPropertyManager.canShow(
+                                                    'Wheels.Authorization.Users.User'
+                                                )
+                                            " role="menuitem">
+                                            <a href="javascript:;" class="dropdown-item"
+                                                (click)="showDynamicProperties(record)">
+                                                {{ 'DynamicProperties' | localize }}
+                                            </a>
+                                        </li>
+                                        <li *ngIf="'Pages.Administration.Users.Delete' | permission"
+                                            role="menuitem">
+                                            <a href="javascript:;" class="dropdown-item"
+                                                (click)="deleteUser(record)">
+                                                {{ 'Delete' | localize }}
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <!-- <app-action-button (action)="action($event, record)" [ActionsInfo]="[
+                               
+                                {
+                                    label: 'Edit'
+                                },
+                                {
+                                    label: 'History'
+                                },
+                                {
+                                    label: 'Delete'
+                                }
+                            ]"></app-action-button> -->
+
+                                
+                            </td>
                                 </tr>
                             </ng-template>
                         </p-table>
@@ -426,17 +345,12 @@
                             {{ 'NoData' | localize }}
                         </div>
                         <div class="primeng-paging-container">
-                            <p-paginator
-                                [rows]="primengTableHelper.defaultRecordsCountPerPage"
-                                #paginator
-                                (onPageChange)="getUsers($event)"
-                                [totalRecords]="primengTableHelper.totalRecordsCount"
+                            <p-paginator [rows]="primengTableHelper.defaultRecordsCountPerPage" #paginator
+                                (onPageChange)="getUsers($event)" [totalRecords]="primengTableHelper.totalRecordsCount"
                                 [rowsPerPageOptions]="primengTableHelper.predefinedRecordsCountPerPage"
-                                [showCurrentPageReport]="true"
-                                [currentPageReportTemplate]="
+                                [showCurrentPageReport]="true" [currentPageReportTemplate]="
                                     'TotalRecordsCount' | localize: primengTableHelper.totalRecordsCount
-                                "
-                            ></p-paginator>
+                                "></p-paginator>
                         </div>
                     </div>
                     <!--<Primeng-TurboTable-End>-->

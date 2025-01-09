@@ -37,7 +37,7 @@ export class CategoriesComponent extends AppComponentBase {
     advancedFiltersAreShown = false;
     filterText = '';
     isActiveFilter = -1;
-
+    checkedActive:boolean = true;
 
     _entityTypeFullName = 'MIS.Lookups.Category';
     entityHistoryEnabled = false;
@@ -161,4 +161,11 @@ export class CategoriesComponent extends AppComponentBase {
 
         this.getCategories();
     }
+        getCheckedActive($event){
+            if(!$event.checked){
+                this.checkedActive = false
+            }else{
+                this.checkedActive = true
+            }
+        }
 }

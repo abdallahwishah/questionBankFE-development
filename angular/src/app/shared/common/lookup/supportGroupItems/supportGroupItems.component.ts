@@ -44,6 +44,7 @@ export class SupportGroupItemsComponent extends AppComponentBase {
         supportGroupNameLFilter = '';
 
 
+        checkedActive:boolean = true;
 
 
 
@@ -96,8 +97,29 @@ export class SupportGroupItemsComponent extends AppComponentBase {
     createSupportGroupItem(): void {
         this.createOrEditSupportGroupItemModal.show();        
     }
+    action(event: any, record: any) {
+        switch (event) {
+            case 'View':
+                this.viewSupportGroupItemModal.show(record)
+                break;
+            case 'Edit':
+                this.createOrEditSupportGroupItemModal.show(record.supportGroupItem.id)
+                break;
+            case 'Delete':
+                this.deleteSupportGroupItem(record.supportGroupItem)
+                break;
 
+        }
 
+    }
+
+    getCheckedActive($event){
+        if(!$event.checked){
+            this.checkedActive = false
+        }else{
+            this.checkedActive = true
+        }
+    }
     deleteSupportGroupItem(supportGroupItem: SupportGroupItemDto): void {
         this.message.confirm(
             '',

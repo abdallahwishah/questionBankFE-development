@@ -6,6 +6,7 @@ import {CategoriesComponent} from './categories.component';
 import {CreateOrEditCategoryModalComponent} from './create-or-edit-category-modal.component';
 import {ViewCategoryModalComponent} from './view-category-modal.component';
 import { ActionButtonComponent } from "../../../components/action-button/action-button.component";
+import { InputSwitchModule } from 'primeng/inputswitch';
 
 
 
@@ -14,9 +15,10 @@ import { ActionButtonComponent } from "../../../components/action-button/action-
         CategoriesComponent,
         CreateOrEditCategoryModalComponent,
         ViewCategoryModalComponent,
+        
 
     ],
-    imports: [AppSharedModule, CategoryRoutingModule, AdminSharedModule, ActionButtonComponent],
+    imports: [AppSharedModule, CategoryRoutingModule, AdminSharedModule, ActionButtonComponent,InputSwitchModule],
 
 })
 export class CategoryModule {
