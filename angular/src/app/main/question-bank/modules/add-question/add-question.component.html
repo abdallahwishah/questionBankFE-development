@@ -159,7 +159,17 @@
             <div class="col-12 mt-6">
                 <div class="card px-8 py-6">
                     <div class="row mt-2">
-                        <div class="col-md-3 mb-2 d-flex justify-content-center align-items-center gap-4">
+                        <div
+                            class="col-md-3 mb-2 d-flex justify-content-center align-items-center gap-4"
+                            *ngIf="
+                                _createOrEditQuestionDto.type == QuestionTypeEnum.SinglChoice ||
+                                _createOrEditQuestionDto.type == QuestionTypeEnum.DargingForm ||
+                                _createOrEditQuestionDto.type == QuestionTypeEnum.MutliChoice ||
+                                _createOrEditQuestionDto.type == QuestionTypeEnum.Rearrange ||
+                                _createOrEditQuestionDto.type == QuestionTypeEnum.Match ||
+                                _createOrEditQuestionDto.type == QuestionTypeEnum.TrueAndFalse
+                            "
+                        >
                             <p-inputSwitch [(ngModel)]="_createOrEditQuestionDto.autoCorrection"></p-inputSwitch>
 
                             <label class="pt-3">{{ l('AutomaticallyCorrectTheQuestion') }}</label>

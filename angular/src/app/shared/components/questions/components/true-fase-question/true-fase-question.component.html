@@ -1,56 +1,50 @@
 <div class="d-flex gap-3 mt-2 mb-6">
     <p class="mb-0 fw-medium">{{ l('Choices') }}</p>
     <span class="d-inline-block text-gray-700">
-      {{ l('ChooseTheCorrectAnswer') }}
+        {{ l('ChooseTheCorrectAnswer') }}
     </span>
-  </div>
+</div>
 
-  <!-- Loop exactly 2 items (True/False) -->
-  <div
-    class="row question d-flex align-items-center mb-6"
-    *ngFor="let choice of value; let i = index"
-  >
+<!-- Loop exactly 2 items (True/False) -->
+<div class="row question d-flex align-items-center mb-6" *ngFor="let choice of value; let i = index">
     <div class="col-md-1 col-3 d-flex align-items-center gap-5">
-      <img class="cursor-pointer" src="assets/common/images/menu.svg" alt="" />
+        <img class="cursor-pointer" src="assets/common/images/menu.svg" alt="" />
 
-      <!-- Radio button: if selected => markCorrect(i) -->
-      <input
-        class="form-check-input"
-        type="radio"
-        name="trueFalseRadio"
-        [checked]="choice.optionType === QuestionOptionTypeEnum.Pinned"
-        (change)="markCorrect(i)"
-      />
+        <!-- Radio button: if selected => markCorrect(i) -->
+        <input
+            class="form-check-input"
+            type="radio"
+            name="trueFalseRadio"
+            [checked]="choice.optionType === QuestionOptionTypeEnum.Pinned"
+            (change)="markCorrect(i)"
+        />
     </div>
 
     <!-- Display the name or a localized string. -->
     <div class="col-md-7 col-9 mb-md-0 mb-3">
-      <p class="mb-0">{{ choice.name }}</p>
+        <p class="mb-0">{{ choice.name }}</p>
+        <span class="badge bg-success ms-2" *ngIf="choice.optionType === QuestionOptionTypeEnum.Pinned">
+            {{ l('CorrectAnswer') }}
+        </span>
     </div>
 
     <div class="col-md-4 d-flex align-items-center justify-content-end">
-      <!-- Points input -->
-      <p-inputNumber
-        [(ngModel)]="choice.point"
-        (ngModelChange)="notifyValueChange()"
-        [showButtons]="true"
-        buttonLayout="horizontal"
-        inputId="horizontal"
-        spinnerMode="horizontal"
-        [step]="1"
-        decrementButtonClass="min"
-        incrementButtonClass="max"
-        incrementButtonIcon="pi pi-plus"
-        decrementButtonIcon="pi pi-minus"
-      >
-      </p-inputNumber>
-
-      <!-- You can keep or remove the "Edit" button if needed -->
-      <button class="btn btn-edit p-3 mx-2">
-        <img src="assets/common/images/edit.svg" alt="Edit" />
-      </button>
+        <!-- Points input -->
+        <p-inputNumber
+            [(ngModel)]="choice.point"
+            (ngModelChange)="notifyValueChange()"
+            [showButtons]="true"
+            buttonLayout="horizontal"
+            inputId="horizontal"
+            spinnerMode="horizontal"
+            [step]="1"
+            decrementButtonClass="min"
+            incrementButtonClass="max"
+            incrementButtonIcon="pi pi-plus"
+            decrementButtonIcon="pi pi-minus"
+        ></p-inputNumber>
     </div>
-  </div>
 
-  <!-- No "AddNewOption" here, since True/False are strictly 2.
+    <!-- No "AddNewOption" here, since True/False are strictly 2.
        If you'd like to allow more, you can add one. -->
+</div>

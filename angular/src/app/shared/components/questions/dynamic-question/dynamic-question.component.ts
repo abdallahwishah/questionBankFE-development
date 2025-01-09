@@ -1,4 +1,4 @@
-import { Component, Input, forwardRef } from '@angular/core';
+import { Component, Input, SimpleChanges, forwardRef } from '@angular/core';
 import {
     NG_VALUE_ACCESSOR,
     NG_VALIDATORS,
@@ -58,7 +58,13 @@ export class DynamicQuestionComponent implements ControlValueAccessor, Validator
 
     // This is our model. Subcomponents bind to specific properties of `value`.
     value: QuestionPayloadDto = new QuestionPayloadDto();
-
+    ngOnChanges(changes: SimpleChanges): void {
+        //Called before any other lifecycle hook. Use it to inject dependencies, but avoid any serious work here.
+        //Add '${implements OnChanges}' to the class.
+        if (changes?.['questionType']) {
+            this.value = new QuestionPayloadDto();
+        }
+    }
     // Provided by Angular forms
     onChange: (val: QuestionPayloadDto) => void = () => {};
     onTouched: () => void = () => {};
@@ -67,6 +73,9 @@ export class DynamicQuestionComponent implements ControlValueAccessor, Validator
 
     writeValue(obj: QuestionPayloadDto): void {
         this.value = obj || new QuestionPayloadDto();
+    }
+    notifyChange() {
+        this.onChange(this.value);
     }
 
     registerOnChange(fn: (val: QuestionPayloadDto) => void): void {

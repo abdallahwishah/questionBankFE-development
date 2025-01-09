@@ -24,7 +24,7 @@
       </div>
 
       <!-- Word or phrase (text input) -->
-      <div class="col-md-4 col-6 mb-md-0 mb-3">
+      <div class="col-md-8 col-12 mb-md-0 mb-3">
         <input
           name="text"
           class="form-control m-input"
@@ -36,17 +36,6 @@
       </div>
 
       <!-- "Sorting" input - if needed. Or you can store 'order' or 'point' -->
-      <div class="col-md-4 col-6 mb-md-0 mb-3">
-        <!-- For example, if 'order' is a numeric rank or a special text: -->
-        <input
-          name="text"
-          class="form-control m-input"
-          [placeholder]="l('Sorting')"
-          type="number"
-          [(ngModel)]="item.order"
-          (ngModelChange)="notifyValueChange()"
-        />
-      </div>
 
       <!-- Points + Delete -->
       <div class="col-md-3 d-flex align-items-center justify-content-end gap-2">

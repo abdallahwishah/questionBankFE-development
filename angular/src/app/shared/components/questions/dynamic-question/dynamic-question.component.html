@@ -2,42 +2,49 @@
     <app-multiple-choice-one-option
       *ngSwitchCase="QuestionTypeEnum.SinglChoice"
       [(ngModel)]="value.choices"
+      (ngModelChange)="notifyChange()"
     >
     </app-multiple-choice-one-option>
 
     <app-multiple-choice-more-than-option
       *ngSwitchCase="QuestionTypeEnum.MutliChoice"
       [(ngModel)]="value.choices"
+      (ngModelChange)="notifyChange()"
     >
     </app-multiple-choice-more-than-option>
 
     <app-true-fase-question
       *ngSwitchCase="QuestionTypeEnum.TrueAndFalse"
       [(ngModel)]="value.choices"
+      (ngModelChange)="notifyChange()"
     >
     </app-true-fase-question>
 
     <app-connecting-sentences
       *ngSwitchCase="QuestionTypeEnum.Match"
       [(ngModel)]="value.matchQuestions"
+      (ngModelChange)="notifyChange()"
     >
     </app-connecting-sentences>
 
     <app-re-order
       *ngSwitchCase="QuestionTypeEnum.Rearrange"
       [(ngModel)]="value.rearrangeQuestions"
+      (ngModelChange)="notifyChange()"
     >
     </app-re-order>
 
     <app-drag-drop-words
       *ngSwitchCase="QuestionTypeEnum.DargingForm"
       [(ngModel)]="value.dragFormQuestions"
+      (ngModelChange)="notifyChange()"
     >
     </app-drag-drop-words>
 
     <app-drag-drop-table
       *ngSwitchCase="QuestionTypeEnum.DargingTable"
       [(ngModel)]="value.tableDragQuestions"
+      (ngModelChange)="notifyChange()"
     >
     </app-drag-drop-table>
   </ng-container>

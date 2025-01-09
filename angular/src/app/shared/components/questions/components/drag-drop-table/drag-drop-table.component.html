@@ -33,7 +33,7 @@
 
     <div class="col-md-1 mt-md-0 mt-4">
       <!-- Generate (Build) the table once -->
-      <button class="btn btn-primary w-md-auto w-100 p-3" (click)="buildTable()">
+      <button class="btn btn-primary w-md-auto w-100 p-3" (click)="buildOrUpdateTable()">
         <svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path fill-rule="evenodd" clip-rule="evenodd" d="M3.05484 21.0299C2.51484 20.4899 2.21484 19.7699 2.21484 18.9999C2.21484 18.2299 2.51484 17.5099 3.05484 16.9699L16.0548 3.96988C17.1748 2.84988 18.9948 2.84988 20.1148 3.96988C20.6548 4.50988 20.9548 5.22988 20.9548 5.99988C20.9548 6.76988 20.6548 7.48988 20.1148 8.02988L7.11484 21.0299C6.55484 21.5899 5.82484 21.8699 5.08484 21.8699C4.34484 21.8699 3.61484 21.5899 3.05484 21.0299ZM17.1148 5.02988L4.11484 18.0299C3.85484 18.2899 3.71484 18.6299 3.71484 18.9999C3.71484 19.3699 3.85484 19.7099 4.11484 19.9699C4.64484 20.4999 5.52484 20.4999 6.05484 19.9699L19.0548 6.96988C19.3148 6.70988 19.4548 6.36988 19.4548 5.99988C19.4548 5.62988 19.3148 5.28988 19.0548 5.02988C18.7848 4.75988 18.4348 4.62988 18.0848 4.62988C17.7348 4.62988 17.3848 4.75988 17.1148 5.02988Z" fill="white"/>
             <path d="M17.5632 9.52018L14.5632 6.52018C14.2732 6.23018 14.2732 5.75018 14.5632 5.46018C14.8532 5.17018 15.3332 5.17018 15.6232 5.46018L18.6232 8.46018C18.9132 8.75018 18.9132 9.23018 18.6232 9.52018C18.4732 9.67018 18.2832 9.74018 18.0932 9.74018C17.9032 9.74018 17.7132 9.67018 17.5632 9.52018Z" fill="white"/>
@@ -45,68 +45,54 @@
     </div>
   </div>
 
-  <!-- Wrap the table rows in a cdkDropList for row reordering -->
-  <div
-    cdkDropList
-    [cdkDropListData]="value"
-    (cdkDropListDropped)="dropRow($event)"
-  >
-    <p-table [value]="value" class="w-100">
-      <!-- Table Header -->
-      <ng-template pTemplate="header">
-        <tr>
-          <!-- First cell for drag handle -->
-          <th class="w-50px text-center"></th>
-          <!-- Dynamically render tableWidth columns for the header -->
-          <th *ngFor="let col of [].constructor(tableWidth)">
-            <input
-              class="form-control m-input"
-              [placeholder]="l('EnterSectionTitle')"
-              type="text"
-              disabled
-            />
-          </th>
-        </tr>
-      </ng-template>
+<!-- Display the table. We can use a basic HTML table or p-table. -->
+<!-- For clarity, let's use a basic <table>. -->
 
-      <!-- Table Body -->
-      <ng-template pTemplate="body" let-row let-rowIndex="rowIndex">
-        <!-- each row is cdkDrag -->
-        <tr cdkDrag>
-          <!-- Drag handle cell -->
-          <td cdkDragHandle>
-            <img
-              class="cursor-pointer"
-              src="assets/common/images/menu.svg"
-              alt="Drag handle"
-            />
-          </td>
-
-          <!-- Loop over row.dragDropTableItems for columns -->
-          <td
-            *ngFor="
-              let cell of row.dragDropTableItems;
-              let colIndex = index
-            "
-          >
-            <!-- pinned checkbox -->
+<table class="table table-bordered">
+    <thead>
+        <!-- If we have at least 1 row, that row is the header row -->
+        <tr *ngIf="value.length > 0">
+            <th *ngFor="let headerCell of value[0].dragDropTableItems; let colIndex = index">
+                <!-- Show the header cell title -->
+                <input
+                    type="text"
+                    class="form-control"
+                    [(ngModel)]="headerCell.title"
+                    (ngModelChange)="notifyValueChange()"
+                    [disabled]="false"
+                />
+                <!-- Show isPinned checkbox (but disabled, since we always want the header pinned) -->
+                <!-- <br />
+          <label class="mt-1">
             <input
               type="checkbox"
-              class="form-check-input me-2"
-              [(ngModel)]="cell.isPinned"
+              [(ngModel)]="headerCell.isPinned"
               (ngModelChange)="notifyValueChange()"
+              disabled
             />
-
-            <!-- cell text -->
-            <input
-              class="form-control m-input"
-              [placeholder]="l('EnterTheAppropriateWord')"
-              type="text"
-              [(ngModel)]="cell.title"
-              (ngModelChange)="notifyValueChange()"
-            />
-          </td>
+            <span class="ms-1">Pinned?</span>
+          </label> -->
+            </th>
         </tr>
-      </ng-template>
-    </p-table>
-  </div>
+    </thead>
+
+    <tbody>
+        <!-- Data rows (index=1..n) -->
+        <tr *ngFor="let row of value; let rowIndex = index" [hidden]="rowIndex === 0">
+            <td *ngFor="let cell of row.dragDropTableItems; let colIndex = index">
+                <!-- Title input -->
+                <label class="mt-1">
+                    <input type="checkbox" [(ngModel)]="cell.isPinned" (ngModelChange)="notifyValueChange()" />
+                </label>
+                <input
+                    type="text"
+                    class="form-control"
+                    [(ngModel)]="cell.title"
+                    (ngModelChange)="notifyValueChange()"
+                />
+
+                <!-- Pinned checkbox (enabled for data rows) -->
+            </td>
+        </tr>
+    </tbody>
+</table>
