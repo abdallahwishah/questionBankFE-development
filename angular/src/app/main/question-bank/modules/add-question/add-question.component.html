@@ -8,7 +8,8 @@
                     viewBox="0 0 14 14"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
-                    class="postion">
+                    class="postion"
+                >
                     <path
                         d="M9.3337 8.12643L5.53036 11.9298C5.3612 12.0989 5.0812 12.0989 4.91203 11.9298C4.74286 11.7606 4.74286 11.4806 4.91203 11.3114L8.71536 7.5081C8.99536 7.2281 8.99536 6.7731 8.71536 6.4931L4.91203 2.68977C4.74286 2.5206 4.74286 2.2406 4.91203 2.07143C5.0812 1.90226 5.3612 1.90226 5.53036 2.07143L9.3337 5.87476C9.64286 6.18393 9.80036 6.59227 9.80036 7.0006C9.80036 7.40893 9.64286 7.81727 9.3337 8.12643Z"
                         fill="#999999"
@@ -32,43 +33,50 @@
 
                     <div class="row mt-6">
                         <div class="col-md-6 mb-5">
-                            <app-dropdown-field [(ngModel)]="_createOrEditQuestionDto.studySubjectId"
-                             [options]="studySubjects"
-                            optionLabel="name"
-                            optionValue="id"
-                             [labelField]="l('StudySubject')"></app-dropdown-field>
+                            <app-dropdown-field
+                                [(ngModel)]="_createOrEditQuestionDto.studySubjectId"
+                                [options]="studySubjects"
+                                optionLabel="name"
+                                optionValue="id"
+                                [labelField]="l('StudySubject')"
+                            ></app-dropdown-field>
                         </div>
                         <div class="col-md-6 mb-5">
-                            <app-dropdown-field [(ngModel)]="_createOrEditQuestionDto.studyLevelId"
-                            [options]="studyLevels"
-                            optionLabel="name"
-                            optionValue="id"
-                             [labelField]="l('Class')"></app-dropdown-field>
+                            <app-dropdown-field
+                                [(ngModel)]="_createOrEditQuestionDto.studyLevelId"
+                                [options]="studyLevels"
+                                optionLabel="name"
+                                optionValue="id"
+                                [labelField]="l('Class')"
+                            ></app-dropdown-field>
                         </div>
                         <div class="col-md-6 mb-5">
-                            <app-dropdown-field [(ngModel)]="_createOrEditQuestionDto.subjectUnitId"
-                            [options]="subjectUnits"
-                            optionLabel="name"
-                            optionValue="id"
-
-                            [labelField]="l('StudyUnit')"></app-dropdown-field>
+                            <app-dropdown-field
+                                [(ngModel)]="_createOrEditQuestionDto.subjectUnitId"
+                                [options]="subjectUnits"
+                                optionLabel="name"
+                                optionValue="id"
+                                [labelField]="l('StudyUnit')"
+                            ></app-dropdown-field>
                         </div>
                         <div class="col-md-6 mb-5">
-                            <label class="mb-2">{{l('PageNumber')}}</label>
+                            <label class="mb-2">{{ l('PageNumber') }}</label>
                             <input
-                            name="text"
-                            [(ngModel)]="_createOrEditQuestionDto.pageNumber"
-                            class="form-control m-input"
-                            [placeholder]="l('EnterPageNumber')"
-                            type="text"
-                        />
+                                name="text"
+                                [(ngModel)]="_createOrEditQuestionDto.pageNumber"
+                                class="form-control m-input"
+                                [placeholder]="l('EnterPageNumber')"
+                                type="text"
+                            />
                         </div>
                         <div class="col-12 mb-2">
-                            <app-dropdown-field [(ngModel)]="_createOrEditQuestionDto.complexityId"
-                            [options]="complexities"
-                            optionLabel="name"
-                            optionValue="id"
-                            [labelField]="l('DifficultyLevel')"></app-dropdown-field>
+                            <app-dropdown-field
+                                [(ngModel)]="_createOrEditQuestionDto.complexityId"
+                                [options]="complexities"
+                                optionLabel="name"
+                                optionValue="id"
+                                [labelField]="l('DifficultyLevel')"
+                            ></app-dropdown-field>
                         </div>
                     </div>
                 </div>
@@ -85,11 +93,10 @@
                     <!-- @if (checked) { -->
                     <div class="row mt-6">
                         <div class="col-12 mb-2">
-                            <app-editor></app-editor>
+                            <app-editor [(ngModel)]="_createOrEditQuestionDto.body"></app-editor>
                         </div>
                     </div>
                     <!-- } -->
-
                 </div>
             </div>
 
@@ -101,7 +108,7 @@
                     </div>
                     <div class="row mt-6">
                         <div class="col-12 mb-2">
-                            <app-editor></app-editor>
+                            <app-editor [(ngModel)]="_createOrEditQuestionDto.questionHelper"></app-editor>
                         </div>
                     </div>
                 </div>
@@ -153,9 +160,7 @@
                 <div class="card px-8 py-6">
                     <div class="row mt-2">
                         <div class="col-md-3 mb-2 d-flex justify-content-center align-items-center gap-4">
-                            <p-inputSwitch
-                            [(ngModel)]="_createOrEditQuestionDto.autoCorrection">
-                          </p-inputSwitch>
+                            <p-inputSwitch [(ngModel)]="_createOrEditQuestionDto.autoCorrection"></p-inputSwitch>
 
                             <label class="pt-3">{{ l('AutomaticallyCorrectTheQuestion') }}</label>
                         </div>
