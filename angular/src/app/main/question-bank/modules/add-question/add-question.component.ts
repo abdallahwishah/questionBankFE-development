@@ -39,7 +39,7 @@ export class AddQuestionComponent extends AppComponentBase implements OnInit {
     }
 
     ngOnInit() {
-        this.getQuestion()
+        // this.getQuestion()
          this._studyLevelsServiceProxy.getAll(undefined , undefined , undefined ,undefined , undefined).subscribe(val=>{
             this.studyLevels = val.items.map(item => {
                 return {
@@ -84,51 +84,51 @@ export class AddQuestionComponent extends AppComponentBase implements OnInit {
     }
 
 
-     getQuestion(event?: LazyLoadEvent) {
-            if (event) {
-                if (this.primengTableHelper.shouldResetPaging(event)) {
-                    this.paginator.changePage(0);
-                    if (this.primengTableHelper.records && this.primengTableHelper.records.length > 0) {
-                        return;
-                    }
-                }
-            }
+    //  getQuestion(event?: LazyLoadEvent) {
+    //         if (event) {
+    //             if (this.primengTableHelper.shouldResetPaging(event)) {
+    //                 this.paginator.changePage(0);
+    //                 if (this.primengTableHelper.records && this.primengTableHelper.records.length > 0) {
+    //                     return;
+    //                 }
+    //             }
+    //         }
 
-            this.primengTableHelper.showLoadingIndicator();
+    //         this.primengTableHelper.showLoadingIndicator();
 
-            this._questionsServiceProxy
-                .getAll(
-                    undefined,
-                    undefined,
-                    undefined,
-                    undefined,
-                    undefined,
-                    undefined,
-                    undefined,
-                    undefined,
-                    undefined,
-                    undefined,
-                    undefined,
-                    undefined,
-                    undefined,
-                    undefined,
-                    undefined,
-                    undefined,
-                    undefined,
-                    undefined,
-                    undefined,
-                    undefined,
-                    this.primengTableHelper.getSorting(this.dataTable),
-                    this.primengTableHelper.getSkipCount(this.paginator, event),
-                    this.primengTableHelper.getMaxResultCount(this.paginator, event),
-                )
-                .subscribe((result) => {
-                    this.primengTableHelper.totalRecordsCount = result.totalCount;
-                    this.primengTableHelper.records = result.items;
-                    console.log(result.items);
-                    this.primengTableHelper.hideLoadingIndicator();
-                });
-     }
+    //         this._questionsServiceProxy
+    //             .getAll(
+    //                 undefined,
+    //                 undefined,
+    //                 undefined,
+    //                 undefined,
+    //                 undefined,
+    //                 undefined,
+    //                 undefined,
+    //                 undefined,
+    //                 undefined,
+    //                 undefined,
+    //                 undefined,
+    //                 undefined,
+    //                 undefined,
+    //                 undefined,
+    //                 undefined,
+    //                 undefined,
+    //                 undefined,
+    //                 undefined,
+    //                 undefined,
+    //                 undefined,
+    //                 this.primengTableHelper.getSorting(this.dataTable),
+    //                 this.primengTableHelper.getSkipCount(this.paginator, event),
+    //                 this.primengTableHelper.getMaxResultCount(this.paginator, event),
+    //             )
+    //             .subscribe((result) => {
+    //                 this.primengTableHelper.totalRecordsCount = result.totalCount;
+    //                 this.primengTableHelper.records = result.items;
+    //                 console.log(result.items);
+    //                 this.primengTableHelper.hideLoadingIndicator();
+    //             });
+    //  }
 
 
     Save(){
