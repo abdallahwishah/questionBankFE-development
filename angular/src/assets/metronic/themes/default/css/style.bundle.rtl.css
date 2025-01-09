@@ -49298,3 +49298,11 @@ body,
 }
 
 
+.p-paginator .p-dropdown .p-dropdown-label{
+    padding-right: 10px !important;
+}
+
+
+.p-paginator .p-paginator-first, .p-paginator .p-paginator-prev, .p-paginator .p-paginator-next, .p-paginator .p-paginator-last{
+    transform: rotate(180deg) !important;
+}

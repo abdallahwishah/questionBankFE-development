@@ -563,3 +563,31 @@ td , th{
 th , td {
     text-align: center !important;
 }
+
+
+.cke_notification_warning{
+    display: none !important;
+}
+
+.p-paginator .p-paginator-pages .p-paginator-page.p-highlight{
+    border-radius: 6px !important;
+}
+
+/* .p-checkbox .p-checkbox-box .p-checkbox-icon{
+    color: var(--bs-primary);
+}
+.p-checkbox .p-checkbox-box.p-highlight{
+    background: transparent !important;
+    border-color: #DEE1E6 !important;
+} */
+.p-checkbox .p-checkbox-box , .p-checkbox {
+    width: 23px !important;
+    height: 23px !important;
+}
+.p-checkbox .p-checkbox-box{
+    border-color: var(--bs-gray-300) !important;
+    border-radius: 6px !important;
+}
+.p-checkbox.p-checkbox-checked:not(.p-checkbox-disabled):hover , .p-checkbox:not(.p-checkbox-disabled):hover{
+    box-shadow: none !important;
+}
