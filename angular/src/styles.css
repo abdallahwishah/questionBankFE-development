@@ -559,3 +559,7 @@ td , th{
     padding-bottom: 9px !important;
     border-bottom: 1px solid #DEE1E6;
 }
+
+th , td {
+    text-align: center !important;
+}
