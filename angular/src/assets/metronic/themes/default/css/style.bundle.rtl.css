@@ -184,7 +184,7 @@
 *::after {
   box-sizing: border-box;
 }
-.p-component{
+.p-component , .app-dropdown .p-dropdown .p-inputtext{
     font-family: var(--bs-body-font-family) !important;
 }
 body {
