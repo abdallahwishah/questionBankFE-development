@@ -591,3 +591,14 @@ th , td {
 .p-checkbox.p-checkbox-checked:not(.p-checkbox-disabled):hover , .p-checkbox:not(.p-checkbox-disabled):hover{
     box-shadow: none !important;
 }
+.custom-tabel span {
+     color: var(--bs-primary)
+}
+.custom-tabel{
+    border: 1px solid #DEE1E6;
+    border-radius: 8px;
+}
+
+.custom-tabel .row:not(:last-of-type){
+    border-bottom:1xp solid #D9D9D9;
+}

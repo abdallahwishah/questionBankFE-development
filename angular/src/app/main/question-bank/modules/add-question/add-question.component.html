@@ -31,12 +31,32 @@
                 <div class="card px-8 py-6">
                     <h3>{{ l('QuestionsYouAdded') }}</h3>
 
-                    <div class="row mt-6">
-                        <div class="col-12">
+                    <div class="custom-tabel mt-6 p-5">
+                       @for (item of [1 , 2 , 3]; track $index) {
+                        <div class="row">
+                            <div class="col-md-1">
+                                <img src="assets/common/images/menu.svg" alt="drag handle" class="cursor-pointer">
+                            </div>
+                            <div class="col-md-2">
+                                <span class="fs-5">السؤال الاول</span>
+                            </div>
+                            <div class="col-md-7">
+                                 <p class="mb-0">Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo similique repellendus voluptate dolor dolores quam. Sunt sequi minus inventore nemo!</p>
+                            </div>
+                            <div class="col-md-2 d-flex flex-column align-items-center justify-content-between gap-4">
 
+                            <button class="btn btn-add py-3 px-4 mx-2">
+                                <img src="assets/common/images/check.svg" alt="" />
+                            </button>
+                            <button class="btn btn-delete p-3 m-0">
+                                <img src="assets/common/images/trash.svg" alt="" />
+                            </button>
 
+                            </div>
                         </div>
+                       }
                     </div>
+
                 </div>
             </div>
 
