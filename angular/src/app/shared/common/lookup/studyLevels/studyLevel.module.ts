@@ -5,6 +5,7 @@ import {StudyLevelRoutingModule} from './studyLevel-routing.module';
 import {StudyLevelsComponent} from './studyLevels.component';
 import {CreateOrEditStudyLevelModalComponent} from './create-or-edit-studyLevel-modal.component';
 import {ViewStudyLevelModalComponent} from './view-studyLevel-modal.component';
+import { ActionButtonComponent } from "../../../components/action-button/action-button.component";
 
 
 
@@ -13,10 +14,10 @@ import {ViewStudyLevelModalComponent} from './view-studyLevel-modal.component';
         StudyLevelsComponent,
         CreateOrEditStudyLevelModalComponent,
         ViewStudyLevelModalComponent,
-        
+
     ],
-    imports: [AppSharedModule, StudyLevelRoutingModule , AdminSharedModule ],
-    
+    imports: [AppSharedModule, StudyLevelRoutingModule, AdminSharedModule, ActionButtonComponent],
+
 })
 export class StudyLevelModule {
 }

@@ -24,11 +24,11 @@ import { DateTime } from 'luxon';
     animations: [appModuleAnimation()]
 })
 export class ComplexitiesComponent extends AppComponentBase {
-    
-    
+
+
     @ViewChild('createOrEditComplexityModal', { static: true }) createOrEditComplexityModal: CreateOrEditComplexityModalComponent;
-    @ViewChild('viewComplexityModal', { static: true }) viewComplexityModal: ViewComplexityModalComponent;   
-    
+    @ViewChild('viewComplexityModal', { static: true }) viewComplexityModal: ViewComplexityModalComponent;
+
     @ViewChild('dataTable', { static: true }) dataTable: Table;
     @ViewChild('paginator', { static: true }) paginator: Paginator;
 
@@ -82,7 +82,7 @@ export class ComplexitiesComponent extends AppComponentBase {
     }
 
     createComplexity(): void {
-        this.createOrEditComplexityModal.show();        
+        this.createOrEditComplexityModal.show();
     }
 
 
@@ -111,11 +111,27 @@ export class ComplexitiesComponent extends AppComponentBase {
             this._fileDownloadService.downloadTempFile(result);
          });
     }
-    
-    
-    
-    
-    
+
+
+
+    action(event: any, record: any) {
+        switch (event) {
+            case 'View':
+                this.viewComplexityModal.show(record)
+                break;
+            case 'Edit':
+                this.createOrEditComplexityModal.show(record.complexity.id)
+                break;
+            case 'Delete':
+                this.deleteComplexity(record.complexity)
+                break;
+        }
+
+    }
+
+
+
+
 
     resetFilters(): void {
         this.filterText = '';

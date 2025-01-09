@@ -12,6 +12,11 @@ export class AppNavigationService {
         private _appSessionService: AppSessionService,
     ) {}
 
+
+   /*  new AppMenuItem('ClassRoom', 'Pages.Administration.Roles', 'flaticon-point', '/app/main/question-ids'),
+    new AppMenuItem('Subjects', 'Pages.Administration.Users', 'flaticon-users', '/app/main/subjects'), */
+
+
     getMenu(): AppMenu {
         return new AppMenu('MainMenu', 'MainMenu', [
             new AppMenuItem(
@@ -28,8 +33,14 @@ export class AppNavigationService {
                 '',
                 [],
                 [
-                    new AppMenuItem('ClassRoom', 'Pages.Administration.Roles', 'flaticon-point', '/app/main/question-ids'),
-                    new AppMenuItem('Subjects', 'Pages.Administration.Users', 'flaticon-users', '/app/main/subjects'),
+                    new AppMenuItem('categories', '', 'flaticon-app', '/app/main/categories'),
+                    new AppMenuItem('complexities', '', 'flaticon-users', '/app/main/complexities'),
+                    new AppMenuItem('studyLevels', '', 'flaticon-users', '/app/main/studyLevels'),
+                    new AppMenuItem('studySubjects', '', 'flaticon-users', '/app/main/studySubjects'),
+                    new AppMenuItem('subjectUnits', '', 'flaticon-users', '/app/main/subjectUnits'),
+                    new AppMenuItem('subjectGroups', '', 'flaticon-users', '/app/main/subjectGroups'),
+                    new AppMenuItem('supportGroupItems', '', 'flaticon-users', '/app/main/supportGroupItems'),
+                    new AppMenuItem('supportGroups', '', 'flaticon-users', '/app/main/supportGroups'),
                 ],
             ),
             new AppMenuItem('QuestionBank', '', 'flaticon-line-graph', '/app/main/question-bank'),
@@ -49,8 +60,8 @@ export class AppNavigationService {
                     new AppMenuItem('complexities', '', 'flaticon-users', '/app/main/complexities'),
                     new AppMenuItem('studyLevels', '', 'flaticon-users', '/app/main/studyLevels'),
                     new AppMenuItem('studySubjects', '', 'flaticon-users', '/app/main/studySubjects'),
-                    new AppMenuItem('subjectGroups', '', 'flaticon-users', '/app/main/subjectGroups'),
                     new AppMenuItem('subjectUnits', '', 'flaticon-users', '/app/main/subjectUnits'),
+                    new AppMenuItem('subjectGroups', '', 'flaticon-users', '/app/main/subjectGroups'),
                     new AppMenuItem('supportGroupItems', '', 'flaticon-users', '/app/main/supportGroupItems'),
                     new AppMenuItem('supportGroups', '', 'flaticon-users', '/app/main/supportGroups'),
                 ],

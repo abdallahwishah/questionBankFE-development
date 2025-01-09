@@ -25,12 +25,12 @@ import { DateTime } from 'luxon';
     animations: [appModuleAnimation()]
 })
 export class StudySubjectsComponent extends AppComponentBase {
-    
-    
+
+
     @ViewChild('entityTypeHistoryModal', { static: true }) entityTypeHistoryModal: EntityTypeHistoryModalComponent;
     @ViewChild('createOrEditStudySubjectModal', { static: true }) createOrEditStudySubjectModal: CreateOrEditStudySubjectModalComponent;
-    @ViewChild('viewStudySubjectModal', { static: true }) viewStudySubjectModal: ViewStudySubjectModalComponent;   
-    
+    @ViewChild('viewStudySubjectModal', { static: true }) viewStudySubjectModal: ViewStudySubjectModalComponent;
+
     @ViewChild('dataTable', { static: true }) dataTable: Table;
     @ViewChild('paginator', { static: true }) paginator: Paginator;
 
@@ -97,7 +97,7 @@ export class StudySubjectsComponent extends AppComponentBase {
     }
 
     createStudySubject(): void {
-        this.createOrEditStudySubjectModal.show();        
+        this.createOrEditStudySubjectModal.show();
     }
 
 
@@ -135,11 +135,28 @@ export class StudySubjectsComponent extends AppComponentBase {
             this._fileDownloadService.downloadTempFile(result);
          });
     }
-    
-    
-    
-    
-    
+
+
+    action(event: any, record: any) {
+        switch (event) {
+            case 'View':
+                this.viewStudySubjectModal.show(record)
+                break;
+            case 'Edit':
+                this.createOrEditStudySubjectModal.show(record.complexity.id)
+                break;
+            case 'Delete':
+                this.deleteStudySubject(record.complexity)
+                break;
+            case 'History':
+                this.showHistory(record.complexity)
+                break;
+        }
+
+    }
+
+
+
 
     resetFilters(): void {
         this.filterText = '';

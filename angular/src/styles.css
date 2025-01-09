@@ -538,3 +538,24 @@ td , th{
 .bg-transparent{
  background: transparent !important;
 }
+
+.p-overlaypanel .p-overlaypanel-content {
+    padding: 0.4rem 0.8rem !important;
+}
+.p-overlaypanel .p-overlaypanel-content ul {
+    list-style-type: none !important;
+    margin-bottom: 4px !important;
+}
+.p-overlaypanel{
+    box-shadow: 0px 4px 30px 0px #0000001A !important;
+    min-width: 10rem !important;
+}
+
+.p-overlaypanel li {
+    cursor: pointer;
+}
+.p-overlaypanel li:not(:last-of-type){
+    margin-bottom: 9px !important;
+    padding-bottom: 9px !important;
+    border-bottom: 1px solid #DEE1E6;
+}

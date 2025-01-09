@@ -5,6 +5,7 @@ import {ComplexityRoutingModule} from './complexity-routing.module';
 import {ComplexitiesComponent} from './complexities.component';
 import {CreateOrEditComplexityModalComponent} from './create-or-edit-complexity-modal.component';
 import {ViewComplexityModalComponent} from './view-complexity-modal.component';
+import { ActionButtonComponent } from "../../../components/action-button/action-button.component";
 
 
 
@@ -13,10 +14,10 @@ import {ViewComplexityModalComponent} from './view-complexity-modal.component';
         ComplexitiesComponent,
         CreateOrEditComplexityModalComponent,
         ViewComplexityModalComponent,
-        
+
     ],
-    imports: [AppSharedModule, ComplexityRoutingModule , AdminSharedModule ],
-    
+    imports: [AppSharedModule, ComplexityRoutingModule, AdminSharedModule, ActionButtonComponent],
+
 })
 export class ComplexityModule {
 }
