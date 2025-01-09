@@ -20,6 +20,11 @@ import { RouterModule } from '@node_modules/@angular/router';
                         loadChildren: () =>
                             import('./modules/add-question/add-question.module').then((m) => m.AddQuestionModule),
                     },
+                    {
+                        path: 'addQuestion/:id',
+                        loadChildren: () =>
+                            import('./modules/add-question/add-question.module').then((m) => m.AddQuestionModule),
+                    },
                 ],
             },
         ]),

@@ -8,6 +8,7 @@ import { DropdownFieldComponent } from "../../../../shared/components/fields/dro
 import { ActionButtonComponent } from "../../../../shared/components/action-button/action-button.component";
 import { PaginatorComponent } from '@app/shared/common/paginator/paginator.component';
 import { AddFileModalComponent } from '../../components/add-file-modal/add-file-modal.component';
+import { InputSwitchModule } from 'primeng/inputswitch';
 
 @NgModule({
   imports: [
@@ -23,6 +24,7 @@ import { AddFileModalComponent } from '../../components/add-file-modal/add-file-
     DropdownFieldComponent,
     ActionButtonComponent,
     PaginatorComponent,
+    InputSwitchModule,
     AddFileModalComponent
 ],
   declarations: [ListComponent]
