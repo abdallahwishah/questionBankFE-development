@@ -71,7 +71,7 @@ export class ListComponent extends AppComponentBase implements OnInit {
             .subscribe((result) => {
                 this.primengTableHelper.totalRecordsCount = result.totalCount;
                 this.primengTableHelper.records = result.items;
-                console.log(result.items);
+                console.log(result);
                 this.primengTableHelper.hideLoadingIndicator();
             });
     }
@@ -84,6 +84,9 @@ export class ListComponent extends AppComponentBase implements OnInit {
         switch (label) {
             case 'View':
                 console.log();
+                break;
+            case 'Edit':
+
                 break;
         }
     }

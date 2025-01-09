@@ -49,7 +49,7 @@ export class AppNavigationService {
             new AppMenuItem('Sessions', '', 'flaticon-line-graph', '/app/main/sessions'),
             new AppMenuItem('CorrectingSession', '', 'flaticon-line-graph', '/app/main/correcting'),
             new AppMenuItem('Audit', '', 'flaticon-line-graph', '/app/main/audit'),
-            new AppMenuItem(
+           /*  new AppMenuItem(
                 'lockup',
                 '',
                 'flaticon-line-graph',
@@ -65,7 +65,7 @@ export class AppNavigationService {
                     new AppMenuItem('supportGroupItems', '', 'flaticon-users', '/app/main/supportGroupItems'),
                     new AppMenuItem('supportGroups', '', 'flaticon-users', '/app/main/supportGroups'),
                 ],
-            ),
+            ), */
             new AppMenuItem('Tenants', 'Pages.Tenants', 'flaticon-list-3', '/app/admin/tenants'),
             new AppMenuItem('Editions', 'Pages.Editions', 'flaticon-app', '/app/admin/editions'),
             new AppMenuItem(
