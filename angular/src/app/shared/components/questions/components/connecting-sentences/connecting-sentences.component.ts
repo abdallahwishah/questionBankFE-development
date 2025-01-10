@@ -141,7 +141,7 @@ import { CreateOrEditMatchQuestionDto } from '@shared/service-proxies/service-pr
     addFake(): void {
       const fake = new CreateOrEditMatchQuestionDto();
       fake.matchedFakeWord = ' ';
-      fake.point = 1;
+      fake.point = 0;
       this.value.push(fake);
       this.notifyValueChange();
     }

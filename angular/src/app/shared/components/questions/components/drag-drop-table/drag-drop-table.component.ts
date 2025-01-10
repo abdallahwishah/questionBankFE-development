@@ -36,18 +36,19 @@ import {
 })
 export class DragDropTableComponent extends AppComponentBase implements ControlValueAccessor {
     /**
-     * The array of rows, each containing a list of cells.
-     * The first row (index=0) is "header" => pinned = true, titled "Header" by default.
-     * Later rows => data => pinned can be toggled by user.
+     * "value" is an array of columns, not rows.
+     * Each item in `value` => one column.
+     * `dragDropTableItems[]` => the rows in that column (vertical).
      */
     value: CreateOrEditTableDragQuestionDto[] = [];
 
     /**
-     * User inputs for how many total rows & columns
-     * (including the header row).
+     * We'll interpret:
+     *  - tableHeight => how many columns
+     *  - tableWidth  => how many rows (each column has these many rows)
      */
-    tableHeight = 3; // default = 3
-    tableWidth = 3;  // default = 3
+    tableHeight = 3; // # of columns
+    tableWidth = 3;  // # of rows
 
     // ControlValueAccessor callbacks
     private onChange: (val: CreateOrEditTableDragQuestionDto[]) => void = () => {};
@@ -57,9 +58,9 @@ export class DragDropTableComponent extends AppComponentBase implements ControlV
         super(injector);
     }
 
-    // ----------------------------------------------------------------
+    // ---------------------------------------------
     // ControlValueAccessor
-    // ----------------------------------------------------------------
+    // ---------------------------------------------
     writeValue(obj: CreateOrEditTableDragQuestionDto[]): void {
         this.value = obj || [];
     }
@@ -72,89 +73,74 @@ export class DragDropTableComponent extends AppComponentBase implements ControlV
         this.onTouched = fn;
     }
 
-    setDisabledState?(isDisabled: boolean): void {
-        // If you need to disable the entire table or some controls, do it here
-    }
+    setDisabledState?(isDisabled: boolean): void {}
 
-    /**
-     * Notify the parent form any time `this.value` changes.
-     */
+    /** Whenever our data changes, notify the parent form. */
     notifyValueChange(): void {
         this.onChange(this.value);
         this.onTouched();
     }
 
-    // ----------------------------------------------------------------
-    // Build or Update Table
-    // ----------------------------------------------------------------
-
-    /**
-     * Called by a button in the template to (re-)generate the table
-     * according to `tableHeight` & `tableWidth`.
-     *
-     * If the new size is smaller than existing, confirm before truncating.
-     */
+    // ---------------------------------------------
+    // Build or Update the "columns-based" table
+    // ---------------------------------------------
     buildOrUpdateTable(): void {
-        const newRowCount = Math.max(1, this.tableHeight);
-        const newColCount = Math.max(1, this.tableWidth);
+        const newColCount = Math.max(1, this.tableHeight); // columns
+        const newRowCount = Math.max(1, this.tableWidth);  // rows
 
-        // If no existing table data, build from scratch
         if (!this.value || this.value.length === 0) {
-            this.value = this.buildNewTable(newRowCount, newColCount);
+            // Build from scratch
+            this.value = this.buildNewTable(newColCount, newRowCount);
             this.notifyValueChange();
             return;
         }
 
-        // If we already have data, preserve it while adjusting size
-        const oldRowCount = this.value.length;
-        const oldColCount = oldRowCount > 0
-            ? (this.value[0].dragDropTableItems?.length || 0)
-            : 0;
+        // Already have data => preserve as best we can
+        const oldColCount = this.value.length;
+        const oldRowCount = oldColCount > 0 ? (this.value[0].dragDropTableItems?.length || 0) : 0;
 
-        // 1) Confirm before removing rows/columns
-        if (newRowCount < oldRowCount || newColCount < oldColCount) {
+        // If removing columns/rows, confirm
+        if (newColCount < oldColCount || newRowCount < oldRowCount) {
             const confirmMsg = this.l('YouAreAboutToRemoveRowsOrColumns');
             if (!confirm(confirmMsg)) {
-                // Revert to old values if user cancels
-                this.tableHeight = oldRowCount;
-                this.tableWidth = oldColCount;
+                // revert
+                this.tableHeight = oldColCount;
+                this.tableWidth = oldRowCount;
                 return;
             }
         }
 
-        // 2) Adjust row count
-        // If newRowCount < oldRowCount => remove extra rows
-        if (newRowCount < oldRowCount) {
-            this.value.splice(newRowCount, oldRowCount - newRowCount);
-        }
-        // If newRowCount > oldRowCount => add new rows
-        else if (newRowCount > oldRowCount) {
-            for (let r = oldRowCount; r < newRowCount; r++) {
-                const newRow = this.buildRow(r, newColCount);
-                this.value.push(newRow);
+        // Adjust column count
+        if (newColCount < oldColCount) {
+            // remove extra columns
+            this.value.splice(newColCount, oldColCount - newColCount);
+        } else if (newColCount > oldColCount) {
+            // add new columns
+            for (let c = oldColCount; c < newColCount; c++) {
+                const newCol = this.buildColumn(c, newRowCount);
+                this.value.push(newCol);
             }
         }
 
-        // 3) Adjust column count for each row
-        this.value.forEach((rowDto, rowIndex) => {
-            const items = rowDto.dragDropTableItems || [];
-            const currentCols = items.length;
+        // Adjust row count in each column
+        this.value.forEach((colDto, colIndex) => {
+            const items = colDto.dragDropTableItems || [];
+            const currentRowCount = items.length;
 
-            // If fewer columns => remove extras
-            if (newColCount < currentCols) {
-                items.splice(newColCount, currentCols - newColCount);
+            // remove extra rows
+            if (newRowCount < currentRowCount) {
+                items.splice(newRowCount, currentRowCount - newRowCount);
             }
-            // If more columns => add new
-            else if (newColCount > currentCols) {
-                for (let c = currentCols; c < newColCount; c++) {
+            // add new rows
+            else if (newRowCount > currentRowCount) {
+                for (let r = currentRowCount; r < newRowCount; r++) {
                     const cell = new CreateOrEditTableDragItemDto();
-                    cell.order = c;
-                    // If header row => pinned + default "Header"
-                    if (rowIndex === 0) {
+                    cell.order = r;
+                    // If row = 0 => pinned & title=Header
+                    if (r === 0) {
                         cell.isPinned = true;
                         cell.title = 'Header';
                     } else {
-                        // Data row => pinned false by default, user can toggle
                         cell.isPinned = false;
                         cell.title = '';
                     }
@@ -162,66 +148,56 @@ export class DragDropTableComponent extends AppComponentBase implements ControlV
                 }
             }
 
-            // Force pinned in header row, data row pinned is user-defined
-            if (rowIndex === 0) {
-                items.forEach(cell => {
-                    cell.isPinned = true;
-                    if (!cell.title) {
-                        cell.title = 'Header';
-                    }
-                });
+            // Also, ensure that rowIndex=0 is pinned & titled "Header"
+            // in case we had existing data that changed, just reaffirm that rule:
+            if (items.length > 0) {
+                items[0].isPinned = true;
+                if (!items[0].title) {
+                    items[0].title = 'Header';
+                }
             }
 
-            rowDto.dragDropTableItems = items;
-            rowDto.dragDropTableColumnIndex = rowIndex;
+            colDto.dragDropTableColumnIndex = colIndex;
+            colDto.dragDropTableItems = items;
         });
 
-        // 4) Notify the parent form
         this.notifyValueChange();
     }
 
-    /**
-     * Build a brand-new table with the given row & column count.
-     */
-    private buildNewTable(rowCount: number, colCount: number): CreateOrEditTableDragQuestionDto[] {
+    /** Build an entirely new table => an array of columns. */
+    private buildNewTable(colCount: number, rowCount: number): CreateOrEditTableDragQuestionDto[] {
         const newValue: CreateOrEditTableDragQuestionDto[] = [];
-        for (let r = 0; r < rowCount; r++) {
-            newValue.push(this.buildRow(r, colCount));
+        for (let c = 0; c < colCount; c++) {
+            newValue.push(this.buildColumn(c, rowCount));
         }
         return newValue;
     }
 
     /**
-     * Build a single row. The 0th row is the header row => pinned = true, "Header" title.
+     * Build one column => `CreateOrEditTableDragQuestionDto`.
+     * That column has rowCount items. The top item (row=0) is pinned & titled "Header".
      */
-    private buildRow(rowIndex: number, colCount: number): CreateOrEditTableDragQuestionDto {
-        const rowDto = new CreateOrEditTableDragQuestionDto();
-        rowDto.dragDropTableColumnIndex = rowIndex;
-        // For convenience, set dragDropTableHeaders to identify row
-        // rowDto.dragDropTableHeaders =
-        //     rowIndex === 0
-        //         ? this.l('HeaderRow') + ' ' + (rowIndex + 1)
-        //         : this.l('DataRow')   + ' ' + (rowIndex + 1);
+    private buildColumn(colIndex: number, rowCount: number): CreateOrEditTableDragQuestionDto {
+        const colDto = new CreateOrEditTableDragQuestionDto();
+        colDto.dragDropTableColumnIndex = colIndex;
+        colDto.dragDropTableItems = [];
 
-        rowDto.dragDropTableItems = [];
-
-        for (let c = 0; c < colCount; c++) {
+        for (let r = 0; r < rowCount; r++) {
             const cell = new CreateOrEditTableDragItemDto();
-            cell.order = c;
+            cell.order = r;
 
-            if (rowIndex === 0) {
-                // Header row => pinned, default "Header"
+            // row=0 => pinned
+            if (r === 0) {
                 cell.isPinned = true;
                 cell.title = 'Header';
             } else {
-                // Data row => pinned can be toggled by user
                 cell.isPinned = false;
                 cell.title = '';
             }
 
-            rowDto.dragDropTableItems.push(cell);
+            colDto.dragDropTableItems.push(cell);
         }
 
-        return rowDto;
+        return colDto;
     }
 }

@@ -25,14 +25,12 @@ export class ListComponent extends AppComponentBase implements OnInit {
         private _injector: Injector,
         private _DialogSharedService: DialogSharedService,
         private _questionsServiceProxy: QuestionsServiceProxy,
-        private _router:Router
-
+        private _router: Router,
     ) {
         super(_injector);
     }
 
-    ngOnInit() {
-     }
+    ngOnInit() {}
 
     getQuestion(event?: LazyLoadEvent) {
         if (event) {
@@ -70,28 +68,26 @@ export class ListComponent extends AppComponentBase implements OnInit {
             });
     }
 
-
     addFile() {
         this._DialogSharedService.showDialog(this.Add_File_dialog, {});
     }
 
-    CheckedQuestion:any;
-    getCheckedQuestion($event){
-        if(!$event.checked){
-            this.CheckedQuestion = false
-        }else{
-            this.CheckedQuestion = true
-        }
-    }
-    doActions(label: any, record: any) {
-        switch (label) {
-            case 'View':
-                console.log();
-                break;
-            case 'Edit':
-                this._router.navigate(['app/main/question-bank/addQuestion/'+record.question.id])
-                break;
-        }
+    CheckedQuestion: any;
+    getCheckedQuestion(record) {
+        record.question.isActive
+        // this._questionsServiceProxy.
     }
 
+    doActions(label: any, record: any) {
+        switch (label) {
+            case 'Edit':
+                this._router.navigate(['app/main/question-bank/addQuestion/' + record.question.id]);
+                break;
+            case 'Delete':
+                this._questionsServiceProxy.delete(record.question.id).subscribe((val) => {
+                    this.getQuestion();
+                });
+                break;
+        }
+    }
 }

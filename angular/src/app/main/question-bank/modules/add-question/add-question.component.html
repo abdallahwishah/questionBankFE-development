@@ -139,8 +139,9 @@
                         <!-- [(ngModel)]="checked" -->
 
                         <div class="d-flex align-items-center gap-5">
+                            <!-- [(ngModel)]="_createOrEditQuestionDto.hasQuestionHelper" -->
+
                             <p-inputSwitch
-                                [(ngModel)]="checkedExplanatoryNote"
                                 (onChange)="getCheckedExplanatoryNote($event)"
                             ></p-inputSwitch>
                             <span class="mt-2">يمتلك شرح توضيحي</span>
@@ -155,7 +156,7 @@
             </div>
 
             <!-- third card -->
-            @if (checkedExplanatoryNote) {
+            @if (_createOrEditQuestionDto.hasQuestionHelper) {
                 <div class="col-12 mt-6">
                     <div class="card px-8 py-6">
                         <div class="d-flex justify-content-between align-items-center">
@@ -181,6 +182,7 @@
                                 [enm]="QuestionTypeEnum"
                                 [(ngModel)]="_createOrEditQuestionDto.type"
                                 [labelField]="l('QuestionType')"
+                                (ngModelChange)="_createOrEditQuestionDto.autoCorrection=false"
                             ></app-dropdown-field>
                         </div>
                         <div class="col-md-3 mb-5">

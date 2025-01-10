@@ -48,51 +48,53 @@
 <!-- Display the table. We can use a basic HTML table or p-table. -->
 <!-- For clarity, let's use a basic <table>. -->
 
-<table class="table table-bordered">
-    <thead>
-        <!-- If we have at least 1 row, that row is the header row -->
-        <tr *ngIf="value.length > 0">
-            <th *ngFor="let headerCell of value[0].dragDropTableItems; let colIndex = index">
-                <!-- Show the header cell title -->
-                <input
-                    type="text"
-                    class="form-control"
-                    [(ngModel)]="headerCell.title"
-                    (ngModelChange)="notifyValueChange()"
-                    [disabled]="false"
-                />
-                <!-- Show isPinned checkbox (but disabled, since we always want the header pinned) -->
-                <!-- <br />
-          <label class="mt-1">
-            <input
-              type="checkbox"
-              [(ngModel)]="headerCell.isPinned"
-              (ngModelChange)="notifyValueChange()"
-              disabled
-            />
-            <span class="ms-1">Pinned?</span>
-          </label> -->
+    <table class="table table-bordered">
+        <thead>
+          <!-- We only display a <tr> if there is at least 1 row. In that row, we can show the "top cells" from each column. -->
+          <tr *ngIf="value.length > 0">
+            <!-- Loop over columns (value), the "first row" is item[0] in dragDropTableItems -->
+            <th *ngFor="let colDto of value; let colIndex = index">
+              <!-- The row 0 cell in this column = colDto.dragDropTableItems[0] -->
+              <input
+                type="text"
+                class="form-control"
+                [(ngModel)]="colDto.dragDropTableItems[0].title"
+                (ngModelChange)="notifyValueChange()"
+              />
             </th>
-        </tr>
-    </thead>
+          </tr>
+        </thead>
 
-    <tbody>
-        <!-- Data rows (index=1..n) -->
-        <tr *ngFor="let row of value; let rowIndex = index" [hidden]="rowIndex === 0">
-            <td *ngFor="let cell of row.dragDropTableItems; let colIndex = index">
-                <!-- Title input -->
-                <label class="mt-1">
-                    <input type="checkbox" [(ngModel)]="cell.isPinned" (ngModelChange)="notifyValueChange()" />
-                </label>
+        <tbody>
+          <!-- We'll build rowIndex from 1..(rowCount-1) if the 0th row is "header."
+               If you prefer to show row 0 in the body as well, just start from 0. -->
+
+          <!-- If the first column has dragDropTableItems, we know how many rows to render -->
+          <tr
+            *ngFor="
+              let rowIndex of [].constructor(value[0]?.dragDropTableItems?.length || 0);
+              let r = index
+            "
+            [hidden]="r === 0"
+          >
+            <!-- For each row, loop over columns -->
+            <td *ngFor="let colDto of value; let c = index">
+              <!-- colDto.dragDropTableItems[r] => the cell at row r in column c -->
+              <label>
                 <input
-                    type="text"
-                    class="form-control"
-                    [(ngModel)]="cell.title"
-                    (ngModelChange)="notifyValueChange()"
+                  type="checkbox"
+                  [(ngModel)]="colDto.dragDropTableItems[r].isPinned"
+                  (ngModelChange)="notifyValueChange()"
                 />
+               </label>
 
-                <!-- Pinned checkbox (enabled for data rows) -->
+              <input
+                type="text"
+                class="form-control mt-1"
+                [(ngModel)]="colDto.dragDropTableItems[r].title"
+                (ngModelChange)="notifyValueChange()"
+              />
             </td>
-        </tr>
-    </tbody>
-</table>
+          </tr>
+        </tbody>
+      </table>
