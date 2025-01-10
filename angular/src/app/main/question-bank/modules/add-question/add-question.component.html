@@ -19,12 +19,12 @@
             </span>
             <span class="mx-2">/</span>
 
-            <h2 class="fw-bolder mb-0">{{ 'AddAQuestion' }}</h2>
+            <h2 class="fw-bolder mb-0">{{ _createOrEditQuestionDto?.id ? 'EditQuestion' : 'AddAQuestion' }}</h2>
         </div>
     </div>
 
     <!-- Start Qusestion  -->
-    <div class="container-fluid mt-8 px-5">
+    <div class="container-fluid mt-8 px-5" *ngIf="!loading; else loader">
         <div class="row">
             <!-- first card -->
             <!-- <div class="col-12">
@@ -68,7 +68,6 @@
 
             <!-- first card -->
             <div class="col-12 mt-6">
-
                 <div class="card px-8 py-6">
                     <h3>{{ l('QuestionIDs') }}</h3>
 
@@ -141,9 +140,7 @@
                         <div class="d-flex align-items-center gap-5">
                             <!-- [(ngModel)]="_createOrEditQuestionDto.hasQuestionHelper" -->
 
-                            <p-inputSwitch
-                                (onChange)="getCheckedExplanatoryNote($event)"
-                            ></p-inputSwitch>
+                            <p-inputSwitch (onChange)="getCheckedExplanatoryNote($event)"></p-inputSwitch>
                             <span class="mt-2">يمتلك شرح توضيحي</span>
                         </div>
                     </div>
@@ -182,7 +179,7 @@
                                 [enm]="QuestionTypeEnum"
                                 [(ngModel)]="_createOrEditQuestionDto.type"
                                 [labelField]="l('QuestionType')"
-                                (ngModelChange)="_createOrEditQuestionDto.autoCorrection=false"
+                                (ngModelChange)="_createOrEditQuestionDto.autoCorrection = false"
                             ></app-dropdown-field>
                         </div>
                         <div class="col-md-3 mb-5">
@@ -199,7 +196,7 @@
                             <input
                                 name="text"
                                 [(ngModel)]="_createOrEditQuestionDto.minPoints"
-                                class="form-control m-input d-block "
+                                class="form-control m-input d-block"
                                 type="text"
                             />
                         </div>
@@ -261,3 +258,6 @@
         </div>
     </div>
 </div>
+<ng-template #loader>
+    loader...
+</ng-template>

@@ -1,9 +1,17 @@
+import { ActivatedRoute } from '@angular/router';
 import { Component, Injector, OnInit, ViewChild } from '@angular/core';
 import { LazyLoadEvent } from '@node_modules/primeng/api';
 import { Paginator } from '@node_modules/primeng/paginator';
 import { Table } from '@node_modules/primeng/table';
 import { AppComponentBase } from '@shared/common/app-component-base';
-import { CategoriesServiceProxy, ComplexitiesServiceProxy, QuestionTypeEnum, StudyLevelsServiceProxy, StudySubjectsServiceProxy, SubjectUnitsServiceProxy } from '@shared/service-proxies/service-proxies';
+import {
+    CategoriesServiceProxy,
+    ComplexitiesServiceProxy,
+    QuestionTypeEnum,
+    StudyLevelsServiceProxy,
+    StudySubjectsServiceProxy,
+    SubjectUnitsServiceProxy,
+} from '@shared/service-proxies/service-proxies';
 import { CreateOrEditQuestionDto } from '@shared/service-proxies/service-proxies';
 import { QuestionsServiceProxy } from '@shared/service-proxies/service-proxies';
 
@@ -23,67 +31,85 @@ export class AddQuestionComponent extends AppComponentBase implements OnInit {
     subjectUnits: any[] = [];
     complexities: any[] = [];
     categories: any[] = [];
-    checkedExplanatoryNote:boolean = true;
+    checkedExplanatoryNote: boolean = true;
     QuestionTypeEnum = QuestionTypeEnum;
     _createOrEditQuestionDto = new CreateOrEditQuestionDto();
+    loading=false
     constructor(
         private _injector: Injector,
         private _questionsServiceProxy: QuestionsServiceProxy,
         private _studyLevelsServiceProxy: StudyLevelsServiceProxy,
         private _studySubjectsProxy: StudySubjectsServiceProxy,
-        private _subjectUnitsServiceProxy:SubjectUnitsServiceProxy,
-        private _complexitiesServiceProxy:ComplexitiesServiceProxy,
-        private _categoriesServiceProxy:CategoriesServiceProxy,
+        private _subjectUnitsServiceProxy: SubjectUnitsServiceProxy,
+        private _complexitiesServiceProxy: ComplexitiesServiceProxy,
+        private _categoriesServiceProxy: CategoriesServiceProxy,
+        private _activatedRoute: ActivatedRoute,
     ) {
         super(_injector);
+        _activatedRoute.params.subscribe((params) => {
+            if (params.id) {
+                this.getForEdit(params);
+            }
+        });
     }
 
     ngOnInit() {
-        // this.getQuestion()
-         this._studyLevelsServiceProxy.getAll(undefined , undefined , undefined ,undefined , undefined).subscribe(val=>{
-            this.studyLevels = val.items.map(item => {
+        this._studyLevelsServiceProxy.getAll(undefined, undefined, undefined, undefined, undefined).subscribe((val) => {
+            this.studyLevels = val.items.map((item) => {
                 return {
-                  id: item.studyLevel.id,
-                  name: item.studyLevel.name,
+                    id: item.studyLevel.id,
+                    name: item.studyLevel.name,
                 };
-              });
-        })
-        this._studySubjectsProxy.getAll(undefined , undefined , undefined ,undefined , undefined  , undefined).subscribe(val=>{
-            this.studySubjects = val.items.map(item => {
+            });
+        });
+        this._studySubjectsProxy
+            .getAll(undefined, undefined, undefined, undefined, undefined, undefined)
+            .subscribe((val) => {
+                this.studySubjects = val.items.map((item) => {
+                    return {
+                        id: item.studySubject.id,
+                        name: item.studySubject.name,
+                    };
+                });
+            });
+        this._subjectUnitsServiceProxy
+            .getAll(undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined)
+            .subscribe((val) => {
+                this.subjectUnits = val.items.map((item) => {
+                    return {
+                        id: item.subjectUnit.id,
+                        name: item.subjectUnit.name,
+                    };
+                });
+            });
+        this._complexitiesServiceProxy
+            .getAll(undefined, undefined, undefined, undefined, undefined)
+            .subscribe((val) => {
+                this.complexities = val.items.map((item) => {
+                    return {
+                        id: item.complexity.id,
+                        name: item.complexity.name,
+                    };
+                });
+            });
+        this._categoriesServiceProxy.getAll(undefined, undefined, undefined, undefined, undefined).subscribe((val) => {
+            this.categories = val.items.map((item) => {
                 return {
-                  id: item.studySubject.id,
-                  name: item.studySubject.name,
+                    id: item.category.id,
+                    name: item.category.name,
                 };
-              });
-
-        })
-        this._subjectUnitsServiceProxy.getAll(undefined , undefined , undefined ,undefined , undefined  , undefined , undefined , undefined).subscribe(val=>{
-            this.subjectUnits = val.items.map(item => {
-                return {
-                  id: item.subjectUnit.id,
-                  name: item.subjectUnit.name,
-                };
-              });
-        })
-        this._complexitiesServiceProxy.getAll(undefined , undefined , undefined ,undefined , undefined).subscribe(val=>{
-            this.complexities = val.items.map(item => {
-                return {
-                  id: item.complexity.id,
-                  name: item.complexity.name,
-                };
-              });
-        })
-        this._categoriesServiceProxy.getAll(undefined , undefined , undefined ,undefined , undefined).subscribe(val=>{
-            this.categories = val.items.map(item => {
-                return {
-                  id: item.category.id,
-                  name: item.category.name,
-                };
-              });
-        })
+            });
+        });
     }
 
+    getForEdit(params) {
+        this.loading=true
+        this._questionsServiceProxy.getQuestionForEdit(params.id).subscribe((val) => {
+            this._createOrEditQuestionDto = val.question;
+            this.loading=false
 
+        });
+    }
     //  getQuestion(event?: LazyLoadEvent) {
     //         if (event) {
     //             if (this.primengTableHelper.shouldResetPaging(event)) {
@@ -130,19 +156,17 @@ export class AddQuestionComponent extends AppComponentBase implements OnInit {
     //             });
     //  }
 
-
-    Save(){
-        this._questionsServiceProxy.createOrEdit(this._createOrEditQuestionDto).subscribe((val)=>{
-            console.log("val :" , val)
-        })
+    Save() {
+        this._questionsServiceProxy.createOrEdit(this._createOrEditQuestionDto).subscribe((val) => {
+            console.log('val :', val);
+        });
     }
 
-
-    getCheckedExplanatoryNote($event){
-        if(!$event.checked){
-            this.checkedExplanatoryNote = false
-        }else{
-            this.checkedExplanatoryNote = true
+    getCheckedExplanatoryNote($event) {
+        if (!$event.checked) {
+            this.checkedExplanatoryNote = false;
+        } else {
+            this.checkedExplanatoryNote = true;
         }
     }
 }

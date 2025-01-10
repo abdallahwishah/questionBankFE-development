@@ -19,6 +19,10 @@ import { ComplexitiesServiceProxy, StudyLevelsServiceProxy, StudySubjectsService
                 path: '',
                 component: AddQuestionComponent,
             },
+            {
+                path: ':id',
+                component: AddQuestionComponent,
+            },
         ]),
         DropdownFieldComponent,
         DynamicQuestionComponent,

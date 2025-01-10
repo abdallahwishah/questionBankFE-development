@@ -1,93 +1,127 @@
-<!-- Container for the whole list, with drag-drop enabled -->
+<!-- A cdkDropList for the array of questions -->
 <div
-  cdkDropList
-  [cdkDropListData]="value"
-  (cdkDropListDropped)="dropReorder($event)"
-  class="drag-list-container"
+    cdkDropList
+    [cdkDropListData]="value"
+    (cdkDropListDropped)="dropReorder($event)"
+    class="drag-list-container"
 >
-  <div class="d-flex gap-3 mt-2 mb-6">
-    <p class="mb-0 fw-medium">{{ l('Texts') }}</p>
-    <span class="d-inline-block text-gray-600 fw-normal">
-      {{ l('ChooseTheAppropriateWordsForTheMissingText') }}
-    </span>
-  </div>
-
-  <!-- Loop over each question item in the array -->
-  <div
-    class="row question d-flex align-items-center mb-2"
-    *ngFor="let question of value; let i = index"
-    cdkDrag
-  >
-    <!-- Drag handle -->
-    <div class="col-md-1 col-1 d-flex align-items-center gap-5 mb-md-0 mb-3" cdkDragHandle>
-      <img class="cursor-pointer" src="assets/common/images/menu.svg" alt="drag handle" />
+    <div class="d-flex gap-3 mt-2 mb-6">
+        <p class="mb-0 fw-medium">{{ l('Texts') }}</p>
+        <span class="d-inline-block text-gray-600 fw-normal">
+            {{ l('ChooseTheAppropriateWordsForTheMissingText') }}
+        </span>
     </div>
 
-    <!-- The editor for "question.value" -->
-    <div class="col-md-10 col-11">
-      <app-editor
-        [simple]="true"
-        class="w-100"
-        [(ngModel)]="question.value"
-        (ngModelChange)="onEditorChanged($event, question, i)"
-      ></app-editor>
-
-      <!-- "Insert Input" button to add a new input field into the editor -->
-      <div class="mt-3">
-        <button class="btn btn-primary me-2"
-          (click)="insertInputField(question, i)"
-        >
-          {{ l('InsertInputField') }}
-        </button>
-      </div>
-
-      <!--
-        If you want to display question.inputs[] for debugging or confirmation,
-        you can do so. But user will only edit them inside the editor <input> fields.
-      -->
-      <!--
-      <div class="mt-2 text-muted">
-        <strong>{{ l('Parsed Inputs:') }}</strong>
-        {{ question.inputs | json }}
-      </div>
-      -->
-    </div>
-
-    <!-- Buttons to confirm or remove the entire question block -->
+    <!-- Each question block is drag-draggable -->
     <div
-      class="col-md-1 d-flex flex-md-column align-items-center justify-content-md-between justify-content-center"
+        class="row question d-flex align-items-center mb-2"
+        *ngFor="let question of value; let i = index"
+        cdkDrag
     >
-      <!-- Delete question block -->
-      <button
-        class="btn btn-delete p-3 m-0"
-        (click)="removeText(i)"
-      >
-        <img src="assets/common/images/trash.svg" alt="" />
-      </button>
+        <!-- Drag handle -->
+        <div
+            class="col-md-1 col-1 d-flex align-items-center gap-5 mb-md-0 mb-3"
+            cdkDragHandle
+        >
+            <img
+                class="cursor-pointer"
+                src="assets/common/images/menu.svg"
+                alt="drag handle"
+            />
+        </div>
+
+        <!-- Editor + Correct Inputs -->
+        <div class="col-md-10 col-11">
+            <div class="d-flex flex-wrap gap-2 mb-3">
+                <!-- Insert correct input field into the editor -->
+                <button
+                    class="btn btn-primary"
+                    (click)="insertCorrectInputField(question, i)"
+                >
+                    {{ l('InsertCorrectInputField') }}
+                </button>
+            </div>
+
+            <!-- The WYSIWYG editor for question.value -->
+            <app-editor
+                [simple]="true"
+                class="w-100"
+                [(ngModel)]="question.value"
+                (ngModelChange)="onEditorChanged($event, question, i)"
+            ></app-editor>
+
+            <!-- Manage FAKE words below the editor -->
+            <div class="mt-3">
+                <div class="d-flex align-items-center gap-2 mb-2">
+                    <input
+                        #fakeWordInput
+                        class="form-control"
+                        [placeholder]="l('EnterFakeWord')"
+                    />
+                    <button
+                        class="btn btn-secondary"
+                        (click)="
+                          addFakeWord(question, fakeWordInput.value);
+                          fakeWordInput.value = ''
+                        "
+                    >
+                        {{ l('AddFakeWord') }}
+                    </button>
+                </div>
+
+                <!-- Display the existing fake words as "chips" -->
+                <div class="d-flex gap-2 flex-wrap">
+                    <button
+                        *ngFor="let fake of question.fakeInputs; let fi = index"
+                        class="btn btn-outline-primary"
+                        type="button"
+                    >
+                        {{ fake }}
+                        <img
+                            src="assets/common/images/trash-gray.svg"
+                            alt="delete"
+                            class="ms-2 cursor-pointer"
+                            (click)="removeFakeWord(question, fi)"
+                        />
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Remove entire question block -->
+        <div
+            class="col-md-1 d-flex flex-md-column align-items-center justify-content-md-between justify-content-center"
+        >
+            <button
+                class="btn btn-delete p-3 m-0"
+                (click)="removeText(i)"
+            >
+                <img src="assets/common/images/trash.svg" alt="" />
+            </button>
+        </div>
     </div>
-  </div>
 </div>
 
 <!-- "Add new text" button -->
 <h5
-  class="d-flex align-items-center justify-content-start gap-2 cursor-pointer mt-7"
-  (click)="addNewText()"
+    class="d-flex align-items-center justify-content-start gap-2 cursor-pointer mt-7"
+    (click)="addNewText()"
 >
-  <svg
-    width="25"
-    height="24"
-    viewBox="0 0 25 24"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-  >
-    <path
-      d="M6.5 12.75C6.09 12.75 5.75 12.41 5.75 12C5.75 11.59 6.09 11.25 6.5 11.25H18.5C18.91 11.25 19.25 11.59 19.25 12C19.25 12.41 18.91 12.75 18.5 12.75H6.5Z"
-      fill="#6D31ED"
-    />
-    <path
-      d="M11.75 18V6C11.75 5.59 12.09 5.25 12.5 5.25C12.91 5.25 13.25 5.59 13.25 6V18C13.25 18.41 12.91 18.75 12.5 18.75C12.09 18.75 11.75 18.41 11.75 18Z"
-      fill="#6D31ED"
-    />
-  </svg>
-  <span class="text-primary">{{ l('AddNewText') }}</span>
+    <svg
+        width="25"
+        height="24"
+        viewBox="0 0 25 24"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+    >
+        <path
+            d="M6.5 12.75C6.09 12.75 5.75 12.41 5.75 12C5.75 11.59 6.09 11.25 6.5 11.25H18.5C18.91 11.25 19.25 11.59 19.25 12C19.25 12.41 18.91 12.75 18.5 12.75H6.5Z"
+            fill="#6D31ED"
+        />
+        <path
+            d="M11.75 18V6C11.75 5.59 12.09 5.25 12.5 5.25C12.91 5.25 13.25 5.59 13.25 6V18C13.25 18.41 12.91 18.75 12.5 18.75C12.09 18.75 11.75 18.41 11.75 18Z"
+            fill="#6D31ED"
+        />
+    </svg>
+    <span class="text-primary">{{ l('AddNewText') }}</span>
 </h5>

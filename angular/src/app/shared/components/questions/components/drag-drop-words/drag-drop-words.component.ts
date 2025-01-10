@@ -13,12 +13,24 @@ import { FormsModule } from '@angular/forms';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { ButtonModule } from 'primeng/button';
 import { EditorComponent } from '@app/shared/components/editor/editor.component';
-
-import { CreateOrEditDragFormQuestionDto } from '@shared/service-proxies/service-proxies';
 import { CommonModule } from '@node_modules/@angular/common';
 
 // For drag-drop
 import { DragDropModule, CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+
+/**
+ * Example DTO.
+ *  - 'value' => the HTML content with <input> tags for correct answers.
+ *  - 'inputs' => array of correct answers parsed from the editor.
+ *  - 'fakeInputs' => array of "fake words" managed outside the editor.
+ */
+export class CreateOrEditDragFormQuestionDto {
+    type!: number;
+    value!: string | undefined;
+    inputs!: string[] | undefined;
+    fakeInputs!: string[] | undefined;
+    point!: number;
+}
 
 @Component({
     selector: 'app-drag-drop-words',
@@ -29,7 +41,7 @@ import { DragDropModule, CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-
         InputNumberModule,
         ButtonModule,
         EditorComponent,
-        DragDropModule  // <-- import the Angular CDK drag-drop module
+        DragDropModule
     ],
     templateUrl: './drag-drop-words.component.html',
     styleUrls: ['./drag-drop-words.component.css'],
@@ -42,101 +54,91 @@ import { DragDropModule, CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-
     ]
 })
 export class DragDropWordsComponent
-  extends AppComponentBase
-  implements ControlValueAccessor
+    extends AppComponentBase
+    implements ControlValueAccessor
 {
     /**
-     * The array of "drag form questions", bound from the parent via:
-     *    <app-drag-drop-words [(ngModel)]="value.dragFormQuestions"></app-drag-drop-words>
+     * An array of question blocks (each can be drag-dropped).
      */
     value: CreateOrEditDragFormQuestionDto[] = [];
 
-    // For generating unique input names: DragForm[questionIndex][Inputs][inputIndex]
-    // We can track how many inputs we've added so far per question.
-    // Alternatively, parse the editor each time to discover the next index.
-    private inputCounterMap = new Map<number, number>();
+    /**
+     * For inserting correct inputs inside the editor, we track how many so far
+     * to build a unique index for each input name: "DragForm[i][Inputs][X]".
+     */
+    private correctCounterMap = new Map<number, number>();
 
-    // ControlValueAccessor callbacks
+    // ControlValueAccessor
     private onChange: (val: CreateOrEditDragFormQuestionDto[]) => void = () => {};
     private onTouched: () => void = () => {};
 
     constructor(injector: Injector) {
-      super(injector);
+        super(injector);
     }
 
-    // ----------------------------
-    // ControlValueAccessor
-    // ----------------------------
     writeValue(obj: CreateOrEditDragFormQuestionDto[]): void {
-      this.value = obj || [];
+        this.value = obj || [];
     }
 
     registerOnChange(fn: (val: CreateOrEditDragFormQuestionDto[]) => void): void {
-      this.onChange = fn;
+        this.onChange = fn;
     }
 
     registerOnTouched(fn: () => void): void {
-      this.onTouched = fn;
+        this.onTouched = fn;
     }
 
-    setDisabledState?(isDisabled: boolean): void {
-      // If you want to disable child elements, do that here
-    }
+    setDisabledState?(isDisabled: boolean): void {}
 
-    /** Notify the parent form that the value changed */
+    /** Notify parent form that our data changed */
     notifyChange(): void {
-      this.onChange(this.value);
-      this.onTouched();
+        this.onChange(this.value);
+        this.onTouched();
     }
 
-    // ----------------------------
-    // Drag & Drop for entire questions
-    // ----------------------------
+    // ---------------------------
+    // Drag & Drop to reorder
+    // ---------------------------
     dropReorder(event: CdkDragDrop<CreateOrEditDragFormQuestionDto[]>): void {
-      moveItemInArray(this.value, event.previousIndex, event.currentIndex);
-      this.notifyChange();
+        moveItemInArray(this.value, event.previousIndex, event.currentIndex);
+        this.notifyChange();
     }
 
-    // ----------------------------
-    // Business Logic
-    // ----------------------------
-
+    // ---------------------------
+    // Add/Remove question blocks
+    // ---------------------------
     addNewText(): void {
-      const item = new CreateOrEditDragFormQuestionDto();
-      item.type = 0;
-      item.value = '';        // Editor starts blank
-      item.inputs = [];       // We'll keep it if we need to parse them
-      item.fakeInputs = [];
-      item.point = 1;
+        const item = new CreateOrEditDragFormQuestionDto();
+        item.type = 0;
+        item.value = '';       // Editor starts blank
+        item.inputs = [];      // correct answers
+        item.fakeInputs = [];  // fake answers
+        item.point = 1;
 
-      this.value.push(item);
-      this.notifyChange();
+        this.value.push(item);
+        this.notifyChange();
     }
 
     removeText(index: number): void {
-      if (index >= 0 && index < this.value.length) {
-        this.value.splice(index, 1);
-        this.notifyChange();
-      }
+        if (index >= 0 && index < this.value.length) {
+            this.value.splice(index, 1);
+            this.notifyChange();
+        }
     }
 
-    /**
-     * Insert an <input> field (wrapped in a <span>), at the end of the editor content
-     * for a given question. The `name` attribute will be something like:
-     *   DragForm[questionIndex][Inputs][X]
-     * to match your existing structure.
-     */
-    insertInputField(question: CreateOrEditDragFormQuestionDto, questionIndex: number): void {
-      // 1) Figure out how many inputs we've created so far for this question
-      const currentCount = this.inputCounterMap.get(questionIndex) || 0;
-      const newIndex = currentCount;
-      // Increment for next time
-      this.inputCounterMap.set(questionIndex, currentCount + 1);
+    // ---------------------------
+    // Insert CORRECT inputs into editor
+    // ---------------------------
+    insertCorrectInputField(
+        question: CreateOrEditDragFormQuestionDto,
+        questionIndex: number
+    ): void {
+        const currentCount = this.correctCounterMap.get(questionIndex) || 0;
+        const newIndex = currentCount;
+        this.correctCounterMap.set(questionIndex, currentCount + 1);
 
-      // 2) Construct the snippet
-      // We’ll keep the same classes you gave: .inputsTracker0 .dragDropTextContainer
-      // You can also add a unique class if you want, e.g. inputsTracker{questionIndex}
-      const snippet = `
+        // Build snippet with a unique name for the correct input
+        const snippet = `
         <span class="inputsTracker${questionIndex} dragDropTextContainer">
           <input
             name="DragForm[${questionIndex}][Inputs][${newIndex}]"
@@ -145,41 +147,52 @@ export class DragDropWordsComponent
             style="display: inline; width: fit-content"
           />
         </span>&nbsp;
-      `;
+        `;
 
-      // 3) Insert the snippet at the *end* of the current editor content
-      //    (Or at the caret position, if your EditorComponent supports it.)
-      const currentHtml = question.value || '';
-      const updatedHtml = currentHtml + snippet;
-
-      // 4) Assign back to the question and notify
-      question.value = updatedHtml;
-      this.notifyChange();
+        // Append to the existing HTML
+        const oldHtml = question.value || '';
+        question.value = oldHtml + snippet;
+        this.notifyChange();
     }
 
-    /**
-     * Called each time the editor’s (ngModelChange) fires
-     * (i.e., user typed something). We parse the <input> fields from the HTML
-     * to keep question.inputs[] in sync, if desired.
-     *
-     * If you prefer to store them only in the HTML, skip this step.
-     */
-    onEditorChanged(htmlValue: string, question: CreateOrEditDragFormQuestionDto, questionIndex: number): void {
-      question.value = htmlValue;
+    // ---------------------------
+    // Manage FAKE words (outside the editor)
+    // ---------------------------
+    addFakeWord(question: CreateOrEditDragFormQuestionDto, newWord: string): void {
+        if (!newWord) { return; }
+        if (!question.fakeInputs) {
+            question.fakeInputs = [];
+        }
+        question.fakeInputs.push(newWord);
+        this.notifyChange();
+    }
 
-      // Parse out any <input name="DragForm[questionIndex][Inputs][X]" ... >
-      // We'll store them in question.inputs to see what the user typed.
-      const parser = new DOMParser();
-      const doc = parser.parseFromString(htmlValue, 'text/html');
+    removeFakeWord(question: CreateOrEditDragFormQuestionDto, index: number): void {
+        if (question.fakeInputs && index >= 0 && index < question.fakeInputs.length) {
+            question.fakeInputs.splice(index, 1);
+            this.notifyChange();
+        }
+    }
 
-      const inputSelector = `input[name^="DragForm[${questionIndex}][Inputs]"]`;
-      const inputElements = Array.from(doc.querySelectorAll(inputSelector)) as HTMLInputElement[];
+    // ---------------------------
+    // On editor change => parse correct inputs
+    // ---------------------------
+    onEditorChanged(
+        htmlValue: string,
+        question: CreateOrEditDragFormQuestionDto,
+        questionIndex: number
+    ): void {
+        question.value = htmlValue;
 
-      question.inputs = inputElements.map((el) => el.value || '');
+        // Parse out correct inputs only
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(htmlValue, 'text/html');
 
-      // If you also want to track the next "X" index from the parsed inputs,
-      // you could do so by comparing the highest X found in the `name` attribute, etc.
+        // correct inputs => name="DragForm[i][Inputs][x]"
+        const correctSelector = `input[name^="DragForm[${questionIndex}][Inputs]"]`;
+        const correctEls = Array.from(doc.querySelectorAll(correctSelector)) as HTMLInputElement[];
 
-      this.notifyChange();
+        question.inputs = correctEls.map(el => el.value || '');
+        this.notifyChange();
     }
 }
