@@ -2,8 +2,8 @@
     <div class="container-fluid px-5 mt-md-0 mt-7">
         <div class="d-flex align-items-center">
             <span class="cursor-pointer" [routerLink]="'/app/main/question-bank'">
+                <!-- Back arrow icon -->
                 <svg
-
                     width="14"
                     height="14"
                     viewBox="0 0 14 14"
@@ -19,235 +19,292 @@
                 {{ l('Templates') }}
             </span>
             <span class="mx-2">/</span>
-
             <h2 class="fw-bolder mb-0">{{ 'AddTemplate' }}</h2>
         </div>
     </div>
 
-    <!-- Start Qusestion  -->
+    <!-- Start Form -->
     <div class="container-fluid mt-8 px-5">
         <div class="row">
-
-            <!-- first card -->
+            <!-- Template details card -->
             <div class="col-12">
                 <div class="card px-8 py-6">
                     <h3>{{ l('TemplateDetails') }}</h3>
 
                     <div class="row mt-6">
+                        <!-- Template Name -->
                         <div class="col-md-6 mb-5">
-                            <label class="mb-2">{{l('TemplateName')}}</label>
+                            <label class="mb-2">{{ l('TemplateName') }}</label>
                             <input
-                                name="text"
+                                name="templateName"
                                 class="form-control m-input"
-
-                                [placeholder]="l('MinimumPoints')"
-                                type="text" />
+                                [(ngModel)]="_createOrEditExamTemplateDto.name"
+                                type="text"
+                            />
                         </div>
+
+                        <!-- Example: NumberOfTemplates (unbound or separate) -->
                         <div class="col-md-6 mb-5">
-                            <label class="mb-2">{{l('NumberOfTemplates')}}</label>
-                            <input
-                            name="text"
-                            class="form-control m-input"
-                            [placeholder]="l('2')"
-                            type="text" />
+                            <label class="mb-2">{{ l('NumberOfTemplates') }}</label>
+                            <input name="numberOfTemplates" class="form-control m-input" type="text" />
                             <div class="d-flex gap-5 mt-4">
-                               <div class="d-flex gap-2">
-                                <input class="form-check-input" id="01" name="" [value]="true" type="radio" />
-                                <label for="01">نفس الأسئلة ولكن بترتيب مختلف</label>
-                               </div>
-                               <div class="d-flex gap-2">
-                                <input class="form-check-input" id="01" name="" [value]="true" type="radio" />
-                                <label for="01">أسئلة مختلفة</label>
-                               </div>
+                                <div class="d-flex gap-2">
+                                    <input class="form-check-input" id="radio-1" name="templateType" type="radio" />
+                                    <label for="radio-1">نفس الأسئلة ولكن بترتيب مختلف</label>
+                                </div>
+                                <div class="d-flex gap-2">
+                                    <input class="form-check-input" id="radio-2" name="templateType" type="radio" />
+                                    <label for="radio-2">أسئلة مختلفة</label>
+                                </div>
                             </div>
                         </div>
+
+                        <!-- Study Subject -->
                         <div class="col-md-6 mb-5">
-                            <app-dropdown-field [labelField]="l('StudySubject')"></app-dropdown-field>
+                            <label class="mb-2">{{ l('StudySubject') }}</label>
+                            <app-dropdown-field
+                                [options]="studySubjects"
+                                optionLabel="name"
+                                optionValue="id"
+                                [(ngModel)]="_createOrEditExamTemplateDto.studySubjectId"
+                            ></app-dropdown-field>
                         </div>
+
+                        <!-- Class / Study Level -->
                         <div class="col-md-6 mb-5">
-                            <app-dropdown-field [labelField]="l('Class')"></app-dropdown-field>
+                            <label class="mb-2">{{ l('StudyLevel') }}</label>
+                            <app-dropdown-field
+                                [options]="studyLevels"
+                                optionLabel="name"
+                                optionValue="id"
+                                [(ngModel)]="_createOrEditExamTemplateDto.studyLevelId"
+                            ></app-dropdown-field>
                         </div>
+
                         <div class="col-md-6 mb-5">
-                            <label class="mb-2">{{l('UnitNumbers')}}</label>
+                            <label class="mb-2">{{ l('VersionCount') }}</label>
                             <input
-                            name="text"
-                            class="form-control m-input"
-                            [placeholder]="l('EnterUnitNumbers')"
-                            type="text" />
+                                name="VersionCount"
+                                [(ngModel)]="_createOrEditExamTemplateDto.versionCount"
+                                class="form-control m-input"
+                                type="text"
+                            />
                         </div>
-                        <div class="col-md-6 mb-5">
-                            <label class="mb-2">{{l('ExcludedPageNumbers')}}</label>
-                            <input
-                            name="text"
-                            class="form-control m-input"
-                            [placeholder]="l('EnterExcludedPageNumbers')"
-                            type="text" />
-                        </div>
+
+                        <!-- Main Instructions -->
                         <div class="col-12 mb-2">
-                            <label class="mb-2">{{l('Instructions')}}</label>
-                            <app-editor></app-editor>
+                            <label class="mb-2">{{ l('Instructions') }}</label>
+                            <app-editor
+                                name="instructions"
+                                [(ngModel)]="_createOrEditExamTemplateDto.instructions"
+                            ></app-editor>
                         </div>
                     </div>
                 </div>
             </div>
-          <!--   <p-inputSwitch (onChange)="getChecked($event)" [(ngModel)]="checked" /> -->
 
-            <!-- forth card -->
+            <!-- Sections card -->
             <div class="col-12 mt-6">
                 <div class="card px-8 py-6">
                     <h3>{{ l('Sections') }}</h3>
 
-                    <div class="row mt-6">
-                        <div class="col-md-6 mb-5">
-                            <app-dropdown-field (onSelectionChange)="getQuestionType($event)" [options]="questionsType" [labelField]="l('SectionOrder')"></app-dropdown-field>
-                        </div>
-                        <div class="col-md-3 mb-5 d-flex align-items-end">
-                          <div class="w-100">
-                            <label>{{l('SectionName')}}</label>
-                            <input
-                                name="text"
-                                class="form-control m-input"
-                                [placeholder]="l('SectionName')"
-                                type="text"
-                            />
-                          </div>
-                        </div>
-                        <div class="col-md-3 mb-5 d-flex align-items-end">
-                          <div class="w-100">
-                            <label>{{l('Time')}}</label>
-                            <input
-                                name="text"
-                                class="form-control m-input"
-                                [placeholder]="l('MaximumPoints')"
-                                type="text" />
-                          </div>
-                        </div>
+                    <!-- Loop over sections in the main DTO -->
+                    <div
+                        class="col-12"
+                        *ngFor="let section of _createOrEditExamTemplateDto.templateSections; let sectionIndex = index"
+                    >
+                        <div class="template-box mt-4">
+                            <h4 class="template-box-header py-4 px-5 d-flex align-items-center justify-content-between">
+                                {{ l('Section') }} #{{ sectionIndex + 1 }}
+                                <button class="btn btn-delete p-3 m-0" (click)="removeSection(sectionIndex)">
+                                    <img src="assets/common/images/trash.svg" alt="Remove section" />
+                                </button>
+                            </h4>
 
-                        <div class="col-12">
-                            <div class="template-box">
-                                <h4 class="template-box-header py-4 px-5">
-                                 {{ l('FirstSection') }}
-                                </h4>
-                            <div class="p-5">
-
-                             <div class="row">
-                                 <div class="col-md-3 mb-2 d-flex align-items-center gap-3">
-                                     <p-inputSwitch [(ngModel)]="checked" />
-                                     <label> {{ l('AddInstructions') }}</label>
-                                 </div>
-                                 <div class="col-md-12 mt-3">
-                                     <app-editor class="w-100"></app-editor>
-                                 </div>
-                             </div>
-
-
-                             <div class="row my-7">
-                                <div class="co-12 mb-4 ">
-                                    <h3>{{ l('SectionDetails') }}</h3>
+                            <!-- Section Info -->
+                            <div class="p-5 row">
+                                <!-- SectionOrder => (newSection as any).order is a string -->
+                                <div class="col-md-4 mb-5">
+                                    <label>{{ l('SectionOrder') }}</label>
+                                    <input class="form-control m-input" type="text" [(ngModel)]="section.order" />
                                 </div>
-                                <div class="col-12">
-                                    <p-table [value]="[1 , 2 , 3]" class="w-100">
-                                        <ng-template pTemplate="header">
-                                            <tr class="text-center">
-                                                <th class="w-25">{{ l('QuestionType') }}</th>
-                                                <th>{{ l('HardLevel') }}</th>
-                                                <th>{{ l('IntermediateLevel') }}</th>
-                                                <th>{{ l('EasyLevel') }}</th>
-                                                <th></th>
-                                            </tr>
-                                        </ng-template>
-                                        <ng-template pTemplate="body" let-product>
-                                            <tr>
-                                                <td>
-                                                    <app-dropdown-field></app-dropdown-field>
-                                                </td>
-                                               <td>
-                                                <input
-                                                name="text"
-                                                class="form-control m-input"
-                                                [placeholder]="l('NumberOfQuestions')"
-                                                type="text" />
-                                               </td>
-                                               <td>
-                                                <input
-                                                name="text"
-                                                class="form-control m-input"
-                                                [placeholder]="l('NumberOfQuestions')"
-                                                type="text" />
-                                               </td>
-                                               <td>
-                                                <input
-                                                name="text"
-                                                class="form-control m-input"
-                                                [placeholder]="l('NumberOfQuestions')"
-                                                type="text" />
-                                               </td>
-                                               <td>
-                                                <button class="btn btn-delete p-3 m-0">
-                                                    <img src="assets/common/images/trash.svg" alt="" />
-                                                </button>
-                                               </td>
-                                            </tr>
-                                        </ng-template>
-                                    </p-table>
 
+                                <!-- SectionName => section.name -->
+                                <div class="col-md-4 mb-5">
+                                    <label>{{ l('SectionName') }}</label>
+                                    <input class="form-control m-input" type="text" [(ngModel)]="section.name" />
                                 </div>
-                             </div>
 
+                                <!-- Time => section.durationTime -->
+                                <div class="col-md-4 mb-5">
+                                    <label>{{ l('Time') }}</label>
+                                    <input
+                                        class="form-control m-input"
+                                        type="number"
+                                        [(ngModel)]="section.durationTime"
+                                    />
+                                </div>
 
-                             <h5 class="d-flex align-items-center justify-content-start gap-2 cursor-pointer">
-                                 <svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                     <path
-                                         d="M6.5 12.75C6.09 12.75 5.75 12.41 5.75 12C5.75 11.59 6.09 11.25 6.5 11.25H18.5C18.91 11.25 19.25 11.59 19.25 12C19.25 12.41 18.91 12.75 18.5 12.75H6.5Z"
-                                         fill="#6D31ED"
-                                     />
-                                     <path
-                                         d="M11.75 18V6C11.75 5.59 12.09 5.25 12.5 5.25C12.91 5.25 13.25 5.59 13.25 6V18C13.25 18.41 12.91 18.75 12.5 18.75C12.09 18.75 11.75 18.41 11.75 18Z"
-                                         fill="#6D31ED"
-                                     />
-                                 </svg>
-                                 <span class="text-primary">{{l('AddNewOption')}}</span>
-                             </h5>
+                                <!-- If you want to toggle instructions at section-level with p-inputSwitch -->
+                                <!-- <div class="col-md-3 mb-2 d-flex align-items-center gap-3">
+                                    <p-inputSwitch
+                                        (onChange)="getChecked($event)"
+                                        [(ngModel)]="checked"
+                                    ></p-inputSwitch>
+                                    <label>{{ l('AddInstructions') }}</label>
+                                </div> -->
+
+                                <!-- Section instructions -->
+                                <div class="col-md-12 mt-3">
+                                    <label>{{ l('Instructions') }}</label>
+                                    <app-editor class="w-100" [(ngModel)]="section.instructions"></app-editor>
+                                </div>
+
+                                <!-- Table for difficultyCriteria rows -->
+                                <div class="row my-7">
+                                    <div class="col-12 mb-4">
+                                        <h3>{{ l('SectionDetails') }}</h3>
+                                    </div>
+
+                                    <div class="col-12">
+                                        <p-table [value]="section.difficultyCriteria" class="w-100">
+                                            <ng-template pTemplate="header">
+                                                <tr class="text-center">
+                                                    <th>{{ l('QuestionType') }}</th>
+                                                    <th>{{ l('subjectUnit') }}</th>
+                                                    <th>{{ l('Category') }}</th>
+                                                    <th>{{ l('ExcludedPages') }}</th>
+                                                    <!-- Dynamic complexities columns -->
+                                                    <th *ngFor="let comp of complexities">
+                                                        {{ comp.name }}
+                                                    </th>
+                                                    <th></th>
+                                                </tr>
+                                            </ng-template>
+
+                                            <ng-template pTemplate="body" let-criteria let-rowIndex="rowIndex">
+                                                <tr>
+                                                    <!-- QuestionType -->
+                                                    <td>
+                                                        <app-dropdown-field
+                                                            [enm]="QuestionTypeEnum"
+                                                            [(ngModel)]="criteria.questionType"
+                                                        ></app-dropdown-field>
+                                                    </td>
+
+                                                    <!-- SubjectUnit -->
+                                                    <td>
+                                                        <app-dropdown-field
+                                                            [options]="subjectUnits"
+                                                            optionLabel="name"
+                                                            optionValue="id"
+                                                            [(ngModel)]="criteria.subjectUnitId"
+                                                        ></app-dropdown-field>
+                                                    </td>
+
+                                                    <!-- Category -->
+                                                    <td>
+                                                        <app-dropdown-field
+                                                            [options]="categories"
+                                                            optionLabel="name"
+                                                            optionValue="id"
+                                                            [(ngModel)]="criteria.categoryId"
+                                                        ></app-dropdown-field>
+                                                    </td>
+
+                                                    <!-- ExcludedPages -->
+                                                    <td>
+                                                        <input
+                                                            name="excludedPageNumber"
+                                                            class="form-control m-input"
+                                                            type="text"
+                                                            [(ngModel)]="criteria.execludedPageNumber"
+                                                        />
+                                                    </td>
+
+                                                    <!-- Dynamic columns for complexities -->
+                                                    <td *ngFor="let item of criteria.items; let cIndex = index">
+                                                        <input
+                                                            name="complexityCount"
+                                                            class="form-control m-input"
+                                                            type="number"
+                                                            [(ngModel)]="item.number"
+                                                        />
+                                                    </td>
+
+                                                    <!-- Delete row button -->
+                                                    <td>
+                                                        <button
+                                                            class="btn btn-delete p-3 m-0"
+                                                            (click)="removeDifficultyCriteria(section, rowIndex)"
+                                                        >
+                                                            <img src="assets/common/images/trash.svg" alt="trash" />
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            </ng-template>
+                                        </p-table>
+                                    </div>
+                                </div>
+
+                                <!-- Add new row to difficultyCriteria -->
+                                <h5
+                                    class="d-flex align-items-center justify-content-start gap-2 cursor-pointer"
+                                    (click)="addNewDifficultyCriteria(section)"
+                                >
+                                    <svg
+                                        width="25"
+                                        height="24"
+                                        viewBox="0 0 25 24"
+                                        fill="none"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                        <path
+                                            d="M6.5 12.75C6.09 12.75 5.75 12.41 5.75 12C5.75 11.59 6.09 11.25 6.5 11.25H18.5C18.91 11.25 19.25 11.59 19.25 12C19.25 12.41 18.91 12.75 18.5 12.75H6.5Z"
+                                            fill="#6D31ED"
+                                        />
+                                        <path
+                                            d="M11.75 18V6C11.75 5.59 12.09 5.25 12.5 5.25C12.91 5.25 13.25 5.59 13.25 6V18C13.25 18.41 12.91 18.75 12.5 18.75C12.09 18.75 11.75 18.41 11.75 18Z"
+                                            fill="#6D31ED"
+                                        />
+                                    </svg>
+                                    <span class="text-primary">
+                                        {{ l('AddNewOption') }}
+                                    </span>
+                                </h5>
                             </div>
-                         </div>
                         </div>
+                    </div>
 
-
+                    <!-- Add new section button -->
+                    <div class="d-flex justify-content-start mt-4">
+                        <button class="btn btn-outline-primary" (click)="addNewSection()">
+                            {{ 'AddNewSection' | localize }}
+                        </button>
                     </div>
                 </div>
             </div>
 
-
-
-
-
-
-               <!-- Fifth card -->
+            <!-- Footer card with Save and Reset -->
             <div class="col-12 mt-6">
                 <div class="card px-8 py-6">
                     <div class="row mt-2">
                         <div class="d-flex justify-content-between">
-                            <button class="btn btn-outline-primary">
-                                {{ 'AddAnotherQuestion' | localize }}
-                            </button>
-                           <div>
-                            <button class="btn btn-primary">
-                                {{ 'Save' | localize }}
-                            </button>
-                            <button class="btn btn-outline">
-                                {{ 'Reset' | localize }}
-                            </button>
-                           </div>
+                            <div></div>
+                            <div>
+                                <!-- Save -->
+                                <button class="btn btn-primary" (click)="createOrEditTemplate()">
+                                    {{ 'Save' | localize }}
+                                </button>
+                                <!-- Reset -->
+                                <button class="btn btn-outline" (click)="resetForm()">
+                                    {{ 'Reset' | localize }}
+                                </button>
+                            </div>
                         </div>
-
-
                     </div>
-
                 </div>
             </div>
-
         </div>
     </div>
 </div>
-
-

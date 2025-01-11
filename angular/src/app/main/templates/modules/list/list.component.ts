@@ -2,6 +2,7 @@ import { Component, Injector, OnInit } from '@angular/core';
 import { DialogSharedService } from '@app/shared/components/dialog-shared/dialog-shared.service';
 import { UniqueNameComponents } from '@app/shared/Models/UniqueNameComponents';
 import { AppComponentBase } from '@shared/common/app-component-base';
+import { ExamTemplatesServiceProxy } from '@shared/service-proxies/service-proxies';
 
 @Component({
     selector: 'app-list',
@@ -17,14 +18,18 @@ export class ListComponent extends AppComponentBase implements OnInit {
     constructor(
         private _injector: Injector,
         private _DialogSharedService: DialogSharedService,
+        private _examTemplatesServiceProxy: ExamTemplatesServiceProxy,
     ) {
         super(_injector);
     }
 
-    ngOnInit() {}
+    ngOnInit() {
+        this._examTemplatesServiceProxy
+            .getAll(undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined)
+            .subscribe((val) => {});
+    }
     getQuestion() {}
     getList($event) {}
-
 
     doActions(label: any, record: any) {
         switch (label) {
@@ -34,10 +39,10 @@ export class ListComponent extends AppComponentBase implements OnInit {
         }
     }
 
-    addTemplate(){
-        this._DialogSharedService.showDialog(this.Warning_dialog , {})
+    addTemplate() {
+        this._DialogSharedService.showDialog(this.Warning_dialog, {});
     }
-    CopyTemplate(){
-        this._DialogSharedService.showDialog(this.Copy_Template_dialog , {})
+    CopyTemplate() {
+        this._DialogSharedService.showDialog(this.Copy_Template_dialog, {});
     }
 }

@@ -16,7 +16,7 @@ import { RouterModule } from '@node_modules/@angular/router';
                        loadChildren: () => import('./modules/list/list.module').then((m) => m.ListModule),
                    },
                    {
-                    path: 'add-template/:id',
+                    path: 'add-template',
                     loadChildren: () =>
                         import('./modules/add-template/add-template.module').then((m) => m.AddTemplateModule),
                 },
