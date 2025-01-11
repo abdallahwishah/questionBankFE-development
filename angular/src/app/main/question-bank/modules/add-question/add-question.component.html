@@ -1,4 +1,4 @@
-<div>
+<div *ngIf="!loading; else loader">
     <div class="container-fluid px-5 mt-md-0 mt-7">
         <div class="d-flex align-items-center">
             <span class="cursor-pointer" [routerLink]="'/app/main/question-bank'">
@@ -24,7 +24,7 @@
     </div>
 
     <!-- Start Qusestion  -->
-    <div class="container-fluid mt-8 px-5" *ngIf="!loading; else loader">
+    <div class="container-fluid mt-8 px-5" >
         <div class="row">
             <!-- first card -->
             <!-- <div class="col-12">
@@ -156,7 +156,7 @@
                         <div class="d-flex align-items-center gap-5">
                             <!-- [(ngModel)]="_createOrEditQuestionDto.hasQuestionHelper" -->
 
-                            <p-inputSwitch (onChange)="getCheckedExplanatoryNote($event)"></p-inputSwitch>
+                            <p-inputSwitch  [(ngModel)]="checkedExplanatoryNote" ></p-inputSwitch>
                             <span class="mt-2">يمتلك شرح توضيحي</span>
                         </div>
                     </div>

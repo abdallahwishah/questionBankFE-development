@@ -6,7 +6,12 @@ import { LazyLoadEvent } from '@node_modules/primeng/api';
 import { Paginator } from '@node_modules/primeng/paginator';
 import { Table } from '@node_modules/primeng/table';
 import { AppComponentBase } from '@shared/common/app-component-base';
-import { QuestionsServiceProxy, QuestionTypeEnum, StudyLevelsServiceProxy, StudySubjectsServiceProxy } from '@shared/service-proxies/service-proxies';
+import {
+    QuestionsServiceProxy,
+    QuestionTypeEnum,
+    StudyLevelsServiceProxy,
+    StudySubjectsServiceProxy,
+} from '@shared/service-proxies/service-proxies';
 
 @Component({
     selector: 'app-list',
@@ -37,7 +42,7 @@ export class ListComponent extends AppComponentBase implements OnInit {
     }
 
     ngOnInit() {
-        console.log('klf , ' ,  this.QuestionTypeEnum)
+        console.log('klf , ', this.QuestionTypeEnum);
         this._studyLevelsServiceProxy.getAll(undefined, undefined, undefined, undefined, undefined).subscribe((val) => {
             this.studyLevels = val.items.map((item) => {
                 return {
@@ -100,7 +105,7 @@ export class ListComponent extends AppComponentBase implements OnInit {
 
     CheckedQuestion: any;
     getCheckedQuestion(record) {
-        record.question.isActive
+        record.question.isActive;
         // this._questionsServiceProxy.
     }
 
@@ -110,9 +115,14 @@ export class ListComponent extends AppComponentBase implements OnInit {
                 this._router.navigate(['app/main/question-bank/addQuestion/' + record.question.id]);
                 break;
             case 'Delete':
-                this._questionsServiceProxy.delete(record.question.id).subscribe((val) => {
-                    this.getQuestion();
+                this.message.confirm('', this.l('AreYouSure'), (isConfirmed) => {
+                    if (isConfirmed) {
+                        this._questionsServiceProxy.delete(record.question.id).subscribe((val) => {
+                            this.getQuestion();
+                        });
+                    }
                 });
+
                 break;
         }
     }

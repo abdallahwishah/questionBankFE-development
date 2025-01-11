@@ -1,4 +1,4 @@
-<div>
+<div *ngIf="!loading; else loader">
     <div class="container-fluid px-5 mt-md-0 mt-7">
         <div class="d-flex align-items-center">
             <span class="cursor-pointer" [routerLink]="'/app/main/question-bank'">
@@ -19,7 +19,7 @@
                 {{ l('Templates') }}
             </span>
             <span class="mx-2">/</span>
-            <h2 class="fw-bolder mb-0">{{ 'AddTemplate' }}</h2>
+            <h2 class="fw-bolder mb-0">{{ _createOrEditExamTemplateDto?.id ? 'EditTemplate' : 'AddTemplate' }}</h2>
         </div>
     </div>
 
@@ -48,13 +48,16 @@
                             <label class="mb-2">{{ l('NumberOfTemplates') }}</label>
                             <input name="numberOfTemplates" class="form-control m-input" type="text" />
                             <div class="d-flex gap-5 mt-4">
-                                <div class="d-flex gap-2">
-                                    <input class="form-check-input" id="radio-1" name="templateType" type="radio" />
-                                    <label for="radio-1">نفس الأسئلة ولكن بترتيب مختلف</label>
-                                </div>
-                                <div class="d-flex gap-2">
-                                    <input class="form-check-input" id="radio-2" name="templateType" type="radio" />
-                                    <label for="radio-2">أسئلة مختلفة</label>
+                                <div class="d-flex gap-2" *ngFor="let item of TemplateTypes; index as i">
+                                    <input
+                                        class="form-check-input"
+                                        [id]="'radio-' + i"
+                                        name="templateType"
+                                        type="radio"
+                                        [value]="item?.Code"
+                                        [(ngModel)]="_createOrEditExamTemplateDto.templateType"
+                                    />
+                                    <label [for]="'radio-' + i">{{ item?.Name }}</label>
                                 </div>
                             </div>
                         </div>
@@ -90,83 +93,102 @@
                                 type="text"
                             />
                         </div>
+                        <div class="col-md-6 mb-5">
+                            <label>{{ l('Time') }}</label>
+                            <div class="time-group">
+                                <input
+                                    class="form-control m-input"
+                                    type="number"
+                                    [(ngModel)]="_createOrEditExamTemplateDto.durationTime"
+                                />
+                                <div class="time-icon">
+                                    دقيقة
+
+                                    <svg
+                                        width="20"
+                                        height="20"
+                                        viewBox="0 0 20 20"
+                                        fill="none"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                        <path
+                                            fill-rule="evenodd"
+                                            clip-rule="evenodd"
+                                            d="M2.08333 11.0417C2.08333 6.675 5.63333 3.125 9.99999 3.125C14.3667 3.125 17.9167 6.675 17.9167 11.0417C17.9167 15.4083 14.3667 18.9583 9.99999 18.9583C5.63333 18.9583 2.08333 15.4083 2.08333 11.0417ZM3.33333 11.0417C3.33333 14.7167 6.325 17.7083 9.99999 17.7083C13.675 17.7083 16.6667 14.7167 16.6667 11.0417C16.6667 7.36667 13.675 4.375 9.99999 4.375C6.325 4.375 3.33333 7.36667 3.33333 11.0417Z"
+                                            fill="#171A1F"
+                                        />
+                                        <path
+                                            d="M9.375 10.8332V6.6665C9.375 6.32484 9.65833 6.0415 10 6.0415C10.3417 6.0415 10.625 6.32484 10.625 6.6665V10.8332C10.625 11.1748 10.3417 11.4582 10 11.4582C9.65833 11.4582 9.375 11.1748 9.375 10.8332Z"
+                                            fill="#171A1F"
+                                        />
+                                        <path
+                                            d="M7.5 2.2915C7.15833 2.2915 6.875 2.00817 6.875 1.6665C6.875 1.32484 7.15833 1.0415 7.5 1.0415H12.5C12.8417 1.0415 13.125 1.32484 13.125 1.6665C13.125 2.00817 12.8417 2.2915 12.5 2.2915H7.5Z"
+                                            fill="#171A1F"
+                                        />
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
 
                         <!-- Main Instructions -->
                         <div class="col-12 mb-2">
-                            <div class="d-flex align-items-center gap-5 mb-5">
-                            <p-inputSwitch (onChange)="getCheckedInstructions($event)"></p-inputSwitch>
-                            <label class="mt-2">{{ l('HasInstructions') }}</label>
-                            </div>
-
-                            @if (checkedInstructions) {
-                                <app-editor
+                            <app-editor
                                 name="instructions"
                                 [(ngModel)]="_createOrEditExamTemplateDto.instructions"
                             ></app-editor>
-                            }
-
-
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <!-- Sections card -->
-            <div class="col-12 mt-6">
-                <div class="card px-8 py-6">
-                    <h3>{{ l('Sections') }}</h3>
+                <!-- Sections card -->
+                <div class="col-12 mt-6">
+                    <div class="card px-8 py-6">
+                        <h3>{{ l('Sections') }}</h3>
 
-                    <!-- Loop over sections in the main DTO -->
-                    <div
-                        class="col-12"
-                        *ngFor="let section of _createOrEditExamTemplateDto.templateSections; let sectionIndex = index"
-                    >
-                        <div class="template-box mt-4">
-                            <h4 class="template-box-header py-4 px-5 d-flex align-items-center justify-content-between">
-                                {{ l('Section') }} #{{ sectionIndex + 1 }}
-                                <button class="btn btn-delete2 p-3 m-0" (click)="removeSection(sectionIndex)">
-                                    <img src="assets/common/images/trash-w.svg" alt="Remove section" />
-                                </button>
-                            </h4>
+                        <!-- Loop over sections in the main DTO -->
+                        <div
+                            class="col-12"
+                            *ngFor="
+                                let section of _createOrEditExamTemplateDto.templateSections;
+                                let sectionIndex = index
+                            "
+                        >
+                            <div class="template-box mt-4">
+                                <h4
+                                    class="template-box-header py-4 px-5 d-flex align-items-center justify-content-between"
+                                >
+                                    {{ l('Section') }} #{{ sectionIndex + 1 }}
+                                    <button class="btn btn-delete2 p-3 m-0" (click)="removeSection(sectionIndex)">
+                                        <img src="assets/common/images/trash-w.svg" alt="Remove section" />
+                                    </button>
+                                </h4>
 
-                            <!-- Section Info -->
-                            <div class="p-5 row">
-                                <!-- SectionOrder => (newSection as any).order is a string -->
-                                <div class="col-md-4 mb-5">
-                                    <label>{{ l('SectionOrder') }}</label>
-                                    <input class="form-control m-input" type="text" [(ngModel)]="section.order" />
-                                </div>
-
-                                <!-- SectionName => section.name -->
-                                <div class="col-md-4 mb-5">
-                                    <label>{{ l('SectionName') }}</label>
-                                    <input class="form-control m-input" type="text" [(ngModel)]="section.name" />
-                                </div>
-
-                                <!-- Time => section.durationTime -->
-                                <div class="col-md-4 mb-5">
-                                    <label>{{ l('Time') }}</label>
-                                    <div class="time-group">
-                                        <input
-                                        class="form-control m-input"
-                                        type="number"
-                                        [(ngModel)]="section.durationTime"
-                                    />
-                                    <div class="time-icon">
-                                        دقيقة
-
-                                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M2.08333 11.0417C2.08333 6.675 5.63333 3.125 9.99999 3.125C14.3667 3.125 17.9167 6.675 17.9167 11.0417C17.9167 15.4083 14.3667 18.9583 9.99999 18.9583C5.63333 18.9583 2.08333 15.4083 2.08333 11.0417ZM3.33333 11.0417C3.33333 14.7167 6.325 17.7083 9.99999 17.7083C13.675 17.7083 16.6667 14.7167 16.6667 11.0417C16.6667 7.36667 13.675 4.375 9.99999 4.375C6.325 4.375 3.33333 7.36667 3.33333 11.0417Z" fill="#171A1F"/>
-                                            <path d="M9.375 10.8332V6.6665C9.375 6.32484 9.65833 6.0415 10 6.0415C10.3417 6.0415 10.625 6.32484 10.625 6.6665V10.8332C10.625 11.1748 10.3417 11.4582 10 11.4582C9.65833 11.4582 9.375 11.1748 9.375 10.8332Z" fill="#171A1F"/>
-                                            <path d="M7.5 2.2915C7.15833 2.2915 6.875 2.00817 6.875 1.6665C6.875 1.32484 7.15833 1.0415 7.5 1.0415H12.5C12.8417 1.0415 13.125 1.32484 13.125 1.6665C13.125 2.00817 12.8417 2.2915 12.5 2.2915H7.5Z" fill="#171A1F"/>
-                                            </svg>
-
-                                    </div>
+                                <!-- Section Info -->
+                                <div class="p-5 row">
+                                    <!-- SectionOrder => (newSection as any).order is a string -->
+                                    <div class="col-md-2 mb-5">
+                                        <label>{{ l('SectionOrder') }}</label>
+                                        <input class="form-control m-input" type="text" [(ngModel)]="section.order" />
                                     </div>
 
-                                </div>
+                                    <!-- SectionName => section.name -->
+                                    <div class="col-md-6 mb-5">
+                                        <label>{{ l('SectionName') }}</label>
+                                        <input class="form-control m-input" type="text" [(ngModel)]="section.name" />
+                                    </div>
+                                    <!-- SectionName => section.name -->
+                                    <div class="col-md-4 mb-5">
+                                        <label>{{ l('sectionType') }}</label>
+                                        <app-dropdown-field
+                                            [enm]="SectionTypeEnum"
+                                            [(ngModel)]="section.sectionType"
+                                        ></app-dropdown-field>
+                                    </div>
 
-                                <!-- If you want to toggle instructions at section-level with p-inputSwitch -->
-                                <!-- <div class="col-md-3 mb-2 d-flex align-items-center gap-3">
+                                    <!-- Time => section.durationTime -->
+
+                                    <!-- If you want to toggle instructions at section-level with p-inputSwitch -->
+                                    <!-- <div class="col-md-3 mb-2 d-flex align-items-center gap-3">
                                     <p-inputSwitch
                                         (onChange)="getChecked($event)"
                                         [(ngModel)]="checked"
@@ -174,152 +196,156 @@
                                     <label>{{ l('AddInstructions') }}</label>
                                 </div> -->
 
-                                <!-- Section instructions -->
-                                <div class="col-md-12 mt-3">
-                                    <label>{{ l('Instructions') }}</label>
-                                    <app-editor class="w-100" [(ngModel)]="section.instructions"></app-editor>
-                                </div>
-
-                                <!-- Table for difficultyCriteria rows -->
-                                <div class="row my-7">
-                                    <div class="col-12 mb-4">
-                                        <h3>{{ l('SectionDetails') }}</h3>
+                                    <!-- Section instructions -->
+                                    <div class="col-md-12 mt-3">
+                                        <div class="d-flex justify-content-end align-items-center gap-5 mb-5">
+                                            <p-inputSwitch [(ngModel)]="section.hasInstructions"></p-inputSwitch>
+                                            <label class="mt-2">{{ l('HasInstructions') }}</label>
+                                        </div>
+                                        @if (section.hasInstructions) {
+                                            <label>{{ l('Instructions') }}</label>
+                                            <app-editor class="w-100" [(ngModel)]="section.instructions"></app-editor>
+                                        }
                                     </div>
 
-                                    <div class="col-12 dynamic-tabel">
-                                        <p-table [value]="section.difficultyCriteria" class="w-100">
-                                            <ng-template pTemplate="header">
-                                                <tr class="text-center">
-                                                    <th>{{ l('QuestionType') }}</th>
-                                                    <th>{{ l('subjectUnit') }}</th>
-                                                    <th>{{ l('Category') }}</th>
-                                                    <th>{{ l('ExcludedPages') }}</th>
-                                                    <!-- Dynamic complexities columns -->
-                                                    <th *ngFor="let comp of complexities">
-                                                        {{ comp.name }}
-                                                    </th>
-                                                    <th></th>
-                                                </tr>
-                                            </ng-template>
+                                    <!-- Table for difficultyCriteria rows -->
+                                    <div class="row my-7">
+                                        <div class="col-12 mb-4">
+                                            <h3>{{ l('SectionDetails') }}</h3>
+                                        </div>
 
-                                            <ng-template pTemplate="body" let-criteria let-rowIndex="rowIndex">
-                                                <tr>
-                                                    <!-- QuestionType -->
-                                                    <td>
-                                                        <app-dropdown-field
-                                                            [enm]="QuestionTypeEnum"
-                                                            [(ngModel)]="criteria.questionType"
-                                                        ></app-dropdown-field>
-                                                    </td>
+                                        <div class="col-12 dynamic-tabel">
+                                            <p-table [value]="section.difficultyCriteria" class="w-100">
+                                                <ng-template pTemplate="header">
+                                                    <tr class="text-center">
+                                                        <th>{{ l('QuestionType') }}</th>
+                                                        <th>{{ l('subjectUnit') }}</th>
+                                                        <th>{{ l('Category') }}</th>
+                                                        <th>{{ l('ExcludedPages') }}</th>
+                                                        <!-- Dynamic complexities columns -->
+                                                        <th *ngFor="let comp of complexities">
+                                                            {{ comp.name }}
+                                                        </th>
+                                                        <th></th>
+                                                    </tr>
+                                                </ng-template>
 
-                                                    <!-- SubjectUnit -->
-                                                    <td>
-                                                        <app-dropdown-field
-                                                            [options]="subjectUnits"
-                                                            optionLabel="name"
-                                                            optionValue="id"
-                                                            [(ngModel)]="criteria.subjectUnitId"
-                                                        ></app-dropdown-field>
-                                                    </td>
+                                                <ng-template pTemplate="body" let-criteria let-rowIndex="rowIndex">
+                                                    <tr>
+                                                        <!-- QuestionType -->
+                                                        <td>
+                                                            <app-dropdown-field
+                                                                [enm]="QuestionTypeEnum"
+                                                                [(ngModel)]="criteria.questionType"
+                                                            ></app-dropdown-field>
+                                                        </td>
 
-                                                    <!-- Category -->
-                                                    <td>
-                                                        <app-dropdown-field
-                                                            [options]="categories"
-                                                            optionLabel="name"
-                                                            optionValue="id"
-                                                            [(ngModel)]="criteria.categoryId"
-                                                        ></app-dropdown-field>
-                                                    </td>
+                                                        <!-- SubjectUnit -->
+                                                        <td>
+                                                            <app-dropdown-field
+                                                                [options]="subjectUnits"
+                                                                optionLabel="name"
+                                                                optionValue="id"
+                                                                [(ngModel)]="criteria.subjectUnitId"
+                                                            ></app-dropdown-field>
+                                                        </td>
 
-                                                    <!-- ExcludedPages -->
-                                                    <td>
-                                                        <input
-                                                            name="excludedPageNumber"
-                                                            class="form-control m-input"
-                                                            type="text"
-                                                            [(ngModel)]="criteria.execludedPageNumber"
-                                                        />
-                                                    </td>
+                                                        <!-- Category -->
+                                                        <td>
+                                                            <app-dropdown-field
+                                                                [options]="categories"
+                                                                optionLabel="name"
+                                                                optionValue="id"
+                                                                [(ngModel)]="criteria.categoryId"
+                                                            ></app-dropdown-field>
+                                                        </td>
 
-                                                    <!-- Dynamic columns for complexities -->
-                                                    <td *ngFor="let item of criteria.items; let cIndex = index">
-                                                        <input
-                                                            name="complexityCount"
-                                                            class="form-control m-input"
-                                                            type="number"
-                                                            [(ngModel)]="item.number"
-                                                        />
-                                                    </td>
+                                                        <!-- ExcludedPages -->
+                                                        <td>
+                                                            <input
+                                                                class="form-control m-input"
+                                                                type="text"
+                                                                [(ngModel)]="criteria.execludedPageNumber"
+                                                            />
+                                                        </td>
 
-                                                    <!-- Delete row button -->
-                                                    <td>
-                                                        <button
-                                                            class="btn btn-delete p-3 m-0"
-                                                            (click)="removeDifficultyCriteria(section, rowIndex)"
-                                                        >
-                                                            <img src="assets/common/images/trash.svg" alt="trash" />
-                                                        </button>
-                                                    </td>
-                                                </tr>
-                                            </ng-template>
-                                        </p-table>
+                                                        <!-- Dynamic columns for complexities -->
+                                                        <td *ngFor="let item of criteria.items; let cIndex = index">
+                                                            <input
+                                                                class="form-control m-input"
+                                                                type="number"
+                                                                [(ngModel)]="item.number"
+                                                            />
+                                                        </td>
+
+                                                        <!-- Delete row button -->
+                                                        <td>
+                                                            <button
+                                                                class="btn btn-delete p-3 m-0"
+                                                                (click)="removeDifficultyCriteria(section, rowIndex)"
+                                                            >
+                                                                <img src="assets/common/images/trash.svg" alt="trash" />
+                                                            </button>
+                                                        </td>
+                                                    </tr>
+                                                </ng-template>
+                                            </p-table>
+                                        </div>
                                     </div>
-                                </div>
 
-                                <!-- Add new row to difficultyCriteria -->
-                                <h5
-                                    class="d-flex align-items-center justify-content-start gap-2 cursor-pointer"
-                                    (click)="addNewDifficultyCriteria(section)"
-                                >
-                                    <svg
-                                        width="25"
-                                        height="24"
-                                        viewBox="0 0 25 24"
-                                        fill="none"
-                                        xmlns="http://www.w3.org/2000/svg"
+                                    <!-- Add new row to difficultyCriteria -->
+                                    <h5
+                                        class="d-flex align-items-center justify-content-start gap-2 cursor-pointer"
+                                        (click)="addNewDifficultyCriteria(section)"
                                     >
-                                        <path
-                                            d="M6.5 12.75C6.09 12.75 5.75 12.41 5.75 12C5.75 11.59 6.09 11.25 6.5 11.25H18.5C18.91 11.25 19.25 11.59 19.25 12C19.25 12.41 18.91 12.75 18.5 12.75H6.5Z"
-                                            fill="#6D31ED"
-                                        />
-                                        <path
-                                            d="M11.75 18V6C11.75 5.59 12.09 5.25 12.5 5.25C12.91 5.25 13.25 5.59 13.25 6V18C13.25 18.41 12.91 18.75 12.5 18.75C12.09 18.75 11.75 18.41 11.75 18Z"
-                                            fill="#6D31ED"
-                                        />
-                                    </svg>
-                                    <span class="text-primary">
-                                        {{ l('AddNewOption') }}
-                                    </span>
-                                </h5>
+                                        <svg
+                                            width="25"
+                                            height="24"
+                                            viewBox="0 0 25 24"
+                                            fill="none"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                        >
+                                            <path
+                                                d="M6.5 12.75C6.09 12.75 5.75 12.41 5.75 12C5.75 11.59 6.09 11.25 6.5 11.25H18.5C18.91 11.25 19.25 11.59 19.25 12C19.25 12.41 18.91 12.75 18.5 12.75H6.5Z"
+                                                fill="#6D31ED"
+                                            />
+                                            <path
+                                                d="M11.75 18V6C11.75 5.59 12.09 5.25 12.5 5.25C12.91 5.25 13.25 5.59 13.25 6V18C13.25 18.41 12.91 18.75 12.5 18.75C12.09 18.75 11.75 18.41 11.75 18Z"
+                                                fill="#6D31ED"
+                                            />
+                                        </svg>
+                                        <span class="text-primary">
+                                            {{ l('AddNewOption') }}
+                                        </span>
+                                    </h5>
+                                </div>
                             </div>
                         </div>
-                    </div>
 
-                    <!-- Add new section button -->
-                    <div class="d-flex justify-content-start mt-4">
-                        <button class="btn btn-outline-primary" (click)="addNewSection()">
-                            {{ 'AddNewSection' | localize }}
-                        </button>
+                        <!-- Add new section button -->
                     </div>
                 </div>
-            </div>
 
-            <!-- Footer card with Save and Reset -->
-            <div class="col-12 mt-6">
-                <div class="card px-8 py-6">
-                    <div class="row mt-2">
-                        <div class="d-flex justify-content-between">
-                            <div></div>
-                            <div>
-                                <!-- Save -->
-                                <button class="btn btn-primary" (click)="createOrEditTemplate()">
-                                    {{ 'Save' | localize }}
-                                </button>
-                                <!-- Reset -->
-                                <button class="btn btn-outline" (click)="resetForm()">
-                                    {{ 'Reset' | localize }}
-                                </button>
+                <!-- Footer card with Save and Reset -->
+                <div class="col-12 mt-6">
+                    <div class="card px-8 py-6">
+                        <div class="row mt-2">
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    <button class="btn btn-outline-primary" (click)="addNewSection()">
+                                        {{ 'AddNewSection' | localize }}
+                                    </button>
+                                </div>
+                                <div>
+                                    <!-- Save -->
+                                    <button class="btn btn-primary" (click)="createOrEditTemplate()">
+                                        {{ 'Save' | localize }}
+                                    </button>
+                                    <!-- Reset -->
+                                    <button class="btn btn-outline" (click)="resetForm()">
+                                        {{ 'Reset' | localize }}
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -328,3 +354,4 @@
         </div>
     </div>
 </div>
+<ng-template #loader>loading...</ng-template>

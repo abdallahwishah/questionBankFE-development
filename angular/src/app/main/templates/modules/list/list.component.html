@@ -4,36 +4,34 @@
         <div class="d-flex justify-content-between">
             <div class="d-flex gap-2">
                 <p class="gray">{{ l('NumberOfTemplates') }}:</p>
-                <span class="text-dark">150</span>
+                <span class="text-dark">{{ primengTableHelper.totalRecordsCount }}</span>
             </div>
 
-                <div>
-                    <button class="btn btn-primary d-flex gap-2">
-                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path
-                                d="M6.66663 10.625C6.32496 10.625 6.04163 10.3417 6.04163 10C6.04163 9.65833 6.32496 9.375 6.66663 9.375H13.3333C13.675 9.375 13.9583 9.65833 13.9583 10C13.9583 10.3417 13.675 10.625 13.3333 10.625H6.66663Z"
-                                fill="white"
-                            />
-                            <path
-                                d="M9.375 13.3334V6.66669C9.375 6.32502 9.65833 6.04169 10 6.04169C10.3417 6.04169 10.625 6.32502 10.625 6.66669V13.3334C10.625 13.675 10.3417 13.9584 10 13.9584C9.65833 13.9584 9.375 13.675 9.375 13.3334Z"
-                                fill="white"
-                            />
-                            <path
-                                fill-rule="evenodd"
-                                clip-rule="evenodd"
-                                d="M7.49996 18.9584C2.97496 18.9584 1.04163 17.025 1.04163 12.5V7.50002C1.04163 2.97502 2.97496 1.04169 7.49996 1.04169H12.5C17.025 1.04169 18.9583 2.97502 18.9583 7.50002V12.5C18.9583 17.025 17.025 18.9584 12.5 18.9584H7.49996ZM2.29163 7.50002V12.5C2.29163 16.3417 3.65829 17.7084 7.49996 17.7084H12.5C16.3416 17.7084 17.7083 16.3417 17.7083 12.5V7.50002C17.7083 3.65835 16.3416 2.29169 12.5 2.29169H7.49996C3.65829 2.29169 2.29163 3.65835 2.29163 7.50002Z"
-                                fill="white"
-                            />
-                        </svg>
+            <div>
+                <button class="btn btn-primary d-flex gap-2">
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M6.66663 10.625C6.32496 10.625 6.04163 10.3417 6.04163 10C6.04163 9.65833 6.32496 9.375 6.66663 9.375H13.3333C13.675 9.375 13.9583 9.65833 13.9583 10C13.9583 10.3417 13.675 10.625 13.3333 10.625H6.66663Z"
+                            fill="white"
+                        />
+                        <path
+                            d="M9.375 13.3334V6.66669C9.375 6.32502 9.65833 6.04169 10 6.04169C10.3417 6.04169 10.625 6.32502 10.625 6.66669V13.3334C10.625 13.675 10.3417 13.9584 10 13.9584C9.65833 13.9584 9.375 13.675 9.375 13.3334Z"
+                            fill="white"
+                        />
+                        <path
+                            fill-rule="evenodd"
+                            clip-rule="evenodd"
+                            d="M7.49996 18.9584C2.97496 18.9584 1.04163 17.025 1.04163 12.5V7.50002C1.04163 2.97502 2.97496 1.04169 7.49996 1.04169H12.5C17.025 1.04169 18.9583 2.97502 18.9583 7.50002V12.5C18.9583 17.025 17.025 18.9584 12.5 18.9584H7.49996ZM2.29163 7.50002V12.5C2.29163 16.3417 3.65829 17.7084 7.49996 17.7084H12.5C16.3416 17.7084 17.7083 16.3417 17.7083 12.5V7.50002C17.7083 3.65835 16.3416 2.29169 12.5 2.29169H7.49996C3.65829 2.29169 2.29163 3.65835 2.29163 7.50002Z"
+                            fill="white"
+                        />
+                    </svg>
 
-                        <span class="d-none d-md-inline-block" (click)="addTemplate()">
-                            {{ l('AddTemplate') }}
-                        </span>
-                    </button>
-                </div>
+                    <span class="d-none d-md-inline-block" [routerLink]="'/app/main/templates/add-template'">
+                        {{ l('AddTemplate') }}
+                    </span>
+                </button>
+            </div>
         </div>
-
-
 
         <!-- Filter & Search  -->
         <div class="row justify-content-between switch-serch-bar mt-9">
@@ -49,39 +47,46 @@
                     />
                     <button class="btn btn-primary" type="submit">
                         <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd" clip-rule="evenodd" d="M18.9584 9.58317C18.9584 4.87484 15.125 1.0415 10.4167 1.0415C5.70837 1.0415 1.87504 4.87484 1.87504 9.58317C1.87504 14.2915 5.70837 18.1248 10.4167 18.1248C15.125 18.1248 18.9584 14.2915 18.9584 9.58317ZM17.7084 9.58317C17.7084 13.5998 14.4417 16.8748 10.4167 16.8748C6.39171 16.8748 3.12504 13.5998 3.12504 9.58317C3.12504 5.5665 6.39171 2.2915 10.4167 2.2915C14.4417 2.2915 17.7084 5.5665 17.7084 9.58317Z" fill="#6D31ED"/>
-                            <path d="M2.10802 18.7752L3.77468 17.1085C4.01635 16.8669 4.01635 16.4669 3.77468 16.2252C3.53302 15.9835 3.13301 15.9835 2.89135 16.2252L1.22468 17.8919C0.983015 18.1335 0.983015 18.5335 1.22468 18.7752C1.34968 18.9002 1.50802 18.9585 1.66635 18.9585C1.82468 18.9585 1.98302 18.9002 2.10802 18.7752Z" fill="#6D31ED"/>
-                            </svg>
+                            <path
+                                fill-rule="evenodd"
+                                clip-rule="evenodd"
+                                d="M18.9584 9.58317C18.9584 4.87484 15.125 1.0415 10.4167 1.0415C5.70837 1.0415 1.87504 4.87484 1.87504 9.58317C1.87504 14.2915 5.70837 18.1248 10.4167 18.1248C15.125 18.1248 18.9584 14.2915 18.9584 9.58317ZM17.7084 9.58317C17.7084 13.5998 14.4417 16.8748 10.4167 16.8748C6.39171 16.8748 3.12504 13.5998 3.12504 9.58317C3.12504 5.5665 6.39171 2.2915 10.4167 2.2915C14.4417 2.2915 17.7084 5.5665 17.7084 9.58317Z"
+                                fill="#6D31ED"
+                            />
+                            <path
+                                d="M2.10802 18.7752L3.77468 17.1085C4.01635 16.8669 4.01635 16.4669 3.77468 16.2252C3.53302 15.9835 3.13301 15.9835 2.89135 16.2252L1.22468 17.8919C0.983015 18.1335 0.983015 18.5335 1.22468 18.7752C1.34968 18.9002 1.50802 18.9585 1.66635 18.9585C1.82468 18.9585 1.98302 18.9002 2.10802 18.7752Z"
+                                fill="#6D31ED"
+                            />
+                        </svg>
                     </button>
                 </div>
             </div>
 
-            <div class="col-md-3 d-grid justify-content-end ">
+            <div class="col-md-3 d-grid justify-content-end">
                 <app-filters>
                     <ng-container filterBody>
                         <div class="row">
                             <div class="col-12 mb-5">
                                 <app-dropdown-field
-                                [(ngModel)]="filter"
-                                [options]="studySubjects"
-                                optionLabel="name"
-                                optionValue="id"
-                                [labelField]="l('StudySubject')"
-                            ></app-dropdown-field>
-
+                                    [(ngModel)]="filter"
+                                    [options]="studySubjects"
+                                    optionLabel="name"
+                                    optionValue="id"
+                                    [labelField]="l('StudySubject')"
+                                ></app-dropdown-field>
                             </div>
                             <div class="col-12 mb-5">
-                                    <app-dropdown-field
-                                       [(ngModel)]="filter"
-                                        [options]="studyLevels"
-                                        optionLabel="name"
-                                        optionValue="id"
-                                        [labelField]="l('StudyLevel')"
-                                    ></app-dropdown-field>
+                                <app-dropdown-field
+                                    [(ngModel)]="filter"
+                                    [options]="studyLevels"
+                                    optionLabel="name"
+                                    optionValue="id"
+                                    [labelField]="l('StudyLevel')"
+                                ></app-dropdown-field>
                             </div>
                         </div>
                         <div class="d-flex justify-content-between mt-4">
-                            <button class="btn btn-primary" (click)="getList()" >
+                            <button class="btn btn-primary" (click)="getList()">
                                 {{ 'Save' | localize }}
                             </button>
                             <button class="btn btn-outline">
@@ -92,8 +97,6 @@
                 </app-filters>
             </div>
         </div>
-
-
 
         <!-- Start Tabel -->
         <div class="primeng-datatable-container p-0 col-12 mt-6">
@@ -112,7 +115,7 @@
                 <ng-template pTemplate="header">
                     <tr>
                         <th pSortableColumn="caseCode">
-                            {{  '#' }}
+                            {{ '#' }}
                         </th>
                         <th pSortableColumn="TemplateName">
                             {{ l('TemplateName') }}
@@ -138,7 +141,7 @@
                 <ng-template pTemplate="body" let-record="$implicit" let-i="rowIndex">
                     <tr>
                         <td>
-                            {{i + 1}}
+                            {{ i + 1 }}
                         </td>
                         <td>
                             <span class="p-column-title">{{ l('name') }}</span>
@@ -191,24 +194,21 @@
             </div>
             <p-paginator
                 #paginator
-                [hidden]="true"
-                [rows]="primengTableHelper.defaultRecordsCountPerPage"
+                 [rows]="primengTableHelper.defaultRecordsCountPerPage"
                 (onPageChange)="getList($event)"
                 [totalRecords]="primengTableHelper.totalRecordsCount"
-                [showCurrentPageReport]="true"
-                [rows]="primengTableHelper.defaultRecordsCountPerPage"
+                 [rows]="primengTableHelper.defaultRecordsCountPerPage"
                 [rowsPerPageOptions]="primengTableHelper.predefinedRecordsCountPerPage"
             ></p-paginator>
-            <app-paginator
+            <!-- <app-paginator
                 [hidden]="primengTableHelper.totalRecordsCount == 0"
                 [paginator]="paginator"
                 [primengTableHelper]="primengTableHelper"
-            ></app-paginator>
+            ></app-paginator> -->
         </div>
         <!-- End Tabel -->
     </div>
 </div>
-
 
 <!-- Modals -->
 <app-warning-modal></app-warning-modal>

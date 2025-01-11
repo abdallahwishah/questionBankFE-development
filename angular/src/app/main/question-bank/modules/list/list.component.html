@@ -233,18 +233,16 @@
             </div>
             <p-paginator
                 #paginator
-                [hidden]="true"
-                [rows]="primengTableHelper.defaultRecordsCountPerPage"
+                 [rows]="primengTableHelper.defaultRecordsCountPerPage"
                 (onPageChange)="getQuestion($event)"
                 [totalRecords]="primengTableHelper.totalRecordsCount"
-                [showCurrentPageReport]="true"
-                [rows]="primengTableHelper.defaultRecordsCountPerPage"
+                 [rows]="primengTableHelper.defaultRecordsCountPerPage"
                 [rowsPerPageOptions]="primengTableHelper.predefinedRecordsCountPerPage"
             ></p-paginator>
-            <app-paginator
+            <!-- <app-paginator
                 [hidden]="primengTableHelper.totalRecordsCount == 0"
                 [paginator]="paginator"
-                [primengTableHelper]="primengTableHelper"></app-paginator>
+                [primengTableHelper]="primengTableHelper"></app-paginator> -->
         </div>
         <!-- End Tabel -->
     </div>

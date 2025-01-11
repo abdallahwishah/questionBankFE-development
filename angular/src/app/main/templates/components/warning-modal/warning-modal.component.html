@@ -1,33 +1,21 @@
-<app-dialog-shared
-    [width]="'35vw'"
-    (close)="closeDialog()"
-    [dialog_name]="Warning_dialog"
->
+<app-dialog-shared [width]="'35vw'" (close)="closeDialog()" [dialog_name]="Warning_dialog">
     <ng-container bodyDialog>
         <ng-container>
-                <div class="row justify-content-center">
-                    <div class="col-md-10 text-center">
-                      <img src="assets/common/images/warning.svg" alt="">
-                      <p class="fs-3 fw-bolder mt-7 mb-5">هل أنت متأكد؟</p>
-                      <p class="text-gray-700 mb-0">سوف يتم إنشاء اختبار واحد فقط من هذا القالب, ولن تتمكن من التراجع عن هذه العملية</p>
-                    </div>
+            <div class="row justify-content-center">
+                <div class="col-md-10 text-center">
+                    <img src="assets/common/images/warning.svg" alt="" />
+                    <p class="fs-3 fw-bolder mt-7 mb-5">هل أنت متأكد؟</p>
+                    <p class="text-gray-700 mb-0">
+                        سوف يتم إنشاء اختبار واحد فقط من هذا القالب, ولن تتمكن من التراجع عن هذه العملية
+                    </p>
                 </div>
-
+            </div>
         </ng-container>
     </ng-container>
     <ng-container footerDialog>
-
-
-
-        <button
-            type="submit"
-            class="btn btn-primary blue"
-            [routerLink]="'/app/main/templates/add-template'"
-        >
-       <!--  [buttonBusy]="saving"
-        [busyText]="l('Save')" -->
-        <span>{{l('Yes')}}</span>
+        <button type="submit" class="btn btn-primary blue" (click)="Save()">
+            <span>{{ l('Yes') }}</span>
         </button>
-        <button class="btn btn-outline-primary">{{l('No')}}</button>
+        <button class="btn btn-outline-primary">{{ l('No') }}</button>
     </ng-container>
 </app-dialog-shared>

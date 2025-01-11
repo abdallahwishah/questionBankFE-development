@@ -6,7 +6,11 @@ import { LazyLoadEvent } from '@node_modules/primeng/api';
 import { Paginator } from '@node_modules/primeng/paginator';
 import { Table } from '@node_modules/primeng/table';
 import { AppComponentBase } from '@shared/common/app-component-base';
-import { ExamTemplatesServiceProxy, StudyLevelsServiceProxy, StudySubjectsServiceProxy } from '@shared/service-proxies/service-proxies';
+import {
+    ExamTemplatesServiceProxy,
+    StudyLevelsServiceProxy,
+    StudySubjectsServiceProxy,
+} from '@shared/service-proxies/service-proxies';
 
 @Component({
     selector: 'app-list',
@@ -55,32 +59,38 @@ export class ListComponent extends AppComponentBase implements OnInit {
                     };
                 });
             });
-
     }
     getQuestion() {}
 
     getList(event?: LazyLoadEvent) {
-            if (event) {
-                if (this.primengTableHelper.shouldResetPaging(event)) {
-                    this.paginator.changePage(0);
-                    if (this.primengTableHelper.records && this.primengTableHelper.records.length > 0) {
-                        return;
-                    }
+        if (event) {
+            if (this.primengTableHelper.shouldResetPaging(event)) {
+                this.paginator.changePage(0);
+                if (this.primengTableHelper.records && this.primengTableHelper.records.length > 0) {
+                    return;
                 }
             }
-
-            this.primengTableHelper.showLoadingIndicator();
-
-            this._examTemplatesServiceProxy
-                .getAll(
-                    this.filter, undefined, undefined, undefined, undefined, undefined, undefined, undefined
-                )
-                .subscribe((result) => {
-                    this.primengTableHelper.totalRecordsCount = result.totalCount;
-                    this.primengTableHelper.records = result.items;
-                    this.primengTableHelper.hideLoadingIndicator();
-                });
         }
+
+        this.primengTableHelper.showLoadingIndicator();
+
+        this._examTemplatesServiceProxy
+            .getAll(
+                this.filter,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                this.primengTableHelper.getSorting(this.dataTable),
+                this.primengTableHelper.getSkipCount(this.paginator, event),
+                this.primengTableHelper.getMaxResultCount(this.paginator, event),
+            )
+            .subscribe((result) => {
+                this.primengTableHelper.totalRecordsCount = result.totalCount;
+                this.primengTableHelper.records = result.items;
+                this.primengTableHelper.hideLoadingIndicator();
+            });
+    }
 
     doActions(label: any, record: any) {
         switch (label) {
@@ -88,10 +98,22 @@ export class ListComponent extends AppComponentBase implements OnInit {
                 this._router.navigate(['app/main/templates/add-template/' + record.examTemplate.id]);
                 break;
             case 'CreateTest':
+                this._DialogSharedService.showDialog(this.Warning_dialog, {
+                    confirm: () => {
+                        this._examTemplatesServiceProxy
+                            .generateExamByTemplate(record.examTemplate.id)
+                            .subscribe((val) => {
+                                this.notify.success(this.l('SavedSuccessfully'));
+                            });
+                    },
+                });
 
                 break;
             case 'Copy':
-                this.CopyTemplate();
+                this._examTemplatesServiceProxy.copyTemplate(record.examTemplate.id).subscribe((val) => {
+                    this.getList();
+                });
+
                 break;
             case 'Delete':
                 this._examTemplatesServiceProxy.delete(record.question.id).subscribe((val) => {
@@ -101,9 +123,6 @@ export class ListComponent extends AppComponentBase implements OnInit {
         }
     }
 
-    addTemplate() {
-        this._DialogSharedService.showDialog(this.Warning_dialog, {});
-    }
     CopyTemplate() {
         this._DialogSharedService.showDialog(this.Copy_Template_dialog, {});
     }

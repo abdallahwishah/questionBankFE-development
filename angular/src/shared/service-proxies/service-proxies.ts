@@ -29,7 +29,7 @@ export class AccountServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     isTenantAvailable(body: IsTenantAvailableInput | undefined): Observable<IsTenantAvailableOutput> {
@@ -85,7 +85,7 @@ export class AccountServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     resolveTenantId(body: ResolveTenantIdInput | undefined): Observable<number> {
@@ -130,7 +130,7 @@ export class AccountServiceProxy {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
                 result200 = resultData200 !== undefined ? resultData200 : <any>null;
-
+    
             return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
@@ -142,7 +142,7 @@ export class AccountServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     register(body: RegisterInput | undefined): Observable<RegisterOutput> {
@@ -198,7 +198,7 @@ export class AccountServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     sendPasswordResetCode(body: SendPasswordResetCodeInput | undefined): Observable<void> {
@@ -250,7 +250,7 @@ export class AccountServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     resetPassword(body: ResetPasswordInput | undefined): Observable<ResetPasswordOutput> {
@@ -306,7 +306,7 @@ export class AccountServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     sendEmailActivationLink(body: SendEmailActivationLinkInput | undefined): Observable<void> {
@@ -358,7 +358,7 @@ export class AccountServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     activateEmail(body: ActivateEmailInput | undefined): Observable<void> {
@@ -410,7 +410,7 @@ export class AccountServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     changeEmail(body: ChangeEmailInput | undefined): Observable<void> {
@@ -462,7 +462,7 @@ export class AccountServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     impersonateUser(body: ImpersonateUserInput | undefined): Observable<ImpersonateOutput> {
@@ -518,7 +518,7 @@ export class AccountServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     impersonateTenant(body: ImpersonateTenantInput | undefined): Observable<ImpersonateOutput> {
@@ -574,7 +574,7 @@ export class AccountServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     delegatedImpersonate(body: DelegatedImpersonateInput | undefined): Observable<ImpersonateOutput> {
@@ -681,7 +681,7 @@ export class AccountServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     switchToLinkedAccount(body: SwitchToLinkedAccountInput | undefined): Observable<SwitchToLinkedAccountOutput> {
@@ -749,18 +749,18 @@ export class AuditLogServiceProxy {
     }
 
     /**
-     * @param startDate (optional)
-     * @param endDate (optional)
-     * @param userName (optional)
-     * @param serviceName (optional)
-     * @param methodName (optional)
-     * @param browserInfo (optional)
-     * @param hasException (optional)
-     * @param minExecutionDuration (optional)
-     * @param maxExecutionDuration (optional)
-     * @param sorting (optional)
-     * @param maxResultCount (optional)
-     * @param skipCount (optional)
+     * @param startDate (optional) 
+     * @param endDate (optional) 
+     * @param userName (optional) 
+     * @param serviceName (optional) 
+     * @param methodName (optional) 
+     * @param browserInfo (optional) 
+     * @param hasException (optional) 
+     * @param minExecutionDuration (optional) 
+     * @param maxExecutionDuration (optional) 
+     * @param sorting (optional) 
+     * @param maxResultCount (optional) 
+     * @param skipCount (optional) 
      * @return Success
      */
     getAuditLogs(startDate: DateTime | undefined, endDate: DateTime | undefined, userName: string | undefined, serviceName: string | undefined, methodName: string | undefined, browserInfo: string | undefined, hasException: boolean | undefined, minExecutionDuration: number | undefined, maxExecutionDuration: number | undefined, sorting: string | undefined, maxResultCount: number | undefined, skipCount: number | undefined): Observable<PagedResultDtoOfAuditLogListDto> {
@@ -860,18 +860,18 @@ export class AuditLogServiceProxy {
     }
 
     /**
-     * @param startDate (optional)
-     * @param endDate (optional)
-     * @param userName (optional)
-     * @param serviceName (optional)
-     * @param methodName (optional)
-     * @param browserInfo (optional)
-     * @param hasException (optional)
-     * @param minExecutionDuration (optional)
-     * @param maxExecutionDuration (optional)
-     * @param sorting (optional)
-     * @param maxResultCount (optional)
-     * @param skipCount (optional)
+     * @param startDate (optional) 
+     * @param endDate (optional) 
+     * @param userName (optional) 
+     * @param serviceName (optional) 
+     * @param methodName (optional) 
+     * @param browserInfo (optional) 
+     * @param hasException (optional) 
+     * @param minExecutionDuration (optional) 
+     * @param maxExecutionDuration (optional) 
+     * @param sorting (optional) 
+     * @param maxResultCount (optional) 
+     * @param skipCount (optional) 
      * @return Success
      */
     getAuditLogsToExcel(startDate: DateTime | undefined, endDate: DateTime | undefined, userName: string | undefined, serviceName: string | undefined, methodName: string | undefined, browserInfo: string | undefined, hasException: boolean | undefined, minExecutionDuration: number | undefined, maxExecutionDuration: number | undefined, sorting: string | undefined, maxResultCount: number | undefined, skipCount: number | undefined): Observable<FileDto> {
@@ -1029,13 +1029,13 @@ export class AuditLogServiceProxy {
     }
 
     /**
-     * @param startDate (optional)
-     * @param endDate (optional)
-     * @param userName (optional)
-     * @param entityTypeFullName (optional)
-     * @param sorting (optional)
-     * @param maxResultCount (optional)
-     * @param skipCount (optional)
+     * @param startDate (optional) 
+     * @param endDate (optional) 
+     * @param userName (optional) 
+     * @param entityTypeFullName (optional) 
+     * @param sorting (optional) 
+     * @param maxResultCount (optional) 
+     * @param skipCount (optional) 
      * @return Success
      */
     getEntityChanges(startDate: DateTime | undefined, endDate: DateTime | undefined, userName: string | undefined, entityTypeFullName: string | undefined, sorting: string | undefined, maxResultCount: number | undefined, skipCount: number | undefined): Observable<PagedResultDtoOfEntityChangeListDto> {
@@ -1115,11 +1115,11 @@ export class AuditLogServiceProxy {
     }
 
     /**
-     * @param entityTypeFullName (optional)
-     * @param entityId (optional)
-     * @param sorting (optional)
-     * @param maxResultCount (optional)
-     * @param skipCount (optional)
+     * @param entityTypeFullName (optional) 
+     * @param entityId (optional) 
+     * @param sorting (optional) 
+     * @param maxResultCount (optional) 
+     * @param skipCount (optional) 
      * @return Success
      */
     getEntityTypeChanges(entityTypeFullName: string | undefined, entityId: string | undefined, sorting: string | undefined, maxResultCount: number | undefined, skipCount: number | undefined): Observable<PagedResultDtoOfEntityChangeListDto> {
@@ -1191,13 +1191,13 @@ export class AuditLogServiceProxy {
     }
 
     /**
-     * @param startDate (optional)
-     * @param endDate (optional)
-     * @param userName (optional)
-     * @param entityTypeFullName (optional)
-     * @param sorting (optional)
-     * @param maxResultCount (optional)
-     * @param skipCount (optional)
+     * @param startDate (optional) 
+     * @param endDate (optional) 
+     * @param userName (optional) 
+     * @param entityTypeFullName (optional) 
+     * @param sorting (optional) 
+     * @param maxResultCount (optional) 
+     * @param skipCount (optional) 
      * @return Success
      */
     getEntityChangesToExcel(startDate: DateTime | undefined, endDate: DateTime | undefined, userName: string | undefined, entityTypeFullName: string | undefined, sorting: string | undefined, maxResultCount: number | undefined, skipCount: number | undefined): Observable<FileDto> {
@@ -1277,7 +1277,7 @@ export class AuditLogServiceProxy {
     }
 
     /**
-     * @param entityChangeId (optional)
+     * @param entityChangeId (optional) 
      * @return Success
      */
     getEntityPropertyChanges(entityChangeId: number | undefined): Observable<EntityPropertyChangeDto[]> {
@@ -1403,7 +1403,7 @@ export class CachingServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     clearCache(body: EntityDtoOfString | undefined): Observable<void> {
@@ -1542,7 +1542,7 @@ export class CachingServiceProxy {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
                 result200 = resultData200 !== undefined ? resultData200 : <any>null;
-
+    
             return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
@@ -1566,11 +1566,11 @@ export class CategoriesServiceProxy {
     }
 
     /**
-     * @param filter (optional)
-     * @param isActiveFilter (optional)
-     * @param sorting (optional)
-     * @param skipCount (optional)
-     * @param maxResultCount (optional)
+     * @param filter (optional) 
+     * @param isActiveFilter (optional) 
+     * @param sorting (optional) 
+     * @param skipCount (optional) 
+     * @param maxResultCount (optional) 
      * @return Success
      */
     getAll(filter: string | undefined, isActiveFilter: number | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfGetCategoryForViewDto> {
@@ -1642,7 +1642,7 @@ export class CategoriesServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     getCategoryForView(id: number | undefined): Observable<GetCategoryForViewDto> {
@@ -1698,7 +1698,7 @@ export class CategoriesServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     getCategoryForEdit(id: number | undefined): Observable<GetCategoryForEditOutput> {
@@ -1754,7 +1754,7 @@ export class CategoriesServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     createOrEdit(body: CreateOrEditCategoryDto | undefined): Observable<void> {
@@ -1806,7 +1806,7 @@ export class CategoriesServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     delete(id: number | undefined): Observable<void> {
@@ -1858,8 +1858,8 @@ export class CategoriesServiceProxy {
     }
 
     /**
-     * @param filter (optional)
-     * @param isActiveFilter (optional)
+     * @param filter (optional) 
+     * @param isActiveFilter (optional) 
      * @return Success
      */
     getCategoriesToExcel(filter: string | undefined, isActiveFilter: number | undefined): Observable<FileDto> {
@@ -1982,10 +1982,10 @@ export class ChatServiceProxy {
     }
 
     /**
-     * @param tenantId (optional)
-     * @param userId (optional)
-     * @param minMessageId (optional)
-     * @param maxResultCount (optional)
+     * @param tenantId (optional) 
+     * @param userId (optional) 
+     * @param minMessageId (optional) 
+     * @param maxResultCount (optional) 
      * @return Success
      */
     getUserChatMessages(tenantId: number | undefined, userId: number | undefined, minMessageId: number | undefined, maxResultCount: number | undefined): Observable<ListResultDtoOfChatMessageDto> {
@@ -2053,7 +2053,7 @@ export class ChatServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     markAllUnreadMessagesOfUserAsRead(body: MarkAllUnreadMessagesOfUserAsReadInput | undefined): Observable<void> {
@@ -2117,7 +2117,7 @@ export class CommonLookupServiceProxy {
     }
 
     /**
-     * @param onlyFreeItems (optional)
+     * @param onlyFreeItems (optional) 
      * @return Success
      */
     getEditionsForCombobox(onlyFreeItems: boolean | undefined): Observable<ListResultDtoOfSubscribableEditionComboboxItemDto> {
@@ -2173,7 +2173,7 @@ export class CommonLookupServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     findUsers(body: FindUsersInput | undefined): Observable<PagedResultDtoOfFindUsersOutputDto> {
@@ -2292,11 +2292,11 @@ export class ComplexitiesServiceProxy {
     }
 
     /**
-     * @param filter (optional)
-     * @param isActiveFilter (optional)
-     * @param sorting (optional)
-     * @param skipCount (optional)
-     * @param maxResultCount (optional)
+     * @param filter (optional) 
+     * @param isActiveFilter (optional) 
+     * @param sorting (optional) 
+     * @param skipCount (optional) 
+     * @param maxResultCount (optional) 
      * @return Success
      */
     getAll(filter: string | undefined, isActiveFilter: number | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfGetComplexityForViewDto> {
@@ -2368,7 +2368,7 @@ export class ComplexitiesServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     getComplexityForView(id: number | undefined): Observable<GetComplexityForViewDto> {
@@ -2424,7 +2424,7 @@ export class ComplexitiesServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     getComplexityForEdit(id: number | undefined): Observable<GetComplexityForEditOutput> {
@@ -2480,7 +2480,7 @@ export class ComplexitiesServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     createOrEdit(body: CreateOrEditComplexityDto | undefined): Observable<void> {
@@ -2532,7 +2532,7 @@ export class ComplexitiesServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     delete(id: number | undefined): Observable<void> {
@@ -2584,8 +2584,8 @@ export class ComplexitiesServiceProxy {
     }
 
     /**
-     * @param filter (optional)
-     * @param isActiveFilter (optional)
+     * @param filter (optional) 
+     * @param isActiveFilter (optional) 
      * @return Success
      */
     getComplexitiesToExcel(filter: string | undefined, isActiveFilter: number | undefined): Observable<FileDto> {
@@ -2657,8 +2657,8 @@ export class DashboardCustomizationServiceProxy {
     }
 
     /**
-     * @param dashboardName (optional)
-     * @param application (optional)
+     * @param dashboardName (optional) 
+     * @param application (optional) 
      * @return Success
      */
     getUserDashboard(dashboardName: string | undefined, application: string | undefined): Observable<Dashboard> {
@@ -2718,7 +2718,7 @@ export class DashboardCustomizationServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     savePage(body: SavePageInput | undefined): Observable<void> {
@@ -2770,7 +2770,7 @@ export class DashboardCustomizationServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     renamePage(body: RenamePageInput | undefined): Observable<void> {
@@ -2822,7 +2822,7 @@ export class DashboardCustomizationServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     addNewPage(body: AddNewPageInput | undefined): Observable<AddNewPageOutput> {
@@ -2878,9 +2878,9 @@ export class DashboardCustomizationServiceProxy {
     }
 
     /**
-     * @param id (optional)
-     * @param dashboardName (optional)
-     * @param application (optional)
+     * @param id (optional) 
+     * @param dashboardName (optional) 
+     * @param application (optional) 
      * @return Success
      */
     deletePage(id: string | undefined, dashboardName: string | undefined, application: string | undefined): Observable<void> {
@@ -2940,7 +2940,7 @@ export class DashboardCustomizationServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     addWidget(body: AddWidgetInput | undefined): Observable<Widget> {
@@ -2996,8 +2996,8 @@ export class DashboardCustomizationServiceProxy {
     }
 
     /**
-     * @param dashboardName (optional)
-     * @param application (optional)
+     * @param dashboardName (optional) 
+     * @param application (optional) 
      * @return Success
      */
     getDashboardDefinition(dashboardName: string | undefined, application: string | undefined): Observable<DashboardOutput> {
@@ -3057,8 +3057,8 @@ export class DashboardCustomizationServiceProxy {
     }
 
     /**
-     * @param dashboardName (optional)
-     * @param application (optional)
+     * @param dashboardName (optional) 
+     * @param application (optional) 
      * @return Success
      */
     getAllWidgetDefinitions(dashboardName: string | undefined, application: string | undefined): Observable<WidgetOutput[]> {
@@ -3125,9 +3125,9 @@ export class DashboardCustomizationServiceProxy {
     }
 
     /**
-     * @param dashboardName (optional)
-     * @param application (optional)
-     * @param pageId (optional)
+     * @param dashboardName (optional) 
+     * @param application (optional) 
+     * @param pageId (optional) 
      * @return Success
      */
     getAllAvailableWidgetDefinitionsForPage(dashboardName: string | undefined, application: string | undefined, pageId: string | undefined): Observable<WidgetOutput[]> {
@@ -3198,8 +3198,8 @@ export class DashboardCustomizationServiceProxy {
     }
 
     /**
-     * @param application (optional)
-     * @param dashboardName (optional)
+     * @param application (optional) 
+     * @param dashboardName (optional) 
      * @return Success
      */
     getSettingName(application: string | undefined, dashboardName: string | undefined): Observable<string> {
@@ -3248,7 +3248,7 @@ export class DashboardCustomizationServiceProxy {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
                 result200 = resultData200 !== undefined ? resultData200 : <any>null;
-
+    
             return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
@@ -3272,7 +3272,7 @@ export class DemoUiComponentsServiceProxy {
     }
 
     /**
-     * @param date (optional)
+     * @param date (optional) 
      * @return Success
      */
     sendAndGetDate(date: DateTime | undefined): Observable<DateFieldOutput> {
@@ -3328,7 +3328,7 @@ export class DemoUiComponentsServiceProxy {
     }
 
     /**
-     * @param date (optional)
+     * @param date (optional) 
      * @return Success
      */
     sendAndGetDateTime(date: DateTime | undefined): Observable<DateFieldOutput> {
@@ -3384,8 +3384,8 @@ export class DemoUiComponentsServiceProxy {
     }
 
     /**
-     * @param startDate (optional)
-     * @param endDate (optional)
+     * @param startDate (optional) 
+     * @param endDate (optional) 
      * @return Success
      */
     sendAndGetDateRange(startDate: DateTime | undefined, endDate: DateTime | undefined): Observable<DateRangeFieldOutput> {
@@ -3445,7 +3445,7 @@ export class DemoUiComponentsServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     sendAndGetDateWithText(body: SendAndGetDateWithTextInput | undefined): Observable<DateWithTextFieldOutput> {
@@ -3501,7 +3501,7 @@ export class DemoUiComponentsServiceProxy {
     }
 
     /**
-     * @param searchTerm (optional)
+     * @param searchTerm (optional) 
      * @return Success
      */
     getCountries(searchTerm: string | undefined): Observable<NameValueOfString[]> {
@@ -3564,7 +3564,7 @@ export class DemoUiComponentsServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     sendAndGetSelectedCountries(body: NameValueOfString[] | undefined): Observable<NameValueOfString[]> {
@@ -3627,7 +3627,7 @@ export class DemoUiComponentsServiceProxy {
     }
 
     /**
-     * @param input (optional)
+     * @param input (optional) 
      * @return Success
      */
     sendAndGetValue(input: string | undefined): Observable<StringOutput> {
@@ -3695,7 +3695,7 @@ export class DynamicEntityPropertyServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     get(id: number | undefined): Observable<DynamicEntityPropertyDto> {
@@ -3751,7 +3751,7 @@ export class DynamicEntityPropertyServiceProxy {
     }
 
     /**
-     * @param entityFullName (optional)
+     * @param entityFullName (optional) 
      * @return Success
      */
     getAllPropertiesOfAnEntity(entityFullName: string | undefined): Observable<ListResultDtoOfDynamicEntityPropertyDto> {
@@ -3858,7 +3858,7 @@ export class DynamicEntityPropertyServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     add(body: DynamicEntityPropertyDto | undefined): Observable<void> {
@@ -3910,7 +3910,7 @@ export class DynamicEntityPropertyServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     update(body: DynamicEntityPropertyDto | undefined): Observable<void> {
@@ -3962,7 +3962,7 @@ export class DynamicEntityPropertyServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     delete(id: number | undefined): Observable<void> {
@@ -4205,7 +4205,7 @@ export class DynamicEntityPropertyValueServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     get(id: number | undefined): Observable<DynamicEntityPropertyValueDto> {
@@ -4261,8 +4261,8 @@ export class DynamicEntityPropertyValueServiceProxy {
     }
 
     /**
-     * @param entityId (optional)
-     * @param propertyId (optional)
+     * @param entityId (optional) 
+     * @param propertyId (optional) 
      * @return Success
      */
     getAll(entityId: string | undefined, propertyId: number | undefined): Observable<ListResultDtoOfDynamicEntityPropertyValueDto> {
@@ -4322,7 +4322,7 @@ export class DynamicEntityPropertyValueServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     add(body: DynamicEntityPropertyValueDto | undefined): Observable<void> {
@@ -4374,7 +4374,7 @@ export class DynamicEntityPropertyValueServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     update(body: DynamicEntityPropertyValueDto | undefined): Observable<void> {
@@ -4426,7 +4426,7 @@ export class DynamicEntityPropertyValueServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     delete(id: number | undefined): Observable<void> {
@@ -4537,7 +4537,7 @@ export class DynamicEntityPropertyValueServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     insertOrUpdateAllValues(body: InsertOrUpdateAllValuesInput | undefined): Observable<void> {
@@ -4589,7 +4589,7 @@ export class DynamicEntityPropertyValueServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     cleanValues(body: CleanValuesInput | undefined): Observable<void> {
@@ -4653,7 +4653,7 @@ export class DynamicPropertyServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     get(id: number | undefined): Observable<DynamicPropertyDto> {
@@ -4760,7 +4760,7 @@ export class DynamicPropertyServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     add(body: DynamicPropertyDto | undefined): Observable<void> {
@@ -4812,7 +4812,7 @@ export class DynamicPropertyServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     update(body: DynamicPropertyDto | undefined): Observable<void> {
@@ -4864,7 +4864,7 @@ export class DynamicPropertyServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     delete(id: number | undefined): Observable<void> {
@@ -4916,7 +4916,7 @@ export class DynamicPropertyServiceProxy {
     }
 
     /**
-     * @param name (optional)
+     * @param name (optional) 
      * @return Success
      */
     findAllowedInputType(name: string | undefined): Observable<IInputType> {
@@ -4984,7 +4984,7 @@ export class DynamicPropertyValueServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     get(id: number | undefined): Observable<DynamicPropertyValueDto> {
@@ -5040,7 +5040,7 @@ export class DynamicPropertyValueServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     getAllValuesOfDynamicProperty(id: number | undefined): Observable<ListResultDtoOfDynamicPropertyValueDto> {
@@ -5096,7 +5096,7 @@ export class DynamicPropertyValueServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     add(body: DynamicPropertyValueDto | undefined): Observable<void> {
@@ -5148,7 +5148,7 @@ export class DynamicPropertyValueServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     update(body: DynamicPropertyValueDto | undefined): Observable<void> {
@@ -5200,7 +5200,7 @@ export class DynamicPropertyValueServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     delete(id: number | undefined): Observable<void> {
@@ -5315,7 +5315,7 @@ export class EditionServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     getEditionForEdit(id: number | undefined): Observable<GetEditionEditOutput> {
@@ -5371,7 +5371,7 @@ export class EditionServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     createEdition(body: CreateEditionDto | undefined): Observable<void> {
@@ -5423,7 +5423,7 @@ export class EditionServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     updateEdition(body: UpdateEditionDto | undefined): Observable<void> {
@@ -5475,7 +5475,7 @@ export class EditionServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     deleteEdition(id: number | undefined): Observable<void> {
@@ -5527,7 +5527,7 @@ export class EditionServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     moveTenantsToAnotherEdition(body: MoveTenantsToAnotherEditionDto | undefined): Observable<void> {
@@ -5579,9 +5579,9 @@ export class EditionServiceProxy {
     }
 
     /**
-     * @param selectedEditionId (optional)
-     * @param addAllItem (optional)
-     * @param onlyFreeItems (optional)
+     * @param selectedEditionId (optional) 
+     * @param addAllItem (optional) 
+     * @param onlyFreeItems (optional) 
      * @return Success
      */
     getEditionComboboxItems(selectedEditionId: number | undefined, addAllItem: boolean | undefined, onlyFreeItems: boolean | undefined): Observable<SubscribableEditionComboboxItemDto[]> {
@@ -5652,7 +5652,7 @@ export class EditionServiceProxy {
     }
 
     /**
-     * @param editionId (optional)
+     * @param editionId (optional) 
      * @return Success
      */
     getTenantCount(editionId: number | undefined): Observable<number> {
@@ -5697,7 +5697,7 @@ export class EditionServiceProxy {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
                 result200 = resultData200 !== undefined ? resultData200 : <any>null;
-
+    
             return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
@@ -5721,20 +5721,20 @@ export class ExamAnswersServiceProxy {
     }
 
     /**
-     * @param filter (optional)
-     * @param valueFilter (optional)
-     * @param maxScoreFilter (optional)
-     * @param minScoreFilter (optional)
-     * @param maxOriginalScoreFilter (optional)
-     * @param minOriginalScoreFilter (optional)
-     * @param fakeAnswerFilter (optional)
-     * @param questionQuestionHelperFilter (optional)
-     * @param questionOptionValueFilter (optional)
-     * @param questionQuestionHelper2Filter (optional)
-     * @param attemptNoteFilter (optional)
-     * @param sorting (optional)
-     * @param skipCount (optional)
-     * @param maxResultCount (optional)
+     * @param filter (optional) 
+     * @param valueFilter (optional) 
+     * @param maxScoreFilter (optional) 
+     * @param minScoreFilter (optional) 
+     * @param maxOriginalScoreFilter (optional) 
+     * @param minOriginalScoreFilter (optional) 
+     * @param fakeAnswerFilter (optional) 
+     * @param questionQuestionHelperFilter (optional) 
+     * @param questionOptionValueFilter (optional) 
+     * @param questionQuestionHelper2Filter (optional) 
+     * @param attemptNoteFilter (optional) 
+     * @param sorting (optional) 
+     * @param skipCount (optional) 
+     * @param maxResultCount (optional) 
      * @return Success
      */
     getAll(filter: string | undefined, valueFilter: string | undefined, maxScoreFilter: number | undefined, minScoreFilter: number | undefined, maxOriginalScoreFilter: number | undefined, minOriginalScoreFilter: number | undefined, fakeAnswerFilter: number | undefined, questionQuestionHelperFilter: string | undefined, questionOptionValueFilter: string | undefined, questionQuestionHelper2Filter: string | undefined, attemptNoteFilter: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfGetExamAnswerForViewDto> {
@@ -5842,10 +5842,10 @@ export class ExamAnswersServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
-    getExamAnswerForView(id: number | undefined): Observable<GetExamAnswerForViewDto> {
+    getExamAnswerForView(id: string | undefined): Observable<GetExamAnswerForViewDto> {
         let url_ = this.baseUrl + "/api/services/app/ExamAnswers/GetExamAnswerForView?";
         if (id === null)
             throw new Error("The parameter 'id' cannot be null.");
@@ -5898,10 +5898,10 @@ export class ExamAnswersServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
-    getExamAnswerForEdit(id: number | undefined): Observable<GetExamAnswerForEditOutput> {
+    getExamAnswerForEdit(id: string | undefined): Observable<GetExamAnswerForEditOutput> {
         let url_ = this.baseUrl + "/api/services/app/ExamAnswers/GetExamAnswerForEdit?";
         if (id === null)
             throw new Error("The parameter 'id' cannot be null.");
@@ -5954,7 +5954,7 @@ export class ExamAnswersServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     createOrEdit(body: CreateOrEditExamAnswerDto | undefined): Observable<void> {
@@ -6006,10 +6006,10 @@ export class ExamAnswersServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
-    delete(id: number | undefined): Observable<void> {
+    delete(id: string | undefined): Observable<void> {
         let url_ = this.baseUrl + "/api/services/app/ExamAnswers/Delete?";
         if (id === null)
             throw new Error("The parameter 'id' cannot be null.");
@@ -6058,17 +6058,17 @@ export class ExamAnswersServiceProxy {
     }
 
     /**
-     * @param filter (optional)
-     * @param valueFilter (optional)
-     * @param maxScoreFilter (optional)
-     * @param minScoreFilter (optional)
-     * @param maxOriginalScoreFilter (optional)
-     * @param minOriginalScoreFilter (optional)
-     * @param fakeAnswerFilter (optional)
-     * @param questionQuestionHelperFilter (optional)
-     * @param questionOptionValueFilter (optional)
-     * @param questionQuestionHelper2Filter (optional)
-     * @param attemptNoteFilter (optional)
+     * @param filter (optional) 
+     * @param valueFilter (optional) 
+     * @param maxScoreFilter (optional) 
+     * @param minScoreFilter (optional) 
+     * @param maxOriginalScoreFilter (optional) 
+     * @param minOriginalScoreFilter (optional) 
+     * @param fakeAnswerFilter (optional) 
+     * @param questionQuestionHelperFilter (optional) 
+     * @param questionOptionValueFilter (optional) 
+     * @param questionQuestionHelper2Filter (optional) 
+     * @param attemptNoteFilter (optional) 
      * @return Success
      */
     getExamAnswersToExcel(filter: string | undefined, valueFilter: string | undefined, maxScoreFilter: number | undefined, minScoreFilter: number | undefined, maxOriginalScoreFilter: number | undefined, minOriginalScoreFilter: number | undefined, fakeAnswerFilter: number | undefined, questionQuestionHelperFilter: string | undefined, questionOptionValueFilter: string | undefined, questionQuestionHelper2Filter: string | undefined, attemptNoteFilter: string | undefined): Observable<FileDto> {
@@ -6164,10 +6164,10 @@ export class ExamAnswersServiceProxy {
     }
 
     /**
-     * @param filter (optional)
-     * @param sorting (optional)
-     * @param skipCount (optional)
-     * @param maxResultCount (optional)
+     * @param filter (optional) 
+     * @param sorting (optional) 
+     * @param skipCount (optional) 
+     * @param maxResultCount (optional) 
      * @return Success
      */
     getAllQuestionForLookupTable(filter: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfExamAnswerQuestionLookupTableDto> {
@@ -6235,10 +6235,10 @@ export class ExamAnswersServiceProxy {
     }
 
     /**
-     * @param filter (optional)
-     * @param sorting (optional)
-     * @param skipCount (optional)
-     * @param maxResultCount (optional)
+     * @param filter (optional) 
+     * @param sorting (optional) 
+     * @param skipCount (optional) 
+     * @param maxResultCount (optional) 
      * @return Success
      */
     getAllQuestionOptionForLookupTable(filter: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfExamAnswerQuestionOptionLookupTableDto> {
@@ -6306,10 +6306,10 @@ export class ExamAnswersServiceProxy {
     }
 
     /**
-     * @param filter (optional)
-     * @param sorting (optional)
-     * @param skipCount (optional)
-     * @param maxResultCount (optional)
+     * @param filter (optional) 
+     * @param sorting (optional) 
+     * @param skipCount (optional) 
+     * @param maxResultCount (optional) 
      * @return Success
      */
     getAllAttemptForLookupTable(filter: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfExamAnswerAttemptLookupTableDto> {
@@ -6389,26 +6389,26 @@ export class ExamAttemptsServiceProxy {
     }
 
     /**
-     * @param filter (optional)
-     * @param maxTotalScoreFilter (optional)
-     * @param minTotalScoreFilter (optional)
-     * @param maxAttemptDateFilter (optional)
-     * @param minAttemptDateFilter (optional)
-     * @param maxAuditedDateFilter (optional)
-     * @param minAuditedDateFilter (optional)
-     * @param maxCorrectionDateFilter (optional)
-     * @param minCorrectionDateFilter (optional)
-     * @param isManualCorrectedFilter (optional)
-     * @param isSubQuestionManualCorrectedFilter (optional)
-     * @param noteFilter (optional)
-     * @param examTitleFilter (optional)
-     * @param sessionNameLFilter (optional)
-     * @param studentClassNameFilter (optional)
-     * @param userNameFilter (optional)
-     * @param userName2Filter (optional)
-     * @param sorting (optional)
-     * @param skipCount (optional)
-     * @param maxResultCount (optional)
+     * @param filter (optional) 
+     * @param maxTotalScoreFilter (optional) 
+     * @param minTotalScoreFilter (optional) 
+     * @param maxAttemptDateFilter (optional) 
+     * @param minAttemptDateFilter (optional) 
+     * @param maxAuditedDateFilter (optional) 
+     * @param minAuditedDateFilter (optional) 
+     * @param maxCorrectionDateFilter (optional) 
+     * @param minCorrectionDateFilter (optional) 
+     * @param isManualCorrectedFilter (optional) 
+     * @param isSubQuestionManualCorrectedFilter (optional) 
+     * @param noteFilter (optional) 
+     * @param examTitleFilter (optional) 
+     * @param sessionNameLFilter (optional) 
+     * @param studentClassNameFilter (optional) 
+     * @param userNameFilter (optional) 
+     * @param userName2Filter (optional) 
+     * @param sorting (optional) 
+     * @param skipCount (optional) 
+     * @param maxResultCount (optional) 
      * @return Success
      */
     getAll(filter: string | undefined, maxTotalScoreFilter: number | undefined, minTotalScoreFilter: number | undefined, maxAttemptDateFilter: DateTime | undefined, minAttemptDateFilter: DateTime | undefined, maxAuditedDateFilter: DateTime | undefined, minAuditedDateFilter: DateTime | undefined, maxCorrectionDateFilter: DateTime | undefined, minCorrectionDateFilter: DateTime | undefined, isManualCorrectedFilter: number | undefined, isSubQuestionManualCorrectedFilter: number | undefined, noteFilter: string | undefined, examTitleFilter: string | undefined, sessionNameLFilter: string | undefined, studentClassNameFilter: string | undefined, userNameFilter: string | undefined, userName2Filter: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfGetExamAttemptForViewDto> {
@@ -6540,7 +6540,7 @@ export class ExamAttemptsServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     getExamAttemptForView(id: string | undefined): Observable<GetExamAttemptForViewDto> {
@@ -6596,7 +6596,7 @@ export class ExamAttemptsServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     getExamAttemptForEdit(id: string | undefined): Observable<GetExamAttemptForEditOutput> {
@@ -6652,7 +6652,7 @@ export class ExamAttemptsServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     createOrEdit(body: CreateOrEditExamAttemptDto | undefined): Observable<void> {
@@ -6704,7 +6704,7 @@ export class ExamAttemptsServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     delete(id: string | undefined): Observable<void> {
@@ -6756,23 +6756,23 @@ export class ExamAttemptsServiceProxy {
     }
 
     /**
-     * @param filter (optional)
-     * @param maxTotalScoreFilter (optional)
-     * @param minTotalScoreFilter (optional)
-     * @param maxAttemptDateFilter (optional)
-     * @param minAttemptDateFilter (optional)
-     * @param maxAuditedDateFilter (optional)
-     * @param minAuditedDateFilter (optional)
-     * @param maxCorrectionDateFilter (optional)
-     * @param minCorrectionDateFilter (optional)
-     * @param isManualCorrectedFilter (optional)
-     * @param isSubQuestionManualCorrectedFilter (optional)
-     * @param noteFilter (optional)
-     * @param examTitleFilter (optional)
-     * @param sessionNameLFilter (optional)
-     * @param studentClassNameFilter (optional)
-     * @param userNameFilter (optional)
-     * @param userName2Filter (optional)
+     * @param filter (optional) 
+     * @param maxTotalScoreFilter (optional) 
+     * @param minTotalScoreFilter (optional) 
+     * @param maxAttemptDateFilter (optional) 
+     * @param minAttemptDateFilter (optional) 
+     * @param maxAuditedDateFilter (optional) 
+     * @param minAuditedDateFilter (optional) 
+     * @param maxCorrectionDateFilter (optional) 
+     * @param minCorrectionDateFilter (optional) 
+     * @param isManualCorrectedFilter (optional) 
+     * @param isSubQuestionManualCorrectedFilter (optional) 
+     * @param noteFilter (optional) 
+     * @param examTitleFilter (optional) 
+     * @param sessionNameLFilter (optional) 
+     * @param studentClassNameFilter (optional) 
+     * @param userNameFilter (optional) 
+     * @param userName2Filter (optional) 
      * @return Success
      */
     getExamAttemptsToExcel(filter: string | undefined, maxTotalScoreFilter: number | undefined, minTotalScoreFilter: number | undefined, maxAttemptDateFilter: DateTime | undefined, minAttemptDateFilter: DateTime | undefined, maxAuditedDateFilter: DateTime | undefined, minAuditedDateFilter: DateTime | undefined, maxCorrectionDateFilter: DateTime | undefined, minCorrectionDateFilter: DateTime | undefined, isManualCorrectedFilter: number | undefined, isSubQuestionManualCorrectedFilter: number | undefined, noteFilter: string | undefined, examTitleFilter: string | undefined, sessionNameLFilter: string | undefined, studentClassNameFilter: string | undefined, userNameFilter: string | undefined, userName2Filter: string | undefined): Observable<FileDto> {
@@ -6892,10 +6892,10 @@ export class ExamAttemptsServiceProxy {
     }
 
     /**
-     * @param filter (optional)
-     * @param sorting (optional)
-     * @param skipCount (optional)
-     * @param maxResultCount (optional)
+     * @param filter (optional) 
+     * @param sorting (optional) 
+     * @param skipCount (optional) 
+     * @param maxResultCount (optional) 
      * @return Success
      */
     getAllExamForLookupTable(filter: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfExamAttemptExamLookupTableDto> {
@@ -6963,10 +6963,10 @@ export class ExamAttemptsServiceProxy {
     }
 
     /**
-     * @param filter (optional)
-     * @param sorting (optional)
-     * @param skipCount (optional)
-     * @param maxResultCount (optional)
+     * @param filter (optional) 
+     * @param sorting (optional) 
+     * @param skipCount (optional) 
+     * @param maxResultCount (optional) 
      * @return Success
      */
     getAllSessionForLookupTable(filter: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfExamAttemptSessionLookupTableDto> {
@@ -7034,10 +7034,10 @@ export class ExamAttemptsServiceProxy {
     }
 
     /**
-     * @param filter (optional)
-     * @param sorting (optional)
-     * @param skipCount (optional)
-     * @param maxResultCount (optional)
+     * @param filter (optional) 
+     * @param sorting (optional) 
+     * @param skipCount (optional) 
+     * @param maxResultCount (optional) 
      * @return Success
      */
     getAllStudentForLookupTable(filter: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfExamAttemptStudentLookupTableDto> {
@@ -7105,10 +7105,10 @@ export class ExamAttemptsServiceProxy {
     }
 
     /**
-     * @param filter (optional)
-     * @param sorting (optional)
-     * @param skipCount (optional)
-     * @param maxResultCount (optional)
+     * @param filter (optional) 
+     * @param sorting (optional) 
+     * @param skipCount (optional) 
+     * @param maxResultCount (optional) 
      * @return Success
      */
     getAllUserForLookupTable(filter: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfExamAttemptUserLookupTableDto> {
@@ -7188,16 +7188,16 @@ export class ExamQuestionsServiceProxy {
     }
 
     /**
-     * @param filter (optional)
-     * @param isManualInsertionFilter (optional)
-     * @param maxOrderFilter (optional)
-     * @param minOrderFilter (optional)
-     * @param noteFilter (optional)
-     * @param questionQuestionHelperFilter (optional)
-     * @param examSectionNameLFilter (optional)
-     * @param sorting (optional)
-     * @param skipCount (optional)
-     * @param maxResultCount (optional)
+     * @param filter (optional) 
+     * @param isManualInsertionFilter (optional) 
+     * @param maxOrderFilter (optional) 
+     * @param minOrderFilter (optional) 
+     * @param noteFilter (optional) 
+     * @param questionQuestionHelperFilter (optional) 
+     * @param examSectionNameLFilter (optional) 
+     * @param sorting (optional) 
+     * @param skipCount (optional) 
+     * @param maxResultCount (optional) 
      * @return Success
      */
     getAll(filter: string | undefined, isManualInsertionFilter: number | undefined, maxOrderFilter: number | undefined, minOrderFilter: number | undefined, noteFilter: string | undefined, questionQuestionHelperFilter: string | undefined, examSectionNameLFilter: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfGetExamQuestionForViewDto> {
@@ -7289,7 +7289,7 @@ export class ExamQuestionsServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     getExamQuestionForView(id: number | undefined): Observable<GetExamQuestionForViewDto> {
@@ -7345,7 +7345,7 @@ export class ExamQuestionsServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     getExamQuestionForEdit(id: number | undefined): Observable<GetExamQuestionForEditOutput> {
@@ -7401,7 +7401,7 @@ export class ExamQuestionsServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     createOrEdit(body: CreateOrEditExamQuestionDto | undefined): Observable<void> {
@@ -7453,7 +7453,7 @@ export class ExamQuestionsServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     delete(id: number | undefined): Observable<void> {
@@ -7505,13 +7505,13 @@ export class ExamQuestionsServiceProxy {
     }
 
     /**
-     * @param filter (optional)
-     * @param isManualInsertionFilter (optional)
-     * @param maxOrderFilter (optional)
-     * @param minOrderFilter (optional)
-     * @param noteFilter (optional)
-     * @param questionQuestionHelperFilter (optional)
-     * @param examSectionNameLFilter (optional)
+     * @param filter (optional) 
+     * @param isManualInsertionFilter (optional) 
+     * @param maxOrderFilter (optional) 
+     * @param minOrderFilter (optional) 
+     * @param noteFilter (optional) 
+     * @param questionQuestionHelperFilter (optional) 
+     * @param examSectionNameLFilter (optional) 
      * @return Success
      */
     getExamQuestionsToExcel(filter: string | undefined, isManualInsertionFilter: number | undefined, maxOrderFilter: number | undefined, minOrderFilter: number | undefined, noteFilter: string | undefined, questionQuestionHelperFilter: string | undefined, examSectionNameLFilter: string | undefined): Observable<FileDto> {
@@ -7591,10 +7591,10 @@ export class ExamQuestionsServiceProxy {
     }
 
     /**
-     * @param filter (optional)
-     * @param sorting (optional)
-     * @param skipCount (optional)
-     * @param maxResultCount (optional)
+     * @param filter (optional) 
+     * @param sorting (optional) 
+     * @param skipCount (optional) 
+     * @param maxResultCount (optional) 
      * @return Success
      */
     getAllQuestionForLookupTable(filter: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfExamQuestionQuestionLookupTableDto> {
@@ -7662,10 +7662,10 @@ export class ExamQuestionsServiceProxy {
     }
 
     /**
-     * @param filter (optional)
-     * @param sorting (optional)
-     * @param skipCount (optional)
-     * @param maxResultCount (optional)
+     * @param filter (optional) 
+     * @param sorting (optional) 
+     * @param skipCount (optional) 
+     * @param maxResultCount (optional) 
      * @return Success
      */
     getAllExamSectionForLookupTable(filter: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfExamQuestionExamSectionLookupTableDto> {
@@ -7745,15 +7745,15 @@ export class ExamsServiceProxy {
     }
 
     /**
-     * @param filter (optional)
-     * @param examTemplateIdFilter (optional)
-     * @param isActiveFilter (optional)
-     * @param moreThanOneVertionFilter (optional)
-     * @param studyLevelIdFilter (optional)
-     * @param studySubjectIdFilter (optional)
-     * @param sorting (optional)
-     * @param skipCount (optional)
-     * @param maxResultCount (optional)
+     * @param filter (optional) 
+     * @param examTemplateIdFilter (optional) 
+     * @param isActiveFilter (optional) 
+     * @param moreThanOneVertionFilter (optional) 
+     * @param studyLevelIdFilter (optional) 
+     * @param studySubjectIdFilter (optional) 
+     * @param sorting (optional) 
+     * @param skipCount (optional) 
+     * @param maxResultCount (optional) 
      * @return Success
      */
     getAll(filter: string | undefined, examTemplateIdFilter: number | undefined, isActiveFilter: number | undefined, moreThanOneVertionFilter: number | undefined, studyLevelIdFilter: number | undefined, studySubjectIdFilter: number | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfGetExamForViewDto> {
@@ -7841,7 +7841,7 @@ export class ExamsServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     getApplyModel(id: number | undefined): Observable<ApplyExamDto> {
@@ -7897,7 +7897,7 @@ export class ExamsServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     getExamForView(id: number | undefined): Observable<GetExamForViewDto> {
@@ -7953,7 +7953,7 @@ export class ExamsServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     deleteExamQuestion(id: number | undefined): Observable<boolean> {
@@ -7998,7 +7998,7 @@ export class ExamsServiceProxy {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
                 result200 = resultData200 !== undefined ? resultData200 : <any>null;
-
+    
             return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
@@ -8010,7 +8010,7 @@ export class ExamsServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     deleteExamSection(id: number | undefined): Observable<boolean> {
@@ -8055,7 +8055,7 @@ export class ExamsServiceProxy {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
                 result200 = resultData200 !== undefined ? resultData200 : <any>null;
-
+    
             return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
@@ -8067,7 +8067,7 @@ export class ExamsServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     addExamQuestion(body: CreateExamQuestionDto | undefined): Observable<ExamQuestionDto> {
@@ -8123,7 +8123,7 @@ export class ExamsServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     reOrderQuestion(body: ReOrderExamQuestionDto | undefined): Observable<ExamQuestionDto> {
@@ -8179,10 +8179,10 @@ export class ExamsServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
-    viewNextQuestion(body: ViewExamQuestionDto | undefined): Observable<QuestionWithAnswerResDto> {
+    viewNextQuestion(body: ViewExamQuestionDto | undefined): Observable<QuestionWithAnswerDto> {
         let url_ = this.baseUrl + "/api/services/app/Exams/ViewNextQuestion";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -8205,14 +8205,14 @@ export class ExamsServiceProxy {
                 try {
                     return this.processViewNextQuestion(response_ as any);
                 } catch (e) {
-                    return _observableThrow(e) as any as Observable<QuestionWithAnswerResDto>;
+                    return _observableThrow(e) as any as Observable<QuestionWithAnswerDto>;
                 }
             } else
-                return _observableThrow(response_) as any as Observable<QuestionWithAnswerResDto>;
+                return _observableThrow(response_) as any as Observable<QuestionWithAnswerDto>;
         }));
     }
 
-    protected processViewNextQuestion(response: HttpResponseBase): Observable<QuestionWithAnswerResDto> {
+    protected processViewNextQuestion(response: HttpResponseBase): Observable<QuestionWithAnswerDto> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -8223,7 +8223,7 @@ export class ExamsServiceProxy {
             return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = QuestionWithAnswerResDto.fromJS(resultData200);
+            result200 = QuestionWithAnswerDto.fromJS(resultData200);
             return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
@@ -8235,10 +8235,10 @@ export class ExamsServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
-    viewPreviosQuestion(body: ViewExamQuestionDto | undefined): Observable<QuestionWithAnswerResDto> {
+    viewPreviosQuestion(body: ViewExamQuestionDto | undefined): Observable<QuestionWithAnswerDto> {
         let url_ = this.baseUrl + "/api/services/app/Exams/ViewPreviosQuestion";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -8261,14 +8261,14 @@ export class ExamsServiceProxy {
                 try {
                     return this.processViewPreviosQuestion(response_ as any);
                 } catch (e) {
-                    return _observableThrow(e) as any as Observable<QuestionWithAnswerResDto>;
+                    return _observableThrow(e) as any as Observable<QuestionWithAnswerDto>;
                 }
             } else
-                return _observableThrow(response_) as any as Observable<QuestionWithAnswerResDto>;
+                return _observableThrow(response_) as any as Observable<QuestionWithAnswerDto>;
         }));
     }
 
-    protected processViewPreviosQuestion(response: HttpResponseBase): Observable<QuestionWithAnswerResDto> {
+    protected processViewPreviosQuestion(response: HttpResponseBase): Observable<QuestionWithAnswerDto> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -8279,7 +8279,221 @@ export class ExamsServiceProxy {
             return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = QuestionWithAnswerResDto.fromJS(resultData200);
+            result200 = QuestionWithAnswerDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @return Success
+     */
+    moveNextSection(): Observable<QuestionWithAnswerDto> {
+        let url_ = this.baseUrl + "/api/services/app/Exams/MoveNextSection";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processMoveNextSection(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processMoveNextSection(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<QuestionWithAnswerDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<QuestionWithAnswerDto>;
+        }));
+    }
+
+    protected processMoveNextSection(response: HttpResponseBase): Observable<QuestionWithAnswerDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = QuestionWithAnswerDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param body (optional) 
+     * @return Success
+     */
+    nextQuestion(body: ExamQuestionWithAnswerDto | undefined): Observable<QuestionWithAnswerDto> {
+        let url_ = this.baseUrl + "/api/services/app/Exams/NextQuestion";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json",
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processNextQuestion(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processNextQuestion(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<QuestionWithAnswerDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<QuestionWithAnswerDto>;
+        }));
+    }
+
+    protected processNextQuestion(response: HttpResponseBase): Observable<QuestionWithAnswerDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = QuestionWithAnswerDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param body (optional) 
+     * @return Success
+     */
+    backQuestion(body: ExamQuestionWithAnswerDto | undefined): Observable<QuestionWithAnswerDto> {
+        let url_ = this.baseUrl + "/api/services/app/Exams/BackQuestion";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json",
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processBackQuestion(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processBackQuestion(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<QuestionWithAnswerDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<QuestionWithAnswerDto>;
+        }));
+    }
+
+    protected processBackQuestion(response: HttpResponseBase): Observable<QuestionWithAnswerDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = QuestionWithAnswerDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @return Success
+     */
+    movePreviousSection(): Observable<QuestionWithAnswerDto> {
+        let url_ = this.baseUrl + "/api/services/app/Exams/MovePreviousSection";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processMovePreviousSection(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processMovePreviousSection(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<QuestionWithAnswerDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<QuestionWithAnswerDto>;
+        }));
+    }
+
+    protected processMovePreviousSection(response: HttpResponseBase): Observable<QuestionWithAnswerDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = QuestionWithAnswerDto.fromJS(resultData200);
             return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
@@ -8303,19 +8517,19 @@ export class ExamSectionsServiceProxy {
     }
 
     /**
-     * @param filter (optional)
-     * @param maxDurationTimeFilter (optional)
-     * @param minDurationTimeFilter (optional)
-     * @param maxOrderFilter (optional)
-     * @param minOrderFilter (optional)
-     * @param instructionsFilter (optional)
-     * @param nameLFilter (optional)
-     * @param nameFFilter (optional)
-     * @param typeFilter (optional)
-     * @param examTitleFilter (optional)
-     * @param sorting (optional)
-     * @param skipCount (optional)
-     * @param maxResultCount (optional)
+     * @param filter (optional) 
+     * @param maxDurationTimeFilter (optional) 
+     * @param minDurationTimeFilter (optional) 
+     * @param maxOrderFilter (optional) 
+     * @param minOrderFilter (optional) 
+     * @param instructionsFilter (optional) 
+     * @param nameLFilter (optional) 
+     * @param nameFFilter (optional) 
+     * @param typeFilter (optional) 
+     * @param examTitleFilter (optional) 
+     * @param sorting (optional) 
+     * @param skipCount (optional) 
+     * @param maxResultCount (optional) 
      * @return Success
      */
     getAll(filter: string | undefined, maxDurationTimeFilter: DateTime | undefined, minDurationTimeFilter: DateTime | undefined, maxOrderFilter: number | undefined, minOrderFilter: number | undefined, instructionsFilter: string | undefined, nameLFilter: string | undefined, nameFFilter: string | undefined, typeFilter: number | undefined, examTitleFilter: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfGetExamSectionForViewDto> {
@@ -8419,7 +8633,7 @@ export class ExamSectionsServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     getExamSectionForView(id: number | undefined): Observable<GetExamSectionForViewDto> {
@@ -8475,7 +8689,7 @@ export class ExamSectionsServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     getExamSectionForEdit(id: number | undefined): Observable<GetExamSectionForEditOutput> {
@@ -8531,7 +8745,7 @@ export class ExamSectionsServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     createOrEdit(body: CreateOrEditExamSectionDto | undefined): Observable<void> {
@@ -8583,7 +8797,7 @@ export class ExamSectionsServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     delete(id: number | undefined): Observable<void> {
@@ -8635,16 +8849,16 @@ export class ExamSectionsServiceProxy {
     }
 
     /**
-     * @param filter (optional)
-     * @param maxDurationTimeFilter (optional)
-     * @param minDurationTimeFilter (optional)
-     * @param maxOrderFilter (optional)
-     * @param minOrderFilter (optional)
-     * @param instructionsFilter (optional)
-     * @param nameLFilter (optional)
-     * @param nameFFilter (optional)
-     * @param typeFilter (optional)
-     * @param examTitleFilter (optional)
+     * @param filter (optional) 
+     * @param maxDurationTimeFilter (optional) 
+     * @param minDurationTimeFilter (optional) 
+     * @param maxOrderFilter (optional) 
+     * @param minOrderFilter (optional) 
+     * @param instructionsFilter (optional) 
+     * @param nameLFilter (optional) 
+     * @param nameFFilter (optional) 
+     * @param typeFilter (optional) 
+     * @param examTitleFilter (optional) 
      * @return Success
      */
     getExamSectionsToExcel(filter: string | undefined, maxDurationTimeFilter: DateTime | undefined, minDurationTimeFilter: DateTime | undefined, maxOrderFilter: number | undefined, minOrderFilter: number | undefined, instructionsFilter: string | undefined, nameLFilter: string | undefined, nameFFilter: string | undefined, typeFilter: number | undefined, examTitleFilter: string | undefined): Observable<FileDto> {
@@ -8736,10 +8950,10 @@ export class ExamSectionsServiceProxy {
     }
 
     /**
-     * @param filter (optional)
-     * @param sorting (optional)
-     * @param skipCount (optional)
-     * @param maxResultCount (optional)
+     * @param filter (optional) 
+     * @param sorting (optional) 
+     * @param skipCount (optional) 
+     * @param maxResultCount (optional) 
      * @return Success
      */
     getAllExamForLookupTable(filter: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfExamSectionExamLookupTableDto> {
@@ -8819,7 +9033,7 @@ export class ExamTemplatesServiceProxy {
     }
 
     /**
-     * @param templateId (optional)
+     * @param templateId (optional) 
      * @return Success
      */
     checkIfTemplateIsAlreadyUsed(templateId: number | undefined): Observable<boolean> {
@@ -8864,7 +9078,7 @@ export class ExamTemplatesServiceProxy {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
                 result200 = resultData200 !== undefined ? resultData200 : <any>null;
-
+    
             return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
@@ -8876,14 +9090,14 @@ export class ExamTemplatesServiceProxy {
     }
 
     /**
-     * @param filter (optional)
-     * @param isActiveFilter (optional)
-     * @param moreThanOneVertionFilter (optional)
-     * @param studyLevelIdFilter (optional)
-     * @param studySubjectIdFilter (optional)
-     * @param sorting (optional)
-     * @param skipCount (optional)
-     * @param maxResultCount (optional)
+     * @param filter (optional) 
+     * @param isActiveFilter (optional) 
+     * @param moreThanOneVertionFilter (optional) 
+     * @param studyLevelIdFilter (optional) 
+     * @param studySubjectIdFilter (optional) 
+     * @param sorting (optional) 
+     * @param skipCount (optional) 
+     * @param maxResultCount (optional) 
      * @return Success
      */
     getAll(filter: string | undefined, isActiveFilter: number | undefined, moreThanOneVertionFilter: number | undefined, studyLevelIdFilter: number | undefined, studySubjectIdFilter: number | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfGetExamTemplateForViewDto> {
@@ -8967,7 +9181,7 @@ export class ExamTemplatesServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     getExamTemplateForEdit(id: number | undefined): Observable<GetExamTemplateForEditOutput> {
@@ -9023,7 +9237,7 @@ export class ExamTemplatesServiceProxy {
     }
 
     /**
-     * @param templateId (optional)
+     * @param templateId (optional) 
      * @return Success
      */
     generateExamByTemplate(templateId: number | undefined): Observable<void> {
@@ -9075,7 +9289,7 @@ export class ExamTemplatesServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     createOrEdit(body: CreateOrEditExamTemplateDto | undefined): Observable<number> {
@@ -9120,7 +9334,7 @@ export class ExamTemplatesServiceProxy {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
                 result200 = resultData200 !== undefined ? resultData200 : <any>null;
-
+    
             return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
@@ -9132,7 +9346,7 @@ export class ExamTemplatesServiceProxy {
     }
 
     /**
-     * @param examTemplateId (optional)
+     * @param examTemplateId (optional) 
      * @return Success
      */
     copyTemplate(examTemplateId: number | undefined): Observable<number> {
@@ -9177,7 +9391,7 @@ export class ExamTemplatesServiceProxy {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
                 result200 = resultData200 !== undefined ? resultData200 : <any>null;
-
+    
             return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
@@ -9189,7 +9403,7 @@ export class ExamTemplatesServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     delete(id: number | undefined): Observable<void> {
@@ -9253,7 +9467,7 @@ export class FriendshipServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     createFriendshipRequest(body: CreateFriendshipRequestInput | undefined): Observable<FriendDto> {
@@ -9309,7 +9523,7 @@ export class FriendshipServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     createFriendshipWithDifferentTenant(body: CreateFriendshipWithDifferentTenantInput | undefined): Observable<FriendDto> {
@@ -9365,7 +9579,7 @@ export class FriendshipServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     createFriendshipForCurrentTenant(body: CreateFriendshipForCurrentTenantInput | undefined): Observable<FriendDto> {
@@ -9421,7 +9635,7 @@ export class FriendshipServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     blockUser(body: BlockUserInput | undefined): Observable<void> {
@@ -9473,7 +9687,7 @@ export class FriendshipServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     unblockUser(body: UnblockUserInput | undefined): Observable<void> {
@@ -9525,7 +9739,7 @@ export class FriendshipServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     acceptFriendshipRequest(body: AcceptFriendshipRequestInput | undefined): Observable<void> {
@@ -9577,8 +9791,8 @@ export class FriendshipServiceProxy {
     }
 
     /**
-     * @param userId (optional)
-     * @param tenantId (optional)
+     * @param userId (optional) 
+     * @param tenantId (optional) 
      * @return Success
      */
     removeFriend(userId: number | undefined, tenantId: number | undefined): Observable<void> {
@@ -9646,8 +9860,8 @@ export class HostDashboardServiceProxy {
     }
 
     /**
-     * @param startDate (optional)
-     * @param endDate (optional)
+     * @param startDate (optional) 
+     * @param endDate (optional) 
      * @return Success
      */
     getTopStatsData(startDate: DateTime | undefined, endDate: DateTime | undefined): Observable<TopStatsData> {
@@ -9809,9 +10023,9 @@ export class HostDashboardServiceProxy {
     }
 
     /**
-     * @param incomeStatisticsDateInterval (optional)
-     * @param startDate (optional)
-     * @param endDate (optional)
+     * @param incomeStatisticsDateInterval (optional) 
+     * @param startDate (optional) 
+     * @param endDate (optional) 
      * @return Success
      */
     getIncomeStatistics(incomeStatisticsDateInterval: ChartDateInterval | undefined, startDate: DateTime | undefined, endDate: DateTime | undefined): Observable<GetIncomeStatisticsDataOutput> {
@@ -9875,8 +10089,8 @@ export class HostDashboardServiceProxy {
     }
 
     /**
-     * @param startDate (optional)
-     * @param endDate (optional)
+     * @param startDate (optional) 
+     * @param endDate (optional) 
      * @return Success
      */
     getEditionTenantStatistics(startDate: DateTime | undefined, endDate: DateTime | undefined): Observable<GetEditionTenantStatisticsOutput> {
@@ -9999,7 +10213,7 @@ export class HostSettingsServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     updateAllSettings(body: HostSettingsEditDto | undefined): Observable<void> {
@@ -10051,7 +10265,7 @@ export class HostSettingsServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     sendTestEmail(body: SendTestEmailInput | undefined): Observable<void> {
@@ -10166,7 +10380,7 @@ export class InstallServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     setup(body: InstallDto | undefined): Observable<void> {
@@ -10332,7 +10546,7 @@ export class InvoiceServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     getInvoiceInfo(id: number | undefined): Observable<InvoiceDto> {
@@ -10388,7 +10602,7 @@ export class InvoiceServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     createInvoice(body: CreateInvoiceDto | undefined): Observable<void> {
@@ -10503,7 +10717,7 @@ export class LanguageServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     getLanguageForEdit(id: number | undefined): Observable<GetLanguageForEditOutput> {
@@ -10559,7 +10773,7 @@ export class LanguageServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     createOrUpdateLanguage(body: CreateOrUpdateLanguageInput | undefined): Observable<void> {
@@ -10611,7 +10825,7 @@ export class LanguageServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     deleteLanguage(id: number | undefined): Observable<void> {
@@ -10663,7 +10877,7 @@ export class LanguageServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     setDefaultLanguage(body: SetDefaultLanguageInput | undefined): Observable<void> {
@@ -10715,12 +10929,12 @@ export class LanguageServiceProxy {
     }
 
     /**
-     * @param maxResultCount (optional)
-     * @param skipCount (optional)
-     * @param sorting (optional)
-     * @param baseLanguageName (optional)
-     * @param targetValueFilter (optional)
-     * @param filterText (optional)
+     * @param maxResultCount (optional) 
+     * @param skipCount (optional) 
+     * @param sorting (optional) 
+     * @param baseLanguageName (optional) 
+     * @param targetValueFilter (optional) 
+     * @param filterText (optional) 
      * @return Success
      */
     getLanguageTexts(maxResultCount: number | undefined, skipCount: number | undefined, sorting: string | undefined, sourceName: string, baseLanguageName: string | undefined, targetLanguageName: string, targetValueFilter: string | undefined, filterText: string | undefined): Observable<PagedResultDtoOfLanguageTextListDto> {
@@ -10804,7 +11018,7 @@ export class LanguageServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     updateLanguageText(body: UpdateLanguageTextInput | undefined): Observable<void> {
@@ -10868,11 +11082,11 @@ export class NotificationServiceProxy {
     }
 
     /**
-     * @param state (optional)
-     * @param startDate (optional)
-     * @param endDate (optional)
-     * @param maxResultCount (optional)
-     * @param skipCount (optional)
+     * @param state (optional) 
+     * @param startDate (optional) 
+     * @param endDate (optional) 
+     * @param maxResultCount (optional) 
+     * @param skipCount (optional) 
      * @return Success
      */
     getUserNotifications(state: UserNotificationState | undefined, startDate: DateTime | undefined, endDate: DateTime | undefined, maxResultCount: number | undefined, skipCount: number | undefined): Observable<GetNotificationsOutput> {
@@ -10984,7 +11198,7 @@ export class NotificationServiceProxy {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
                 result200 = resultData200 !== undefined ? resultData200 : <any>null;
-
+    
             return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
@@ -11094,7 +11308,7 @@ export class NotificationServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     setNotificationAsRead(body: EntityDtoOfGuid | undefined): Observable<SetNotificationAsReadOutput> {
@@ -11201,7 +11415,7 @@ export class NotificationServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     updateNotificationSettings(body: UpdateNotificationSettingsInput | undefined): Observable<void> {
@@ -11253,7 +11467,7 @@ export class NotificationServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     deleteNotification(id: string | undefined): Observable<void> {
@@ -11305,9 +11519,9 @@ export class NotificationServiceProxy {
     }
 
     /**
-     * @param state (optional)
-     * @param startDate (optional)
-     * @param endDate (optional)
+     * @param state (optional) 
+     * @param startDate (optional) 
+     * @param endDate (optional) 
      * @return Success
      */
     deleteAllUserNotifications(state: UserNotificationState | undefined, startDate: DateTime | undefined, endDate: DateTime | undefined): Observable<void> {
@@ -11367,10 +11581,10 @@ export class NotificationServiceProxy {
     }
 
     /**
-     * @param filter (optional)
-     * @param sorting (optional)
-     * @param skipCount (optional)
-     * @param maxResultCount (optional)
+     * @param filter (optional) 
+     * @param sorting (optional) 
+     * @param skipCount (optional) 
+     * @param maxResultCount (optional) 
      * @return Success
      */
     getAllUserForLookupTable(filter: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfMassNotificationUserLookupTableDto> {
@@ -11438,10 +11652,10 @@ export class NotificationServiceProxy {
     }
 
     /**
-     * @param filter (optional)
-     * @param sorting (optional)
-     * @param skipCount (optional)
-     * @param maxResultCount (optional)
+     * @param filter (optional) 
+     * @param sorting (optional) 
+     * @param skipCount (optional) 
+     * @param maxResultCount (optional) 
      * @return Success
      */
     getAllOrganizationUnitForLookupTable(filter: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfMassNotificationOrganizationUnitLookupTableDto> {
@@ -11509,7 +11723,7 @@ export class NotificationServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     createMassNotification(body: CreateMassNotificationInput | undefined): Observable<void> {
@@ -11666,8 +11880,8 @@ export class NotificationServiceProxy {
     }
 
     /**
-     * @param startDate (optional)
-     * @param endDate (optional)
+     * @param startDate (optional) 
+     * @param endDate (optional) 
      * @return Success
      */
     getNotificationsPublishedByUser(startDate: DateTime | undefined, endDate: DateTime | undefined): Observable<GetPublishedNotificationsOutput> {
@@ -11790,10 +12004,10 @@ export class OrganizationUnitServiceProxy {
     }
 
     /**
-     * @param id (optional)
-     * @param sorting (optional)
-     * @param maxResultCount (optional)
-     * @param skipCount (optional)
+     * @param id (optional) 
+     * @param sorting (optional) 
+     * @param maxResultCount (optional) 
+     * @param skipCount (optional) 
      * @return Success
      */
     getOrganizationUnitUsers(id: number | undefined, sorting: string | undefined, maxResultCount: number | undefined, skipCount: number | undefined): Observable<PagedResultDtoOfOrganizationUnitUserListDto> {
@@ -11861,10 +12075,10 @@ export class OrganizationUnitServiceProxy {
     }
 
     /**
-     * @param id (optional)
-     * @param sorting (optional)
-     * @param maxResultCount (optional)
-     * @param skipCount (optional)
+     * @param id (optional) 
+     * @param sorting (optional) 
+     * @param maxResultCount (optional) 
+     * @param skipCount (optional) 
      * @return Success
      */
     getOrganizationUnitRoles(id: number | undefined, sorting: string | undefined, maxResultCount: number | undefined, skipCount: number | undefined): Observable<PagedResultDtoOfOrganizationUnitRoleListDto> {
@@ -11932,7 +12146,7 @@ export class OrganizationUnitServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     createOrganizationUnit(body: CreateOrganizationUnitInput | undefined): Observable<OrganizationUnitDto> {
@@ -11988,7 +12202,7 @@ export class OrganizationUnitServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     updateOrganizationUnit(body: UpdateOrganizationUnitInput | undefined): Observable<OrganizationUnitDto> {
@@ -12044,7 +12258,7 @@ export class OrganizationUnitServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     moveOrganizationUnit(body: MoveOrganizationUnitInput | undefined): Observable<OrganizationUnitDto> {
@@ -12100,7 +12314,7 @@ export class OrganizationUnitServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     deleteOrganizationUnit(id: number | undefined): Observable<void> {
@@ -12152,8 +12366,8 @@ export class OrganizationUnitServiceProxy {
     }
 
     /**
-     * @param userId (optional)
-     * @param organizationUnitId (optional)
+     * @param userId (optional) 
+     * @param organizationUnitId (optional) 
      * @return Success
      */
     removeUserFromOrganizationUnit(userId: number | undefined, organizationUnitId: number | undefined): Observable<void> {
@@ -12209,8 +12423,8 @@ export class OrganizationUnitServiceProxy {
     }
 
     /**
-     * @param roleId (optional)
-     * @param organizationUnitId (optional)
+     * @param roleId (optional) 
+     * @param organizationUnitId (optional) 
      * @return Success
      */
     removeRoleFromOrganizationUnit(roleId: number | undefined, organizationUnitId: number | undefined): Observable<void> {
@@ -12266,7 +12480,7 @@ export class OrganizationUnitServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     addUsersToOrganizationUnit(body: UsersToOrganizationUnitInput | undefined): Observable<void> {
@@ -12318,7 +12532,7 @@ export class OrganizationUnitServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     addRolesToOrganizationUnit(body: RolesToOrganizationUnitInput | undefined): Observable<void> {
@@ -12370,7 +12584,7 @@ export class OrganizationUnitServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     findUsers(body: FindOrganizationUnitUsersInput | undefined): Observable<PagedResultDtoOfFindOrganizationUnitUsersOutputDto> {
@@ -12426,7 +12640,7 @@ export class OrganizationUnitServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     findRoles(body: FindOrganizationUnitRolesInput | undefined): Observable<PagedResultDtoOfNameValueDto> {
@@ -12552,7 +12766,7 @@ export class PaymentServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     createPayment(body: CreatePaymentDto | undefined): Observable<number> {
@@ -12597,7 +12811,7 @@ export class PaymentServiceProxy {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
                 result200 = resultData200 !== undefined ? resultData200 : <any>null;
-
+    
             return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
@@ -12609,7 +12823,7 @@ export class PaymentServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     cancelPayment(body: CancelPaymentDto | undefined): Observable<void> {
@@ -12661,7 +12875,7 @@ export class PaymentServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     updatePayment(body: UpdatePaymentDto | undefined): Observable<void> {
@@ -12713,9 +12927,9 @@ export class PaymentServiceProxy {
     }
 
     /**
-     * @param sorting (optional)
-     * @param maxResultCount (optional)
-     * @param skipCount (optional)
+     * @param sorting (optional) 
+     * @param maxResultCount (optional) 
+     * @param skipCount (optional) 
      * @return Success
      */
     getPaymentHistory(sorting: string | undefined, maxResultCount: number | undefined, skipCount: number | undefined): Observable<PagedResultDtoOfSubscriptionPaymentListDto> {
@@ -12779,7 +12993,7 @@ export class PaymentServiceProxy {
     }
 
     /**
-     * @param recurringPaymentsEnabled (optional)
+     * @param recurringPaymentsEnabled (optional) 
      * @return Success
      */
     getActiveGateways(recurringPaymentsEnabled: boolean | undefined): Observable<PaymentGatewayModel[]> {
@@ -12842,7 +13056,7 @@ export class PaymentServiceProxy {
     }
 
     /**
-     * @param paymentId (optional)
+     * @param paymentId (optional) 
      * @return Success
      */
     getPayment(paymentId: number | undefined): Observable<SubscriptionPaymentDto> {
@@ -12949,7 +13163,7 @@ export class PaymentServiceProxy {
     }
 
     /**
-     * @param paymentId (optional)
+     * @param paymentId (optional) 
      * @return Success
      */
     paymentFailed(paymentId: number | undefined): Observable<void> {
@@ -13041,7 +13255,7 @@ export class PaymentServiceProxy {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
                 result200 = resultData200 !== undefined ? resultData200 : <any>null;
-
+    
             return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
@@ -13065,8 +13279,8 @@ export class PayPalPaymentServiceProxy {
     }
 
     /**
-     * @param paymentId (optional)
-     * @param paypalOrderId (optional)
+     * @param paymentId (optional) 
+     * @param paypalOrderId (optional) 
      * @return Success
      */
     confirmPayment(paymentId: number | undefined, paypalOrderId: string | undefined): Observable<void> {
@@ -13299,7 +13513,7 @@ export class ProfileServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     disableGoogleAuthenticator(body: VerifyAuthenticatorCodeInput | undefined): Observable<void> {
@@ -13351,7 +13565,7 @@ export class ProfileServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     viewRecoveryCodes(body: VerifyAuthenticatorCodeInput | undefined): Observable<UpdateGoogleAuthenticatorKeyOutput> {
@@ -13458,7 +13672,7 @@ export class ProfileServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     updateGoogleAuthenticatorKey(body: UpdateGoogleAuthenticatorKeyInput | undefined): Observable<UpdateGoogleAuthenticatorKeyOutput> {
@@ -13514,7 +13728,7 @@ export class ProfileServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     sendVerificationSms(body: SendVerificationSmsInputDto | undefined): Observable<void> {
@@ -13566,7 +13780,7 @@ export class ProfileServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     verifySmsCode(body: VerifySmsCodeInputDto | undefined): Observable<void> {
@@ -13665,7 +13879,7 @@ export class ProfileServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     updateCurrentUserProfile(body: CurrentUserProfileEditDto | undefined): Observable<void> {
@@ -13717,7 +13931,7 @@ export class ProfileServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     changePassword(body: ChangePasswordInput | undefined): Observable<void> {
@@ -13769,7 +13983,7 @@ export class ProfileServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     updateProfilePicture(body: UpdateProfilePictureInput | undefined): Observable<void> {
@@ -13821,7 +14035,7 @@ export class ProfileServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     verifyAuthenticatorCode(body: VerifyAuthenticatorCodeInput | undefined): Observable<boolean> {
@@ -13866,7 +14080,7 @@ export class ProfileServiceProxy {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
                 result200 = resultData200 !== undefined ? resultData200 : <any>null;
-
+    
             return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
@@ -13980,7 +14194,7 @@ export class ProfileServiceProxy {
     }
 
     /**
-     * @param username (optional)
+     * @param username (optional) 
      * @return Success
      */
     getProfilePictureByUserName(username: string | undefined): Observable<GetProfilePictureOutput> {
@@ -14036,8 +14250,8 @@ export class ProfileServiceProxy {
     }
 
     /**
-     * @param userId (optional)
-     * @param tenantId (optional)
+     * @param userId (optional) 
+     * @param tenantId (optional) 
      * @return Success
      */
     getFriendProfilePicture(userId: number | undefined, tenantId: number | undefined): Observable<GetProfilePictureOutput> {
@@ -14097,7 +14311,7 @@ export class ProfileServiceProxy {
     }
 
     /**
-     * @param userId (optional)
+     * @param userId (optional) 
      * @return Success
      */
     getProfilePictureByUser(userId: number | undefined): Observable<GetProfilePictureOutput> {
@@ -14153,7 +14367,7 @@ export class ProfileServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     changeLanguage(body: ChangeUserLanguageDto | undefined): Observable<void> {
@@ -14217,13 +14431,13 @@ export class QuestionCategoriesServiceProxy {
     }
 
     /**
-     * @param filter (optional)
-     * @param noteFilter (optional)
-     * @param categoryNameFilter (optional)
-     * @param questionQuestionHelperFilter (optional)
-     * @param sorting (optional)
-     * @param skipCount (optional)
-     * @param maxResultCount (optional)
+     * @param filter (optional) 
+     * @param noteFilter (optional) 
+     * @param categoryNameFilter (optional) 
+     * @param questionQuestionHelperFilter (optional) 
+     * @param sorting (optional) 
+     * @param skipCount (optional) 
+     * @param maxResultCount (optional) 
      * @return Success
      */
     getAll(filter: string | undefined, noteFilter: string | undefined, categoryNameFilter: string | undefined, questionQuestionHelperFilter: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfGetQuestionCategoryForViewDto> {
@@ -14303,7 +14517,7 @@ export class QuestionCategoriesServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     getQuestionCategoryForView(id: number | undefined): Observable<GetQuestionCategoryForViewDto> {
@@ -14359,7 +14573,7 @@ export class QuestionCategoriesServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     getQuestionCategoryForEdit(id: number | undefined): Observable<GetQuestionCategoryForEditOutput> {
@@ -14415,7 +14629,7 @@ export class QuestionCategoriesServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     createOrEdit(body: CreateOrEditQuestionCategoryDto | undefined): Observable<void> {
@@ -14467,7 +14681,7 @@ export class QuestionCategoriesServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     delete(id: number | undefined): Observable<void> {
@@ -14519,10 +14733,10 @@ export class QuestionCategoriesServiceProxy {
     }
 
     /**
-     * @param filter (optional)
-     * @param noteFilter (optional)
-     * @param categoryNameFilter (optional)
-     * @param questionQuestionHelperFilter (optional)
+     * @param filter (optional) 
+     * @param noteFilter (optional) 
+     * @param categoryNameFilter (optional) 
+     * @param questionQuestionHelperFilter (optional) 
      * @return Success
      */
     getQuestionCategoriesToExcel(filter: string | undefined, noteFilter: string | undefined, categoryNameFilter: string | undefined, questionQuestionHelperFilter: string | undefined): Observable<FileDto> {
@@ -14590,10 +14804,10 @@ export class QuestionCategoriesServiceProxy {
     }
 
     /**
-     * @param filter (optional)
-     * @param sorting (optional)
-     * @param skipCount (optional)
-     * @param maxResultCount (optional)
+     * @param filter (optional) 
+     * @param sorting (optional) 
+     * @param skipCount (optional) 
+     * @param maxResultCount (optional) 
      * @return Success
      */
     getAllCategoryForLookupTable(filter: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfQuestionCategoryCategoryLookupTableDto> {
@@ -14661,10 +14875,10 @@ export class QuestionCategoriesServiceProxy {
     }
 
     /**
-     * @param filter (optional)
-     * @param sorting (optional)
-     * @param skipCount (optional)
-     * @param maxResultCount (optional)
+     * @param filter (optional) 
+     * @param sorting (optional) 
+     * @param skipCount (optional) 
+     * @param maxResultCount (optional) 
      * @return Success
      */
     getAllQuestionForLookupTable(filter: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfQuestionCategoryQuestionLookupTableDto> {
@@ -14744,13 +14958,13 @@ export class QuestionComplexitiesServiceProxy {
     }
 
     /**
-     * @param filter (optional)
-     * @param noteFilter (optional)
-     * @param complexityNameFilter (optional)
-     * @param questionQuestionHelperFilter (optional)
-     * @param sorting (optional)
-     * @param skipCount (optional)
-     * @param maxResultCount (optional)
+     * @param filter (optional) 
+     * @param noteFilter (optional) 
+     * @param complexityNameFilter (optional) 
+     * @param questionQuestionHelperFilter (optional) 
+     * @param sorting (optional) 
+     * @param skipCount (optional) 
+     * @param maxResultCount (optional) 
      * @return Success
      */
     getAll(filter: string | undefined, noteFilter: string | undefined, complexityNameFilter: string | undefined, questionQuestionHelperFilter: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfGetQuestionComplexitiyForViewDto> {
@@ -14830,7 +15044,7 @@ export class QuestionComplexitiesServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     getQuestionComplexitiyForView(id: number | undefined): Observable<GetQuestionComplexitiyForViewDto> {
@@ -14886,7 +15100,7 @@ export class QuestionComplexitiesServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     getQuestionComplexitiyForEdit(id: number | undefined): Observable<GetQuestionComplexitiyForEditOutput> {
@@ -14942,7 +15156,7 @@ export class QuestionComplexitiesServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     createOrEdit(body: CreateOrEditQuestionComplexitiyDto | undefined): Observable<void> {
@@ -14994,7 +15208,7 @@ export class QuestionComplexitiesServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     delete(id: number | undefined): Observable<void> {
@@ -15046,10 +15260,10 @@ export class QuestionComplexitiesServiceProxy {
     }
 
     /**
-     * @param filter (optional)
-     * @param noteFilter (optional)
-     * @param complexityNameFilter (optional)
-     * @param questionQuestionHelperFilter (optional)
+     * @param filter (optional) 
+     * @param noteFilter (optional) 
+     * @param complexityNameFilter (optional) 
+     * @param questionQuestionHelperFilter (optional) 
      * @return Success
      */
     getQuestionComplexitiesToExcel(filter: string | undefined, noteFilter: string | undefined, complexityNameFilter: string | undefined, questionQuestionHelperFilter: string | undefined): Observable<FileDto> {
@@ -15117,10 +15331,10 @@ export class QuestionComplexitiesServiceProxy {
     }
 
     /**
-     * @param filter (optional)
-     * @param sorting (optional)
-     * @param skipCount (optional)
-     * @param maxResultCount (optional)
+     * @param filter (optional) 
+     * @param sorting (optional) 
+     * @param skipCount (optional) 
+     * @param maxResultCount (optional) 
      * @return Success
      */
     getAllComplexityForLookupTable(filter: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfQuestionComplexitiyComplexityLookupTableDto> {
@@ -15188,10 +15402,10 @@ export class QuestionComplexitiesServiceProxy {
     }
 
     /**
-     * @param filter (optional)
-     * @param sorting (optional)
-     * @param skipCount (optional)
-     * @param maxResultCount (optional)
+     * @param filter (optional) 
+     * @param sorting (optional) 
+     * @param skipCount (optional) 
+     * @param maxResultCount (optional) 
      * @return Success
      */
     getAllQuestionForLookupTable(filter: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfQuestionComplexitiyQuestionLookupTableDto> {
@@ -15271,13 +15485,13 @@ export class QuestionGroupItemsServiceProxy {
     }
 
     /**
-     * @param filter (optional)
-     * @param noteFilter (optional)
-     * @param questionQuestionHelperFilter (optional)
-     * @param supportGroupItemValueFilter (optional)
-     * @param sorting (optional)
-     * @param skipCount (optional)
-     * @param maxResultCount (optional)
+     * @param filter (optional) 
+     * @param noteFilter (optional) 
+     * @param questionQuestionHelperFilter (optional) 
+     * @param supportGroupItemValueFilter (optional) 
+     * @param sorting (optional) 
+     * @param skipCount (optional) 
+     * @param maxResultCount (optional) 
      * @return Success
      */
     getAll(filter: string | undefined, noteFilter: string | undefined, questionQuestionHelperFilter: string | undefined, supportGroupItemValueFilter: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfGetQuestionGroupItemForViewDto> {
@@ -15357,7 +15571,7 @@ export class QuestionGroupItemsServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     getQuestionGroupItemForView(id: number | undefined): Observable<GetQuestionGroupItemForViewDto> {
@@ -15413,7 +15627,7 @@ export class QuestionGroupItemsServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     getQuestionGroupItemForEdit(id: number | undefined): Observable<GetQuestionGroupItemForEditOutput> {
@@ -15469,7 +15683,7 @@ export class QuestionGroupItemsServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     createOrEdit(body: CreateOrEditQuestionGroupItemDto | undefined): Observable<void> {
@@ -15521,7 +15735,7 @@ export class QuestionGroupItemsServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     delete(id: number | undefined): Observable<void> {
@@ -15573,10 +15787,10 @@ export class QuestionGroupItemsServiceProxy {
     }
 
     /**
-     * @param filter (optional)
-     * @param noteFilter (optional)
-     * @param questionQuestionHelperFilter (optional)
-     * @param supportGroupItemValueFilter (optional)
+     * @param filter (optional) 
+     * @param noteFilter (optional) 
+     * @param questionQuestionHelperFilter (optional) 
+     * @param supportGroupItemValueFilter (optional) 
      * @return Success
      */
     getQuestionGroupItemsToExcel(filter: string | undefined, noteFilter: string | undefined, questionQuestionHelperFilter: string | undefined, supportGroupItemValueFilter: string | undefined): Observable<FileDto> {
@@ -15644,10 +15858,10 @@ export class QuestionGroupItemsServiceProxy {
     }
 
     /**
-     * @param filter (optional)
-     * @param sorting (optional)
-     * @param skipCount (optional)
-     * @param maxResultCount (optional)
+     * @param filter (optional) 
+     * @param sorting (optional) 
+     * @param skipCount (optional) 
+     * @param maxResultCount (optional) 
      * @return Success
      */
     getAllQuestionForLookupTable(filter: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfQuestionGroupItemQuestionLookupTableDto> {
@@ -15715,10 +15929,10 @@ export class QuestionGroupItemsServiceProxy {
     }
 
     /**
-     * @param filter (optional)
-     * @param sorting (optional)
-     * @param skipCount (optional)
-     * @param maxResultCount (optional)
+     * @param filter (optional) 
+     * @param sorting (optional) 
+     * @param skipCount (optional) 
+     * @param maxResultCount (optional) 
      * @return Success
      */
     getAllSupportGroupItemForLookupTable(filter: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfQuestionGroupItemSupportGroupItemLookupTableDto> {
@@ -15798,13 +16012,13 @@ export class QuestionLevelsServiceProxy {
     }
 
     /**
-     * @param filter (optional)
-     * @param noteFilter (optional)
-     * @param studyLevelNameFilter (optional)
-     * @param questionQuestionHelperFilter (optional)
-     * @param sorting (optional)
-     * @param skipCount (optional)
-     * @param maxResultCount (optional)
+     * @param filter (optional) 
+     * @param noteFilter (optional) 
+     * @param studyLevelNameFilter (optional) 
+     * @param questionQuestionHelperFilter (optional) 
+     * @param sorting (optional) 
+     * @param skipCount (optional) 
+     * @param maxResultCount (optional) 
      * @return Success
      */
     getAll(filter: string | undefined, noteFilter: string | undefined, studyLevelNameFilter: string | undefined, questionQuestionHelperFilter: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfGetQuestionLevelForViewDto> {
@@ -15884,7 +16098,7 @@ export class QuestionLevelsServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     getQuestionLevelForView(id: number | undefined): Observable<GetQuestionLevelForViewDto> {
@@ -15940,7 +16154,7 @@ export class QuestionLevelsServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     getQuestionLevelForEdit(id: number | undefined): Observable<GetQuestionLevelForEditOutput> {
@@ -15996,7 +16210,7 @@ export class QuestionLevelsServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     createOrEdit(body: CreateOrEditQuestionLevelDto | undefined): Observable<void> {
@@ -16048,7 +16262,7 @@ export class QuestionLevelsServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     delete(id: number | undefined): Observable<void> {
@@ -16100,10 +16314,10 @@ export class QuestionLevelsServiceProxy {
     }
 
     /**
-     * @param filter (optional)
-     * @param noteFilter (optional)
-     * @param studyLevelNameFilter (optional)
-     * @param questionQuestionHelperFilter (optional)
+     * @param filter (optional) 
+     * @param noteFilter (optional) 
+     * @param studyLevelNameFilter (optional) 
+     * @param questionQuestionHelperFilter (optional) 
      * @return Success
      */
     getQuestionLevelsToExcel(filter: string | undefined, noteFilter: string | undefined, studyLevelNameFilter: string | undefined, questionQuestionHelperFilter: string | undefined): Observable<FileDto> {
@@ -16171,10 +16385,10 @@ export class QuestionLevelsServiceProxy {
     }
 
     /**
-     * @param filter (optional)
-     * @param sorting (optional)
-     * @param skipCount (optional)
-     * @param maxResultCount (optional)
+     * @param filter (optional) 
+     * @param sorting (optional) 
+     * @param skipCount (optional) 
+     * @param maxResultCount (optional) 
      * @return Success
      */
     getAllStudyLevelForLookupTable(filter: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfQuestionLevelStudyLevelLookupTableDto> {
@@ -16242,10 +16456,10 @@ export class QuestionLevelsServiceProxy {
     }
 
     /**
-     * @param filter (optional)
-     * @param sorting (optional)
-     * @param skipCount (optional)
-     * @param maxResultCount (optional)
+     * @param filter (optional) 
+     * @param sorting (optional) 
+     * @param skipCount (optional) 
+     * @param maxResultCount (optional) 
      * @return Success
      */
     getAllQuestionForLookupTable(filter: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfQuestionLevelQuestionLookupTableDto> {
@@ -16325,22 +16539,22 @@ export class QuestionOptionsServiceProxy {
     }
 
     /**
-     * @param filter (optional)
-     * @param valueFilter (optional)
-     * @param isRequiredFilter (optional)
-     * @param maxWeightFilter (optional)
-     * @param minWeightFilter (optional)
-     * @param maxMinWeightFilter (optional)
-     * @param minMinWeightFilter (optional)
-     * @param maxMaxWeightFilter (optional)
-     * @param minMaxWeightFilter (optional)
-     * @param optionTypeFilter (optional)
-     * @param maxOrderFilter (optional)
-     * @param minOrderFilter (optional)
-     * @param questionQuestionHelperFilter (optional)
-     * @param sorting (optional)
-     * @param skipCount (optional)
-     * @param maxResultCount (optional)
+     * @param filter (optional) 
+     * @param valueFilter (optional) 
+     * @param isRequiredFilter (optional) 
+     * @param maxWeightFilter (optional) 
+     * @param minWeightFilter (optional) 
+     * @param maxMinWeightFilter (optional) 
+     * @param minMinWeightFilter (optional) 
+     * @param maxMaxWeightFilter (optional) 
+     * @param minMaxWeightFilter (optional) 
+     * @param optionTypeFilter (optional) 
+     * @param maxOrderFilter (optional) 
+     * @param minOrderFilter (optional) 
+     * @param questionQuestionHelperFilter (optional) 
+     * @param sorting (optional) 
+     * @param skipCount (optional) 
+     * @param maxResultCount (optional) 
      * @return Success
      */
     getAll(filter: string | undefined, valueFilter: string | undefined, isRequiredFilter: number | undefined, maxWeightFilter: number | undefined, minWeightFilter: number | undefined, maxMinWeightFilter: number | undefined, minMinWeightFilter: number | undefined, maxMaxWeightFilter: number | undefined, minMaxWeightFilter: number | undefined, optionTypeFilter: number | undefined, maxOrderFilter: number | undefined, minOrderFilter: number | undefined, questionQuestionHelperFilter: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfGetQuestionOptionForViewDto> {
@@ -16456,7 +16670,7 @@ export class QuestionOptionsServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     getQuestionOptionForView(id: number | undefined): Observable<GetQuestionOptionForViewDto> {
@@ -16512,7 +16726,7 @@ export class QuestionOptionsServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     getQuestionOptionForEdit(id: number | undefined): Observable<GetQuestionOptionForEditOutput> {
@@ -16568,7 +16782,7 @@ export class QuestionOptionsServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     createOrEdit(body: CreateOrEditQuestionOptionDto | undefined): Observable<void> {
@@ -16620,7 +16834,7 @@ export class QuestionOptionsServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     delete(id: number | undefined): Observable<void> {
@@ -16672,19 +16886,19 @@ export class QuestionOptionsServiceProxy {
     }
 
     /**
-     * @param filter (optional)
-     * @param valueFilter (optional)
-     * @param isRequiredFilter (optional)
-     * @param maxWeightFilter (optional)
-     * @param minWeightFilter (optional)
-     * @param maxMinWeightFilter (optional)
-     * @param minMinWeightFilter (optional)
-     * @param maxMaxWeightFilter (optional)
-     * @param minMaxWeightFilter (optional)
-     * @param optionTypeFilter (optional)
-     * @param maxOrderFilter (optional)
-     * @param minOrderFilter (optional)
-     * @param questionQuestionHelperFilter (optional)
+     * @param filter (optional) 
+     * @param valueFilter (optional) 
+     * @param isRequiredFilter (optional) 
+     * @param maxWeightFilter (optional) 
+     * @param minWeightFilter (optional) 
+     * @param maxMinWeightFilter (optional) 
+     * @param minMinWeightFilter (optional) 
+     * @param maxMaxWeightFilter (optional) 
+     * @param minMaxWeightFilter (optional) 
+     * @param optionTypeFilter (optional) 
+     * @param maxOrderFilter (optional) 
+     * @param minOrderFilter (optional) 
+     * @param questionQuestionHelperFilter (optional) 
      * @return Success
      */
     getQuestionOptionsToExcel(filter: string | undefined, valueFilter: string | undefined, isRequiredFilter: number | undefined, maxWeightFilter: number | undefined, minWeightFilter: number | undefined, maxMinWeightFilter: number | undefined, minMinWeightFilter: number | undefined, maxMaxWeightFilter: number | undefined, minMaxWeightFilter: number | undefined, optionTypeFilter: number | undefined, maxOrderFilter: number | undefined, minOrderFilter: number | undefined, questionQuestionHelperFilter: string | undefined): Observable<FileDto> {
@@ -16788,10 +17002,10 @@ export class QuestionOptionsServiceProxy {
     }
 
     /**
-     * @param filter (optional)
-     * @param sorting (optional)
-     * @param skipCount (optional)
-     * @param maxResultCount (optional)
+     * @param filter (optional) 
+     * @param sorting (optional) 
+     * @param skipCount (optional) 
+     * @param maxResultCount (optional) 
      * @return Success
      */
     getAllQuestionForLookupTable(filter: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfQuestionOptionQuestionLookupTableDto> {
@@ -16871,19 +17085,19 @@ export class QuestionsServiceProxy {
     }
 
     /**
-     * @param filter (optional)
-     * @param typeFilter (optional)
-     * @param languageFilter (optional)
-     * @param isActiveFilter (optional)
-     * @param autoCorrectionFilter (optional)
-     * @param examId (optional)
-     * @param subjectId (optional)
-     * @param levelId (optional)
-     * @param subjectUnitId (optional)
-     * @param complexityId (optional)
-     * @param sorting (optional)
-     * @param skipCount (optional)
-     * @param maxResultCount (optional)
+     * @param filter (optional) 
+     * @param typeFilter (optional) 
+     * @param languageFilter (optional) 
+     * @param isActiveFilter (optional) 
+     * @param autoCorrectionFilter (optional) 
+     * @param examId (optional) 
+     * @param subjectId (optional) 
+     * @param levelId (optional) 
+     * @param subjectUnitId (optional) 
+     * @param complexityId (optional) 
+     * @param sorting (optional) 
+     * @param skipCount (optional) 
+     * @param maxResultCount (optional) 
      * @return Success
      */
     getAll(filter: string | undefined, typeFilter: QuestionTypeEnum | undefined, languageFilter: QuestionLanguageEnum | undefined, isActiveFilter: boolean | undefined, autoCorrectionFilter: number | undefined, examId: number | undefined, subjectId: number | undefined, levelId: number | undefined, subjectUnitId: number | undefined, complexityId: number | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfGetQuestionForViewDto> {
@@ -16987,7 +17201,7 @@ export class QuestionsServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     getQuestionForView(id: number | undefined): Observable<GetQuestionForViewDto> {
@@ -17043,7 +17257,7 @@ export class QuestionsServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     getQuestionForEdit(id: number | undefined): Observable<GetQuestionForEditOutput> {
@@ -17099,7 +17313,7 @@ export class QuestionsServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     createOrEdit(body: CreateOrEditQuestionDto | undefined): Observable<void> {
@@ -17151,7 +17365,7 @@ export class QuestionsServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     delete(id: number | undefined): Observable<void> {
@@ -17203,22 +17417,22 @@ export class QuestionsServiceProxy {
     }
 
     /**
-     * @param filter (optional)
-     * @param bodyFilter (optional)
-     * @param typeFilter (optional)
-     * @param instructionsFilter (optional)
-     * @param languageFilter (optional)
-     * @param questionHelperFilter (optional)
-     * @param isActiveFilter (optional)
-     * @param autoCorrectionFilter (optional)
-     * @param maxPointFilter (optional)
-     * @param minPointFilter (optional)
-     * @param maxMinPointsFilter (optional)
-     * @param minMinPointsFilter (optional)
-     * @param maxMaxPointsFilter (optional)
-     * @param minMaxPointsFilter (optional)
-     * @param questionBodyFilter (optional)
-     * @param questionBody2Filter (optional)
+     * @param filter (optional) 
+     * @param bodyFilter (optional) 
+     * @param typeFilter (optional) 
+     * @param instructionsFilter (optional) 
+     * @param languageFilter (optional) 
+     * @param questionHelperFilter (optional) 
+     * @param isActiveFilter (optional) 
+     * @param autoCorrectionFilter (optional) 
+     * @param maxPointFilter (optional) 
+     * @param minPointFilter (optional) 
+     * @param maxMinPointsFilter (optional) 
+     * @param minMinPointsFilter (optional) 
+     * @param maxMaxPointsFilter (optional) 
+     * @param minMaxPointsFilter (optional) 
+     * @param questionBodyFilter (optional) 
+     * @param questionBody2Filter (optional) 
      * @return Success
      */
     getQuestionsToExcel(filter: string | undefined, bodyFilter: string | undefined, typeFilter: number | undefined, instructionsFilter: string | undefined, languageFilter: number | undefined, questionHelperFilter: string | undefined, isActiveFilter: number | undefined, autoCorrectionFilter: number | undefined, maxPointFilter: number | undefined, minPointFilter: number | undefined, maxMinPointsFilter: number | undefined, minMinPointsFilter: number | undefined, maxMaxPointsFilter: number | undefined, minMaxPointsFilter: number | undefined, questionBodyFilter: string | undefined, questionBody2Filter: string | undefined): Observable<FileDto> {
@@ -17392,10 +17606,10 @@ export class QuestionsServiceProxy {
     }
 
     /**
-     * @param filter (optional)
-     * @param sorting (optional)
-     * @param skipCount (optional)
-     * @param maxResultCount (optional)
+     * @param filter (optional) 
+     * @param sorting (optional) 
+     * @param skipCount (optional) 
+     * @param maxResultCount (optional) 
      * @return Success
      */
     getAllQuestionForLookupTable(filter: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfQuestionQuestionLookupTableDto> {
@@ -17463,10 +17677,10 @@ export class QuestionsServiceProxy {
     }
 
     /**
-     * @param filter (optional)
-     * @param sorting (optional)
-     * @param skipCount (optional)
-     * @param maxResultCount (optional)
+     * @param filter (optional) 
+     * @param sorting (optional) 
+     * @param skipCount (optional) 
+     * @param maxResultCount (optional) 
      * @return Success
      */
     getAllSupportGroupForLookupTable(filter: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfQuestionSupportGroupLookupTableDto> {
@@ -17546,13 +17760,13 @@ export class QuestionSubjectsServiceProxy {
     }
 
     /**
-     * @param filter (optional)
-     * @param noteFilter (optional)
-     * @param questionQuestionHelperFilter (optional)
-     * @param studySubjectNameFilter (optional)
-     * @param sorting (optional)
-     * @param skipCount (optional)
-     * @param maxResultCount (optional)
+     * @param filter (optional) 
+     * @param noteFilter (optional) 
+     * @param questionQuestionHelperFilter (optional) 
+     * @param studySubjectNameFilter (optional) 
+     * @param sorting (optional) 
+     * @param skipCount (optional) 
+     * @param maxResultCount (optional) 
      * @return Success
      */
     getAll(filter: string | undefined, noteFilter: string | undefined, questionQuestionHelperFilter: string | undefined, studySubjectNameFilter: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfGetQuestionSubjectForViewDto> {
@@ -17632,7 +17846,7 @@ export class QuestionSubjectsServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     getQuestionSubjectForView(id: number | undefined): Observable<GetQuestionSubjectForViewDto> {
@@ -17688,7 +17902,7 @@ export class QuestionSubjectsServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     getQuestionSubjectForEdit(id: number | undefined): Observable<GetQuestionSubjectForEditOutput> {
@@ -17744,7 +17958,7 @@ export class QuestionSubjectsServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     createOrEdit(body: CreateOrEditQuestionSubjectDto | undefined): Observable<void> {
@@ -17796,7 +18010,7 @@ export class QuestionSubjectsServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     delete(id: number | undefined): Observable<void> {
@@ -17848,10 +18062,10 @@ export class QuestionSubjectsServiceProxy {
     }
 
     /**
-     * @param filter (optional)
-     * @param noteFilter (optional)
-     * @param questionQuestionHelperFilter (optional)
-     * @param studySubjectNameFilter (optional)
+     * @param filter (optional) 
+     * @param noteFilter (optional) 
+     * @param questionQuestionHelperFilter (optional) 
+     * @param studySubjectNameFilter (optional) 
      * @return Success
      */
     getQuestionSubjectsToExcel(filter: string | undefined, noteFilter: string | undefined, questionQuestionHelperFilter: string | undefined, studySubjectNameFilter: string | undefined): Observable<FileDto> {
@@ -17919,10 +18133,10 @@ export class QuestionSubjectsServiceProxy {
     }
 
     /**
-     * @param filter (optional)
-     * @param sorting (optional)
-     * @param skipCount (optional)
-     * @param maxResultCount (optional)
+     * @param filter (optional) 
+     * @param sorting (optional) 
+     * @param skipCount (optional) 
+     * @param maxResultCount (optional) 
      * @return Success
      */
     getAllQuestionForLookupTable(filter: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfQuestionSubjectQuestionLookupTableDto> {
@@ -17990,10 +18204,10 @@ export class QuestionSubjectsServiceProxy {
     }
 
     /**
-     * @param filter (optional)
-     * @param sorting (optional)
-     * @param skipCount (optional)
-     * @param maxResultCount (optional)
+     * @param filter (optional) 
+     * @param sorting (optional) 
+     * @param skipCount (optional) 
+     * @param maxResultCount (optional) 
      * @return Success
      */
     getAllStudySubjectForLookupTable(filter: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfQuestionSubjectStudySubjectLookupTableDto> {
@@ -18073,13 +18287,13 @@ export class QuestionSubjectUnitsServiceProxy {
     }
 
     /**
-     * @param filter (optional)
-     * @param noteFilter (optional)
-     * @param subjectUnitCodeFilter (optional)
-     * @param questionQuestionHelperFilter (optional)
-     * @param sorting (optional)
-     * @param skipCount (optional)
-     * @param maxResultCount (optional)
+     * @param filter (optional) 
+     * @param noteFilter (optional) 
+     * @param subjectUnitCodeFilter (optional) 
+     * @param questionQuestionHelperFilter (optional) 
+     * @param sorting (optional) 
+     * @param skipCount (optional) 
+     * @param maxResultCount (optional) 
      * @return Success
      */
     getAll(filter: string | undefined, noteFilter: string | undefined, subjectUnitCodeFilter: string | undefined, questionQuestionHelperFilter: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfGetQuestionSubjectUnitForViewDto> {
@@ -18159,7 +18373,7 @@ export class QuestionSubjectUnitsServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     getQuestionSubjectUnitForView(id: number | undefined): Observable<GetQuestionSubjectUnitForViewDto> {
@@ -18215,7 +18429,7 @@ export class QuestionSubjectUnitsServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     getQuestionSubjectUnitForEdit(id: number | undefined): Observable<GetQuestionSubjectUnitForEditOutput> {
@@ -18271,7 +18485,7 @@ export class QuestionSubjectUnitsServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     createOrEdit(body: CreateOrEditQuestionSubjectUnitDto | undefined): Observable<void> {
@@ -18323,7 +18537,7 @@ export class QuestionSubjectUnitsServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     delete(id: number | undefined): Observable<void> {
@@ -18375,10 +18589,10 @@ export class QuestionSubjectUnitsServiceProxy {
     }
 
     /**
-     * @param filter (optional)
-     * @param noteFilter (optional)
-     * @param subjectUnitCodeFilter (optional)
-     * @param questionQuestionHelperFilter (optional)
+     * @param filter (optional) 
+     * @param noteFilter (optional) 
+     * @param subjectUnitCodeFilter (optional) 
+     * @param questionQuestionHelperFilter (optional) 
      * @return Success
      */
     getQuestionSubjectUnitsToExcel(filter: string | undefined, noteFilter: string | undefined, subjectUnitCodeFilter: string | undefined, questionQuestionHelperFilter: string | undefined): Observable<FileDto> {
@@ -18446,10 +18660,10 @@ export class QuestionSubjectUnitsServiceProxy {
     }
 
     /**
-     * @param filter (optional)
-     * @param sorting (optional)
-     * @param skipCount (optional)
-     * @param maxResultCount (optional)
+     * @param filter (optional) 
+     * @param sorting (optional) 
+     * @param skipCount (optional) 
+     * @param maxResultCount (optional) 
      * @return Success
      */
     getAllSubjectUnitForLookupTable(filter: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfQuestionSubjectUnitSubjectUnitLookupTableDto> {
@@ -18517,10 +18731,10 @@ export class QuestionSubjectUnitsServiceProxy {
     }
 
     /**
-     * @param filter (optional)
-     * @param sorting (optional)
-     * @param skipCount (optional)
-     * @param maxResultCount (optional)
+     * @param filter (optional) 
+     * @param sorting (optional) 
+     * @param skipCount (optional) 
+     * @param maxResultCount (optional) 
      * @return Success
      */
     getAllQuestionForLookupTable(filter: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfQuestionSubjectUnitQuestionLookupTableDto> {
@@ -18600,7 +18814,7 @@ export class RoleServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     getRoles(body: GetRolesInput | undefined): Observable<ListResultDtoOfRoleListDto> {
@@ -18656,7 +18870,7 @@ export class RoleServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     getRoleForEdit(id: number | undefined): Observable<GetRoleForEditOutput> {
@@ -18712,7 +18926,7 @@ export class RoleServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     createOrUpdateRole(body: CreateOrUpdateRoleInput | undefined): Observable<void> {
@@ -18764,7 +18978,7 @@ export class RoleServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     deleteRole(id: number | undefined): Observable<void> {
@@ -18828,11 +19042,11 @@ export class SchoolsServiceProxy {
     }
 
     /**
-     * @param filter (optional)
-     * @param schoolNoFilter (optional)
-     * @param sorting (optional)
-     * @param skipCount (optional)
-     * @param maxResultCount (optional)
+     * @param filter (optional) 
+     * @param schoolNoFilter (optional) 
+     * @param sorting (optional) 
+     * @param skipCount (optional) 
+     * @param maxResultCount (optional) 
      * @return Success
      */
     getAll(filter: string | undefined, schoolNoFilter: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfGetSchoolForViewDto> {
@@ -18904,7 +19118,7 @@ export class SchoolsServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     getSchoolForView(id: number | undefined): Observable<GetSchoolForViewDto> {
@@ -18960,7 +19174,7 @@ export class SchoolsServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     getSchoolForEdit(id: number | undefined): Observable<GetSchoolForEditOutput> {
@@ -19016,7 +19230,7 @@ export class SchoolsServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     createOrEdit(body: CreateOrEditSchoolDto | undefined): Observable<void> {
@@ -19068,7 +19282,7 @@ export class SchoolsServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     delete(id: number | undefined): Observable<void> {
@@ -19120,8 +19334,8 @@ export class SchoolsServiceProxy {
     }
 
     /**
-     * @param filter (optional)
-     * @param schoolNoFilter (optional)
+     * @param filter (optional) 
+     * @param schoolNoFilter (optional) 
      * @return Success
      */
     getSchoolsToExcel(filter: string | undefined, schoolNoFilter: string | undefined): Observable<FileDto> {
@@ -19307,17 +19521,17 @@ export class SessionsServiceProxy {
     }
 
     /**
-     * @param filter (optional)
-     * @param maxStartDateFilter (optional)
-     * @param minStartDateFilter (optional)
-     * @param maxActualStartDateFilter (optional)
-     * @param minActualStartDateFilter (optional)
-     * @param endDateFilter (optional)
-     * @param examGenerationTokenFilter (optional)
-     * @param backgroundStartJobIdFilter (optional)
-     * @param sorting (optional)
-     * @param skipCount (optional)
-     * @param maxResultCount (optional)
+     * @param filter (optional) 
+     * @param maxStartDateFilter (optional) 
+     * @param minStartDateFilter (optional) 
+     * @param maxActualStartDateFilter (optional) 
+     * @param minActualStartDateFilter (optional) 
+     * @param endDateFilter (optional) 
+     * @param examGenerationTokenFilter (optional) 
+     * @param backgroundStartJobIdFilter (optional) 
+     * @param sorting (optional) 
+     * @param skipCount (optional) 
+     * @param maxResultCount (optional) 
      * @return Success
      */
     getAll(filter: string | undefined, maxStartDateFilter: DateTime | undefined, minStartDateFilter: DateTime | undefined, maxActualStartDateFilter: DateTime | undefined, minActualStartDateFilter: DateTime | undefined, endDateFilter: string | undefined, examGenerationTokenFilter: string | undefined, backgroundStartJobIdFilter: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfGetSessionForViewDto> {
@@ -19413,7 +19627,7 @@ export class SessionsServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     getSessionForView(id: number | undefined): Observable<GetSessionForViewDto> {
@@ -19469,7 +19683,7 @@ export class SessionsServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     getSessionForEdit(id: number | undefined): Observable<GetSessionForEditOutput> {
@@ -19525,7 +19739,7 @@ export class SessionsServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     createOrEdit(body: CreateOrEditSessionDto | undefined): Observable<void> {
@@ -19577,7 +19791,7 @@ export class SessionsServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     delete(id: number | undefined): Observable<void> {
@@ -19629,14 +19843,14 @@ export class SessionsServiceProxy {
     }
 
     /**
-     * @param filter (optional)
-     * @param maxStartDateFilter (optional)
-     * @param minStartDateFilter (optional)
-     * @param maxActualStartDateFilter (optional)
-     * @param minActualStartDateFilter (optional)
-     * @param endDateFilter (optional)
-     * @param examGenerationTokenFilter (optional)
-     * @param backgroundStartJobIdFilter (optional)
+     * @param filter (optional) 
+     * @param maxStartDateFilter (optional) 
+     * @param minStartDateFilter (optional) 
+     * @param maxActualStartDateFilter (optional) 
+     * @param minActualStartDateFilter (optional) 
+     * @param endDateFilter (optional) 
+     * @param examGenerationTokenFilter (optional) 
+     * @param backgroundStartJobIdFilter (optional) 
      * @return Success
      */
     getSessionsToExcel(filter: string | undefined, maxStartDateFilter: DateTime | undefined, minStartDateFilter: DateTime | undefined, maxActualStartDateFilter: DateTime | undefined, minActualStartDateFilter: DateTime | undefined, endDateFilter: string | undefined, examGenerationTokenFilter: string | undefined, backgroundStartJobIdFilter: string | undefined): Observable<FileDto> {
@@ -19732,13 +19946,13 @@ export class SessionSupervisorsServiceProxy {
     }
 
     /**
-     * @param filter (optional)
-     * @param noteFilter (optional)
-     * @param sessionNameLFilter (optional)
-     * @param supervisorNoteFilter (optional)
-     * @param sorting (optional)
-     * @param skipCount (optional)
-     * @param maxResultCount (optional)
+     * @param filter (optional) 
+     * @param noteFilter (optional) 
+     * @param sessionNameLFilter (optional) 
+     * @param supervisorNoteFilter (optional) 
+     * @param sorting (optional) 
+     * @param skipCount (optional) 
+     * @param maxResultCount (optional) 
      * @return Success
      */
     getAll(filter: string | undefined, noteFilter: string | undefined, sessionNameLFilter: string | undefined, supervisorNoteFilter: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfGetSessionSupervisorForViewDto> {
@@ -19818,7 +20032,7 @@ export class SessionSupervisorsServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     getSessionSupervisorForView(id: number | undefined): Observable<GetSessionSupervisorForViewDto> {
@@ -19874,7 +20088,7 @@ export class SessionSupervisorsServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     getSessionSupervisorForEdit(id: number | undefined): Observable<GetSessionSupervisorForEditOutput> {
@@ -19930,7 +20144,7 @@ export class SessionSupervisorsServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     createOrEdit(body: CreateOrEditSessionSupervisorDto | undefined): Observable<void> {
@@ -19982,7 +20196,7 @@ export class SessionSupervisorsServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     delete(id: number | undefined): Observable<void> {
@@ -20034,10 +20248,10 @@ export class SessionSupervisorsServiceProxy {
     }
 
     /**
-     * @param filter (optional)
-     * @param noteFilter (optional)
-     * @param sessionNameLFilter (optional)
-     * @param supervisorNoteFilter (optional)
+     * @param filter (optional) 
+     * @param noteFilter (optional) 
+     * @param sessionNameLFilter (optional) 
+     * @param supervisorNoteFilter (optional) 
      * @return Success
      */
     getSessionSupervisorsToExcel(filter: string | undefined, noteFilter: string | undefined, sessionNameLFilter: string | undefined, supervisorNoteFilter: string | undefined): Observable<FileDto> {
@@ -20105,10 +20319,10 @@ export class SessionSupervisorsServiceProxy {
     }
 
     /**
-     * @param filter (optional)
-     * @param sorting (optional)
-     * @param skipCount (optional)
-     * @param maxResultCount (optional)
+     * @param filter (optional) 
+     * @param sorting (optional) 
+     * @param skipCount (optional) 
+     * @param maxResultCount (optional) 
      * @return Success
      */
     getAllSessionForLookupTable(filter: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfSessionSupervisorSessionLookupTableDto> {
@@ -20176,10 +20390,10 @@ export class SessionSupervisorsServiceProxy {
     }
 
     /**
-     * @param filter (optional)
-     * @param sorting (optional)
-     * @param skipCount (optional)
-     * @param maxResultCount (optional)
+     * @param filter (optional) 
+     * @param sorting (optional) 
+     * @param skipCount (optional) 
+     * @param maxResultCount (optional) 
      * @return Success
      */
     getAllSupervisorForLookupTable(filter: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfSessionSupervisorSupervisorLookupTableDto> {
@@ -20259,12 +20473,12 @@ export class SiteTrackersServiceProxy {
     }
 
     /**
-     * @param filter (optional)
-     * @param valueFilter (optional)
-     * @param trackerFilter (optional)
-     * @param sorting (optional)
-     * @param skipCount (optional)
-     * @param maxResultCount (optional)
+     * @param filter (optional) 
+     * @param valueFilter (optional) 
+     * @param trackerFilter (optional) 
+     * @param sorting (optional) 
+     * @param skipCount (optional) 
+     * @param maxResultCount (optional) 
      * @return Success
      */
     getAll(filter: string | undefined, valueFilter: string | undefined, trackerFilter: number | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfGetSiteTrackerForViewDto> {
@@ -20340,7 +20554,7 @@ export class SiteTrackersServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     getSiteTrackerForView(id: number | undefined): Observable<GetSiteTrackerForViewDto> {
@@ -20396,7 +20610,7 @@ export class SiteTrackersServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     getSiteTrackerForEdit(id: number | undefined): Observable<GetSiteTrackerForEditOutput> {
@@ -20452,7 +20666,7 @@ export class SiteTrackersServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     createOrEdit(body: CreateOrEditSiteTrackerDto | undefined): Observable<void> {
@@ -20504,7 +20718,7 @@ export class SiteTrackersServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     delete(id: number | undefined): Observable<void> {
@@ -20556,9 +20770,9 @@ export class SiteTrackersServiceProxy {
     }
 
     /**
-     * @param filter (optional)
-     * @param valueFilter (optional)
-     * @param trackerFilter (optional)
+     * @param filter (optional) 
+     * @param valueFilter (optional) 
+     * @param trackerFilter (optional) 
      * @return Success
      */
     getSiteTrackersToExcel(filter: string | undefined, valueFilter: string | undefined, trackerFilter: number | undefined): Observable<FileDto> {
@@ -20685,7 +20899,7 @@ export class StripePaymentServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     createPaymentSession(body: StripeCreatePaymentSessionInput | undefined): Observable<string> {
@@ -20730,7 +20944,7 @@ export class StripePaymentServiceProxy {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
                 result200 = resultData200 !== undefined ? resultData200 : <any>null;
-
+    
             return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
@@ -20742,7 +20956,7 @@ export class StripePaymentServiceProxy {
     }
 
     /**
-     * @param paymentId (optional)
+     * @param paymentId (optional) 
      * @return Success
      */
     getPaymentResult(paymentId: number | undefined): Observable<StripePaymentResultOutput> {
@@ -20810,14 +21024,14 @@ export class StudentsServiceProxy {
     }
 
     /**
-     * @param filter (optional)
-     * @param classNameFilter (optional)
-     * @param cityFilter (optional)
-     * @param userNameFilter (optional)
-     * @param sessionSupervisorNoteFilter (optional)
-     * @param sorting (optional)
-     * @param skipCount (optional)
-     * @param maxResultCount (optional)
+     * @param filter (optional) 
+     * @param classNameFilter (optional) 
+     * @param cityFilter (optional) 
+     * @param userNameFilter (optional) 
+     * @param sessionSupervisorNoteFilter (optional) 
+     * @param sorting (optional) 
+     * @param skipCount (optional) 
+     * @param maxResultCount (optional) 
      * @return Success
      */
     getAll(filter: string | undefined, classNameFilter: string | undefined, cityFilter: string | undefined, userNameFilter: string | undefined, sessionSupervisorNoteFilter: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfGetStudentForViewDto> {
@@ -20901,7 +21115,7 @@ export class StudentsServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     getStudentForView(id: number | undefined): Observable<GetStudentForViewDto> {
@@ -20957,7 +21171,7 @@ export class StudentsServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     getStudentForEdit(id: number | undefined): Observable<GetStudentForEditOutput> {
@@ -21013,7 +21227,7 @@ export class StudentsServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     createOrEdit(body: CreateOrEditStudentDto | undefined): Observable<void> {
@@ -21065,7 +21279,7 @@ export class StudentsServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     delete(id: number | undefined): Observable<void> {
@@ -21117,11 +21331,11 @@ export class StudentsServiceProxy {
     }
 
     /**
-     * @param filter (optional)
-     * @param classNameFilter (optional)
-     * @param cityFilter (optional)
-     * @param userNameFilter (optional)
-     * @param sessionSupervisorNoteFilter (optional)
+     * @param filter (optional) 
+     * @param classNameFilter (optional) 
+     * @param cityFilter (optional) 
+     * @param userNameFilter (optional) 
+     * @param sessionSupervisorNoteFilter (optional) 
      * @return Success
      */
     getStudentsToExcel(filter: string | undefined, classNameFilter: string | undefined, cityFilter: string | undefined, userNameFilter: string | undefined, sessionSupervisorNoteFilter: string | undefined): Observable<FileDto> {
@@ -21193,10 +21407,10 @@ export class StudentsServiceProxy {
     }
 
     /**
-     * @param filter (optional)
-     * @param sorting (optional)
-     * @param skipCount (optional)
-     * @param maxResultCount (optional)
+     * @param filter (optional) 
+     * @param sorting (optional) 
+     * @param skipCount (optional) 
+     * @param maxResultCount (optional) 
      * @return Success
      */
     getAllUserForLookupTable(filter: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfStudentUserLookupTableDto> {
@@ -21264,10 +21478,10 @@ export class StudentsServiceProxy {
     }
 
     /**
-     * @param filter (optional)
-     * @param sorting (optional)
-     * @param skipCount (optional)
-     * @param maxResultCount (optional)
+     * @param filter (optional) 
+     * @param sorting (optional) 
+     * @param skipCount (optional) 
+     * @param maxResultCount (optional) 
      * @return Success
      */
     getAllSessionSupervisorForLookupTable(filter: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfStudentSessionSupervisorLookupTableDto> {
@@ -21347,11 +21561,11 @@ export class StudyLevelsServiceProxy {
     }
 
     /**
-     * @param filter (optional)
-     * @param isActiveFilter (optional)
-     * @param sorting (optional)
-     * @param skipCount (optional)
-     * @param maxResultCount (optional)
+     * @param filter (optional) 
+     * @param isActiveFilter (optional) 
+     * @param sorting (optional) 
+     * @param skipCount (optional) 
+     * @param maxResultCount (optional) 
      * @return Success
      */
     getAll(filter: string | undefined, isActiveFilter: number | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfGetStudyLevelForViewDto> {
@@ -21423,7 +21637,7 @@ export class StudyLevelsServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     getStudyLevelForView(id: number | undefined): Observable<GetStudyLevelForViewDto> {
@@ -21479,7 +21693,7 @@ export class StudyLevelsServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     getStudyLevelForEdit(id: number | undefined): Observable<GetStudyLevelForEditOutput> {
@@ -21535,7 +21749,7 @@ export class StudyLevelsServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     createOrEdit(body: CreateOrEditStudyLevelDto | undefined): Observable<void> {
@@ -21587,7 +21801,7 @@ export class StudyLevelsServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     delete(id: number | undefined): Observable<void> {
@@ -21639,8 +21853,8 @@ export class StudyLevelsServiceProxy {
     }
 
     /**
-     * @param filter (optional)
-     * @param isActiveFilter (optional)
+     * @param filter (optional) 
+     * @param isActiveFilter (optional) 
      * @return Success
      */
     getStudyLevelsToExcel(filter: string | undefined, isActiveFilter: number | undefined): Observable<FileDto> {
@@ -21712,12 +21926,12 @@ export class StudySubjectsServiceProxy {
     }
 
     /**
-     * @param filter (optional)
-     * @param languageFilter (optional)
-     * @param isActiveFilter (optional)
-     * @param sorting (optional)
-     * @param skipCount (optional)
-     * @param maxResultCount (optional)
+     * @param filter (optional) 
+     * @param languageFilter (optional) 
+     * @param isActiveFilter (optional) 
+     * @param sorting (optional) 
+     * @param skipCount (optional) 
+     * @param maxResultCount (optional) 
      * @return Success
      */
     getAll(filter: string | undefined, languageFilter: number | undefined, isActiveFilter: number | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfGetStudySubjectForViewDto> {
@@ -21793,7 +22007,7 @@ export class StudySubjectsServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     getStudySubjectForView(id: number | undefined): Observable<GetStudySubjectForViewDto> {
@@ -21849,7 +22063,7 @@ export class StudySubjectsServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     getStudySubjectForEdit(id: number | undefined): Observable<GetStudySubjectForEditOutput> {
@@ -21905,7 +22119,7 @@ export class StudySubjectsServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     createOrEdit(body: CreateOrEditStudySubjectDto | undefined): Observable<void> {
@@ -21957,7 +22171,7 @@ export class StudySubjectsServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     delete(id: number | undefined): Observable<void> {
@@ -22009,9 +22223,9 @@ export class StudySubjectsServiceProxy {
     }
 
     /**
-     * @param filter (optional)
-     * @param languageFilter (optional)
-     * @param isActiveFilter (optional)
+     * @param filter (optional) 
+     * @param languageFilter (optional) 
+     * @param isActiveFilter (optional) 
      * @return Success
      */
     getStudySubjectsToExcel(filter: string | undefined, languageFilter: number | undefined, isActiveFilter: number | undefined): Observable<FileDto> {
@@ -22087,13 +22301,13 @@ export class SubjectCategoriesServiceProxy {
     }
 
     /**
-     * @param filter (optional)
-     * @param noteFilter (optional)
-     * @param categoryValueFilter (optional)
-     * @param studySubjectValueFilter (optional)
-     * @param sorting (optional)
-     * @param skipCount (optional)
-     * @param maxResultCount (optional)
+     * @param filter (optional) 
+     * @param noteFilter (optional) 
+     * @param categoryValueFilter (optional) 
+     * @param studySubjectValueFilter (optional) 
+     * @param sorting (optional) 
+     * @param skipCount (optional) 
+     * @param maxResultCount (optional) 
      * @return Success
      */
     getAll(filter: string | undefined, noteFilter: string | undefined, categoryValueFilter: string | undefined, studySubjectValueFilter: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfGetSubjectCategoryForViewDto> {
@@ -22173,7 +22387,7 @@ export class SubjectCategoriesServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     getSubjectCategoryForView(id: number | undefined): Observable<GetSubjectCategoryForViewDto> {
@@ -22229,7 +22443,7 @@ export class SubjectCategoriesServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     getSubjectCategoryForEdit(id: number | undefined): Observable<GetSubjectCategoryForEditOutput> {
@@ -22285,7 +22499,7 @@ export class SubjectCategoriesServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     createOrEdit(body: CreateOrEditSubjectCategoryDto | undefined): Observable<void> {
@@ -22337,7 +22551,7 @@ export class SubjectCategoriesServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     delete(id: number | undefined): Observable<void> {
@@ -22389,10 +22603,10 @@ export class SubjectCategoriesServiceProxy {
     }
 
     /**
-     * @param filter (optional)
-     * @param noteFilter (optional)
-     * @param categoryValueFilter (optional)
-     * @param studySubjectValueFilter (optional)
+     * @param filter (optional) 
+     * @param noteFilter (optional) 
+     * @param categoryValueFilter (optional) 
+     * @param studySubjectValueFilter (optional) 
      * @return Success
      */
     getSubjectCategoriesToExcel(filter: string | undefined, noteFilter: string | undefined, categoryValueFilter: string | undefined, studySubjectValueFilter: string | undefined): Observable<FileDto> {
@@ -22460,10 +22674,10 @@ export class SubjectCategoriesServiceProxy {
     }
 
     /**
-     * @param filter (optional)
-     * @param sorting (optional)
-     * @param skipCount (optional)
-     * @param maxResultCount (optional)
+     * @param filter (optional) 
+     * @param sorting (optional) 
+     * @param skipCount (optional) 
+     * @param maxResultCount (optional) 
      * @return Success
      */
     getAllCategoryForLookupTable(filter: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfSubjectCategoryCategoryLookupTableDto> {
@@ -22531,10 +22745,10 @@ export class SubjectCategoriesServiceProxy {
     }
 
     /**
-     * @param filter (optional)
-     * @param sorting (optional)
-     * @param skipCount (optional)
-     * @param maxResultCount (optional)
+     * @param filter (optional) 
+     * @param sorting (optional) 
+     * @param skipCount (optional) 
+     * @param maxResultCount (optional) 
      * @return Success
      */
     getAllStudySubjectForLookupTable(filter: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfSubjectCategoryStudySubjectLookupTableDto> {
@@ -22614,13 +22828,13 @@ export class SubjectGroupsServiceProxy {
     }
 
     /**
-     * @param filter (optional)
-     * @param noteFilter (optional)
-     * @param studySubjectValueFilter (optional)
-     * @param supportGroupNameLFilter (optional)
-     * @param sorting (optional)
-     * @param skipCount (optional)
-     * @param maxResultCount (optional)
+     * @param filter (optional) 
+     * @param noteFilter (optional) 
+     * @param studySubjectValueFilter (optional) 
+     * @param supportGroupNameLFilter (optional) 
+     * @param sorting (optional) 
+     * @param skipCount (optional) 
+     * @param maxResultCount (optional) 
      * @return Success
      */
     getAll(filter: string | undefined, noteFilter: string | undefined, studySubjectValueFilter: string | undefined, supportGroupNameLFilter: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfGetSubjectGroupForViewDto> {
@@ -22700,7 +22914,7 @@ export class SubjectGroupsServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     getSubjectGroupForView(id: number | undefined): Observable<GetSubjectGroupForViewDto> {
@@ -22756,7 +22970,7 @@ export class SubjectGroupsServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     getSubjectGroupForEdit(id: number | undefined): Observable<GetSubjectGroupForEditOutput> {
@@ -22812,7 +23026,7 @@ export class SubjectGroupsServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     createOrEdit(body: CreateOrEditSubjectGroupDto | undefined): Observable<void> {
@@ -22864,7 +23078,7 @@ export class SubjectGroupsServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     delete(id: number | undefined): Observable<void> {
@@ -22916,10 +23130,10 @@ export class SubjectGroupsServiceProxy {
     }
 
     /**
-     * @param filter (optional)
-     * @param noteFilter (optional)
-     * @param studySubjectValueFilter (optional)
-     * @param supportGroupNameLFilter (optional)
+     * @param filter (optional) 
+     * @param noteFilter (optional) 
+     * @param studySubjectValueFilter (optional) 
+     * @param supportGroupNameLFilter (optional) 
      * @return Success
      */
     getSubjectGroupsToExcel(filter: string | undefined, noteFilter: string | undefined, studySubjectValueFilter: string | undefined, supportGroupNameLFilter: string | undefined): Observable<FileDto> {
@@ -22987,10 +23201,10 @@ export class SubjectGroupsServiceProxy {
     }
 
     /**
-     * @param filter (optional)
-     * @param sorting (optional)
-     * @param skipCount (optional)
-     * @param maxResultCount (optional)
+     * @param filter (optional) 
+     * @param sorting (optional) 
+     * @param skipCount (optional) 
+     * @param maxResultCount (optional) 
      * @return Success
      */
     getAllStudySubjectForLookupTable(filter: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfSubjectGroupStudySubjectLookupTableDto> {
@@ -23058,10 +23272,10 @@ export class SubjectGroupsServiceProxy {
     }
 
     /**
-     * @param filter (optional)
-     * @param sorting (optional)
-     * @param skipCount (optional)
-     * @param maxResultCount (optional)
+     * @param filter (optional) 
+     * @param sorting (optional) 
+     * @param skipCount (optional) 
+     * @param maxResultCount (optional) 
      * @return Success
      */
     getAllSupportGroupForLookupTable(filter: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfSubjectGroupSupportGroupLookupTableDto> {
@@ -23141,14 +23355,14 @@ export class SubjectUnitsServiceProxy {
     }
 
     /**
-     * @param filter (optional)
-     * @param codeFilter (optional)
-     * @param isActiveFilter (optional)
-     * @param studyLevelValueFilter (optional)
-     * @param studySubjectValueFilter (optional)
-     * @param sorting (optional)
-     * @param skipCount (optional)
-     * @param maxResultCount (optional)
+     * @param filter (optional) 
+     * @param codeFilter (optional) 
+     * @param isActiveFilter (optional) 
+     * @param studyLevelValueFilter (optional) 
+     * @param studySubjectValueFilter (optional) 
+     * @param sorting (optional) 
+     * @param skipCount (optional) 
+     * @param maxResultCount (optional) 
      * @return Success
      */
     getAll(filter: string | undefined, codeFilter: string | undefined, isActiveFilter: number | undefined, studyLevelValueFilter: string | undefined, studySubjectValueFilter: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfGetSubjectUnitForViewDto> {
@@ -23232,7 +23446,7 @@ export class SubjectUnitsServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     getSubjectUnitForView(id: number | undefined): Observable<GetSubjectUnitForViewDto> {
@@ -23288,7 +23502,7 @@ export class SubjectUnitsServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     getSubjectUnitForEdit(id: number | undefined): Observable<GetSubjectUnitForEditOutput> {
@@ -23344,7 +23558,7 @@ export class SubjectUnitsServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     createOrEdit(body: CreateOrEditSubjectUnitDto | undefined): Observable<void> {
@@ -23396,7 +23610,7 @@ export class SubjectUnitsServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     delete(id: number | undefined): Observable<void> {
@@ -23448,11 +23662,11 @@ export class SubjectUnitsServiceProxy {
     }
 
     /**
-     * @param filter (optional)
-     * @param codeFilter (optional)
-     * @param isActiveFilter (optional)
-     * @param studyLevelValueFilter (optional)
-     * @param studySubjectValueFilter (optional)
+     * @param filter (optional) 
+     * @param codeFilter (optional) 
+     * @param isActiveFilter (optional) 
+     * @param studyLevelValueFilter (optional) 
+     * @param studySubjectValueFilter (optional) 
      * @return Success
      */
     getSubjectUnitsToExcel(filter: string | undefined, codeFilter: string | undefined, isActiveFilter: number | undefined, studyLevelValueFilter: string | undefined, studySubjectValueFilter: string | undefined): Observable<FileDto> {
@@ -23524,10 +23738,10 @@ export class SubjectUnitsServiceProxy {
     }
 
     /**
-     * @param filter (optional)
-     * @param sorting (optional)
-     * @param skipCount (optional)
-     * @param maxResultCount (optional)
+     * @param filter (optional) 
+     * @param sorting (optional) 
+     * @param skipCount (optional) 
+     * @param maxResultCount (optional) 
      * @return Success
      */
     getAllStudyLevelForLookupTable(filter: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfSubjectUnitStudyLevelLookupTableDto> {
@@ -23595,10 +23809,10 @@ export class SubjectUnitsServiceProxy {
     }
 
     /**
-     * @param filter (optional)
-     * @param sorting (optional)
-     * @param skipCount (optional)
-     * @param maxResultCount (optional)
+     * @param filter (optional) 
+     * @param sorting (optional) 
+     * @param skipCount (optional) 
+     * @param maxResultCount (optional) 
      * @return Success
      */
     getAllStudySubjectForLookupTable(filter: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfSubjectUnitStudySubjectLookupTableDto> {
@@ -23772,7 +23986,7 @@ export class SubscriptionServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     startExtendSubscription(body: StartExtendSubscriptionInput | undefined): Observable<number> {
@@ -23817,7 +24031,7 @@ export class SubscriptionServiceProxy {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
                 result200 = resultData200 !== undefined ? resultData200 : <any>null;
-
+    
             return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
@@ -23829,7 +24043,7 @@ export class SubscriptionServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     startUpgradeSubscription(body: StartUpgradeSubscriptionInput | undefined): Observable<StartUpgradeSubscriptionOutput> {
@@ -23885,7 +24099,7 @@ export class SubscriptionServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     startTrialToBuySubscription(body: StartTrialToBuySubscriptionInput | undefined): Observable<number> {
@@ -23930,7 +24144,7 @@ export class SubscriptionServiceProxy {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
                 result200 = resultData200 !== undefined ? resultData200 : <any>null;
-
+    
             return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
@@ -23954,13 +24168,13 @@ export class SupervisorsServiceProxy {
     }
 
     /**
-     * @param filter (optional)
-     * @param noteFilter (optional)
-     * @param schoolNameLFilter (optional)
-     * @param userNameFilter (optional)
-     * @param sorting (optional)
-     * @param skipCount (optional)
-     * @param maxResultCount (optional)
+     * @param filter (optional) 
+     * @param noteFilter (optional) 
+     * @param schoolNameLFilter (optional) 
+     * @param userNameFilter (optional) 
+     * @param sorting (optional) 
+     * @param skipCount (optional) 
+     * @param maxResultCount (optional) 
      * @return Success
      */
     getAll(filter: string | undefined, noteFilter: string | undefined, schoolNameLFilter: string | undefined, userNameFilter: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfGetSupervisorForViewDto> {
@@ -24040,7 +24254,7 @@ export class SupervisorsServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     getSupervisorForView(id: number | undefined): Observable<GetSupervisorForViewDto> {
@@ -24096,7 +24310,7 @@ export class SupervisorsServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     getSupervisorForEdit(id: number | undefined): Observable<GetSupervisorForEditOutput> {
@@ -24152,7 +24366,7 @@ export class SupervisorsServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     createOrEdit(body: CreateOrEditSupervisorDto | undefined): Observable<void> {
@@ -24204,7 +24418,7 @@ export class SupervisorsServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     delete(id: number | undefined): Observable<void> {
@@ -24256,10 +24470,10 @@ export class SupervisorsServiceProxy {
     }
 
     /**
-     * @param filter (optional)
-     * @param noteFilter (optional)
-     * @param schoolNameLFilter (optional)
-     * @param userNameFilter (optional)
+     * @param filter (optional) 
+     * @param noteFilter (optional) 
+     * @param schoolNameLFilter (optional) 
+     * @param userNameFilter (optional) 
      * @return Success
      */
     getSupervisorsToExcel(filter: string | undefined, noteFilter: string | undefined, schoolNameLFilter: string | undefined, userNameFilter: string | undefined): Observable<FileDto> {
@@ -24327,10 +24541,10 @@ export class SupervisorsServiceProxy {
     }
 
     /**
-     * @param filter (optional)
-     * @param sorting (optional)
-     * @param skipCount (optional)
-     * @param maxResultCount (optional)
+     * @param filter (optional) 
+     * @param sorting (optional) 
+     * @param skipCount (optional) 
+     * @param maxResultCount (optional) 
      * @return Success
      */
     getAllSchoolForLookupTable(filter: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfSupervisorSchoolLookupTableDto> {
@@ -24398,10 +24612,10 @@ export class SupervisorsServiceProxy {
     }
 
     /**
-     * @param filter (optional)
-     * @param sorting (optional)
-     * @param skipCount (optional)
-     * @param maxResultCount (optional)
+     * @param filter (optional) 
+     * @param sorting (optional) 
+     * @param skipCount (optional) 
+     * @param maxResultCount (optional) 
      * @return Success
      */
     getAllUserForLookupTable(filter: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfSupervisorUserLookupTableDto> {
@@ -24481,16 +24695,16 @@ export class SupportGroupItemsServiceProxy {
     }
 
     /**
-     * @param filter (optional)
-     * @param valueFilter (optional)
-     * @param quoteFilter (optional)
-     * @param maxOrderNoFilter (optional)
-     * @param minOrderNoFilter (optional)
-     * @param isActiveFilter (optional)
-     * @param supportGroupNameLFilter (optional)
-     * @param sorting (optional)
-     * @param skipCount (optional)
-     * @param maxResultCount (optional)
+     * @param filter (optional) 
+     * @param valueFilter (optional) 
+     * @param quoteFilter (optional) 
+     * @param maxOrderNoFilter (optional) 
+     * @param minOrderNoFilter (optional) 
+     * @param isActiveFilter (optional) 
+     * @param supportGroupNameLFilter (optional) 
+     * @param sorting (optional) 
+     * @param skipCount (optional) 
+     * @param maxResultCount (optional) 
      * @return Success
      */
     getAll(filter: string | undefined, valueFilter: string | undefined, quoteFilter: string | undefined, maxOrderNoFilter: number | undefined, minOrderNoFilter: number | undefined, isActiveFilter: number | undefined, supportGroupNameLFilter: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfGetSupportGroupItemForViewDto> {
@@ -24582,7 +24796,7 @@ export class SupportGroupItemsServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     getSupportGroupItemForView(id: number | undefined): Observable<GetSupportGroupItemForViewDto> {
@@ -24638,7 +24852,7 @@ export class SupportGroupItemsServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     getSupportGroupItemForEdit(id: number | undefined): Observable<GetSupportGroupItemForEditOutput> {
@@ -24694,7 +24908,7 @@ export class SupportGroupItemsServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     createOrEdit(body: CreateOrEditSupportGroupItemDto | undefined): Observable<void> {
@@ -24746,7 +24960,7 @@ export class SupportGroupItemsServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     delete(id: number | undefined): Observable<void> {
@@ -24798,13 +25012,13 @@ export class SupportGroupItemsServiceProxy {
     }
 
     /**
-     * @param filter (optional)
-     * @param valueFilter (optional)
-     * @param quoteFilter (optional)
-     * @param maxOrderNoFilter (optional)
-     * @param minOrderNoFilter (optional)
-     * @param isActiveFilter (optional)
-     * @param supportGroupNameLFilter (optional)
+     * @param filter (optional) 
+     * @param valueFilter (optional) 
+     * @param quoteFilter (optional) 
+     * @param maxOrderNoFilter (optional) 
+     * @param minOrderNoFilter (optional) 
+     * @param isActiveFilter (optional) 
+     * @param supportGroupNameLFilter (optional) 
      * @return Success
      */
     getSupportGroupItemsToExcel(filter: string | undefined, valueFilter: string | undefined, quoteFilter: string | undefined, maxOrderNoFilter: number | undefined, minOrderNoFilter: number | undefined, isActiveFilter: number | undefined, supportGroupNameLFilter: string | undefined): Observable<FileDto> {
@@ -24884,10 +25098,10 @@ export class SupportGroupItemsServiceProxy {
     }
 
     /**
-     * @param filter (optional)
-     * @param sorting (optional)
-     * @param skipCount (optional)
-     * @param maxResultCount (optional)
+     * @param filter (optional) 
+     * @param sorting (optional) 
+     * @param skipCount (optional) 
+     * @param maxResultCount (optional) 
      * @return Success
      */
     getAllSupportGroupForLookupTable(filter: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfSupportGroupItemSupportGroupLookupTableDto> {
@@ -24967,14 +25181,14 @@ export class SupportGroupsServiceProxy {
     }
 
     /**
-     * @param filter (optional)
-     * @param isActiveFilter (optional)
-     * @param nameLFilter (optional)
-     * @param nameFFilter (optional)
-     * @param groupTypeFilter (optional)
-     * @param sorting (optional)
-     * @param skipCount (optional)
-     * @param maxResultCount (optional)
+     * @param filter (optional) 
+     * @param isActiveFilter (optional) 
+     * @param nameLFilter (optional) 
+     * @param nameFFilter (optional) 
+     * @param groupTypeFilter (optional) 
+     * @param sorting (optional) 
+     * @param skipCount (optional) 
+     * @param maxResultCount (optional) 
      * @return Success
      */
     getAll(filter: string | undefined, isActiveFilter: number | undefined, nameLFilter: string | undefined, nameFFilter: string | undefined, groupTypeFilter: number | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfGetSupportGroupForViewDto> {
@@ -25058,7 +25272,7 @@ export class SupportGroupsServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     getSupportGroupForView(id: number | undefined): Observable<GetSupportGroupForViewDto> {
@@ -25114,7 +25328,7 @@ export class SupportGroupsServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     getSupportGroupForEdit(id: number | undefined): Observable<GetSupportGroupForEditOutput> {
@@ -25170,7 +25384,7 @@ export class SupportGroupsServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     createOrEdit(body: CreateOrEditSupportGroupDto | undefined): Observable<void> {
@@ -25222,7 +25436,7 @@ export class SupportGroupsServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     delete(id: number | undefined): Observable<void> {
@@ -25274,11 +25488,11 @@ export class SupportGroupsServiceProxy {
     }
 
     /**
-     * @param filter (optional)
-     * @param isActiveFilter (optional)
-     * @param nameLFilter (optional)
-     * @param nameFFilter (optional)
-     * @param groupTypeFilter (optional)
+     * @param filter (optional) 
+     * @param isActiveFilter (optional) 
+     * @param nameLFilter (optional) 
+     * @param nameFFilter (optional) 
+     * @param groupTypeFilter (optional) 
      * @return Success
      */
     getSupportGroupsToExcel(filter: string | undefined, isActiveFilter: number | undefined, nameLFilter: string | undefined, nameFFilter: string | undefined, groupTypeFilter: number | undefined): Observable<FileDto> {
@@ -25362,16 +25576,16 @@ export class TenantServiceProxy {
     }
 
     /**
-     * @param filter (optional)
-     * @param subscriptionEndDateStart (optional)
-     * @param subscriptionEndDateEnd (optional)
-     * @param creationDateStart (optional)
-     * @param creationDateEnd (optional)
-     * @param editionId (optional)
-     * @param editionIdSpecified (optional)
-     * @param sorting (optional)
-     * @param maxResultCount (optional)
-     * @param skipCount (optional)
+     * @param filter (optional) 
+     * @param subscriptionEndDateStart (optional) 
+     * @param subscriptionEndDateEnd (optional) 
+     * @param creationDateStart (optional) 
+     * @param creationDateEnd (optional) 
+     * @param editionId (optional) 
+     * @param editionIdSpecified (optional) 
+     * @param sorting (optional) 
+     * @param maxResultCount (optional) 
+     * @param skipCount (optional) 
      * @return Success
      */
     getTenants(filter: string | undefined, subscriptionEndDateStart: DateTime | undefined, subscriptionEndDateEnd: DateTime | undefined, creationDateStart: DateTime | undefined, creationDateEnd: DateTime | undefined, editionId: number | undefined, editionIdSpecified: boolean | undefined, sorting: string | undefined, maxResultCount: number | undefined, skipCount: number | undefined): Observable<PagedResultDtoOfTenantListDto> {
@@ -25463,7 +25677,7 @@ export class TenantServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     createTenant(body: CreateTenantInput | undefined): Observable<void> {
@@ -25515,7 +25729,7 @@ export class TenantServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     getTenantForEdit(id: number | undefined): Observable<TenantEditDto> {
@@ -25571,7 +25785,7 @@ export class TenantServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     updateTenant(body: TenantEditDto | undefined): Observable<void> {
@@ -25623,7 +25837,7 @@ export class TenantServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     deleteTenant(id: number | undefined): Observable<void> {
@@ -25675,7 +25889,7 @@ export class TenantServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     getTenantFeaturesForEdit(id: number | undefined): Observable<GetTenantFeaturesEditOutput> {
@@ -25731,7 +25945,7 @@ export class TenantServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     updateTenantFeatures(body: UpdateTenantFeaturesInput | undefined): Observable<void> {
@@ -25783,7 +25997,7 @@ export class TenantServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     resetTenantSpecificFeatures(body: EntityDto | undefined): Observable<void> {
@@ -25835,7 +26049,7 @@ export class TenantServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     unlockTenantAdmin(body: EntityDto | undefined): Observable<void> {
@@ -25899,8 +26113,8 @@ export class TenantCustomizationServiceProxy {
     }
 
     /**
-     * @param tenantId (optional)
-     * @param extension (optional)
+     * @param tenantId (optional) 
+     * @param extension (optional) 
      * @return Success
      */
     getTenantLogo(skin: string, tenantId: number | undefined, extension: string | undefined): Observable<void> {
@@ -26022,7 +26236,7 @@ export class TenantDashboardServiceProxy {
     }
 
     /**
-     * @param salesSummaryDatePeriod (optional)
+     * @param salesSummaryDatePeriod (optional) 
      * @return Success
      */
     getDashboardData(salesSummaryDatePeriod: SalesSummaryDatePeriod | undefined): Observable<GetDashboardDataOutput> {
@@ -26231,7 +26445,7 @@ export class TenantDashboardServiceProxy {
     }
 
     /**
-     * @param salesSummaryDatePeriod (optional)
+     * @param salesSummaryDatePeriod (optional) 
      * @return Success
      */
     getSalesSummary(salesSummaryDatePeriod: SalesSummaryDatePeriod | undefined): Observable<GetSalesSummaryOutput> {
@@ -26401,7 +26615,7 @@ export class TenantRegistrationServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     registerTenant(body: RegisterTenantInput | undefined): Observable<RegisterTenantOutput> {
@@ -26457,7 +26671,7 @@ export class TenantRegistrationServiceProxy {
     }
 
     /**
-     * @param paymentId (optional)
+     * @param paymentId (optional) 
      * @return Success
      */
     buyNowSucceed(paymentId: number | undefined): Observable<void> {
@@ -26509,7 +26723,7 @@ export class TenantRegistrationServiceProxy {
     }
 
     /**
-     * @param paymentId (optional)
+     * @param paymentId (optional) 
      * @return Success
      */
     newRegistrationSucceed(paymentId: number | undefined): Observable<void> {
@@ -26561,7 +26775,7 @@ export class TenantRegistrationServiceProxy {
     }
 
     /**
-     * @param paymentId (optional)
+     * @param paymentId (optional) 
      * @return Success
      */
     upgradeSucceed(paymentId: number | undefined): Observable<void> {
@@ -26613,7 +26827,7 @@ export class TenantRegistrationServiceProxy {
     }
 
     /**
-     * @param paymentId (optional)
+     * @param paymentId (optional) 
      * @return Success
      */
     extendSucceed(paymentId: number | undefined): Observable<void> {
@@ -26716,7 +26930,7 @@ export class TenantRegistrationServiceProxy {
     }
 
     /**
-     * @param editionId (optional)
+     * @param editionId (optional) 
      * @return Success
      */
     getEdition(editionId: number | undefined): Observable<EditionSelectDto> {
@@ -26835,7 +27049,7 @@ export class TenantSettingsServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     updateAllSettings(body: TenantSettingsEditDto | undefined): Observable<void> {
@@ -27122,7 +27336,7 @@ export class TenantSettingsServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     sendTestEmail(body: SendTestEmailInput | undefined): Observable<void> {
@@ -27237,7 +27451,7 @@ export class TimingServiceProxy {
     }
 
     /**
-     * @param defaultTimezoneScope (optional)
+     * @param defaultTimezoneScope (optional) 
      * @return Success
      */
     getTimezones(defaultTimezoneScope: SettingScopes | undefined): Observable<ListResultDtoOfNameValueDto> {
@@ -27293,7 +27507,7 @@ export class TimingServiceProxy {
     }
 
     /**
-     * @param selectedTimezoneId (optional)
+     * @param selectedTimezoneId (optional) 
      * @return Success
      */
     getTimezoneComboboxItems(selectedTimezoneId: string | undefined): Observable<ComboboxItemDto[]> {
@@ -27368,7 +27582,7 @@ export class TokenAuthServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     authenticate(body: AuthenticateModel | undefined): Observable<AuthenticateResultModel> {
@@ -27424,7 +27638,7 @@ export class TokenAuthServiceProxy {
     }
 
     /**
-     * @param refreshToken (optional)
+     * @param refreshToken (optional) 
      * @return Success
      */
     refreshToken(refreshToken: string | undefined): Observable<RefreshTokenResult> {
@@ -27527,7 +27741,7 @@ export class TokenAuthServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     sendTwoFactorAuthCode(body: SendTwoFactorAuthCodeModel | undefined): Observable<void> {
@@ -27579,7 +27793,7 @@ export class TokenAuthServiceProxy {
     }
 
     /**
-     * @param impersonationToken (optional)
+     * @param impersonationToken (optional) 
      * @return Success
      */
     impersonatedAuthenticate(impersonationToken: string | undefined): Observable<ImpersonatedAuthenticateResultModel> {
@@ -27635,8 +27849,8 @@ export class TokenAuthServiceProxy {
     }
 
     /**
-     * @param userDelegationId (optional)
-     * @param impersonationToken (optional)
+     * @param userDelegationId (optional) 
+     * @param impersonationToken (optional) 
      * @return Success
      */
     delegatedImpersonatedAuthenticate(userDelegationId: number | undefined, impersonationToken: string | undefined): Observable<ImpersonatedAuthenticateResultModel> {
@@ -27696,7 +27910,7 @@ export class TokenAuthServiceProxy {
     }
 
     /**
-     * @param switchAccountToken (optional)
+     * @param switchAccountToken (optional) 
      * @return Success
      */
     linkedAccountAuthenticate(switchAccountToken: string | undefined): Observable<SwitchedAccountAuthenticateResultModel> {
@@ -27810,7 +28024,7 @@ export class TokenAuthServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     externalAuthenticate(body: ExternalAuthenticateModel | undefined): Observable<ExternalAuthenticateResultModel> {
@@ -27866,8 +28080,8 @@ export class TokenAuthServiceProxy {
     }
 
     /**
-     * @param message (optional)
-     * @param severity (optional)
+     * @param message (optional) 
+     * @param severity (optional) 
      * @return Success
      */
     testNotification(message: string | undefined, severity: string | undefined): Observable<void> {
@@ -27986,8 +28200,8 @@ export class TwitterServiceProxy {
     }
 
     /**
-     * @param token (optional)
-     * @param verifier (optional)
+     * @param token (optional) 
+     * @param verifier (optional) 
      * @return Success
      */
     getAccessToken(token: string | undefined, verifier: string | undefined): Observable<TwitterGetAccessTokenResponse> {
@@ -28117,7 +28331,7 @@ export class UiCustomizationSettingsServiceProxy {
     }
 
     /**
-     * @param themeName (optional)
+     * @param themeName (optional) 
      * @return Success
      */
     changeThemeWithDefaultValues(themeName: string | undefined): Observable<void> {
@@ -28169,7 +28383,7 @@ export class UiCustomizationSettingsServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     updateUiManagementSettings(body: ThemeSettingsDto | undefined): Observable<void> {
@@ -28221,7 +28435,7 @@ export class UiCustomizationSettingsServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     updateDefaultUiManagementSettings(body: ThemeSettingsDto | undefined): Observable<void> {
@@ -28320,7 +28534,7 @@ export class UiCustomizationSettingsServiceProxy {
     }
 
     /**
-     * @param isDarkModeActive (optional)
+     * @param isDarkModeActive (optional) 
      * @return Success
      */
     changeDarkModeOfCurrentTheme(isDarkModeActive: boolean | undefined): Observable<void> {
@@ -28384,7 +28598,7 @@ export class UserServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     getUsers(body: GetUsersInput | undefined): Observable<PagedResultDtoOfUserListDto> {
@@ -28440,12 +28654,12 @@ export class UserServiceProxy {
     }
 
     /**
-     * @param filter (optional)
-     * @param permissions (optional)
-     * @param selectedColumns (optional)
-     * @param role (optional)
-     * @param onlyLockedUsers (optional)
-     * @param sorting (optional)
+     * @param filter (optional) 
+     * @param permissions (optional) 
+     * @param selectedColumns (optional) 
+     * @param role (optional) 
+     * @param onlyLockedUsers (optional) 
+     * @param sorting (optional) 
      * @return Success
      */
     getUsersToExcel(filter: string | undefined, permissions: string[] | undefined, selectedColumns: string[] | undefined, role: number | undefined, onlyLockedUsers: boolean | undefined, sorting: string | undefined): Observable<FileDto> {
@@ -28579,7 +28793,7 @@ export class UserServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     getUserForEdit(id: number | undefined): Observable<GetUserForEditOutput> {
@@ -28635,7 +28849,7 @@ export class UserServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     getUserPermissionsForEdit(id: number | undefined): Observable<GetUserPermissionsForEditOutput> {
@@ -28691,7 +28905,7 @@ export class UserServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     resetUserSpecificPermissions(body: EntityDtoOfInt64 | undefined): Observable<void> {
@@ -28743,7 +28957,7 @@ export class UserServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     updateUserPermissions(body: UpdateUserPermissionsInput | undefined): Observable<void> {
@@ -28795,7 +29009,7 @@ export class UserServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     createOrUpdateUser(body: CreateOrUpdateUserInput | undefined): Observable<void> {
@@ -28847,7 +29061,7 @@ export class UserServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     deleteUser(id: number | undefined): Observable<void> {
@@ -28899,7 +29113,7 @@ export class UserServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     unlockUser(body: EntityDtoOfInt64 | undefined): Observable<void> {
@@ -28963,9 +29177,9 @@ export class UserDelegationServiceProxy {
     }
 
     /**
-     * @param maxResultCount (optional)
-     * @param skipCount (optional)
-     * @param sorting (optional)
+     * @param maxResultCount (optional) 
+     * @param skipCount (optional) 
+     * @param sorting (optional) 
      * @return Success
      */
     getDelegatedUsers(maxResultCount: number | undefined, skipCount: number | undefined, sorting: string | undefined): Observable<PagedResultDtoOfUserDelegationDto> {
@@ -29029,7 +29243,7 @@ export class UserDelegationServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     delegateNewUser(body: CreateUserDelegationDto | undefined): Observable<void> {
@@ -29081,7 +29295,7 @@ export class UserDelegationServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     removeDelegation(id: number | undefined): Observable<void> {
@@ -29203,7 +29417,7 @@ export class UserLinkServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     linkToUser(body: LinkToUserInput | undefined): Observable<void> {
@@ -29255,9 +29469,9 @@ export class UserLinkServiceProxy {
     }
 
     /**
-     * @param maxResultCount (optional)
-     * @param skipCount (optional)
-     * @param sorting (optional)
+     * @param maxResultCount (optional) 
+     * @param skipCount (optional) 
+     * @param sorting (optional) 
      * @return Success
      */
     getLinkedUsers(maxResultCount: number | undefined, skipCount: number | undefined, sorting: string | undefined): Observable<PagedResultDtoOfLinkedUserDto> {
@@ -29372,7 +29586,7 @@ export class UserLinkServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     unlinkUser(body: UnlinkUserInput | undefined): Observable<void> {
@@ -29436,13 +29650,13 @@ export class UserLoginServiceProxy {
     }
 
     /**
-     * @param filter (optional)
-     * @param startDate (optional)
-     * @param endDate (optional)
-     * @param result (optional)
-     * @param sorting (optional)
-     * @param maxResultCount (optional)
-     * @param skipCount (optional)
+     * @param filter (optional) 
+     * @param startDate (optional) 
+     * @param endDate (optional) 
+     * @param result (optional) 
+     * @param sorting (optional) 
+     * @param maxResultCount (optional) 
+     * @param skipCount (optional) 
      * @return Success
      */
     getUserLoginAttempts(filter: string | undefined, startDate: DateTime | undefined, endDate: DateTime | undefined, result: AbpLoginResultType | undefined, sorting: string | undefined, maxResultCount: number | undefined, skipCount: number | undefined): Observable<PagedResultDtoOfUserLoginAttemptDto> {
@@ -29534,7 +29748,7 @@ export class WebhookEventServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     get(id: string | undefined): Observable<WebhookEvent> {
@@ -29602,9 +29816,9 @@ export class WebhookSendAttemptServiceProxy {
     }
 
     /**
-     * @param subscriptionId (optional)
-     * @param maxResultCount (optional)
-     * @param skipCount (optional)
+     * @param subscriptionId (optional) 
+     * @param maxResultCount (optional) 
+     * @param skipCount (optional) 
      * @return Success
      */
     getAllSendAttempts(subscriptionId: string | undefined, maxResultCount: number | undefined, skipCount: number | undefined): Observable<PagedResultDtoOfGetAllSendAttemptsOutput> {
@@ -29668,7 +29882,7 @@ export class WebhookSendAttemptServiceProxy {
     }
 
     /**
-     * @param id (optional)
+     * @param id (optional) 
      * @return Success
      */
     getAllSendAttemptsOfWebhookEvent(id: string | undefined): Observable<ListResultDtoOfGetAllSendAttemptsOfWebhookEventOutput> {
@@ -29724,7 +29938,7 @@ export class WebhookSendAttemptServiceProxy {
     }
 
     /**
-     * @param sendAttemptId (optional)
+     * @param sendAttemptId (optional) 
      * @return Success
      */
     resend(sendAttemptId: string | undefined): Observable<void> {
@@ -29828,7 +30042,7 @@ export class WebhookSubscriptionServiceProxy {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
                 result200 = resultData200 !== undefined ? resultData200 : <any>null;
-
+    
             return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
@@ -29891,7 +30105,7 @@ export class WebhookSubscriptionServiceProxy {
     }
 
     /**
-     * @param subscriptionId (optional)
+     * @param subscriptionId (optional) 
      * @return Success
      */
     getSubscription(subscriptionId: string | undefined): Observable<WebhookSubscription> {
@@ -29947,7 +30161,7 @@ export class WebhookSubscriptionServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     addSubscription(body: WebhookSubscription | undefined): Observable<void> {
@@ -29999,7 +30213,7 @@ export class WebhookSubscriptionServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     updateSubscription(body: WebhookSubscription | undefined): Observable<void> {
@@ -30051,7 +30265,7 @@ export class WebhookSubscriptionServiceProxy {
     }
 
     /**
-     * @param body (optional)
+     * @param body (optional) 
      * @return Success
      */
     activateWebhookSubscription(body: ActivateWebhookSubscriptionInput | undefined): Observable<void> {
@@ -30103,7 +30317,7 @@ export class WebhookSubscriptionServiceProxy {
     }
 
     /**
-     * @param webhookName (optional)
+     * @param webhookName (optional) 
      * @return Success
      */
     isSubscribed(webhookName: string | undefined): Observable<boolean> {
@@ -30148,7 +30362,7 @@ export class WebhookSubscriptionServiceProxy {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
                 result200 = resultData200 !== undefined ? resultData200 : <any>null;
-
+    
             return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
@@ -30160,7 +30374,7 @@ export class WebhookSubscriptionServiceProxy {
     }
 
     /**
-     * @param webhookName (optional)
+     * @param webhookName (optional) 
      * @return Success
      */
     getAllSubscriptionsIfFeaturesGranted(webhookName: string | undefined): Observable<ListResultDtoOfGetAllSubscriptionsOutput> {
@@ -30928,7 +31142,7 @@ export class ApplyExamDto implements IApplyExamDto {
     examInstructions!: string | undefined;
     sectionInstructions!: string | undefined;
     question!: ExamQuestionDto;
-    questionWithAnswer!: QuestionWithAnswerResDto;
+    questionWithAnswer!: QuestionWithAnswerDto;
     hasAnswer!: boolean;
     lang!: QuestionLanguageEnum;
     isLastQuestionInSection!: boolean;
@@ -30960,7 +31174,7 @@ export class ApplyExamDto implements IApplyExamDto {
             this.examInstructions = _data["examInstructions"];
             this.sectionInstructions = _data["sectionInstructions"];
             this.question = _data["question"] ? ExamQuestionDto.fromJS(_data["question"]) : <any>undefined;
-            this.questionWithAnswer = _data["questionWithAnswer"] ? QuestionWithAnswerResDto.fromJS(_data["questionWithAnswer"]) : <any>undefined;
+            this.questionWithAnswer = _data["questionWithAnswer"] ? QuestionWithAnswerDto.fromJS(_data["questionWithAnswer"]) : <any>undefined;
             this.hasAnswer = _data["hasAnswer"];
             this.lang = _data["lang"];
             this.isLastQuestionInSection = _data["isLastQuestionInSection"];
@@ -31017,7 +31231,7 @@ export interface IApplyExamDto {
     examInstructions: string | undefined;
     sectionInstructions: string | undefined;
     question: ExamQuestionDto;
-    questionWithAnswer: QuestionWithAnswerResDto;
+    questionWithAnswer: QuestionWithAnswerDto;
     hasAnswer: boolean;
     lang: QuestionLanguageEnum;
     isLastQuestionInSection: boolean;
@@ -32696,7 +32910,7 @@ export interface ICreateOrEditDragFormQuestionDto {
 }
 
 export class CreateOrEditExamAnswerDto implements ICreateOrEditExamAnswerDto {
-    id!: number | undefined;
+    id!: string | undefined;
     value!: string | undefined;
     score!: number | undefined;
     originalScore!: number | undefined;
@@ -32752,7 +32966,7 @@ export class CreateOrEditExamAnswerDto implements ICreateOrEditExamAnswerDto {
 }
 
 export interface ICreateOrEditExamAnswerDto {
-    id: number | undefined;
+    id: string | undefined;
     value: string | undefined;
     score: number | undefined;
     originalScore: number | undefined;
@@ -32970,11 +33184,14 @@ export interface ICreateOrEditExamSectionDto {
 export class CreateOrEditExamTemplateDto implements ICreateOrEditExamTemplateDto {
     id!: number | undefined;
     name!: string;
+    durationTime!: number;
     instructions!: string | undefined;
     hasInstructions!: boolean;
     versionCount!: number;
     studyLevelId!: number;
     studySubjectId!: number;
+    templateType!: TemplateTypeEnum;
+    generateDifferentQuestionsForEachVersion!: boolean;
     templateSections!: CreateOrEditTemplateSectionDto[] | undefined;
 
     constructor(data?: ICreateOrEditExamTemplateDto) {
@@ -32990,11 +33207,14 @@ export class CreateOrEditExamTemplateDto implements ICreateOrEditExamTemplateDto
         if (_data) {
             this.id = _data["id"];
             this.name = _data["name"];
+            this.durationTime = _data["durationTime"];
             this.instructions = _data["instructions"];
             this.hasInstructions = _data["hasInstructions"];
             this.versionCount = _data["versionCount"];
             this.studyLevelId = _data["studyLevelId"];
             this.studySubjectId = _data["studySubjectId"];
+            this.templateType = _data["templateType"];
+            this.generateDifferentQuestionsForEachVersion = _data["generateDifferentQuestionsForEachVersion"];
             if (Array.isArray(_data["templateSections"])) {
                 this.templateSections = [] as any;
                 for (let item of _data["templateSections"])
@@ -33014,11 +33234,14 @@ export class CreateOrEditExamTemplateDto implements ICreateOrEditExamTemplateDto
         data = typeof data === 'object' ? data : {};
         data["id"] = this.id;
         data["name"] = this.name;
+        data["durationTime"] = this.durationTime;
         data["instructions"] = this.instructions;
         data["hasInstructions"] = this.hasInstructions;
         data["versionCount"] = this.versionCount;
         data["studyLevelId"] = this.studyLevelId;
         data["studySubjectId"] = this.studySubjectId;
+        data["templateType"] = this.templateType;
+        data["generateDifferentQuestionsForEachVersion"] = this.generateDifferentQuestionsForEachVersion;
         if (Array.isArray(this.templateSections)) {
             data["templateSections"] = [];
             for (let item of this.templateSections)
@@ -33031,11 +33254,14 @@ export class CreateOrEditExamTemplateDto implements ICreateOrEditExamTemplateDto
 export interface ICreateOrEditExamTemplateDto {
     id: number | undefined;
     name: string;
+    durationTime: number;
     instructions: string | undefined;
     hasInstructions: boolean;
     versionCount: number;
     studyLevelId: number;
     studySubjectId: number;
+    templateType: TemplateTypeEnum;
+    generateDifferentQuestionsForEachVersion: boolean;
     templateSections: CreateOrEditTemplateSectionDto[] | undefined;
 }
 
@@ -34375,6 +34601,7 @@ export class CreateOrEditTemplateSectionDto implements ICreateOrEditTemplateSect
     id!: number | undefined;
     durationTime!: number;
     order!: number;
+    hasInstructions!: boolean;
     instructions!: string | undefined;
     name!: string;
     sectionType!: SectionTypeEnum;
@@ -34395,6 +34622,7 @@ export class CreateOrEditTemplateSectionDto implements ICreateOrEditTemplateSect
             this.id = _data["id"];
             this.durationTime = _data["durationTime"];
             this.order = _data["order"];
+            this.hasInstructions = _data["hasInstructions"];
             this.instructions = _data["instructions"];
             this.name = _data["name"];
             this.sectionType = _data["sectionType"];
@@ -34419,6 +34647,7 @@ export class CreateOrEditTemplateSectionDto implements ICreateOrEditTemplateSect
         data["id"] = this.id;
         data["durationTime"] = this.durationTime;
         data["order"] = this.order;
+        data["hasInstructions"] = this.hasInstructions;
         data["instructions"] = this.instructions;
         data["name"] = this.name;
         data["sectionType"] = this.sectionType;
@@ -34436,6 +34665,7 @@ export interface ICreateOrEditTemplateSectionDto {
     id: number | undefined;
     durationTime: number;
     order: number;
+    hasInstructions: boolean;
     instructions: string | undefined;
     name: string;
     sectionType: SectionTypeEnum;
@@ -35546,6 +35776,102 @@ export interface IDelegatedImpersonateInput {
     userDelegationId: number;
 }
 
+export class DragFormAnswer implements IDragFormAnswer {
+    id!: number;
+    words!: string[] | undefined;
+
+    constructor(data?: IDragFormAnswer) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            if (Array.isArray(_data["words"])) {
+                this.words = [] as any;
+                for (let item of _data["words"])
+                    this.words!.push(item);
+            }
+        }
+    }
+
+    static fromJS(data: any): DragFormAnswer {
+        data = typeof data === 'object' ? data : {};
+        let result = new DragFormAnswer();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        if (Array.isArray(this.words)) {
+            data["words"] = [];
+            for (let item of this.words)
+                data["words"].push(item);
+        }
+        return data;
+    }
+}
+
+export interface IDragFormAnswer {
+    id: number;
+    words: string[] | undefined;
+}
+
+export class DragTableAnswer implements IDragTableAnswer {
+    title!: string | undefined;
+    words!: string[] | undefined;
+
+    constructor(data?: IDragTableAnswer) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.title = _data["title"];
+            if (Array.isArray(_data["words"])) {
+                this.words = [] as any;
+                for (let item of _data["words"])
+                    this.words!.push(item);
+            }
+        }
+    }
+
+    static fromJS(data: any): DragTableAnswer {
+        data = typeof data === 'object' ? data : {};
+        let result = new DragTableAnswer();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["title"] = this.title;
+        if (Array.isArray(this.words)) {
+            data["words"] = [];
+            for (let item of this.words)
+                data["words"].push(item);
+        }
+        return data;
+    }
+}
+
+export interface IDragTableAnswer {
+    title: string | undefined;
+    words: string[] | undefined;
+}
+
 export class DynamicEntityPropertyDto implements IDynamicEntityPropertyDto {
     id!: number;
     entityFullName!: string | undefined;
@@ -36639,7 +36965,7 @@ export interface IExamAnswerAttemptLookupTableDto {
 }
 
 export class ExamAnswerDto implements IExamAnswerDto {
-    id!: number;
+    id!: string;
     value!: string | undefined;
     score!: number | undefined;
     originalScore!: number | undefined;
@@ -36695,7 +37021,7 @@ export class ExamAnswerDto implements IExamAnswerDto {
 }
 
 export interface IExamAnswerDto {
-    id: number;
+    id: string;
     value: string | undefined;
     score: number | undefined;
     originalScore: number | undefined;
@@ -37240,6 +37566,146 @@ export class ExamQuestionQuestionLookupTableDto implements IExamQuestionQuestion
 export interface IExamQuestionQuestionLookupTableDto {
     id: number;
     displayName: string | undefined;
+}
+
+export class ExamQuestionWithAnswerDto implements IExamQuestionWithAnswerDto {
+    questionNo!: number;
+    sectionId!: number;
+    examId!: number;
+    sectionNo!: number;
+    type!: number;
+    multipleChoiceAnswer!: number[] | undefined;
+    singleChoiceAnswer!: number;
+    trueFalseAnswer!: number;
+    matchAnswer!: string[] | undefined;
+    rearrangeAnswer!: string[] | undefined;
+    saAnswer!: string | undefined;
+    dragTableAnswer!: DragTableAnswer[] | undefined;
+    dragFormAnswer!: DragFormAnswer[] | undefined;
+    linkedQuestionAnswer!: SubQuestionAnswer[] | undefined;
+    drawingAnswer!: string | undefined;
+
+    constructor(data?: IExamQuestionWithAnswerDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.questionNo = _data["questionNo"];
+            this.sectionId = _data["sectionId"];
+            this.examId = _data["examId"];
+            this.sectionNo = _data["sectionNo"];
+            this.type = _data["type"];
+            if (Array.isArray(_data["multipleChoiceAnswer"])) {
+                this.multipleChoiceAnswer = [] as any;
+                for (let item of _data["multipleChoiceAnswer"])
+                    this.multipleChoiceAnswer!.push(item);
+            }
+            this.singleChoiceAnswer = _data["singleChoiceAnswer"];
+            this.trueFalseAnswer = _data["trueFalseAnswer"];
+            if (Array.isArray(_data["matchAnswer"])) {
+                this.matchAnswer = [] as any;
+                for (let item of _data["matchAnswer"])
+                    this.matchAnswer!.push(item);
+            }
+            if (Array.isArray(_data["rearrangeAnswer"])) {
+                this.rearrangeAnswer = [] as any;
+                for (let item of _data["rearrangeAnswer"])
+                    this.rearrangeAnswer!.push(item);
+            }
+            this.saAnswer = _data["saAnswer"];
+            if (Array.isArray(_data["dragTableAnswer"])) {
+                this.dragTableAnswer = [] as any;
+                for (let item of _data["dragTableAnswer"])
+                    this.dragTableAnswer!.push(DragTableAnswer.fromJS(item));
+            }
+            if (Array.isArray(_data["dragFormAnswer"])) {
+                this.dragFormAnswer = [] as any;
+                for (let item of _data["dragFormAnswer"])
+                    this.dragFormAnswer!.push(DragFormAnswer.fromJS(item));
+            }
+            if (Array.isArray(_data["linkedQuestionAnswer"])) {
+                this.linkedQuestionAnswer = [] as any;
+                for (let item of _data["linkedQuestionAnswer"])
+                    this.linkedQuestionAnswer!.push(SubQuestionAnswer.fromJS(item));
+            }
+            this.drawingAnswer = _data["drawingAnswer"];
+        }
+    }
+
+    static fromJS(data: any): ExamQuestionWithAnswerDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new ExamQuestionWithAnswerDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["questionNo"] = this.questionNo;
+        data["sectionId"] = this.sectionId;
+        data["examId"] = this.examId;
+        data["sectionNo"] = this.sectionNo;
+        data["type"] = this.type;
+        if (Array.isArray(this.multipleChoiceAnswer)) {
+            data["multipleChoiceAnswer"] = [];
+            for (let item of this.multipleChoiceAnswer)
+                data["multipleChoiceAnswer"].push(item);
+        }
+        data["singleChoiceAnswer"] = this.singleChoiceAnswer;
+        data["trueFalseAnswer"] = this.trueFalseAnswer;
+        if (Array.isArray(this.matchAnswer)) {
+            data["matchAnswer"] = [];
+            for (let item of this.matchAnswer)
+                data["matchAnswer"].push(item);
+        }
+        if (Array.isArray(this.rearrangeAnswer)) {
+            data["rearrangeAnswer"] = [];
+            for (let item of this.rearrangeAnswer)
+                data["rearrangeAnswer"].push(item);
+        }
+        data["saAnswer"] = this.saAnswer;
+        if (Array.isArray(this.dragTableAnswer)) {
+            data["dragTableAnswer"] = [];
+            for (let item of this.dragTableAnswer)
+                data["dragTableAnswer"].push(item.toJSON());
+        }
+        if (Array.isArray(this.dragFormAnswer)) {
+            data["dragFormAnswer"] = [];
+            for (let item of this.dragFormAnswer)
+                data["dragFormAnswer"].push(item.toJSON());
+        }
+        if (Array.isArray(this.linkedQuestionAnswer)) {
+            data["linkedQuestionAnswer"] = [];
+            for (let item of this.linkedQuestionAnswer)
+                data["linkedQuestionAnswer"].push(item.toJSON());
+        }
+        data["drawingAnswer"] = this.drawingAnswer;
+        return data;
+    }
+}
+
+export interface IExamQuestionWithAnswerDto {
+    questionNo: number;
+    sectionId: number;
+    examId: number;
+    sectionNo: number;
+    type: number;
+    multipleChoiceAnswer: number[] | undefined;
+    singleChoiceAnswer: number;
+    trueFalseAnswer: number;
+    matchAnswer: string[] | undefined;
+    rearrangeAnswer: string[] | undefined;
+    saAnswer: string | undefined;
+    dragTableAnswer: DragTableAnswer[] | undefined;
+    dragFormAnswer: DragFormAnswer[] | undefined;
+    linkedQuestionAnswer: SubQuestionAnswer[] | undefined;
+    drawingAnswer: string | undefined;
 }
 
 export class ExamSectionDto implements IExamSectionDto {
@@ -52814,7 +53280,7 @@ export enum QuestionTypeEnum {
     DargingTable = 512,
 }
 
-export class QuestionWithAnswerResDto implements IQuestionWithAnswerResDto {
+export class QuestionWithAnswerDto implements IQuestionWithAnswerDto {
     sectionId!: number;
     examSectionId!: number;
     sectionNo!: number;
@@ -52838,7 +53304,7 @@ export class QuestionWithAnswerResDto implements IQuestionWithAnswerResDto {
     type!: SectionTypeEnum;
     currentQuestionIndex!: number;
 
-    constructor(data?: IQuestionWithAnswerResDto) {
+    constructor(data?: IQuestionWithAnswerDto) {
         if (data) {
             for (var property in data) {
                 if (data.hasOwnProperty(property))
@@ -52898,9 +53364,9 @@ export class QuestionWithAnswerResDto implements IQuestionWithAnswerResDto {
         }
     }
 
-    static fromJS(data: any): QuestionWithAnswerResDto {
+    static fromJS(data: any): QuestionWithAnswerDto {
         data = typeof data === 'object' ? data : {};
-        let result = new QuestionWithAnswerResDto();
+        let result = new QuestionWithAnswerDto();
         result.init(data);
         return result;
     }
@@ -52957,7 +53423,7 @@ export class QuestionWithAnswerResDto implements IQuestionWithAnswerResDto {
     }
 }
 
-export interface IQuestionWithAnswerResDto {
+export interface IQuestionWithAnswerDto {
     sectionId: number;
     examSectionId: number;
     sectionNo: number;
@@ -55261,6 +55727,78 @@ export interface IStudySubjectDto {
     isActive: boolean;
 }
 
+export class SubQuestionAnswer implements ISubQuestionAnswer {
+    questionId!: number;
+    multipleChoiceAnswer!: number[] | undefined;
+    singleChoiceAnswer!: number;
+    trueFalseAnswer!: number;
+    matchAnswer!: string[] | undefined;
+    saAnswer!: string | undefined;
+
+    constructor(data?: ISubQuestionAnswer) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.questionId = _data["questionId"];
+            if (Array.isArray(_data["multipleChoiceAnswer"])) {
+                this.multipleChoiceAnswer = [] as any;
+                for (let item of _data["multipleChoiceAnswer"])
+                    this.multipleChoiceAnswer!.push(item);
+            }
+            this.singleChoiceAnswer = _data["singleChoiceAnswer"];
+            this.trueFalseAnswer = _data["trueFalseAnswer"];
+            if (Array.isArray(_data["matchAnswer"])) {
+                this.matchAnswer = [] as any;
+                for (let item of _data["matchAnswer"])
+                    this.matchAnswer!.push(item);
+            }
+            this.saAnswer = _data["saAnswer"];
+        }
+    }
+
+    static fromJS(data: any): SubQuestionAnswer {
+        data = typeof data === 'object' ? data : {};
+        let result = new SubQuestionAnswer();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["questionId"] = this.questionId;
+        if (Array.isArray(this.multipleChoiceAnswer)) {
+            data["multipleChoiceAnswer"] = [];
+            for (let item of this.multipleChoiceAnswer)
+                data["multipleChoiceAnswer"].push(item);
+        }
+        data["singleChoiceAnswer"] = this.singleChoiceAnswer;
+        data["trueFalseAnswer"] = this.trueFalseAnswer;
+        if (Array.isArray(this.matchAnswer)) {
+            data["matchAnswer"] = [];
+            for (let item of this.matchAnswer)
+                data["matchAnswer"].push(item);
+        }
+        data["saAnswer"] = this.saAnswer;
+        return data;
+    }
+}
+
+export interface ISubQuestionAnswer {
+    questionId: number;
+    multipleChoiceAnswer: number[] | undefined;
+    singleChoiceAnswer: number;
+    trueFalseAnswer: number;
+    matchAnswer: string[] | undefined;
+    saAnswer: string | undefined;
+}
+
 export class SubjectCategoryCategoryLookupTableDto implements ISubjectCategoryCategoryLookupTableDto {
     id!: number;
     displayName!: string | undefined;
@@ -56409,6 +56947,11 @@ export interface ISwitchedAccountAuthenticateResultModel {
     accessToken: string | undefined;
     encryptedAccessToken: string | undefined;
     expireInSeconds: number;
+}
+
+export enum TemplateTypeEnum {
+    SameQuestionsDifferentOrder = 0,
+    DifferentQuestions = 1,
 }
 
 export enum TenantAvailabilityState {

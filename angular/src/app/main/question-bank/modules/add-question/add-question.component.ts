@@ -1,9 +1,11 @@
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Component, Injector, OnInit, ViewChild } from '@angular/core';
-import { LazyLoadEvent } from '@node_modules/primeng/api';
-import { Paginator } from '@node_modules/primeng/paginator';
-import { Table } from '@node_modules/primeng/table';
+import { LazyLoadEvent } from 'primeng/api';
+import { Paginator } from 'primeng/paginator';
+import { Table } from 'primeng/table';
+import { forkJoin } from 'rxjs';
 import { AppComponentBase } from '@shared/common/app-component-base';
+
 import {
     CategoriesServiceProxy,
     ComplexitiesServiceProxy,
@@ -11,9 +13,9 @@ import {
     StudyLevelsServiceProxy,
     StudySubjectsServiceProxy,
     SubjectUnitsServiceProxy,
+    CreateOrEditQuestionDto,
+    QuestionsServiceProxy,
 } from '@shared/service-proxies/service-proxies';
-import { CreateOrEditQuestionDto } from '@shared/service-proxies/service-proxies';
-import { QuestionsServiceProxy } from '@shared/service-proxies/service-proxies';
 
 @Component({
     selector: 'app-add-question',
@@ -23,8 +25,8 @@ import { QuestionsServiceProxy } from '@shared/service-proxies/service-proxies';
 export class AddQuestionComponent extends AppComponentBase implements OnInit {
     @ViewChild('dataTable', { static: true }) dataTable: Table;
     @ViewChild('paginator', { static: true }) paginator: Paginator;
-    filter: string;
 
+    filter: string;
     questionsType: any[] = [];
     studyLevels: any[] = [];
     studySubjects: any[] = [];
@@ -34,7 +36,8 @@ export class AddQuestionComponent extends AppComponentBase implements OnInit {
     checkedExplanatoryNote: boolean = true;
     QuestionTypeEnum = QuestionTypeEnum;
     _createOrEditQuestionDto = new CreateOrEditQuestionDto();
-    loading=false
+    loading = false;
+
     constructor(
         private _injector: Injector,
         private _questionsServiceProxy: QuestionsServiceProxy,
@@ -44,129 +47,126 @@ export class AddQuestionComponent extends AppComponentBase implements OnInit {
         private _complexitiesServiceProxy: ComplexitiesServiceProxy,
         private _categoriesServiceProxy: CategoriesServiceProxy,
         private _activatedRoute: ActivatedRoute,
+        private _router: Router,
     ) {
         super(_injector);
-        _activatedRoute.params.subscribe((params) => {
-            if (params.id) {
-                this.getForEdit(params);
-            }
-        });
     }
 
-    ngOnInit() {
-        this._studyLevelsServiceProxy.getAll(undefined, undefined, undefined, undefined, undefined).subscribe((val) => {
-            this.studyLevels = val.items.map((item) => {
-                return {
+    ngOnInit(): void {
+        this.loading = true;
+
+        // Load route params once here
+        const id = this._activatedRoute.snapshot.params.id;
+
+        // Use forkJoin to get all references in parallel
+        forkJoin([
+            this._studyLevelsServiceProxy.getAll(
+                undefined, // filter
+                undefined, // sorting
+                undefined, // skipCount
+                undefined, // maxResultCount
+                undefined  // extra param
+            ),
+            this._studySubjectsProxy.getAll(
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined
+            ),
+            this._subjectUnitsServiceProxy.getAll(
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined
+            ),
+            this._complexitiesServiceProxy.getAll(
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined
+            ),
+            this._categoriesServiceProxy.getAll(
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined
+            ),
+        ]).subscribe({
+            next: ([
+                studyLevelsRes,
+                studySubjectsRes,
+                subjectUnitsRes,
+                complexitiesRes,
+                categoriesRes,
+            ]) => {
+                // Map each response to your arrays
+                this.studyLevels = studyLevelsRes.items.map((item) => ({
                     id: item.studyLevel.id,
                     name: item.studyLevel.name,
-                };
-            });
-        });
-        this._studySubjectsProxy
-            .getAll(undefined, undefined, undefined, undefined, undefined, undefined)
-            .subscribe((val) => {
-                this.studySubjects = val.items.map((item) => {
-                    return {
-                        id: item.studySubject.id,
-                        name: item.studySubject.name,
-                    };
-                });
-            });
-        this._subjectUnitsServiceProxy
-            .getAll(undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined)
-            .subscribe((val) => {
-                this.subjectUnits = val.items.map((item) => {
-                    return {
-                        id: item.subjectUnit.id,
-                        name: item.subjectUnit.name,
-                    };
-                });
-            });
-        this._complexitiesServiceProxy
-            .getAll(undefined, undefined, undefined, undefined, undefined)
-            .subscribe((val) => {
-                this.complexities = val.items.map((item) => {
-                    return {
-                        id: item.complexity.id,
-                        name: item.complexity.name,
-                    };
-                });
-            });
-        this._categoriesServiceProxy.getAll(undefined, undefined, undefined, undefined, undefined).subscribe((val) => {
-            this.categories = val.items.map((item) => {
-                return {
+                }));
+
+                this.studySubjects = studySubjectsRes.items.map((item) => ({
+                    id: item.studySubject.id,
+                    name: item.studySubject.name,
+                }));
+
+                this.subjectUnits = subjectUnitsRes.items.map((item) => ({
+                    id: item.subjectUnit.id,
+                    name: item.subjectUnit.name,
+                }));
+
+                this.complexities = complexitiesRes.items.map((item) => ({
+                    id: item.complexity.id,
+                    name: item.complexity.name,
+                }));
+
+                this.categories = categoriesRes.items.map((item) => ({
                     id: item.category.id,
                     name: item.category.name,
-                };
-            });
+                }));
+
+                // If we have an ID, load the question for edit
+                if (id) {
+                    this.getForEdit(id);
+                } else {
+                    // If there's no ID, just stop loading
+                    this.loading = false;
+                }
+            },
+            error: (err) => {
+                // Handle error if needed
+                this.loading = false;
+            },
         });
     }
 
-    getForEdit(params) {
-        this.loading=true
-        this._questionsServiceProxy.getQuestionForEdit(params.id).subscribe((val) => {
-            this._createOrEditQuestionDto = val.question;
-            this.loading=false
-
-        });
-    }
-    //  getQuestion(event?: LazyLoadEvent) {
-    //         if (event) {
-    //             if (this.primengTableHelper.shouldResetPaging(event)) {
-    //                 this.paginator.changePage(0);
-    //                 if (this.primengTableHelper.records && this.primengTableHelper.records.length > 0) {
-    //                     return;
-    //                 }
-    //             }
-    //         }
-
-    //         this.primengTableHelper.showLoadingIndicator();
-
-    //         this._questionsServiceProxy
-    //             .getAll(
-    //                 undefined,
-    //                 undefined,
-    //                 undefined,
-    //                 undefined,
-    //                 undefined,
-    //                 undefined,
-    //                 undefined,
-    //                 undefined,
-    //                 undefined,
-    //                 undefined,
-    //                 undefined,
-    //                 undefined,
-    //                 undefined,
-    //                 undefined,
-    //                 undefined,
-    //                 undefined,
-    //                 undefined,
-    //                 undefined,
-    //                 undefined,
-    //                 undefined,
-    //                 this.primengTableHelper.getSorting(this.dataTable),
-    //                 this.primengTableHelper.getSkipCount(this.paginator, event),
-    //                 this.primengTableHelper.getMaxResultCount(this.paginator, event),
-    //             )
-    //             .subscribe((result) => {
-    //                 this.primengTableHelper.totalRecordsCount = result.totalCount;
-    //                 this.primengTableHelper.records = result.items;
-    //                 console.log(result.items);
-    //                 this.primengTableHelper.hideLoadingIndicator();
-    //             });
-    //  }
-
-    Save() {
-        this._questionsServiceProxy.createOrEdit(this._createOrEditQuestionDto).subscribe((val) => {
-            console.log('val :', val);
+    getForEdit(id: number): void {
+        this.loading = true;
+        this._questionsServiceProxy.getQuestionForEdit(id).subscribe({
+            next: (val) => {
+                this._createOrEditQuestionDto = val.question;
+                this.loading = false;
+            },
+            error: (err) => {
+                this.loading = false;
+            },
         });
     }
 
-    getCheckedExplanatoryNote($event) {
-        if (!$event.checked) {
-            this.checkedExplanatoryNote = false;
-        } else {
-            this.checkedExplanatoryNote = true;
-        }
+    Save(): void {
+        this._questionsServiceProxy.createOrEdit(this._createOrEditQuestionDto).subscribe({
+            next: () => {
+                this.notify.success(this.l('SavedSuccessfully'));
+                this._router.navigate(['app/main/question-bank/list']);
+            },
+        });
     }
 }

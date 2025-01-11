@@ -1,4 +1,6 @@
 import { Component, Injector, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { forkJoin } from 'rxjs'; // <— for parallel requests
 import { AppComponentBase } from '@shared/common/app-component-base';
 
 import {
@@ -13,6 +15,8 @@ import {
     QuestionTypeEnum,
     StudyLevelsServiceProxy,
     StudySubjectsServiceProxy,
+    TemplateTypeEnum,
+    SectionTypeEnum,
 } from '@shared/service-proxies/service-proxies';
 
 @Component({
@@ -24,23 +28,27 @@ export class AddTemplateComponent extends AppComponentBase implements OnInit {
     // Main DTO for create/edit
     _createOrEditExamTemplateDto = new CreateOrEditExamTemplateDto();
 
-    // For toggling main instructions (if needed)
+    // For toggling main instructions
     checked: boolean = true;
 
     // For question-type enum
     QuestionTypeEnum = QuestionTypeEnum;
 
-    // Arrays for dropdowns (populated in ngOnInit)
+    // Arrays for dropdowns (will be populated)
     subjectUnits: any[] = [];
     categories: any[] = [];
-    complexities: any[] = []; // This is what we'll use to generate dynamic columns
-
-    // Example arrays for other dropdowns
+    complexities: any[] = [];
     studySubjects: any[] = [];
     studyLevels: any[] = [];
 
-    // Example: Could be used for "section order" if you like
+    // Additional arrays
     questionsType: any[] = [];
+    TemplateTypes: any[] = [];
+
+    SectionTypeEnum = SectionTypeEnum;
+
+    loading = false;
+    private templateId: number | undefined;
 
     constructor(
         injector: Injector,
@@ -49,73 +57,101 @@ export class AddTemplateComponent extends AppComponentBase implements OnInit {
         private _complexitiesServiceProxy: ComplexitiesServiceProxy,
         private _categoriesServiceProxy: CategoriesServiceProxy,
         private _studyLevelsServiceProxy: StudyLevelsServiceProxy,
-        private _studySubjectsProxy: StudySubjectsServiceProxy,
+        private _studySubjectsServiceProxy: StudySubjectsServiceProxy,
+        private _activatedRoute: ActivatedRoute,
+        private _router: Router,
     ) {
         super(injector);
+
+        // Read params once in constructor or ngOnInit
+        this._activatedRoute.params.subscribe((params) => {
+            if (params?.id) {
+                this.templateId = Number(params.id);
+            }
+        });
     }
 
     ngOnInit(): void {
-        // Initialize sections array
-        this._createOrEditExamTemplateDto.templateSections = [];
+        this.loading = true;
 
-        // Load subject units
-        this._subjectUnitsServiceProxy
-            .getAll(undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined)
-            .subscribe((val) => {
-                this.subjectUnits = val.items.map((item) => {
-                    return {
-                        id: item.subjectUnit.id,
-                        name: item.subjectUnit.name,
-                    };
-                });
-            });
+        // Use forkJoin to load everything in parallel
+        forkJoin([
+            this._subjectUnitsServiceProxy.getAll(
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+            ),
+            this._complexitiesServiceProxy.getAll(undefined, undefined, undefined, undefined, undefined),
+            this._categoriesServiceProxy.getAll(undefined, undefined, undefined, undefined, undefined),
+            this._studyLevelsServiceProxy.getAll(undefined, undefined, undefined, undefined, undefined),
+            this._studySubjectsServiceProxy.getAll(undefined, undefined, undefined, undefined, undefined, undefined),
+        ]).subscribe(
+            ([unitsRes, complexitiesRes, categoriesRes, levelsRes, subjectsRes]) => {
+                // subject units
+                this.subjectUnits = unitsRes.items.map((item) => ({
+                    id: item.subjectUnit.id,
+                    name: item.subjectUnit.name,
+                }));
 
-        // Load complexities
-        this._complexitiesServiceProxy
-            .getAll(undefined, undefined, undefined, undefined, undefined)
-            .subscribe((val) => {
-                this.complexities = val.items.map((item) => {
-                    return {
-                        id: item.complexity.id,
-                        name: item.complexity.name,
-                    };
-                });
-            });
+                // complexities
+                this.complexities = complexitiesRes.items.map((item) => ({
+                    id: item.complexity.id,
+                    name: item.complexity.name,
+                }));
 
-        // Load categories
-        this._categoriesServiceProxy.getAll(undefined, undefined, undefined, undefined, undefined).subscribe((val) => {
-            this.categories = val.items.map((item) => {
-                return {
+                // categories
+                this.categories = categoriesRes.items.map((item) => ({
                     id: item.category.id,
                     name: item.category.name,
-                };
-            });
-        });
+                }));
 
-        // If you need studySubjects / studyLevels, load them similarly
-        // this.studySubjects = [...];
-        // this.studyLevels = [...];
-        this._studyLevelsServiceProxy.getAll(undefined, undefined, undefined, undefined, undefined).subscribe((val) => {
-            this.studyLevels = val.items.map((item) => {
-                return {
+                // study levels
+                this.studyLevels = levelsRes.items.map((item) => ({
                     id: item.studyLevel.id,
                     name: item.studyLevel.name,
-                };
-            });
-        });
-        this._studySubjectsProxy
-            .getAll(undefined, undefined, undefined, undefined, undefined, undefined)
-            .subscribe((val) => {
-                this.studySubjects = val.items.map((item) => {
-                    return {
-                        id: item.studySubject.id,
-                        name: item.studySubject.name,
-                    };
-                });
-            });
+                }));
+
+                // study subjects
+                this.studySubjects = subjectsRes.items.map((item) => ({
+                    id: item.studySubject.id,
+                    name: item.studySubject.name,
+                }));
+
+                // Template types
+                this.TemplateTypes = Object.entries(TemplateTypeEnum)
+                    .filter(([key, value]) => typeof value === 'number')
+                    .map(([key, value]) => ({
+                        Name: key,
+                        Code: value,
+                    }));
+
+                // If we are in "edit" mode, load the existing template now.
+                // If not, add a new empty section.
+                if (this.templateId) {
+                    this._examTemplatesServiceProxy.getExamTemplateForEdit(this.templateId).subscribe((val) => {
+                        this._createOrEditExamTemplateDto = val.examTemplate;
+                        this.checked = this._createOrEditExamTemplateDto.hasInstructions ?? true;
+                        this.loading = false;
+                    });
+                } else {
+                    // "create" mode
+                    this.addNewSection();
+                    this.loading = false;
+                }
+            },
+            (error) => {
+                this.loading = false;
+                // handle error if needed
+            },
+        );
     }
 
-    // If you need to track p-inputSwitch for main instructions
+    // Track p-inputSwitch
     getChecked($event: any) {
         this.checked = !!$event.checked;
         this._createOrEditExamTemplateDto.hasInstructions = this.checked;
@@ -123,13 +159,14 @@ export class AddTemplateComponent extends AppComponentBase implements OnInit {
 
     // Add new section
     addNewSection(): void {
+        if (!this._createOrEditExamTemplateDto.templateSections) {
+            this._createOrEditExamTemplateDto.templateSections = [];
+        }
+
         const newSection = new CreateOrEditTemplateSectionDto();
-        newSection.id = undefined;
-        newSection.name = ''; // SectionName
-        newSection.durationTime = 0; // "Time"
-        // If you want "SectionOrder" to be text, you can store a string
-        // in the .order property. For clarity, let's keep .order as number or string:
-        (newSection as any).order = ''; // Store as string for demonstration
+        newSection.name = '';
+        newSection.durationTime = 0;
+        (newSection as any).order = ''; // store as string for demonstration
         newSection.instructions = '';
         newSection.difficultyCriteria = [];
 
@@ -151,8 +188,8 @@ export class AddTemplateComponent extends AppComponentBase implements OnInit {
         // For dynamic complexities, each complexity becomes a CreateComplexityItemDto
         newCriteria.items = this.complexities.map((comp) => {
             const item = new CreateComplexityItemDto();
-            item.complexity = comp.id; // store the complexity ID
-            item.number = 0; // user types how many questions for that complexity
+            item.complexity = comp.id;
+            item.number = 0;
             return item;
         });
 
@@ -167,6 +204,8 @@ export class AddTemplateComponent extends AppComponentBase implements OnInit {
     createOrEditTemplate(): void {
         this._examTemplatesServiceProxy.createOrEdit(this._createOrEditExamTemplateDto).subscribe(() => {
             this.notify.success(this.l('SavedSuccessfully'));
+            this._router.navigate(['app/main/templates/list']);
+
             this.resetForm();
         });
     }
@@ -177,14 +216,4 @@ export class AddTemplateComponent extends AppComponentBase implements OnInit {
         this._createOrEditExamTemplateDto.templateSections = [];
         this.checked = true;
     }
-
-    checkedInstructions:boolean = false
-    getCheckedInstructions($event) {
-        if (!$event.checked) {
-            this.checkedInstructions = false;
-        } else {
-            this.checkedInstructions = true;
-        }
-    }
-
 }
