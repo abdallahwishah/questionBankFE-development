@@ -99,13 +99,30 @@
                     <ng-container filterBody>
                         <div class="row">
                             <div class="col-12 mb-5">
-                                <app-dropdown-field [labelField]="l('StudySubject')"></app-dropdown-field>
+                                <app-dropdown-field
+                                [options]="studySubjects"
+                                optionLabel="name"
+                                optionValue="id"
+                                [labelField]="l('StudySubject')"
+                            ></app-dropdown-field>
+
                             </div>
                             <div class="col-12 mb-5">
-                                <app-dropdown-field [labelField]="l('StudySubject')"></app-dropdown-field>
+                                    <app-dropdown-field
+                                        [options]="studyLevels"
+                                        optionLabel="name"
+                                        optionValue="id"
+                                        [labelField]="l('StudyLevel')"
+                                    ></app-dropdown-field>
                             </div>
                             <div class="col-12 mb-5">
-                                <app-dropdown-field [labelField]="l('Class')"></app-dropdown-field>
+                                <app-dropdown-field
+                                class="d-block"
+                                [options]="QuestionTypeEnum"
+                                optionLabel="name"
+                                optionValue="id"
+                                [labelField]="l('QuestionType')"
+                            ></app-dropdown-field>
                             </div>
                         </div>
                         <div class="d-flex justify-content-between mt-4">
@@ -149,7 +166,7 @@
                             <p-sortIcon field="QuestionType"></p-sortIcon>
                         </th>
                         <th pSortableColumn="Class">
-                            {{ l('Class') }}
+                            {{ l('StudyLevel') }}
                             <p-sortIcon field="Class"></p-sortIcon>
                         </th>
                         <th pSortableColumn="StudySubject">
@@ -177,7 +194,6 @@
                         </td>
                         <td>
 
-
                             {{ QuestionTypeEnum[record.question.type]  }}
                         </td>
                         <td>
@@ -188,7 +204,6 @@
                             <span class="p-column-title">{{ l('studySubjectName') }}</span>
                             {{  record.studySubjectName || '-' }}
                         </td>
-
                         <td>
                             <p-inputSwitch
                             [(ngModel)]="record.question.isActive"
@@ -229,8 +244,7 @@
             <app-paginator
                 [hidden]="primengTableHelper.totalRecordsCount == 0"
                 [paginator]="paginator"
-                [primengTableHelper]="primengTableHelper"
-            ></app-paginator>
+                [primengTableHelper]="primengTableHelper"></app-paginator>
         </div>
         <!-- End Tabel -->
     </div>

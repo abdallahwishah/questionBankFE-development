@@ -1,59 +1,134 @@
-﻿<div bsModal #createOrEditModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="createOrEditModal" aria-hidden="true" [config]="{backdrop: 'static'}">
+﻿<div
+    bsModal
+    #createOrEditModal="bs-modal"
+    class="modal fade"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="createOrEditModal"
+    aria-hidden="true"
+    [config]="{ backdrop: 'static' }"
+>
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <form *ngIf="active" #subjectGroupForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
                 <div class="modal-header">
                     <h4 class="modal-title">
-                        <span *ngIf="subjectGroup.id">{{l("EditSubjectGroup")}}</span>
-                        <span *ngIf="!subjectGroup.id">{{l("CreateNewSubjectGroup")}}</span>
-                    </h4>                    
-                    
-                    
-                 <button type="button" class="btn-close" (click)="close()" aria-label="Close" [disabled]="saving"></button>
-             
+                        <span *ngIf="subjectGroup.id">{{ l('EditSubjectGroup') }}</span>
+                        <span *ngIf="!subjectGroup.id">{{ l('CreateNewSubjectGroup') }}</span>
+                    </h4>
+
+                    <button
+                        type="button"
+                        class="btn-close"
+                        (click)="close()"
+                        aria-label="Close"
+                        [disabled]="saving"
+                    ></button>
                 </div>
                 <div class="modal-body">
-                 
-
-
-					<div class="my-3">
-                        <label class="form-label" for="StudySubjectValue">{{l("StudySubject")}}</label>
-                        <div class="input-group">
-                            <input class="form-control" id="StudySubjectValue" name="studySubjectValue" [(ngModel)]="studySubjectValue" type="text" disabled>     
-                            <button class="btn btn-primary blue" (click)="openSelectStudySubjectModal()" type="button"><i class="fa fa-search"></i> {{l("Pick")}}</button>
-                            <button class="btn btn-danger btn-icon" type="button" (click)="setStudySubjectIdNull()"><i class="fa fa-times"></i></button>                            
+                    <div class="row">
+                        <div class="col-md-6 my-3">
+                            <label class="form-label" for="StudySubjectValue">{{ l('StudySubject') }}</label>
+                            <div class="input-group">
+                                <input
+                                    class="form-control"
+                                    id="StudySubjectValue"
+                                    name="studySubjectValue"
+                                    [(ngModel)]="studySubjectValue"
+                                    type="text"
+                                    disabled
+                                />
+                                <button
+                                    class="btn btn-primary blue"
+                                    (click)="openSelectStudySubjectModal()"
+                                    type="button"
+                                >
+                                    <i class="fa fa-search"></i>
+                                    {{ l('Pick') }}
+                                </button>
+                                <button class="btn btn-danger btn-icon" type="button" (click)="setStudySubjectIdNull()">
+                                    <i class="fa fa-times"></i>
+                                </button>
+                            </div>
+                            <input
+                                class="form-control"
+                                name="subjectGroup.studySubjectId"
+                                [(ngModel)]="subjectGroup.studySubjectId"
+                                type="text"
+                                required
+                                hidden
+                            />
+                        </div>
+                        <div class="col-md-6 my-3">
+                            <label class="form-label" for="SupportGroupNameL">{{ l('SupportGroup') }}</label>
+                            <div class="input-group">
+                                <input
+                                    class="form-control"
+                                    id="SupportGroupNameL"
+                                    name="supportGroupNameL"
+                                    [(ngModel)]="supportGroupNameL"
+                                    type="text"
+                                    disabled
+                                />
+                                <button
+                                    class="btn btn-primary blue"
+                                    (click)="openSelectSupportGroupModal()"
+                                    type="button"
+                                >
+                                    <i class="fa fa-search"></i>
+                                    {{ l('Pick') }}
+                                </button>
+                                <button class="btn btn-danger btn-icon" type="button" (click)="setSupportGroupIdNull()">
+                                    <i class="fa fa-times"></i>
+                                </button>
+                            </div>
+                            <input
+                                class="form-control"
+                                name="subjectGroup.supportGroupId"
+                                [(ngModel)]="subjectGroup.supportGroupId"
+                                type="text"
+                                required
+                                hidden
+                            />
+                        </div>
+                        <div class="col-12 my-3">
+                            <label class="form-label" for="SubjectGroup_Note">{{ l('Note') }}</label>
+                            <input
+                                type="text"
+                                #SubjectGroup_Note="ngModel"
+                                id="SubjectGroup_Note"
+                                class="form-control"
+                                [(ngModel)]="subjectGroup.note"
+                                name="Note"
+                            />
+                            <validation-messages [formCtrl]="SubjectGroup_Note"></validation-messages>
                         </div>
                     </div>
-                    <input class="form-control" name="subjectGroup.studySubjectId" [(ngModel)]="subjectGroup.studySubjectId" type="text" required hidden>
-                        
-					<div class="my-3">
-                        <label class="form-label" for="SupportGroupNameL">{{l("SupportGroup")}}</label>
-                        <div class="input-group">
-                            <input class="form-control" id="SupportGroupNameL" name="supportGroupNameL" [(ngModel)]="supportGroupNameL" type="text" disabled>     
-                            <button class="btn btn-primary blue" (click)="openSelectSupportGroupModal()" type="button"><i class="fa fa-search"></i> {{l("Pick")}}</button>
-                            <button class="btn btn-danger btn-icon" type="button" (click)="setSupportGroupIdNull()"><i class="fa fa-times"></i></button>                            
-                        </div>
-                    </div>
-                    <input class="form-control" name="subjectGroup.supportGroupId" [(ngModel)]="subjectGroup.supportGroupId" type="text" required hidden>
-                        
-
-
-								<div class="my-3">
-									<label class="form-label" for="SubjectGroup_Note">{{l("Note")}}</label>
-									<input type="text" #SubjectGroup_Note="ngModel" id="SubjectGroup_Note" class="form-control" [(ngModel)]="subjectGroup.note" name="Note"    />
-								    <validation-messages [formCtrl]="SubjectGroup_Note"></validation-messages>
-								</div>
-					
-
                 </div>
                 <div class="modal-footer">
-                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">{{l("Cancel")}}</button>
-                    <button type="submit" class="btn btn-primary blue" [disabled]="!subjectGroupForm.form.valid" [buttonBusy]="saving" [busyText]="l('SavingWithThreeDot')"><i class="fa fa-save"></i> <span>{{l("Save")}}</span></button>
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">
+                        {{ l('Cancel') }}
+                    </button>
+                    <button
+                        type="submit"
+                        class="btn btn-primary blue"
+                        [disabled]="!subjectGroupForm.form.valid"
+                        [buttonBusy]="saving"
+                        [busyText]="l('SavingWithThreeDot')"
+                    >
+                        <i class="fa fa-save"></i>
+                        <span>{{ l('Save') }}</span>
+                    </button>
                 </div>
             </form>
         </div>
     </div>
-<subjectGroupStudySubjectLookupTableModal #subjectGroupStudySubjectLookupTableModal (modalSave)="getNewStudySubjectId()"></subjectGroupStudySubjectLookupTableModal>
-		 <subjectGroupSupportGroupLookupTableModal #subjectGroupSupportGroupLookupTableModal (modalSave)="getNewSupportGroupId()"></subjectGroupSupportGroupLookupTableModal>
-		 
+    <subjectGroupStudySubjectLookupTableModal
+        #subjectGroupStudySubjectLookupTableModal
+        (modalSave)="getNewStudySubjectId()"
+    ></subjectGroupStudySubjectLookupTableModal>
+    <subjectGroupSupportGroupLookupTableModal
+        #subjectGroupSupportGroupLookupTableModal
+        (modalSave)="getNewSupportGroupId()"
+    ></subjectGroupSupportGroupLookupTableModal>
 </div>

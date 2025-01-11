@@ -24,3 +24,20 @@
 ::ng-deep [dir="ltr"]  .p-datatable-wrapper .form-control{
  padding-inline-end: 45px !important;
 }
+
+.dynamic-tabel .form-control{
+    padding: 0.775rem 1rem !important;
+}
+.time-group{
+    position: relative;
+}
+.time-group input{
+  padding-left: 25% !important;
+}
+.time-icon{
+    position: absolute;
+    left: 15px;
+    bottom: 12px;
+    padding-right: 5px;
+    border-right: 1.5px solid #DEE1E6
+}

@@ -93,12 +93,19 @@
 
                         <!-- Main Instructions -->
                         <div class="col-12 mb-2">
-                            <label class="mb-2">{{ l('Instructions') }}</label>
-                            <app-editor
+                            <div class="d-flex align-items-center gap-5 mb-5">
+                            <p-inputSwitch (onChange)="getCheckedInstructions($event)"></p-inputSwitch>
+                            <label class="mt-2">{{ l('HasInstructions') }}</label>
+                            </div>
+
+                            @if (checkedInstructions) {
+                                <app-editor
                                 name="instructions"
                                 [(ngModel)]="_createOrEditExamTemplateDto.instructions"
                             ></app-editor>
-                        </div>
+                            }
+
+
                     </div>
                 </div>
             </div>
@@ -116,8 +123,8 @@
                         <div class="template-box mt-4">
                             <h4 class="template-box-header py-4 px-5 d-flex align-items-center justify-content-between">
                                 {{ l('Section') }} #{{ sectionIndex + 1 }}
-                                <button class="btn btn-delete p-3 m-0" (click)="removeSection(sectionIndex)">
-                                    <img src="assets/common/images/trash.svg" alt="Remove section" />
+                                <button class="btn btn-delete2 p-3 m-0" (click)="removeSection(sectionIndex)">
+                                    <img src="assets/common/images/trash-w.svg" alt="Remove section" />
                                 </button>
                             </h4>
 
@@ -138,11 +145,24 @@
                                 <!-- Time => section.durationTime -->
                                 <div class="col-md-4 mb-5">
                                     <label>{{ l('Time') }}</label>
-                                    <input
+                                    <div class="time-group">
+                                        <input
                                         class="form-control m-input"
                                         type="number"
                                         [(ngModel)]="section.durationTime"
                                     />
+                                    <div class="time-icon">
+                                        دقيقة
+
+                                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M2.08333 11.0417C2.08333 6.675 5.63333 3.125 9.99999 3.125C14.3667 3.125 17.9167 6.675 17.9167 11.0417C17.9167 15.4083 14.3667 18.9583 9.99999 18.9583C5.63333 18.9583 2.08333 15.4083 2.08333 11.0417ZM3.33333 11.0417C3.33333 14.7167 6.325 17.7083 9.99999 17.7083C13.675 17.7083 16.6667 14.7167 16.6667 11.0417C16.6667 7.36667 13.675 4.375 9.99999 4.375C6.325 4.375 3.33333 7.36667 3.33333 11.0417Z" fill="#171A1F"/>
+                                            <path d="M9.375 10.8332V6.6665C9.375 6.32484 9.65833 6.0415 10 6.0415C10.3417 6.0415 10.625 6.32484 10.625 6.6665V10.8332C10.625 11.1748 10.3417 11.4582 10 11.4582C9.65833 11.4582 9.375 11.1748 9.375 10.8332Z" fill="#171A1F"/>
+                                            <path d="M7.5 2.2915C7.15833 2.2915 6.875 2.00817 6.875 1.6665C6.875 1.32484 7.15833 1.0415 7.5 1.0415H12.5C12.8417 1.0415 13.125 1.32484 13.125 1.6665C13.125 2.00817 12.8417 2.2915 12.5 2.2915H7.5Z" fill="#171A1F"/>
+                                            </svg>
+
+                                    </div>
+                                    </div>
+
                                 </div>
 
                                 <!-- If you want to toggle instructions at section-level with p-inputSwitch -->
@@ -166,7 +186,7 @@
                                         <h3>{{ l('SectionDetails') }}</h3>
                                     </div>
 
-                                    <div class="col-12">
+                                    <div class="col-12 dynamic-tabel">
                                         <p-table [value]="section.difficultyCriteria" class="w-100">
                                             <ng-template pTemplate="header">
                                                 <tr class="text-center">

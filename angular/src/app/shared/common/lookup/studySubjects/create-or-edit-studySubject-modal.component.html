@@ -1,71 +1,112 @@
-﻿<div bsModal #createOrEditModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="createOrEditModal" aria-hidden="true" [config]="{backdrop: 'static'}">
+﻿<div
+    bsModal
+    #createOrEditModal="bs-modal"
+    class="modal fade"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="createOrEditModal"
+    aria-hidden="true"
+    [config]="{ backdrop: 'static' }"
+>
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <form *ngIf="active" #studySubjectForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
                 <div class="modal-header">
                     <h4 class="modal-title">
-                        <span *ngIf="studySubject.id">{{l("EditStudySubject")}}</span>
-                        <span *ngIf="!studySubject.id">{{l("CreateNewStudySubject")}}</span>
-                    </h4>                    
-                    
-                    
-                 <button type="button" class="btn-close" (click)="close()" aria-label="Close" [disabled]="saving"></button>
-             
+                        <span *ngIf="studySubject.id">{{ l('EditStudySubject') }}</span>
+                        <span *ngIf="!studySubject.id">{{ l('CreateNewStudySubject') }}</span>
+                    </h4>
+
+                    <button
+                        type="button"
+                        class="btn-close"
+                        (click)="close()"
+                        aria-label="Close"
+                        [disabled]="saving"
+                    ></button>
                 </div>
                 <div class="modal-body">
-                 
+                    <div class="row">
+                        <div class="col-md-6 my-3">
+                            <label class="form-label" for="StudySubject_NameF">{{ l('NameF') }} *</label>
+                            <input
+                                type="text"
+                                #StudySubject_NameF="ngModel"
+                                id="StudySubject_NameF"
+                                class="form-control"
+                                [(ngModel)]="studySubject.nameF"
+                                name="NameF"
+                                required
+                            />
+                            <validation-messages [formCtrl]="StudySubject_NameF"></validation-messages>
+                            </div>
+                        <div class="col-md-6 my-3">
+                            <label class="form-label" for="StudySubject_NameL">{{ l('NameL') }} *</label>
+                            <input
+                                type="text"
+                                #StudySubject_NameL="ngModel"
+                                id="StudySubject_NameL"
+                                class="form-control"
+                                [(ngModel)]="studySubject.nameL"
+                                name="NameL"
+                                required
+                            />
+                            <validation-messages [formCtrl]="StudySubject_NameL"></validation-messages>
+
+                            </div>
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label" for="StudySubject_Language">{{ l('Language') }}</label>
+                                <select
+                                    class="form-select"
+                                    #StudySubject_Language="ngModel"
+                                    name="Language"
+                                    id="StudySubject_Language"
+                                    [(ngModel)]="studySubject.language"
+                                >
+                                    <option value="0">{{ l('AR') }}</option>
+
+                                    <option value="1">{{ l('EN') }}</option>
+                                </select>
+                                <validation-messages [formCtrl]="StudySubject_Language"></validation-messages>
+                            </div>
 
 
 
 
-								<div class="my-3">
-									<label class="form-label" for="StudySubject_NameF">{{l("NameF")}} *</label>
-									<input type="text" #StudySubject_NameF="ngModel" id="StudySubject_NameF" class="form-control" [(ngModel)]="studySubject.nameF" name="NameF"     required/>
-								    <validation-messages [formCtrl]="StudySubject_NameF"></validation-messages>
-								</div>
-					
-								<div class="my-3">
-									<label class="form-label" for="StudySubject_NameL">{{l("NameL")}} *</label>
-									<input type="text" #StudySubject_NameL="ngModel" id="StudySubject_NameL" class="form-control" [(ngModel)]="studySubject.nameL" name="NameL"     required/>
-								    <validation-messages [formCtrl]="StudySubject_NameL"></validation-messages>
-								</div>
-					
-								<div class="my-3">
-									<label class="form-label" for="StudySubject_Language">{{l("Language")}}</label>
-									<select class="form-select" #StudySubject_Language="ngModel" name="Language" id="StudySubject_Language" [(ngModel)]="studySubject.language" >
-									<option value="0">{{l('AR')}}</option>
-
-									<option value="1">{{l('EN')}}</option>
-
-
-									</select>
-									<validation-messages [formCtrl]="StudySubject_Language"></validation-messages>
-								</div>
-					
-								<br/>
-								<label class="form-check form-check-custom form-check-solid">
-                                    <input
-                                        id="StudySubject_IsActive" 
-                                        #StudySubject_IsActive="ngModel"
-                                        name="IsActive" 
-                                        [(ngModel)]="studySubject.isActive"
-                                        type="checkbox"
-                                        class="form-check-input"
-                                    />
-                                    <span class="form-check-label">
-                                        {{l("IsActive")}}
-                                    </span>
-                                </label>
-                                <validation-messages [formCtrl]="StudySubject_IsActive"></validation-messages>
-					
-
+                    <br />
+                    <label class="form-check form-check-custom form-check-solid">
+                        <input
+                            id="StudySubject_IsActive"
+                            #StudySubject_IsActive="ngModel"
+                            name="IsActive"
+                            [(ngModel)]="studySubject.isActive"
+                            type="checkbox"
+                            class="form-check-input"
+                        />
+                        <span class="form-check-label">
+                            {{ l('IsActive') }}
+                        </span>
+                    </label>
+                    <validation-messages [formCtrl]="StudySubject_IsActive"></validation-messages>
                 </div>
                 <div class="modal-footer">
-                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">{{l("Cancel")}}</button>
-                    <button type="submit" class="btn btn-primary blue" [disabled]="!studySubjectForm.form.valid" [buttonBusy]="saving" [busyText]="l('SavingWithThreeDot')"><i class="fa fa-save"></i> <span>{{l("Save")}}</span></button>
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">
+                        {{ l('Cancel') }}
+                    </button>
+                    <button
+                        type="submit"
+                        class="btn btn-primary blue"
+                        [disabled]="!studySubjectForm.form.valid"
+                        [buttonBusy]="saving"
+                        [busyText]="l('SavingWithThreeDot')"
+                    >
+                        <i class="fa fa-save"></i>
+                        <span>{{ l('Save') }}</span>
+                    </button>
                 </div>
             </form>
         </div>
     </div>
-
 </div>

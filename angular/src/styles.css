@@ -339,8 +339,15 @@ textarea{
 .btn-edit{
     background-color: #462b7e0f !important;
 }
+.btn-delete , .btn-delete2 , .btn-add{
+    width: 42px;
+    height: 42px;
+}
 .btn-delete{
     background-color: #ED1C241A !important;
+}
+.btn-delete2{
+    background-color: #ed1c23 !important;
 }
 .btn-add{
     background-color: #52C93F26 !important;
@@ -390,8 +397,8 @@ textarea{
     background: #6D31ED0F;
 }
 .template-box-header{
-    color: #fff;
-    background: var(--bs-primary);
+    color: var(--bs-primary);
+    background: #6d31ed20;
 }
 
 .outline-dashed{
@@ -603,4 +610,15 @@ th , td {
     border-bottom:1px solid #D9D9D9;
     margin-bottom: 0.85rem !important;
     padding-bottom:0.85rem !important;
+}
+
+.dynamic-tabel .p-dropdown{
+ width: 240px !important;
+}
+.dynamic-tabel .form-control{
+ width: 100px !important;
+}
+
+.badge{
+    color: #fff !important;
 }

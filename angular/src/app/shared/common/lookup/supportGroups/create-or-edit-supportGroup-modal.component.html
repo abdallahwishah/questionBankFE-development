@@ -26,49 +26,50 @@
                     ></button>
                 </div>
                 <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label" for="SupportGroup_NameL">{{ l('NameL') }}</label>
+                            <input
+                                type="text"
+                                #SupportGroup_NameL="ngModel"
+                                id="SupportGroup_NameL"
+                                class="form-control"
+                                [(ngModel)]="supportGroup.nameL"
+                                name="NameL"
+                            />
+                            <validation-messages [formCtrl]="SupportGroup_NameL"></validation-messages>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label" for="SupportGroup_NameF">{{ l('NameF') }}</label>
+                            <input
+                                type="text"
+                                #SupportGroup_NameF="ngModel"
+                                id="SupportGroup_NameF"
+                                class="form-control"
+                                [(ngModel)]="supportGroup.nameF"
+                                name="NameF"
+                            />
+                            <validation-messages [formCtrl]="SupportGroup_NameF"></validation-messages>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label" for="SupportGroup_GroupType">{{ l('GroupType') }}</label>
+                            <select
+                                class="form-select"
+                                #SupportGroup_GroupType="ngModel"
+                                name="GroupType"
+                                id="SupportGroup_GroupType"
+                                [(ngModel)]="supportGroup.groupType"
+                            >
+                                <option value="1">{{ l('Image') }}</option>
 
-
-                    <div class="my-3">
-                        <label class="form-label" for="SupportGroup_NameL">{{ l('NameL') }}</label>
-                        <input
-                            type="text"
-                            #SupportGroup_NameL="ngModel"
-                            id="SupportGroup_NameL"
-                            class="form-control"
-                            [(ngModel)]="supportGroup.nameL"
-                            name="NameL"
-                        />
-                        <validation-messages [formCtrl]="SupportGroup_NameL"></validation-messages>
+                                <option value="1">{{ l('Text') }}</option>
+                            </select>
+                            <validation-messages [formCtrl]="SupportGroup_GroupType"></validation-messages>
+                        </div>
                     </div>
 
-                    <div class="my-3">
-                        <label class="form-label" for="SupportGroup_NameF">{{ l('NameF') }}</label>
-                        <input
-                            type="text"
-                            #SupportGroup_NameF="ngModel"
-                            id="SupportGroup_NameF"
-                            class="form-control"
-                            [(ngModel)]="supportGroup.nameF"
-                            name="NameF"
-                        />
-                        <validation-messages [formCtrl]="SupportGroup_NameF"></validation-messages>
-                    </div>
+                    <br>
 
-                    <div class="mt-3 mb-4">
-                        <label class="form-label" for="SupportGroup_GroupType">{{ l('GroupType') }}</label>
-                        <select
-                            class="form-select"
-                            #SupportGroup_GroupType="ngModel"
-                            name="GroupType"
-                            id="SupportGroup_GroupType"
-                            [(ngModel)]="supportGroup.groupType"
-                        >
-                            <option value="1">{{ l('Image') }}</option>
-
-                            <option value="1">{{ l('Text') }}</option>
-                        </select>
-                        <validation-messages [formCtrl]="SupportGroup_GroupType"></validation-messages>
-                    </div>
                     <label class="form-check form-check-custom form-check-solid">
                         <input
                             id="SupportGroup_IsActive"

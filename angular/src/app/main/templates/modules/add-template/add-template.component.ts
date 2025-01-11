@@ -177,4 +177,14 @@ export class AddTemplateComponent extends AppComponentBase implements OnInit {
         this._createOrEditExamTemplateDto.templateSections = [];
         this.checked = true;
     }
+
+    checkedInstructions:boolean = false
+    getCheckedInstructions($event) {
+        if (!$event.checked) {
+            this.checkedInstructions = false;
+        } else {
+            this.checkedInstructions = true;
+        }
+    }
+
 }

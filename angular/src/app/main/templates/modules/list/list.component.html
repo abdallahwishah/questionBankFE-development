@@ -45,7 +45,7 @@
                         [placeholder]="l('Search')"
                         type="text"
                         [(ngModel)]="filter"
-                        (ngModelChange)="getQuestion()"
+                        (ngModelChange)="getList()"
                     />
                     <button class="btn btn-primary" type="submit">
                         <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -61,14 +61,27 @@
                     <ng-container filterBody>
                         <div class="row">
                             <div class="col-12 mb-5">
-                                <app-dropdown-field [labelField]="l('StudySubject')"></app-dropdown-field>
+                                <app-dropdown-field
+                                [(ngModel)]="filter"
+                                [options]="studySubjects"
+                                optionLabel="name"
+                                optionValue="id"
+                                [labelField]="l('StudySubject')"
+                            ></app-dropdown-field>
+
                             </div>
                             <div class="col-12 mb-5">
-                                <app-dropdown-field [labelField]="l('Class')"></app-dropdown-field>
+                                    <app-dropdown-field
+                                       [(ngModel)]="filter"
+                                        [options]="studyLevels"
+                                        optionLabel="name"
+                                        optionValue="id"
+                                        [labelField]="l('StudyLevel')"
+                                    ></app-dropdown-field>
                             </div>
                         </div>
                         <div class="d-flex justify-content-between mt-4">
-                            <button class="btn btn-primary">
+                            <button class="btn btn-primary" (click)="getList()" >
                                 {{ 'Save' | localize }}
                             </button>
                             <button class="btn btn-outline">
@@ -106,7 +119,7 @@
                             <p-sortIcon field="TemplateName"></p-sortIcon>
                         </th>
                         <th pSortableColumn="Class">
-                            {{ l('Class') }}
+                            {{ l('StudyLevel') }}
                             <p-sortIcon field="Class"></p-sortIcon>
                         </th>
                         <th pSortableColumn="StudySubject">
@@ -125,26 +138,21 @@
                 <ng-template pTemplate="body" let-record="$implicit" let-i="rowIndex">
                     <tr>
                         <td>
-                            <span class="p-column-title">{{ l('Code') }}</span>
-                            {{ record.auditCase.caseCode || '-' }}
+                            {{i + 1}}
                         </td>
                         <td>
-                            <span class="p-column-title">{{ l('CaseTitle') }}</span>
-                            {{ record.auditCase.name || '-' }}
+                            <span class="p-column-title">{{ l('name') }}</span>
+                            {{ record.examTemplate.name || '-' }}
                         </td>
                         <td>
-                            <span class="p-column-title">{{ l('CaseOwner') }}</span>
-                            {{ record.organizationUnitDisplayName || '-' }}
+                            <span class="p-column-title">{{ l('studyLevel') }}</span>
+                            {{ record.studyLevel || '-' }}
                         </td>
                         <td>
-                            <span class="p-column-title">{{ l('RepeatCase') }}</span>
-                            {{ l('') || '-' }}
+                            <span class="p-column-title">{{ l('studySubject') }}</span>
+                            {{ record.studySubject || '-' }}
                         </td>
 
-                        <td>
-                            <span class="p-column-title">{{ l('creationDate') }}</span>
-                            {{ (record.auditCase.creationTime | luxonFormat: 'dd/MM/yyyy - hh:mm a') || '-' }}
-                        </td>
                         <td>
                             <span class="p-column-title">{{ l('CreatedBy') }}</span>
                             <!-- <img
@@ -154,12 +162,17 @@
                             height="25"
                             alt=""
                         /> -->
-                            {{ record.creatorUser || '--' }}
+                            {{ record.createdBy || '--' }}
                         </td>
                         <td>
                             <app-action-button
                                 [ActionsInfo]="[
-                                    { label: 'View' },
+                                    {
+                                        label: 'Copy'
+                                    },
+                                    {
+                                        label: 'CreateTest'
+                                    },
                                     {
                                         label: 'Edit'
                                     },
@@ -196,12 +209,6 @@
     </div>
 </div>
 
-
-
-<p class="mb-0 mt-4"> just for test</p>
-<button class="btn btn-primary" (click)="CopyTemplate()">
-    Open Copy Template
-</button>
 
 <!-- Modals -->
 <app-warning-modal></app-warning-modal>

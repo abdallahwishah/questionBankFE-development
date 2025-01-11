@@ -1,0 +1,33 @@
+<label class="form-label" [class]="required ? 'label-required' : ''" *ngIf="isLabel">{{ label }}</label>
+<div class="autoComplete-shared">
+    <p-autoComplete
+        #autoComplete
+        [ngClass]="{ 'p-inputtext-sm': true }"
+        [style.min-width]="'90%'"
+        [style.display]="'100%'"
+        [placeholder]="(type === 'sendEmail' ? 'EnterEmailAddress' : 'Search') | localize"
+        [required]="required"
+        [suggestions]="Filter$ | async"
+        [field]="field"
+        [dropdown]="true"
+        [formControl]="autoCompleteControl"
+        (completeMethod)="completeMethod($event)"
+        (onSelect)="onSelect($event)"
+        [multiple]="multiple"
+        [disabled]="disabled"
+        (onKeyUp)="handleKeyUp($event, autoComplete)"
+        [forceSelection]="type !== 'sendEmail'"
+        emptyMessage=""
+        (keydown.enter)="$event.preventDefault()"
+    >
+        <ng-template let-item pTemplate="item" *ngIf="type === 'sendEmail'">
+            <div class="email-item">
+                <div class="avatar">{{ getInitials(item.name || item.value) }}</div>
+                <div class="details">
+                    <div class="name">{{ item.name || formatEmailForDisplay(item.value) }}</div>
+                    <div class="email">{{ item.value }}</div>
+                </div>
+            </div>
+        </ng-template>
+    </p-autoComplete>
+</div>

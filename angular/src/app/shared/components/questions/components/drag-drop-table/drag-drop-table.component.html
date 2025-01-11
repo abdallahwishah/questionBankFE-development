@@ -80,13 +80,19 @@
             <!-- For each row, loop over columns -->
             <td *ngFor="let colDto of value; let c = index">
               <!-- colDto.dragDropTableItems[r] => the cell at row r in column c -->
-              <label>
+             <!--  <label>
+
                 <input
                   type="checkbox"
                   [(ngModel)]="colDto.dragDropTableItems[r].isPinned"
                   (ngModelChange)="notifyValueChange()"
                 />
-               </label>
+               </label> -->
+
+               <p-checkbox
+               [(ngModel)]="colDto.dragDropTableItems[r].isPinned"
+               (ngModelChange)="notifyValueChange()"
+       ></p-checkbox>
 
               <input
                 type="text"

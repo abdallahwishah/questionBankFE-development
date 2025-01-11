@@ -73,6 +73,22 @@
 
                     <div class="row mt-6">
                         <div class="col-md-6 mb-5">
+                            <app-auto-complete-feild
+                            [label]="l('StudySubject')"
+                            field="archiveTransaction.subject"
+                            [(ngModel)]="_createOrEditQuestionDto.studySubjectId"
+                            name="linkWithIncoming"
+                            [multiple]="false"
+                            [ConfigCustomSearch]="{
+                                api: '/api/services/app/StudySubjects/GetAll',
+                                keySearch: 'filter',
+                                customParams: {
+                                    Sorting: '',
+                                    SkipCount: 0,
+                                    MaxResultCount: 10,
+                                },
+                            }"
+                        ></app-auto-complete-feild>
                             <app-dropdown-field
                                 [(ngModel)]="_createOrEditQuestionDto.studySubjectId"
                                 [options]="studySubjects"
@@ -87,7 +103,7 @@
                                 [options]="studyLevels"
                                 optionLabel="name"
                                 optionValue="id"
-                                [labelField]="l('Class')"
+                                [labelField]="l('StudyLevel')"
                             ></app-dropdown-field>
                         </div>
                         <div class="col-md-6 mb-5">

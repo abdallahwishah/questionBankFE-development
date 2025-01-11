@@ -13,6 +13,7 @@ import {
     CreateOrEditTableDragItemDto,
     CreateOrEditTableDragQuestionDto,
 } from '@shared/service-proxies/service-proxies';
+import { CheckboxModule } from 'primeng/checkbox';
 
 @Component({
     selector: 'app-drag-drop-table',
@@ -22,7 +23,8 @@ import {
         InputNumberModule,
         ButtonModule,
         TableModule,
-        CommonModule
+        CommonModule,
+        CheckboxModule
     ],
     templateUrl: './drag-drop-table.component.html',
     styleUrls: ['./drag-drop-table.component.css'],

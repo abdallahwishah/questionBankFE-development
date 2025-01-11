@@ -1,59 +1,97 @@
-﻿<div bsModal #createOrEditModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="createOrEditModal" aria-hidden="true" [config]="{backdrop: 'static'}">
+﻿<div
+    bsModal
+    #createOrEditModal="bs-modal"
+    class="modal fade"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="createOrEditModal"
+    aria-hidden="true"
+    [config]="{ backdrop: 'static' }"
+>
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <form *ngIf="active" #categoryForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
                 <div class="modal-header">
                     <h4 class="modal-title">
-                        <span *ngIf="category.id">{{l("EditCategory")}}</span>
-                        <span *ngIf="!category.id">{{l("CreateNewCategory")}}</span>
-                    </h4>                    
-                    
-                    
-                 <button type="button" class="btn-close" (click)="close()" aria-label="Close" [disabled]="saving"></button>
-             
+                        <span *ngIf="category.id">{{ l('EditCategory') }}</span>
+                        <span *ngIf="!category.id">{{ l('CreateNewCategory') }}</span>
+                    </h4>
+
+                    <button
+                        type="button"
+                        class="btn-close"
+                        (click)="close()"
+                        aria-label="Close"
+                        [disabled]="saving"
+                    ></button>
                 </div>
                 <div class="modal-body">
-                 
+                    <div class="row">
+                        <div class="col-md-6 my-3">
+                            <label class="form-label" for="Category_NameF">{{ l('NameF') }} *</label>
+                            <input
+                                type="text"
+                                #Category_NameF="ngModel"
+                                id="Category_NameF"
+                                class="form-control"
+                                [(ngModel)]="category.nameF"
+                                name="NameF"
+                                required
+                            />
+                            <validation-messages [formCtrl]="Category_NameF"></validation-messages>
+                        </div>
+                        <div class="col-md-6 my-3">
+
+                            <label class="form-label" for="Category_NameL">{{ l('NameL') }} *</label>
+                            <input
+                                type="text"
+                                #Category_NameL="ngModel"
+                                id="Category_NameL"
+                                class="form-control"
+                                [(ngModel)]="category.nameL"
+                                name="NameL"
+                                required
+                            />
+                            <validation-messages [formCtrl]="Category_NameL"></validation-messages>
+
+                        </div>
+
+                    </div>
 
 
 
-
-								<div class="my-3">
-									<label class="form-label" for="Category_NameF">{{l("NameF")}} *</label>
-									<input type="text" #Category_NameF="ngModel" id="Category_NameF" class="form-control" [(ngModel)]="category.nameF" name="NameF"     required/>
-								    <validation-messages [formCtrl]="Category_NameF"></validation-messages>
-								</div>
-					
-								<div class="my-3">
-									<label class="form-label" for="Category_NameL">{{l("NameL")}} *</label>
-									<input type="text" #Category_NameL="ngModel" id="Category_NameL" class="form-control" [(ngModel)]="category.nameL" name="NameL"     required/>
-								    <validation-messages [formCtrl]="Category_NameL"></validation-messages>
-								</div>
-					
-								<br/>
-								<label class="form-check form-check-custom form-check-solid">
-                                    <input
-                                        id="Category_IsActive" 
-                                        #Category_IsActive="ngModel"
-                                        name="IsActive" 
-                                        [(ngModel)]="category.isActive"
-                                        type="checkbox"
-                                        class="form-check-input"
-                                    />
-                                    <span class="form-check-label">
-                                        {{l("IsActive")}}
-                                    </span>
-                                </label>
-                                <validation-messages [formCtrl]="Category_IsActive"></validation-messages>
-					
-
+                    <br />
+                    <label class="form-check form-check-custom form-check-solid">
+                        <input
+                            id="Category_IsActive"
+                            #Category_IsActive="ngModel"
+                            name="IsActive"
+                            [(ngModel)]="category.isActive"
+                            type="checkbox"
+                            class="form-check-input"
+                        />
+                        <span class="form-check-label">
+                            {{ l('IsActive') }}
+                        </span>
+                    </label>
+                    <validation-messages [formCtrl]="Category_IsActive"></validation-messages>
                 </div>
                 <div class="modal-footer">
-                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">{{l("Cancel")}}</button>
-                    <button type="submit" class="btn btn-primary blue" [disabled]="!categoryForm.form.valid" [buttonBusy]="saving" [busyText]="l('SavingWithThreeDot')"><i class="fa fa-save"></i> <span>{{l("Save")}}</span></button>
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">
+                        {{ l('Cancel') }}
+                    </button>
+                    <button
+                        type="submit"
+                        class="btn btn-primary blue"
+                        [disabled]="!categoryForm.form.valid"
+                        [buttonBusy]="saving"
+                        [busyText]="l('SavingWithThreeDot')"
+                    >
+                        <i class="fa fa-save"></i>
+                        <span>{{ l('Save') }}</span>
+                    </button>
                 </div>
             </form>
         </div>
     </div>
-
 </div>

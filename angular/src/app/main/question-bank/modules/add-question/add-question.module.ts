@@ -9,6 +9,7 @@ import { EditorComponent } from '../../../../shared/components/editor/editor.com
 import { DynamicQuestionComponent } from '@app/shared/components/questions/dynamic-question/dynamic-question.component';
 import { AddFileModalComponent } from '../../components/add-file-modal/add-file-modal.component';
 import { ComplexitiesServiceProxy, StudyLevelsServiceProxy, StudySubjectsServiceProxy, SubjectUnitsServiceProxy } from '@shared/service-proxies/service-proxies';
+import { AutoCompleteFeildModule } from '@app/shared/components/auto-complete-feild/auto-complete-feild.module';
 
 @NgModule({
     imports: [
@@ -29,6 +30,7 @@ import { ComplexitiesServiceProxy, StudyLevelsServiceProxy, StudySubjectsService
         EditorComponent,
         InputSwitchModule,
         AddFileModalComponent,
+        AutoCompleteFeildModule
     ],
     declarations: [AddQuestionComponent],
     providers:[StudyLevelsServiceProxy , StudySubjectsServiceProxy  , SubjectUnitsServiceProxy  , ComplexitiesServiceProxy ]

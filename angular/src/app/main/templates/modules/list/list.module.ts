@@ -18,7 +18,7 @@ import { DropdownFieldComponent } from '@app/shared/components/fields/dropdown-f
         {
             path: '',
             component: ListComponent,
-        },
+        }
     ]),
     FiltersComponent,
     ActionButtonComponent,

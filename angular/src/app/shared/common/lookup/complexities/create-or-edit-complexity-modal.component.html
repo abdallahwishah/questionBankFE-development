@@ -15,22 +15,25 @@
 
                 </div>
                 <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6 my-3">
+                            <label class="form-label" for="Complexity_NameF">{{l("NameF")}} *</label>
+                            <input type="text" #Complexity_NameF="ngModel" id="Complexity_NameF" class="form-control"
+                                [(ngModel)]="complexity.nameF" name="NameF" required />
+                            <validation-messages [formCtrl]="Complexity_NameF"></validation-messages>
+                        </div>
+                        <div class="col-md-6 my-3">
+                            <label class="form-label" for="Complexity_NameL">{{l("NameL")}} *</label>
+                            <input type="text" #Complexity_NameL="ngModel" id="Complexity_NameL" class="form-control"
+                                [(ngModel)]="complexity.nameL" name="NameL" required />
+                            <validation-messages [formCtrl]="Complexity_NameL"></validation-messages>
 
-                    <div class="my-3">
-                        <label class="form-label" for="Complexity_NameF">{{l("NameF")}} *</label>
-                        <input type="text" #Complexity_NameF="ngModel" id="Complexity_NameF" class="form-control"
-                            [(ngModel)]="complexity.nameF" name="NameF" required />
-                        <validation-messages [formCtrl]="Complexity_NameF"></validation-messages>
-                    </div>
+                        </div>
+                        </div>
 
 
 
-                    <div class="mt-3 mb-4">
-                        <label class="form-label" for="Complexity_NameL">{{l("NameL")}} *</label>
-                        <input type="text" #Complexity_NameL="ngModel" id="Complexity_NameL" class="form-control"
-                            [(ngModel)]="complexity.nameL" name="NameL" required />
-                        <validation-messages [formCtrl]="Complexity_NameL"></validation-messages>
-                    </div>
+
 
 
                     <label class="form-check form-check-custom form-check-solid">

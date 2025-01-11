@@ -23,13 +23,13 @@
     <!-- Display or edit the name -->
     <div class="col-md-7 col-9 mb-md-0 mb-3">
         <!-- Using a WYSIWYG editor for the choice text -->
+        <div class="d-inline-flex align-items-center ">
         <app-editor
             *ngIf="choice.isEdit"
             class="w-100"
             [(ngModel)]="choice.name"
             (ngModelChange)="notifyValueChange()"
         ></app-editor>
-        <div class="d-flex">
             <p class="mb-0" *ngIf="!choice.isEdit" [innerHtml]="choice.name"></p>
             <!-- if this seleted need to show correct asswer -->
             <span class="badge bg-success ms-2" *ngIf="choice.optionType === QuestionOptionTypeEnum.Pinned">
