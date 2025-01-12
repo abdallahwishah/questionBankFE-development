@@ -173,9 +173,9 @@
                                     >
                                         <!-- Show question body or fallback text -->
                                         <h4 class="question-name text-primary fw-normal mb-0">
-                                            {{ question.question.body || 'سؤال بدون نص' }}
+                                            {{ question?.question?.body || 'سؤال بدون نص' }}
                                             <span>
-                                                ({{ question.question.type }})
+                                                ({{ question?.question?.type }})
                                             </span>
                                         </h4>
 
@@ -258,11 +258,11 @@
                                     </div>
 
                                     <!-- Example: Render question dynamically -->
-                                    <app-dynamic-exam-question
+                                    <!-- <app-dynamic-exam-question
                                         [questionType]="question.question.type"
                                         style="display: block; margin-top: 1rem;"
                                     >
-                                    </app-dynamic-exam-question>
+                                    </app-dynamic-exam-question> -->
 
                                     <div class="line mt-5"></div>
                                 </div>
