@@ -73,7 +73,7 @@
 
                     <div class="row mt-6">
                         <div class="col-md-6 mb-5">
-                                 <app-auto-complete-feild
+                              <!--    <app-auto-complete-feild
                             [label]="l('StudySubject')"
                             field="name"
                             [(ngModel)]="_createOrEditQuestionDto.studySubjectId"
@@ -82,13 +82,14 @@
                             [ConfigCustomSearch]="{
                                 api: '/api/services/app/StudySubjects/GetAll',
                                 keySearch: 'filter',
+                                PathObj: ['studySubject'],
                                 customParams: {
                                     Sorting: '',
                                     SkipCount: 0,
                                     MaxResultCount: 10,
                                 },
                             }"
-                        ></app-auto-complete-feild>
+                        ></app-auto-complete-feild> -->
                             <app-dropdown-field
                                 [(ngModel)]="_createOrEditQuestionDto.studySubjectId"
                                 [options]="studySubjects"

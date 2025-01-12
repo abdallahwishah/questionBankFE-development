@@ -9,6 +9,7 @@ import { ActionButtonComponent } from "../../../../shared/components/action-butt
 import { PaginatorComponent } from '@app/shared/common/paginator/paginator.component';
 import { AddFileModalComponent } from '../../components/add-file-modal/add-file-modal.component';
 import { InputSwitchModule } from 'primeng/inputswitch';
+import { SafeTextPipe } from "../../../../shared/pipes/safe-text.pipe";
 
 @NgModule({
   imports: [
@@ -25,7 +26,8 @@ import { InputSwitchModule } from 'primeng/inputswitch';
     ActionButtonComponent,
     PaginatorComponent,
     InputSwitchModule,
-    AddFileModalComponent
+    AddFileModalComponent,
+    SafeTextPipe
 ],
   declarations: [ListComponent]
 })

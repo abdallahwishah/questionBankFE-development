@@ -24,11 +24,19 @@ export class ListComponent extends AppComponentBase implements OnInit {
 
     studyLevels: any[] = [];
     studySubjects: any[] = [];
+    status = [
+        {name: "فعال" , id:true},
+        {name: "غير فعال" , id:false},
+    ]
 
     Add_File_dialog = UniqueNameComponents.Add_File_dialog;
     filter: string;
     QuestionTypeEnum = QuestionTypeEnum;
-
+    isActive:any;
+    subjectId:number;
+    levelId:number;
+    typeFilter:number;
+    questionTypeArray:any [] = [];
     constructor(
         private _injector: Injector,
         private _DialogSharedService: DialogSharedService,
@@ -42,6 +50,15 @@ export class ListComponent extends AppComponentBase implements OnInit {
     }
 
     ngOnInit() {
+            /* Covert Enum To array */
+        this.questionTypeArray = Object.keys(QuestionTypeEnum)
+        .filter((key) => isNaN(Number(key)))
+        .map((key) => ({
+            name: key,
+            id: QuestionTypeEnum[key as keyof typeof QuestionTypeEnum],
+        }));
+
+
         console.log('klf , ', this.QuestionTypeEnum);
         this._studyLevelsServiceProxy.getAll(undefined, undefined, undefined, undefined, undefined).subscribe((val) => {
             this.studyLevels = val.items.map((item) => {
@@ -63,7 +80,7 @@ export class ListComponent extends AppComponentBase implements OnInit {
             });
     }
 
-    getQuestion(event?: LazyLoadEvent) {
+    getList(event?: LazyLoadEvent) {
         if (event) {
             if (this.primengTableHelper.shouldResetPaging(event)) {
                 this.paginator.changePage(0);
@@ -78,13 +95,13 @@ export class ListComponent extends AppComponentBase implements OnInit {
         this._questionsServiceProxy
             .getAll(
                 this.filter,
+                this.typeFilter || undefined,
+                undefined,
+                this.isActive || undefined,
                 undefined,
                 undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
+                this.subjectId || undefined,
+                this.levelId || undefined,
                 undefined,
                 undefined,
                 this.primengTableHelper.getSorting(this.dataTable),
@@ -97,6 +114,13 @@ export class ListComponent extends AppComponentBase implements OnInit {
                 console.log(result.items);
                 this.primengTableHelper.hideLoadingIndicator();
             });
+    }
+
+    clearFilter(){
+        this.typeFilter = undefined
+        this.subjectId = undefined
+        this.levelId = undefined
+        this.getList()
     }
 
     addFile() {
@@ -118,7 +142,7 @@ export class ListComponent extends AppComponentBase implements OnInit {
                 this.message.confirm('', this.l('AreYouSure'), (isConfirmed) => {
                     if (isConfirmed) {
                         this._questionsServiceProxy.delete(record.question.id).subscribe((val) => {
-                            this.getQuestion();
+                            this.getList();
                         });
                     }
                 });

@@ -74,7 +74,7 @@
                         [placeholder]="l('Search')"
                         type="text"
                         [(ngModel)]="filter"
-                        (ngModelChange)="getQuestion()"
+                        (ngModelChange)="getList()"
                     />
                     <button class="btn btn-primary" type="submit">
                         <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -94,13 +94,21 @@
             </div>
 
             <div class="col-md-3 d-grid justify-content-end gap-5" style="grid-template-columns: 1fr auto">
-                <app-dropdown-field [placeholder]="'Status'"></app-dropdown-field>
+                <app-dropdown-field
+                [options]="status"
+                optionLabel="name"
+                optionValue="id"
+                [placeholder]="'Status'"
+                [(ngModel)]="isActive"
+                (ngModelChange)="getList()"
+                ></app-dropdown-field>
                 <app-filters>
                     <ng-container filterBody>
                         <div class="row">
                             <div class="col-12 mb-5">
                                 <app-dropdown-field
                                 [options]="studySubjects"
+                                [(ngModel)]="subjectId"
                                 optionLabel="name"
                                 optionValue="id"
                                 [labelField]="l('StudySubject')"
@@ -110,6 +118,7 @@
                             <div class="col-12 mb-5">
                                     <app-dropdown-field
                                         [options]="studyLevels"
+                                        [(ngModel)]="levelId"
                                         optionLabel="name"
                                         optionValue="id"
                                         [labelField]="l('StudyLevel')"
@@ -118,7 +127,8 @@
                             <div class="col-12 mb-5">
                                 <app-dropdown-field
                                 class="d-block"
-                                [options]="QuestionTypeEnum"
+                                [options]="questionTypeArray"
+                                [(ngModel)]="typeFilter"
                                 optionLabel="name"
                                 optionValue="id"
                                 [labelField]="l('QuestionType')"
@@ -126,10 +136,10 @@
                             </div>
                         </div>
                         <div class="d-flex justify-content-between mt-4">
-                            <button class="btn btn-primary">
+                            <button class="btn btn-primary" (click)="getList()">
                                 {{ 'Save' | localize }}
                             </button>
-                            <button class="btn btn-outline">
+                            <button class="btn btn-outline" (click)="clearFilter()">
                                 {{ 'Reset' | localize }}
                             </button>
                         </div>
@@ -143,7 +153,7 @@
             <p-table
                 #dataTable
                 [value]="primengTableHelper.records"
-                (onLazyLoad)="getQuestion($event)"
+                (onLazyLoad)="getList($event)"
                 rows="{{ primengTableHelper.defaultRecordsCountPerPage }}"
                 [paginator]="false"
                 [loading]="primengTableHelper.isLoading"
@@ -188,9 +198,10 @@
                             {{ i + 1  }}
 
                         </td>
+
                         <td>
                             <span class="p-column-title">{{ l('body') }}</span>
-                            <div [innerHTML]="record.question.body"></div>
+                            <div [innerHTML]="record.question.body | safeText:40" ></div>
                         </td>
                         <td>
 
@@ -234,7 +245,7 @@
             <p-paginator
                 #paginator
                  [rows]="primengTableHelper.defaultRecordsCountPerPage"
-                (onPageChange)="getQuestion($event)"
+                (onPageChange)="getList($event)"
                 [totalRecords]="primengTableHelper.totalRecordsCount"
                  [rows]="primengTableHelper.defaultRecordsCountPerPage"
                 [rowsPerPageOptions]="primengTableHelper.predefinedRecordsCountPerPage"

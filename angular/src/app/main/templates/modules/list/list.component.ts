@@ -28,6 +28,9 @@ export class ListComponent extends AppComponentBase implements OnInit {
     Copy_Template_dialog = UniqueNameComponents.Copy_Template_dialog;
 
     filter: string;
+    subjectId:number;
+    levelId:number;
+
 
     constructor(
         private _injector: Injector,
@@ -79,8 +82,8 @@ export class ListComponent extends AppComponentBase implements OnInit {
                 this.filter,
                 undefined,
                 undefined,
-                undefined,
-                undefined,
+                this.levelId || undefined,
+                this.subjectId || undefined,
                 this.primengTableHelper.getSorting(this.dataTable),
                 this.primengTableHelper.getSkipCount(this.paginator, event),
                 this.primengTableHelper.getMaxResultCount(this.paginator, event),
@@ -92,6 +95,12 @@ export class ListComponent extends AppComponentBase implements OnInit {
             });
     }
 
+
+    clearFilter(){
+        this.subjectId = undefined
+        this.levelId = undefined
+        this.getList()
+    }
     doActions(label: any, record: any) {
         switch (label) {
             case 'Edit':

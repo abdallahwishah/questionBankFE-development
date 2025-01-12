@@ -7,20 +7,29 @@
     <ng-container bodyDialog>
         <ng-container>
             <div class="row">
-                <div class="col-12 mb-5">
+               <!--  <div class="col-12 mb-5">
                     <label class="mb-2">{{l('ExamName')}}</label>
                     <input
                     name="text"
                     class="form-control m-input"
                     type="text" />
-                </div>
+                </div> -->
 
                 <div class="col-12 mb-5">
-                    <app-dropdown-field [labelField]="l('ExamTemplate')"></app-dropdown-field>
+                    @if (examTemplates) {
+                        <app-dropdown-field
+                        [options]="examTemplates"
+                        optionLabel="name"
+                        optionValue="id"
+                         [labelField]="l('ExamTemplate')"></app-dropdown-field>
+                    }@else {
+                      <app-skeleton></app-skeleton>
+                    }
+
                 </div>
-                <div class="col-12 mb-5">
+               <!--  <div class="col-12 mb-5">
                     <app-dropdown-field [labelField]="l('NumberOfModels')"></app-dropdown-field>
-                </div>
+                </div> -->
 
             </div>
         </ng-container>

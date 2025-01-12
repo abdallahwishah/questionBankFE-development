@@ -740,3 +740,6 @@ td {
 .p-paginator .p-paginator-pages .p-paginator-page{
     border-radius: 5px !important;
 }
+.p-dropdown-items{
+    margin-bottom: 0 !important;
+}
