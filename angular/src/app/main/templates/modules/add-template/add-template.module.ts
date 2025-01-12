@@ -8,6 +8,7 @@ import { InputSwitchModule } from 'primeng/inputswitch';
 import { RouterModule } from '@node_modules/@angular/router';
 import { DynamicQuestionComponent } from '@app/shared/components/questions/dynamic-question/dynamic-question.component';
 import { AddFileModalComponent } from '@app/main/question-bank/components/add-file-modal/add-file-modal.component';
+import { SkeletonComponent } from "../../../../shared/components/skeleton/skeleton.component";
 
 @NgModule({
   imports: [
@@ -27,8 +28,9 @@ import { AddFileModalComponent } from '@app/main/question-bank/components/add-fi
     DynamicQuestionComponent,
     EditorComponent,
     InputSwitchModule,
-    AddFileModalComponent
-  ],
+    AddFileModalComponent,
+    SkeletonComponent
+],
   declarations: [AddTemplateComponent]
 })
 export class AddTemplateModule { }

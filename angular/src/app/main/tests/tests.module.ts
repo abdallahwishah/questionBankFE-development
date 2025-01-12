@@ -16,7 +16,7 @@ import { RouterModule } from '@node_modules/@angular/router';
                         loadChildren: () => import('./modules/list/list.module').then((m) => m.ListModule),
                     },
                     {
-                        path: 'view/:id',
+                        path: 'view',
                         loadChildren: () =>
                             import('./modules/view-test/view-test.module').then((m) => m.ViewTestModule),
                     },

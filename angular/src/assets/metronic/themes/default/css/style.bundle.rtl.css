@@ -49306,3 +49306,19 @@ body,
 .p-paginator .p-paginator-first, .p-paginator .p-paginator-prev, .p-paginator .p-paginator-next, .p-paginator .p-paginator-last{
     transform: rotate(180deg) !important;
 }
+
+
+.p-autocomplete-dd .p-autocomplete-input, .p-autocomplete-dd .p-autocomplete-multiple-container {
+    border-top-right-radius: 0.475rem !important;
+    border-bottom-right-radius: 0.475rem !important;
+    border-top-left-radius: 0 !important;
+    border-bottom-left-radius:  0 !important;
+
+}
+
+.p-autocomplete-dd .p-autocomplete-dropdown {
+    border-top-left-radius: 0.475rem !important;
+    border-bottom-left-radius:  0.475rem !important;
+    background: #F8F8F8 !important;
+    color: rgb(126, 130, 153) !important;
+}

@@ -43,7 +43,7 @@
                         [placeholder]="l('Search')"
                         type="text"
                         [(ngModel)]="filter"
-                        (ngModelChange)="getQuestion()"
+                        (ngModelChange)="getList()"
                     />
                     <button class="btn btn-primary" type="submit">
                         <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -146,36 +146,31 @@
                 <ng-template pTemplate="body" let-record="$implicit" let-i="rowIndex">
                     <tr>
                         <td>
-                            <span class="p-column-title">{{ l('Code') }}</span>
-                            {{ record.auditCase.caseCode || '-' }}
+                            {{i + 1}}
                         </td>
                         <td>
-                            <span class="p-column-title">{{ l('CaseTitle') }}</span>
-                            {{ record.auditCase.name || '-' }}
+                            <span class="p-column-title">{{ l('title') }}</span>
+                            {{ record.exam.title || '-' }}
                         </td>
                         <td>
-                            <span class="p-column-title">{{ l('CaseOwner') }}</span>
-                            {{ record.organizationUnitDisplayName || '-' }}
+                            <span class="p-column-title">{{ l('examTemplateName') }}</span>
+                            {{ record.examTemplateName || '-' }}
                         </td>
                         <td>
-                            <span class="p-column-title">{{ l('RepeatCase') }}</span>
-                            {{ l('') || '-' }}
+                            <span class="p-column-title">{{ l('versionNo') }}</span>
+                            {{ record.exam.versionNo || '-' }}
                         </td>
-
                         <td>
-                            <span class="p-column-title">{{ l('creationDate') }}</span>
-                            {{ (record.auditCase.creationTime | luxonFormat: 'dd/MM/yyyy - hh:mm a') || '-' }}
+                            <span class="p-column-title">{{ l('studyLevel') }}</span>
+                            {{ record.studyLevel || '-' }}
+                        </td>
+                        <td>
+                            <span class="p-column-title">{{ l('studySubject') }}</span>
+                            {{ record.studySubject || '-' }}
                         </td>
                         <td>
                             <span class="p-column-title">{{ l('CreatedBy') }}</span>
-                            <!-- <img
-                            [src]="record.profilePictureUrl"
-                            class="img-rounded"
-                            width="25"
-                            height="25"
-                            alt=""
-                        /> -->
-                            {{ record.creatorUser || '--' }}
+                            {{ record.createdBy || '--' }}
                         </td>
                         <td>
                             <app-action-button
@@ -198,27 +193,22 @@
                 {{ l('NoData') }}
             </div>
             <p-paginator
-                #paginator
-                [hidden]="true"
-                [rows]="primengTableHelper.defaultRecordsCountPerPage"
-                (onPageChange)="getList($event)"
-                [totalRecords]="primengTableHelper.totalRecordsCount"
-                [showCurrentPageReport]="true"
-                [rows]="primengTableHelper.defaultRecordsCountPerPage"
-                [rowsPerPageOptions]="primengTableHelper.predefinedRecordsCountPerPage"
-            ></p-paginator>
-            <app-paginator
+            #paginator
+             [rows]="primengTableHelper.defaultRecordsCountPerPage"
+            (onPageChange)="getList($event)"
+            [totalRecords]="primengTableHelper.totalRecordsCount"
+             [rows]="primengTableHelper.defaultRecordsCountPerPage"
+            [rowsPerPageOptions]="primengTableHelper.predefinedRecordsCountPerPage"
+        ></p-paginator>
+          <!--   <app-paginator
                 [hidden]="primengTableHelper.totalRecordsCount == 0"
                 [paginator]="paginator"
                 [primengTableHelper]="primengTableHelper"
-            ></app-paginator>
+            ></app-paginator> -->
         </div>
         <!-- End Tabel -->
     </div>
 </div>
-
-<p class="mb-0 mt-4">for test</p>
-<button class="btn btn-primary" routerLink="/app/main/exams/view/1">go to Test View</button>
 
 <!-- Modals -->
 <app-add-test-modal></app-add-test-modal>

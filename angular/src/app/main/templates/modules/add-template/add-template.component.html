@@ -354,4 +354,38 @@
         </div>
     </div>
 </div>
-<ng-template #loader>loading...</ng-template>
+<ng-template #loader>
+    <div class="container-fluid mt-8 px-5">
+        <div class="row">
+            <!-- Template details card -->
+            <div class="col-12">
+                <div class="card px-8 py-6">
+                    <h3>{{ l('TemplateDetails') }}</h3>
+
+                    <div class="row mt-6">
+                        @for (item of [1, 2, 3, 4, 5, 6]; track $index) {
+                            <div class="col-md-6 mb-5">
+                                <app-skeleton></app-skeleton>
+                            </div>
+                        }
+                        <div class="col-12 mb-5">
+                            <app-skeleton [height]="'200px'"></app-skeleton>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sections card -->
+            <div class="col-12 mt-6">
+                <div class="card px-8 py-6">
+                    <h3>{{ l('Sections') }}</h3>
+                    <div class="row">
+                        <div class="col-12 mb-5">
+                            <app-skeleton [height]="'200px'"></app-skeleton>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-template>

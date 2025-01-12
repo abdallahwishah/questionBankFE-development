@@ -10,28 +10,30 @@ import { DynamicQuestionComponent } from '@app/shared/components/questions/dynam
 import { AddFileModalComponent } from '../../components/add-file-modal/add-file-modal.component';
 import { ComplexitiesServiceProxy, StudyLevelsServiceProxy, StudySubjectsServiceProxy, SubjectUnitsServiceProxy } from '@shared/service-proxies/service-proxies';
 import { AutoCompleteFeildModule } from '@app/shared/components/auto-complete-feild/auto-complete-feild.module';
+import { SkeletonComponent } from "../../../../shared/components/skeleton/skeleton.component";
 
 @NgModule({
     imports: [
-        CommonModule,
-        AppSharedModule,
-        RouterModule.forChild([
-            {
-                path: '',
-                component: AddQuestionComponent,
-            },
-            {
-                path: ':id',
-                component: AddQuestionComponent,
-            },
-        ]),
-        DropdownFieldComponent,
-        DynamicQuestionComponent,
-        EditorComponent,
-        InputSwitchModule,
-        AddFileModalComponent,
-        AutoCompleteFeildModule
-    ],
+    CommonModule,
+    AppSharedModule,
+    RouterModule.forChild([
+        {
+            path: '',
+            component: AddQuestionComponent,
+        },
+        {
+            path: ':id',
+            component: AddQuestionComponent,
+        },
+    ]),
+    DropdownFieldComponent,
+    DynamicQuestionComponent,
+    EditorComponent,
+    InputSwitchModule,
+    AddFileModalComponent,
+    AutoCompleteFeildModule,
+    SkeletonComponent
+],
     declarations: [AddQuestionComponent],
     providers:[StudyLevelsServiceProxy , StudySubjectsServiceProxy  , SubjectUnitsServiceProxy  , ComplexitiesServiceProxy ]
 })

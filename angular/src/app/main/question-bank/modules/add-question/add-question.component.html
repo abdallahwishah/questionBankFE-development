@@ -24,10 +24,10 @@
     </div>
 
     <!-- Start Qusestion  -->
-    <div class="container-fluid mt-8 px-5" >
+    <div class="container-fluid mt-8 px-5">
         <div class="row">
             <!-- first card -->
-            <!-- <div class="col-12">
+           <!--   <div class="col-12">
                 <div class="card px-8 py-6">
                     <h3>{{ l('QuestionsYouAdded') }}</h3>
 
@@ -43,7 +43,7 @@
                                         <span class="fs-5">السؤال الاول</span>
                                     </div>
                                     <div class="col-md-8">
-                                         <p class="mb-0">Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo similique repellendus voluptate dolor dolores quam. Sunt sequi minus inventore nemo!</p>
+                                         <p class="mb-0">Lore elit. Nemo voluptate dolor dolores quam. Sunt sequi minus inventore nemo!</p>
                                     </div>
                                     <div class="col-md-1">
                                    <div class="d-flex align-items-center justify-content-between">
@@ -73,11 +73,11 @@
 
                     <div class="row mt-6">
                         <div class="col-md-6 mb-5">
-                           <!--  <app-auto-complete-feild
+                                 <app-auto-complete-feild
                             [label]="l('StudySubject')"
-                            field="archiveTransaction.subject"
+                            field="name"
                             [(ngModel)]="_createOrEditQuestionDto.studySubjectId"
-                            name="linkWithIncoming"
+                            name="studySubjectId"
                             [multiple]="false"
                             [ConfigCustomSearch]="{
                                 api: '/api/services/app/StudySubjects/GetAll',
@@ -88,7 +88,7 @@
                                     MaxResultCount: 10,
                                 },
                             }"
-                        ></app-auto-complete-feild> -->
+                        ></app-auto-complete-feild>
                             <app-dropdown-field
                                 [(ngModel)]="_createOrEditQuestionDto.studySubjectId"
                                 [options]="studySubjects"
@@ -156,7 +156,7 @@
                         <div class="d-flex align-items-center gap-5">
                             <!-- [(ngModel)]="_createOrEditQuestionDto.hasQuestionHelper" -->
 
-                            <p-inputSwitch  [(ngModel)]="checkedExplanatoryNote" ></p-inputSwitch>
+                            <p-inputSwitch [(ngModel)]="checkedExplanatoryNote"></p-inputSwitch>
                             <span class="mt-2">يمتلك شرح توضيحي</span>
                         </div>
                     </div>
@@ -275,5 +275,59 @@
     </div>
 </div>
 <ng-template #loader>
-    loader...
+    <div class="container-fluid px-5 mt-md-0 mt-7">
+        <div class="card px-8 py-6">
+            <h3>{{ l('QuestionIDs') }}</h3>
+            <div class="row mt-6">
+                @for (item of [1, 2, 3, 4, 5, 6]; track $index) {
+                    <div class="col-md-6 mb-5">
+                        <app-skeleton></app-skeleton>
+                    </div>
+                }
+            </div>
+        </div>
+
+        <div class="card px-8 py-6 mt-6">
+                <h3>{{ l('QuestionText') }}</h3>
+                <app-skeleton [height]="'200px'"></app-skeleton>
+        </div>
+        <div class="card px-8 py-6 mt-6">
+                <h3>{{ l('QuestionDetails') }}</h3>
+                <div class="row mt-6">
+                        <div class="col-md-6 mb-5">
+                            <app-skeleton></app-skeleton>
+                        </div>
+                        <div class="col-md-3 mb-5">
+                            <app-skeleton></app-skeleton>
+                        </div>
+                        <div class="col-md-3 mb-5">
+                            <app-skeleton></app-skeleton>
+                        </div>
+                </div>
+        </div>
+
+        @if (_createOrEditQuestionDto.hasQuestionHelper) {
+            <div class="col-12 mt-6">
+                <div class="card px-8 py-6">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h3 class="fs-3 fw-medium">{{ l('ExplanatoryNote') }}</h3>
+                    </div>
+                    <div class="row mt-6">
+                        <div class="col-12 mb-2">
+                            <app-skeleton [height]="'200px'"></app-skeleton>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+
+        <div class="card px-8 py-6 mt-6">
+            <div class="row">
+                <div class="col-md4">
+                    <app-skeleton></app-skeleton>
+                </div>
+            </div>
+        </div>
+
+    </div>
 </ng-template>

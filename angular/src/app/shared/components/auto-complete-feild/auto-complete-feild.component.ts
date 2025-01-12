@@ -146,7 +146,9 @@ export class AutoCompleteFeildComponent implements OnInit, OnDestroy, ControlVal
                     )
                     .pipe(
                         map((value) => {
-                            return EnterInPathObj(value, this?.ConfigCustomSearch?.PathObj || ['result', 'items']);
+                          let a =    value.map((item: any) => item.studySubject) || [];
+
+                             return EnterInPathObj(a, this?.ConfigCustomSearch?.PathObj || ['result', 'items']);
                         }),
                         catchError((error) => {
                             console.error('Search error:', error);

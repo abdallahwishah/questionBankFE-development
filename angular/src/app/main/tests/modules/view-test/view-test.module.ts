@@ -19,6 +19,10 @@ import { AddFileModalComponent } from '@app/main/question-bank/components/add-fi
                 path: '',
                 component: ViewTestComponent,
             },
+            {
+                path: ':id',
+                component: ViewTestComponent,
+            },
         ]),
         DropdownFieldComponent,
         DynamicQuestionComponent,
