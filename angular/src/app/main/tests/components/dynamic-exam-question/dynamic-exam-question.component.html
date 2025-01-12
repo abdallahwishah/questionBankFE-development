@@ -1,26 +1,26 @@
 @switch (questionType) {
-    @case (1) {
+    @case (QuestionTypeEnum.SA) {
         <app-article-questions></app-article-questions>
     }
-    @case (2) {
+    @case (QuestionTypeEnum.TrueAndFalse) {
         <app-true-fase></app-true-fase>
     }
-    @case (3) {
+    @case (QuestionTypeEnum.SinglChoice) {
         <app-multiple-choice-one-option></app-multiple-choice-one-option>
     }
-    @case (4) {
+    @case (QuestionTypeEnum.MutliChoice) {
         <app-multiple-choice-more-than-option></app-multiple-choice-more-than-option>
     }
-    @case (5) {
+    @case (QuestionTypeEnum.Match) {
         <app-connecting-words></app-connecting-words>
     }
-    @case (6) {
+    @case (QuestionTypeEnum.LinkedQuestions) {
         <app-related-questions></app-related-questions>
     }
-    @case (7) {
+    @case (QuestionTypeEnum.Rearrange) {
         <app-words-order></app-words-order>
     }
-    @case (8) {
+    <!-- @case () {
         <app-cartesian-level></app-cartesian-level>
-    }
+    } -->
 }

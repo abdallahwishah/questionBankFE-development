@@ -1,3 +1,4 @@
+import { ExamsServiceProxy } from './../../../../../shared/service-proxies/service-proxies';
 import { Component, Injector, OnInit } from '@angular/core';
 import { DialogSharedService } from '@app/shared/components/dialog-shared/dialog-shared.service';
 import { UniqueNameComponents } from '@app/shared/Models/UniqueNameComponents';
@@ -16,14 +17,28 @@ export class ListComponent extends AppComponentBase implements OnInit {
     constructor(
         private _injector: Injector,
         private _DialogSharedService: DialogSharedService,
+        private _examsServiceProxy: ExamsServiceProxy,
     ) {
         super(_injector);
     }
 
     ngOnInit() {}
     getQuestion() {}
-    getList($event) {}
+    getList($event) {
+        this._examsServiceProxy.getAll(
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            1000,
+        ).subscribe((val) => {
 
+        })
+    }
 
     doActions(label: any, record: any) {
         switch (label) {
@@ -33,7 +48,7 @@ export class ListComponent extends AppComponentBase implements OnInit {
         }
     }
 
-    AddExam(){
-        this._DialogSharedService.showDialog(this.Add_Test_dialog , {})
+    AddExam() {
+        this._DialogSharedService.showDialog(this.Add_Test_dialog, {});
     }
 }
