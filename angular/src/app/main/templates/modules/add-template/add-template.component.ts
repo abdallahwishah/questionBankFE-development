@@ -204,7 +204,7 @@ export class AddTemplateComponent extends AppComponentBase implements OnInit {
     createOrEditTemplate(): void {
         this._examTemplatesServiceProxy.createOrEdit(this._createOrEditExamTemplateDto).subscribe(() => {
             this.notify.success(this.l('SavedSuccessfully'));
-            this._router.navigate(['app/main/templates/list']);
+            this._router.navigate(['app/main/templates']);
 
             this.resetForm();
         });

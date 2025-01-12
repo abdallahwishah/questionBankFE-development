@@ -165,7 +165,7 @@ export class AddQuestionComponent extends AppComponentBase implements OnInit {
         this._questionsServiceProxy.createOrEdit(this._createOrEditQuestionDto).subscribe({
             next: () => {
                 this.notify.success(this.l('SavedSuccessfully'));
-                this._router.navigate(['app/main/question-bank/list']);
+                this._router.navigate(['app/main/question-bank']);
             },
         });
     }
