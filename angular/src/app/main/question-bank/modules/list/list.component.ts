@@ -39,6 +39,7 @@ export class ListComponent extends AppComponentBase implements OnInit {
     typeFilter: number;
     loadingFilter: boolean = false;
     questionTypeArray: any[] = [];
+    activeCount = 0;
     constructor(
         private _injector: Injector,
         private _DialogSharedService: DialogSharedService,
@@ -122,6 +123,7 @@ export class ListComponent extends AppComponentBase implements OnInit {
             )
             .subscribe((result) => {
                 this.primengTableHelper.totalRecordsCount = result.totalCount;
+                this.activeCount = result.activeCount;
                 this.primengTableHelper.records = result.items;
                 this.isActiveFilter = false;
                 this.primengTableHelper.hideLoadingIndicator();
