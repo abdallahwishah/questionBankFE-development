@@ -10,13 +10,13 @@ import { ExamTemplatesServiceProxy } from '@shared/service-proxies/service-proxi
 import { SkeletonComponent } from "../../../../shared/components/skeleton/skeleton.component";
 
 @Component({
-  selector: 'app-add-test-modal',
+  selector: 'app-add-exam-modal',
   standalone: true,
   imports: [DropdownFieldComponent, DialogSharedModule, DateComponent, AutoCompleteComponent, SkeletonComponent],
-  templateUrl: './add-test-modal.component.html',
-  styleUrl: './add-test-modal.component.css'
+  templateUrl: './add-exam-modal.component.html',
+  styleUrl: './add-exam-modal.component.css'
 })
-export class AddTestModalComponent  extends AppComponentBase implements OnInit {
+export class AddExamModalComponent  extends AppComponentBase implements OnInit {
     Add_Test_dialog = UniqueNameComponents.Add_Test_dialog;
     saving = false;
     examTemplates:any;

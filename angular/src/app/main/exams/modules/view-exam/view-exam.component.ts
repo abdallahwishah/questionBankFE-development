@@ -11,11 +11,11 @@ import {
 } from '@shared/service-proxies/service-proxies';
 
 @Component({
-    selector: 'app-view-test',
-    templateUrl: './view-test.component.html',
-    styleUrls: ['./view-test.component.css'],
+    selector: 'app-view-exam',
+    templateUrl: './view-exam.component.html',
+    styleUrls: ['./view-exam.component.css'],
 })
-export class ViewTestComponent extends AppComponentBase implements OnInit {
+export class ViewExamComponent extends AppComponentBase implements OnInit {
     examForView: GetExamForViewDto;
     questionsType: any[] = [];
 

@@ -99,41 +99,55 @@
                 optionLabel="name"
                 optionValue="id"
                 [placeholder]="'Status'"
-                [(ngModel)]="isActive"
+                [(ngModel)]="isActiveFilter"
+                (onClear)="cleaerStatusFilter()"
                 (ngModelChange)="getList()"
                 ></app-dropdown-field>
                 <app-filters>
                     <ng-container filterBody>
                         <div class="row">
-                            <div class="col-12 mb-5">
-                                <app-dropdown-field
-                                [options]="studySubjects"
-                                [(ngModel)]="subjectId"
-                                optionLabel="name"
-                                optionValue="id"
-                                [labelField]="l('StudySubject')"
-                            ></app-dropdown-field>
+                            @if (!loadingFilter) {
 
-                            </div>
-                            <div class="col-12 mb-5">
+                                <div class="col-12 mb-5">
                                     <app-dropdown-field
-                                        [options]="studyLevels"
-                                        [(ngModel)]="levelId"
-                                        optionLabel="name"
-                                        optionValue="id"
-                                        [labelField]="l('StudyLevel')"
-                                    ></app-dropdown-field>
-                            </div>
-                            <div class="col-12 mb-5">
-                                <app-dropdown-field
-                                class="d-block"
-                                [options]="questionTypeArray"
-                                [(ngModel)]="typeFilter"
-                                optionLabel="name"
-                                optionValue="id"
-                                [labelField]="l('QuestionType')"
-                            ></app-dropdown-field>
-                            </div>
+                                    [options]="studySubjects"
+                                    [(ngModel)]="subjectId"
+                                    optionLabel="name"
+                                    optionValue="id"
+                                    [labelField]="l('StudySubject')"
+                                ></app-dropdown-field>
+
+                                </div>
+                                <div class="col-12 mb-5">
+                                        <app-dropdown-field
+                                            [options]="studyLevels"
+                                            [(ngModel)]="levelId"
+                                            optionLabel="name"
+                                            optionValue="id"
+                                            [labelField]="l('StudyLevel')"
+                                        ></app-dropdown-field>
+                                </div>
+                                <div class="col-12 mb-5">
+                                    <app-dropdown-field
+                                    class="d-block"
+                                    [options]="questionTypeArray"
+                                    [(ngModel)]="typeFilter"
+                                    optionLabel="name"
+                                    optionValue="id"
+                                    [labelField]="l('QuestionType')"
+                                ></app-dropdown-field>
+                                </div>
+
+                            }@else {
+
+                            @for (item of [1 , 2 , 3]; track $index) {
+                                <div class="col-12 mb-5">
+                                    <app-skeleton></app-skeleton>
+                                </div>
+                            }
+                            }
+
+
                         </div>
                         <div class="d-flex justify-content-between mt-4">
                             <button class="btn btn-primary" (click)="getList()">

@@ -66,26 +66,42 @@
                 <app-filters>
                     <ng-container filterBody>
                         <div class="row">
-                            <div class="col-12 mb-5">
-                                <input
-                                    name="text"
-                                    class="form-control m-input"
-                                    [placeholder]="l('NumberOfModels')"
-                                    type="text"
-                                />
-                            </div>
-                            <div class="col-12 mb-5">
-                                <app-dropdown-field [labelField]="l('StudySubject')"></app-dropdown-field>
-                            </div>
-                            <div class="col-12 mb-5">
-                                <app-dropdown-field [labelField]="l('StudyLevel')"></app-dropdown-field>
-                            </div>
+                            @if (!loadingFilter) {
+                                <div class="col-12 mb-5">
+                                    <label for="" class="mb-2">{{ l('NumberOfModels') }}</label>
+                                    <input name="text" class="form-control m-input" type="text" />
+                                </div>
+                                <div class="col-12 mb-5">
+                                    <app-dropdown-field
+                                        [options]="studySubjects"
+                                        [(ngModel)]="subjectId"
+                                        optionLabel="name"
+                                        optionValue="id"
+                                        [labelField]="l('StudySubject')"
+                                    ></app-dropdown-field>
+                                </div>
+                                <div class="col-12 mb-5">
+                                    <app-dropdown-field
+                                        [options]="studyLevels"
+                                        [(ngModel)]="levelId"
+                                        optionLabel="name"
+                                        optionValue="id"
+                                        [labelField]="l('StudyLevel')"
+                                    ></app-dropdown-field>
+                                </div>
+                            } @else {
+                                @for (item of [1, 2, 3]; track $index) {
+                                    <div class="col-12 mb-5">
+                                        <app-skeleton></app-skeleton>
+                                    </div>
+                                }
+                            }
                         </div>
                         <div class="d-flex justify-content-between mt-4">
-                            <button class="btn btn-primary">
+                            <button class="btn btn-primary" (click)="getList()">
                                 {{ 'Save' | localize }}
                             </button>
-                            <button class="btn btn-outline">
+                            <button class="btn btn-outline" (click)="clearFilter()">
                                 {{ 'Reset' | localize }}
                             </button>
                         </div>
@@ -146,7 +162,7 @@
                 <ng-template pTemplate="body" let-record="$implicit" let-i="rowIndex">
                     <tr>
                         <td>
-                            {{i + 1}}
+                            {{ i + 1 }}
                         </td>
                         <td>
                             <span class="p-column-title">{{ l('title') }}</span>
@@ -192,14 +208,14 @@
                 {{ l('NoData') }}
             </div>
             <p-paginator
-            #paginator
-             [rows]="primengTableHelper.defaultRecordsCountPerPage"
-            (onPageChange)="getList($event)"
-            [totalRecords]="primengTableHelper.totalRecordsCount"
-             [rows]="primengTableHelper.defaultRecordsCountPerPage"
-            [rowsPerPageOptions]="primengTableHelper.predefinedRecordsCountPerPage"
-        ></p-paginator>
-          <!--   <app-paginator
+                #paginator
+                [rows]="primengTableHelper.defaultRecordsCountPerPage"
+                (onPageChange)="getList($event)"
+                [totalRecords]="primengTableHelper.totalRecordsCount"
+                [rows]="primengTableHelper.defaultRecordsCountPerPage"
+                [rowsPerPageOptions]="primengTableHelper.predefinedRecordsCountPerPage"
+            ></p-paginator>
+            <!--   <app-paginator
                 [hidden]="primengTableHelper.totalRecordsCount == 0"
                 [paginator]="paginator"
                 [primengTableHelper]="primengTableHelper"
@@ -210,4 +226,4 @@
 </div>
 
 <!-- Modals -->
-<app-add-test-modal></app-add-test-modal>
+<app-add-exam-modal></app-add-exam-modal>

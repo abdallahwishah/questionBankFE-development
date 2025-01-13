@@ -65,26 +65,35 @@
             <div class="col-md-3 d-grid justify-content-end">
                 <app-filters>
                     <ng-container filterBody>
-                        <div class="row">
-                            <div class="col-12 mb-5">
-                                <app-dropdown-field
-                                    [(ngModel)]="subjectId"
-                                    [options]="studySubjects"
-                                    optionLabel="name"
-                                    optionValue="id"
-                                    [labelField]="l('StudySubject')"
-                                ></app-dropdown-field>
-                            </div>
-                            <div class="col-12 mb-5">
-                                <app-dropdown-field
-                                    [(ngModel)]="levelId"
-                                    [options]="studyLevels"
-                                    optionLabel="name"
-                                    optionValue="id"
-                                    [labelField]="l('StudyLevel')"
-                                ></app-dropdown-field>
-                            </div>
-                        </div>
+                            <div class="row">
+                                @if (!loadingFilter) {
+                                <div class="col-12 mb-5">
+                                    <app-dropdown-field
+                                        [(ngModel)]="subjectId"
+                                        [options]="studySubjects"
+                                        optionLabel="name"
+                                        optionValue="id"
+                                        [labelField]="l('StudySubject')"
+                                    ></app-dropdown-field>
+                                </div>
+                                <div class="col-12 mb-5">
+                                    <app-dropdown-field
+                                        [(ngModel)]="levelId"
+                                        [options]="studyLevels"
+                                        optionLabel="name"
+                                        optionValue="id"
+                                        [labelField]="l('StudyLevel')"
+                                    ></app-dropdown-field>
+                                </div>
+                        }@else {
+                            @for (item of [1 , 2]; track $index) {
+                                <div class="col-12 mb-5">
+                                    <app-skeleton></app-skeleton>
+                                </div>
+                            }
+                        }
+                    </div>
+
                         <div class="d-flex justify-content-between mt-4">
                             <button class="btn btn-primary" (click)="getList()">
                                 {{ 'Save' | localize }}

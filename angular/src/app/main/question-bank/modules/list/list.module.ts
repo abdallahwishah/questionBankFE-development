@@ -10,6 +10,7 @@ import { PaginatorComponent } from '@app/shared/common/paginator/paginator.compo
 import { AddFileModalComponent } from '../../components/add-file-modal/add-file-modal.component';
 import { InputSwitchModule } from 'primeng/inputswitch';
 import { SafeTextPipe } from "../../../../shared/pipes/safe-text.pipe";
+import { SkeletonComponent } from "../../../../shared/components/skeleton/skeleton.component";
 
 @NgModule({
   imports: [
@@ -27,7 +28,8 @@ import { SafeTextPipe } from "../../../../shared/pipes/safe-text.pipe";
     PaginatorComponent,
     InputSwitchModule,
     AddFileModalComponent,
-    SafeTextPipe
+    SafeTextPipe,
+    SkeletonComponent
 ],
   declarations: [ListComponent]
 })

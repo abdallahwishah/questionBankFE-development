@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { TestsComponent } from './tests.component';
+import { ExamsComponent } from './exams.component';
 import { RouterModule } from '@node_modules/@angular/router';
 
 @NgModule({
@@ -9,7 +9,7 @@ import { RouterModule } from '@node_modules/@angular/router';
         RouterModule.forChild([
             {
                 path: '',
-                component: TestsComponent,
+                component: ExamsComponent,
                 children: [
                     {
                         path: '',
@@ -18,13 +18,13 @@ import { RouterModule } from '@node_modules/@angular/router';
                     {
                         path: 'view',
                         loadChildren: () =>
-                            import('./modules/view-test/view-test.module').then((m) => m.ViewTestModule),
+                            import('./modules/view-exam/view-exam.module').then((m) => m.ViewExamModule),
                     },
 
                 ],
             },
         ]),
     ],
-    declarations: [TestsComponent]
+    declarations: [ExamsComponent]
 })
-export class TestsModule { }
+export class ExamsModule { }

@@ -9,6 +9,7 @@ import { PaginatorComponent } from '@app/shared/common/paginator/paginator.compo
 import { WarningModalComponent } from "../../components/warning-modal/warning-modal.component";
 import { CopyTemplateModalComponent } from "../../components/copy-template-modal/copy-template-modal.component";
 import { DropdownFieldComponent } from '@app/shared/components/fields/dropdown-field/dropdown-field.component';
+import { SkeletonComponent } from "../../../../shared/components/skeleton/skeleton.component";
 
 @NgModule({
   imports: [
@@ -25,7 +26,8 @@ import { DropdownFieldComponent } from '@app/shared/components/fields/dropdown-f
     PaginatorComponent,
     WarningModalComponent,
     CopyTemplateModalComponent,
-    DropdownFieldComponent
+    DropdownFieldComponent,
+    SkeletonComponent
 ],
   declarations: [ListComponent]
 })

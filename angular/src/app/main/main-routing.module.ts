@@ -26,7 +26,7 @@ import { RouterModule } from '@angular/router';
                     },
                     {
                         path: 'exams',
-                        loadChildren: () => import('./tests/tests.module').then((m) => m.TestsModule)
+                        loadChildren: () => import('./exams/exams.module').then((m) => m.ExamsModule)
                     },
                     {
                         path: 'sessions',

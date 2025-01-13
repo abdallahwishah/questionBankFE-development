@@ -6,8 +6,9 @@ import { RouterModule } from '@node_modules/@angular/router';
 import { FiltersComponent } from "../../../../shared/components/filters/filters.component";
 import { ActionButtonComponent } from "../../../../shared/components/action-button/action-button.component";
 import { PaginatorComponent } from '@app/shared/common/paginator/paginator.component';
-import { AddTestModalComponent } from "../../components/add-test-modal/add-test-modal.component";
+import { AddExamModalComponent } from "../../components/add-exam-modal/add-exam-modal.component";
 import { DropdownFieldComponent } from '@app/shared/components/fields/dropdown-field/dropdown-field.component';
+import { SkeletonComponent } from "../../../../shared/components/skeleton/skeleton.component";
 
 @NgModule({
   imports: [
@@ -22,8 +23,9 @@ import { DropdownFieldComponent } from '@app/shared/components/fields/dropdown-f
     FiltersComponent,
     ActionButtonComponent,
     PaginatorComponent,
-    AddTestModalComponent,
-    DropdownFieldComponent
+    AddExamModalComponent,
+    DropdownFieldComponent,
+    SkeletonComponent
 ],
   declarations: [ListComponent]
 })

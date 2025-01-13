@@ -5,6 +5,7 @@ import { Router } from '@node_modules/@angular/router';
 import { LazyLoadEvent } from '@node_modules/primeng/api';
 import { Paginator } from '@node_modules/primeng/paginator';
 import { Table } from '@node_modules/primeng/table';
+import { forkJoin } from 'rxjs';
 import { AppComponentBase } from '@shared/common/app-component-base';
 import {
     ExamTemplatesServiceProxy,
@@ -30,7 +31,7 @@ export class ListComponent extends AppComponentBase implements OnInit {
     filter: string;
     subjectId:number;
     levelId:number;
-
+    loadingFilter = false;
 
     constructor(
         private _injector: Injector,
@@ -44,24 +45,45 @@ export class ListComponent extends AppComponentBase implements OnInit {
     }
 
     ngOnInit() {
-        this._studyLevelsServiceProxy.getAll(undefined, undefined, undefined, undefined, undefined).subscribe((val) => {
-            this.studyLevels = val.items.map((item) => {
-                return {
-                    id: item.studyLevel.id,
-                    name: item.studyLevel.name,
-                };
-            });
-        });
-        this._studySubjectsProxy
-            .getAll(undefined, undefined, undefined, undefined, undefined, undefined)
-            .subscribe((val) => {
-                this.studySubjects = val.items.map((item) => {
-                    return {
-                        id: item.studySubject.id,
-                        name: item.studySubject.name,
-                    };
-                });
-            });
+       // Use forkJoin to get all references in parallel
+       forkJoin([
+        this._studyLevelsServiceProxy.getAll(
+            undefined, // filter
+            undefined, // sorting
+            undefined, // skipCount
+            undefined, // maxResultCount
+            undefined  // extra param
+        ),
+        this._studySubjectsProxy.getAll(
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined
+        )
+    ]).subscribe({
+        next: ([
+            studyLevelsRes,
+            studySubjectsRes,
+        ]) => {
+            // Map each response to your arrays
+            this.studyLevels = studyLevelsRes.items.map((item) => ({
+                id: item.studyLevel.id,
+                name: item.studyLevel.name,
+            }));
+
+            this.studySubjects = studySubjectsRes.items.map((item) => ({
+                id: item.studySubject.id,
+                name: item.studySubject.name,
+            }));
+
+        },
+        error: (err) => {
+            // Handle error if needed
+            this.loadingFilter = false;
+        },
+    });
     }
     getQuestion() {}
 

@@ -5,6 +5,7 @@ import { Router } from '@node_modules/@angular/router';
 import { LazyLoadEvent } from '@node_modules/primeng/api';
 import { Paginator } from '@node_modules/primeng/paginator';
 import { Table } from '@node_modules/primeng/table';
+import { forkJoin } from 'rxjs';
 import { AppComponentBase } from '@shared/common/app-component-base';
 import {
     QuestionsServiceProxy,
@@ -25,17 +26,18 @@ export class ListComponent extends AppComponentBase implements OnInit {
     studyLevels: any[] = [];
     studySubjects: any[] = [];
     status = [
-        {name: "فعال" , id:true},
-        {name: "غير فعال" , id:false},
+        {name:"Active" , id:true},
+        {name:"NoActive" , id:false},
     ]
 
     Add_File_dialog = UniqueNameComponents.Add_File_dialog;
     filter: string;
     QuestionTypeEnum = QuestionTypeEnum;
-    isActive:any;
+    isActiveFilter:boolean;
     subjectId:number;
     levelId:number;
     typeFilter:number;
+    loadingFilter:boolean = false;
     questionTypeArray:any [] = [];
     constructor(
         private _injector: Injector,
@@ -59,25 +61,44 @@ export class ListComponent extends AppComponentBase implements OnInit {
         }));
 
 
-        console.log('klf , ', this.QuestionTypeEnum);
-        this._studyLevelsServiceProxy.getAll(undefined, undefined, undefined, undefined, undefined).subscribe((val) => {
-            this.studyLevels = val.items.map((item) => {
-                return {
-                    id: item.studyLevel.id,
-                    name: item.studyLevel.name,
-                };
-            });
-        });
-        this._studySubjectsProxy
-            .getAll(undefined, undefined, undefined, undefined, undefined, undefined)
-            .subscribe((val) => {
-                this.studySubjects = val.items.map((item) => {
-                    return {
-                        id: item.studySubject.id,
-                        name: item.studySubject.name,
-                    };
-                });
-            });
+       // Use forkJoin to get all references in parallel
+                       forkJoin([
+                           this._studyLevelsServiceProxy.getAll(
+                               undefined, // filter
+                               undefined, // sorting
+                               undefined, // skipCount
+                               undefined, // maxResultCount
+                               undefined  // extra param
+                           ),
+                           this._studySubjectsProxy.getAll(
+                               undefined,
+                               undefined,
+                               undefined,
+                               undefined,
+                               undefined,
+                               undefined
+                           )
+                       ]).subscribe({
+                           next: ([
+                               studyLevelsRes,
+                               studySubjectsRes,
+                           ]) => {
+                               // Map each response to your arrays
+                               this.studyLevels = studyLevelsRes.items.map((item) => ({
+                                   id: item.studyLevel.id,
+                                   name: item.studyLevel.name,
+                               }));
+
+                               this.studySubjects = studySubjectsRes.items.map((item) => ({
+                                   id: item.studySubject.id,
+                                   name: item.studySubject.name,
+                               }));
+                           },
+                           error: (err) => {
+                               // Handle error if needed
+                               this.loadingFilter = false;
+                           },
+                       });
     }
 
     getList(event?: LazyLoadEvent) {
@@ -97,7 +118,7 @@ export class ListComponent extends AppComponentBase implements OnInit {
                 this.filter,
                 this.typeFilter || undefined,
                 undefined,
-                this.isActive || undefined,
+                this.isActiveFilter,
                 undefined,
                 undefined,
                 this.subjectId || undefined,
@@ -111,7 +132,7 @@ export class ListComponent extends AppComponentBase implements OnInit {
             .subscribe((result) => {
                 this.primengTableHelper.totalRecordsCount = result.totalCount;
                 this.primengTableHelper.records = result.items;
-                console.log(result.items);
+                this.isActiveFilter  =false;
                 this.primengTableHelper.hideLoadingIndicator();
             });
     }
@@ -120,6 +141,10 @@ export class ListComponent extends AppComponentBase implements OnInit {
         this.typeFilter = undefined
         this.subjectId = undefined
         this.levelId = undefined
+        this.getList()
+    }
+    cleaerStatusFilter(){
+        this.isActiveFilter = undefined;
         this.getList()
     }
 

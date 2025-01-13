@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ViewTestComponent } from './view-test.component';
 import { EditorComponent } from '@app/shared/components/editor/editor.component';
 import { AppSharedModule } from '@app/shared/app-shared.module';
 import { DropdownFieldComponent } from '@app/shared/components/fields/dropdown-field/dropdown-field.component';
@@ -9,6 +8,7 @@ import { InputSwitchModule } from 'primeng/inputswitch';
 import { DynamicExamQuestionComponent } from '../../components/dynamic-exam-question/dynamic-exam-question.component';
 import { DynamicQuestionComponent } from '@app/shared/components/questions/dynamic-question/dynamic-question.component';
 import { AddFileModalComponent } from '@app/main/question-bank/components/add-file-modal/add-file-modal.component';
+import { ViewExamComponent } from './view-exam.component';
 
 @NgModule({
     imports: [
@@ -17,11 +17,11 @@ import { AddFileModalComponent } from '@app/main/question-bank/components/add-fi
         RouterModule.forChild([
             {
                 path: '',
-                component: ViewTestComponent,
+                component: ViewExamComponent,
             },
             {
                 path: ':id',
-                component: ViewTestComponent,
+                component: ViewExamComponent,
             },
         ]),
         DropdownFieldComponent,
@@ -31,6 +31,6 @@ import { AddFileModalComponent } from '@app/main/question-bank/components/add-fi
         AddFileModalComponent,
         DynamicExamQuestionComponent,
     ],
-    declarations: [ViewTestComponent],
+    declarations: [ViewExamComponent],
 })
-export class ViewTestModule {}
+export class ViewExamModule {}
