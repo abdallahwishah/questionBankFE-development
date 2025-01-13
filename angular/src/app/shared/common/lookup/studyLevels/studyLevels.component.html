@@ -6,12 +6,8 @@
                 {{ l('ExportToExcel') }}
             </button>
 
-            <button
-                id="btn_create_studyLevel"
-                *ngIf="isGranted('Pages.StudyLevels.Create')"
-                (click)="createStudyLevel()"
-                class="btn btn-primary blue"
-            >
+            <button id="btn_create_studyLevel" *ngIf="isGranted('Pages.StudyLevels.Create')"
+                (click)="createStudyLevel()" class="btn btn-primary blue">
                 <i class="fa fa-plus"></i>
                 {{ l('CreateNewStudyLevel') }}
             </button>
@@ -19,9 +15,28 @@
     </sub-header>
 
     <div [class]="containerClass">
-        <div class="card card-custom gutter-b">
+        <div class=" card-custom gutter-b">
             <div class="card-body">
-                <form class="form" autocomplete="off">
+                <div class="row justify-content-between switch-serch-bar mt-9">
+                    <div class="col-md-4 px-0">
+                        <div class="input-group search-group">
+                            <input name="filterText" class="form-control m-input" [placeholder]="l('Search')"
+                                type="text" [(ngModel)]="filterText" (ngModelChange)="getStudyLevels()" />
+                            <button class="btn btn-primary" type="submit">
+                                <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd" clip-rule="evenodd"
+                                        d="M18.9584 9.58317C18.9584 4.87484 15.125 1.0415 10.4167 1.0415C5.70837 1.0415 1.87504 4.87484 1.87504 9.58317C1.87504 14.2915 5.70837 18.1248 10.4167 18.1248C15.125 18.1248 18.9584 14.2915 18.9584 9.58317ZM17.7084 9.58317C17.7084 13.5998 14.4417 16.8748 10.4167 16.8748C6.39171 16.8748 3.12504 13.5998 3.12504 9.58317C3.12504 5.5665 6.39171 2.2915 10.4167 2.2915C14.4417 2.2915 17.7084 5.5665 17.7084 9.58317Z"
+                                        fill="#6D31ED" />
+                                    <path
+                                        d="M2.10802 18.7752L3.77468 17.1085C4.01635 16.8669 4.01635 16.4669 3.77468 16.2252C3.53302 15.9835 3.13301 15.9835 2.89135 16.2252L1.22468 17.8919C0.983015 18.1335 0.983015 18.5335 1.22468 18.7752C1.34968 18.9002 1.50802 18.9585 1.66635 18.9585C1.82468 18.9585 1.98302 18.9002 2.10802 18.7752Z"
+                                        fill="#6D31ED" />
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <!-- <form class="form" autocomplete="off">
                     <div>
                         <div class="row align-items-center">
                             <div class="col-xl-12">
@@ -94,23 +109,15 @@
                             </div>
                         </div>
                     </div>
-                </form>
+                </form> -->
 
-                <div class="row align-items-center">
+                <div class="row align-items-center p-0 col-12 mt-6">
                     <!--<Primeng-Datatable-Start>-->
                     <div class="primeng-datatable-container col-12" [busyIf]="primengTableHelper.isLoading">
-                        <p-table
-                            #dataTable
-                            (onLazyLoad)="getStudyLevels($event)"
-                            [value]="primengTableHelper.records"
-                            rows="{{ primengTableHelper.defaultRecordsCountPerPage }}"
-                            [paginator]="false"
-                            [lazy]="true"
-                            [scrollable]="true"
-                            ScrollWidth="100%"
-                            [tableStyle]="{ 'min-width': '50rem' }"
-                            [resizableColumns]="primengTableHelper.resizableColumns"
-                        >
+                        <p-table #dataTable (onLazyLoad)="getStudyLevels($event)" [value]="primengTableHelper.records"
+                            rows="{{ primengTableHelper.defaultRecordsCountPerPage }}" [paginator]="false" [lazy]="true"
+                            [scrollable]="true" ScrollWidth="100%" [tableStyle]="{ 'min-width': '50rem' }"
+                            [resizableColumns]="primengTableHelper.resizableColumns">
                             <ng-template pTemplate="header">
                                 <tr>
                                     <th pSortableColumn="caseCode">
@@ -124,11 +131,8 @@
                                         {{ l('IsActive') }}
                                         <p-sortIcon field="studyLevel.isActive"></p-sortIcon>
                                     </th>
-                                    <th
-                                        class="text-center"
-                                        style="width: 130px"
-                                        [hidden]="!isGrantedAny('Pages.StudyLevels.Edit', 'Pages.StudyLevels.Delete')"
-                                    >
+                                    <th class="text-center" style="width: 130px"
+                                        [hidden]="!isGrantedAny('Pages.StudyLevels.Edit', 'Pages.StudyLevels.Delete')">
                                         {{ l('Actions') }}
                                     </th>
                                 </tr>
@@ -136,7 +140,7 @@
                             <ng-template pTemplate="body" let-record="$implicit" let-i="rowIndex">
                                 <tr>
                                     <td class="text-center" style="width: 150px">
-                                        {{ i + 1  }}
+                                        {{ i + 1 }}
                                     </td>
                                     <td style="width: 150px" class="text-center">
                                         <span class="p-column-title">{{ l('Name') }}</span>
@@ -144,15 +148,11 @@
                                     </td>
                                     <td style="width: 150px" class="text-center">
                                         <p-inputSwitch [(ngModel)]="checkedActive"
-                                    (onChange)="getCheckedActive($event)"></p-inputSwitch>
+                                            (onChange)="getCheckedActive($event)"></p-inputSwitch>
                                     </td>
-                                    <td
-                                        class="text-center"
-                                        style="width: 130px"
+                                    <td class="text-center" style="width: 130px"
                                         [hidden]="!isGrantedAny('Pages.StudyLevels.Edit', 'Pages.StudyLevels.Delete')">
-                                        <app-action-button
-                                            (action)="action($event, record)"
-                                            [ActionsInfo]="[
+                                        <app-action-button (action)="action($event, record)" [ActionsInfo]="[
                                                 {
                                                     label: 'View'
                                                 },
@@ -162,8 +162,7 @@
                                                 {
                                                     label: 'Delete'
                                                 }
-                                            ]"
-                                        ></app-action-button>
+                                            ]"></app-action-button>
 
                                     </td>
                                 </tr>
@@ -173,17 +172,13 @@
                             {{ l('NoData') }}
                         </div>
                         <div class="primeng-paging-container">
-                            <p-paginator
-                                [rows]="primengTableHelper.defaultRecordsCountPerPage"
-                                #paginator
+                            <p-paginator [rows]="primengTableHelper.defaultRecordsCountPerPage" #paginator
                                 (onPageChange)="getStudyLevels($event)"
                                 [totalRecords]="primengTableHelper.totalRecordsCount"
                                 [rowsPerPageOptions]="primengTableHelper.predefinedRecordsCountPerPage"
-                                [showCurrentPageReport]="true"
-                                [currentPageReportTemplate]="
+                                [showCurrentPageReport]="true" [currentPageReportTemplate]="
                                     'TotalRecordsCount' | localize: primengTableHelper.totalRecordsCount
-                                "
-                            ></p-paginator>
+                                "></p-paginator>
                         </div>
                     </div>
                     <!--<Primeng-Datatable-End>-->
@@ -191,10 +186,8 @@
             </div>
         </div>
     </div>
-    <createOrEditStudyLevelModal
-        #createOrEditStudyLevelModal
-        (modalSave)="getStudyLevels()"
-    ></createOrEditStudyLevelModal>
+    <createOrEditStudyLevelModal #createOrEditStudyLevelModal (modalSave)="getStudyLevels()">
+    </createOrEditStudyLevelModal>
     <viewStudyLevelModal #viewStudyLevelModal></viewStudyLevelModal>
     <entityTypeHistoryModal #entityTypeHistoryModal></entityTypeHistoryModal>
 </div>
