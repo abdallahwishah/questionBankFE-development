@@ -26,19 +26,19 @@ export class ListComponent extends AppComponentBase implements OnInit {
     studyLevels: any[] = [];
     studySubjects: any[] = [];
     status = [
-        {name:"Active" , id:true},
-        {name:"NoActive" , id:false},
-    ]
+        { name: 'Active', id: true },
+        { name: 'NoActive', id: false },
+    ];
 
     Add_File_dialog = UniqueNameComponents.Add_File_dialog;
     filter: string;
     QuestionTypeEnum = QuestionTypeEnum;
-    isActiveFilter:boolean;
-    subjectId:number;
-    levelId:number;
-    typeFilter:number;
-    loadingFilter:boolean = false;
-    questionTypeArray:any [] = [];
+    isActiveFilter: boolean;
+    subjectId: number;
+    levelId: number;
+    typeFilter: number;
+    loadingFilter: boolean = false;
+    questionTypeArray: any[] = [];
     constructor(
         private _injector: Injector,
         private _DialogSharedService: DialogSharedService,
@@ -52,53 +52,42 @@ export class ListComponent extends AppComponentBase implements OnInit {
     }
 
     ngOnInit() {
-            /* Covert Enum To array */
+        /* Covert Enum To array */
         this.questionTypeArray = Object.keys(QuestionTypeEnum)
-        .filter((key) => isNaN(Number(key)))
-        .map((key) => ({
-            name: key,
-            id: QuestionTypeEnum[key as keyof typeof QuestionTypeEnum],
-        }));
+            .filter((key) => isNaN(Number(key)))
+            .map((key) => ({
+                name: key,
+                id: QuestionTypeEnum[key as keyof typeof QuestionTypeEnum],
+            }));
 
+        // Use forkJoin to get all references in parallel
+        forkJoin([
+            this._studyLevelsServiceProxy.getAll(
+                undefined, // filter
+                undefined, // sorting
+                undefined, // skipCount
+                undefined, // maxResultCount
+                undefined, // extra param
+            ),
+            this._studySubjectsProxy.getAll(undefined, undefined, undefined, undefined, undefined, undefined),
+        ]).subscribe({
+            next: ([studyLevelsRes, studySubjectsRes]) => {
+                // Map each response to your arrays
+                this.studyLevels = studyLevelsRes.items.map((item) => ({
+                    id: item.studyLevel.id,
+                    name: item.studyLevel.name,
+                }));
 
-       // Use forkJoin to get all references in parallel
-                       forkJoin([
-                           this._studyLevelsServiceProxy.getAll(
-                               undefined, // filter
-                               undefined, // sorting
-                               undefined, // skipCount
-                               undefined, // maxResultCount
-                               undefined  // extra param
-                           ),
-                           this._studySubjectsProxy.getAll(
-                               undefined,
-                               undefined,
-                               undefined,
-                               undefined,
-                               undefined,
-                               undefined
-                           )
-                       ]).subscribe({
-                           next: ([
-                               studyLevelsRes,
-                               studySubjectsRes,
-                           ]) => {
-                               // Map each response to your arrays
-                               this.studyLevels = studyLevelsRes.items.map((item) => ({
-                                   id: item.studyLevel.id,
-                                   name: item.studyLevel.name,
-                               }));
-
-                               this.studySubjects = studySubjectsRes.items.map((item) => ({
-                                   id: item.studySubject.id,
-                                   name: item.studySubject.name,
-                               }));
-                           },
-                           error: (err) => {
-                               // Handle error if needed
-                               this.loadingFilter = false;
-                           },
-                       });
+                this.studySubjects = studySubjectsRes.items.map((item) => ({
+                    id: item.studySubject.id,
+                    name: item.studySubject.name,
+                }));
+            },
+            error: (err) => {
+                // Handle error if needed
+                this.loadingFilter = false;
+            },
+        });
     }
 
     getList(event?: LazyLoadEvent) {
@@ -125,6 +114,8 @@ export class ListComponent extends AppComponentBase implements OnInit {
                 this.levelId || undefined,
                 undefined,
                 undefined,
+                undefined,
+
                 this.primengTableHelper.getSorting(this.dataTable),
                 this.primengTableHelper.getSkipCount(this.paginator, event),
                 this.primengTableHelper.getMaxResultCount(this.paginator, event),
@@ -132,20 +123,20 @@ export class ListComponent extends AppComponentBase implements OnInit {
             .subscribe((result) => {
                 this.primengTableHelper.totalRecordsCount = result.totalCount;
                 this.primengTableHelper.records = result.items;
-                this.isActiveFilter  =false;
+                this.isActiveFilter = false;
                 this.primengTableHelper.hideLoadingIndicator();
             });
     }
 
-    clearFilter(){
-        this.typeFilter = undefined
-        this.subjectId = undefined
-        this.levelId = undefined
-        this.getList()
+    clearFilter() {
+        this.typeFilter = undefined;
+        this.subjectId = undefined;
+        this.levelId = undefined;
+        this.getList();
     }
-    cleaerStatusFilter(){
+    cleaerStatusFilter() {
         this.isActiveFilter = undefined;
-        this.getList()
+        this.getList();
     }
 
     addFile() {

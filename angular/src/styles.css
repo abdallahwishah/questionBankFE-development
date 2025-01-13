@@ -743,3 +743,12 @@ td {
 .p-dropdown-items{
     margin-bottom: 0 !important;
 }
+/* In a global CSS or a CSS file the editor loads */
+.ql-input-blot input {
+    display: inline-block;
+    width: auto;
+    margin: 0 4px;
+    padding: 2px 5px;
+    vertical-align: middle;
+    /* etc. */
+  }

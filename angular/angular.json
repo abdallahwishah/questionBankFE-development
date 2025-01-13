@@ -93,7 +93,7 @@
               "src/assets/metronic/common/js/components/toggle.js",
               "src/assets/metronic/common/js/components/util.js",
               "src/assets/metronic/common/js/components/app.js"
-            ],
+             ],
             "vendorChunk": true,
             "extractLicenses": false,
             "buildOptimizer": false,

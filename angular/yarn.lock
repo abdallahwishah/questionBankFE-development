@@ -187,7 +187,7 @@
     symbol-observable "4.0.0"
     yargs "17.7.2"
 
-"@angular/common@^16.0.0", "@angular/common@^17.0.0", "@angular/common@^17.0.0 || ^18.0.0", "@angular/common@^17.0.3", "@angular/common@^17.1.2", "@angular/common@>=12.0.0", "@angular/common@>=13.0.0", "@angular/common@>=14.0.0", "@angular/common@>=15.0.0", "@angular/common@>=5.0.0", "@angular/common@17.1.2":
+"@angular/common@^16.0.0", "@angular/common@^17.0.0", "@angular/common@^17.0.0 || ^18.0.0", "@angular/common@^17.0.3", "@angular/common@^17.1.2", "@angular/common@>=12.0.0", "@angular/common@>=13.0.0", "@angular/common@>=14.0.0", "@angular/common@>=15.0.0", "@angular/common@14.x - 16.x", "@angular/common@17.1.2":
   version "17.1.2"
   resolved "https://registry.npmjs.org/@angular/common/-/common-17.1.2.tgz"
   integrity sha512-y/wD+zuPaPgK3dB80Q63qBtuu5TuryKuUgjWrOmrguBWV9oiJRhKQrcp1gVw9vVrowmbDBKGtPMS622Q4oxOWQ==
@@ -220,7 +220,7 @@
   resolved "https://registry.npmjs.org/@angular/compiler/-/compiler-9.0.0.tgz"
   integrity sha512-ctjwuntPfZZT2mNj2NDIVu51t9cvbhl/16epc5xEwyzyDt76pX9UgwvY+MbXrf/C/FWwdtmNtfP698BKI+9leQ==
 
-"@angular/core@^16.0.0", "@angular/core@^17.0.0", "@angular/core@^17.0.0 || ^18.0.0", "@angular/core@^17.0.3", "@angular/core@^17.1.2", "@angular/core@>=12.0.0", "@angular/core@>=13.0.0", "@angular/core@>=14.0.0", "@angular/core@>=15.0.0", "@angular/core@>=15.0.0 < 16.0.0", "@angular/core@>=5.0.0", "@angular/core@17.1.2":
+"@angular/core@^16.0.0", "@angular/core@^17.0.0", "@angular/core@^17.0.0 || ^18.0.0", "@angular/core@^17.0.3", "@angular/core@^17.1.2", "@angular/core@>=12.0.0", "@angular/core@>=13.0.0", "@angular/core@>=14.0.0", "@angular/core@>=15.0.0", "@angular/core@>=15.0.0 < 16.0.0", "@angular/core@14.x - 16.x", "@angular/core@17.1.2":
   version "17.1.2"
   resolved "https://registry.npmjs.org/@angular/core/-/core-17.1.2.tgz"
   integrity sha512-0M787BZVgYSVogHCUzo/dFrT56TgfQoEsOQngHMpyERJZv6dycXZlRdHc6TzvHUa+Uu/MNjn/RclBR8063bdWA==
@@ -232,7 +232,7 @@
   resolved "https://registry.npmjs.org/@angular/core/-/core-9.0.0.tgz"
   integrity sha512-6Pxgsrf0qF9iFFqmIcWmjJGkkCaCm6V5QNnxMy2KloO3SDq6QuMVRbN9RtC8Urmo25LP+eZ6ZgYqFYpdD8Hd9w==
 
-"@angular/forms@^17.0.0", "@angular/forms@^17.1.2", "@angular/forms@>=12.0.0", "@angular/forms@>=5.0.0":
+"@angular/forms@^17.0.0", "@angular/forms@^17.1.2", "@angular/forms@>=12.0.0", "@angular/forms@14.x - 16.x":
   version "17.1.2"
   resolved "https://registry.npmjs.org/@angular/forms/-/forms-17.1.2.tgz"
   integrity sha512-n1WsZAL2IVOB6ocROKR6CFOR14PIC9RGAB41SwTfPhJeBM1kjW48bXY0sw97TasxM4mWJKGCmFXu0jQwkoeSpQ==
@@ -3141,24 +3141,6 @@ chrome-trace-event@^1.0.2:
   version "1.0.3"
   resolved "https://registry.npmjs.org/chrome-trace-event/-/chrome-trace-event-1.0.3.tgz"
   integrity sha512-p3KULyQg4S7NIHixdwbGX+nFHkoBiA4YQmyWtjb8XngSKV124nJmRysgAeujbUVb15vh+RvFUfCPqU7rXk+hZg==
-
-ckeditor4-angular@2.4.0:
-  version "2.4.0"
-  resolved "https://registry.npmjs.org/ckeditor4-angular/-/ckeditor4-angular-2.4.0.tgz"
-  integrity sha512-v4Wrgox//F+vfRwT5nBTYUUJDzYLnztiBWifibA323FmHoPXqr/oB3s9Aqgb+KxW3NlCXn94A/ZG7LH/l1ksOA==
-  dependencies:
-    ckeditor4-integrations-common "^1.0.0"
-    tslib "^2.2.0"
-
-ckeditor4-integrations-common@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.npmjs.org/ckeditor4-integrations-common/-/ckeditor4-integrations-common-1.0.0.tgz"
-  integrity sha512-OAoQT/gYrHkg0qgzf6MS/rndYhq3SScLVQ3rtXQeuCE8ju7nFHg3qZ7WGA2XpFxcZzsMP6hhugXqdel5vbcC3g==
-
-ckeditor4@4.22.1:
-  version "4.22.1"
-  resolved "https://registry.npmjs.org/ckeditor4/-/ckeditor4-4.22.1.tgz"
-  integrity sha512-Yj4vTHX5YxHwc48gNqUqTm+KLkRr9tuyb4O2VIABu4oKHWRNVIdLdy6vUNe/XNx+RiTavMejfA1MVOU/MxLjqQ==
 
 class-utils@^0.3.5:
   version "0.3.6"
@@ -6241,6 +6223,11 @@ jiti@^1.20.0, jiti@>=1.21.0:
   resolved "https://registry.npmjs.org/jiti/-/jiti-1.21.0.tgz"
   integrity sha512-gFqAIbuKyyso/3G2qhiO2OM6shY6EPP/R0+mkDbyspxKazh8BXDC5FiFsUjlczgdNz/vfra0da2y+aHrusLG/Q==
 
+jquery@^3.7.1:
+  version "3.7.1"
+  resolved "https://registry.npmjs.org/jquery/-/jquery-3.7.1.tgz"
+  integrity sha512-m4avr8yL8kmFN8psrbFFFmB/If14iN5o9nw/NgnnM+kybDJpRsAynV2BsfpTYrTRysYUdADVD7CkUUizgkpLfg==
+
 js-cookie@^3.0.5:
   version "3.0.5"
   resolved "https://registry.npmjs.org/js-cookie/-/js-cookie-3.0.5.tgz"
@@ -7199,6 +7186,13 @@ ngx-spinner@^16.0.2:
   integrity sha512-MZpOHb3dvSqD6xiEdR+EtOfPY2r1kfA7t5Hv5IVwi7gkbTwVgnqxDWdOYJ/HW1pSZ5iEGhqlJqWg6CysLmNfHQ==
   dependencies:
     tslib "^2.3.0"
+
+ngx-summernote@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.npmjs.org/ngx-summernote/-/ngx-summernote-1.0.0.tgz"
+  integrity sha512-gOtZ4c5rUHnla/ZLyClR3j60l8pfD8UfFRus8T1mF2OyG0yy7jmcfXVUNiSHoPI0wANKcUOBaCKH3PgbWdBYSA==
+  dependencies:
+    tslib "^2.0.0"
 
 node-fetch@^2.6.7:
   version "2.7.0"
@@ -9329,6 +9323,11 @@ strip-json-comments@^3.1.1:
   version "3.1.1"
   resolved "https://registry.npmjs.org/strip-json-comments/-/strip-json-comments-3.1.1.tgz"
   integrity sha512-6fPc+R4ihwqP6N/aIv2f1gMH8lOVtWQHoqC4yK6oSDVVocumAsfCqjkXnqiYMhmMwS/mEHLp7Vehlt3ql6lEig==
+
+summernote@^0.9.1, summernote@>=0.8.10:
+  version "0.9.1"
+  resolved "https://registry.npmjs.org/summernote/-/summernote-0.9.1.tgz"
+  integrity sha512-5Hfuey6+N0XIbk8ZpkGEVDmrkRVRHZWKBhw/072i9/TJLaWUKboB+KOyyd6AzDP2CQs1O6or4zRTU8HY30kt4w==
 
 supports-color@^5.3.0:
   version "5.5.0"

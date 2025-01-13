@@ -1566,6 +1566,68 @@ export class CategoriesServiceProxy {
     }
 
     /**
+     * @param id (optional) 
+     * @param isActive (optional) 
+     * @return Success
+     */
+    updateCategoryStatus(id: number | undefined, isActive: boolean | undefined): Observable<boolean> {
+        let url_ = this.baseUrl + "/api/services/app/Categories/UpdateCategoryStatus?";
+        if (id === null)
+            throw new Error("The parameter 'id' cannot be null.");
+        else if (id !== undefined)
+            url_ += "id=" + encodeURIComponent("" + id) + "&";
+        if (isActive === null)
+            throw new Error("The parameter 'isActive' cannot be null.");
+        else if (isActive !== undefined)
+            url_ += "isActive=" + encodeURIComponent("" + isActive) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("put", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processUpdateCategoryStatus(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processUpdateCategoryStatus(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<boolean>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<boolean>;
+        }));
+    }
+
+    protected processUpdateCategoryStatus(response: HttpResponseBase): Observable<boolean> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+                result200 = resultData200 !== undefined ? resultData200 : <any>null;
+    
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
      * @param filter (optional) 
      * @param isActiveFilter (optional) 
      * @param sorting (optional) 
@@ -2289,6 +2351,68 @@ export class ComplexitiesServiceProxy {
     constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
         this.http = http;
         this.baseUrl = baseUrl ?? "";
+    }
+
+    /**
+     * @param id (optional) 
+     * @param isActive (optional) 
+     * @return Success
+     */
+    updateComplexityStatus(id: number | undefined, isActive: boolean | undefined): Observable<boolean> {
+        let url_ = this.baseUrl + "/api/services/app/Complexities/UpdateComplexityStatus?";
+        if (id === null)
+            throw new Error("The parameter 'id' cannot be null.");
+        else if (id !== undefined)
+            url_ += "id=" + encodeURIComponent("" + id) + "&";
+        if (isActive === null)
+            throw new Error("The parameter 'isActive' cannot be null.");
+        else if (isActive !== undefined)
+            url_ += "isActive=" + encodeURIComponent("" + isActive) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("put", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processUpdateComplexityStatus(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processUpdateComplexityStatus(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<boolean>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<boolean>;
+        }));
+    }
+
+    protected processUpdateComplexityStatus(response: HttpResponseBase): Observable<boolean> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+                result200 = resultData200 !== undefined ? resultData200 : <any>null;
+    
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
     }
 
     /**
@@ -6390,97 +6514,32 @@ export class ExamAttemptsServiceProxy {
 
     /**
      * @param filter (optional) 
-     * @param maxTotalScoreFilter (optional) 
-     * @param minTotalScoreFilter (optional) 
-     * @param maxAttemptDateFilter (optional) 
-     * @param minAttemptDateFilter (optional) 
-     * @param maxAuditedDateFilter (optional) 
-     * @param minAuditedDateFilter (optional) 
-     * @param maxCorrectionDateFilter (optional) 
-     * @param minCorrectionDateFilter (optional) 
-     * @param isManualCorrectedFilter (optional) 
-     * @param isSubQuestionManualCorrectedFilter (optional) 
-     * @param noteFilter (optional) 
-     * @param examTitleFilter (optional) 
-     * @param sessionNameLFilter (optional) 
-     * @param studentClassNameFilter (optional) 
-     * @param userNameFilter (optional) 
-     * @param userName2Filter (optional) 
+     * @param examIdFilter (optional) 
+     * @param sessionIdFilter (optional) 
+     * @param studentClassIdFilter (optional) 
      * @param sorting (optional) 
      * @param skipCount (optional) 
      * @param maxResultCount (optional) 
      * @return Success
      */
-    getAll(filter: string | undefined, maxTotalScoreFilter: number | undefined, minTotalScoreFilter: number | undefined, maxAttemptDateFilter: DateTime | undefined, minAttemptDateFilter: DateTime | undefined, maxAuditedDateFilter: DateTime | undefined, minAuditedDateFilter: DateTime | undefined, maxCorrectionDateFilter: DateTime | undefined, minCorrectionDateFilter: DateTime | undefined, isManualCorrectedFilter: number | undefined, isSubQuestionManualCorrectedFilter: number | undefined, noteFilter: string | undefined, examTitleFilter: string | undefined, sessionNameLFilter: string | undefined, studentClassNameFilter: string | undefined, userNameFilter: string | undefined, userName2Filter: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfGetExamAttemptForViewDto> {
+    getAll(filter: string | undefined, examIdFilter: number | undefined, sessionIdFilter: number | undefined, studentClassIdFilter: number | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfGetExamAttemptForViewDto> {
         let url_ = this.baseUrl + "/api/services/app/ExamAttempts/GetAll?";
         if (filter === null)
             throw new Error("The parameter 'filter' cannot be null.");
         else if (filter !== undefined)
             url_ += "Filter=" + encodeURIComponent("" + filter) + "&";
-        if (maxTotalScoreFilter === null)
-            throw new Error("The parameter 'maxTotalScoreFilter' cannot be null.");
-        else if (maxTotalScoreFilter !== undefined)
-            url_ += "MaxTotalScoreFilter=" + encodeURIComponent("" + maxTotalScoreFilter) + "&";
-        if (minTotalScoreFilter === null)
-            throw new Error("The parameter 'minTotalScoreFilter' cannot be null.");
-        else if (minTotalScoreFilter !== undefined)
-            url_ += "MinTotalScoreFilter=" + encodeURIComponent("" + minTotalScoreFilter) + "&";
-        if (maxAttemptDateFilter === null)
-            throw new Error("The parameter 'maxAttemptDateFilter' cannot be null.");
-        else if (maxAttemptDateFilter !== undefined)
-            url_ += "MaxAttemptDateFilter=" + encodeURIComponent(maxAttemptDateFilter ? "" + maxAttemptDateFilter.toString() : "") + "&";
-        if (minAttemptDateFilter === null)
-            throw new Error("The parameter 'minAttemptDateFilter' cannot be null.");
-        else if (minAttemptDateFilter !== undefined)
-            url_ += "MinAttemptDateFilter=" + encodeURIComponent(minAttemptDateFilter ? "" + minAttemptDateFilter.toString() : "") + "&";
-        if (maxAuditedDateFilter === null)
-            throw new Error("The parameter 'maxAuditedDateFilter' cannot be null.");
-        else if (maxAuditedDateFilter !== undefined)
-            url_ += "MaxAuditedDateFilter=" + encodeURIComponent(maxAuditedDateFilter ? "" + maxAuditedDateFilter.toString() : "") + "&";
-        if (minAuditedDateFilter === null)
-            throw new Error("The parameter 'minAuditedDateFilter' cannot be null.");
-        else if (minAuditedDateFilter !== undefined)
-            url_ += "MinAuditedDateFilter=" + encodeURIComponent(minAuditedDateFilter ? "" + minAuditedDateFilter.toString() : "") + "&";
-        if (maxCorrectionDateFilter === null)
-            throw new Error("The parameter 'maxCorrectionDateFilter' cannot be null.");
-        else if (maxCorrectionDateFilter !== undefined)
-            url_ += "MaxCorrectionDateFilter=" + encodeURIComponent(maxCorrectionDateFilter ? "" + maxCorrectionDateFilter.toString() : "") + "&";
-        if (minCorrectionDateFilter === null)
-            throw new Error("The parameter 'minCorrectionDateFilter' cannot be null.");
-        else if (minCorrectionDateFilter !== undefined)
-            url_ += "MinCorrectionDateFilter=" + encodeURIComponent(minCorrectionDateFilter ? "" + minCorrectionDateFilter.toString() : "") + "&";
-        if (isManualCorrectedFilter === null)
-            throw new Error("The parameter 'isManualCorrectedFilter' cannot be null.");
-        else if (isManualCorrectedFilter !== undefined)
-            url_ += "IsManualCorrectedFilter=" + encodeURIComponent("" + isManualCorrectedFilter) + "&";
-        if (isSubQuestionManualCorrectedFilter === null)
-            throw new Error("The parameter 'isSubQuestionManualCorrectedFilter' cannot be null.");
-        else if (isSubQuestionManualCorrectedFilter !== undefined)
-            url_ += "IsSubQuestionManualCorrectedFilter=" + encodeURIComponent("" + isSubQuestionManualCorrectedFilter) + "&";
-        if (noteFilter === null)
-            throw new Error("The parameter 'noteFilter' cannot be null.");
-        else if (noteFilter !== undefined)
-            url_ += "NoteFilter=" + encodeURIComponent("" + noteFilter) + "&";
-        if (examTitleFilter === null)
-            throw new Error("The parameter 'examTitleFilter' cannot be null.");
-        else if (examTitleFilter !== undefined)
-            url_ += "ExamTitleFilter=" + encodeURIComponent("" + examTitleFilter) + "&";
-        if (sessionNameLFilter === null)
-            throw new Error("The parameter 'sessionNameLFilter' cannot be null.");
-        else if (sessionNameLFilter !== undefined)
-            url_ += "SessionNameLFilter=" + encodeURIComponent("" + sessionNameLFilter) + "&";
-        if (studentClassNameFilter === null)
-            throw new Error("The parameter 'studentClassNameFilter' cannot be null.");
-        else if (studentClassNameFilter !== undefined)
-            url_ += "StudentClassNameFilter=" + encodeURIComponent("" + studentClassNameFilter) + "&";
-        if (userNameFilter === null)
-            throw new Error("The parameter 'userNameFilter' cannot be null.");
-        else if (userNameFilter !== undefined)
-            url_ += "UserNameFilter=" + encodeURIComponent("" + userNameFilter) + "&";
-        if (userName2Filter === null)
-            throw new Error("The parameter 'userName2Filter' cannot be null.");
-        else if (userName2Filter !== undefined)
-            url_ += "UserName2Filter=" + encodeURIComponent("" + userName2Filter) + "&";
+        if (examIdFilter === null)
+            throw new Error("The parameter 'examIdFilter' cannot be null.");
+        else if (examIdFilter !== undefined)
+            url_ += "ExamIdFilter=" + encodeURIComponent("" + examIdFilter) + "&";
+        if (sessionIdFilter === null)
+            throw new Error("The parameter 'sessionIdFilter' cannot be null.");
+        else if (sessionIdFilter !== undefined)
+            url_ += "SessionIdFilter=" + encodeURIComponent("" + sessionIdFilter) + "&";
+        if (studentClassIdFilter === null)
+            throw new Error("The parameter 'studentClassIdFilter' cannot be null.");
+        else if (studentClassIdFilter !== undefined)
+            url_ += "StudentClassIdFilter=" + encodeURIComponent("" + studentClassIdFilter) + "&";
         if (sorting === null)
             throw new Error("The parameter 'sorting' cannot be null.");
         else if (sorting !== undefined)
@@ -6585,62 +6644,6 @@ export class ExamAttemptsServiceProxy {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
             result200 = GetExamAttemptForViewDto.fromJS(resultData200);
-            return _observableOf(result200);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf(null as any);
-    }
-
-    /**
-     * @param id (optional) 
-     * @return Success
-     */
-    getExamAttemptForEdit(id: string | undefined): Observable<GetExamAttemptForEditOutput> {
-        let url_ = this.baseUrl + "/api/services/app/ExamAttempts/GetExamAttemptForEdit?";
-        if (id === null)
-            throw new Error("The parameter 'id' cannot be null.");
-        else if (id !== undefined)
-            url_ += "Id=" + encodeURIComponent("" + id) + "&";
-        url_ = url_.replace(/[?&]$/, "");
-
-        let options_ : any = {
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Accept": "text/plain"
-            })
-        };
-
-        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGetExamAttemptForEdit(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processGetExamAttemptForEdit(response_ as any);
-                } catch (e) {
-                    return _observableThrow(e) as any as Observable<GetExamAttemptForEditOutput>;
-                }
-            } else
-                return _observableThrow(response_) as any as Observable<GetExamAttemptForEditOutput>;
-        }));
-    }
-
-    protected processGetExamAttemptForEdit(response: HttpResponseBase): Observable<GetExamAttemptForEditOutput> {
-        const status = response.status;
-        const responseBlob =
-            response instanceof HttpResponse ? response.body :
-            (response as any).error instanceof Blob ? (response as any).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = GetExamAttemptForEditOutput.fromJS(resultData200);
             return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
@@ -6881,290 +6884,6 @@ export class ExamAttemptsServiceProxy {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
             result200 = FileDto.fromJS(resultData200);
-            return _observableOf(result200);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf(null as any);
-    }
-
-    /**
-     * @param filter (optional) 
-     * @param sorting (optional) 
-     * @param skipCount (optional) 
-     * @param maxResultCount (optional) 
-     * @return Success
-     */
-    getAllExamForLookupTable(filter: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfExamAttemptExamLookupTableDto> {
-        let url_ = this.baseUrl + "/api/services/app/ExamAttempts/GetAllExamForLookupTable?";
-        if (filter === null)
-            throw new Error("The parameter 'filter' cannot be null.");
-        else if (filter !== undefined)
-            url_ += "Filter=" + encodeURIComponent("" + filter) + "&";
-        if (sorting === null)
-            throw new Error("The parameter 'sorting' cannot be null.");
-        else if (sorting !== undefined)
-            url_ += "Sorting=" + encodeURIComponent("" + sorting) + "&";
-        if (skipCount === null)
-            throw new Error("The parameter 'skipCount' cannot be null.");
-        else if (skipCount !== undefined)
-            url_ += "SkipCount=" + encodeURIComponent("" + skipCount) + "&";
-        if (maxResultCount === null)
-            throw new Error("The parameter 'maxResultCount' cannot be null.");
-        else if (maxResultCount !== undefined)
-            url_ += "MaxResultCount=" + encodeURIComponent("" + maxResultCount) + "&";
-        url_ = url_.replace(/[?&]$/, "");
-
-        let options_ : any = {
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Accept": "text/plain"
-            })
-        };
-
-        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGetAllExamForLookupTable(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processGetAllExamForLookupTable(response_ as any);
-                } catch (e) {
-                    return _observableThrow(e) as any as Observable<PagedResultDtoOfExamAttemptExamLookupTableDto>;
-                }
-            } else
-                return _observableThrow(response_) as any as Observable<PagedResultDtoOfExamAttemptExamLookupTableDto>;
-        }));
-    }
-
-    protected processGetAllExamForLookupTable(response: HttpResponseBase): Observable<PagedResultDtoOfExamAttemptExamLookupTableDto> {
-        const status = response.status;
-        const responseBlob =
-            response instanceof HttpResponse ? response.body :
-            (response as any).error instanceof Blob ? (response as any).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = PagedResultDtoOfExamAttemptExamLookupTableDto.fromJS(resultData200);
-            return _observableOf(result200);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf(null as any);
-    }
-
-    /**
-     * @param filter (optional) 
-     * @param sorting (optional) 
-     * @param skipCount (optional) 
-     * @param maxResultCount (optional) 
-     * @return Success
-     */
-    getAllSessionForLookupTable(filter: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfExamAttemptSessionLookupTableDto> {
-        let url_ = this.baseUrl + "/api/services/app/ExamAttempts/GetAllSessionForLookupTable?";
-        if (filter === null)
-            throw new Error("The parameter 'filter' cannot be null.");
-        else if (filter !== undefined)
-            url_ += "Filter=" + encodeURIComponent("" + filter) + "&";
-        if (sorting === null)
-            throw new Error("The parameter 'sorting' cannot be null.");
-        else if (sorting !== undefined)
-            url_ += "Sorting=" + encodeURIComponent("" + sorting) + "&";
-        if (skipCount === null)
-            throw new Error("The parameter 'skipCount' cannot be null.");
-        else if (skipCount !== undefined)
-            url_ += "SkipCount=" + encodeURIComponent("" + skipCount) + "&";
-        if (maxResultCount === null)
-            throw new Error("The parameter 'maxResultCount' cannot be null.");
-        else if (maxResultCount !== undefined)
-            url_ += "MaxResultCount=" + encodeURIComponent("" + maxResultCount) + "&";
-        url_ = url_.replace(/[?&]$/, "");
-
-        let options_ : any = {
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Accept": "text/plain"
-            })
-        };
-
-        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGetAllSessionForLookupTable(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processGetAllSessionForLookupTable(response_ as any);
-                } catch (e) {
-                    return _observableThrow(e) as any as Observable<PagedResultDtoOfExamAttemptSessionLookupTableDto>;
-                }
-            } else
-                return _observableThrow(response_) as any as Observable<PagedResultDtoOfExamAttemptSessionLookupTableDto>;
-        }));
-    }
-
-    protected processGetAllSessionForLookupTable(response: HttpResponseBase): Observable<PagedResultDtoOfExamAttemptSessionLookupTableDto> {
-        const status = response.status;
-        const responseBlob =
-            response instanceof HttpResponse ? response.body :
-            (response as any).error instanceof Blob ? (response as any).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = PagedResultDtoOfExamAttemptSessionLookupTableDto.fromJS(resultData200);
-            return _observableOf(result200);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf(null as any);
-    }
-
-    /**
-     * @param filter (optional) 
-     * @param sorting (optional) 
-     * @param skipCount (optional) 
-     * @param maxResultCount (optional) 
-     * @return Success
-     */
-    getAllStudentForLookupTable(filter: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfExamAttemptStudentLookupTableDto> {
-        let url_ = this.baseUrl + "/api/services/app/ExamAttempts/GetAllStudentForLookupTable?";
-        if (filter === null)
-            throw new Error("The parameter 'filter' cannot be null.");
-        else if (filter !== undefined)
-            url_ += "Filter=" + encodeURIComponent("" + filter) + "&";
-        if (sorting === null)
-            throw new Error("The parameter 'sorting' cannot be null.");
-        else if (sorting !== undefined)
-            url_ += "Sorting=" + encodeURIComponent("" + sorting) + "&";
-        if (skipCount === null)
-            throw new Error("The parameter 'skipCount' cannot be null.");
-        else if (skipCount !== undefined)
-            url_ += "SkipCount=" + encodeURIComponent("" + skipCount) + "&";
-        if (maxResultCount === null)
-            throw new Error("The parameter 'maxResultCount' cannot be null.");
-        else if (maxResultCount !== undefined)
-            url_ += "MaxResultCount=" + encodeURIComponent("" + maxResultCount) + "&";
-        url_ = url_.replace(/[?&]$/, "");
-
-        let options_ : any = {
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Accept": "text/plain"
-            })
-        };
-
-        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGetAllStudentForLookupTable(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processGetAllStudentForLookupTable(response_ as any);
-                } catch (e) {
-                    return _observableThrow(e) as any as Observable<PagedResultDtoOfExamAttemptStudentLookupTableDto>;
-                }
-            } else
-                return _observableThrow(response_) as any as Observable<PagedResultDtoOfExamAttemptStudentLookupTableDto>;
-        }));
-    }
-
-    protected processGetAllStudentForLookupTable(response: HttpResponseBase): Observable<PagedResultDtoOfExamAttemptStudentLookupTableDto> {
-        const status = response.status;
-        const responseBlob =
-            response instanceof HttpResponse ? response.body :
-            (response as any).error instanceof Blob ? (response as any).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = PagedResultDtoOfExamAttemptStudentLookupTableDto.fromJS(resultData200);
-            return _observableOf(result200);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf(null as any);
-    }
-
-    /**
-     * @param filter (optional) 
-     * @param sorting (optional) 
-     * @param skipCount (optional) 
-     * @param maxResultCount (optional) 
-     * @return Success
-     */
-    getAllUserForLookupTable(filter: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfExamAttemptUserLookupTableDto> {
-        let url_ = this.baseUrl + "/api/services/app/ExamAttempts/GetAllUserForLookupTable?";
-        if (filter === null)
-            throw new Error("The parameter 'filter' cannot be null.");
-        else if (filter !== undefined)
-            url_ += "Filter=" + encodeURIComponent("" + filter) + "&";
-        if (sorting === null)
-            throw new Error("The parameter 'sorting' cannot be null.");
-        else if (sorting !== undefined)
-            url_ += "Sorting=" + encodeURIComponent("" + sorting) + "&";
-        if (skipCount === null)
-            throw new Error("The parameter 'skipCount' cannot be null.");
-        else if (skipCount !== undefined)
-            url_ += "SkipCount=" + encodeURIComponent("" + skipCount) + "&";
-        if (maxResultCount === null)
-            throw new Error("The parameter 'maxResultCount' cannot be null.");
-        else if (maxResultCount !== undefined)
-            url_ += "MaxResultCount=" + encodeURIComponent("" + maxResultCount) + "&";
-        url_ = url_.replace(/[?&]$/, "");
-
-        let options_ : any = {
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Accept": "text/plain"
-            })
-        };
-
-        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGetAllUserForLookupTable(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processGetAllUserForLookupTable(response_ as any);
-                } catch (e) {
-                    return _observableThrow(e) as any as Observable<PagedResultDtoOfExamAttemptUserLookupTableDto>;
-                }
-            } else
-                return _observableThrow(response_) as any as Observable<PagedResultDtoOfExamAttemptUserLookupTableDto>;
-        }));
-    }
-
-    protected processGetAllUserForLookupTable(response: HttpResponseBase): Observable<PagedResultDtoOfExamAttemptUserLookupTableDto> {
-        const status = response.status;
-        const responseBlob =
-            response instanceof HttpResponse ? response.body :
-            (response as any).error instanceof Blob ? (response as any).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = PagedResultDtoOfExamAttemptUserLookupTableDto.fromJS(resultData200);
             return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
@@ -8452,573 +8171,6 @@ export class ExamsServiceProxy {
         }
         return _observableOf(null as any);
     }
-
-    /**
-     * @return Success
-     */
-    movePreviousSection(): Observable<QuestionWithAnswerDto> {
-        let url_ = this.baseUrl + "/api/services/app/Exams/MovePreviousSection";
-        url_ = url_.replace(/[?&]$/, "");
-
-        let options_ : any = {
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Accept": "text/plain"
-            })
-        };
-
-        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processMovePreviousSection(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processMovePreviousSection(response_ as any);
-                } catch (e) {
-                    return _observableThrow(e) as any as Observable<QuestionWithAnswerDto>;
-                }
-            } else
-                return _observableThrow(response_) as any as Observable<QuestionWithAnswerDto>;
-        }));
-    }
-
-    protected processMovePreviousSection(response: HttpResponseBase): Observable<QuestionWithAnswerDto> {
-        const status = response.status;
-        const responseBlob =
-            response instanceof HttpResponse ? response.body :
-            (response as any).error instanceof Blob ? (response as any).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = QuestionWithAnswerDto.fromJS(resultData200);
-            return _observableOf(result200);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf(null as any);
-    }
-}
-
-@Injectable()
-export class ExamSectionsServiceProxy {
-    private http: HttpClient;
-    private baseUrl: string;
-    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
-
-    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
-        this.http = http;
-        this.baseUrl = baseUrl ?? "";
-    }
-
-    /**
-     * @param filter (optional) 
-     * @param maxDurationTimeFilter (optional) 
-     * @param minDurationTimeFilter (optional) 
-     * @param maxOrderFilter (optional) 
-     * @param minOrderFilter (optional) 
-     * @param instructionsFilter (optional) 
-     * @param nameLFilter (optional) 
-     * @param nameFFilter (optional) 
-     * @param typeFilter (optional) 
-     * @param examTitleFilter (optional) 
-     * @param sorting (optional) 
-     * @param skipCount (optional) 
-     * @param maxResultCount (optional) 
-     * @return Success
-     */
-    getAll(filter: string | undefined, maxDurationTimeFilter: DateTime | undefined, minDurationTimeFilter: DateTime | undefined, maxOrderFilter: number | undefined, minOrderFilter: number | undefined, instructionsFilter: string | undefined, nameLFilter: string | undefined, nameFFilter: string | undefined, typeFilter: number | undefined, examTitleFilter: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfGetExamSectionForViewDto> {
-        let url_ = this.baseUrl + "/api/services/app/ExamSections/GetAll?";
-        if (filter === null)
-            throw new Error("The parameter 'filter' cannot be null.");
-        else if (filter !== undefined)
-            url_ += "Filter=" + encodeURIComponent("" + filter) + "&";
-        if (maxDurationTimeFilter === null)
-            throw new Error("The parameter 'maxDurationTimeFilter' cannot be null.");
-        else if (maxDurationTimeFilter !== undefined)
-            url_ += "MaxDurationTimeFilter=" + encodeURIComponent(maxDurationTimeFilter ? "" + maxDurationTimeFilter.toString() : "") + "&";
-        if (minDurationTimeFilter === null)
-            throw new Error("The parameter 'minDurationTimeFilter' cannot be null.");
-        else if (minDurationTimeFilter !== undefined)
-            url_ += "MinDurationTimeFilter=" + encodeURIComponent(minDurationTimeFilter ? "" + minDurationTimeFilter.toString() : "") + "&";
-        if (maxOrderFilter === null)
-            throw new Error("The parameter 'maxOrderFilter' cannot be null.");
-        else if (maxOrderFilter !== undefined)
-            url_ += "MaxOrderFilter=" + encodeURIComponent("" + maxOrderFilter) + "&";
-        if (minOrderFilter === null)
-            throw new Error("The parameter 'minOrderFilter' cannot be null.");
-        else if (minOrderFilter !== undefined)
-            url_ += "MinOrderFilter=" + encodeURIComponent("" + minOrderFilter) + "&";
-        if (instructionsFilter === null)
-            throw new Error("The parameter 'instructionsFilter' cannot be null.");
-        else if (instructionsFilter !== undefined)
-            url_ += "InstructionsFilter=" + encodeURIComponent("" + instructionsFilter) + "&";
-        if (nameLFilter === null)
-            throw new Error("The parameter 'nameLFilter' cannot be null.");
-        else if (nameLFilter !== undefined)
-            url_ += "NameLFilter=" + encodeURIComponent("" + nameLFilter) + "&";
-        if (nameFFilter === null)
-            throw new Error("The parameter 'nameFFilter' cannot be null.");
-        else if (nameFFilter !== undefined)
-            url_ += "NameFFilter=" + encodeURIComponent("" + nameFFilter) + "&";
-        if (typeFilter === null)
-            throw new Error("The parameter 'typeFilter' cannot be null.");
-        else if (typeFilter !== undefined)
-            url_ += "TypeFilter=" + encodeURIComponent("" + typeFilter) + "&";
-        if (examTitleFilter === null)
-            throw new Error("The parameter 'examTitleFilter' cannot be null.");
-        else if (examTitleFilter !== undefined)
-            url_ += "ExamTitleFilter=" + encodeURIComponent("" + examTitleFilter) + "&";
-        if (sorting === null)
-            throw new Error("The parameter 'sorting' cannot be null.");
-        else if (sorting !== undefined)
-            url_ += "Sorting=" + encodeURIComponent("" + sorting) + "&";
-        if (skipCount === null)
-            throw new Error("The parameter 'skipCount' cannot be null.");
-        else if (skipCount !== undefined)
-            url_ += "SkipCount=" + encodeURIComponent("" + skipCount) + "&";
-        if (maxResultCount === null)
-            throw new Error("The parameter 'maxResultCount' cannot be null.");
-        else if (maxResultCount !== undefined)
-            url_ += "MaxResultCount=" + encodeURIComponent("" + maxResultCount) + "&";
-        url_ = url_.replace(/[?&]$/, "");
-
-        let options_ : any = {
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Accept": "text/plain"
-            })
-        };
-
-        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGetAll(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processGetAll(response_ as any);
-                } catch (e) {
-                    return _observableThrow(e) as any as Observable<PagedResultDtoOfGetExamSectionForViewDto>;
-                }
-            } else
-                return _observableThrow(response_) as any as Observable<PagedResultDtoOfGetExamSectionForViewDto>;
-        }));
-    }
-
-    protected processGetAll(response: HttpResponseBase): Observable<PagedResultDtoOfGetExamSectionForViewDto> {
-        const status = response.status;
-        const responseBlob =
-            response instanceof HttpResponse ? response.body :
-            (response as any).error instanceof Blob ? (response as any).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = PagedResultDtoOfGetExamSectionForViewDto.fromJS(resultData200);
-            return _observableOf(result200);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf(null as any);
-    }
-
-    /**
-     * @param id (optional) 
-     * @return Success
-     */
-    getExamSectionForView(id: number | undefined): Observable<GetExamSectionForViewDto> {
-        let url_ = this.baseUrl + "/api/services/app/ExamSections/GetExamSectionForView?";
-        if (id === null)
-            throw new Error("The parameter 'id' cannot be null.");
-        else if (id !== undefined)
-            url_ += "id=" + encodeURIComponent("" + id) + "&";
-        url_ = url_.replace(/[?&]$/, "");
-
-        let options_ : any = {
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Accept": "text/plain"
-            })
-        };
-
-        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGetExamSectionForView(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processGetExamSectionForView(response_ as any);
-                } catch (e) {
-                    return _observableThrow(e) as any as Observable<GetExamSectionForViewDto>;
-                }
-            } else
-                return _observableThrow(response_) as any as Observable<GetExamSectionForViewDto>;
-        }));
-    }
-
-    protected processGetExamSectionForView(response: HttpResponseBase): Observable<GetExamSectionForViewDto> {
-        const status = response.status;
-        const responseBlob =
-            response instanceof HttpResponse ? response.body :
-            (response as any).error instanceof Blob ? (response as any).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = GetExamSectionForViewDto.fromJS(resultData200);
-            return _observableOf(result200);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf(null as any);
-    }
-
-    /**
-     * @param id (optional) 
-     * @return Success
-     */
-    getExamSectionForEdit(id: number | undefined): Observable<GetExamSectionForEditOutput> {
-        let url_ = this.baseUrl + "/api/services/app/ExamSections/GetExamSectionForEdit?";
-        if (id === null)
-            throw new Error("The parameter 'id' cannot be null.");
-        else if (id !== undefined)
-            url_ += "Id=" + encodeURIComponent("" + id) + "&";
-        url_ = url_.replace(/[?&]$/, "");
-
-        let options_ : any = {
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Accept": "text/plain"
-            })
-        };
-
-        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGetExamSectionForEdit(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processGetExamSectionForEdit(response_ as any);
-                } catch (e) {
-                    return _observableThrow(e) as any as Observable<GetExamSectionForEditOutput>;
-                }
-            } else
-                return _observableThrow(response_) as any as Observable<GetExamSectionForEditOutput>;
-        }));
-    }
-
-    protected processGetExamSectionForEdit(response: HttpResponseBase): Observable<GetExamSectionForEditOutput> {
-        const status = response.status;
-        const responseBlob =
-            response instanceof HttpResponse ? response.body :
-            (response as any).error instanceof Blob ? (response as any).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = GetExamSectionForEditOutput.fromJS(resultData200);
-            return _observableOf(result200);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf(null as any);
-    }
-
-    /**
-     * @param body (optional) 
-     * @return Success
-     */
-    createOrEdit(body: CreateOrEditExamSectionDto | undefined): Observable<void> {
-        let url_ = this.baseUrl + "/api/services/app/ExamSections/CreateOrEdit";
-        url_ = url_.replace(/[?&]$/, "");
-
-        const content_ = JSON.stringify(body);
-
-        let options_ : any = {
-            body: content_,
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Content-Type": "application/json",
-            })
-        };
-
-        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processCreateOrEdit(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processCreateOrEdit(response_ as any);
-                } catch (e) {
-                    return _observableThrow(e) as any as Observable<void>;
-                }
-            } else
-                return _observableThrow(response_) as any as Observable<void>;
-        }));
-    }
-
-    protected processCreateOrEdit(response: HttpResponseBase): Observable<void> {
-        const status = response.status;
-        const responseBlob =
-            response instanceof HttpResponse ? response.body :
-            (response as any).error instanceof Blob ? (response as any).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            return _observableOf(null as any);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf(null as any);
-    }
-
-    /**
-     * @param id (optional) 
-     * @return Success
-     */
-    delete(id: number | undefined): Observable<void> {
-        let url_ = this.baseUrl + "/api/services/app/ExamSections/Delete?";
-        if (id === null)
-            throw new Error("The parameter 'id' cannot be null.");
-        else if (id !== undefined)
-            url_ += "Id=" + encodeURIComponent("" + id) + "&";
-        url_ = url_.replace(/[?&]$/, "");
-
-        let options_ : any = {
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-            })
-        };
-
-        return this.http.request("delete", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processDelete(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processDelete(response_ as any);
-                } catch (e) {
-                    return _observableThrow(e) as any as Observable<void>;
-                }
-            } else
-                return _observableThrow(response_) as any as Observable<void>;
-        }));
-    }
-
-    protected processDelete(response: HttpResponseBase): Observable<void> {
-        const status = response.status;
-        const responseBlob =
-            response instanceof HttpResponse ? response.body :
-            (response as any).error instanceof Blob ? (response as any).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            return _observableOf(null as any);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf(null as any);
-    }
-
-    /**
-     * @param filter (optional) 
-     * @param maxDurationTimeFilter (optional) 
-     * @param minDurationTimeFilter (optional) 
-     * @param maxOrderFilter (optional) 
-     * @param minOrderFilter (optional) 
-     * @param instructionsFilter (optional) 
-     * @param nameLFilter (optional) 
-     * @param nameFFilter (optional) 
-     * @param typeFilter (optional) 
-     * @param examTitleFilter (optional) 
-     * @return Success
-     */
-    getExamSectionsToExcel(filter: string | undefined, maxDurationTimeFilter: DateTime | undefined, minDurationTimeFilter: DateTime | undefined, maxOrderFilter: number | undefined, minOrderFilter: number | undefined, instructionsFilter: string | undefined, nameLFilter: string | undefined, nameFFilter: string | undefined, typeFilter: number | undefined, examTitleFilter: string | undefined): Observable<FileDto> {
-        let url_ = this.baseUrl + "/api/services/app/ExamSections/GetExamSectionsToExcel?";
-        if (filter === null)
-            throw new Error("The parameter 'filter' cannot be null.");
-        else if (filter !== undefined)
-            url_ += "Filter=" + encodeURIComponent("" + filter) + "&";
-        if (maxDurationTimeFilter === null)
-            throw new Error("The parameter 'maxDurationTimeFilter' cannot be null.");
-        else if (maxDurationTimeFilter !== undefined)
-            url_ += "MaxDurationTimeFilter=" + encodeURIComponent(maxDurationTimeFilter ? "" + maxDurationTimeFilter.toString() : "") + "&";
-        if (minDurationTimeFilter === null)
-            throw new Error("The parameter 'minDurationTimeFilter' cannot be null.");
-        else if (minDurationTimeFilter !== undefined)
-            url_ += "MinDurationTimeFilter=" + encodeURIComponent(minDurationTimeFilter ? "" + minDurationTimeFilter.toString() : "") + "&";
-        if (maxOrderFilter === null)
-            throw new Error("The parameter 'maxOrderFilter' cannot be null.");
-        else if (maxOrderFilter !== undefined)
-            url_ += "MaxOrderFilter=" + encodeURIComponent("" + maxOrderFilter) + "&";
-        if (minOrderFilter === null)
-            throw new Error("The parameter 'minOrderFilter' cannot be null.");
-        else if (minOrderFilter !== undefined)
-            url_ += "MinOrderFilter=" + encodeURIComponent("" + minOrderFilter) + "&";
-        if (instructionsFilter === null)
-            throw new Error("The parameter 'instructionsFilter' cannot be null.");
-        else if (instructionsFilter !== undefined)
-            url_ += "InstructionsFilter=" + encodeURIComponent("" + instructionsFilter) + "&";
-        if (nameLFilter === null)
-            throw new Error("The parameter 'nameLFilter' cannot be null.");
-        else if (nameLFilter !== undefined)
-            url_ += "NameLFilter=" + encodeURIComponent("" + nameLFilter) + "&";
-        if (nameFFilter === null)
-            throw new Error("The parameter 'nameFFilter' cannot be null.");
-        else if (nameFFilter !== undefined)
-            url_ += "NameFFilter=" + encodeURIComponent("" + nameFFilter) + "&";
-        if (typeFilter === null)
-            throw new Error("The parameter 'typeFilter' cannot be null.");
-        else if (typeFilter !== undefined)
-            url_ += "TypeFilter=" + encodeURIComponent("" + typeFilter) + "&";
-        if (examTitleFilter === null)
-            throw new Error("The parameter 'examTitleFilter' cannot be null.");
-        else if (examTitleFilter !== undefined)
-            url_ += "ExamTitleFilter=" + encodeURIComponent("" + examTitleFilter) + "&";
-        url_ = url_.replace(/[?&]$/, "");
-
-        let options_ : any = {
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Accept": "text/plain"
-            })
-        };
-
-        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGetExamSectionsToExcel(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processGetExamSectionsToExcel(response_ as any);
-                } catch (e) {
-                    return _observableThrow(e) as any as Observable<FileDto>;
-                }
-            } else
-                return _observableThrow(response_) as any as Observable<FileDto>;
-        }));
-    }
-
-    protected processGetExamSectionsToExcel(response: HttpResponseBase): Observable<FileDto> {
-        const status = response.status;
-        const responseBlob =
-            response instanceof HttpResponse ? response.body :
-            (response as any).error instanceof Blob ? (response as any).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = FileDto.fromJS(resultData200);
-            return _observableOf(result200);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf(null as any);
-    }
-
-    /**
-     * @param filter (optional) 
-     * @param sorting (optional) 
-     * @param skipCount (optional) 
-     * @param maxResultCount (optional) 
-     * @return Success
-     */
-    getAllExamForLookupTable(filter: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfExamSectionExamLookupTableDto> {
-        let url_ = this.baseUrl + "/api/services/app/ExamSections/GetAllExamForLookupTable?";
-        if (filter === null)
-            throw new Error("The parameter 'filter' cannot be null.");
-        else if (filter !== undefined)
-            url_ += "Filter=" + encodeURIComponent("" + filter) + "&";
-        if (sorting === null)
-            throw new Error("The parameter 'sorting' cannot be null.");
-        else if (sorting !== undefined)
-            url_ += "Sorting=" + encodeURIComponent("" + sorting) + "&";
-        if (skipCount === null)
-            throw new Error("The parameter 'skipCount' cannot be null.");
-        else if (skipCount !== undefined)
-            url_ += "SkipCount=" + encodeURIComponent("" + skipCount) + "&";
-        if (maxResultCount === null)
-            throw new Error("The parameter 'maxResultCount' cannot be null.");
-        else if (maxResultCount !== undefined)
-            url_ += "MaxResultCount=" + encodeURIComponent("" + maxResultCount) + "&";
-        url_ = url_.replace(/[?&]$/, "");
-
-        let options_ : any = {
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Accept": "text/plain"
-            })
-        };
-
-        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGetAllExamForLookupTable(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processGetAllExamForLookupTable(response_ as any);
-                } catch (e) {
-                    return _observableThrow(e) as any as Observable<PagedResultDtoOfExamSectionExamLookupTableDto>;
-                }
-            } else
-                return _observableThrow(response_) as any as Observable<PagedResultDtoOfExamSectionExamLookupTableDto>;
-        }));
-    }
-
-    protected processGetAllExamForLookupTable(response: HttpResponseBase): Observable<PagedResultDtoOfExamSectionExamLookupTableDto> {
-        const status = response.status;
-        const responseBlob =
-            response instanceof HttpResponse ? response.body :
-            (response as any).error instanceof Blob ? (response as any).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = PagedResultDtoOfExamSectionExamLookupTableDto.fromJS(resultData200);
-            return _observableOf(result200);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf(null as any);
-    }
 }
 
 @Injectable()
@@ -9270,6 +8422,58 @@ export class ExamTemplatesServiceProxy {
     }
 
     protected processGenerateExamByTemplate(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return _observableOf(null as any);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param body (optional) 
+     * @return Success
+     */
+    ensureSufficientQuestionsForTemplate(body: CreateOrEditExamTemplateDto | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/ExamTemplates/EnsureSufficientQuestionsForTemplate";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json",
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processEnsureSufficientQuestionsForTemplate(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processEnsureSufficientQuestionsForTemplate(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<void>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<void>;
+        }));
+    }
+
+    protected processEnsureSufficientQuestionsForTemplate(response: HttpResponseBase): Observable<void> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -17085,10 +16289,73 @@ export class QuestionsServiceProxy {
     }
 
     /**
+     * @param id (optional) 
+     * @param isActive (optional) 
+     * @return Success
+     */
+    updateQuestionStatus(id: number | undefined, isActive: boolean | undefined): Observable<boolean> {
+        let url_ = this.baseUrl + "/api/services/app/Questions/UpdateQuestionStatus?";
+        if (id === null)
+            throw new Error("The parameter 'id' cannot be null.");
+        else if (id !== undefined)
+            url_ += "id=" + encodeURIComponent("" + id) + "&";
+        if (isActive === null)
+            throw new Error("The parameter 'isActive' cannot be null.");
+        else if (isActive !== undefined)
+            url_ += "isActive=" + encodeURIComponent("" + isActive) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("put", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processUpdateQuestionStatus(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processUpdateQuestionStatus(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<boolean>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<boolean>;
+        }));
+    }
+
+    protected processUpdateQuestionStatus(response: HttpResponseBase): Observable<boolean> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+                result200 = resultData200 !== undefined ? resultData200 : <any>null;
+    
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
      * @param filter (optional) 
      * @param typeFilter (optional) 
      * @param languageFilter (optional) 
      * @param isActiveFilter (optional) 
+     * @param isDraftFilter (optional) 
      * @param autoCorrectionFilter (optional) 
      * @param examId (optional) 
      * @param subjectId (optional) 
@@ -17100,7 +16367,7 @@ export class QuestionsServiceProxy {
      * @param maxResultCount (optional) 
      * @return Success
      */
-    getAll(filter: string | undefined, typeFilter: QuestionTypeEnum | undefined, languageFilter: QuestionLanguageEnum | undefined, isActiveFilter: boolean | undefined, autoCorrectionFilter: number | undefined, examId: number | undefined, subjectId: number | undefined, levelId: number | undefined, subjectUnitId: number | undefined, complexityId: number | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfGetQuestionForViewDto> {
+    getAll(filter: string | undefined, typeFilter: QuestionTypeEnum | undefined, languageFilter: QuestionLanguageEnum | undefined, isActiveFilter: boolean | undefined, isDraftFilter: boolean | undefined, autoCorrectionFilter: boolean | undefined, examId: number | undefined, subjectId: number | undefined, levelId: number | undefined, subjectUnitId: number | undefined, complexityId: number | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<GetQuestionsOutput> {
         let url_ = this.baseUrl + "/api/services/app/Questions/GetAll?";
         if (filter === null)
             throw new Error("The parameter 'filter' cannot be null.");
@@ -17118,6 +16385,10 @@ export class QuestionsServiceProxy {
             throw new Error("The parameter 'isActiveFilter' cannot be null.");
         else if (isActiveFilter !== undefined)
             url_ += "IsActiveFilter=" + encodeURIComponent("" + isActiveFilter) + "&";
+        if (isDraftFilter === null)
+            throw new Error("The parameter 'isDraftFilter' cannot be null.");
+        else if (isDraftFilter !== undefined)
+            url_ += "IsDraftFilter=" + encodeURIComponent("" + isDraftFilter) + "&";
         if (autoCorrectionFilter === null)
             throw new Error("The parameter 'autoCorrectionFilter' cannot be null.");
         else if (autoCorrectionFilter !== undefined)
@@ -17171,14 +16442,14 @@ export class QuestionsServiceProxy {
                 try {
                     return this.processGetAll(response_ as any);
                 } catch (e) {
-                    return _observableThrow(e) as any as Observable<PagedResultDtoOfGetQuestionForViewDto>;
+                    return _observableThrow(e) as any as Observable<GetQuestionsOutput>;
                 }
             } else
-                return _observableThrow(response_) as any as Observable<PagedResultDtoOfGetQuestionForViewDto>;
+                return _observableThrow(response_) as any as Observable<GetQuestionsOutput>;
         }));
     }
 
-    protected processGetAll(response: HttpResponseBase): Observable<PagedResultDtoOfGetQuestionForViewDto> {
+    protected processGetAll(response: HttpResponseBase): Observable<GetQuestionsOutput> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -17189,7 +16460,7 @@ export class QuestionsServiceProxy {
             return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = PagedResultDtoOfGetQuestionForViewDto.fromJS(resultData200);
+            result200 = GetQuestionsOutput.fromJS(resultData200);
             return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
@@ -19031,6 +18302,462 @@ export class RoleServiceProxy {
 }
 
 @Injectable()
+export class SchoolClassesServiceProxy {
+    private http: HttpClient;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        this.http = http;
+        this.baseUrl = baseUrl ?? "";
+    }
+
+    /**
+     * @param filter (optional) 
+     * @param nameFilter (optional) 
+     * @param codeFilter (optional) 
+     * @param schoolSchoolNoFilter (optional) 
+     * @param sorting (optional) 
+     * @param skipCount (optional) 
+     * @param maxResultCount (optional) 
+     * @return Success
+     */
+    getAll(filter: string | undefined, nameFilter: string | undefined, codeFilter: string | undefined, schoolSchoolNoFilter: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfGetSchoolClassForViewDto> {
+        let url_ = this.baseUrl + "/api/services/app/SchoolClasses/GetAll?";
+        if (filter === null)
+            throw new Error("The parameter 'filter' cannot be null.");
+        else if (filter !== undefined)
+            url_ += "Filter=" + encodeURIComponent("" + filter) + "&";
+        if (nameFilter === null)
+            throw new Error("The parameter 'nameFilter' cannot be null.");
+        else if (nameFilter !== undefined)
+            url_ += "NameFilter=" + encodeURIComponent("" + nameFilter) + "&";
+        if (codeFilter === null)
+            throw new Error("The parameter 'codeFilter' cannot be null.");
+        else if (codeFilter !== undefined)
+            url_ += "CodeFilter=" + encodeURIComponent("" + codeFilter) + "&";
+        if (schoolSchoolNoFilter === null)
+            throw new Error("The parameter 'schoolSchoolNoFilter' cannot be null.");
+        else if (schoolSchoolNoFilter !== undefined)
+            url_ += "SchoolSchoolNoFilter=" + encodeURIComponent("" + schoolSchoolNoFilter) + "&";
+        if (sorting === null)
+            throw new Error("The parameter 'sorting' cannot be null.");
+        else if (sorting !== undefined)
+            url_ += "Sorting=" + encodeURIComponent("" + sorting) + "&";
+        if (skipCount === null)
+            throw new Error("The parameter 'skipCount' cannot be null.");
+        else if (skipCount !== undefined)
+            url_ += "SkipCount=" + encodeURIComponent("" + skipCount) + "&";
+        if (maxResultCount === null)
+            throw new Error("The parameter 'maxResultCount' cannot be null.");
+        else if (maxResultCount !== undefined)
+            url_ += "MaxResultCount=" + encodeURIComponent("" + maxResultCount) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetAll(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetAll(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<PagedResultDtoOfGetSchoolClassForViewDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<PagedResultDtoOfGetSchoolClassForViewDto>;
+        }));
+    }
+
+    protected processGetAll(response: HttpResponseBase): Observable<PagedResultDtoOfGetSchoolClassForViewDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = PagedResultDtoOfGetSchoolClassForViewDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param id (optional) 
+     * @return Success
+     */
+    getSchoolClassForView(id: number | undefined): Observable<GetSchoolClassForViewDto> {
+        let url_ = this.baseUrl + "/api/services/app/SchoolClasses/GetSchoolClassForView?";
+        if (id === null)
+            throw new Error("The parameter 'id' cannot be null.");
+        else if (id !== undefined)
+            url_ += "id=" + encodeURIComponent("" + id) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetSchoolClassForView(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetSchoolClassForView(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<GetSchoolClassForViewDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<GetSchoolClassForViewDto>;
+        }));
+    }
+
+    protected processGetSchoolClassForView(response: HttpResponseBase): Observable<GetSchoolClassForViewDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = GetSchoolClassForViewDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param id (optional) 
+     * @return Success
+     */
+    getSchoolClassForEdit(id: number | undefined): Observable<GetSchoolClassForEditOutput> {
+        let url_ = this.baseUrl + "/api/services/app/SchoolClasses/GetSchoolClassForEdit?";
+        if (id === null)
+            throw new Error("The parameter 'id' cannot be null.");
+        else if (id !== undefined)
+            url_ += "Id=" + encodeURIComponent("" + id) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetSchoolClassForEdit(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetSchoolClassForEdit(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<GetSchoolClassForEditOutput>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<GetSchoolClassForEditOutput>;
+        }));
+    }
+
+    protected processGetSchoolClassForEdit(response: HttpResponseBase): Observable<GetSchoolClassForEditOutput> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = GetSchoolClassForEditOutput.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param body (optional) 
+     * @return Success
+     */
+    createOrEdit(body: CreateOrEditSchoolClassDto | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/SchoolClasses/CreateOrEdit";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json",
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processCreateOrEdit(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processCreateOrEdit(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<void>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<void>;
+        }));
+    }
+
+    protected processCreateOrEdit(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return _observableOf(null as any);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param id (optional) 
+     * @return Success
+     */
+    delete(id: number | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/SchoolClasses/Delete?";
+        if (id === null)
+            throw new Error("The parameter 'id' cannot be null.");
+        else if (id !== undefined)
+            url_ += "Id=" + encodeURIComponent("" + id) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+            })
+        };
+
+        return this.http.request("delete", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processDelete(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processDelete(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<void>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<void>;
+        }));
+    }
+
+    protected processDelete(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return _observableOf(null as any);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param filter (optional) 
+     * @param nameFilter (optional) 
+     * @param codeFilter (optional) 
+     * @param schoolSchoolNoFilter (optional) 
+     * @return Success
+     */
+    getSchoolClassesToExcel(filter: string | undefined, nameFilter: string | undefined, codeFilter: string | undefined, schoolSchoolNoFilter: string | undefined): Observable<FileDto> {
+        let url_ = this.baseUrl + "/api/services/app/SchoolClasses/GetSchoolClassesToExcel?";
+        if (filter === null)
+            throw new Error("The parameter 'filter' cannot be null.");
+        else if (filter !== undefined)
+            url_ += "Filter=" + encodeURIComponent("" + filter) + "&";
+        if (nameFilter === null)
+            throw new Error("The parameter 'nameFilter' cannot be null.");
+        else if (nameFilter !== undefined)
+            url_ += "NameFilter=" + encodeURIComponent("" + nameFilter) + "&";
+        if (codeFilter === null)
+            throw new Error("The parameter 'codeFilter' cannot be null.");
+        else if (codeFilter !== undefined)
+            url_ += "CodeFilter=" + encodeURIComponent("" + codeFilter) + "&";
+        if (schoolSchoolNoFilter === null)
+            throw new Error("The parameter 'schoolSchoolNoFilter' cannot be null.");
+        else if (schoolSchoolNoFilter !== undefined)
+            url_ += "SchoolSchoolNoFilter=" + encodeURIComponent("" + schoolSchoolNoFilter) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetSchoolClassesToExcel(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetSchoolClassesToExcel(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<FileDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<FileDto>;
+        }));
+    }
+
+    protected processGetSchoolClassesToExcel(response: HttpResponseBase): Observable<FileDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = FileDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param filter (optional) 
+     * @param sorting (optional) 
+     * @param skipCount (optional) 
+     * @param maxResultCount (optional) 
+     * @return Success
+     */
+    getAllSchoolForLookupTable(filter: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfSchoolClassSchoolLookupTableDto> {
+        let url_ = this.baseUrl + "/api/services/app/SchoolClasses/GetAllSchoolForLookupTable?";
+        if (filter === null)
+            throw new Error("The parameter 'filter' cannot be null.");
+        else if (filter !== undefined)
+            url_ += "Filter=" + encodeURIComponent("" + filter) + "&";
+        if (sorting === null)
+            throw new Error("The parameter 'sorting' cannot be null.");
+        else if (sorting !== undefined)
+            url_ += "Sorting=" + encodeURIComponent("" + sorting) + "&";
+        if (skipCount === null)
+            throw new Error("The parameter 'skipCount' cannot be null.");
+        else if (skipCount !== undefined)
+            url_ += "SkipCount=" + encodeURIComponent("" + skipCount) + "&";
+        if (maxResultCount === null)
+            throw new Error("The parameter 'maxResultCount' cannot be null.");
+        else if (maxResultCount !== undefined)
+            url_ += "MaxResultCount=" + encodeURIComponent("" + maxResultCount) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetAllSchoolForLookupTable(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetAllSchoolForLookupTable(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<PagedResultDtoOfSchoolClassSchoolLookupTableDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<PagedResultDtoOfSchoolClassSchoolLookupTableDto>;
+        }));
+    }
+
+    protected processGetAllSchoolForLookupTable(response: HttpResponseBase): Observable<PagedResultDtoOfSchoolClassSchoolLookupTableDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = PagedResultDtoOfSchoolClassSchoolLookupTableDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+}
+
+@Injectable()
 export class SchoolsServiceProxy {
     private http: HttpClient;
     private baseUrl: string;
@@ -19524,17 +19251,15 @@ export class SessionsServiceProxy {
      * @param filter (optional) 
      * @param maxStartDateFilter (optional) 
      * @param minStartDateFilter (optional) 
-     * @param maxActualStartDateFilter (optional) 
-     * @param minActualStartDateFilter (optional) 
-     * @param endDateFilter (optional) 
-     * @param examGenerationTokenFilter (optional) 
-     * @param backgroundStartJobIdFilter (optional) 
+     * @param examTemplateIdFilter (optional) 
+     * @param studyLevelIdFilter (optional) 
+     * @param studySubjectIdFilter (optional) 
      * @param sorting (optional) 
      * @param skipCount (optional) 
      * @param maxResultCount (optional) 
      * @return Success
      */
-    getAll(filter: string | undefined, maxStartDateFilter: DateTime | undefined, minStartDateFilter: DateTime | undefined, maxActualStartDateFilter: DateTime | undefined, minActualStartDateFilter: DateTime | undefined, endDateFilter: string | undefined, examGenerationTokenFilter: string | undefined, backgroundStartJobIdFilter: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfGetSessionForViewDto> {
+    getAll(filter: string | undefined, maxStartDateFilter: DateTime | undefined, minStartDateFilter: DateTime | undefined, examTemplateIdFilter: number | undefined, studyLevelIdFilter: number | undefined, studySubjectIdFilter: number | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfGetSessionForViewDto> {
         let url_ = this.baseUrl + "/api/services/app/Sessions/GetAll?";
         if (filter === null)
             throw new Error("The parameter 'filter' cannot be null.");
@@ -19548,26 +19273,18 @@ export class SessionsServiceProxy {
             throw new Error("The parameter 'minStartDateFilter' cannot be null.");
         else if (minStartDateFilter !== undefined)
             url_ += "MinStartDateFilter=" + encodeURIComponent(minStartDateFilter ? "" + minStartDateFilter.toString() : "") + "&";
-        if (maxActualStartDateFilter === null)
-            throw new Error("The parameter 'maxActualStartDateFilter' cannot be null.");
-        else if (maxActualStartDateFilter !== undefined)
-            url_ += "MaxActualStartDateFilter=" + encodeURIComponent(maxActualStartDateFilter ? "" + maxActualStartDateFilter.toString() : "") + "&";
-        if (minActualStartDateFilter === null)
-            throw new Error("The parameter 'minActualStartDateFilter' cannot be null.");
-        else if (minActualStartDateFilter !== undefined)
-            url_ += "MinActualStartDateFilter=" + encodeURIComponent(minActualStartDateFilter ? "" + minActualStartDateFilter.toString() : "") + "&";
-        if (endDateFilter === null)
-            throw new Error("The parameter 'endDateFilter' cannot be null.");
-        else if (endDateFilter !== undefined)
-            url_ += "EndDateFilter=" + encodeURIComponent("" + endDateFilter) + "&";
-        if (examGenerationTokenFilter === null)
-            throw new Error("The parameter 'examGenerationTokenFilter' cannot be null.");
-        else if (examGenerationTokenFilter !== undefined)
-            url_ += "ExamGenerationTokenFilter=" + encodeURIComponent("" + examGenerationTokenFilter) + "&";
-        if (backgroundStartJobIdFilter === null)
-            throw new Error("The parameter 'backgroundStartJobIdFilter' cannot be null.");
-        else if (backgroundStartJobIdFilter !== undefined)
-            url_ += "BackgroundStartJobIdFilter=" + encodeURIComponent("" + backgroundStartJobIdFilter) + "&";
+        if (examTemplateIdFilter === null)
+            throw new Error("The parameter 'examTemplateIdFilter' cannot be null.");
+        else if (examTemplateIdFilter !== undefined)
+            url_ += "ExamTemplateIdFilter=" + encodeURIComponent("" + examTemplateIdFilter) + "&";
+        if (studyLevelIdFilter === null)
+            throw new Error("The parameter 'studyLevelIdFilter' cannot be null.");
+        else if (studyLevelIdFilter !== undefined)
+            url_ += "StudyLevelIdFilter=" + encodeURIComponent("" + studyLevelIdFilter) + "&";
+        if (studySubjectIdFilter === null)
+            throw new Error("The parameter 'studySubjectIdFilter' cannot be null.");
+        else if (studySubjectIdFilter !== undefined)
+            url_ += "StudySubjectIdFilter=" + encodeURIComponent("" + studySubjectIdFilter) + "&";
         if (sorting === null)
             throw new Error("The parameter 'sorting' cannot be null.");
         else if (sorting !== undefined)
@@ -19683,15 +19400,30 @@ export class SessionsServiceProxy {
     }
 
     /**
-     * @param id (optional) 
+     * @param sessionIdFilter (optional) 
+     * @param sorting (optional) 
+     * @param skipCount (optional) 
+     * @param maxResultCount (optional) 
      * @return Success
      */
-    getSessionForEdit(id: number | undefined): Observable<GetSessionForEditOutput> {
-        let url_ = this.baseUrl + "/api/services/app/Sessions/GetSessionForEdit?";
-        if (id === null)
-            throw new Error("The parameter 'id' cannot be null.");
-        else if (id !== undefined)
-            url_ += "Id=" + encodeURIComponent("" + id) + "&";
+    getAllSessionSchool(sessionIdFilter: number | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfGetSchoolForViewDto> {
+        let url_ = this.baseUrl + "/api/services/app/Sessions/GetAllSessionSchool?";
+        if (sessionIdFilter === null)
+            throw new Error("The parameter 'sessionIdFilter' cannot be null.");
+        else if (sessionIdFilter !== undefined)
+            url_ += "SessionIdFilter=" + encodeURIComponent("" + sessionIdFilter) + "&";
+        if (sorting === null)
+            throw new Error("The parameter 'sorting' cannot be null.");
+        else if (sorting !== undefined)
+            url_ += "Sorting=" + encodeURIComponent("" + sorting) + "&";
+        if (skipCount === null)
+            throw new Error("The parameter 'skipCount' cannot be null.");
+        else if (skipCount !== undefined)
+            url_ += "SkipCount=" + encodeURIComponent("" + skipCount) + "&";
+        if (maxResultCount === null)
+            throw new Error("The parameter 'maxResultCount' cannot be null.");
+        else if (maxResultCount !== undefined)
+            url_ += "MaxResultCount=" + encodeURIComponent("" + maxResultCount) + "&";
         url_ = url_.replace(/[?&]$/, "");
 
         let options_ : any = {
@@ -19703,20 +19435,20 @@ export class SessionsServiceProxy {
         };
 
         return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGetSessionForEdit(response_);
+            return this.processGetAllSessionSchool(response_);
         })).pipe(_observableCatch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
-                    return this.processGetSessionForEdit(response_ as any);
+                    return this.processGetAllSessionSchool(response_ as any);
                 } catch (e) {
-                    return _observableThrow(e) as any as Observable<GetSessionForEditOutput>;
+                    return _observableThrow(e) as any as Observable<PagedResultDtoOfGetSchoolForViewDto>;
                 }
             } else
-                return _observableThrow(response_) as any as Observable<GetSessionForEditOutput>;
+                return _observableThrow(response_) as any as Observable<PagedResultDtoOfGetSchoolForViewDto>;
         }));
     }
 
-    protected processGetSessionForEdit(response: HttpResponseBase): Observable<GetSessionForEditOutput> {
+    protected processGetAllSessionSchool(response: HttpResponseBase): Observable<PagedResultDtoOfGetSchoolForViewDto> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -19727,7 +19459,7 @@ export class SessionsServiceProxy {
             return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = GetSessionForEditOutput.fromJS(resultData200);
+            result200 = PagedResultDtoOfGetSchoolForViewDto.fromJS(resultData200);
             return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
@@ -19848,12 +19580,14 @@ export class SessionsServiceProxy {
      * @param minStartDateFilter (optional) 
      * @param maxActualStartDateFilter (optional) 
      * @param minActualStartDateFilter (optional) 
+     * @param maxEndDateFilter (optional) 
+     * @param minEndDateFilter (optional) 
      * @param endDateFilter (optional) 
      * @param examGenerationTokenFilter (optional) 
      * @param backgroundStartJobIdFilter (optional) 
      * @return Success
      */
-    getSessionsToExcel(filter: string | undefined, maxStartDateFilter: DateTime | undefined, minStartDateFilter: DateTime | undefined, maxActualStartDateFilter: DateTime | undefined, minActualStartDateFilter: DateTime | undefined, endDateFilter: string | undefined, examGenerationTokenFilter: string | undefined, backgroundStartJobIdFilter: string | undefined): Observable<FileDto> {
+    getSessionsToExcel(filter: string | undefined, maxStartDateFilter: DateTime | undefined, minStartDateFilter: DateTime | undefined, maxActualStartDateFilter: DateTime | undefined, minActualStartDateFilter: DateTime | undefined, maxEndDateFilter: DateTime | undefined, minEndDateFilter: DateTime | undefined, endDateFilter: string | undefined, examGenerationTokenFilter: string | undefined, backgroundStartJobIdFilter: string | undefined): Observable<FileDto> {
         let url_ = this.baseUrl + "/api/services/app/Sessions/GetSessionsToExcel?";
         if (filter === null)
             throw new Error("The parameter 'filter' cannot be null.");
@@ -19875,6 +19609,14 @@ export class SessionsServiceProxy {
             throw new Error("The parameter 'minActualStartDateFilter' cannot be null.");
         else if (minActualStartDateFilter !== undefined)
             url_ += "MinActualStartDateFilter=" + encodeURIComponent(minActualStartDateFilter ? "" + minActualStartDateFilter.toString() : "") + "&";
+        if (maxEndDateFilter === null)
+            throw new Error("The parameter 'maxEndDateFilter' cannot be null.");
+        else if (maxEndDateFilter !== undefined)
+            url_ += "MaxEndDateFilter=" + encodeURIComponent(maxEndDateFilter ? "" + maxEndDateFilter.toString() : "") + "&";
+        if (minEndDateFilter === null)
+            throw new Error("The parameter 'minEndDateFilter' cannot be null.");
+        else if (minEndDateFilter !== undefined)
+            url_ += "MinEndDateFilter=" + encodeURIComponent(minEndDateFilter ? "" + minEndDateFilter.toString() : "") + "&";
         if (endDateFilter === null)
             throw new Error("The parameter 'endDateFilter' cannot be null.");
         else if (endDateFilter !== undefined)
@@ -19947,32 +19689,27 @@ export class SessionSupervisorsServiceProxy {
 
     /**
      * @param filter (optional) 
-     * @param noteFilter (optional) 
-     * @param sessionNameLFilter (optional) 
-     * @param supervisorNoteFilter (optional) 
+     * @param sessionIdFilter (optional) 
+     * @param schoolClassIdFilter (optional) 
      * @param sorting (optional) 
      * @param skipCount (optional) 
      * @param maxResultCount (optional) 
      * @return Success
      */
-    getAll(filter: string | undefined, noteFilter: string | undefined, sessionNameLFilter: string | undefined, supervisorNoteFilter: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfGetSessionSupervisorForViewDto> {
+    getAll(filter: string | undefined, sessionIdFilter: number | undefined, schoolClassIdFilter: number | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfGetSessionSupervisorForViewDto> {
         let url_ = this.baseUrl + "/api/services/app/SessionSupervisors/GetAll?";
         if (filter === null)
             throw new Error("The parameter 'filter' cannot be null.");
         else if (filter !== undefined)
             url_ += "Filter=" + encodeURIComponent("" + filter) + "&";
-        if (noteFilter === null)
-            throw new Error("The parameter 'noteFilter' cannot be null.");
-        else if (noteFilter !== undefined)
-            url_ += "NoteFilter=" + encodeURIComponent("" + noteFilter) + "&";
-        if (sessionNameLFilter === null)
-            throw new Error("The parameter 'sessionNameLFilter' cannot be null.");
-        else if (sessionNameLFilter !== undefined)
-            url_ += "SessionNameLFilter=" + encodeURIComponent("" + sessionNameLFilter) + "&";
-        if (supervisorNoteFilter === null)
-            throw new Error("The parameter 'supervisorNoteFilter' cannot be null.");
-        else if (supervisorNoteFilter !== undefined)
-            url_ += "SupervisorNoteFilter=" + encodeURIComponent("" + supervisorNoteFilter) + "&";
+        if (sessionIdFilter === null)
+            throw new Error("The parameter 'sessionIdFilter' cannot be null.");
+        else if (sessionIdFilter !== undefined)
+            url_ += "SessionIdFilter=" + encodeURIComponent("" + sessionIdFilter) + "&";
+        if (schoolClassIdFilter === null)
+            throw new Error("The parameter 'schoolClassIdFilter' cannot be null.");
+        else if (schoolClassIdFilter !== undefined)
+            url_ += "SchoolClassIdFilter=" + encodeURIComponent("" + schoolClassIdFilter) + "&";
         if (sorting === null)
             throw new Error("The parameter 'sorting' cannot be null.");
         else if (sorting !== undefined)
@@ -20308,148 +20045,6 @@ export class SessionSupervisorsServiceProxy {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
             result200 = FileDto.fromJS(resultData200);
-            return _observableOf(result200);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf(null as any);
-    }
-
-    /**
-     * @param filter (optional) 
-     * @param sorting (optional) 
-     * @param skipCount (optional) 
-     * @param maxResultCount (optional) 
-     * @return Success
-     */
-    getAllSessionForLookupTable(filter: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfSessionSupervisorSessionLookupTableDto> {
-        let url_ = this.baseUrl + "/api/services/app/SessionSupervisors/GetAllSessionForLookupTable?";
-        if (filter === null)
-            throw new Error("The parameter 'filter' cannot be null.");
-        else if (filter !== undefined)
-            url_ += "Filter=" + encodeURIComponent("" + filter) + "&";
-        if (sorting === null)
-            throw new Error("The parameter 'sorting' cannot be null.");
-        else if (sorting !== undefined)
-            url_ += "Sorting=" + encodeURIComponent("" + sorting) + "&";
-        if (skipCount === null)
-            throw new Error("The parameter 'skipCount' cannot be null.");
-        else if (skipCount !== undefined)
-            url_ += "SkipCount=" + encodeURIComponent("" + skipCount) + "&";
-        if (maxResultCount === null)
-            throw new Error("The parameter 'maxResultCount' cannot be null.");
-        else if (maxResultCount !== undefined)
-            url_ += "MaxResultCount=" + encodeURIComponent("" + maxResultCount) + "&";
-        url_ = url_.replace(/[?&]$/, "");
-
-        let options_ : any = {
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Accept": "text/plain"
-            })
-        };
-
-        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGetAllSessionForLookupTable(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processGetAllSessionForLookupTable(response_ as any);
-                } catch (e) {
-                    return _observableThrow(e) as any as Observable<PagedResultDtoOfSessionSupervisorSessionLookupTableDto>;
-                }
-            } else
-                return _observableThrow(response_) as any as Observable<PagedResultDtoOfSessionSupervisorSessionLookupTableDto>;
-        }));
-    }
-
-    protected processGetAllSessionForLookupTable(response: HttpResponseBase): Observable<PagedResultDtoOfSessionSupervisorSessionLookupTableDto> {
-        const status = response.status;
-        const responseBlob =
-            response instanceof HttpResponse ? response.body :
-            (response as any).error instanceof Blob ? (response as any).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = PagedResultDtoOfSessionSupervisorSessionLookupTableDto.fromJS(resultData200);
-            return _observableOf(result200);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf(null as any);
-    }
-
-    /**
-     * @param filter (optional) 
-     * @param sorting (optional) 
-     * @param skipCount (optional) 
-     * @param maxResultCount (optional) 
-     * @return Success
-     */
-    getAllSupervisorForLookupTable(filter: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfSessionSupervisorSupervisorLookupTableDto> {
-        let url_ = this.baseUrl + "/api/services/app/SessionSupervisors/GetAllSupervisorForLookupTable?";
-        if (filter === null)
-            throw new Error("The parameter 'filter' cannot be null.");
-        else if (filter !== undefined)
-            url_ += "Filter=" + encodeURIComponent("" + filter) + "&";
-        if (sorting === null)
-            throw new Error("The parameter 'sorting' cannot be null.");
-        else if (sorting !== undefined)
-            url_ += "Sorting=" + encodeURIComponent("" + sorting) + "&";
-        if (skipCount === null)
-            throw new Error("The parameter 'skipCount' cannot be null.");
-        else if (skipCount !== undefined)
-            url_ += "SkipCount=" + encodeURIComponent("" + skipCount) + "&";
-        if (maxResultCount === null)
-            throw new Error("The parameter 'maxResultCount' cannot be null.");
-        else if (maxResultCount !== undefined)
-            url_ += "MaxResultCount=" + encodeURIComponent("" + maxResultCount) + "&";
-        url_ = url_.replace(/[?&]$/, "");
-
-        let options_ : any = {
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Accept": "text/plain"
-            })
-        };
-
-        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGetAllSupervisorForLookupTable(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processGetAllSupervisorForLookupTable(response_ as any);
-                } catch (e) {
-                    return _observableThrow(e) as any as Observable<PagedResultDtoOfSessionSupervisorSupervisorLookupTableDto>;
-                }
-            } else
-                return _observableThrow(response_) as any as Observable<PagedResultDtoOfSessionSupervisorSupervisorLookupTableDto>;
-        }));
-    }
-
-    protected processGetAllSupervisorForLookupTable(response: HttpResponseBase): Observable<PagedResultDtoOfSessionSupervisorSupervisorLookupTableDto> {
-        const status = response.status;
-        const responseBlob =
-            response instanceof HttpResponse ? response.body :
-            (response as any).error instanceof Blob ? (response as any).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = PagedResultDtoOfSessionSupervisorSupervisorLookupTableDto.fromJS(resultData200);
             return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
@@ -21561,6 +21156,68 @@ export class StudyLevelsServiceProxy {
     }
 
     /**
+     * @param id (optional) 
+     * @param isActive (optional) 
+     * @return Success
+     */
+    updateStudyLevelStatus(id: number | undefined, isActive: boolean | undefined): Observable<boolean> {
+        let url_ = this.baseUrl + "/api/services/app/StudyLevels/UpdateStudyLevelStatus?";
+        if (id === null)
+            throw new Error("The parameter 'id' cannot be null.");
+        else if (id !== undefined)
+            url_ += "id=" + encodeURIComponent("" + id) + "&";
+        if (isActive === null)
+            throw new Error("The parameter 'isActive' cannot be null.");
+        else if (isActive !== undefined)
+            url_ += "isActive=" + encodeURIComponent("" + isActive) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("put", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processUpdateStudyLevelStatus(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processUpdateStudyLevelStatus(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<boolean>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<boolean>;
+        }));
+    }
+
+    protected processUpdateStudyLevelStatus(response: HttpResponseBase): Observable<boolean> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+                result200 = resultData200 !== undefined ? resultData200 : <any>null;
+    
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
      * @param filter (optional) 
      * @param isActiveFilter (optional) 
      * @param sorting (optional) 
@@ -21923,6 +21580,68 @@ export class StudySubjectsServiceProxy {
     constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
         this.http = http;
         this.baseUrl = baseUrl ?? "";
+    }
+
+    /**
+     * @param id (optional) 
+     * @param isActive (optional) 
+     * @return Success
+     */
+    updateStudyLevelStatus(id: number | undefined, isActive: boolean | undefined): Observable<boolean> {
+        let url_ = this.baseUrl + "/api/services/app/StudySubjects/UpdateStudyLevelStatus?";
+        if (id === null)
+            throw new Error("The parameter 'id' cannot be null.");
+        else if (id !== undefined)
+            url_ += "id=" + encodeURIComponent("" + id) + "&";
+        if (isActive === null)
+            throw new Error("The parameter 'isActive' cannot be null.");
+        else if (isActive !== undefined)
+            url_ += "isActive=" + encodeURIComponent("" + isActive) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("put", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processUpdateStudyLevelStatus(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processUpdateStudyLevelStatus(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<boolean>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<boolean>;
+        }));
+    }
+
+    protected processUpdateStudyLevelStatus(response: HttpResponseBase): Observable<boolean> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+                result200 = resultData200 !== undefined ? resultData200 : <any>null;
+    
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
     }
 
     /**
@@ -23352,6 +23071,68 @@ export class SubjectUnitsServiceProxy {
     constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
         this.http = http;
         this.baseUrl = baseUrl ?? "";
+    }
+
+    /**
+     * @param id (optional) 
+     * @param isActive (optional) 
+     * @return Success
+     */
+    updateSubjectUnitStatus(id: number | undefined, isActive: boolean | undefined): Observable<boolean> {
+        let url_ = this.baseUrl + "/api/services/app/SubjectUnits/UpdateSubjectUnitStatus?";
+        if (id === null)
+            throw new Error("The parameter 'id' cannot be null.");
+        else if (id !== undefined)
+            url_ += "id=" + encodeURIComponent("" + id) + "&";
+        if (isActive === null)
+            throw new Error("The parameter 'isActive' cannot be null.");
+        else if (isActive !== undefined)
+            url_ += "isActive=" + encodeURIComponent("" + isActive) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("put", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processUpdateSubjectUnitStatus(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processUpdateSubjectUnitStatus(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<boolean>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<boolean>;
+        }));
+    }
+
+    protected processUpdateSubjectUnitStatus(response: HttpResponseBase): Observable<boolean> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+                result200 = resultData200 !== undefined ? resultData200 : <any>null;
+    
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
     }
 
     /**
@@ -33117,70 +32898,6 @@ export interface ICreateOrEditExamQuestionDto {
     sectionId: number;
 }
 
-export class CreateOrEditExamSectionDto implements ICreateOrEditExamSectionDto {
-    id!: number | undefined;
-    durationTime!: DateTime;
-    order!: number;
-    instructions!: string | undefined;
-    nameL!: string | undefined;
-    nameF!: string | undefined;
-    type!: SectionTypeEnum;
-    examId!: number;
-
-    constructor(data?: ICreateOrEditExamSectionDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.id = _data["id"];
-            this.durationTime = _data["durationTime"] ? DateTime.fromISO(_data["durationTime"].toString()) : <any>undefined;
-            this.order = _data["order"];
-            this.instructions = _data["instructions"];
-            this.nameL = _data["nameL"];
-            this.nameF = _data["nameF"];
-            this.type = _data["type"];
-            this.examId = _data["examId"];
-        }
-    }
-
-    static fromJS(data: any): CreateOrEditExamSectionDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new CreateOrEditExamSectionDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["id"] = this.id;
-        data["durationTime"] = this.durationTime ? this.durationTime.toString() : <any>undefined;
-        data["order"] = this.order;
-        data["instructions"] = this.instructions;
-        data["nameL"] = this.nameL;
-        data["nameF"] = this.nameF;
-        data["type"] = this.type;
-        data["examId"] = this.examId;
-        return data;
-    }
-}
-
-export interface ICreateOrEditExamSectionDto {
-    id: number | undefined;
-    durationTime: DateTime;
-    order: number;
-    instructions: string | undefined;
-    nameL: string | undefined;
-    nameF: string | undefined;
-    type: SectionTypeEnum;
-    examId: number;
-}
-
 export class CreateOrEditExamTemplateDto implements ICreateOrEditExamTemplateDto {
     id!: number | undefined;
     name!: string;
@@ -33415,10 +33132,11 @@ export class CreateOrEditQuestionDto implements ICreateOrEditQuestionDto {
     type!: QuestionTypeEnum;
     instructions!: string | undefined;
     language!: QuestionLanguageEnum;
-    readonly hasQuestionHelper!: boolean;
+    hasQuestionHelper!: boolean;
     enableShuffleOptions!: boolean;
     questionHelper!: string | undefined;
     isActive!: boolean;
+    isDraft!: boolean;
     autoCorrection!: boolean;
     point!: number | undefined;
     minPoints!: number | undefined;
@@ -33449,10 +33167,11 @@ export class CreateOrEditQuestionDto implements ICreateOrEditQuestionDto {
             this.type = _data["type"];
             this.instructions = _data["instructions"];
             this.language = _data["language"];
-            (<any>this).hasQuestionHelper = _data["hasQuestionHelper"];
+            this.hasQuestionHelper = _data["hasQuestionHelper"];
             this.enableShuffleOptions = _data["enableShuffleOptions"];
             this.questionHelper = _data["questionHelper"];
             this.isActive = _data["isActive"];
+            this.isDraft = _data["isDraft"];
             this.autoCorrection = _data["autoCorrection"];
             this.point = _data["point"];
             this.minPoints = _data["minPoints"];
@@ -33487,6 +33206,7 @@ export class CreateOrEditQuestionDto implements ICreateOrEditQuestionDto {
         data["enableShuffleOptions"] = this.enableShuffleOptions;
         data["questionHelper"] = this.questionHelper;
         data["isActive"] = this.isActive;
+        data["isDraft"] = this.isDraft;
         data["autoCorrection"] = this.autoCorrection;
         data["point"] = this.point;
         data["minPoints"] = this.minPoints;
@@ -33514,6 +33234,7 @@ export interface ICreateOrEditQuestionDto {
     enableShuffleOptions: boolean;
     questionHelper: string | undefined;
     isActive: boolean;
+    isDraft: boolean;
     autoCorrection: boolean;
     point: number | undefined;
     minPoints: number | undefined;
@@ -33831,6 +33552,54 @@ export interface ICreateOrEditRearrangeQuestionDto {
     order: number;
     point: number;
     word: string | undefined;
+}
+
+export class CreateOrEditSchoolClassDto implements ICreateOrEditSchoolClassDto {
+    id!: number | undefined;
+    name!: string | undefined;
+    code!: string | undefined;
+    schoolId!: number | undefined;
+
+    constructor(data?: ICreateOrEditSchoolClassDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.name = _data["name"];
+            this.code = _data["code"];
+            this.schoolId = _data["schoolId"];
+        }
+    }
+
+    static fromJS(data: any): CreateOrEditSchoolClassDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new CreateOrEditSchoolClassDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["name"] = this.name;
+        data["code"] = this.code;
+        data["schoolId"] = this.schoolId;
+        return data;
+    }
+}
+
+export interface ICreateOrEditSchoolClassDto {
+    id: number | undefined;
+    name: string | undefined;
+    code: string | undefined;
+    schoolId: number | undefined;
 }
 
 export class CreateOrEditSchoolDto implements ICreateOrEditSchoolDto {
@@ -37196,166 +36965,6 @@ export interface IExamAttemptDto {
     auditorId: number | undefined;
 }
 
-export class ExamAttemptExamLookupTableDto implements IExamAttemptExamLookupTableDto {
-    id!: number;
-    displayName!: string | undefined;
-
-    constructor(data?: IExamAttemptExamLookupTableDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.id = _data["id"];
-            this.displayName = _data["displayName"];
-        }
-    }
-
-    static fromJS(data: any): ExamAttemptExamLookupTableDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new ExamAttemptExamLookupTableDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["id"] = this.id;
-        data["displayName"] = this.displayName;
-        return data;
-    }
-}
-
-export interface IExamAttemptExamLookupTableDto {
-    id: number;
-    displayName: string | undefined;
-}
-
-export class ExamAttemptSessionLookupTableDto implements IExamAttemptSessionLookupTableDto {
-    id!: number;
-    displayName!: string | undefined;
-
-    constructor(data?: IExamAttemptSessionLookupTableDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.id = _data["id"];
-            this.displayName = _data["displayName"];
-        }
-    }
-
-    static fromJS(data: any): ExamAttemptSessionLookupTableDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new ExamAttemptSessionLookupTableDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["id"] = this.id;
-        data["displayName"] = this.displayName;
-        return data;
-    }
-}
-
-export interface IExamAttemptSessionLookupTableDto {
-    id: number;
-    displayName: string | undefined;
-}
-
-export class ExamAttemptStudentLookupTableDto implements IExamAttemptStudentLookupTableDto {
-    id!: number;
-    displayName!: string | undefined;
-
-    constructor(data?: IExamAttemptStudentLookupTableDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.id = _data["id"];
-            this.displayName = _data["displayName"];
-        }
-    }
-
-    static fromJS(data: any): ExamAttemptStudentLookupTableDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new ExamAttemptStudentLookupTableDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["id"] = this.id;
-        data["displayName"] = this.displayName;
-        return data;
-    }
-}
-
-export interface IExamAttemptStudentLookupTableDto {
-    id: number;
-    displayName: string | undefined;
-}
-
-export class ExamAttemptUserLookupTableDto implements IExamAttemptUserLookupTableDto {
-    id!: number;
-    displayName!: string | undefined;
-
-    constructor(data?: IExamAttemptUserLookupTableDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.id = _data["id"];
-            this.displayName = _data["displayName"];
-        }
-    }
-
-    static fromJS(data: any): ExamAttemptUserLookupTableDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new ExamAttemptUserLookupTableDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["id"] = this.id;
-        data["displayName"] = this.displayName;
-        return data;
-    }
-}
-
-export interface IExamAttemptUserLookupTableDto {
-    id: number;
-    displayName: string | undefined;
-}
-
 export class ExamDto implements IExamDto {
     id!: number;
     versionNo!: number;
@@ -37778,46 +37387,6 @@ export interface IExamSectionDto {
     type: SectionTypeEnum;
     examId: number;
     examQuestions: ExamQuestionDto[] | undefined;
-}
-
-export class ExamSectionExamLookupTableDto implements IExamSectionExamLookupTableDto {
-    id!: number;
-    displayName!: string | undefined;
-
-    constructor(data?: IExamSectionExamLookupTableDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.id = _data["id"];
-            this.displayName = _data["displayName"];
-        }
-    }
-
-    static fromJS(data: any): ExamSectionExamLookupTableDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new ExamSectionExamLookupTableDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["id"] = this.id;
-        data["displayName"] = this.displayName;
-        return data;
-    }
-}
-
-export interface IExamSectionExamLookupTableDto {
-    id: number;
-    displayName: string | undefined;
 }
 
 export class ExamTemplateDto implements IExamTemplateDto {
@@ -40378,69 +39947,17 @@ export interface IGetExamAnswerForViewDto {
     attemptNote: string | undefined;
 }
 
-export class GetExamAttemptForEditOutput implements IGetExamAttemptForEditOutput {
-    examAttempt!: CreateOrEditExamAttemptDto;
-    examTitle!: string | undefined;
-    sessionNameL!: string | undefined;
-    studentClassName!: string | undefined;
-    userName!: string | undefined;
-    userName2!: string | undefined;
-
-    constructor(data?: IGetExamAttemptForEditOutput) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.examAttempt = _data["examAttempt"] ? CreateOrEditExamAttemptDto.fromJS(_data["examAttempt"]) : <any>undefined;
-            this.examTitle = _data["examTitle"];
-            this.sessionNameL = _data["sessionNameL"];
-            this.studentClassName = _data["studentClassName"];
-            this.userName = _data["userName"];
-            this.userName2 = _data["userName2"];
-        }
-    }
-
-    static fromJS(data: any): GetExamAttemptForEditOutput {
-        data = typeof data === 'object' ? data : {};
-        let result = new GetExamAttemptForEditOutput();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["examAttempt"] = this.examAttempt ? this.examAttempt.toJSON() : <any>undefined;
-        data["examTitle"] = this.examTitle;
-        data["sessionNameL"] = this.sessionNameL;
-        data["studentClassName"] = this.studentClassName;
-        data["userName"] = this.userName;
-        data["userName2"] = this.userName2;
-        return data;
-    }
-}
-
-export interface IGetExamAttemptForEditOutput {
-    examAttempt: CreateOrEditExamAttemptDto;
-    examTitle: string | undefined;
-    sessionNameL: string | undefined;
-    studentClassName: string | undefined;
-    userName: string | undefined;
-    userName2: string | undefined;
-}
-
 export class GetExamAttemptForViewDto implements IGetExamAttemptForViewDto {
     examAttempt!: ExamAttemptDto;
     examTitle!: string | undefined;
-    sessionNameL!: string | undefined;
-    studentClassName!: string | undefined;
-    userName!: string | undefined;
-    userName2!: string | undefined;
+    sessionName!: string | undefined;
+    className!: string | undefined;
+    studentName!: string | undefined;
+    correctorName!: string | undefined;
+    auditorName!: string | undefined;
+    currentSectionOrder!: number;
+    currentQuestionNo!: number;
+    currentQuestionNoInGeneral!: number;
 
     constructor(data?: IGetExamAttemptForViewDto) {
         if (data) {
@@ -40455,10 +39972,14 @@ export class GetExamAttemptForViewDto implements IGetExamAttemptForViewDto {
         if (_data) {
             this.examAttempt = _data["examAttempt"] ? ExamAttemptDto.fromJS(_data["examAttempt"]) : <any>undefined;
             this.examTitle = _data["examTitle"];
-            this.sessionNameL = _data["sessionNameL"];
-            this.studentClassName = _data["studentClassName"];
-            this.userName = _data["userName"];
-            this.userName2 = _data["userName2"];
+            this.sessionName = _data["sessionName"];
+            this.className = _data["className"];
+            this.studentName = _data["studentName"];
+            this.correctorName = _data["correctorName"];
+            this.auditorName = _data["auditorName"];
+            this.currentSectionOrder = _data["currentSectionOrder"];
+            this.currentQuestionNo = _data["currentQuestionNo"];
+            this.currentQuestionNoInGeneral = _data["currentQuestionNoInGeneral"];
         }
     }
 
@@ -40473,10 +39994,14 @@ export class GetExamAttemptForViewDto implements IGetExamAttemptForViewDto {
         data = typeof data === 'object' ? data : {};
         data["examAttempt"] = this.examAttempt ? this.examAttempt.toJSON() : <any>undefined;
         data["examTitle"] = this.examTitle;
-        data["sessionNameL"] = this.sessionNameL;
-        data["studentClassName"] = this.studentClassName;
-        data["userName"] = this.userName;
-        data["userName2"] = this.userName2;
+        data["sessionName"] = this.sessionName;
+        data["className"] = this.className;
+        data["studentName"] = this.studentName;
+        data["correctorName"] = this.correctorName;
+        data["auditorName"] = this.auditorName;
+        data["currentSectionOrder"] = this.currentSectionOrder;
+        data["currentQuestionNo"] = this.currentQuestionNo;
+        data["currentQuestionNoInGeneral"] = this.currentQuestionNoInGeneral;
         return data;
     }
 }
@@ -40484,10 +40009,14 @@ export class GetExamAttemptForViewDto implements IGetExamAttemptForViewDto {
 export interface IGetExamAttemptForViewDto {
     examAttempt: ExamAttemptDto;
     examTitle: string | undefined;
-    sessionNameL: string | undefined;
-    studentClassName: string | undefined;
-    userName: string | undefined;
-    userName2: string | undefined;
+    sessionName: string | undefined;
+    className: string | undefined;
+    studentName: string | undefined;
+    correctorName: string | undefined;
+    auditorName: string | undefined;
+    currentSectionOrder: number;
+    currentQuestionNo: number;
+    currentQuestionNoInGeneral: number;
 }
 
 export class GetExamForViewDto implements IGetExamForViewDto {
@@ -40644,46 +40173,6 @@ export interface IGetExamQuestionForViewDto {
     examQuestion: ExamQuestionDto;
     questionQuestionHelper: string | undefined;
     examSectionName: string | undefined;
-}
-
-export class GetExamSectionForEditOutput implements IGetExamSectionForEditOutput {
-    examSection!: CreateOrEditExamSectionDto;
-    examTitle!: string | undefined;
-
-    constructor(data?: IGetExamSectionForEditOutput) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.examSection = _data["examSection"] ? CreateOrEditExamSectionDto.fromJS(_data["examSection"]) : <any>undefined;
-            this.examTitle = _data["examTitle"];
-        }
-    }
-
-    static fromJS(data: any): GetExamSectionForEditOutput {
-        data = typeof data === 'object' ? data : {};
-        let result = new GetExamSectionForEditOutput();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["examSection"] = this.examSection ? this.examSection.toJSON() : <any>undefined;
-        data["examTitle"] = this.examTitle;
-        return data;
-    }
-}
-
-export interface IGetExamSectionForEditOutput {
-    examSection: CreateOrEditExamSectionDto;
-    examTitle: string | undefined;
 }
 
 export class GetExamSectionForViewDto implements IGetExamSectionForViewDto {
@@ -42346,6 +41835,58 @@ export interface IGetQuestionSubjectUnitForViewDto {
     questionQuestionHelper: string | undefined;
 }
 
+export class GetQuestionsOutput implements IGetQuestionsOutput {
+    items!: GetQuestionForViewDto[] | undefined;
+    totalCount!: number;
+    activeCount!: number;
+
+    constructor(data?: IGetQuestionsOutput) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            if (Array.isArray(_data["items"])) {
+                this.items = [] as any;
+                for (let item of _data["items"])
+                    this.items!.push(GetQuestionForViewDto.fromJS(item));
+            }
+            this.totalCount = _data["totalCount"];
+            this.activeCount = _data["activeCount"];
+        }
+    }
+
+    static fromJS(data: any): GetQuestionsOutput {
+        data = typeof data === 'object' ? data : {};
+        let result = new GetQuestionsOutput();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        if (Array.isArray(this.items)) {
+            data["items"] = [];
+            for (let item of this.items)
+                data["items"].push(item.toJSON());
+        }
+        data["totalCount"] = this.totalCount;
+        data["activeCount"] = this.activeCount;
+        return data;
+    }
+}
+
+export interface IGetQuestionsOutput {
+    items: GetQuestionForViewDto[] | undefined;
+    totalCount: number;
+    activeCount: number;
+}
+
 export class GetRecentTenantsOutput implements IGetRecentTenantsOutput {
     recentTenantsDayCount!: number;
     maxRecentTenantsShownCount!: number;
@@ -42610,6 +42151,98 @@ export interface IGetSalesSummaryOutput {
     salesSummary: SalesSummaryData[] | undefined;
 }
 
+export class GetSchoolClassForEditOutput implements IGetSchoolClassForEditOutput {
+    schoolClass!: CreateOrEditSchoolClassDto;
+    schoolSchoolNo!: string | undefined;
+
+    constructor(data?: IGetSchoolClassForEditOutput) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.schoolClass = _data["schoolClass"] ? CreateOrEditSchoolClassDto.fromJS(_data["schoolClass"]) : <any>undefined;
+            this.schoolSchoolNo = _data["schoolSchoolNo"];
+        }
+    }
+
+    static fromJS(data: any): GetSchoolClassForEditOutput {
+        data = typeof data === 'object' ? data : {};
+        let result = new GetSchoolClassForEditOutput();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["schoolClass"] = this.schoolClass ? this.schoolClass.toJSON() : <any>undefined;
+        data["schoolSchoolNo"] = this.schoolSchoolNo;
+        return data;
+    }
+}
+
+export interface IGetSchoolClassForEditOutput {
+    schoolClass: CreateOrEditSchoolClassDto;
+    schoolSchoolNo: string | undefined;
+}
+
+export class GetSchoolClassForViewDto implements IGetSchoolClassForViewDto {
+    schoolClass!: SchoolClassDto;
+    schoolName!: string | undefined;
+    sessionId!: number;
+    numberOfAttempt!: number;
+    numberOfSupervisor!: number;
+
+    constructor(data?: IGetSchoolClassForViewDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.schoolClass = _data["schoolClass"] ? SchoolClassDto.fromJS(_data["schoolClass"]) : <any>undefined;
+            this.schoolName = _data["schoolName"];
+            this.sessionId = _data["sessionId"];
+            this.numberOfAttempt = _data["numberOfAttempt"];
+            this.numberOfSupervisor = _data["numberOfSupervisor"];
+        }
+    }
+
+    static fromJS(data: any): GetSchoolClassForViewDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new GetSchoolClassForViewDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["schoolClass"] = this.schoolClass ? this.schoolClass.toJSON() : <any>undefined;
+        data["schoolName"] = this.schoolName;
+        data["sessionId"] = this.sessionId;
+        data["numberOfAttempt"] = this.numberOfAttempt;
+        data["numberOfSupervisor"] = this.numberOfSupervisor;
+        return data;
+    }
+}
+
+export interface IGetSchoolClassForViewDto {
+    schoolClass: SchoolClassDto;
+    schoolName: string | undefined;
+    sessionId: number;
+    numberOfAttempt: number;
+    numberOfSupervisor: number;
+}
+
 export class GetSchoolForEditOutput implements IGetSchoolForEditOutput {
     school!: CreateOrEditSchoolDto;
 
@@ -42648,6 +42281,7 @@ export interface IGetSchoolForEditOutput {
 
 export class GetSchoolForViewDto implements IGetSchoolForViewDto {
     school!: SchoolDto;
+    getSchoolClassForViewDtos!: GetSchoolClassForViewDto[] | undefined;
 
     constructor(data?: IGetSchoolForViewDto) {
         if (data) {
@@ -42661,6 +42295,11 @@ export class GetSchoolForViewDto implements IGetSchoolForViewDto {
     init(_data?: any) {
         if (_data) {
             this.school = _data["school"] ? SchoolDto.fromJS(_data["school"]) : <any>undefined;
+            if (Array.isArray(_data["getSchoolClassForViewDtos"])) {
+                this.getSchoolClassForViewDtos = [] as any;
+                for (let item of _data["getSchoolClassForViewDtos"])
+                    this.getSchoolClassForViewDtos!.push(GetSchoolClassForViewDto.fromJS(item));
+            }
         }
     }
 
@@ -42674,52 +42313,26 @@ export class GetSchoolForViewDto implements IGetSchoolForViewDto {
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["school"] = this.school ? this.school.toJSON() : <any>undefined;
+        if (Array.isArray(this.getSchoolClassForViewDtos)) {
+            data["getSchoolClassForViewDtos"] = [];
+            for (let item of this.getSchoolClassForViewDtos)
+                data["getSchoolClassForViewDtos"].push(item.toJSON());
+        }
         return data;
     }
 }
 
 export interface IGetSchoolForViewDto {
     school: SchoolDto;
-}
-
-export class GetSessionForEditOutput implements IGetSessionForEditOutput {
-    session!: CreateOrEditSessionDto;
-
-    constructor(data?: IGetSessionForEditOutput) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.session = _data["session"] ? CreateOrEditSessionDto.fromJS(_data["session"]) : <any>undefined;
-        }
-    }
-
-    static fromJS(data: any): GetSessionForEditOutput {
-        data = typeof data === 'object' ? data : {};
-        let result = new GetSessionForEditOutput();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["session"] = this.session ? this.session.toJSON() : <any>undefined;
-        return data;
-    }
-}
-
-export interface IGetSessionForEditOutput {
-    session: CreateOrEditSessionDto;
+    getSchoolClassForViewDtos: GetSchoolClassForViewDto[] | undefined;
 }
 
 export class GetSessionForViewDto implements IGetSessionForViewDto {
     session!: SessionDto;
+    examTemplateName!: string | undefined;
+    studySubject!: string | undefined;
+    studyLevel!: string | undefined;
+    schools!: GetSchoolForViewDto[] | undefined;
 
     constructor(data?: IGetSessionForViewDto) {
         if (data) {
@@ -42733,6 +42346,14 @@ export class GetSessionForViewDto implements IGetSessionForViewDto {
     init(_data?: any) {
         if (_data) {
             this.session = _data["session"] ? SessionDto.fromJS(_data["session"]) : <any>undefined;
+            this.examTemplateName = _data["examTemplateName"];
+            this.studySubject = _data["studySubject"];
+            this.studyLevel = _data["studyLevel"];
+            if (Array.isArray(_data["schools"])) {
+                this.schools = [] as any;
+                for (let item of _data["schools"])
+                    this.schools!.push(GetSchoolForViewDto.fromJS(item));
+            }
         }
     }
 
@@ -42746,17 +42367,29 @@ export class GetSessionForViewDto implements IGetSessionForViewDto {
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["session"] = this.session ? this.session.toJSON() : <any>undefined;
+        data["examTemplateName"] = this.examTemplateName;
+        data["studySubject"] = this.studySubject;
+        data["studyLevel"] = this.studyLevel;
+        if (Array.isArray(this.schools)) {
+            data["schools"] = [];
+            for (let item of this.schools)
+                data["schools"].push(item.toJSON());
+        }
         return data;
     }
 }
 
 export interface IGetSessionForViewDto {
     session: SessionDto;
+    examTemplateName: string | undefined;
+    studySubject: string | undefined;
+    studyLevel: string | undefined;
+    schools: GetSchoolForViewDto[] | undefined;
 }
 
 export class GetSessionSupervisorForEditOutput implements IGetSessionSupervisorForEditOutput {
     sessionSupervisor!: CreateOrEditSessionSupervisorDto;
-    sessionNameL!: string | undefined;
+    sessionName!: string | undefined;
     supervisorNote!: string | undefined;
 
     constructor(data?: IGetSessionSupervisorForEditOutput) {
@@ -42771,7 +42404,7 @@ export class GetSessionSupervisorForEditOutput implements IGetSessionSupervisorF
     init(_data?: any) {
         if (_data) {
             this.sessionSupervisor = _data["sessionSupervisor"] ? CreateOrEditSessionSupervisorDto.fromJS(_data["sessionSupervisor"]) : <any>undefined;
-            this.sessionNameL = _data["sessionNameL"];
+            this.sessionName = _data["sessionName"];
             this.supervisorNote = _data["supervisorNote"];
         }
     }
@@ -42786,7 +42419,7 @@ export class GetSessionSupervisorForEditOutput implements IGetSessionSupervisorF
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["sessionSupervisor"] = this.sessionSupervisor ? this.sessionSupervisor.toJSON() : <any>undefined;
-        data["sessionNameL"] = this.sessionNameL;
+        data["sessionName"] = this.sessionName;
         data["supervisorNote"] = this.supervisorNote;
         return data;
     }
@@ -42794,14 +42427,14 @@ export class GetSessionSupervisorForEditOutput implements IGetSessionSupervisorF
 
 export interface IGetSessionSupervisorForEditOutput {
     sessionSupervisor: CreateOrEditSessionSupervisorDto;
-    sessionNameL: string | undefined;
+    sessionName: string | undefined;
     supervisorNote: string | undefined;
 }
 
 export class GetSessionSupervisorForViewDto implements IGetSessionSupervisorForViewDto {
     sessionSupervisor!: SessionSupervisorDto;
-    sessionNameL!: string | undefined;
-    supervisorNote!: string | undefined;
+    sessionName!: string | undefined;
+    supervisorName!: string | undefined;
 
     constructor(data?: IGetSessionSupervisorForViewDto) {
         if (data) {
@@ -42815,8 +42448,8 @@ export class GetSessionSupervisorForViewDto implements IGetSessionSupervisorForV
     init(_data?: any) {
         if (_data) {
             this.sessionSupervisor = _data["sessionSupervisor"] ? SessionSupervisorDto.fromJS(_data["sessionSupervisor"]) : <any>undefined;
-            this.sessionNameL = _data["sessionNameL"];
-            this.supervisorNote = _data["supervisorNote"];
+            this.sessionName = _data["sessionName"];
+            this.supervisorName = _data["supervisorName"];
         }
     }
 
@@ -42830,16 +42463,16 @@ export class GetSessionSupervisorForViewDto implements IGetSessionSupervisorForV
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["sessionSupervisor"] = this.sessionSupervisor ? this.sessionSupervisor.toJSON() : <any>undefined;
-        data["sessionNameL"] = this.sessionNameL;
-        data["supervisorNote"] = this.supervisorNote;
+        data["sessionName"] = this.sessionName;
+        data["supervisorName"] = this.supervisorName;
         return data;
     }
 }
 
 export interface IGetSessionSupervisorForViewDto {
     sessionSupervisor: SessionSupervisorDto;
-    sessionNameL: string | undefined;
-    supervisorNote: string | undefined;
+    sessionName: string | undefined;
+    supervisorName: string | undefined;
 }
 
 export class GetSiteTrackerForEditOutput implements IGetSiteTrackerForEditOutput {
@@ -47850,198 +47483,6 @@ export interface IPagedResultDtoOfExamAnswerQuestionOptionLookupTableDto {
     totalCount: number;
 }
 
-export class PagedResultDtoOfExamAttemptExamLookupTableDto implements IPagedResultDtoOfExamAttemptExamLookupTableDto {
-    items!: ExamAttemptExamLookupTableDto[] | undefined;
-    totalCount!: number;
-
-    constructor(data?: IPagedResultDtoOfExamAttemptExamLookupTableDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            if (Array.isArray(_data["items"])) {
-                this.items = [] as any;
-                for (let item of _data["items"])
-                    this.items!.push(ExamAttemptExamLookupTableDto.fromJS(item));
-            }
-            this.totalCount = _data["totalCount"];
-        }
-    }
-
-    static fromJS(data: any): PagedResultDtoOfExamAttemptExamLookupTableDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new PagedResultDtoOfExamAttemptExamLookupTableDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        if (Array.isArray(this.items)) {
-            data["items"] = [];
-            for (let item of this.items)
-                data["items"].push(item.toJSON());
-        }
-        data["totalCount"] = this.totalCount;
-        return data;
-    }
-}
-
-export interface IPagedResultDtoOfExamAttemptExamLookupTableDto {
-    items: ExamAttemptExamLookupTableDto[] | undefined;
-    totalCount: number;
-}
-
-export class PagedResultDtoOfExamAttemptSessionLookupTableDto implements IPagedResultDtoOfExamAttemptSessionLookupTableDto {
-    items!: ExamAttemptSessionLookupTableDto[] | undefined;
-    totalCount!: number;
-
-    constructor(data?: IPagedResultDtoOfExamAttemptSessionLookupTableDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            if (Array.isArray(_data["items"])) {
-                this.items = [] as any;
-                for (let item of _data["items"])
-                    this.items!.push(ExamAttemptSessionLookupTableDto.fromJS(item));
-            }
-            this.totalCount = _data["totalCount"];
-        }
-    }
-
-    static fromJS(data: any): PagedResultDtoOfExamAttemptSessionLookupTableDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new PagedResultDtoOfExamAttemptSessionLookupTableDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        if (Array.isArray(this.items)) {
-            data["items"] = [];
-            for (let item of this.items)
-                data["items"].push(item.toJSON());
-        }
-        data["totalCount"] = this.totalCount;
-        return data;
-    }
-}
-
-export interface IPagedResultDtoOfExamAttemptSessionLookupTableDto {
-    items: ExamAttemptSessionLookupTableDto[] | undefined;
-    totalCount: number;
-}
-
-export class PagedResultDtoOfExamAttemptStudentLookupTableDto implements IPagedResultDtoOfExamAttemptStudentLookupTableDto {
-    items!: ExamAttemptStudentLookupTableDto[] | undefined;
-    totalCount!: number;
-
-    constructor(data?: IPagedResultDtoOfExamAttemptStudentLookupTableDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            if (Array.isArray(_data["items"])) {
-                this.items = [] as any;
-                for (let item of _data["items"])
-                    this.items!.push(ExamAttemptStudentLookupTableDto.fromJS(item));
-            }
-            this.totalCount = _data["totalCount"];
-        }
-    }
-
-    static fromJS(data: any): PagedResultDtoOfExamAttemptStudentLookupTableDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new PagedResultDtoOfExamAttemptStudentLookupTableDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        if (Array.isArray(this.items)) {
-            data["items"] = [];
-            for (let item of this.items)
-                data["items"].push(item.toJSON());
-        }
-        data["totalCount"] = this.totalCount;
-        return data;
-    }
-}
-
-export interface IPagedResultDtoOfExamAttemptStudentLookupTableDto {
-    items: ExamAttemptStudentLookupTableDto[] | undefined;
-    totalCount: number;
-}
-
-export class PagedResultDtoOfExamAttemptUserLookupTableDto implements IPagedResultDtoOfExamAttemptUserLookupTableDto {
-    items!: ExamAttemptUserLookupTableDto[] | undefined;
-    totalCount!: number;
-
-    constructor(data?: IPagedResultDtoOfExamAttemptUserLookupTableDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            if (Array.isArray(_data["items"])) {
-                this.items = [] as any;
-                for (let item of _data["items"])
-                    this.items!.push(ExamAttemptUserLookupTableDto.fromJS(item));
-            }
-            this.totalCount = _data["totalCount"];
-        }
-    }
-
-    static fromJS(data: any): PagedResultDtoOfExamAttemptUserLookupTableDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new PagedResultDtoOfExamAttemptUserLookupTableDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        if (Array.isArray(this.items)) {
-            data["items"] = [];
-            for (let item of this.items)
-                data["items"].push(item.toJSON());
-        }
-        data["totalCount"] = this.totalCount;
-        return data;
-    }
-}
-
-export interface IPagedResultDtoOfExamAttemptUserLookupTableDto {
-    items: ExamAttemptUserLookupTableDto[] | undefined;
-    totalCount: number;
-}
-
 export class PagedResultDtoOfExamQuestionExamSectionLookupTableDto implements IPagedResultDtoOfExamQuestionExamSectionLookupTableDto {
     items!: ExamQuestionExamSectionLookupTableDto[] | undefined;
     totalCount!: number;
@@ -48135,54 +47576,6 @@ export class PagedResultDtoOfExamQuestionQuestionLookupTableDto implements IPage
 
 export interface IPagedResultDtoOfExamQuestionQuestionLookupTableDto {
     items: ExamQuestionQuestionLookupTableDto[] | undefined;
-    totalCount: number;
-}
-
-export class PagedResultDtoOfExamSectionExamLookupTableDto implements IPagedResultDtoOfExamSectionExamLookupTableDto {
-    items!: ExamSectionExamLookupTableDto[] | undefined;
-    totalCount!: number;
-
-    constructor(data?: IPagedResultDtoOfExamSectionExamLookupTableDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            if (Array.isArray(_data["items"])) {
-                this.items = [] as any;
-                for (let item of _data["items"])
-                    this.items!.push(ExamSectionExamLookupTableDto.fromJS(item));
-            }
-            this.totalCount = _data["totalCount"];
-        }
-    }
-
-    static fromJS(data: any): PagedResultDtoOfExamSectionExamLookupTableDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new PagedResultDtoOfExamSectionExamLookupTableDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        if (Array.isArray(this.items)) {
-            data["items"] = [];
-            for (let item of this.items)
-                data["items"].push(item.toJSON());
-        }
-        data["totalCount"] = this.totalCount;
-        return data;
-    }
-}
-
-export interface IPagedResultDtoOfExamSectionExamLookupTableDto {
-    items: ExamSectionExamLookupTableDto[] | undefined;
     totalCount: number;
 }
 
@@ -48618,54 +48011,6 @@ export interface IPagedResultDtoOfGetExamQuestionForViewDto {
     totalCount: number;
 }
 
-export class PagedResultDtoOfGetExamSectionForViewDto implements IPagedResultDtoOfGetExamSectionForViewDto {
-    items!: GetExamSectionForViewDto[] | undefined;
-    totalCount!: number;
-
-    constructor(data?: IPagedResultDtoOfGetExamSectionForViewDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            if (Array.isArray(_data["items"])) {
-                this.items = [] as any;
-                for (let item of _data["items"])
-                    this.items!.push(GetExamSectionForViewDto.fromJS(item));
-            }
-            this.totalCount = _data["totalCount"];
-        }
-    }
-
-    static fromJS(data: any): PagedResultDtoOfGetExamSectionForViewDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new PagedResultDtoOfGetExamSectionForViewDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        if (Array.isArray(this.items)) {
-            data["items"] = [];
-            for (let item of this.items)
-                data["items"].push(item.toJSON());
-        }
-        data["totalCount"] = this.totalCount;
-        return data;
-    }
-}
-
-export interface IPagedResultDtoOfGetExamSectionForViewDto {
-    items: GetExamSectionForViewDto[] | undefined;
-    totalCount: number;
-}
-
 export class PagedResultDtoOfGetExamTemplateForViewDto implements IPagedResultDtoOfGetExamTemplateForViewDto {
     items!: GetExamTemplateForViewDto[] | undefined;
     totalCount!: number;
@@ -48807,54 +48152,6 @@ export class PagedResultDtoOfGetQuestionComplexitiyForViewDto implements IPagedR
 
 export interface IPagedResultDtoOfGetQuestionComplexitiyForViewDto {
     items: GetQuestionComplexitiyForViewDto[] | undefined;
-    totalCount: number;
-}
-
-export class PagedResultDtoOfGetQuestionForViewDto implements IPagedResultDtoOfGetQuestionForViewDto {
-    items!: GetQuestionForViewDto[] | undefined;
-    totalCount!: number;
-
-    constructor(data?: IPagedResultDtoOfGetQuestionForViewDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            if (Array.isArray(_data["items"])) {
-                this.items = [] as any;
-                for (let item of _data["items"])
-                    this.items!.push(GetQuestionForViewDto.fromJS(item));
-            }
-            this.totalCount = _data["totalCount"];
-        }
-    }
-
-    static fromJS(data: any): PagedResultDtoOfGetQuestionForViewDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new PagedResultDtoOfGetQuestionForViewDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        if (Array.isArray(this.items)) {
-            data["items"] = [];
-            for (let item of this.items)
-                data["items"].push(item.toJSON());
-        }
-        data["totalCount"] = this.totalCount;
-        return data;
-    }
-}
-
-export interface IPagedResultDtoOfGetQuestionForViewDto {
-    items: GetQuestionForViewDto[] | undefined;
     totalCount: number;
 }
 
@@ -49095,6 +48392,54 @@ export class PagedResultDtoOfGetQuestionSubjectUnitForViewDto implements IPagedR
 
 export interface IPagedResultDtoOfGetQuestionSubjectUnitForViewDto {
     items: GetQuestionSubjectUnitForViewDto[] | undefined;
+    totalCount: number;
+}
+
+export class PagedResultDtoOfGetSchoolClassForViewDto implements IPagedResultDtoOfGetSchoolClassForViewDto {
+    items!: GetSchoolClassForViewDto[] | undefined;
+    totalCount!: number;
+
+    constructor(data?: IPagedResultDtoOfGetSchoolClassForViewDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            if (Array.isArray(_data["items"])) {
+                this.items = [] as any;
+                for (let item of _data["items"])
+                    this.items!.push(GetSchoolClassForViewDto.fromJS(item));
+            }
+            this.totalCount = _data["totalCount"];
+        }
+    }
+
+    static fromJS(data: any): PagedResultDtoOfGetSchoolClassForViewDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new PagedResultDtoOfGetSchoolClassForViewDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        if (Array.isArray(this.items)) {
+            data["items"] = [];
+            for (let item of this.items)
+                data["items"].push(item.toJSON());
+        }
+        data["totalCount"] = this.totalCount;
+        return data;
+    }
+}
+
+export interface IPagedResultDtoOfGetSchoolClassForViewDto {
+    items: GetSchoolClassForViewDto[] | undefined;
     totalCount: number;
 }
 
@@ -50778,11 +50123,11 @@ export interface IPagedResultDtoOfQuestionSupportGroupLookupTableDto {
     totalCount: number;
 }
 
-export class PagedResultDtoOfSessionSupervisorSessionLookupTableDto implements IPagedResultDtoOfSessionSupervisorSessionLookupTableDto {
-    items!: SessionSupervisorSessionLookupTableDto[] | undefined;
+export class PagedResultDtoOfSchoolClassSchoolLookupTableDto implements IPagedResultDtoOfSchoolClassSchoolLookupTableDto {
+    items!: SchoolClassSchoolLookupTableDto[] | undefined;
     totalCount!: number;
 
-    constructor(data?: IPagedResultDtoOfSessionSupervisorSessionLookupTableDto) {
+    constructor(data?: IPagedResultDtoOfSchoolClassSchoolLookupTableDto) {
         if (data) {
             for (var property in data) {
                 if (data.hasOwnProperty(property))
@@ -50796,15 +50141,15 @@ export class PagedResultDtoOfSessionSupervisorSessionLookupTableDto implements I
             if (Array.isArray(_data["items"])) {
                 this.items = [] as any;
                 for (let item of _data["items"])
-                    this.items!.push(SessionSupervisorSessionLookupTableDto.fromJS(item));
+                    this.items!.push(SchoolClassSchoolLookupTableDto.fromJS(item));
             }
             this.totalCount = _data["totalCount"];
         }
     }
 
-    static fromJS(data: any): PagedResultDtoOfSessionSupervisorSessionLookupTableDto {
+    static fromJS(data: any): PagedResultDtoOfSchoolClassSchoolLookupTableDto {
         data = typeof data === 'object' ? data : {};
-        let result = new PagedResultDtoOfSessionSupervisorSessionLookupTableDto();
+        let result = new PagedResultDtoOfSchoolClassSchoolLookupTableDto();
         result.init(data);
         return result;
     }
@@ -50821,56 +50166,8 @@ export class PagedResultDtoOfSessionSupervisorSessionLookupTableDto implements I
     }
 }
 
-export interface IPagedResultDtoOfSessionSupervisorSessionLookupTableDto {
-    items: SessionSupervisorSessionLookupTableDto[] | undefined;
-    totalCount: number;
-}
-
-export class PagedResultDtoOfSessionSupervisorSupervisorLookupTableDto implements IPagedResultDtoOfSessionSupervisorSupervisorLookupTableDto {
-    items!: SessionSupervisorSupervisorLookupTableDto[] | undefined;
-    totalCount!: number;
-
-    constructor(data?: IPagedResultDtoOfSessionSupervisorSupervisorLookupTableDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            if (Array.isArray(_data["items"])) {
-                this.items = [] as any;
-                for (let item of _data["items"])
-                    this.items!.push(SessionSupervisorSupervisorLookupTableDto.fromJS(item));
-            }
-            this.totalCount = _data["totalCount"];
-        }
-    }
-
-    static fromJS(data: any): PagedResultDtoOfSessionSupervisorSupervisorLookupTableDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new PagedResultDtoOfSessionSupervisorSupervisorLookupTableDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        if (Array.isArray(this.items)) {
-            data["items"] = [];
-            for (let item of this.items)
-                data["items"].push(item.toJSON());
-        }
-        data["totalCount"] = this.totalCount;
-        return data;
-    }
-}
-
-export interface IPagedResultDtoOfSessionSupervisorSupervisorLookupTableDto {
-    items: SessionSupervisorSupervisorLookupTableDto[] | undefined;
+export interface IPagedResultDtoOfSchoolClassSchoolLookupTableDto {
+    items: SchoolClassSchoolLookupTableDto[] | undefined;
     totalCount: number;
 }
 
@@ -54426,6 +53723,94 @@ export interface ISavePageInput {
     pages: Page[] | undefined;
 }
 
+export class SchoolClassDto implements ISchoolClassDto {
+    id!: number;
+    name!: string | undefined;
+    code!: string | undefined;
+    schoolId!: number | undefined;
+
+    constructor(data?: ISchoolClassDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.name = _data["name"];
+            this.code = _data["code"];
+            this.schoolId = _data["schoolId"];
+        }
+    }
+
+    static fromJS(data: any): SchoolClassDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new SchoolClassDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["name"] = this.name;
+        data["code"] = this.code;
+        data["schoolId"] = this.schoolId;
+        return data;
+    }
+}
+
+export interface ISchoolClassDto {
+    id: number;
+    name: string | undefined;
+    code: string | undefined;
+    schoolId: number | undefined;
+}
+
+export class SchoolClassSchoolLookupTableDto implements ISchoolClassSchoolLookupTableDto {
+    id!: number;
+    displayName!: string | undefined;
+
+    constructor(data?: ISchoolClassSchoolLookupTableDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.displayName = _data["displayName"];
+        }
+    }
+
+    static fromJS(data: any): SchoolClassSchoolLookupTableDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new SchoolClassSchoolLookupTableDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["displayName"] = this.displayName;
+        return data;
+    }
+}
+
+export interface ISchoolClassSchoolLookupTableDto {
+    id: number;
+    displayName: string | undefined;
+}
+
 export class SchoolDto implements ISchoolDto {
     id!: number;
     schoolNo!: string | undefined;
@@ -54765,10 +54150,12 @@ export class SessionDto implements ISessionDto {
     id!: number;
     startDate!: DateTime;
     actualStartDate!: DateTime;
-    endDate!: string | undefined;
+    endDate!: DateTime;
     examGenerationToken!: string;
     backgroundStartJobId!: string | undefined;
     name!: string | undefined;
+    examTemplateId!: number;
+    status!: SessionStatusEnum;
 
     constructor(data?: ISessionDto) {
         if (data) {
@@ -54784,10 +54171,12 @@ export class SessionDto implements ISessionDto {
             this.id = _data["id"];
             this.startDate = _data["startDate"] ? DateTime.fromISO(_data["startDate"].toString()) : <any>undefined;
             this.actualStartDate = _data["actualStartDate"] ? DateTime.fromISO(_data["actualStartDate"].toString()) : <any>undefined;
-            this.endDate = _data["endDate"];
+            this.endDate = _data["endDate"] ? DateTime.fromISO(_data["endDate"].toString()) : <any>undefined;
             this.examGenerationToken = _data["examGenerationToken"];
             this.backgroundStartJobId = _data["backgroundStartJobId"];
             this.name = _data["name"];
+            this.examTemplateId = _data["examTemplateId"];
+            this.status = _data["status"];
         }
     }
 
@@ -54803,10 +54192,12 @@ export class SessionDto implements ISessionDto {
         data["id"] = this.id;
         data["startDate"] = this.startDate ? this.startDate.toString() : <any>undefined;
         data["actualStartDate"] = this.actualStartDate ? this.actualStartDate.toString() : <any>undefined;
-        data["endDate"] = this.endDate;
+        data["endDate"] = this.endDate ? this.endDate.toString() : <any>undefined;
         data["examGenerationToken"] = this.examGenerationToken;
         data["backgroundStartJobId"] = this.backgroundStartJobId;
         data["name"] = this.name;
+        data["examTemplateId"] = this.examTemplateId;
+        data["status"] = this.status;
         return data;
     }
 }
@@ -54815,10 +54206,20 @@ export interface ISessionDto {
     id: number;
     startDate: DateTime;
     actualStartDate: DateTime;
-    endDate: string | undefined;
+    endDate: DateTime;
     examGenerationToken: string;
     backgroundStartJobId: string | undefined;
     name: string | undefined;
+    examTemplateId: number;
+    status: SessionStatusEnum;
+}
+
+export enum SessionStatusEnum {
+    NotValid = 0,
+    NotStarted = 1,
+    Active = 2,
+    Finished = 3,
+    Suspended = 4,
 }
 
 export class SessionSupervisorDto implements ISessionSupervisorDto {
@@ -54867,86 +54268,6 @@ export interface ISessionSupervisorDto {
     note: string | undefined;
     sessionId: number;
     supervisorId: number;
-}
-
-export class SessionSupervisorSessionLookupTableDto implements ISessionSupervisorSessionLookupTableDto {
-    id!: number;
-    displayName!: string | undefined;
-
-    constructor(data?: ISessionSupervisorSessionLookupTableDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.id = _data["id"];
-            this.displayName = _data["displayName"];
-        }
-    }
-
-    static fromJS(data: any): SessionSupervisorSessionLookupTableDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new SessionSupervisorSessionLookupTableDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["id"] = this.id;
-        data["displayName"] = this.displayName;
-        return data;
-    }
-}
-
-export interface ISessionSupervisorSessionLookupTableDto {
-    id: number;
-    displayName: string | undefined;
-}
-
-export class SessionSupervisorSupervisorLookupTableDto implements ISessionSupervisorSupervisorLookupTableDto {
-    id!: number;
-    displayName!: string | undefined;
-
-    constructor(data?: ISessionSupervisorSupervisorLookupTableDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.id = _data["id"];
-            this.displayName = _data["displayName"];
-        }
-    }
-
-    static fromJS(data: any): SessionSupervisorSupervisorLookupTableDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new SessionSupervisorSupervisorLookupTableDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["id"] = this.id;
-        data["displayName"] = this.displayName;
-        return data;
-    }
-}
-
-export interface ISessionSupervisorSupervisorLookupTableDto {
-    id: number;
-    displayName: string | undefined;
 }
 
 export class SessionTimeOutSettingsEditDto implements ISessionTimeOutSettingsEditDto {
