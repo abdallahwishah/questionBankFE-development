@@ -116,7 +116,9 @@
                     <div class="primeng-datatable-container col-12" [busyIf]="primengTableHelper.isLoading">
                         <p-table #dataTable (onLazyLoad)="getStudyLevels($event)" [value]="primengTableHelper.records"
                             rows="{{ primengTableHelper.defaultRecordsCountPerPage }}" [paginator]="false" [lazy]="true"
-                            [scrollable]="true" ScrollWidth="100%" [tableStyle]="{ 'min-width': '50rem' }"
+                            [scrollable]="true"
+                            [loading]="primengTableHelper.isLoading"
+                            ScrollWidth="100%" [tableStyle]="{ 'min-width': '50rem' }"
                             [resizableColumns]="primengTableHelper.resizableColumns">
                             <ng-template pTemplate="header">
                                 <tr>
@@ -147,8 +149,8 @@
                                         {{ record.studyLevel.name }}
                                     </td>
                                     <td style="width: 150px" class="text-center">
-                                        <p-inputSwitch [(ngModel)]="checkedActive"
-                                            (onChange)="getCheckedActive($event)"></p-inputSwitch>
+                                        <p-inputSwitch [(ngModel)]="record.studyLevel.isActive"
+                                        (onChange)="changeStatus($event  , record)"></p-inputSwitch>
                                     </td>
                                     <td class="text-center" style="width: 130px"
                                         [hidden]="!isGrantedAny('Pages.StudyLevels.Edit', 'Pages.StudyLevels.Delete')">

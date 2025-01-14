@@ -9,28 +9,30 @@ import { DynamicExamQuestionComponent } from '../../components/dynamic-exam-ques
 import { DynamicQuestionComponent } from '@app/shared/components/questions/dynamic-question/dynamic-question.component';
 import { AddFileModalComponent } from '@app/main/question-bank/components/add-file-modal/add-file-modal.component';
 import { ViewExamComponent } from './view-exam.component';
+import { SkeletonComponent } from "../../../../shared/components/skeleton/skeleton.component";
 
 @NgModule({
     imports: [
-        CommonModule,
-        AppSharedModule,
-        RouterModule.forChild([
-            {
-                path: '',
-                component: ViewExamComponent,
-            },
-            {
-                path: ':id',
-                component: ViewExamComponent,
-            },
-        ]),
-        DropdownFieldComponent,
-        DynamicQuestionComponent,
-        EditorComponent,
-        InputSwitchModule,
-        AddFileModalComponent,
-        DynamicExamQuestionComponent,
-    ],
+    CommonModule,
+    AppSharedModule,
+    RouterModule.forChild([
+        {
+            path: '',
+            component: ViewExamComponent,
+        },
+        {
+            path: ':id',
+            component: ViewExamComponent,
+        },
+    ]),
+    DropdownFieldComponent,
+    DynamicQuestionComponent,
+    EditorComponent,
+    InputSwitchModule,
+    AddFileModalComponent,
+    DynamicExamQuestionComponent,
+    SkeletonComponent
+],
     declarations: [ViewExamComponent],
 })
 export class ViewExamModule {}

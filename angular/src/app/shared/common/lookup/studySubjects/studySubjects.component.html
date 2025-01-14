@@ -109,7 +109,9 @@
                     <div class="primeng-datatable-container col-12" [busyIf]="primengTableHelper.isLoading">
                         <p-table #dataTable (onLazyLoad)="getStudySubjects($event)" [value]="primengTableHelper.records"
                             rows="{{primengTableHelper.defaultRecordsCountPerPage}}" [paginator]="false" [lazy]="true"
-                            [scrollable]="true" ScrollWidth="100%" [tableStyle]="{'min-width': '50rem'}"
+                            [scrollable]="true"
+                            [loading]="primengTableHelper.isLoading"
+                            ScrollWidth="100%" [tableStyle]="{'min-width': '50rem'}"
                             [resizableColumns]="primengTableHelper.resizableColumns">
                             <ng-template pTemplate="header">
                                 <tr>
@@ -161,8 +163,8 @@
                                     <td
                                     class="text-center"
                                      style="width:150px">
-                                     <p-inputSwitch [(ngModel)]="checkedActive"
-                                     (onChange)="getCheckedActive($event)"></p-inputSwitch>
+                                     <p-inputSwitch [(ngModel)]="record.studySubject.isActive"
+                                     (onChange)="changeStatus($event  , record)"></p-inputSwitch>
                                     </td>
                                     <td
                                     class="text-center"

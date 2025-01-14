@@ -139,12 +139,12 @@
                                         {{l('NameF')}}
                                         <p-sortIcon field="supportGroup.nameF"></p-sortIcon>
                                     </th>
-                                   
+
                                     <th style="width: 150px" pSortableColumn="isActive">
                                         {{l('IsActive')}}
                                         <p-sortIcon field="supportGroup.isActive"></p-sortIcon>
                                     </th>
-                                  
+
                                     <th style="width: 150px" pSortableColumn="groupType">
                                         {{l('GroupType')}}
                                         <p-sortIcon field="supportGroup.groupType"></p-sortIcon>
@@ -168,12 +168,12 @@
                                         <span class="p-column-title"> {{l('NameF')}}</span>
                                         {{record.supportGroup.nameF}}
                                     </td>
-                                   
+
                                     <td style="width:150px">
-                                        <p-inputSwitch [(ngModel)]="checkedActive"
-                                     (onChange)="getCheckedActive($event)"></p-inputSwitch>
+                                        <p-inputSwitch [(ngModel)]="record.supportGroup.isActive"
+                                    (onChange)="changeStatus($event  , record)"></p-inputSwitch>
                                     </td>
-                                   
+
                                     <td style="width:150px">
                                         <span class="p-column-title"> {{l('GroupType')}}</span>
                                         {{l( supportGroupTypeEnum[record.supportGroup.groupType])}}

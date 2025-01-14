@@ -166,6 +166,7 @@
                             rows="{{ primengTableHelper.defaultRecordsCountPerPage }}"
                             [paginator]="false"
                             [lazy]="true"
+                            [loading]="primengTableHelper.isLoading"
                             [scrollable]="true"
                             ScrollWidth="100%"
                             [tableStyle]="{ 'min-width': '50rem' }"
@@ -249,8 +250,8 @@
                                     <td
                                     class="text-center"
                                      style="width: 150px">
-                                     <p-inputSwitch [(ngModel)]="checkedActive"
-                                     (onChange)="getCheckedActive($event)"></p-inputSwitch>
+                                     <p-inputSwitch [(ngModel)]="record.subjectUnit.isActive"
+                                     (onChange)="changeStatus($event  , record)"></p-inputSwitch>
                                     </td>
                                     <td
                                     class="text-center"

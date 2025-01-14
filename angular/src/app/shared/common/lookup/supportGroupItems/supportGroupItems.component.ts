@@ -24,11 +24,11 @@ import { DateTime } from 'luxon';
     animations: [appModuleAnimation()]
 })
 export class SupportGroupItemsComponent extends AppComponentBase {
-    
-    
+
+
     @ViewChild('createOrEditSupportGroupItemModal', { static: true }) createOrEditSupportGroupItemModal: CreateOrEditSupportGroupItemModalComponent;
-    @ViewChild('viewSupportGroupItemModal', { static: true }) viewSupportGroupItemModal: ViewSupportGroupItemModalComponent;   
-    
+    @ViewChild('viewSupportGroupItemModal', { static: true }) viewSupportGroupItemModal: ViewSupportGroupItemModalComponent;
+
     @ViewChild('dataTable', { static: true }) dataTable: Table;
     @ViewChild('paginator', { static: true }) paginator: Paginator;
 
@@ -43,8 +43,6 @@ export class SupportGroupItemsComponent extends AppComponentBase {
     isActiveFilter = -1;
         supportGroupNameLFilter = '';
 
-
-        checkedActive:boolean = true;
 
 
 
@@ -95,7 +93,7 @@ export class SupportGroupItemsComponent extends AppComponentBase {
     }
 
     createSupportGroupItem(): void {
-        this.createOrEditSupportGroupItemModal.show();        
+        this.createOrEditSupportGroupItemModal.show();
     }
     action(event: any, record: any) {
         switch (event) {
@@ -113,13 +111,11 @@ export class SupportGroupItemsComponent extends AppComponentBase {
 
     }
 
-    getCheckedActive($event){
-        if(!$event.checked){
-            this.checkedActive = false
-        }else{
-            this.checkedActive = true
-        }
-    }
+    changeStatus($event , record){
+      /*   this._supportGroupItemsServiceProxy(record.supportGroupItem.id ,$event.checked ).subscribe(val=>{
+           this.getComplexities()
+        }) */
+   }
     deleteSupportGroupItem(supportGroupItem: SupportGroupItemDto): void {
         this.message.confirm(
             '',
@@ -150,11 +146,11 @@ export class SupportGroupItemsComponent extends AppComponentBase {
             this._fileDownloadService.downloadTempFile(result);
          });
     }
-    
-    
-    
-    
-    
+
+
+
+
+
 
     resetFilters(): void {
         this.filterText = '';
@@ -164,7 +160,7 @@ export class SupportGroupItemsComponent extends AppComponentBase {
 		this.minOrderNoFilter = this.maxOrderNoFilterEmpty;
     this.isActiveFilter = -1;
 		this.supportGroupNameLFilter = '';
-					
+
         this.getSupportGroupItems();
     }
 }

@@ -143,7 +143,7 @@
                                     <th style="width: 150px" pSortableColumn="supportGroupFk.nameL">
                                         {{l('Name')}}
                                     </th>
-                                   
+
                                     <th style="width: 150px" pSortableColumn="value">
                                         {{l('Value')}}
                                         <p-sortIcon field="supportGroupItem.value"></p-sortIcon>
@@ -188,8 +188,8 @@
                                         {{record.supportGroupItem.orderNo}}
                                     </td>
                                     <td style="width:150px">
-                                        <p-inputSwitch [(ngModel)]="checkedActive"
-                                        (onChange)="getCheckedActive($event)"></p-inputSwitch>
+                                        <p-inputSwitch [(ngModel)]="record.supportGroupItem.isActive"
+                                    (onChange)="changeStatus($event  , record)"></p-inputSwitch>
                                     </td>
                                     <td style="width: 130px"
                                     [hidden]="!isGrantedAny('Pages.SupportGroupItems.Edit', 'Pages.SupportGroupItems.Delete')">

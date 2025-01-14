@@ -25,12 +25,12 @@ import { DateTime } from 'luxon';
     animations: [appModuleAnimation()]
 })
 export class SupportGroupsComponent extends AppComponentBase {
-    
-    
+
+
     @ViewChild('entityTypeHistoryModal', { static: true }) entityTypeHistoryModal: EntityTypeHistoryModalComponent;
     @ViewChild('createOrEditSupportGroupModal', { static: true }) createOrEditSupportGroupModal: CreateOrEditSupportGroupModalComponent;
-    @ViewChild('viewSupportGroupModal', { static: true }) viewSupportGroupModal: ViewSupportGroupModalComponent;   
-    
+    @ViewChild('viewSupportGroupModal', { static: true }) viewSupportGroupModal: ViewSupportGroupModalComponent;
+
     @ViewChild('dataTable', { static: true }) dataTable: Table;
     @ViewChild('paginator', { static: true }) paginator: Paginator;
 
@@ -102,7 +102,7 @@ export class SupportGroupsComponent extends AppComponentBase {
     }
 
     createSupportGroup(): void {
-        this.createOrEditSupportGroupModal.show();        
+        this.createOrEditSupportGroupModal.show();
     }
     action(event: any, record: any) {
         switch (event) {
@@ -122,13 +122,11 @@ export class SupportGroupsComponent extends AppComponentBase {
         }
 
     }
-    getCheckedActive($event){
-        if(!$event.checked){
-            this.checkedActive = false
-        }else{
-            this.checkedActive = true
-        }
-    }
+    changeStatus($event , record){
+        /*    this._supportGroupsServiceProxy.(record.supportGroupItem.id ,$event.checked ).subscribe(val=>{
+             this.getSupportGroups()
+          }) */
+     }
 
 
     showHistory(supportGroup: SupportGroupDto): void {
@@ -167,11 +165,11 @@ export class SupportGroupsComponent extends AppComponentBase {
             this._fileDownloadService.downloadTempFile(result);
          });
     }
-    
-    
-    
-    
-    
+
+
+
+
+
 
     resetFilters(): void {
         this.filterText = '';

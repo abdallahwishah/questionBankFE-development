@@ -158,11 +158,9 @@ export class StudyLevelsComponent extends AppComponentBase {
 
         this.getStudyLevels();
     }
-    getCheckedActive($event){
-        if(!$event.checked){
-            this.checkedActive = false
-        }else{
-            this.checkedActive = true
-        }
-    }
+    changeStatus($event , record){
+        this._studyLevelsServiceProxy.updateStudyLevelStatus(record.studyLevel.id ,$event.checked ).subscribe(val=>{
+           this.getStudyLevels()
+        })
+   }
 }

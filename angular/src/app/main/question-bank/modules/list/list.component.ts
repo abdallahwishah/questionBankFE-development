@@ -116,7 +116,6 @@ export class ListComponent extends AppComponentBase implements OnInit {
                 undefined,
                 undefined,
                 undefined,
-
                 this.primengTableHelper.getSorting(this.dataTable),
                 this.primengTableHelper.getSkipCount(this.paginator, event),
                 this.primengTableHelper.getMaxResultCount(this.paginator, event),
@@ -125,7 +124,7 @@ export class ListComponent extends AppComponentBase implements OnInit {
                 this.primengTableHelper.totalRecordsCount = result.totalCount;
                 this.activeCount = result.activeCount;
                 this.primengTableHelper.records = result.items;
-                this.isActiveFilter = false;
+                this.isActiveFilter = undefined;
                 this.primengTableHelper.hideLoadingIndicator();
             });
     }
@@ -146,10 +145,11 @@ export class ListComponent extends AppComponentBase implements OnInit {
     }
 
     CheckedQuestion: any;
-    getCheckedQuestion(record) {
-        record.question.isActive;
-        // this._questionsServiceProxy.
-    }
+    changeStatus($event , record){
+           this._questionsServiceProxy.updateQuestionStatus(record.question.id ,$event.checked ).subscribe(val=>{
+             this.getList()
+          })
+     }
 
     doActions(label: any, record: any) {
         switch (label) {

@@ -42,8 +42,8 @@
                     </button>
                 </div>
             </div>
-    
-       
+
+
         </div>
         <!-- <div class=" gutter-b">
             <div class="card-body"> -->
@@ -105,7 +105,9 @@
                 <div class="row align-items-center p-0 col-12 mt-6" >
                     <!--<Primeng-Datatable-Start>-->
                     <div class="primeng-datatable-container col-12" [busyIf]="primengTableHelper.isLoading">
-                        <p-table #dataTable (onLazyLoad)="getCategories($event)" [value]="primengTableHelper.records"
+                        <p-table
+                         #dataTable (onLazyLoad)="getCategories($event)" [value]="primengTableHelper.records"
+                         [loading]="primengTableHelper.isLoading"
                             rows="{{ primengTableHelper.defaultRecordsCountPerPage }}" [paginator]="false" [lazy]="true"
                             [scrollable]="true" ScrollWidth="100%" [tableStyle]="{ 'min-width': '50rem' }"
                             [resizableColumns]="primengTableHelper.resizableColumns">
@@ -143,8 +145,8 @@
 
                                     <td class="text-center" style="width: 150px">
                                         <!-- <div class="d-flex align-items-center gap-5"> -->
-                                        <p-inputSwitch [(ngModel)]="checkedActive"
-                                            (onChange)="getCheckedActive($event)"></p-inputSwitch>
+                                        <p-inputSwitch [(ngModel)]="record.category.isActive"
+                                            (onChange)="changeStatus($event  , record)"></p-inputSwitch>
                                         <!-- </div> -->
                                         <!-- <span class="p-column-title">{{ l('IsActive') }}</span>
                                         <div *ngIf="record.category.isActive" class="text-center">

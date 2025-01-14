@@ -16,7 +16,7 @@ import { FileDownloadService } from '@shared/utils/file-download.service';
 import { filter as _filter } from 'lodash-es';
 import { DateTime } from 'luxon';
 
-             import { DateTimeService } from '@app/shared/common/timing/date-time.service';
+import { DateTimeService } from '@app/shared/common/timing/date-time.service';
 
 @Component({
     templateUrl: './complexities.component.html',
@@ -35,11 +35,6 @@ export class ComplexitiesComponent extends AppComponentBase {
     advancedFiltersAreShown = false;
     filterText = '';
     isActiveFilter = -1;
-    checkedActive:boolean = true;
-
-
-
-
 
 
     constructor(
@@ -140,11 +135,9 @@ export class ComplexitiesComponent extends AppComponentBase {
 
         this.getComplexities();
     }
-    getCheckedActive($event){
-        if(!$event.checked){
-            this.checkedActive = false
-        }else{
-            this.checkedActive = true
-        }
-    }
+    changeStatus($event , record){
+        this._complexitiesServiceProxy.updateComplexityStatus(record.complexity.id ,$event.checked ).subscribe(val=>{
+           this.getComplexities()
+        })
+   }
 }

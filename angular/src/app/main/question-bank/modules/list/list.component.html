@@ -146,8 +146,6 @@
                                 </div>
                             }
                             }
-
-
                         </div>
                         <div class="d-flex justify-content-between mt-4">
                             <button class="btn btn-primary" (click)="getList()">
@@ -230,10 +228,8 @@
                             {{  record.studySubjectName || '-' }}
                         </td>
                         <td>
-                            <p-inputSwitch
-                            [(ngModel)]="record.question.isActive"
-                            (onChange)="getCheckedQuestion(record)"
-                        ></p-inputSwitch>
+                            <p-inputSwitch [(ngModel)]="record.question.isActive"
+                            (onChange)="changeStatus($event  , record)"></p-inputSwitch>
                            <!--  {{ record.question.isActive}} -->
                         </td>
                         <td>
