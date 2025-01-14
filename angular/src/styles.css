@@ -455,6 +455,8 @@ textarea {
 
 .question-box-header {
     background: #6D31ED0F;
+    display: flex;
+    justify-content: space-between;
 }
 
 .template-box-header {

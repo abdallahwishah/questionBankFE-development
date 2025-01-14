@@ -194,7 +194,7 @@
                                 [enm]="QuestionTypeEnum"
                                 [(ngModel)]="_createOrEditQuestionDto.type"
                                 [labelField]="l('QuestionType')"
-                                (ngModelChange)="_createOrEditQuestionDto.autoCorrection = false"
+                                (ngModelChange)="changeType()"
                             ></app-dropdown-field>
                         </div>
                         <div class="col-md-3 mb-5">
@@ -218,10 +218,94 @@
                     </div>
 
                     <!-- dynamic question -->
-                    <app-dynamic-question
-                        [questionType]="_createOrEditQuestionDto.type"
-                        [(ngModel)]="_createOrEditQuestionDto.payload"
-                    ></app-dynamic-question>
+                    <ng-container *ngIf="_createOrEditQuestionDto.type != QuestionTypeEnum.LinkedQuestions">
+                        <app-dynamic-question
+                            [questionType]="_createOrEditQuestionDto.type"
+                            [(ngModel)]="_createOrEditQuestionDto.payload"
+                        ></app-dynamic-question>
+                    </ng-container>
+                    <ng-container *ngIf="_createOrEditQuestionDto.type == QuestionTypeEnum.LinkedQuestions">
+                        <div
+                            class="question-box"
+                            *ngFor="let question of _createOrEditQuestionDto?.payload?.subQuestions; index as qI"
+                        >
+                            <h4 class="question-box-header py-4 px-5">
+                                {{ '# ' + qI + 1 }}
+                                <button class="btn btn-delete2 p-3 m-0" (click)="removeLinkQ(qI)">
+                                    <img src="assets/common/images/trash-w.svg" alt="Remove section" />
+                                </button>
+                            </h4>
+                            <div class="p-5">
+                                <div class="row d-flex justify-content-between">
+                                    <div class="col-md-4">
+                                        <label class="block text-gray-700 font-medium mb-2">
+                                            {{ l('QuestionText') }}
+                                        </label>
+                                    </div>
+                                    <div
+                                        class="col-md-3 mb-2 d-flex justify-content-center align-items-center gap-3"
+                                        *ngIf="
+                                            question.type == QuestionTypeEnum.SinglChoice ||
+                                            question.type == QuestionTypeEnum.DargingForm ||
+                                            question.type == QuestionTypeEnum.MutliChoice ||
+                                            question.type == QuestionTypeEnum.Rearrange ||
+                                            question.type == QuestionTypeEnum.Match ||
+                                            question.type == QuestionTypeEnum.TrueAndFalse
+                                        "
+                                    >
+                                        <p-inputSwitch [(ngModel)]="question.autoCorrection" />
+                                        <label>{{ l('AutomaticallyCorrectTheQuestion') }}</label>
+                                    </div>
+                                    <div class="col-md-12 mt-3">
+                                        <app-editor class="w-100" [(ngModel)]="question.body"></app-editor>
+                                    </div>
+                                </div>
+
+                                <div class="row mt-6">
+                                    <div class="col-md-6 mb-5">
+                                        <app-dropdown-field
+                                            [labelField]="l('QuestionType')"
+                                            [enm]="QuestionTypeEnum"
+                                            [(ngModel)]="question.type"
+                                            (ngModelChange)="question.autoCorrection = false"
+                                        ></app-dropdown-field>
+                                    </div>
+                                    <div class="col-md-3 mb-5 d-flex align-items-end">
+                                        <input
+                                            name="text"
+                                            class="form-control m-input"
+                                            [placeholder]="l('MinimumPoints')"
+                                            type="text"
+                                            [(ngModel)]="question.maxPoints"
+                                        />
+                                    </div>
+                                    <div class="col-md-3 mb-5 d-flex align-items-end">
+                                        <input
+                                            name="text"
+                                            class="form-control m-input"
+                                            [placeholder]="l('MaximumPoints')"
+                                            type="text"
+                                            [(ngModel)]="question.minPoints"
+                                        />
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <app-dynamic-question
+                                        [questionType]="question.type"
+                                        [(ngModel)]="question.payload"
+                                    ></app-dynamic-question>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button
+                            class="btn btn-outline-primary outline-dashed mt-4"
+                            (click)="addNewLinledQ()"
+                            style="width: 300px"
+                        >
+                            {{ l('AddNewQuestion') }}
+                        </button>
+                    </ng-container>
                 </div>
             </div>
 

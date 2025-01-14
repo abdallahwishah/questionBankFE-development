@@ -19,7 +19,6 @@ import { ConnectingSentencesComponent } from '../components/connecting-sentences
 import { ReOrderComponent } from '../components/re-order/re-order.component';
 import { DragDropWordsComponent } from '../components/drag-drop-words/drag-drop-words.component';
 import { DragDropTableComponent } from '../components/drag-drop-table/drag-drop-table.component';
-import { ConnectingQuestionsComponent } from '../components/connecting-questions/connecting-questions.component';
 
 @Component({
     selector: 'app-dynamic-question',
@@ -35,8 +34,7 @@ import { ConnectingQuestionsComponent } from '../components/connecting-questions
         ReOrderComponent,
         DragDropWordsComponent,
         DragDropTableComponent,
-        ConnectingQuestionsComponent,
-    ],
+     ],
     templateUrl: './dynamic-question.component.html',
     styleUrls: ['./dynamic-question.component.css'],
     providers: [

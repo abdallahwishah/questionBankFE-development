@@ -15,6 +15,7 @@ import {
     SubjectUnitsServiceProxy,
     CreateOrEditQuestionDto,
     QuestionsServiceProxy,
+    QuestionPayloadDto,
 } from '@shared/service-proxies/service-proxies';
 
 @Component({
@@ -65,16 +66,9 @@ export class AddQuestionComponent extends AppComponentBase implements OnInit {
                 undefined, // sorting
                 undefined, // skipCount
                 undefined, // maxResultCount
-                undefined  // extra param
+                undefined, // extra param
             ),
-            this._studySubjectsProxy.getAll(
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined
-            ),
+            this._studySubjectsProxy.getAll(undefined, undefined, undefined, undefined, undefined, undefined),
             this._subjectUnitsServiceProxy.getAll(
                 undefined,
                 undefined,
@@ -83,30 +77,12 @@ export class AddQuestionComponent extends AppComponentBase implements OnInit {
                 undefined,
                 undefined,
                 undefined,
-                undefined
+                undefined,
             ),
-            this._complexitiesServiceProxy.getAll(
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined
-            ),
-            this._categoriesServiceProxy.getAll(
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined
-            ),
+            this._complexitiesServiceProxy.getAll(undefined, undefined, undefined, undefined, undefined),
+            this._categoriesServiceProxy.getAll(undefined, undefined, undefined, undefined, undefined),
         ]).subscribe({
-            next: ([
-                studyLevelsRes,
-                studySubjectsRes,
-                subjectUnitsRes,
-                complexitiesRes,
-                categoriesRes,
-            ]) => {
+            next: ([studyLevelsRes, studySubjectsRes, subjectUnitsRes, complexitiesRes, categoriesRes]) => {
                 // Map each response to your arrays
                 this.studyLevels = studyLevelsRes.items.map((item) => ({
                     id: item.studyLevel.id,
@@ -160,7 +136,22 @@ export class AddQuestionComponent extends AppComponentBase implements OnInit {
             },
         });
     }
-
+    changeType() {
+        this._createOrEditQuestionDto.autoCorrection = false;
+        this._createOrEditQuestionDto.enableShuffleOptions = false;
+        if (this._createOrEditQuestionDto.type == QuestionTypeEnum.LinkedQuestions) {
+            this._createOrEditQuestionDto.payload = new QuestionPayloadDto({
+                ...new QuestionPayloadDto(),
+                subQuestions: [new CreateOrEditQuestionDto()],
+            });
+        }
+    }
+    addNewLinledQ() {
+        this._createOrEditQuestionDto.payload.subQuestions.push(new CreateOrEditQuestionDto());
+    }
+    removeLinkQ(index){
+        this._createOrEditQuestionDto.payload.subQuestions.splice(index, 1);
+    }
     Save(): void {
         this._questionsServiceProxy.createOrEdit(this._createOrEditQuestionDto).subscribe({
             next: () => {
