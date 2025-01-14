@@ -1,3 +1,4 @@
+import { SessionsServiceProxy } from './../../../../../shared/service-proxies/service-proxies';
 import { Component, Injector, OnInit } from '@angular/core';
 import { DialogSharedService } from '@app/shared/components/dialog-shared/dialog-shared.service';
 import { UniqueNameComponents } from '@app/shared/Models/UniqueNameComponents';
@@ -14,11 +15,13 @@ export class ListComponent extends AppComponentBase implements OnInit {
     filter: string;
 
     constructor(private _injector: Injector,
-        private _DialogSharedService: DialogSharedService
+        private _DialogSharedService: DialogSharedService,
+        private  _sessionsServiceProxy: SessionsServiceProxy,
 
     ) { super(_injector); }
 
     ngOnInit() {
+        this._sessionsServiceProxy.getAll
     }
     getQuestion() {
 

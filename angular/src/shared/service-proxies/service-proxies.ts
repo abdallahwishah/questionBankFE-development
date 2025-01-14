@@ -33652,13 +33652,12 @@ export interface ICreateOrEditSchoolDto {
 
 export class CreateOrEditSessionDto implements ICreateOrEditSessionDto {
     id!: number | undefined;
-    nameL!: string;
-    nameF!: string;
+    name!: string;
     startDate!: DateTime;
-    actualStartDate!: DateTime;
-    endDate!: string | undefined;
-    examGenerationToken!: string;
-    backgroundStartJobId!: string | undefined;
+    endDate!: DateTime;
+    examTemplateId!: number;
+    supervisorFileToken!: string;
+    studentFileToken!: string;
 
     constructor(data?: ICreateOrEditSessionDto) {
         if (data) {
@@ -33672,13 +33671,12 @@ export class CreateOrEditSessionDto implements ICreateOrEditSessionDto {
     init(_data?: any) {
         if (_data) {
             this.id = _data["id"];
-            this.nameL = _data["nameL"];
-            this.nameF = _data["nameF"];
+            this.name = _data["name"];
             this.startDate = _data["startDate"] ? DateTime.fromISO(_data["startDate"].toString()) : <any>undefined;
-            this.actualStartDate = _data["actualStartDate"] ? DateTime.fromISO(_data["actualStartDate"].toString()) : <any>undefined;
-            this.endDate = _data["endDate"];
-            this.examGenerationToken = _data["examGenerationToken"];
-            this.backgroundStartJobId = _data["backgroundStartJobId"];
+            this.endDate = _data["endDate"] ? DateTime.fromISO(_data["endDate"].toString()) : <any>undefined;
+            this.examTemplateId = _data["examTemplateId"];
+            this.supervisorFileToken = _data["supervisorFileToken"];
+            this.studentFileToken = _data["studentFileToken"];
         }
     }
 
@@ -33692,26 +33690,24 @@ export class CreateOrEditSessionDto implements ICreateOrEditSessionDto {
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["id"] = this.id;
-        data["nameL"] = this.nameL;
-        data["nameF"] = this.nameF;
+        data["name"] = this.name;
         data["startDate"] = this.startDate ? this.startDate.toString() : <any>undefined;
-        data["actualStartDate"] = this.actualStartDate ? this.actualStartDate.toString() : <any>undefined;
-        data["endDate"] = this.endDate;
-        data["examGenerationToken"] = this.examGenerationToken;
-        data["backgroundStartJobId"] = this.backgroundStartJobId;
+        data["endDate"] = this.endDate ? this.endDate.toString() : <any>undefined;
+        data["examTemplateId"] = this.examTemplateId;
+        data["supervisorFileToken"] = this.supervisorFileToken;
+        data["studentFileToken"] = this.studentFileToken;
         return data;
     }
 }
 
 export interface ICreateOrEditSessionDto {
     id: number | undefined;
-    nameL: string;
-    nameF: string;
+    name: string;
     startDate: DateTime;
-    actualStartDate: DateTime;
-    endDate: string | undefined;
-    examGenerationToken: string;
-    backgroundStartJobId: string | undefined;
+    endDate: DateTime;
+    examTemplateId: number;
+    supervisorFileToken: string;
+    studentFileToken: string;
 }
 
 export class CreateOrEditSessionSupervisorDto implements ICreateOrEditSessionSupervisorDto {
@@ -54215,11 +54211,12 @@ export interface ISessionDto {
 }
 
 export enum SessionStatusEnum {
-    NotValid = 0,
+    InCreation = 0,
     NotStarted = 1,
     Active = 2,
     Finished = 3,
     Suspended = 4,
+    Invalid = 5,
 }
 
 export class SessionSupervisorDto implements ISessionSupervisorDto {
