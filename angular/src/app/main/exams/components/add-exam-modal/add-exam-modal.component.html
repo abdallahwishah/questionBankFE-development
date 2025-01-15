@@ -20,6 +20,7 @@
                         <app-dropdown-field
                         [options]="examTemplates"
                         optionLabel="name"
+                        [(ngModel)]="templateId"
                         optionValue="id"
                          [labelField]="l('ExamTemplate')"></app-dropdown-field>
                     }@else {

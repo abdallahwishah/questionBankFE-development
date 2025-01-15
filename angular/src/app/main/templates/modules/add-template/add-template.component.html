@@ -220,8 +220,7 @@
                                                     <tr class="text-center">
                                                         <th>{{ l('QuestionType') }}</th>
                                                         <th>{{ l('subjectUnit') }}</th>
-                                                        <th>{{ l('Category') }}</th>
-                                                        <th>{{ l('ExcludedPages') }}</th>
+                                                         <th>{{ l('ExcludedPages') }}</th>
                                                         <!-- Dynamic complexities columns -->
                                                         <th *ngFor="let comp of complexities">
                                                             {{ comp.name }}
@@ -250,20 +249,13 @@
                                                             ></app-dropdown-field>
                                                         </td>
 
-                                                        <!-- Category -->
-                                                        <td>
-                                                            <app-dropdown-field
-                                                                [options]="categories"
-                                                                optionLabel="name"
-                                                                optionValue="id"
-                                                                [(ngModel)]="criteria.categoryId"
-                                                            ></app-dropdown-field>
-                                                        </td>
+
 
                                                         <!-- ExcludedPages -->
                                                         <td>
                                                             <input
                                                                 class="form-control m-input"
+                                                                placeholder="1,2,3"
                                                                 type="text"
                                                                 [(ngModel)]="criteria.execludedPageNumber"
                                                             />

@@ -106,7 +106,7 @@ export class ViewExamComponent extends AppComponentBase implements OnInit {
 
         // Prepare request body
         const body = new ReOrderExamQuestionDto();
-        body.questionId = question.id;
+        body.questionId = question.questionId;
         body.order = question.order; // current order (if needed by backend)
         body.sectionId = question.sectionId;
         body.mode = mode; // 1 => Down, 2 => Up
