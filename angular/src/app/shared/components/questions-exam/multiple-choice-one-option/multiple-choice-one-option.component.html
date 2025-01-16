@@ -1,0 +1,35 @@
+<!--
+  1) Display the question body using [innerHTML].
+  2) Render questionHelper if needed (images, hints, etc.).
+  3) Loop over 'choices' to create radio buttons.
+-->
+
+<!-- 1) QUESTION BODY -->
+<div class="mb-3" *ngIf="config?.question?.body">
+    <!--
+      Safely render HTML from your config.
+      Make sure you trust the source or sanitize it if needed.
+    -->
+    <div [innerHTML]="config.question.body"></div>
+  </div>
+
+  <!-- 2) QUESTION HELPER (e.g., image or hint) -->
+  <div class="mb-3" *ngIf="config?.question?.questionHelper">
+    <div [innerHTML]="config.question.questionHelper"></div>
+  </div>
+
+  <!-- 3) RADIO BUTTONS (Choices) -->
+  <div *ngFor="let choice of config?.questionPayload?.choices" class="mb-4">
+    <input
+      class="form-check-input"
+      type="radio"
+      name="singleChoiceAnswer"
+      [value]="choice.id"
+      [checked]="value === choice.id"
+      (change)="onRadioChange(choice.id)"
+    />
+    <!-- Use [innerHTML] if the text is HTML;
+         or {{ choice.text }} if it’s plain text.
+    -->
+    <label class="mx-3" [innerHTML]="choice.text"></label>
+  </div>

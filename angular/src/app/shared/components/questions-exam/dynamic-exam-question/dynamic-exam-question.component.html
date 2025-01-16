@@ -3,13 +3,13 @@
         <app-article-questions></app-article-questions>
     }
     @case (QuestionTypeEnum.TrueAndFalse) {
-        <app-true-fase></app-true-fase>
+        <app-multiple-choice-one-option [config]="question"></app-multiple-choice-one-option>
     }
     @case (QuestionTypeEnum.SinglChoice) {
-        <app-multiple-choice-one-option></app-multiple-choice-one-option>
+        <app-multiple-choice-one-option [config]="question"></app-multiple-choice-one-option>
     }
     @case (QuestionTypeEnum.MutliChoice) {
-        <app-multiple-choice-more-than-option></app-multiple-choice-more-than-option>
+        <app-multiple-choice-more-than-option [config]="question"></app-multiple-choice-more-than-option>
     }
     @case (QuestionTypeEnum.Match) {
         <app-connecting-words></app-connecting-words>
@@ -20,7 +20,10 @@
     @case (QuestionTypeEnum.Rearrange) {
         <app-words-order></app-words-order>
     }
-    <!-- @case () {
+    @case (QuestionTypeEnum.Drawing) {
         <app-cartesian-level></app-cartesian-level>
-    } -->
+    }
+    @case (QuestionTypeEnum.DargingTable) {
+        <app-drag-drop-table [config]="question"></app-drag-drop-table>
+    }
 }

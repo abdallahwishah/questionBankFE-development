@@ -147,10 +147,8 @@
                                         <div class="d-flex justify-content-between align-items-center">
                                             <!-- Show question body or fallback text -->
                                             <h4 class="question-name text-primary fw-normal mb-0">
-                                                {{ question?.question?.body || 'سؤال بدون نص' }}
-                                                <span>({{ question?.question?.type }})</span>
+                                                {{ QuestionTypeEnum[question?.question?.question?.type] | localize }}
                                             </h4>
-
                                             <!-- Reorder and Delete buttons -->
                                             <div class="d-flex align-items-center gap-2">
                                                 <!-- Reorder Up -->
@@ -207,11 +205,11 @@
                                         </div>
 
                                         <!-- Example: Render question dynamically -->
-                                        <!-- <app-dynamic-exam-question
-                [questionType]="question.question.type"
-                style="display: block; margin-top: 1rem;"
-            >
-            </app-dynamic-exam-question> -->
+                                        <app-dynamic-exam-question
+                                            [question]="question.question"
+                                            [questionType]="question.question.question.type"
+                                            style="display: block; margin-top: 1rem"
+                                        ></app-dynamic-exam-question>
 
                                         <div class="line mt-5"></div>
                                     </div>
@@ -222,10 +220,10 @@
                     } @else {
                         <!-- Sections card -->
                         <div class="col-12 mt-6">
-                            @for (item of [1 , 2]; track $index) {
-                            <app-skeleton [height]="'60px'"></app-skeleton>
-                            <br>
-                        }
+                            @for (item of [1, 2]; track $index) {
+                                <app-skeleton [height]="'60px'"></app-skeleton>
+                                <br />
+                            }
                         </div>
                     }
                 </div>

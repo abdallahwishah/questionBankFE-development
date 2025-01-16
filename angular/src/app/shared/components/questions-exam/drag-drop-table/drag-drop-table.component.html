@@ -1,0 +1,38 @@
+<div class="drag-drop-table-container" *ngIf="tableView as tv; else noData">
+    <!-- Optional: show question body from config -->
+    <div class="mb-3" *ngIf="config?.question?.body" [innerHTML]="config.question.body"></div>
+
+    <!-- A simple table with headers + rows -->
+    <table class="table table-bordered text-center table-sm">
+        <thead>
+            <tr>
+                <!-- if tv.headers is provided, use that; otherwise generate generic col headings -->
+                <th *ngFor="let head of tv.headers; let colIndex = index" [ngClass]="{ 'pinned-cell': true }">
+                    {{ head }}
+                </th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <!-- Build rows from our 'value' (2D array) -->
+            <tr *ngFor="let row of value; let rowIndex = index">
+                <td *ngFor="let cell of row; let colIndex = index" [ngClass]="{ 'pinned-cell': cell.pinned }">
+                    <!-- Example: input for user text -->
+                    <input
+                        type="text"
+                        class="form-control form-control-sm"
+                        [(ngModel)]="value[rowIndex][colIndex].content"
+                        (ngModelChange)="onCellChanged()"
+                    />
+
+                    <!-- Example: checkbox to toggle 'pinned' status -->
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- If config.questionPayload.dragDropTableView is null or missing -->
+<ng-template #noData>
+    <p class="text-muted">لا يوجد جدول للعرض</p>
+</ng-template>

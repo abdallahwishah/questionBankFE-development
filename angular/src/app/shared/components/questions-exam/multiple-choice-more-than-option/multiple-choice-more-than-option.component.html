@@ -1,0 +1,40 @@
+<!--
+  1) Display the question text.
+  2) Loop over 'choices' array to create a checkbox for each choice.
+  3) Use the PrimeNG <p-checkbox> with [binary]="true".
+     The "binary" mode means it toggles between true/false.
+  4) Each checkbox's "value" is the choice ID (or string).
+  5) We check if the internal array `selectedChoices` includes that value.
+  6) (onChange) -> call a handler that updates the array properly.
+-->
+
+<div class="mb-6">
+    <span class="text-primary">{{ questionNumber }})</span>
+    <span [innerHTML]="config?.question?.body"></span>
+  </div>
+
+  <!-- OPTIONAL: Show question helper or image if needed -->
+  <div *ngIf="config?.question?.questionHelper">
+    <div [innerHTML]="config.question.questionHelper"></div>
+  </div>
+
+  <!-- Loop over each choice -->
+  <div
+    class="mb-4"
+    *ngFor="let choice of config?.questionPayload?.choices; let i = index"
+  >
+    <p-checkbox
+      [binary]="true"
+      [inputId]="'choice' + i"
+      [value]="choice.id"
+      [label]="choice.text"
+      [ngModel]="isSelected(choice.id)"
+      (ngModelChange)="onCheckboxChange($event, choice.id)"
+    >
+    </p-checkbox>
+
+    <!-- Alternatively, you could do:
+          <label class="mx-3">{{ choice.text }}</label>
+        if you prefer a separate label.
+    -->
+  </div>

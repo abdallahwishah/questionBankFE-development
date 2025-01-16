@@ -19,6 +19,8 @@ export class ViewExamComponent extends AppComponentBase implements OnInit {
     examForView: GetExamForViewDto;
     questionsType: any[] = [];
 
+    QuestionTypeEnum=QuestionTypeEnum
+
     // Track which sections are open (for accordion)
     openSections: boolean[] = [];
 

@@ -6513,16 +6513,228 @@ export class ExamAttemptsServiceProxy {
     }
 
     /**
+     * @param examAttemptId (optional) 
+     * @return Success
+     */
+    getAnswersByExamAttempt(examAttemptId: string | undefined): Observable<AnswerAttemptDto[]> {
+        let url_ = this.baseUrl + "/api/services/app/ExamAttempts/GetAnswersByExamAttempt?";
+        if (examAttemptId === null)
+            throw new Error("The parameter 'examAttemptId' cannot be null.");
+        else if (examAttemptId !== undefined)
+            url_ += "examAttemptId=" + encodeURIComponent("" + examAttemptId) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetAnswersByExamAttempt(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetAnswersByExamAttempt(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<AnswerAttemptDto[]>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<AnswerAttemptDto[]>;
+        }));
+    }
+
+    protected processGetAnswersByExamAttempt(response: HttpResponseBase): Observable<AnswerAttemptDto[]> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(AnswerAttemptDto.fromJS(item));
+            }
+            else {
+                result200 = <any>null;
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param hideAutoCorrect (optional) 
+     * @param body (optional) 
+     * @return Success
+     */
+    addExtraDataToQuestion(hideAutoCorrect: boolean | undefined, body: CreateOrEditQuestionDto | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/ExamAttempts/AddExtraDataToQuestion?";
+        if (hideAutoCorrect === null)
+            throw new Error("The parameter 'hideAutoCorrect' cannot be null.");
+        else if (hideAutoCorrect !== undefined)
+            url_ += "hideAutoCorrect=" + encodeURIComponent("" + hideAutoCorrect) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json",
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processAddExtraDataToQuestion(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processAddExtraDataToQuestion(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<void>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<void>;
+        }));
+    }
+
+    protected processAddExtraDataToQuestion(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return _observableOf(null as any);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
      * @param filter (optional) 
      * @param examIdFilter (optional) 
      * @param sessionIdFilter (optional) 
      * @param studentClassIdFilter (optional) 
+     * @param sessionStatusIdFilter (optional) 
      * @param sorting (optional) 
      * @param skipCount (optional) 
      * @param maxResultCount (optional) 
      * @return Success
      */
-    getAll(filter: string | undefined, examIdFilter: number | undefined, sessionIdFilter: number | undefined, studentClassIdFilter: number | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfGetExamAttemptForViewDto> {
+    getAllForCorrection(filter: string | undefined, examIdFilter: number | undefined, sessionIdFilter: number | undefined, studentClassIdFilter: number | undefined, sessionStatusIdFilter: SessionStatusEnum | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfGetExamAttemptForViewDto> {
+        let url_ = this.baseUrl + "/api/services/app/ExamAttempts/GetAllForCorrection?";
+        if (filter === null)
+            throw new Error("The parameter 'filter' cannot be null.");
+        else if (filter !== undefined)
+            url_ += "Filter=" + encodeURIComponent("" + filter) + "&";
+        if (examIdFilter === null)
+            throw new Error("The parameter 'examIdFilter' cannot be null.");
+        else if (examIdFilter !== undefined)
+            url_ += "ExamIdFilter=" + encodeURIComponent("" + examIdFilter) + "&";
+        if (sessionIdFilter === null)
+            throw new Error("The parameter 'sessionIdFilter' cannot be null.");
+        else if (sessionIdFilter !== undefined)
+            url_ += "SessionIdFilter=" + encodeURIComponent("" + sessionIdFilter) + "&";
+        if (studentClassIdFilter === null)
+            throw new Error("The parameter 'studentClassIdFilter' cannot be null.");
+        else if (studentClassIdFilter !== undefined)
+            url_ += "StudentClassIdFilter=" + encodeURIComponent("" + studentClassIdFilter) + "&";
+        if (sessionStatusIdFilter === null)
+            throw new Error("The parameter 'sessionStatusIdFilter' cannot be null.");
+        else if (sessionStatusIdFilter !== undefined)
+            url_ += "SessionStatusIdFilter=" + encodeURIComponent("" + sessionStatusIdFilter) + "&";
+        if (sorting === null)
+            throw new Error("The parameter 'sorting' cannot be null.");
+        else if (sorting !== undefined)
+            url_ += "Sorting=" + encodeURIComponent("" + sorting) + "&";
+        if (skipCount === null)
+            throw new Error("The parameter 'skipCount' cannot be null.");
+        else if (skipCount !== undefined)
+            url_ += "SkipCount=" + encodeURIComponent("" + skipCount) + "&";
+        if (maxResultCount === null)
+            throw new Error("The parameter 'maxResultCount' cannot be null.");
+        else if (maxResultCount !== undefined)
+            url_ += "MaxResultCount=" + encodeURIComponent("" + maxResultCount) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetAllForCorrection(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetAllForCorrection(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<PagedResultDtoOfGetExamAttemptForViewDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<PagedResultDtoOfGetExamAttemptForViewDto>;
+        }));
+    }
+
+    protected processGetAllForCorrection(response: HttpResponseBase): Observable<PagedResultDtoOfGetExamAttemptForViewDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = PagedResultDtoOfGetExamAttemptForViewDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param filter (optional) 
+     * @param examIdFilter (optional) 
+     * @param sessionIdFilter (optional) 
+     * @param studentClassIdFilter (optional) 
+     * @param sessionStatusIdFilter (optional) 
+     * @param sorting (optional) 
+     * @param skipCount (optional) 
+     * @param maxResultCount (optional) 
+     * @return Success
+     */
+    getAll(filter: string | undefined, examIdFilter: number | undefined, sessionIdFilter: number | undefined, studentClassIdFilter: number | undefined, sessionStatusIdFilter: SessionStatusEnum | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfGetExamAttemptForViewDto> {
         let url_ = this.baseUrl + "/api/services/app/ExamAttempts/GetAll?";
         if (filter === null)
             throw new Error("The parameter 'filter' cannot be null.");
@@ -6540,6 +6752,10 @@ export class ExamAttemptsServiceProxy {
             throw new Error("The parameter 'studentClassIdFilter' cannot be null.");
         else if (studentClassIdFilter !== undefined)
             url_ += "StudentClassIdFilter=" + encodeURIComponent("" + studentClassIdFilter) + "&";
+        if (sessionStatusIdFilter === null)
+            throw new Error("The parameter 'sessionStatusIdFilter' cannot be null.");
+        else if (sessionStatusIdFilter !== undefined)
+            url_ += "SessionStatusIdFilter=" + encodeURIComponent("" + sessionStatusIdFilter) + "&";
         if (sorting === null)
             throw new Error("The parameter 'sorting' cannot be null.");
         else if (sorting !== undefined)
@@ -19254,12 +19470,13 @@ export class SessionsServiceProxy {
      * @param examTemplateIdFilter (optional) 
      * @param studyLevelIdFilter (optional) 
      * @param studySubjectIdFilter (optional) 
+     * @param sessionStatusIdFilter (optional) 
      * @param sorting (optional) 
      * @param skipCount (optional) 
      * @param maxResultCount (optional) 
      * @return Success
      */
-    getAll(filter: string | undefined, maxStartDateFilter: DateTime | undefined, minStartDateFilter: DateTime | undefined, examTemplateIdFilter: number | undefined, studyLevelIdFilter: number | undefined, studySubjectIdFilter: number | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfGetSessionForViewDto> {
+    getAll(filter: string | undefined, maxStartDateFilter: DateTime | undefined, minStartDateFilter: DateTime | undefined, examTemplateIdFilter: number | undefined, studyLevelIdFilter: number | undefined, studySubjectIdFilter: number | undefined, sessionStatusIdFilter: SessionStatusEnum | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfGetSessionForViewDto> {
         let url_ = this.baseUrl + "/api/services/app/Sessions/GetAll?";
         if (filter === null)
             throw new Error("The parameter 'filter' cannot be null.");
@@ -19285,6 +19502,10 @@ export class SessionsServiceProxy {
             throw new Error("The parameter 'studySubjectIdFilter' cannot be null.");
         else if (studySubjectIdFilter !== undefined)
             url_ += "StudySubjectIdFilter=" + encodeURIComponent("" + studySubjectIdFilter) + "&";
+        if (sessionStatusIdFilter === null)
+            throw new Error("The parameter 'sessionStatusIdFilter' cannot be null.");
+        else if (sessionStatusIdFilter !== undefined)
+            url_ += "SessionStatusIdFilter=" + encodeURIComponent("" + sessionStatusIdFilter) + "&";
         if (sorting === null)
             throw new Error("The parameter 'sorting' cannot be null.");
         else if (sorting !== undefined)
@@ -19322,6 +19543,107 @@ export class SessionsServiceProxy {
     }
 
     protected processGetAll(response: HttpResponseBase): Observable<PagedResultDtoOfGetSessionForViewDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = PagedResultDtoOfGetSessionForViewDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param filter (optional) 
+     * @param maxStartDateFilter (optional) 
+     * @param minStartDateFilter (optional) 
+     * @param examTemplateIdFilter (optional) 
+     * @param studyLevelIdFilter (optional) 
+     * @param studySubjectIdFilter (optional) 
+     * @param sessionStatusIdFilter (optional) 
+     * @param sorting (optional) 
+     * @param skipCount (optional) 
+     * @param maxResultCount (optional) 
+     * @return Success
+     */
+    getAllForCorrection(filter: string | undefined, maxStartDateFilter: DateTime | undefined, minStartDateFilter: DateTime | undefined, examTemplateIdFilter: number | undefined, studyLevelIdFilter: number | undefined, studySubjectIdFilter: number | undefined, sessionStatusIdFilter: SessionStatusEnum | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfGetSessionForViewDto> {
+        let url_ = this.baseUrl + "/api/services/app/Sessions/GetAllForCorrection?";
+        if (filter === null)
+            throw new Error("The parameter 'filter' cannot be null.");
+        else if (filter !== undefined)
+            url_ += "Filter=" + encodeURIComponent("" + filter) + "&";
+        if (maxStartDateFilter === null)
+            throw new Error("The parameter 'maxStartDateFilter' cannot be null.");
+        else if (maxStartDateFilter !== undefined)
+            url_ += "MaxStartDateFilter=" + encodeURIComponent(maxStartDateFilter ? "" + maxStartDateFilter.toString() : "") + "&";
+        if (minStartDateFilter === null)
+            throw new Error("The parameter 'minStartDateFilter' cannot be null.");
+        else if (minStartDateFilter !== undefined)
+            url_ += "MinStartDateFilter=" + encodeURIComponent(minStartDateFilter ? "" + minStartDateFilter.toString() : "") + "&";
+        if (examTemplateIdFilter === null)
+            throw new Error("The parameter 'examTemplateIdFilter' cannot be null.");
+        else if (examTemplateIdFilter !== undefined)
+            url_ += "ExamTemplateIdFilter=" + encodeURIComponent("" + examTemplateIdFilter) + "&";
+        if (studyLevelIdFilter === null)
+            throw new Error("The parameter 'studyLevelIdFilter' cannot be null.");
+        else if (studyLevelIdFilter !== undefined)
+            url_ += "StudyLevelIdFilter=" + encodeURIComponent("" + studyLevelIdFilter) + "&";
+        if (studySubjectIdFilter === null)
+            throw new Error("The parameter 'studySubjectIdFilter' cannot be null.");
+        else if (studySubjectIdFilter !== undefined)
+            url_ += "StudySubjectIdFilter=" + encodeURIComponent("" + studySubjectIdFilter) + "&";
+        if (sessionStatusIdFilter === null)
+            throw new Error("The parameter 'sessionStatusIdFilter' cannot be null.");
+        else if (sessionStatusIdFilter !== undefined)
+            url_ += "SessionStatusIdFilter=" + encodeURIComponent("" + sessionStatusIdFilter) + "&";
+        if (sorting === null)
+            throw new Error("The parameter 'sorting' cannot be null.");
+        else if (sorting !== undefined)
+            url_ += "Sorting=" + encodeURIComponent("" + sorting) + "&";
+        if (skipCount === null)
+            throw new Error("The parameter 'skipCount' cannot be null.");
+        else if (skipCount !== undefined)
+            url_ += "SkipCount=" + encodeURIComponent("" + skipCount) + "&";
+        if (maxResultCount === null)
+            throw new Error("The parameter 'maxResultCount' cannot be null.");
+        else if (maxResultCount !== undefined)
+            url_ += "MaxResultCount=" + encodeURIComponent("" + maxResultCount) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetAllForCorrection(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetAllForCorrection(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<PagedResultDtoOfGetSessionForViewDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<PagedResultDtoOfGetSessionForViewDto>;
+        }));
+    }
+
+    protected processGetAllForCorrection(response: HttpResponseBase): Observable<PagedResultDtoOfGetSessionForViewDto> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -19654,6 +19976,62 @@ export class SessionsServiceProxy {
     }
 
     protected processGetSessionsToExcel(response: HttpResponseBase): Observable<FileDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = FileDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param id (optional) 
+     * @return Success
+     */
+    getSessionToExcel(id: number | undefined): Observable<FileDto> {
+        let url_ = this.baseUrl + "/api/services/app/Sessions/GetSessionToExcel?";
+        if (id === null)
+            throw new Error("The parameter 'id' cannot be null.");
+        else if (id !== undefined)
+            url_ += "Id=" + encodeURIComponent("" + id) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetSessionToExcel(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetSessionToExcel(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<FileDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<FileDto>;
+        }));
+    }
+
+    protected processGetSessionToExcel(response: HttpResponseBase): Observable<FileDto> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -30650,6 +31028,150 @@ export interface IAddWidgetInput {
     application: string | undefined;
 }
 
+export class AnswerAttemptDto implements IAnswerAttemptDto {
+    id!: string;
+    examAttemptId!: string;
+    questionId!: number;
+    question!: CreateOrEditQuestionDto;
+    optionId!: number[] | undefined;
+    option!: QuestionOptionDto;
+    value!: string[] | undefined;
+    score!: number | undefined;
+    minScore!: number;
+    maxScore!: number;
+    linkedQuestionsSubAnswers!: LinkedQuestionsSubAnswers[] | undefined;
+    dargFormQuestionsSubAnswers!: DargFormQuestionsSubAnswers[] | undefined;
+    dargTableQuestionsSubAnswers!: DargTableQuestionsSubAnswers[] | undefined;
+    subScores!: { [key: string]: number; } | undefined;
+    order!: number | undefined;
+
+    constructor(data?: IAnswerAttemptDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.examAttemptId = _data["examAttemptId"];
+            this.questionId = _data["questionId"];
+            this.question = _data["question"] ? CreateOrEditQuestionDto.fromJS(_data["question"]) : <any>undefined;
+            if (Array.isArray(_data["optionId"])) {
+                this.optionId = [] as any;
+                for (let item of _data["optionId"])
+                    this.optionId!.push(item);
+            }
+            this.option = _data["option"] ? QuestionOptionDto.fromJS(_data["option"]) : <any>undefined;
+            if (Array.isArray(_data["value"])) {
+                this.value = [] as any;
+                for (let item of _data["value"])
+                    this.value!.push(item);
+            }
+            this.score = _data["score"];
+            this.minScore = _data["minScore"];
+            this.maxScore = _data["maxScore"];
+            if (Array.isArray(_data["linkedQuestionsSubAnswers"])) {
+                this.linkedQuestionsSubAnswers = [] as any;
+                for (let item of _data["linkedQuestionsSubAnswers"])
+                    this.linkedQuestionsSubAnswers!.push(LinkedQuestionsSubAnswers.fromJS(item));
+            }
+            if (Array.isArray(_data["dargFormQuestionsSubAnswers"])) {
+                this.dargFormQuestionsSubAnswers = [] as any;
+                for (let item of _data["dargFormQuestionsSubAnswers"])
+                    this.dargFormQuestionsSubAnswers!.push(DargFormQuestionsSubAnswers.fromJS(item));
+            }
+            if (Array.isArray(_data["dargTableQuestionsSubAnswers"])) {
+                this.dargTableQuestionsSubAnswers = [] as any;
+                for (let item of _data["dargTableQuestionsSubAnswers"])
+                    this.dargTableQuestionsSubAnswers!.push(DargTableQuestionsSubAnswers.fromJS(item));
+            }
+            if (_data["subScores"]) {
+                this.subScores = {} as any;
+                for (let key in _data["subScores"]) {
+                    if (_data["subScores"].hasOwnProperty(key))
+                        (<any>this.subScores)![key] = _data["subScores"][key];
+                }
+            }
+            this.order = _data["order"];
+        }
+    }
+
+    static fromJS(data: any): AnswerAttemptDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new AnswerAttemptDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["examAttemptId"] = this.examAttemptId;
+        data["questionId"] = this.questionId;
+        data["question"] = this.question ? this.question.toJSON() : <any>undefined;
+        if (Array.isArray(this.optionId)) {
+            data["optionId"] = [];
+            for (let item of this.optionId)
+                data["optionId"].push(item);
+        }
+        data["option"] = this.option ? this.option.toJSON() : <any>undefined;
+        if (Array.isArray(this.value)) {
+            data["value"] = [];
+            for (let item of this.value)
+                data["value"].push(item);
+        }
+        data["score"] = this.score;
+        data["minScore"] = this.minScore;
+        data["maxScore"] = this.maxScore;
+        if (Array.isArray(this.linkedQuestionsSubAnswers)) {
+            data["linkedQuestionsSubAnswers"] = [];
+            for (let item of this.linkedQuestionsSubAnswers)
+                data["linkedQuestionsSubAnswers"].push(item.toJSON());
+        }
+        if (Array.isArray(this.dargFormQuestionsSubAnswers)) {
+            data["dargFormQuestionsSubAnswers"] = [];
+            for (let item of this.dargFormQuestionsSubAnswers)
+                data["dargFormQuestionsSubAnswers"].push(item.toJSON());
+        }
+        if (Array.isArray(this.dargTableQuestionsSubAnswers)) {
+            data["dargTableQuestionsSubAnswers"] = [];
+            for (let item of this.dargTableQuestionsSubAnswers)
+                data["dargTableQuestionsSubAnswers"].push(item.toJSON());
+        }
+        if (this.subScores) {
+            data["subScores"] = {};
+            for (let key in this.subScores) {
+                if (this.subScores.hasOwnProperty(key))
+                    (<any>data["subScores"])[key] = (<any>this.subScores)[key];
+            }
+        }
+        data["order"] = this.order;
+        return data;
+    }
+}
+
+export interface IAnswerAttemptDto {
+    id: string;
+    examAttemptId: string;
+    questionId: number;
+    question: CreateOrEditQuestionDto;
+    optionId: number[] | undefined;
+    option: QuestionOptionDto;
+    value: string[] | undefined;
+    score: number | undefined;
+    minScore: number;
+    maxScore: number;
+    linkedQuestionsSubAnswers: LinkedQuestionsSubAnswers[] | undefined;
+    dargFormQuestionsSubAnswers: DargFormQuestionsSubAnswers[] | undefined;
+    dargTableQuestionsSubAnswers: DargTableQuestionsSubAnswers[] | undefined;
+    subScores: { [key: string]: number; } | undefined;
+    order: number | undefined;
+}
+
 export class AppSettingsJsonDto implements IAppSettingsJsonDto {
     webSiteUrl!: string | undefined;
     serverSiteUrl!: string | undefined;
@@ -32623,6 +33145,7 @@ export interface ICreateOrEditComplexityDto {
 }
 
 export class CreateOrEditDragFormQuestionDto implements ICreateOrEditDragFormQuestionDto {
+    id!: number;
     type!: number;
     value!: string | undefined;
     inputs!: string[] | undefined;
@@ -32640,6 +33163,7 @@ export class CreateOrEditDragFormQuestionDto implements ICreateOrEditDragFormQue
 
     init(_data?: any) {
         if (_data) {
+            this.id = _data["id"];
             this.type = _data["type"];
             this.value = _data["value"];
             if (Array.isArray(_data["inputs"])) {
@@ -32665,6 +33189,7 @@ export class CreateOrEditDragFormQuestionDto implements ICreateOrEditDragFormQue
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
         data["type"] = this.type;
         data["value"] = this.value;
         if (Array.isArray(this.inputs)) {
@@ -32683,6 +33208,7 @@ export class CreateOrEditDragFormQuestionDto implements ICreateOrEditDragFormQue
 }
 
 export interface ICreateOrEditDragFormQuestionDto {
+    id: number;
     type: number;
     value: string | undefined;
     inputs: string[] | undefined;
@@ -33656,8 +34182,8 @@ export class CreateOrEditSessionDto implements ICreateOrEditSessionDto {
     startDate!: DateTime;
     endDate!: DateTime;
     examTemplateId!: number;
-    supervisorFileToken!: string;
-    studentFileToken!: string;
+    supervisorFileToken!: string | undefined;
+    studentFileToken!: string | undefined;
 
     constructor(data?: ICreateOrEditSessionDto) {
         if (data) {
@@ -33706,8 +34232,8 @@ export interface ICreateOrEditSessionDto {
     startDate: DateTime;
     endDate: DateTime;
     examTemplateId: number;
-    supervisorFileToken: string;
-    studentFileToken: string;
+    supervisorFileToken: string | undefined;
+    studentFileToken: string | undefined;
 }
 
 export class CreateOrEditSessionSupervisorDto implements ICreateOrEditSessionSupervisorDto {
@@ -40262,7 +40788,7 @@ export class GetExamTemplateForViewDto implements IGetExamTemplateForViewDto {
     creationTime!: DateTime;
     lastModificationTime!: DateTime;
     createdBy!: string | undefined;
-    enableDelete!: boolean;
+    hasExam!: boolean;
 
     constructor(data?: IGetExamTemplateForViewDto) {
         if (data) {
@@ -40281,7 +40807,7 @@ export class GetExamTemplateForViewDto implements IGetExamTemplateForViewDto {
             this.creationTime = _data["creationTime"] ? DateTime.fromISO(_data["creationTime"].toString()) : <any>undefined;
             this.lastModificationTime = _data["lastModificationTime"] ? DateTime.fromISO(_data["lastModificationTime"].toString()) : <any>undefined;
             this.createdBy = _data["createdBy"];
-            this.enableDelete = _data["enableDelete"];
+            this.hasExam = _data["hasExam"];
         }
     }
 
@@ -40300,7 +40826,7 @@ export class GetExamTemplateForViewDto implements IGetExamTemplateForViewDto {
         data["creationTime"] = this.creationTime ? this.creationTime.toString() : <any>undefined;
         data["lastModificationTime"] = this.lastModificationTime ? this.lastModificationTime.toString() : <any>undefined;
         data["createdBy"] = this.createdBy;
-        data["enableDelete"] = this.enableDelete;
+        data["hasExam"] = this.hasExam;
         return data;
     }
 }
@@ -40312,7 +40838,7 @@ export interface IGetExamTemplateForViewDto {
     creationTime: DateTime;
     lastModificationTime: DateTime;
     createdBy: string | undefined;
-    enableDelete: boolean;
+    hasExam: boolean;
 }
 
 export class GetExpiringTenantsOutput implements IGetExpiringTenantsOutput {

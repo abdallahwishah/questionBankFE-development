@@ -5,11 +5,11 @@ import { AppSharedModule } from '@app/shared/app-shared.module';
 import { DropdownFieldComponent } from '@app/shared/components/fields/dropdown-field/dropdown-field.component';
 import { RouterModule } from '@node_modules/@angular/router';
 import { InputSwitchModule } from 'primeng/inputswitch';
-import { DynamicExamQuestionComponent } from '../../components/dynamic-exam-question/dynamic-exam-question.component';
-import { DynamicQuestionComponent } from '@app/shared/components/questions/dynamic-question/dynamic-question.component';
+ import { DynamicQuestionComponent } from '@app/shared/components/questions/dynamic-question/dynamic-question.component';
 import { AddFileModalComponent } from '@app/main/question-bank/components/add-file-modal/add-file-modal.component';
 import { ViewExamComponent } from './view-exam.component';
 import { SkeletonComponent } from "../../../../shared/components/skeleton/skeleton.component";
+import { DynamicExamQuestionComponent } from '@app/shared/components/questions-exam/dynamic-exam-question/dynamic-exam-question.component';
 
 @NgModule({
     imports: [
