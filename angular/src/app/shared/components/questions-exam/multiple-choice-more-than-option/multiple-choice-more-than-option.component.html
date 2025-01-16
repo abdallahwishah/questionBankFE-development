@@ -9,32 +9,23 @@
 -->
 
 <div class="mb-6">
-    <span class="text-primary">{{ questionNumber }})</span>
-    <span [innerHTML]="config?.question?.body"></span>
-  </div>
+    <p [innerHTML]="config?.question?.body"></p>
+</div>
 
-  <!-- OPTIONAL: Show question helper or image if needed -->
-  <div *ngIf="config?.question?.questionHelper">
-    <div [innerHTML]="config.question.questionHelper"></div>
-  </div>
+<!-- OPTIONAL: Show question helper or image if needed -->
+<div *ngIf="config?.question?.questionHelper">
+    <p [innerHTML]="config.question.questionHelper"></p>
+</div>
 
-  <!-- Loop over each choice -->
-  <div
-    class="mb-4"
-    *ngFor="let choice of config?.questionPayload?.choices; let i = index"
-  >
+<!-- Loop over each choice -->
+<div class="mb-4" *ngFor="let choice of config?.questionPayload?.choices; let i = index">
     <p-checkbox
-      [binary]="true"
-      [inputId]="'choice' + i"
-      [value]="choice.id"
-      [label]="choice.text"
-      [ngModel]="isSelected(choice.id)"
-      (ngModelChange)="onCheckboxChange($event, choice.id)"
-    >
-    </p-checkbox>
+        [binary]="true"
+        [inputId]="'choice' + i"
+        [value]="choice.id"
+        [ngModel]="isSelected(choice.id)"
+        (ngModelChange)="onCheckboxChange($event, choice.id)"
+    ></p-checkbox>
 
-    <!-- Alternatively, you could do:
-          <label class="mx-3">{{ choice.text }}</label>
-        if you prefer a separate label.
-    -->
-  </div>
+    <label class="mx-3" [innerHTML]="choice.text"></label>
+</div>
