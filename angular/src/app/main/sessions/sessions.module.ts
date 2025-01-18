@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SessionsComponent } from './sessions.component';
 import { RouterModule } from '@node_modules/@angular/router';
+import { SessionsServiceProxy } from '@shared/service-proxies/service-proxies';
 
 @NgModule({
    imports: [
@@ -19,6 +20,7 @@ import { RouterModule } from '@node_modules/@angular/router';
           },
       ]),
     ],
-  declarations: [SessionsComponent]
+  declarations: [SessionsComponent],
+  providers:[SessionsServiceProxy]
 })
 export class SessionsModule { }
