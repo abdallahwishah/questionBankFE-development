@@ -1,38 +1,60 @@
-<div class="drag-drop-table-container" *ngIf="tableView as tv; else noData">
-    <!-- Optional: show question body from config -->
+<div class="drag-drop-table-container" *ngIf="tableView as tv">
     <div class="mb-3" *ngIf="config?.question?.body" [innerHTML]="config.question.body"></div>
 
-    <!-- A simple table with headers + rows -->
-    <table class="table table-bordered text-center table-sm">
+    <!-- Draggable items container -->
+    <div
+        class="draggable-items-container"
+        cdkDropList
+        #sourceList="cdkDropList"
+        [cdkDropListData]="draggableItems"
+        (cdkDropListDropped)="handleDrop($event)"
+    >
+        <div
+            *ngFor="let item of draggableItems"
+            class="draggable-item"
+            cdkDrag
+            [cdkDragData]="item"
+        >
+            {{ item.title }}
+        </div>
+    </div>
+
+    <!-- Table -->
+    <table class="table table-bordered" [class.disabled]="isDisabled">
         <thead>
             <tr>
-                <!-- if tv.headers is provided, use that; otherwise generate generic col headings -->
-                <th *ngFor="let head of tv.headers; let colIndex = index" [ngClass]="{ 'pinned-cell': true }">
-                    {{ head }}
-                </th>
+                <th *ngFor="let header of tableView.headers" class="text-center">{{ header }}</th>
             </tr>
         </thead>
-
         <tbody>
-            <!-- Build rows from our 'value' (2D array) -->
-            <tr *ngFor="let row of value; let rowIndex = index">
-                <td *ngFor="let cell of row; let colIndex = index" [ngClass]="{ 'pinned-cell': cell.pinned }">
-                    <!-- Example: input for user text -->
-                    <input
-                        type="text"
-                        class="form-control form-control-sm"
-                        [(ngModel)]="value[rowIndex][colIndex].content"
-                        (ngModelChange)="onCellChanged()"
-                    />
+            <tr *ngFor="let row of internalValue; let rowIndex = index">
+                <td
+                    *ngFor="let cell of row; let colIndex = index"
+                    [ngClass]="{
+                        'pinned-cell': cell.pinned,
+                        'droppable-cell': !cell.pinned,
+                        'has-value': cell.value !== null
+                    }"
+                    cdkDropList
+                    #dropList="cdkDropList"
+                    [cdkDropListData]="{ rowIndex: rowIndex, colIndex: colIndex }"
+                    (cdkDropListDropped)="handleDrop($event)"
+                >
+                    <div class="cell-content">
+                        <span>{{ cell.value }}</span>
 
-                    <!-- Example: checkbox to toggle 'pinned' status -->
+                        <i
+                            *ngIf="cell.value && !cell.pinned"
+                            class="pi pi-times remove-icon"
+                            (click)="removeItem(rowIndex, colIndex, $event)"
+                        ></i>
+                    </div>
                 </td>
             </tr>
         </tbody>
     </table>
 </div>
 
-<!-- If config.questionPayload.dragDropTableView is null or missing -->
 <ng-template #noData>
     <p class="text-muted">لا يوجد جدول للعرض</p>
 </ng-template>

@@ -12,7 +12,7 @@
         <app-multiple-choice-more-than-option [config]="question"></app-multiple-choice-more-than-option>
     }
     @case (QuestionTypeEnum.Match) {
-        <app-connecting-words></app-connecting-words>
+        <app-connecting-words [config]="question"></app-connecting-words>
     }
     @case (QuestionTypeEnum.LinkedQuestions) {
         <app-related-questions></app-related-questions>
