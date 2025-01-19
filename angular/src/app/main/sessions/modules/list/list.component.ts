@@ -10,34 +10,34 @@ import { AppComponentBase } from '@shared/common/app-component-base';
 @Component({
     selector: 'app-list',
     templateUrl: './list.component.html',
-    styleUrls: ['./list.component.css']
+    styleUrls: ['./list.component.css'],
 })
 export class ListComponent extends AppComponentBase implements OnInit {
     @ViewChild('dataTable', { static: true }) dataTable: Table;
     @ViewChild('paginator', { static: true }) paginator: Paginator;
     sessionStatus: any[] = [];
     isStatusFilter: any;
-    sessionStatusEnum = SessionStatusEnum
+    sessionStatusEnum = SessionStatusEnum;
     Add_Session_dialog = UniqueNameComponents.Add_Session_dialog;
 
     filter: string;
 
-    constructor(private _injector: Injector,
+    constructor(
+        private _injector: Injector,
         private _DialogSharedService: DialogSharedService,
-        private  _sessionsServiceProxy: SessionsServiceProxy,
-
-    ) { super(_injector); }
+        private _sessionsServiceProxy: SessionsServiceProxy,
+    ) {
+        super(_injector);
+    }
 
     ngOnInit() {
-
-                /* Covert Enum To array */
-                this.sessionStatus = Object.keys(SessionStatusEnum)
-                .filter((key) => isNaN(Number(key)))
-                .map((key) => ({
-                    name: key,
-                    id: SessionStatusEnum[key as keyof typeof SessionStatusEnum],
-                }));
-
+        /* Covert Enum To array */
+        this.sessionStatus = Object.keys(SessionStatusEnum)
+            .filter((key) => isNaN(Number(key)))
+            .map((key) => ({
+                name: key,
+                id: SessionStatusEnum[key as keyof typeof SessionStatusEnum],
+            }));
     }
     getList(event?: LazyLoadEvent) {
         if (event) {
@@ -59,6 +59,9 @@ export class ListComponent extends AppComponentBase implements OnInit {
                 undefined,
                 undefined,
                 undefined,
+                undefined,
+
+                undefined,
                 this.isStatusFilter,
                 this.primengTableHelper.getSorting(this.dataTable),
                 this.primengTableHelper.getSkipCount(this.paginator, event),
@@ -72,20 +75,15 @@ export class ListComponent extends AppComponentBase implements OnInit {
             });
     }
 
-
-       cleaerStatusFilter(){
-
-       }
+    cleaerStatusFilter() {}
     AddSession() {
         this._DialogSharedService.showDialog(this.Add_Session_dialog, {});
     }
     doActions(label: any, record: any) {
         switch (label) {
             case 'View':
-                console.log()
+                console.log();
                 break;
-
         }
     }
 }
-
