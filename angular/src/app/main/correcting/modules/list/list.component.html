@@ -157,13 +157,14 @@
                         <td>
                             <app-action-button
                                 [ActionsInfo]="[
-                                    { label: 'View' },
+                                    { label: 'ViewAnswersStudent' },
                                     {
                                         label: 'Edit'
                                     },
                                     {
                                         label: 'Delete'
                                     }
+
                                 ]"
                                 (action)="doActions($event, record)"
                             ></app-action-button>

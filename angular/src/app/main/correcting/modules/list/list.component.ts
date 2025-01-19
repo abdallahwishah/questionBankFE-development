@@ -1,6 +1,7 @@
 import { Component, Injector, OnInit, ViewChild } from '@angular/core';
 import { DialogSharedService } from '@app/shared/components/dialog-shared/dialog-shared.service';
 import { UniqueNameComponents } from '@app/shared/Models/UniqueNameComponents';
+import { Router } from '@node_modules/@angular/router';
 import { LazyLoadEvent } from '@node_modules/primeng/api';
 import { Paginator } from '@node_modules/primeng/paginator';
 import { Table } from '@node_modules/primeng/table';
@@ -23,6 +24,7 @@ export class ListComponent extends AppComponentBase implements OnInit {
 
     constructor(
         private _injector: Injector,
+        private _router:Router,
         private _DialogSharedService: DialogSharedService,
         private _sessionsServiceProxy: SessionsServiceProxy,
     ) {
@@ -68,9 +70,11 @@ export class ListComponent extends AppComponentBase implements OnInit {
 
     doActions(label: any, record: any) {
         switch (label) {
-            case 'View':
+            case 'ViewAnswersStudent':
+           this._router.navigate(['/app/main/correcting/answers/',record?.session?.id]);
                 console.log();
                 break;
+
         }
     }
 
