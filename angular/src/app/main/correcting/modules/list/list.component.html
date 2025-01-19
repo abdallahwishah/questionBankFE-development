@@ -5,7 +5,7 @@
             <div class="d-flex gap-5">
                 <div class="d-flex gap-2">
                     <p class="gray">{{ l('NumberOfCorrectedSessions') }}:</p>
-                    <span class="text-dark">150</span>
+                    <span class="text-dark">{{primengTableHelper.totalRecordsCount}}</span>
                 </div>
                 <div class="d-flex gap-2">
                     <p class="gray">{{ l('NumberOfNotCorrectedSessions') }}:</p>
@@ -84,25 +84,21 @@
                         <th pSortableColumn="caseCode">
                             {{  '#' }}
                         </th>
-                        <th pSortableColumn="SessionName">
-                            {{ l('SessionName') }}
-                            <p-sortIcon field="SessionName"></p-sortIcon>
+                        <th pSortableColumn="examTemplateName">
+                            {{ l('ExamTemplateName') }}
+                            <p-sortIcon field="examTemplateName"></p-sortIcon>
                         </th>
-                        <th pSortableColumn="ExamName">
-                            {{ l('ExamName') }}
-                            <p-sortIcon field="ExamName"></p-sortIcon>
+                        <th pSortableColumn="studySubject">
+                            {{ l('StudySubject') }}
+                            <p-sortIcon field="studySubject"></p-sortIcon>
                         </th>
-                        <th pSortableColumn="StartDate">
-                            {{ l('StartDate') }}
-                            <p-sortIcon field="StartDate"></p-sortIcon>
+                        <th pSortableColumn="studyLevel">
+                            {{ l('StudyLevel') }}
+                            <p-sortIcon field="studyLevel"></p-sortIcon>
                         </th>
-                        <th pSortableColumn="EndDate">
-                            {{ l('EndDate') }}
-                            <p-sortIcon field="EndDate"></p-sortIcon>
-                        </th>
-                        <th pSortableColumn="Status">
+                        <th pSortableColumn="status">
                             {{ l('Status') }}
-                            <p-sortIcon field="Status"></p-sortIcon>
+                            <p-sortIcon field="status"></p-sortIcon>
                         </th>
                         <th>
                             {{ l('Actions') }}
@@ -112,37 +108,44 @@
                 <ng-template pTemplate="body" let-record="$implicit" let-i="rowIndex">
                     <tr>
                         <td>
-                            <span class="p-column-title">{{ l('Code') }}</span>
-                            {{ record.auditCase.caseCode || '-' }}
+                            {{ i + 1 }}
                         </td>
                         <td>
-                            <span class="p-column-title">{{ l('CaseTitle') }}</span>
-                            {{ record.auditCase.name || '-' }}
+                            <span class="p-column-title">{{ l('ExamTemplateName') }}</span>
+                            {{ record.examTemplateName || '-' }}
                         </td>
                         <td>
-                            <span class="p-column-title">{{ l('CaseOwner') }}</span>
-                            {{ record.organizationUnitDisplayName || '-' }}
+                            <span class="p-column-title">{{ l('StudySubject') }}</span>
+                            {{ record.studySubject || '-' }}
                         </td>
                         <td>
-                            <span class="p-column-title">{{ l('RepeatCase') }}</span>
-                            {{ l('') || '-' }}
+                            <span class="p-column-title">{{ l('StudyLevel') }}</span>
+                            {{ record.studyLevel || '-' }}
+                        </td>
+                        <td>
+                            <span class="p-column-title">{{ l('StudyLevel') }}</span>
+                            @if(record?.session?.status === sessionStatusEnum.Active){
+                               <span>
+                                {{l('Active')}}
+                               </span>
+                            }
+                            @else if (record?.session?.status === sessionStatusEnum.Finished) {
+                                {{l('Finished')}}
+                            }
+                            @else if (record?.session?.status === sessionStatusEnum.InCreation) {
+                                {{l('InCreation')}}
+                            }
+                            @else if (record?.session?.status === sessionStatusEnum.Invalid) {
+                                {{l('Invalid')}}
+                            }
+                            @else if (record?.session?.status === sessionStatusEnum.NotStarted) {
+                                {{l('NotStarted')}}
+                            }
+                            @else if (record?.session?.status === sessionStatusEnum.Suspended) {
+                                {{l('Suspended')}}
+                            }
                         </td>
 
-                        <td>
-                            <span class="p-column-title">{{ l('creationDate') }}</span>
-                            {{ (record.auditCase.creationTime | luxonFormat: 'dd/MM/yyyy - hh:mm a') || '-' }}
-                        </td>
-                        <td>
-                            <span class="p-column-title">{{ l('CreatedBy') }}</span>
-                            <!-- <img
-                            [src]="record.profilePictureUrl"
-                            class="img-rounded"
-                            width="25"
-                            height="25"
-                            alt=""
-                        /> -->
-                            {{ record.creatorUser || '--' }}
-                        </td>
                         <td>
                             <app-action-button
                                 [ActionsInfo]="[
