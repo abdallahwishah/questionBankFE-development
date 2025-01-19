@@ -1,3 +1,4 @@
+import { ExamAttemptsServiceProxy } from './../../../../../shared/service-proxies/service-proxies';
 import { Component, Injector, OnInit } from '@angular/core';
 import { AppComponentBase } from '@shared/common/app-component-base';
 
@@ -10,9 +11,11 @@ export class AnswersComponent extends AppComponentBase implements OnInit {
     filter: string;
 
     constructor(private _injector: Injector,
+        private _examAttemptsServiceProxy: ExamAttemptsServiceProxy
     ) { super(_injector);}
 
   ngOnInit() {
+    // this._examAttemptsServiceProxy.getAll()
   }
 
   getList($event){
