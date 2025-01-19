@@ -1,5 +1,12 @@
 ﻿import { NgModule } from '@angular/core';
-import { NavigationEnd, NavigationStart, RouteConfigLoadEnd, RouteConfigLoadStart, Router, RouterModule } from '@angular/router';
+import {
+    NavigationEnd,
+    NavigationStart,
+    RouteConfigLoadEnd,
+    RouteConfigLoadStart,
+    Router,
+    RouterModule,
+} from '@angular/router';
 import { AppComponent } from './app.component';
 import { AppRouteGuard } from './shared/common/auth/auth-route-guard';
 import { NotificationsComponent } from './shared/layout/notifications/notifications.component';
@@ -26,6 +33,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
                         loadChildren: () => import('app/main/main.module').then((m) => m.MainModule), //Lazy load main module
                         data: { preload: true },
                     },
+
                     {
                         path: 'admin',
                         loadChildren: () => import('app/admin/admin.module').then((m) => m.AdminModule), //Lazy load admin module
@@ -38,12 +46,20 @@ import { NgxSpinnerService } from 'ngx-spinner';
                     },
                 ],
             },
+            {
+                path: 'student',
+                loadChildren: () => import('app/student/student.module').then((m) => m.StudentModule), //Lazy load main module
+                data: { preload: true },
+            },
         ]),
     ],
     exports: [RouterModule],
 })
 export class AppRoutingModule {
-    constructor(private router: Router, private spinnerService: NgxSpinnerService) {
+    constructor(
+        private router: Router,
+        private spinnerService: NgxSpinnerService,
+    ) {
         router.events.subscribe((event) => {
             if (event instanceof NavigationStart) {
                 spinnerService.show();
