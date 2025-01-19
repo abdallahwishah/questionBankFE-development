@@ -9,7 +9,7 @@
                 </div>
                 <div class="d-flex gap-2">
                     <p class="gray">{{ l('NumberOfNotCorrectedSessions') }}:</p>
-                    <span class="text-dark">67</span>
+                    <span class="text-dark">{{primengTableHelper.totalRecordsCount}}</span>
                 </div>
             </div>
         </div>
@@ -84,17 +84,21 @@
                         <th pSortableColumn="caseCode">
                             {{  '#' }}
                         </th>
+                        <th pSortableColumn="name">
+                            {{ l('SessionName') }}
+                            <p-sortIcon field="name"></p-sortIcon>
+                        </th>
                         <th pSortableColumn="examTemplateName">
                             {{ l('ExamTemplateName') }}
                             <p-sortIcon field="examTemplateName"></p-sortIcon>
                         </th>
-                        <th pSortableColumn="studySubject">
-                            {{ l('StudySubject') }}
-                            <p-sortIcon field="studySubject"></p-sortIcon>
+                        <th pSortableColumn="StartDate">
+                            {{ l('StartDate') }}
+                            <p-sortIcon field="StartDate"></p-sortIcon>
                         </th>
-                        <th pSortableColumn="studyLevel">
-                            {{ l('StudyLevel') }}
-                            <p-sortIcon field="studyLevel"></p-sortIcon>
+                        <th pSortableColumn="EndDate">
+                            {{ l('EndDate') }}
+                            <p-sortIcon field="EndDate"></p-sortIcon>
                         </th>
                         <th pSortableColumn="status">
                             {{ l('Status') }}
@@ -111,16 +115,20 @@
                             {{ i + 1 }}
                         </td>
                         <td>
+                            <span class="p-column-title">{{ l('name') }}</span>
+                            {{ record.session.name || '-' }}
+                        </td>
+                        <td>
                             <span class="p-column-title">{{ l('ExamTemplateName') }}</span>
                             {{ record.examTemplateName || '-' }}
                         </td>
                         <td>
-                            <span class="p-column-title">{{ l('StudySubject') }}</span>
-                            {{ record.studySubject || '-' }}
+                            <span class="p-column-title">{{ l('startDate') }}</span>
+                            {{ (record.session.startDate | luxonFormat: 'dd/MM/yyyy - hh:mm a') || '-' }}
                         </td>
                         <td>
-                            <span class="p-column-title">{{ l('StudyLevel') }}</span>
-                            {{ record.studyLevel || '-' }}
+                            <span class="p-column-title">{{ l('endDate') }}</span>
+                            {{ (record.session.endDate | luxonFormat: 'dd/MM/yyyy - hh:mm a') || '-' }}
                         </td>
                         <td>
                             <span class="p-column-title">{{ l('StudyLevel') }}</span>
