@@ -1,55 +1,52 @@
-/* drag-drop-table.component.ts */
-
-import { Component, Input, forwardRef, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, Input, forwardRef, OnInit, ViewEncapsulation, ViewChild, ViewChildren, QueryList, AfterViewInit, ChangeDetectorRef } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import {
+    CdkDropList,
+    CdkDrag,
+    CdkDragDrop,
+    DragDropModule,
+} from '@angular/cdk/drag-drop';
 
-/*
-    Example:
-      - DragDropTableView holds the metadata: rows, columns, headers, items, etc.
-      - DragTableConfig: top-level config with a questionPayload having dragDropTableView.
-  */
+interface DragDropItem {
+    title: string;
+    isPinned: boolean;
+    order: number;
+}
+
+interface DragDropCell {
+    dragDropTableHeaders: string | null;
+    dragDropTableColmunIndex: number;
+    dargDropTableItems: DragDropItem[];
+}
+
 export interface DragDropTableView {
     rows: number;
     columns: number;
     headers: string[];
-    // other fields, e.g. allColumns, cells, etc.
-    // purely for example:
-    allColumns?: {
-        dargDropTableItems: Array<{
-            title: string;
-            isPinned?: boolean;
-            order?: number; // which col or row they belong to
-        }>;
+    allColumns: {
+        dragDropTableHeaders: string;
+        dragDropTableColmunIndex: number;
+        dargDropTableItems: DragDropItem[];
     };
+    cells: DragDropCell[];
 }
 
-
-/*
-    Our internal "cell" model for the user's arrangement or answer.
-    You might store pinned vs. non-pinned, or the text, etc.
-  */
-export interface DragTableCell {
-    content: string; // user text
-    pinned: boolean; // is it a header or pinned cell?
+export interface TableValue {
+    title: string;
+    words: string[];
 }
 
-/*
-    Our final "value" is a 2D array [row][col].
-    Each cell is a DragTableCell.
-  */
-type DragTableValue = DragTableCell[][];
+export interface TableCell {
+    value: string | null;
+    pinned: boolean;
+    checked: boolean;
+}
 
-/*
-    Standalone component
-    - We import CommonModule for *ngIf, *ngFor, etc.
-    - We import FormsModule for two-way binding [(ngModel)].
-  */
 @Component({
     selector: 'app-drag-drop-table',
     standalone: true,
-    imports: [CommonModule, FormsModule],
+    imports: [CommonModule, DragDropModule],
     templateUrl: './drag-drop-table.component.html',
     styleUrls: ['./drag-drop-table.component.scss'],
     providers: [
@@ -59,54 +56,67 @@ type DragTableValue = DragTableCell[][];
             multi: true,
         },
     ],
-    encapsulation: ViewEncapsulation.None, // optional if you want your .scss to affect children
+    encapsulation: ViewEncapsulation.None,
 })
-export class DragDropTableComponent implements OnInit, ControlValueAccessor {
-    /* The parent (container) will pass in a config object with questionPayload, etc. */
+export class DragDropTableComponent implements OnInit, AfterViewInit, ControlValueAccessor {
     @Input() config: any | null = null;
+    @ViewChild('sourceList') sourceList!: CdkDropList;
+    @ViewChildren('dropList') dropLists!: QueryList<CdkDropList>;
 
-    /*
-      "value" = 2D array.
-      We'll store the user's table in memory.
-      The parent form can read/write it via CVA (ControlValueAccessor).
-    */
-    value: DragTableValue = [];
+    value: TableValue[] = [];
+    internalValue: Array<Array<TableCell>> = [];
+    draggableItems: DragDropItem[] = [];
+    isDisabled = false;
 
-    /*
-      If the config has questionPayload.dragDropTableView, we store it for easy usage.
-      Example: this might have 'rows', 'columns', 'headers', etc.
-    */
     get tableView(): DragDropTableView | undefined {
         return this.config?.questionPayload?.dragDropTableView || undefined;
     }
 
-    /* ControlValueAccessor callbacks */
-    private onChangeFn: (val: DragTableValue) => void = () => {};
+    get actualRows(): number {
+        return (this.tableView?.rows || 1) - 1;
+    }
+
+    private onChangeFn: (val: TableValue[]) => void = () => {};
     private onTouchedFn: () => void = () => {};
 
-    constructor() {}
+    constructor(private cdr: ChangeDetectorRef) {}
 
     ngOnInit(): void {
-        // If we want to build an initial table from config, we could do it here.
-        // But typically, the form might call writeValue() with an existing value.
-        // Or we can create a default table if "value" is empty.
         this.buildTableFromConfig();
+        this.initializeDraggableItems();
     }
 
-    /* ---------------------
-     * ControlValueAccessor
-     * --------------------- */
+    ngAfterViewInit(): void {
+        this.setupDropLists();
+    }
 
-    writeValue(obj: DragTableValue): void {
+    private setupDropLists(): void {
+        if (!this.sourceList || !this.dropLists) return;
+
+        // Get all drop lists including the source
+        const dropListsArray = this.dropLists.toArray();
+
+        // Connect all lists together
+        const allLists = [this.sourceList, ...dropListsArray];
+        allLists.forEach(list => {
+            const otherLists = allLists.filter(l => l !== list);
+            list.connectedTo = otherLists;
+        });
+
+        this.cdr.detectChanges();
+    }
+
+    writeValue(obj: TableValue[]): void {
         if (Array.isArray(obj)) {
-            this.value = obj;
+            this.value = [...obj];
+            this.updateInternalValue();
         } else {
-            // if no object is given, we can build a default table if we want
             this.buildTableFromConfig();
         }
+        this.cdr.markForCheck();
     }
 
-    registerOnChange(fn: (val: DragTableValue) => void): void {
+    registerOnChange(fn: (val: TableValue[]) => void): void {
         this.onChangeFn = fn;
     }
 
@@ -114,52 +124,174 @@ export class DragDropTableComponent implements OnInit, ControlValueAccessor {
         this.onTouchedFn = fn;
     }
 
-    setDisabledState?(isDisabled: boolean): void {
-        // If needed, disable inputs
+    setDisabledState(isDisabled: boolean): void {
+        this.isDisabled = isDisabled;
     }
 
-    /*
-      Called whenever user edits a cell (content or pinned).
-      We'll propagate the new "value" array upward via onChangeFn.
-    */
-    onCellChanged(): void {
-        this.onChangeFn(this.value);
+    handleDrop(event: CdkDragDrop<any>): void {
+        if (this.isDisabled) return;
+
+        const draggedItem = event.item.data;
+        const { container } = event;
+
+        if (!draggedItem || !container.data) return;
+
+        const { rowIndex, colIndex } = container.data;
+
+        if (!this.internalValue[rowIndex]?.[colIndex].pinned) {
+            // Remove from draggable items if coming from source list
+            if (event.previousContainer === this.sourceList) {
+                const itemIndex = this.draggableItems.findIndex(item => item.title === draggedItem.title);
+                if (itemIndex !== -1) {
+                    this.draggableItems.splice(itemIndex, 1);
+                }
+            }
+
+            // Update the target cell
+            this.internalValue[rowIndex][colIndex] = {
+                value: draggedItem.title,
+                pinned: false,
+                checked: false
+            };
+
+            this.updateFormValue();
+            this.onTouchedFn();
+            this.cdr.detectChanges();
+        }
+    }
+
+    removeItem(rowIndex: number, colIndex: number, event?: MouseEvent): void {
+        if (this.isDisabled) return;
+        if (event) {
+            event.stopPropagation();
+        }
+
+        const cell = this.internalValue[rowIndex]?.[colIndex];
+        if (!cell || cell.pinned || !cell.value) return;
+
+        // Add back to draggable items
+        const removedItem: DragDropItem = {
+            title: cell.value,
+            isPinned: false,
+            order: 0
+        };
+        this.draggableItems.push(removedItem);
+
+        // Reset the cell completely
+        this.internalValue[rowIndex][colIndex] = {
+            value: null,
+            pinned: false,
+            checked: false
+        };
+
+        // Ensure drop lists are properly connected
+        this.setupDropLists();
+
+        this.updateFormValue();
         this.onTouchedFn();
+        this.cdr.detectChanges();
     }
 
-    /* ---------------------
-     * Utility
-     * --------------------- */
-
-    /**
-     * Build an initial empty table from the config (rows × columns)
-     * if "value" isn't already set.
-     */
     private buildTableFromConfig(): void {
         const tv = this.tableView;
         if (!tv) {
-            this.value = [];
+            this.internalValue = [];
             return;
         }
 
-        // number of rows & columns from config
-        const rowCount = tv.rows;
-        const colCount = tv.columns;
+        // Initialize empty table
+        this.internalValue = Array(this.actualRows).fill(null).map(() =>
+            Array(tv.columns).fill(null).map(() => ({
+                value: null,
+                pinned: false,
+                checked: false
+            }))
+        );
 
-        // Initialize 2D array if empty
-        if (!this.value || this.value.length === 0) {
-            const newTable: DragTableValue = [];
-            for (let r = 0; r < rowCount; r++) {
-                const rowArr: DragTableCell[] = [];
-                for (let c = 0; c < colCount; c++) {
-                    rowArr.push({
-                        content: '', // empty text
-                        pinned: false, // not pinned by default
-                    });
+        // Process each row from cells array
+        for (let rowIndex = 0; rowIndex < this.actualRows; rowIndex++) {
+            const rowData = tv.cells[rowIndex];
+            if (!rowData?.dargDropTableItems) continue;
+
+            // Process each column in the row
+            rowData.dargDropTableItems.forEach((item, colIndex) => {
+                if (item?.isPinned && colIndex < tv.columns) {
+                    this.internalValue[rowIndex][colIndex] = {
+                        value: item.title,
+                        pinned: true,
+                        checked: true
+                    };
                 }
-                newTable.push(rowArr);
-            }
-            this.value = newTable;
+            });
         }
+
+        this.updateFormValue();
+    }
+
+    private initializeDraggableItems(): void {
+        const tv = this.tableView;
+        if (!tv?.allColumns?.dargDropTableItems) {
+            this.draggableItems = [];
+            return;
+        }
+
+        this.draggableItems = tv.allColumns.dargDropTableItems
+            .filter(item => !item.isPinned)
+            .map(item => ({
+                title: item.title,
+                isPinned: item.isPinned,
+                order: item.order
+            }));
+    }
+
+    private updateInternalValue(): void {
+        const tv = this.tableView;
+        if (!tv) return;
+
+        this.internalValue = Array(this.actualRows).fill(null).map(() =>
+            Array(tv.columns).fill(null).map(() => ({
+                value: null,
+                pinned: false,
+                checked: false
+            }))
+        );
+
+        // Fill from value maintaining pinned status
+        this.value.forEach((columnValue, colIndex) => {
+            columnValue.words.forEach((word, rowIndex) => {
+                if (this.internalValue[rowIndex]?.[colIndex]) {
+                    const isPinned = this.isPinnedCell(rowIndex, colIndex);
+                    this.internalValue[rowIndex][colIndex] = {
+                        value: word,
+                        pinned: isPinned,
+                        checked: isPinned
+                    };
+                }
+            });
+        });
+    }
+
+    private updateFormValue(): void {
+        const tv = this.tableView;
+        if (!tv) return;
+
+        this.value = tv.headers.map((header, columnIndex) => ({
+            title: header,
+            words: this.internalValue
+                .map(row => row[columnIndex].value)
+                .filter((word): word is string => word !== null)
+        }));
+
+        this.onChangeFn(this.value);
+    }
+
+    private isPinnedCell(rowIndex: number, colIndex: number): boolean {
+        const tv = this.tableView;
+        if (!tv || rowIndex >= this.actualRows) return false;
+
+        const rowData = tv.cells[rowIndex];
+        if (!rowData?.dargDropTableItems) return false;
+
+        return rowData.dargDropTableItems[colIndex]?.isPinned || false;
     }
 }
