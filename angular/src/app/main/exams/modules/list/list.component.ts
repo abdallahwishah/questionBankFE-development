@@ -108,7 +108,9 @@ export class ListComponent extends AppComponentBase implements OnInit {
     doActions(label: any, record: any) {
         switch (label) {
             case 'View':
-                this._router.navigate(['app/student/exam-viewer' + record.exam.id]);
+                this._router.navigate(['/student/exam-viewer/' + record.exam.id]);
+                break;
+
             case 'Edit':
                 this._router.navigate(['app/main/exams/view/' + record.exam.id]);
                 break;
