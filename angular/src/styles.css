@@ -754,3 +754,27 @@ td {
     vertical-align: middle;
     /* etc. */
   }
+.w-40rem{
+    width: 40rem;
+}
+
+.p-sidebar-header {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid #DDDDDD;
+    padding-top: 1.5rem !important;
+    padding-bottom: 1.5rem !important;
+    margin-bottom: 10px;
+}
+
+
+.p-accordion-tab{
+    border: 1px solid #e9e9e9 !important;
+    box-shadow: none !important;
+    margin-bottom: 15px;
+
+}
+.p-accordion-tab .p-accordion-tab{
+    border: 0 !important;
+    border-bottom: 1px solid #e9e9e9 !important;
+}

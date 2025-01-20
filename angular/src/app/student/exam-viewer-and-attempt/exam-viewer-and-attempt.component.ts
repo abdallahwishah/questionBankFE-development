@@ -8,10 +8,12 @@ import {
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { SidebarModule } from 'primeng/sidebar';
+import { AccordionModule } from 'primeng/accordion';
 
 @Component({
     standalone: true,
-    imports: [DynamicExamQuestionComponent, CommonModule, FormsModule],
+    imports: [DynamicExamQuestionComponent, CommonModule, FormsModule , SidebarModule , AccordionModule],
     selector: 'app-exam-viewer-and-attempt',
     templateUrl: './exam-viewer-and-attempt.component.html',
     styleUrls: ['./exam-viewer-and-attempt.component.css'],
@@ -22,6 +24,8 @@ export class ExamViewerAndAttemptComponent implements OnInit {
     examData: any;
     question: any;
     showInstructions = true;
+    sidebarVisible = false;
+    
 
     constructor(
         private _examsServiceProxy: ExamsServiceProxy,

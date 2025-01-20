@@ -1,84 +1,185 @@
-<section class="mx-5 my-5" *ngIf="examData">
-    <div class="header-page row">
-        <div class="col-3">
-            <div class="header-right">
-                <div>
-                    <span class="header-title-label">الاسم</span>
-                    <span class="px-1">:</span>
-                    <span class="header-title-label-input">{{ examData.studentName || '-' }}</span>
+<div class="container mt-15">
+    <div class="card">
+        <section class="mx-5 my-5" *ngIf="examData">
+            <div class="header-page row">
+                <div class="col-3">
+                    <div class="header-right">
+                        <div>
+                            <span class="header-title-label">الاسم</span>
+                            <span class="px-1">:</span>
+                            <span class="header-title-label-input">{{ examData.studentName || '-' }}</span>
+                        </div>
+                        <div>
+                            <span class="header-title-label">المبحث</span>
+                            <span class="px-1">:</span>
+                            <span class="header-title-label-input">{{ examData.subjectName }}</span>
+                        </div>
+                        <div>
+                            <span class="header-title-label">الصف</span>
+                            <span class="px-1">:</span>
+                            <span class="header-title-label-input">{{ examData.levelName }}</span>
+                        </div>
+                    </div>
                 </div>
-                <div>
-                    <span class="header-title-label">المبحث</span>
-                    <span class="px-1">:</span>
-                    <span class="header-title-label-input">{{ examData.subjectName }}</span>
+                <div class="col-6">
+                    <div class="header-center">
+                        <div>
+                            <h3 class="header-center-label">اختبار {{ examData.examId }}</h3>
+                        </div>
+                        <div>
+                            <span class="header-center-bio">النموذج رقم {{ examData.examSectionId }}</span>
+                        </div>
+                        <div>
+                            <h5 class="header-center-title" [innerHTML]="examData.sectionInstructions"></h5>
+                        </div>
+                    </div>
                 </div>
-                <div>
-                    <span class="header-title-label">الصف</span>
-                    <span class="px-1">:</span>
-                    <span class="header-title-label-input">{{ examData.levelName }}</span>
+                <div class="col-3">
+                    <div class="header-left">
+                        <div>
+                            <span class="header-title-label">رقم القسم</span>
+                            <span class="px-1">:</span>
+                            <span class="header-title-label-input">{{ examData.sectionNo }}</span>
+                        </div>
+                        <div>
+                            <span class="header-title-label">مدة الاختبار</span>
+                            <span class="px-1">:</span>
+                            <span class="header-title-label-input">{{ examData.sectionDuration }} دقيقة</span>
+                        </div>
+                        <div>
+                            <span class="header-title-label">الوقت المتبقي</span>
+                            <span class="px-1">:</span>
+                            <span class="header-title-label-input">{{ getRemainingTime(examData.remainingSeconds) }}</span>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="col-6">
-            <div class="header-center">
-                <div>
-                    <h3 class="header-center-label">اختبار {{ examData.examId }}</h3>
-                </div>
-                <div>
-                    <span class="header-center-bio">النموذج رقم {{ examData.examSectionId }}</span>
-                </div>
-                <div>
-                    <h5 class="header-center-title" [innerHTML]="examData.sectionInstructions"></h5>
-                </div>
+        
+            <div class="content-page">
+                <ng-container *ngIf="examData">
+                    <div *ngIf="showInstructions" class="instructions">
+                        <div [innerHTML]="examData.examInstructions"></div>
+                        <button class="btn btn-primary mt-7" (click)="startExam()">بدء الاختبار</button>
+                    </div>
+                    <!-- [(ngModel)]="question.question" -->
+                      <app-dynamic-exam-question
+                        *ngIf="!showInstructions && question"
+                        [question]="question.question"
+                        [questionType]="question.question?.question.type"
+                        style="display: block; margin-top: 1rem"
+                    ></app-dynamic-exam-question>
+                </ng-container>
             </div>
-        </div>
-        <div class="col-3">
-            <div class="header-left">
-                <div>
-                    <span class="header-title-label">رقم القسم</span>
-                    <span class="px-1">:</span>
-                    <span class="header-title-label-input">{{ examData.sectionNo }}</span>
-                </div>
-                <div>
-                    <span class="header-title-label">مدة الاختبار</span>
-                    <span class="px-1">:</span>
-                    <span class="header-title-label-input">{{ examData.sectionDuration }} دقيقة</span>
-                </div>
-                <div>
-                    <span class="header-title-label">الوقت المتبقي</span>
-                    <span class="px-1">:</span>
-                    <span class="header-title-label-input">{{ getRemainingTime(examData.remainingSeconds) }}</span>
-                </div>
+            <div  *ngIf="!showInstructions && question">
+                <br><br><br><br>
             </div>
-        </div>
-    </div>
 
-    <div class="content-page">
-        <ng-container *ngIf="examData">
-            <div *ngIf="showInstructions" class="instructions">
-                <div [innerHTML]="examData.examInstructions"></div>
-                <button class="btn btn-primary" (click)="startExam()">بدء الاختبار</button>
+            <div class="footer-page  row" *ngIf="!showInstructions && question">
+                <div class="col-12">
+                    <div class="d-flex flex-row justify-content-between">
+                        <div>
+                            <button class="btn btn-primary-prev" (click)="prev()">السابق</button>
+                        </div>
+                        <div>
+                            <button class="btn btn-primary-next" (click)="next()">التالي</button>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <!-- [(ngModel)]="question.question" -->
-              <app-dynamic-exam-question
-                *ngIf="!showInstructions && question"
-                [question]="question.question"
-                [questionType]="question.question?.question.type"
-                style="display: block; margin-top: 1rem"
-            ></app-dynamic-exam-question>
-        </ng-container>
+        </section>
+        
     </div>
+</div>
 
-    <div class="footer-page row" *ngIf="!showInstructions && question">
-        <div class="col-12">
-            <div class="d-flex flex-row justify-content-between">
-                <div>
-                    <button class="btn btn-primary-prev" (click)="prev()">السابق</button>
-                </div>
-                <div>
-                    <button class="btn btn-primary-next" (click)="next()">التالي</button>
-                </div>
+
+
+<!-- <p-sidebar [(visible)]="sidebarVisible" styleClass="w-40rem" position="right">
+    <ng-template pTemplate="header">
+        <span class="font-semibold text-dark fs-3">قائمة الاختبار</span>
+    </ng-template>
+    <p-accordion class="w-full">
+        <p-accordionTab>
+            <ng-template pTemplate="header">
+                <span class="flex align-items-center gap-2 w-full">
+                    <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="0.5" y="0.5" width="35" height="35" rx="10" fill="#6D31ED" fill-opacity="0.06"/>
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M14.6667 26.9583C11.625 26.9583 9.875 25.2083 9.875 22.1667V13.8333C9.875 10.7917 11.625 9.04166 14.6667 9.04166H21.3333C24.375 9.04166 26.125 10.7917 26.125 13.8333V22.1667C26.125 25.2083 24.375 26.9583 21.3333 26.9583H14.6667ZM11.125 13.8333V22.1667C11.125 24.55 12.2833 25.7083 14.6667 25.7083H21.3333C23.7167 25.7083 24.875 24.55 24.875 22.1667V13.8333C24.875 11.45 23.7167 10.2917 21.3333 10.2917H14.6667C12.2833 10.2917 11.125 11.45 11.125 13.8333Z" fill="#6D31ED"/>
+                        <path d="M21.7497 15.7083C20.483 15.7083 19.458 14.6833 19.458 13.4167V11.75C19.458 11.4083 19.7413 11.125 20.083 11.125C20.4247 11.125 20.708 11.4083 20.708 11.75V13.4167C20.708 13.9917 21.1747 14.4583 21.7497 14.4583H23.4163C23.758 14.4583 24.0413 14.7417 24.0413 15.0833C24.0413 15.425 23.758 15.7083 23.4163 15.7083H21.7497Z" fill="#6D31ED"/>
+                        <path d="M14.667 19.4583C14.3253 19.4583 14.042 19.175 14.042 18.8333C14.042 18.4917 14.3253 18.2083 14.667 18.2083H18.0003C18.342 18.2083 18.6253 18.4917 18.6253 18.8333C18.6253 19.175 18.342 19.4583 18.0003 19.4583H14.667Z" fill="#6D31ED"/>
+                        <path d="M14.667 22.7917C14.3253 22.7917 14.042 22.5083 14.042 22.1667C14.042 21.825 14.3253 21.5417 14.667 21.5417H21.3337C21.6753 21.5417 21.9587 21.825 21.9587 22.1667C21.9587 22.5083 21.6753 22.7917 21.3337 22.7917H14.667Z" fill="#6D31ED"/>
+                        </svg>
+                        
+                    <span class="font-bold white-space-nowrap text-dark">
+                        تعليمات الاختبار
+                    </span>
+                </span>
+            </ng-template>
+            <p class="m-0">
+                Lorem ipsum dolor sit amet...
+            </p>
+        </p-accordionTab>
+
+       <br>
+       
+        @for (item of [1,2,3]; track $index) {
+  <p-accordionTab>
+    <ng-template pTemplate="header">
+        <span class="flex align-items-center gap-2 w-full">
+            
+           <div class="d-flex align-items-center gap-2">
+            <div class="num-box">1</div>
+                 
+            <div>
+             <span class="fw-bold white-space-nowrap text-dark">
+                 القسم الاول
+             </span>
+             <p class="mb-0 text-gray-600 mt-1 "><span class="text-dark">عدد الأسئلة:</span> 6 أسئلة</p>
             </div>
-        </div>
-    </div>
-</section>
+           </div>
+        </span>
+    </ng-template>
+    <p-accordionTab>
+        <ng-template pTemplate="header">
+            <span class="flex align-items-center gap-2 w-full">
+                 <span class="fw-bold white-space-nowrap text-dark">
+                     السؤال الاول
+                 </span>
+            </span>
+        </ng-template>
+        <p class="m-0">
+            Lorem ipsum dolor sit amet...
+        </p>
+    </p-accordionTab>
+    <p-accordionTab>
+        <ng-template pTemplate="header">
+            <span class="flex align-items-center gap-2 w-full">
+                 <span class="fw-bold white-space-nowrap text-dark">
+                     السؤال الثاني
+                 </span>
+            </span>
+        </ng-template>
+        <p class="m-0">
+            Lorem ipsum dolor sit amet...
+        </p>
+    </p-accordionTab>
+    <p-accordionTab>
+        <ng-template pTemplate="header">
+            <span class="flex align-items-center gap-2 w-full">
+                 <span class="fw-bold white-space-nowrap text-dark">
+                     السؤال الثاني
+                 </span>
+            </span>
+        </ng-template>
+        <p class="m-0">
+            Lorem ipsum dolor sit amet...
+        </p>
+    </p-accordionTab>
+</p-accordionTab>
+        
+      
+}
+       
+</p-accordion>
+</p-sidebar>
+<button class="btn btn-primary-next" (click)="sidebarVisible = !sidebarVisible" >open sidebar</button>
+ -->

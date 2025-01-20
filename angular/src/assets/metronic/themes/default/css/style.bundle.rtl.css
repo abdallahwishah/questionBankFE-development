@@ -49340,3 +49340,11 @@ body,
         top: -32px;
     }
 }
+.p-accordion .p-accordion-header .p-accordion-header-link .p-accordion-toggle-icon {
+    margin-left: 0.5rem !important;
+    margin-right: auto !important;
+}
+
+.p-accordion .p-accordion-header .p-icon{
+ color: #000 !important;
+}
