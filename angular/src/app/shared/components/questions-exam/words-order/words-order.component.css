@@ -1,0 +1,91 @@
+.words-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1rem;
+    padding: 1rem;
+    min-height: 100px;
+    position: relative;
+  }
+
+  .word-item {
+    background: white;
+    border: 1px solid #dee2e6;
+    border-radius: 4px;
+    transition: transform 0.2s, box-shadow 0.2s;
+    cursor: grab;
+    position: relative;
+  }
+
+  .word-content {
+    display: flex;
+    align-items: center;
+    padding: 0.5rem;
+    gap: 0.5rem;
+  }
+
+  .drag-handle {
+    cursor: grab;
+    display: flex;
+    align-items: center;
+  }
+
+  .drag-handle img {
+    width: 20px;
+    height: 20px;
+  }
+
+  input.form-control {
+    background-color: #F5F8FA;
+    border: none;
+    padding: 0.5rem;
+    width: 100%;
+  }
+
+  /* Drag States */
+  .word-item.dragging {
+    opacity: 0.5;
+    transform: scale(1.05);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+  }
+
+  .word-item.drop-target {
+    border: 2px dashed #80bdff;
+    background: rgba(0, 123, 255, 0.05);
+  }
+
+  .word-item.disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+
+  /* Prevent text selection during drag */
+  .word-item {
+    user-select: none;
+  }
+
+  /* Animation */
+  .word-item {
+    transition: transform 0.2s ease-out, box-shadow 0.2s ease-out;
+  }
+
+  /* Touch device support */
+  @media (pointer: coarse) {
+    .drag-handle {
+      padding: 0.5rem;
+    }
+
+    .word-content {
+      padding: 0.75rem;
+    }
+  }
+
+  /* Grid item animations */
+  @keyframes scaleIn {
+    from { transform: scale(0.95); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+  }
+
+  .word-item {
+    animation: scaleIn 0.2s ease-out;
+  }

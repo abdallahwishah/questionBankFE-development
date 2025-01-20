@@ -1,26 +1,33 @@
-<p><span class="text-primary fs-5 mb-6"> 1) </span>رتب الكلمات بترتيبها الصحيح ابتداء من اليمين إلى اليسار</p>
-<div class="card p-5 mb-6">
-    <p class="fs-5 mb-7"><span></span>الكلمات المطابقة</p>
-    <div class="row">
-        <div class="col-md-3 d-flex gap-3  align-items-center mb-4">
-            <img class="cursor-pointer" src="assets/common/images/menu.svg" alt="" />
-            <input name="text" class="form-control m-input"  type="text"/>
+<div class="question-container">
+    <!-- Question Body -->
+    <div [innerHTML]="questionBody"></div>
+
+    <div class="card p-4">
+      <div class="fw-bold mb-4">الكلمات المطابقة</div>
+
+      <!-- Words Grid -->
+      <div class="words-grid">
+        <div class="word-item"
+             *ngFor="let item of items; let i = index; trackBy: trackByFn"
+             draggable="true"
+             (dragstart)="onDragStart(i)"
+             (dragover)="onDragOver($event, i)"
+             (drop)="onDrop($event)"
+             [class.dragging]="i === draggedIndex"
+             [class.drop-target]="i === dropIndex"
+             [class.disabled]="disabled">
+
+          <!-- Word Content -->
+          <div class="word-content">
+            <div class="drag-handle">
+              <img src="assets/common/images/menu.svg" alt="drag"/>
+            </div>
+            <input type="text"
+                   [value]="item.word"
+                   class="form-control"
+                   readonly/>
+          </div>
         </div>
-        <div class="col-md-3 d-flex gap-3  align-items-center mb-4">
-            <img class="cursor-pointer" src="assets/common/images/menu.svg" alt="" />
-            <input name="text" class="form-control m-input"  type="text"/>
-        </div>
-        <div class="col-md-3 d-flex gap-3  align-items-center mb-4">
-            <img class="cursor-pointer" src="assets/common/images/menu.svg" alt="" />
-            <input name="text" class="form-control m-input"  type="text"/>
-        </div>
-        <div class="col-md-3 d-flex gap-3  align-items-center mb-4">
-            <img class="cursor-pointer" src="assets/common/images/menu.svg" alt="" />
-            <input name="text" class="form-control m-input"  type="text"/>
-        </div>
-        <div class="col-md-3 d-flex gap-3  align-items-center mb-md-0 mb-4">
-            <img class="cursor-pointer" src="assets/common/images/menu.svg" alt="" />
-            <input name="text" class="form-control m-input"  type="text"/>
-        </div>
+      </div>
     </div>
-</div>
+  </div>
