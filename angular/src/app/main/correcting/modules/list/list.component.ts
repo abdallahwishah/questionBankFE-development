@@ -17,18 +17,19 @@ export class ListComponent extends AppComponentBase implements OnInit {
     Warning_dialog = UniqueNameComponents.Warning_dialog;
 
     filter: string;
-      @ViewChild('dataTable', { static: true }) dataTable: Table;
-      @ViewChild('paginator', { static: true }) paginator: Paginator;
+    @ViewChild('dataTable', { static: true }) dataTable: Table;
+    @ViewChild('paginator', { static: true }) paginator: Paginator;
 
-          sessionStatusEnum = SessionStatusEnum;
-
+    sessionStatusEnum = SessionStatusEnum;
+    isAudit: any;
     constructor(
         private _injector: Injector,
-        private _router:Router,
+        private _router: Router,
         private _DialogSharedService: DialogSharedService,
         private _sessionsServiceProxy: SessionsServiceProxy,
     ) {
         super(_injector);
+        this.isAudit = window?.location.href.includes('audit');
     }
 
     ngOnInit() {}
@@ -67,18 +68,16 @@ export class ListComponent extends AppComponentBase implements OnInit {
             });
     }
 
-
     doActions(label: any, record: any) {
         switch (label) {
             case 'ViewAnswersStudent':
-           this._router.navigate(['/app/main/correcting/answers/',record?.session?.id]);
+                this._router.navigate(['/app/main/correcting/answers/', record?.session?.id]);
                 console.log();
                 break;
-
         }
     }
 
-    addTemplate(){
-        this._DialogSharedService.showDialog(this.Warning_dialog , {})
+    addTemplate() {
+        this._DialogSharedService.showDialog(this.Warning_dialog, {});
     }
 }

@@ -1,3 +1,84 @@
-<p>
-  exam-viewer-and-attempt works!
-</p>
+<section class="mx-5 my-5" *ngIf="examData">
+    <div class="header-page row">
+        <div class="col-3">
+            <div class="header-right">
+                <div>
+                    <span class="header-title-label">الاسم</span>
+                    <span class="px-1">:</span>
+                    <span class="header-title-label-input">{{ examData.studentName || '-' }}</span>
+                </div>
+                <div>
+                    <span class="header-title-label">المبحث</span>
+                    <span class="px-1">:</span>
+                    <span class="header-title-label-input">{{ examData.subjectName }}</span>
+                </div>
+                <div>
+                    <span class="header-title-label">الصف</span>
+                    <span class="px-1">:</span>
+                    <span class="header-title-label-input">{{ examData.levelName }}</span>
+                </div>
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="header-center">
+                <div>
+                    <h3 class="header-center-label">اختبار {{ examData.examId }}</h3>
+                </div>
+                <div>
+                    <span class="header-center-bio">النموذج رقم {{ examData.examSectionId }}</span>
+                </div>
+                <div>
+                    <h5 class="header-center-title" [innerHTML]="examData.sectionInstructions"></h5>
+                </div>
+            </div>
+        </div>
+        <div class="col-3">
+            <div class="header-left">
+                <div>
+                    <span class="header-title-label">رقم القسم</span>
+                    <span class="px-1">:</span>
+                    <span class="header-title-label-input">{{ examData.sectionNo }}</span>
+                </div>
+                <div>
+                    <span class="header-title-label">مدة الاختبار</span>
+                    <span class="px-1">:</span>
+                    <span class="header-title-label-input">{{ examData.sectionDuration }} دقيقة</span>
+                </div>
+                <div>
+                    <span class="header-title-label">الوقت المتبقي</span>
+                    <span class="px-1">:</span>
+                    <span class="header-title-label-input">{{ getRemainingTime(examData.remainingSeconds) }}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="content-page">
+        <ng-container *ngIf="examData">
+            <div *ngIf="showInstructions" class="instructions">
+                <div [innerHTML]="examData.examInstructions"></div>
+                <button class="btn btn-primary" (click)="startExam()">بدء الاختبار</button>
+            </div>
+            <!-- [(ngModel)]="question.question" -->
+              <app-dynamic-exam-question
+                *ngIf="!showInstructions && question"
+                [question]="question.question"
+                [questionType]="question.question?.question.type"
+                style="display: block; margin-top: 1rem"
+            ></app-dynamic-exam-question>
+        </ng-container>
+    </div>
+
+    <div class="footer-page row" *ngIf="!showInstructions && question">
+        <div class="col-12">
+            <div class="d-flex flex-row justify-content-between">
+                <div>
+                    <button class="btn btn-primary-prev" (click)="prev()">السابق</button>
+                </div>
+                <div>
+                    <button class="btn btn-primary-next" (click)="next()">التالي</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

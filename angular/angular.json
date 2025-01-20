@@ -70,7 +70,8 @@
 
               "src/app/shared/core.less",
               "src/app/shared/layout/layout.less",
-              "src/styles.css"
+              "src/styles.css",
+              "node_modules/gridstack/dist/gridstack.min.css"
             ],
             "scripts": [
               "node_modules/@microsoft/signalr/dist/browser/signalr.min.js",

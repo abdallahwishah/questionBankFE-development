@@ -1,6 +1,6 @@
 @switch (questionType) {
     @case (QuestionTypeEnum.SA) {
-        <app-article-questions></app-article-questions>
+        <app-article-questions [config]="question"></app-article-questions>
     }
     @case (QuestionTypeEnum.TrueAndFalse) {
         <app-multiple-choice-one-option [config]="question"></app-multiple-choice-one-option>
@@ -18,10 +18,10 @@
         <app-related-questions></app-related-questions>
     }
     @case (QuestionTypeEnum.Rearrange) {
-        <app-words-order></app-words-order>
+        <app-words-order [config]="question"></app-words-order>
     }
     @case (QuestionTypeEnum.Drawing) {
-        <app-cartesian-level></app-cartesian-level>
+        <app-cartesian-level [config]="question"></app-cartesian-level>
     }
     @case (QuestionTypeEnum.DargingTable) {
         <app-drag-drop-table [config]="question"></app-drag-drop-table>

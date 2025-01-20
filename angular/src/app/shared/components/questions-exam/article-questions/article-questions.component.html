@@ -1,2 +1,11 @@
-<p><span class="text-primary">1)</span> اكتب تعريف التكامل مع ذكر مثال توضيحي. </p>
-<app-editor></app-editor>
+<div class="question-container">
+    <!-- Question Body -->
+    <div [innerHTML]="config?.question?.body"></div>
+
+    <!-- Editor -->
+    <app-editor
+      [(ngModel)]="editorContent"
+      (ngModelChange)="onEditorChange($event)"
+      [disabled]="disabled">
+    </app-editor>
+  </div>

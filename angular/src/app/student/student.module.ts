@@ -13,14 +13,14 @@ import { RouterModule } from '@node_modules/@angular/router';
                 component: StudentComponent,
                 children: [
                     {
-                        path: 'exam-viewer',
+                        path: 'exam-viewer/:id',
                         loadComponent: () =>
                             import('./exam-viewer-and-attempt/exam-viewer-and-attempt.component').then(
                                 (m) => m.ExamViewerAndAttemptComponent,
                             ),
                     },
                     {
-                        path: 'exam-attempt',
+                        path: 'exam-attempt/:id',
                         loadComponent: () =>
                             import('./exam-viewer-and-attempt/exam-viewer-and-attempt.component').then(
                                 (m) => m.ExamViewerAndAttemptComponent,
