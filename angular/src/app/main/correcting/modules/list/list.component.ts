@@ -6,7 +6,8 @@ import { LazyLoadEvent } from '@node_modules/primeng/api';
 import { Paginator } from '@node_modules/primeng/paginator';
 import { Table } from '@node_modules/primeng/table';
 import { AppComponentBase } from '@shared/common/app-component-base';
-import { SessionsServiceProxy, SessionStatusEnum } from '@shared/service-proxies/service-proxies';
+import { SessionsServiceProxy, SessionStatusEnum, StudyLevelsServiceProxy, StudySubjectsServiceProxy } from '@shared/service-proxies/service-proxies';
+import { forkJoin } from 'rxjs';
 
 @Component({
     selector: 'app-list',
@@ -15,6 +16,11 @@ import { SessionsServiceProxy, SessionStatusEnum } from '@shared/service-proxies
 })
 export class ListComponent extends AppComponentBase implements OnInit {
     Warning_dialog = UniqueNameComponents.Warning_dialog;
+    studyLevels: any[] = [];
+    studySubjects: any[] = [];
+    subjectId: number;
+    levelId: number;
+    loadingFilter: boolean = false;
 
     filter: string;
     @ViewChild('dataTable', { static: true }) dataTable: Table;
@@ -27,12 +33,43 @@ export class ListComponent extends AppComponentBase implements OnInit {
         private _router: Router,
         private _DialogSharedService: DialogSharedService,
         private _sessionsServiceProxy: SessionsServiceProxy,
+        private _studyLevelsServiceProxy: StudyLevelsServiceProxy,
+        private _studySubjectsProxy: StudySubjectsServiceProxy,
     ) {
         super(_injector);
         this.isAudit = window?.location.href.includes('audit');
     }
 
-    ngOnInit() {}
+    ngOnInit() {
+            // Use forkJoin to get all references in parallel
+            forkJoin([
+                this._studyLevelsServiceProxy.getAll(
+                    undefined, // filter
+                    undefined, // sorting
+                    undefined, // skipCount
+                    undefined, // maxResultCount
+                    undefined, // extra param
+                ),
+                this._studySubjectsProxy.getAll(undefined, undefined, undefined, undefined, undefined, undefined),
+            ]).subscribe({
+                next: ([studyLevelsRes, studySubjectsRes]) => {
+                    // Map each response to your arrays
+                    this.studyLevels = studyLevelsRes.items.map((item) => ({
+                        id: item.studyLevel.id,
+                        name: item.studyLevel.name,
+                    }));
+    
+                    this.studySubjects = studySubjectsRes.items.map((item) => ({
+                        id: item.studySubject.id,
+                        name: item.studySubject.name,
+                    }));
+                },
+                error: (err) => {
+                    // Handle error if needed
+                    this.loadingFilter = false;
+                },
+            });
+    }
     getQuestion() {}
     getList(event?: LazyLoadEvent) {
         if (event) {
@@ -52,8 +89,8 @@ export class ListComponent extends AppComponentBase implements OnInit {
                 undefined,
                 undefined,
                 undefined,
-                undefined,
-                undefined,
+                this.levelId || undefined,
+                this.subjectId ||undefined,
                 undefined,
                 undefined,
                 undefined,
@@ -75,6 +112,11 @@ export class ListComponent extends AppComponentBase implements OnInit {
                 console.log();
                 break;
         }
+    }
+    clearFilter() {
+        this.subjectId = undefined;
+        this.levelId = undefined;
+        this.getList();
     }
 
     addTemplate() {
