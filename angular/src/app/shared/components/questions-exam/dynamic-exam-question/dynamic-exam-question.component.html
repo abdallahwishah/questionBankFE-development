@@ -15,7 +15,8 @@
         <app-connecting-words [config]="question"></app-connecting-words>
     }
     @case (QuestionTypeEnum.LinkedQuestions) {
-        <app-related-questions></app-related-questions>
+         <div #RelatedQuestion></div>
+
     }
     @case (QuestionTypeEnum.Rearrange) {
         <app-words-order [config]="question"></app-words-order>
