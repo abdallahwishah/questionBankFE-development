@@ -49322,3 +49322,21 @@ body,
     background: #F8F8F8 !important;
     color: rgb(126, 130, 153) !important;
 }
+
+
+.input-normal-form-calendar{
+    #Icons_Calendar{
+        /* position: relative;
+        left: 38px;
+        right: inherit !important;
+        float: inline-end;
+        bottom: 0;
+        top: 15px; */
+        position: relative;
+        left: 14px;
+        right: inherit !important;
+        float: inline-end;
+        bottom: 0;
+        top: -32px;
+    }
+}

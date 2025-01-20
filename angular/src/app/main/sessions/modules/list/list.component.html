@@ -102,9 +102,9 @@
                         {{ l('SessionName') }}
                         <p-sortIcon field="SessionName"></p-sortIcon>
                     </th>
-                    <th pSortableColumn="QuestionName">
-                        {{ l('QuestionName') }}
-                        <p-sortIcon field="QuestionName"></p-sortIcon>
+                    <th pSortableColumn="">
+                        {{ l('NumberOfSchools') }}
+                        <p-sortIcon field=""></p-sortIcon>
                     </th>
                     <th pSortableColumn="StartDate">
                         {{ l('StartDate') }}
@@ -133,18 +133,18 @@
                         {{ record.session.name || '-' }}
                     </td>
                     <td>
-                        <span class="p-column-title">{{ l('examTemplateName') }}</span>
-                        {{ record.examTemplateName || '-' }}
+                        <span class="p-column-title">{{ l('NumberOfSchools') }}</span>
+                        {{ '___' }}
                     </td>
 
 
                     <td>
                         <span class="p-column-title">{{ l('startDate') }}</span>
-                        {{ (record.session.startDate | luxonFormat: 'dd/MM/yyyy - hh:mm a') || '-' }}
+                        {{ (record.session.startDate | luxonFormat: 'hh:mm a - dd/MM/yyyy') || '-' }}
                     </td>
                     <td>
                         <span class="p-column-title">{{ l('endDate') }}</span>
-                        {{ (record.session.endDate | luxonFormat: 'dd/MM/yyyy - hh:mm a') || '-' }}
+                        {{ (record.session.endDate | luxonFormat:  'hh:mm a - dd/MM/yyyy') || '-' }}
                     </td>
                     <td>
                          {{  sessionStatusEnum[record.session.status]}}
@@ -154,7 +154,7 @@
                     <td>
                         <app-action-button
                             [ActionsInfo]="[
-                                { label: 'View' },
+                                { label: 'ViewSetionSchool' },
                                 {
                                     label: 'Edit'
                                 },
@@ -188,4 +188,4 @@
 
 
 <!-- Modals -->
- <app-add-sessions-modal></app-add-sessions-modal>
+ <app-add-sessions-modal (OnRefresh)="getList()"></app-add-sessions-modal>

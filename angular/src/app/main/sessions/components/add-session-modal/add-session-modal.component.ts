@@ -1,16 +1,14 @@
-import { Component, Injector, OnInit } from '@angular/core';
+import { map } from 'rxjs';
+import { Component, EventEmitter, Injector, OnInit, Output } from '@angular/core';
 import { DialogSharedService } from '@app/shared/components/dialog-shared/dialog-shared.service';
 import { UniqueNameComponents } from '@app/shared/Models/UniqueNameComponents';
 import { AppComponentBase } from '@shared/common/app-component-base';
-import { DropdownFieldComponent } from '../../../../shared/components/fields/dropdown-field/dropdown-field.component';
-import { DialogSharedModule } from '../../../../shared/components/dialog-shared/dialog-shared.module';
-import { DateComponent } from '../../../../shared/components/fields/date/date.component';
-import { AutoCompleteComponent } from "../../../../shared/components/fields/auto-complete/auto-complete.component";
+
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ExamTemplatesServiceProxy, SessionsServiceProxy } from '@shared/service-proxies/service-proxies';
 
 @Component({
     selector: 'app-add-sessions-modal',
-    standalone: true,
-    imports: [DropdownFieldComponent, DialogSharedModule, DateComponent, AutoCompleteComponent],
     templateUrl: './add-session-modal.component.html',
     styleUrl: './add-session-modal.component.css',
 })
@@ -18,17 +16,76 @@ export class AddSessionsModalComponent extends AppComponentBase implements OnIni
     Add_Session_dialog = UniqueNameComponents.Add_Session_dialog;
     saving = false;
 
+    @Output() OnRefresh: EventEmitter<boolean> = new EventEmitter<boolean>();
+
+
+
+
+
+
+
+    FormAddSession:FormGroup;
+
+    ListExamTemplates:any[]=[];
     constructor(
         injector: Injector,
         private _DialogSharedService: DialogSharedService,
+        private _fb:FormBuilder,
+        private _ExamTemplatesServiceProxy:ExamTemplatesServiceProxy,
+        private _SessionsServiceProxy:SessionsServiceProxy,
     ) {
         super(injector);
+        this.FormAddSession=this._fb.group({
+            id:[null],
+            name:[null,Validators.required],
+            startDate:[null,Validators.required],
+            endDate:[null,Validators.required],
+            examTemplateId:[null,Validators.required],
+            supervisorFileToken:[null],
+            studentFileToken:[null],
+        })
     }
-    ngOnInit(): void {}
+    ngOnInit(): void {
 
-    Save() {}
+        this._ExamTemplatesServiceProxy.getAll(
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined
+        ).subscribe((res:any)=>{
+            this.ListExamTemplates=res?.items.map((val:any)=>{
+             return {
+                Id:val?.examTemplate?.id,
+                name:val?.examTemplate?.name,
+             }
+            });
+
+        });
+
+
+
+    }
+
+    Save() {
+
+        if(this.FormAddSession.valid){
+            this._SessionsServiceProxy.createOrEdit(this.FormAddSession.value).subscribe(res=>{
+             this.OnRefresh.emit();
+             this.closeDialog();
+            })
+        }
+        else{
+
+        }
+
+    }
 
     closeDialog() {
+        this.FormAddSession.reset();
         this._DialogSharedService.hideDialog(this.Add_Session_dialog);
     }
 }

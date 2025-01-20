@@ -2,9 +2,10 @@ import { SessionsServiceProxy, SessionStatusEnum } from './../../../../../shared
 import { Component, Injector, OnInit, ViewChild } from '@angular/core';
 import { DialogSharedService } from '@app/shared/components/dialog-shared/dialog-shared.service';
 import { UniqueNameComponents } from '@app/shared/Models/UniqueNameComponents';
+import { Router } from '@angular/router';
 import { LazyLoadEvent } from '@node_modules/primeng/api';
-import { Paginator } from '@node_modules/primeng/paginator';
-import { Table } from '@node_modules/primeng/table';
+import { Paginator } from 'primeng/paginator';
+import { Table } from 'primeng/table';
 import { AppComponentBase } from '@shared/common/app-component-base';
 
 @Component({
@@ -26,6 +27,7 @@ export class ListComponent extends AppComponentBase implements OnInit {
         private _injector: Injector,
         private _DialogSharedService: DialogSharedService,
         private _sessionsServiceProxy: SessionsServiceProxy,
+        private _router:Router
     ) {
         super(_injector);
     }
@@ -81,8 +83,8 @@ export class ListComponent extends AppComponentBase implements OnInit {
     }
     doActions(label: any, record: any) {
         switch (label) {
-            case 'View':
-                console.log();
+            case 'ViewSetionSchool':
+                this._router.navigate(['/app/main/sessions/schools/',record?.session?.id]);
                 break;
         }
     }

@@ -6,13 +6,20 @@ import { PaginatorComponent } from '@app/shared/common/paginator/paginator.compo
 import { ActionButtonComponent } from '@app/shared/components/action-button/action-button.component';
 import { DropdownFieldComponent } from '@app/shared/components/fields/dropdown-field/dropdown-field.component';
 import { FiltersComponent } from '@app/shared/components/filters/filters.component';
-import { RouterModule } from '@node_modules/@angular/router';
-import { AddSessionsModalComponent } from "../../components/add-session-modal/add-session-modal.component";
+import { RouterModule } from '@angular/router';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { AddSessionsModalComponent } from '../../components/add-session-modal/add-session-modal.component';
+import { AutoCompleteComponent } from '@app/shared/components/fields/auto-complete/auto-complete.component';
+import { DateComponent } from '@app/shared/components/fields/date/date.component';
+import { DialogSharedModule } from '@app/shared/components/dialog-shared/dialog-shared.module';
+import { CalendarModule } from 'primeng/calendar';
 
 @NgModule({
  imports: [
     CommonModule,
     AppSharedModule,
+    FormsModule,
+    ReactiveFormsModule,
     RouterModule.forChild([
         {
             path: '',
@@ -23,8 +30,15 @@ import { AddSessionsModalComponent } from "../../components/add-session-modal/ad
     DropdownFieldComponent,
     ActionButtonComponent,
     PaginatorComponent,
-    AddSessionsModalComponent
+    DropdownFieldComponent,
+    DateComponent,
+    AutoCompleteComponent,
+    DialogSharedModule,
+    CalendarModule
+
 ],
-  declarations: [ListComponent]
+  declarations: [ListComponent,
+    AddSessionsModalComponent
+  ]
 })
 export class ListModule { }

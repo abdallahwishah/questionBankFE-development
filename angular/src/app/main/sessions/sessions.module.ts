@@ -15,7 +15,18 @@ import { SessionsServiceProxy } from '@shared/service-proxies/service-proxies';
                   {
                       path: '',
                       loadChildren: () => import('./modules/list/list.module').then((m) => m.ListModule),
-                  }
+                  },
+                  {
+                    path: 'schools/:id',
+                    loadChildren: () =>
+                        import('../sessions/modules/schools/schools.module').then((m) => m.SchoolsModule),
+                },
+                {
+                    path: 'supervisors-students/:id',
+                    loadChildren: () =>
+                        import('../sessions/modules/supervisors-students/supervisors-students.module').then((m) => m.SupervisorsStudentsModule),
+                }
+
               ],
           },
       ]),
