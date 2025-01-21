@@ -31,6 +31,8 @@ export class DynamicExamQuestionComponent {
     ) {}
     @Input() questionType: any;
     @Input() question: any;
+    @Input() order: any;
+
     QuestionTypeEnum = QuestionTypeEnum;
     dynamicListInstance: any;
     ngOnInit(): void {

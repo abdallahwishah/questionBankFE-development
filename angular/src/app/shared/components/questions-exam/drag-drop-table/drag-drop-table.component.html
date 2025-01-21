@@ -1,3 +1,4 @@
+<!-- drag-drop-table.component.html -->
 <div class="drag-drop-table-container" *ngIf="tableView as tv">
     <div class="mb-3" *ngIf="config?.question?.body" [innerHTML]="config.question.body"></div>
 
@@ -42,7 +43,7 @@
                 >
                     <div class="cell-content">
                         <span>{{ cell.value }}</span>
-
+                        <!-- <span class="order-indicator" *ngIf="cell.order">{{ cell.order }}</span> -->
                         <i
                             *ngIf="cell.value && !cell.pinned"
                             class="pi pi-times remove-icon"
@@ -56,5 +57,5 @@
 </div>
 
 <ng-template #noData>
-    <p class="text-muted">لا يوجد جدول للعرض</p>
+    <p class="text-muted">No table data available</p>
 </ng-template>

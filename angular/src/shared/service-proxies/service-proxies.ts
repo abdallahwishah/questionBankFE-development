@@ -53680,6 +53680,7 @@ export class QuestionWithAnswerDto implements IQuestionWithAnswerDto {
     sectionId!: number;
     examSectionId!: number;
     sectionNo!: number;
+    questionNo!: number;
     sectionInstructions!: string | undefined;
     sectionDuration!: number;
     remainingSeconds!: number;
@@ -53717,6 +53718,7 @@ export class QuestionWithAnswerDto implements IQuestionWithAnswerDto {
             this.sectionId = _data["sectionId"];
             this.examSectionId = _data["examSectionId"];
             this.sectionNo = _data["sectionNo"];
+            this.questionNo = _data["questionNo"];
             this.sectionInstructions = _data["sectionInstructions"];
             this.sectionDuration = _data["sectionDuration"];
             this.remainingSeconds = _data["remainingSeconds"];
@@ -53778,6 +53780,7 @@ export class QuestionWithAnswerDto implements IQuestionWithAnswerDto {
         data["sectionId"] = this.sectionId;
         data["examSectionId"] = this.examSectionId;
         data["sectionNo"] = this.sectionNo;
+        data["questionNo"] = this.questionNo;
         data["sectionInstructions"] = this.sectionInstructions;
         data["sectionDuration"] = this.sectionDuration;
         data["remainingSeconds"] = this.remainingSeconds;
@@ -53832,6 +53835,7 @@ export interface IQuestionWithAnswerDto {
     sectionId: number;
     examSectionId: number;
     sectionNo: number;
+    questionNo: number;
     sectionInstructions: string | undefined;
     sectionDuration: number;
     remainingSeconds: number;

@@ -13,7 +13,7 @@ import { AccordionModule } from 'primeng/accordion';
 
 @Component({
     standalone: true,
-    imports: [DynamicExamQuestionComponent, CommonModule, FormsModule , SidebarModule , AccordionModule],
+    imports: [DynamicExamQuestionComponent, CommonModule, FormsModule, SidebarModule, AccordionModule],
     selector: 'app-exam-viewer-and-attempt',
     templateUrl: './exam-viewer-and-attempt.component.html',
     styleUrls: ['./exam-viewer-and-attempt.component.css'],
@@ -76,7 +76,7 @@ export class ExamViewerAndAttemptComponent implements OnInit {
             const viewDto = new ViewExamQuestionDto();
             viewDto.examId = this.id;
             viewDto.questionId = this.question.questionId;
-            viewDto.questionNo = this.examData.questionNo;
+            viewDto.questionNo = this.examData.questionNo + 1;
             viewDto.sectionId = this.question.sectionId;
             viewDto.sectionNo = this.examData.sectionNo;
 
@@ -94,7 +94,7 @@ export class ExamViewerAndAttemptComponent implements OnInit {
     private prepareAnswerDto(): ExamQuestionWithAnswerDto {
         const dto = new ExamQuestionWithAnswerDto();
         dto.examId = this.id;
-        dto.questionNo = this.question.questionNo;
+        dto.questionNo = this.examData.questionNo - 1;
         dto.sectionId = this.question.sectionId;
         dto.sectionNo = this.examData.sectionNo;
         dto.type = this.question.question.type;
@@ -103,6 +103,11 @@ export class ExamViewerAndAttemptComponent implements OnInit {
 
     private updateQuestion(response: any) {
         this.question = response.question;
+        this.examData.questionNo = response.questionNo;
+        if (this.examData.isNextSection) {
+            this.examData.sectionNo = response.sectionNo;
+            this.examData.sectionInstructions = response.sectionInstructions;
+        }
     }
 
     getRemainingTime(seconds: number): string {

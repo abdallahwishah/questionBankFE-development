@@ -1,11 +1,13 @@
 <div class="mb-3" *ngIf="config?.question?.body">
     <div [innerHTML]="config.question.body"></div>
-    <ng-container *ngFor="let question of config.linkedQuestions">
-        <div class="mt-2">
+    <ng-container *ngFor="let question of config.linkedQuestions; let i = index">
+        <div class="mt-4">
             <app-dynamic-exam-question
+                [order]="i + 1"
                 [question]="question"
                 [questionType]="question.question.type"
             ></app-dynamic-exam-question>
         </div>
+        <hr class="my-4" />
     </ng-container>
 </div>
