@@ -3,13 +3,53 @@
 
     <sub-header [title]="'SubjectGroups' | localize" [description]="'SubjectGroupsHeaderInfo' | localize">
         <div role="actions">
-            <button (click)="exportToExcel()"
+            <!-- <button (click)="exportToExcel()"
                 class="btn btn-outline btn-outline-success btn-active-light-success me-1"><i
                     class="fa fa-file-excel"></i> {{l("ExportToExcel")}}</button>
 
             <button id="btn_create_subjectGroup" *ngIf="isGranted('Pages.SubjectGroups.Create')"
                 (click)="createSubjectGroup()" class="btn btn-primary blue"><i class="fa fa-plus"></i>
-                {{l("CreateNewSubjectGroup")}}</button>
+                {{l("CreateNewSubjectGroup")}}</button> -->
+                <div class="d-flex gap-3">
+                    <div>
+                        <button class="btn btn-primary d-flex gap-2" (click)="createSubjectGroup()" *ngIf="isGranted('Pages.StudySubjects.Create')">
+                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M6.66663 10.625C6.32496 10.625 6.04163 10.3417 6.04163 10C6.04163 9.65833 6.32496 9.375 6.66663 9.375H13.3333C13.675 9.375 13.9583 9.65833 13.9583 10C13.9583 10.3417 13.675 10.625 13.3333 10.625H6.66663Z"
+                                    fill="white" />
+                                <path
+                                    d="M9.375 13.3334V6.66669C9.375 6.32502 9.65833 6.04169 10 6.04169C10.3417 6.04169 10.625 6.32502 10.625 6.66669V13.3334C10.625 13.675 10.3417 13.9584 10 13.9584C9.65833 13.9584 9.375 13.675 9.375 13.3334Z"
+                                    fill="white" />
+                                <path fill-rule="evenodd" clip-rule="evenodd"
+                                    d="M7.49996 18.9584C2.97496 18.9584 1.04163 17.025 1.04163 12.5V7.50002C1.04163 2.97502 2.97496 1.04169 7.49996 1.04169H12.5C17.025 1.04169 18.9583 2.97502 18.9583 7.50002V12.5C18.9583 17.025 17.025 18.9584 12.5 18.9584H7.49996ZM2.29163 7.50002V12.5C2.29163 16.3417 3.65829 17.7084 7.49996 17.7084H12.5C16.3416 17.7084 17.7083 16.3417 17.7083 12.5V7.50002C17.7083 3.65835 16.3416 2.29169 12.5 2.29169H7.49996C3.65829 2.29169 2.29163 3.65835 2.29163 7.50002Z"
+                                    fill="white" />
+                            </svg>
+    
+                            <span class="d-none d-md-inline-block">
+                                {{ l('CreateNewSubjectGroup') }}
+                            </span>
+                        </button>
+                    </div>
+                    <div>
+                        <button class="btn btn-outline d-flex gap-2">
+                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M7.2838 18.5412C3.19214 18.5412 1.44214 16.7912 1.44214 12.6996V12.5912C1.44214 8.89124 2.90047 7.10791 6.16714 6.79957C6.50047 6.77457 6.81714 7.02457 6.85047 7.36624C6.88381 7.70791 6.63381 8.01624 6.28381 8.04957C3.66714 8.29124 2.69214 9.52457 2.69214 12.5996V12.7079C2.69214 16.0996 3.89214 17.2996 7.2838 17.2996H12.7171C16.1088 17.2996 17.3088 16.0996 17.3088 12.7079V12.5996C17.3088 9.50791 16.3171 8.27457 13.6505 8.04957C13.3088 8.01624 13.0505 7.71624 13.0838 7.37457C13.1171 7.03291 13.4088 6.77457 13.7588 6.80791C17.0755 7.09124 18.5588 8.88291 18.5588 12.6079V12.7162C18.5588 16.7912 16.8088 18.5412 12.7171 18.5412H7.2838Z"
+                                    fill="#171A1F" />
+                                <path
+                                    d="M9.375 12.4999V3.0166C9.375 2.67493 9.65833 2.3916 10 2.3916C10.3417 2.3916 10.625 2.67493 10.625 3.0166V12.4999C10.625 12.8416 10.3417 13.1249 10 13.1249C9.65833 13.1249 9.375 12.8416 9.375 12.4999Z"
+                                    fill="#171A1F" />
+                                <path
+                                    d="M12.3498 5.31621L9.99979 2.96621L7.64979 5.31621C7.40812 5.55788 7.00812 5.55788 6.76646 5.31621C6.52479 5.07454 6.52479 4.67454 6.76646 4.43288L9.55812 1.64121C9.79979 1.39954 10.1998 1.39954 10.4415 1.64121L13.2331 4.43288C13.4748 4.67454 13.4748 5.07454 13.2331 5.31621C13.1165 5.44121 12.9498 5.49954 12.7915 5.49954C12.6331 5.49954 12.4748 5.44121 12.3498 5.31621Z"
+                                    fill="#171A1F" />
+                            </svg>
+                            <!-- <i class="fa fa-file-excel my-1"></i> -->
+                            <span class="d-none d-md-inline-block" (click)="exportToExcel()">
+                                {{ l('ExportToExcel') }}
+                            </span>
+                        </button>
+                    </div>
+                </div>
         </div>
     </sub-header>
 
