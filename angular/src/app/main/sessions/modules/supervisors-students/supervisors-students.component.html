@@ -1,10 +1,118 @@
-
-
-
-<div class="row">
-    <div class="col-12">
-
-
+<div class="container-fluid px-5 mt-md-5 mt-7">
+    <div class="d-flex align-items-center">
+        <span class="cursor-pointer" [routerLink]="'/app/main/sessions'">
+            <!-- Back arrow icon -->
+            <svg
+                width="14"
+                height="14"
+                viewBox="0 0 14 14"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                class="postion"
+            >
+                <path
+                    d="M9.3337 8.12643L5.53036 11.9298C5.3612 12.0989 5.0812 12.0989 4.91203 11.9298C4.74286 11.7606 4.74286 11.4806 4.91203 11.3114L8.71536 7.5081C8.99536 7.2281 8.99536 6.7731 8.71536 6.4931L4.91203 2.68977C4.74286 2.5206 4.74286 2.2406 4.91203 2.07143C5.0812 1.90226 5.3612 1.90226 5.53036 2.07143L9.3337 5.87476C9.64286 6.18393 9.80036 6.59227 9.80036 7.0006C9.80036 7.40893 9.64286 7.81727 9.3337 8.12643Z"
+                    fill="#999999"
+                />
+            </svg>
+            {{ l('Exams') }}
+        </span>
+        <span class="mx-2">/</span>
+        <span>
+            {{ l('جلسة اختبار الرياضيات') }}
+        </span>
+        <span class="mx-2">/</span>
+        <span>
+            {{ l('مدرسة السلام قاعة 1') }}
+        </span>
+        <span class="mx-2">/</span>
+        <!-- Display the exam title if available -->
+        <h2 class="fw-bolder mb-0">
+            {{ 'المشرفين والطلاب' }}
+        </h2>
     </div>
+
+
+      <!-- Start Tabel -->
+      <div class="primeng-datatable-container p-0 col-12 mt-6">
+        <p-table
+            #dataTable
+            [value]="primengTableHelper.records"
+            (onLazyLoad)="getList($event)"
+            rows="{{ primengTableHelper.defaultRecordsCountPerPage }}"
+            [paginator]="false"
+            [loading]="primengTableHelper.isLoading"
+            [lazy]="true"
+            [scrollable]="true"
+            ScrollWidth="100%"
+            [resizableColumns]="primengTableHelper.resizableColumns"
+        >
+            <ng-template pTemplate="header">
+                <tr>
+                    <th pSortableColumn="caseCode">
+                        {{  '#' }}
+                    </th>
+                    <th pSortableColumn="SessionName" >
+                        {{ l('اسم المدرسة') }}
+                        <p-sortIcon field="SessionName"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="SessionName" >
+                        {{ l('اسم الطالب') }}
+                        <p-sortIcon field="SessionName"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="SessionName" >
+                        {{ l('رقم الهوية') }}
+                        <p-sortIcon field="SessionName"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="SessionName" >
+                        {{ l('القسم الحالي') }}
+                        <p-sortIcon field="SessionName"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="SessionName" >
+                        {{ l('السؤال الحالي') }}
+                        <p-sortIcon field="SessionName"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="SessionName" >
+                        {{ l('الحالة') }}
+                        <p-sortIcon field="SessionName"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="SessionName" >
+                        {{ l('Actions') }}
+                        <p-sortIcon field="SessionName"></p-sortIcon>
+                    </th>
+                   
+                    
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-record="$implicit" let-i="rowIndex">
+                <tr>
+                    <td>
+                        {{ i + 1 }}
+                    </td>
+                  <td >
+                    <span class="p-column-title">{{ l('name') }}</span>
+                    {{ record.school.name || '-' }}
+                  </td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+            </ng-template>
+        </p-table>
+        <div class="primeng-no-data" *ngIf="primengTableHelper.totalRecordsCount == 0">
+            {{ l('NoData') }}
+        </div>
+        <p-paginator
+                #paginator
+                [rows]="primengTableHelper.defaultRecordsCountPerPage"
+                (onPageChange)="getList($event)"
+                [totalRecords]="primengTableHelper.totalRecordsCount"
+                [rows]="primengTableHelper.defaultRecordsCountPerPage"
+                [rowsPerPageOptions]="primengTableHelper.predefinedRecordsCountPerPage"
+            ></p-paginator>
+    </div>
+    <!-- End Tabel -->
+
 
 </div>

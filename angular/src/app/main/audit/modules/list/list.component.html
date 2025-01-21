@@ -26,7 +26,7 @@
                         [placeholder]="l('Search')"
                         type="text"
                         [(ngModel)]="filter"
-                        (ngModelChange)="getQuestion()"
+                        (ngModelChange)="getList()"
                     />
                     <button class="btn btn-primary" type="submit">
                         <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -39,7 +39,7 @@
 
             <div class="col-md-3 d-grid justify-content-end ">
                 <app-filters>
-                    <ng-container filterBody>
+                    <!-- <ng-container filterBody>
                         <div class="row">
                             <div class="col-12 mb-5">
                                 <app-dropdown-field [labelField]="l('StudySubject')"></app-dropdown-field>
@@ -54,6 +54,49 @@
                             </button>
                             <button class="btn btn-outline">
                                 {{ 'Reset' | localize }}
+                            </button>
+                        </div>
+                    </ng-container> -->
+                    <ng-container filterBody>
+                        <div class="row">
+                            @if (!loadingFilter) {
+
+                                <div class="col-12 mb-5">
+                                    <app-dropdown-field
+                                    [options]="studySubjects"
+                                    [(ngModel)]="subjectId"
+                                    optionLabel="name"
+                                    optionValue="id"
+                                    [labelField]="l('StudySubject')"
+                                ></app-dropdown-field>
+
+                                </div>
+                                <div class="col-12 mb-5">
+                                        <app-dropdown-field
+                                            [options]="studyLevels"
+                                            [(ngModel)]="levelId"
+                                            optionLabel="name"
+                                            optionValue="id"
+                                            [labelField]="l('StudyLevel')"
+                                        ></app-dropdown-field>
+                                </div>
+    
+
+                            }@else {
+
+                            @for (item of [1 , 2 , 3]; track $index) {
+                                <div class="col-12 mb-5">
+                                    <app-skeleton></app-skeleton>
+                                </div>
+                            }
+                            }
+                        </div>
+                        <div class="d-flex justify-content-between mt-4">
+                            <button class="btn btn-primary" (click)="getList(); closeFilters()">
+                                {{ 'searchFilters' | localize }}
+                            </button>
+                            <button class="btn btn-outline" (click)="clearFilter()">
+                                {{ 'ResetFilters' | localize }}
                             </button>
                         </div>
                     </ng-container>
@@ -88,9 +131,9 @@
                             {{ l('SessionName') }}
                             <p-sortIcon field="name"></p-sortIcon>
                         </th>
-                        <th pSortableColumn="examTemplateName">
-                            {{ l('ExamTemplateName') }}
-                            <p-sortIcon field="examTemplateName"></p-sortIcon>
+                        <th pSortableColumn="ExamName">
+                            {{ l('ExamName') }}
+                            <p-sortIcon field="ExamName"></p-sortIcon>
                         </th>
                         <th pSortableColumn="StartDate">
                             {{ l('StartDate') }}
@@ -133,27 +176,28 @@
                         <td>
                             <span class="p-column-title">{{ l('StudyLevel') }}</span>
                             @if(record?.session?.status === sessionStatusEnum.Active){
-                               <span>
+                               <span class="status-grean">
                                 {{l('Active')}}
                                </span>
                             }
                             @else if (record?.session?.status === sessionStatusEnum.Finished) {
-                                {{l('Finished')}}
+                                <span class="status-grean">{{l('Finished')}}</span>
                             }
                             @else if (record?.session?.status === sessionStatusEnum.InCreation) {
-                                {{l('InCreation')}}
+                                <span class="status-info">{{l('InCreation')}}</span>
                             }
                             @else if (record?.session?.status === sessionStatusEnum.Invalid) {
-                                {{l('Invalid')}}
+                                <span class="status-read">{{l('Invalid')}}</span>
                             }
                             @else if (record?.session?.status === sessionStatusEnum.NotStarted) {
-                                {{l('NotStarted')}}
+                                <span class="status-notStarted">{{l('NotStarted')}}</span>
                             }
                             @else if (record?.session?.status === sessionStatusEnum.Suspended) {
-                                {{l('Suspended')}}
+                                <span class="status-suspended">{{l('Suspended')}}</span>
+        
                             }
+        
                         </td>
-
                         <td>
                             <app-action-button
                                 [ActionsInfo]="[
@@ -192,14 +236,6 @@
             ></app-paginator>
         </div>
         <!-- End Tabel -->
-
-
-
-
-        <p class="mb-0 mt-4">for test</p>
-        <button class="btn btn-primary" routerLink="/app/main/correcting/answers/1">
-            go to answers
-        </button>
     </div>
 </div>
 

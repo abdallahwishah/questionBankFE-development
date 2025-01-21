@@ -50,9 +50,13 @@
     margin-bottom: 0;
     font-size: 16px;
 }
+.card{
+    position: relative;
+}
 
 .footer-page{
-    position: fixed;
+    margin-top: 80px;
+    position: absolute;
     width: 99%;
     bottom: 0;
     padding-top: 1rem;
@@ -79,6 +83,16 @@
     padding: 2rem;
 }
 
+.num-box{
+    width: 35px;
+    height: 35px;
+    color: #6D31ED;
+    background-color: rgba(109, 49, 237, 0.06);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+    border-radius: 10px;
+}
 
 @media only screen and (max-width: 991px) {
     .footer-page{

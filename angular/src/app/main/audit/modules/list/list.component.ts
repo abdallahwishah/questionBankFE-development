@@ -5,8 +5,10 @@ import { LazyLoadEvent } from 'primeng/api';
 import { AppComponentBase } from '@shared/common/app-component-base';
 import { Table } from 'primeng/table';
 import { Paginator } from 'primeng/paginator';
-import { SessionsServiceProxy, SessionStatusEnum } from '@shared/service-proxies/service-proxies';
+import { SessionsServiceProxy, SessionStatusEnum, StudyLevelsServiceProxy, StudySubjectsServiceProxy } from '@shared/service-proxies/service-proxies';
 import { Router } from '@node_modules/@angular/router';
+import { FiltersComponent } from '@app/shared/components/filters/filters.component';
+import { forkJoin } from 'rxjs';
 
 @Component({
     selector: 'app-list',
@@ -15,6 +17,14 @@ import { Router } from '@node_modules/@angular/router';
 })
 export class ListComponent extends AppComponentBase implements OnInit {
     Warning_dialog = UniqueNameComponents.Warning_dialog;
+    @ViewChild(FiltersComponent) FiltersComponent: FiltersComponent;
+
+
+    studyLevels: any[] = [];
+    studySubjects: any[] = [];
+    subjectId: number;
+    levelId: number;
+    loadingFilter: boolean = false;
 
     filter: string;
       @ViewChild('dataTable', { static: true }) dataTable: Table;
@@ -27,12 +37,43 @@ export class ListComponent extends AppComponentBase implements OnInit {
         private _router:Router,
         private _DialogSharedService: DialogSharedService,
         private _sessionsServiceProxy: SessionsServiceProxy,
+        private _studyLevelsServiceProxy: StudyLevelsServiceProxy,
+        private _studySubjectsProxy: StudySubjectsServiceProxy,
+        
     ) {
         super(_injector);
     }
 
-    ngOnInit() {}
-    getQuestion() {}
+    ngOnInit() {
+        // Use forkJoin to get all references in parallel
+        forkJoin([
+            this._studyLevelsServiceProxy.getAll(
+                undefined, // filter
+                undefined, // sorting
+                undefined, // skipCount
+                undefined, // maxResultCount
+                undefined, // extra param
+            ),
+            this._studySubjectsProxy.getAll(undefined, undefined, undefined, undefined, undefined, undefined),
+        ]).subscribe({
+            next: ([studyLevelsRes, studySubjectsRes]) => {
+                // Map each response to your arrays
+                this.studyLevels = studyLevelsRes.items.map((item) => ({
+                    id: item.studyLevel.id,
+                    name: item.studyLevel.name,
+                }));
+
+                this.studySubjects = studySubjectsRes.items.map((item) => ({
+                    id: item.studySubject.id,
+                    name: item.studySubject.name,
+                }));
+            },
+            error: (err) => {
+                // Handle error if needed
+                this.loadingFilter = false;
+            },
+        });
+}
     getList(event?: LazyLoadEvent) {
         if (event) {
             if (this.primengTableHelper.shouldResetPaging(event)) {
@@ -51,8 +92,8 @@ export class ListComponent extends AppComponentBase implements OnInit {
                 undefined,
                 undefined,
                 undefined,
-                undefined,
-                undefined,
+                this.levelId,
+                this.subjectId,
                 undefined,
                 undefined,
                 undefined,
@@ -74,11 +115,19 @@ export class ListComponent extends AppComponentBase implements OnInit {
            this._router.navigate(['/app/main/correcting/answers/',record?.session?.id]);
                 console.log();
                 break;
-
         }
     }
 
     addTemplate(){
         this._DialogSharedService.showDialog(this.Warning_dialog , {})
     }
+
+    clearFilter() {
+         this.subjectId = undefined;
+        this.levelId = undefined;
+        this.getList(); 
+    }
+    closeFilters(){
+        this.FiltersComponent.isPanelOpen = false
+     }
 }

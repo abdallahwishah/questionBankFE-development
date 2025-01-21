@@ -26,6 +26,13 @@ import { RouterModule } from '@node_modules/@angular/router';
                                 (m) => m.ExamViewerAndAttemptComponent,
                             ),
                     },
+                    {
+                        path: 'quiz',
+                        loadComponent: () =>
+                            import('./quiz/quiz.component').then(
+                                (m) => m.QuizComponent,
+                            ),
+                    },
                 ],
             },
         ]),

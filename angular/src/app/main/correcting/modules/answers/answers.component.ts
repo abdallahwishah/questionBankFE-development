@@ -70,9 +70,7 @@ export class AnswersComponent extends AppComponentBase implements OnInit {
       }
 
 
-  getAnswers(){
 
-  }
   doActions(label: any, record: any) {
     switch (label) {
         case 'View':

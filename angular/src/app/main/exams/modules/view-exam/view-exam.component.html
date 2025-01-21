@@ -213,10 +213,20 @@
 
                                         <div class="line mt-5"></div>
                                     </div>
+                                    <button
+                                    class="btn btn-outline-primary outline-dashed my-4"
+                                    (click)="addNewQ()"
+                                    style="width: 300px"
+                                >
+                                    {{ l('AddNewQuestion') }}
+                                </button>
                                 </div>
                             </div>
+
+                          
                         </div>
                         <!-- End Sections -->
+                    
                     } @else {
                         <!-- Sections card -->
                         <div class="col-12 mt-6">
@@ -231,3 +241,5 @@
         </div>
     </div>
 </div>
+
+<app-add-view-exam-modal></app-add-view-exam-modal>

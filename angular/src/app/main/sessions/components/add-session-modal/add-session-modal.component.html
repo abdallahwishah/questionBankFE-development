@@ -28,7 +28,7 @@
                     <div class="col-md-6 mb-5">
                         <label class="col-form-label required">{{ l('StartDate') }}</label>
                         <div class="input-normal-form-calendar">
-                            <p-calendar formControlName="startDate" [showTime]="true" class="w-100"></p-calendar>
+                            <p-calendar formControlName="startDate" appendTo="body" [showTime]="true" class="w-100"></p-calendar>
                             <svg
                                 width="26"
                                 id="Icons_Calendar"
@@ -88,7 +88,7 @@
 
                         <label class="col-form-label required">{{ l('EndDate') }}</label>
                         <div class="input-normal-form-calendar">
-                            <p-calendar formControlName="endDate" [showTime]="true" class="w-100"></p-calendar>
+                            <p-calendar formControlName="endDate" appendTo="body" [showTime]="true" class="w-100"></p-calendar>
                             <svg
                                 width="26"
                                 id="Icons_Calendar"

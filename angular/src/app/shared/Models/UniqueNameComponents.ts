@@ -9,6 +9,7 @@ export enum UniqueNameComponents {
     Add_File_dialog='Add_File_dialog',
     Add_Session_dialog='Add_Session_dialog',
     Add_Test_dialog='Add_Test_dialog',
+    Add_View_exam_dialog='Add_View_exam_dialog',
     Warning_dialog='Warning_dialog',
     Copy_Template_dialog='Copy_Template_dialog',
     Copy_Class_dialog='Copy_Class_dialog',

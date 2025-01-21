@@ -10,6 +10,7 @@ import { AddFileModalComponent } from '@app/main/question-bank/components/add-fi
 import { ViewExamComponent } from './view-exam.component';
 import { SkeletonComponent } from "../../../../shared/components/skeleton/skeleton.component";
 import { DynamicExamQuestionComponent } from '@app/shared/components/questions-exam/dynamic-exam-question/dynamic-exam-question.component';
+import { AddViewExamModalComponent } from '../../components/add-view-exam-modal/add-view-exam-modal.component';
 
 @NgModule({
     imports: [
@@ -31,7 +32,8 @@ import { DynamicExamQuestionComponent } from '@app/shared/components/questions-e
     InputSwitchModule,
     AddFileModalComponent,
     DynamicExamQuestionComponent,
-    SkeletonComponent
+    SkeletonComponent,
+    AddViewExamModalComponent
 ],
     declarations: [ViewExamComponent],
 })

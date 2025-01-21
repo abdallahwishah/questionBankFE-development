@@ -48685,7 +48685,7 @@ body,
   color: var(--bs-app-sidebar-light-menu-link-color);
 }
 [data-kt-app-layout=light-sidebar] .app-sidebar .menu .menu-item .menu-link .menu-title {
-    color: #565D6D !important;
+    color: #565D6D ;
 }
 [data-kt-app-layout=light-sidebar] .app-sidebar .menu .menu-item .menu-link .menu-icon,
 [data-kt-app-layout=light-sidebar] .app-sidebar .menu .menu-item .menu-link .menu-icon .svg-icon,
@@ -48784,12 +48784,13 @@ body,
   color: var(--bs-primary);
 }
 [data-kt-app-layout=light-sidebar] .app-sidebar .menu .menu-item .menu-link.active .menu-title {
-  color: var(--bs-primary);
+  color:#fff;
 }
 [data-kt-app-layout=light-sidebar] .app-sidebar .menu .menu-item .menu-link.active .menu-icon,
 [data-kt-app-layout=light-sidebar] .app-sidebar .menu .menu-item .menu-link.active .menu-icon .svg-icon,
 [data-kt-app-layout=light-sidebar] .app-sidebar .menu .menu-item .menu-link.active .menu-icon i {
-  color: var(--bs-primary);
+  color: var(--bs-primary-inverse);
+
 }
 [data-kt-app-layout=light-sidebar] .app-sidebar .menu .menu-item .menu-link.active .menu-bullet .bullet {
   background-color: var(--bs-primary);
@@ -49333,10 +49334,22 @@ body,
         bottom: 0;
         top: 15px; */
         position: relative;
-        left: 14px;
+        left: 10px;
         right: inherit !important;
         float: inline-end;
         bottom: 0;
         top: -32px;
     }
+}
+.p-accordion .p-accordion-header .p-accordion-header-link .p-accordion-toggle-icon {
+    margin-left: 0.5rem !important;
+    margin-right: auto !important;
+}
+
+.p-accordion .p-accordion-header .p-icon{
+ color: #000 !important;
+}
+
+.p-datepicker .p-datepicker-header .p-datepicker-prev, .p-datepicker .p-datepicker-header .p-datepicker-next{
+  transform: rotate(180deg) !important;
 }

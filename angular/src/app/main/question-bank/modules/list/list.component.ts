@@ -13,6 +13,7 @@ import {
     StudyLevelsServiceProxy,
     StudySubjectsServiceProxy,
 } from '@shared/service-proxies/service-proxies';
+import { FiltersComponent } from '@app/shared/components/filters/filters.component';
 
 @Component({
     selector: 'app-list',
@@ -22,10 +23,13 @@ import {
 export class ListComponent extends AppComponentBase implements OnInit {
     @ViewChild('dataTable', { static: true }) dataTable: Table;
     @ViewChild('paginator', { static: true }) paginator: Paginator;
+    @ViewChild(FiltersComponent) FiltersComponent: FiltersComponent;
+
 
     studyLevels: any[] = [];
     studySubjects: any[] = [];
     status = [
+        { name: 'All', id: undefined },
         { name: 'Active', id: true },
         { name: 'NoActive', id: false },
     ];
@@ -111,9 +115,9 @@ export class ListComponent extends AppComponentBase implements OnInit {
                 this.isActiveFilter,
                 undefined,
                 undefined,
+                undefined,
                 this.subjectId || undefined,
                 this.levelId || undefined,
-                undefined,
                 undefined,
                 undefined,
                 this.primengTableHelper.getSorting(this.dataTable),
@@ -149,6 +153,9 @@ export class ListComponent extends AppComponentBase implements OnInit {
            this._questionsServiceProxy.updateQuestionStatus(record.question.id ,$event.checked ).subscribe(val=>{
              this.getList()
           })
+     }
+     closeFilters(){
+        this.FiltersComponent.isPanelOpen = false
      }
 
     doActions(label: any, record: any) {
