@@ -60,7 +60,52 @@
    </div>
 
 
-    <p-tabView styleClass="tabview-custom">
+      <!-- Filter & Search  -->
+      <div class="row switch-serch-bar mt-9 justify-content-end  " style="margin-bottom: -69px;">
+        <div class="col-md-4">
+            <div class="input-group search-group">
+                <input
+                    name="filterText"
+                    class="form-control m-input"
+                    [placeholder]="l('Search')"
+                    type="text"
+                    [(ngModel)]="filter"
+                    (ngModelChange)="getListSupervis()"
+                />
+                <button class="btn btn-primary" type="submit">
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            fill-rule="evenodd"
+                            clip-rule="evenodd"
+                            d="M18.9584 9.58317C18.9584 4.87484 15.125 1.0415 10.4167 1.0415C5.70837 1.0415 1.87504 4.87484 1.87504 9.58317C1.87504 14.2915 5.70837 18.1248 10.4167 18.1248C15.125 18.1248 18.9584 14.2915 18.9584 9.58317ZM17.7084 9.58317C17.7084 13.5998 14.4417 16.8748 10.4167 16.8748C6.39171 16.8748 3.12504 13.5998 3.12504 9.58317C3.12504 5.5665 6.39171 2.2915 10.4167 2.2915C14.4417 2.2915 17.7084 5.5665 17.7084 9.58317Z"
+                            fill="#6D31ED"
+                        />
+                        <path
+                            d="M2.10802 18.7752L3.77468 17.1085C4.01635 16.8669 4.01635 16.4669 3.77468 16.2252C3.53302 15.9835 3.13301 15.9835 2.89135 16.2252L1.22468 17.8919C0.983015 18.1335 0.983015 18.5335 1.22468 18.7752C1.34968 18.9002 1.50802 18.9585 1.66635 18.9585C1.82468 18.9585 1.98302 18.9002 2.10802 18.7752Z"
+                            fill="#6D31ED"
+                        />
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <div class="col-md-2 d-flex justify-content-end align-items-center">
+          <div>
+            <button class="btn btn-outline-primary2 d-flex gap-2" [routerLink]="'/app/main/question-bank/addQuestion'">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M6.6665 10.625C6.32484 10.625 6.0415 10.3417 6.0415 10C6.0415 9.65833 6.32484 9.375 6.6665 9.375H13.3332C13.6748 9.375 13.9582 9.65833 13.9582 10C13.9582 10.3417 13.6748 10.625 13.3332 10.625H6.6665Z" fill="#6D31ED"/>
+                    <path d="M9.375 13.3334V6.66675C9.375 6.32508 9.65833 6.04175 10 6.04175C10.3417 6.04175 10.625 6.32508 10.625 6.66675V13.3334C10.625 13.6751 10.3417 13.9584 10 13.9584C9.65833 13.9584 9.375 13.6751 9.375 13.3334Z" fill="#6D31ED"/>
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M7.49984 18.9584C2.97484 18.9584 1.0415 17.0251 1.0415 12.5001V7.50008C1.0415 2.97508 2.97484 1.04175 7.49984 1.04175H12.4998C17.0248 1.04175 18.9582 2.97508 18.9582 7.50008V12.5001C18.9582 17.0251 17.0248 18.9584 12.4998 18.9584H7.49984ZM2.2915 7.50008V12.5001C2.2915 16.3417 3.65817 17.7084 7.49984 17.7084H12.4998C16.3415 17.7084 17.7082 16.3417 17.7082 12.5001V7.50008C17.7082 3.65841 16.3415 2.29175 12.4998 2.29175H7.49984C3.65817 2.29175 2.2915 3.65841 2.2915 7.50008Z" fill="#6D31ED"/>
+                    </svg>
+                <span class="d-none d-md-inline-block">
+                    {{ l('إضافة مشرف') }}
+                </span>
+            </button>
+          </div>
+        </div>
+    </div>
+
+    <p-tabView styleClass="tabview-custom mt-6">
         <p-tabPanel>
             <ng-template pTemplate="header">
                 <div class="d-flex align-items-center gap-2">
@@ -76,7 +121,7 @@
         <p-table
             #dataTable
             [value]="primengTableHelper.records"
-            (onLazyLoad)="getList($event)"
+            (onLazyLoad)="getListSupervis($event)"
             rows="{{ primengTableHelper.defaultRecordsCountPerPage }}"
             [paginator]="false"
             [loading]="primengTableHelper.isLoading"
@@ -148,7 +193,7 @@
         <p-paginator
                 #paginator
                 [rows]="primengTableHelper.defaultRecordsCountPerPage"
-                (onPageChange)="getList($event)"
+                (onPageChange)="getListSupervis($event)"
                 [totalRecords]="primengTableHelper.totalRecordsCount"
                 [rows]="primengTableHelper.defaultRecordsCountPerPage"
                 [rowsPerPageOptions]="primengTableHelper.predefinedRecordsCountPerPage"
@@ -167,9 +212,75 @@
                     </span>
                 </div>
             </ng-template>
-            <p>
-                Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium...
-            </p>
+                      <!-- Start Tabel -->
+      <div class="primeng-datatable-container p-0 col-12 ">
+        <p-table
+            #dataTable
+            [value]="primengTableHelper.records"
+            (onLazyLoad)="getListSupervis($event)"
+            rows="{{ primengTableHelper.defaultRecordsCountPerPage }}"
+            [paginator]="false"
+            [loading]="primengTableHelper.isLoading"
+            [lazy]="true"
+            [scrollable]="true"
+            ScrollWidth="100%"
+            [resizableColumns]="primengTableHelper.resizableColumns"
+        >
+            <ng-template pTemplate="header">
+                <tr>
+                    <th pSortableColumn="caseCode">
+                        {{  '#' }}
+                    </th>
+                    <th pSortableColumn="SessionName" >
+                        {{ l('اسم المشرف') }}
+                        <p-sortIcon field="SessionName"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="SessionName" >
+                        {{ l('دور المشرف') }}
+                        <p-sortIcon field="SessionName"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="SessionName" >
+                        {{ l('رقم الموبايل') }}
+                        <p-sortIcon field="SessionName"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="SessionName" >
+                        {{ l('Actions') }}
+                        <p-sortIcon field="SessionName"></p-sortIcon>
+                    </th>
+
+
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-record="$implicit" let-i="rowIndex">
+                <tr>
+                    <td>
+                        {{ i + 1 }}
+                    </td>
+
+
+                  <td >
+                    <span class="p-column-title">{{ l('name') }}</span>
+                    {{ record.school.name || '-' }}
+                  </td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+            </ng-template>
+        </p-table>
+        <div class="primeng-no-data" *ngIf="primengTableHelper.totalRecordsCount == 0">
+            {{ l('NoData') }}
+        </div>
+        <p-paginator
+                #paginator
+                [rows]="primengTableHelper.defaultRecordsCountPerPage"
+                (onPageChange)="getListSupervis($event)"
+                [totalRecords]="primengTableHelper.totalRecordsCount"
+                [rows]="primengTableHelper.defaultRecordsCountPerPage"
+                [rowsPerPageOptions]="primengTableHelper.predefinedRecordsCountPerPage"
+            ></p-paginator>
+    </div>
+    <!-- End Tabel -->
         </p-tabPanel>
       
     </p-tabView>

@@ -1,7 +1,7 @@
 import { ActivatedRoute } from '@angular/router';
 import { Component, Injector, OnInit, ViewChild } from '@angular/core';
 import { AppComponentBase } from '@shared/common/app-component-base';
-import { SessionsServiceProxy } from '@shared/service-proxies/service-proxies';
+import { SessionsServiceProxy, SessionSupervisorsServiceProxy } from '@shared/service-proxies/service-proxies';
 import { Paginator } from '@node_modules/primeng/paginator';
 import { Table } from '@node_modules/primeng/table';
 import { LazyLoadEvent } from '@node_modules/primeng/api';
@@ -17,10 +17,12 @@ export class SupervisorsStudentsComponent extends AppComponentBase implements On
 
     filter: string;
     SessionId: any;
+    classId: any;
 
     constructor(
         private _injector: Injector,
         private _SessionsServiceProxy: SessionsServiceProxy,
+        private _SessionSupervisorsServiceProxy: SessionSupervisorsServiceProxy,
         private _ActivatedRoute: ActivatedRoute,
     ) {
         super(_injector);
@@ -29,12 +31,12 @@ export class SupervisorsStudentsComponent extends AppComponentBase implements On
     ngOnInit() {
         this._ActivatedRoute.paramMap?.subscribe((params) => {
             this.SessionId = Number(params?.get('id')); //.get('product');
-
-            this.getList();
+            this.classId = Number(params?.get('classId')); //.get('product');
+            this.getListSupervis();
         });
     }
 
-     getList(event?: LazyLoadEvent) {
+     getListSupervis(event?: LazyLoadEvent) {
             if (event) {
                 if (this.primengTableHelper.shouldResetPaging(event)) {
                     this.paginator.changePage(0);
@@ -46,8 +48,8 @@ export class SupervisorsStudentsComponent extends AppComponentBase implements On
     
             this.primengTableHelper.showLoadingIndicator();
     
-            this._SessionsServiceProxy
-                .getAllSessionSchool(this.SessionId, undefined, undefined, undefined)
+            this._SessionSupervisorsServiceProxy
+                .getAll(this.filter , this.SessionId, this.classId , undefined, undefined, undefined)
                 .subscribe((result) => {
                     this.primengTableHelper.totalRecordsCount = result.totalCount;
                     this.primengTableHelper.records = result.items;
@@ -55,7 +57,6 @@ export class SupervisorsStudentsComponent extends AppComponentBase implements On
                 });
         }
 
-    getAnswers() {}
     doActions(label: any, record: any) {
         switch (label) {
             case 'View':
