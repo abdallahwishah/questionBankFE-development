@@ -293,6 +293,16 @@ ul.p-autocomplete-items {
     color: var(--bs-primary) !important;
     background: #6D31ED0F;
 }
+.btn-outline-primary2{
+    border: 1px solid var(--bs-primary) !important;
+    color: var(--bs-primary) !important;
+    background: #6d31ed1e;
+    transition: .3s all;
+}
+.btn-outline-primary2:hover{
+    background: #6d31ed37;
+
+}
 
 .btn-outline-primary:hover {
     color: #fff !important;

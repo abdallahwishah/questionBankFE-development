@@ -7,6 +7,7 @@ import { PaginatorComponent } from '@app/shared/common/paginator/paginator.compo
 import { ActionButtonComponent } from '@app/shared/components/action-button/action-button.component';
 import { DropdownFieldComponent } from '@app/shared/components/fields/dropdown-field/dropdown-field.component';
 import { TabViewModule } from 'primeng/tabview';
+import { SessionSupervisorsServiceProxy } from '@shared/service-proxies/service-proxies';
 
 
 @NgModule({
@@ -25,6 +26,7 @@ import { TabViewModule } from 'primeng/tabview';
         PaginatorComponent,
 
     ],
-    declarations: [SupervisorsStudentsComponent]
+    declarations: [SupervisorsStudentsComponent],
+    providers:[SessionSupervisorsServiceProxy ]
 })
 export class SupervisorsStudentsModule { }
