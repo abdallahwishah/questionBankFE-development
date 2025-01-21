@@ -25,7 +25,7 @@ export class ExamViewerAndAttemptComponent implements OnInit {
     question: any;
     showInstructions = true;
     sidebarVisible = false;
-    
+
 
     constructor(
         private _examsServiceProxy: ExamsServiceProxy,
@@ -42,7 +42,7 @@ export class ExamViewerAndAttemptComponent implements OnInit {
     loadExamData() {
         this._examsServiceProxy.getApplyModel(this.id).subscribe((response) => {
             this.examData = response;
-            this.question = response.question;
+            this.question = response.questionWithAnswer.question;
             console.log('questionquestion', this.question);
             this.showInstructions = !!response.examInstructions;
         });

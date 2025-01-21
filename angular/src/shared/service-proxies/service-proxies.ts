@@ -31967,9 +31967,9 @@ export class ApplyExamDto implements IApplyExamDto {
     questionNo!: number;
     sectionDuration!: number;
     remainingSeconds!: number;
+    remainingTime!: TimeSpan;
     examInstructions!: string | undefined;
     sectionInstructions!: string | undefined;
-    question!: ExamQuestionDto;
     questionWithAnswer!: QuestionWithAnswerDto;
     hasAnswer!: boolean;
     lang!: QuestionLanguageEnum;
@@ -31999,9 +31999,9 @@ export class ApplyExamDto implements IApplyExamDto {
             this.questionNo = _data["questionNo"];
             this.sectionDuration = _data["sectionDuration"];
             this.remainingSeconds = _data["remainingSeconds"];
+            this.remainingTime = _data["remainingTime"] ? TimeSpan.fromJS(_data["remainingTime"]) : <any>undefined;
             this.examInstructions = _data["examInstructions"];
             this.sectionInstructions = _data["sectionInstructions"];
-            this.question = _data["question"] ? ExamQuestionDto.fromJS(_data["question"]) : <any>undefined;
             this.questionWithAnswer = _data["questionWithAnswer"] ? QuestionWithAnswerDto.fromJS(_data["questionWithAnswer"]) : <any>undefined;
             this.hasAnswer = _data["hasAnswer"];
             this.lang = _data["lang"];
@@ -32031,9 +32031,9 @@ export class ApplyExamDto implements IApplyExamDto {
         data["questionNo"] = this.questionNo;
         data["sectionDuration"] = this.sectionDuration;
         data["remainingSeconds"] = this.remainingSeconds;
+        data["remainingTime"] = this.remainingTime ? this.remainingTime.toJSON() : <any>undefined;
         data["examInstructions"] = this.examInstructions;
         data["sectionInstructions"] = this.sectionInstructions;
-        data["question"] = this.question ? this.question.toJSON() : <any>undefined;
         data["questionWithAnswer"] = this.questionWithAnswer ? this.questionWithAnswer.toJSON() : <any>undefined;
         data["hasAnswer"] = this.hasAnswer;
         data["lang"] = this.lang;
@@ -32056,9 +32056,9 @@ export interface IApplyExamDto {
     questionNo: number;
     sectionDuration: number;
     remainingSeconds: number;
+    remainingTime: TimeSpan;
     examInstructions: string | undefined;
     sectionInstructions: string | undefined;
-    question: ExamQuestionDto;
     questionWithAnswer: QuestionWithAnswerDto;
     hasAnswer: boolean;
     lang: QuestionLanguageEnum;
@@ -32368,6 +32368,7 @@ export class AuthenticateResultModel implements IAuthenticateResultModel {
     shouldResetPassword!: boolean;
     passwordResetCode!: string | undefined;
     userId!: number;
+    userFullName!: string | undefined;
     requiresTwoFactorVerification!: boolean;
     twoFactorAuthProviders!: string[] | undefined;
     twoFactorRememberClientToken!: string | undefined;
@@ -32393,6 +32394,7 @@ export class AuthenticateResultModel implements IAuthenticateResultModel {
             this.shouldResetPassword = _data["shouldResetPassword"];
             this.passwordResetCode = _data["passwordResetCode"];
             this.userId = _data["userId"];
+            this.userFullName = _data["userFullName"];
             this.requiresTwoFactorVerification = _data["requiresTwoFactorVerification"];
             if (Array.isArray(_data["twoFactorAuthProviders"])) {
                 this.twoFactorAuthProviders = [] as any;
@@ -32422,6 +32424,7 @@ export class AuthenticateResultModel implements IAuthenticateResultModel {
         data["shouldResetPassword"] = this.shouldResetPassword;
         data["passwordResetCode"] = this.passwordResetCode;
         data["userId"] = this.userId;
+        data["userFullName"] = this.userFullName;
         data["requiresTwoFactorVerification"] = this.requiresTwoFactorVerification;
         if (Array.isArray(this.twoFactorAuthProviders)) {
             data["twoFactorAuthProviders"] = [];
@@ -32444,6 +32447,7 @@ export interface IAuthenticateResultModel {
     shouldResetPassword: boolean;
     passwordResetCode: string | undefined;
     userId: number;
+    userFullName: string | undefined;
     requiresTwoFactorVerification: boolean;
     twoFactorAuthProviders: string[] | undefined;
     twoFactorRememberClientToken: string | undefined;
@@ -38507,6 +38511,7 @@ export interface IExamTemplateDto {
 export class ExpectedeExamDto implements IExpectedeExamDto {
     applyExamDto!: ApplyExamDto;
     remainingTime!: TimeSpan;
+    sessionName!: string | undefined;
 
     constructor(data?: IExpectedeExamDto) {
         if (data) {
@@ -38521,6 +38526,7 @@ export class ExpectedeExamDto implements IExpectedeExamDto {
         if (_data) {
             this.applyExamDto = _data["applyExamDto"] ? ApplyExamDto.fromJS(_data["applyExamDto"]) : <any>undefined;
             this.remainingTime = _data["remainingTime"] ? TimeSpan.fromJS(_data["remainingTime"]) : <any>undefined;
+            this.sessionName = _data["sessionName"];
         }
     }
 
@@ -38535,6 +38541,7 @@ export class ExpectedeExamDto implements IExpectedeExamDto {
         data = typeof data === 'object' ? data : {};
         data["applyExamDto"] = this.applyExamDto ? this.applyExamDto.toJSON() : <any>undefined;
         data["remainingTime"] = this.remainingTime ? this.remainingTime.toJSON() : <any>undefined;
+        data["sessionName"] = this.sessionName;
         return data;
     }
 }
@@ -38542,6 +38549,7 @@ export class ExpectedeExamDto implements IExpectedeExamDto {
 export interface IExpectedeExamDto {
     applyExamDto: ApplyExamDto;
     remainingTime: TimeSpan;
+    sessionName: string | undefined;
 }
 
 export class ExpiringTenant implements IExpiringTenant {
@@ -53675,6 +53683,7 @@ export class QuestionWithAnswerDto implements IQuestionWithAnswerDto {
     sectionInstructions!: string | undefined;
     sectionDuration!: number;
     remainingSeconds!: number;
+    remainingTime!: TimeSpan;
     question!: ExamQuestionDto;
     answerdQuestion!: GetQuestionForViewDto;
     isNextSection!: boolean;
@@ -53691,6 +53700,8 @@ export class QuestionWithAnswerDto implements IQuestionWithAnswerDto {
     isLastQuestionInSection!: boolean;
     type!: SectionTypeEnum;
     currentQuestionIndex!: number;
+    sectionCountInExam!: number;
+    questionCountIncurrentSection!: number;
 
     constructor(data?: IQuestionWithAnswerDto) {
         if (data) {
@@ -53709,6 +53720,7 @@ export class QuestionWithAnswerDto implements IQuestionWithAnswerDto {
             this.sectionInstructions = _data["sectionInstructions"];
             this.sectionDuration = _data["sectionDuration"];
             this.remainingSeconds = _data["remainingSeconds"];
+            this.remainingTime = _data["remainingTime"] ? TimeSpan.fromJS(_data["remainingTime"]) : <any>undefined;
             this.question = _data["question"] ? ExamQuestionDto.fromJS(_data["question"]) : <any>undefined;
             this.answerdQuestion = _data["answerdQuestion"] ? GetQuestionForViewDto.fromJS(_data["answerdQuestion"]) : <any>undefined;
             this.isNextSection = _data["isNextSection"];
@@ -53749,6 +53761,8 @@ export class QuestionWithAnswerDto implements IQuestionWithAnswerDto {
             this.isLastQuestionInSection = _data["isLastQuestionInSection"];
             this.type = _data["type"];
             this.currentQuestionIndex = _data["currentQuestionIndex"];
+            this.sectionCountInExam = _data["sectionCountInExam"];
+            this.questionCountIncurrentSection = _data["questionCountIncurrentSection"];
         }
     }
 
@@ -53767,6 +53781,7 @@ export class QuestionWithAnswerDto implements IQuestionWithAnswerDto {
         data["sectionInstructions"] = this.sectionInstructions;
         data["sectionDuration"] = this.sectionDuration;
         data["remainingSeconds"] = this.remainingSeconds;
+        data["remainingTime"] = this.remainingTime ? this.remainingTime.toJSON() : <any>undefined;
         data["question"] = this.question ? this.question.toJSON() : <any>undefined;
         data["answerdQuestion"] = this.answerdQuestion ? this.answerdQuestion.toJSON() : <any>undefined;
         data["isNextSection"] = this.isNextSection;
@@ -53807,6 +53822,8 @@ export class QuestionWithAnswerDto implements IQuestionWithAnswerDto {
         data["isLastQuestionInSection"] = this.isLastQuestionInSection;
         data["type"] = this.type;
         data["currentQuestionIndex"] = this.currentQuestionIndex;
+        data["sectionCountInExam"] = this.sectionCountInExam;
+        data["questionCountIncurrentSection"] = this.questionCountIncurrentSection;
         return data;
     }
 }
@@ -53818,6 +53835,7 @@ export interface IQuestionWithAnswerDto {
     sectionInstructions: string | undefined;
     sectionDuration: number;
     remainingSeconds: number;
+    remainingTime: TimeSpan;
     question: ExamQuestionDto;
     answerdQuestion: GetQuestionForViewDto;
     isNextSection: boolean;
@@ -53834,6 +53852,8 @@ export interface IQuestionWithAnswerDto {
     isLastQuestionInSection: boolean;
     type: SectionTypeEnum;
     currentQuestionIndex: number;
+    sectionCountInExam: number;
+    questionCountIncurrentSection: number;
 }
 
 export class ReOrderExamQuestionDto implements IReOrderExamQuestionDto {
