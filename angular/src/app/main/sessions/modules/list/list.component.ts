@@ -27,7 +27,7 @@ export class ListComponent extends AppComponentBase implements OnInit {
         private _injector: Injector,
         private _DialogSharedService: DialogSharedService,
         private _sessionsServiceProxy: SessionsServiceProxy,
-        private _router:Router
+        private _router: Router,
     ) {
         super(_injector);
     }
@@ -84,7 +84,16 @@ export class ListComponent extends AppComponentBase implements OnInit {
     doActions(label: any, record: any) {
         switch (label) {
             case 'ViewSetionSchool':
-                this._router.navigate(['/app/main/sessions/schools/',record?.session?.id]);
+                this._router.navigate(['/app/main/sessions/schools/', record?.session?.id]);
+                break;
+            case 'Deleted':
+                this.message.confirm('', this.l('AreYouSure'), (isConfirmed) => {
+                    if (isConfirmed) {
+                        this._sessionsServiceProxy.delete(record?.id).subscribe((res) => {
+                            this.getList();
+                        });
+                    }
+                });
                 break;
         }
     }

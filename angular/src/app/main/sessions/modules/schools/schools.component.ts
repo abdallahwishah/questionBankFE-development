@@ -1,10 +1,21 @@
+import { SupervisorDto } from './../../../../../shared/service-proxies/service-proxies';
+// schools.component.ts
 import { Component, Injector, OnInit, ViewChild } from '@angular/core';
 import { AppComponentBase } from '@shared/common/app-component-base';
 import { SessionsServiceProxy } from '@shared/service-proxies/service-proxies';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { LazyLoadEvent } from '@node_modules/primeng/api';
 import { Table } from '@node_modules/primeng/table';
 import { Paginator } from '@node_modules/primeng/paginator';
+
+interface SchoolClass {
+    schoolClass: {
+        name: string;
+        id: number;
+    };
+    numberOfAttempt: number;
+    numberOfSupervisor: number;
+}
 
 @Component({
     selector: 'app-schools',
@@ -14,22 +25,24 @@ import { Paginator } from '@node_modules/primeng/paginator';
 export class SchoolsComponent extends AppComponentBase implements OnInit {
     @ViewChild('dataTable', { static: true }) dataTable: Table;
     @ViewChild('paginator', { static: true }) paginator: Paginator;
-
     filter: string;
     SessionId: any;
+    expandedRows: any = {};
 
     constructor(
         private _injector: Injector,
         private _SessionsServiceProxy: SessionsServiceProxy,
         private _ActivatedRoute: ActivatedRoute,
+        private _router: Router,
     ) {
         super(_injector);
     }
 
-    ngOnInit() {
-        this._ActivatedRoute.paramMap?.subscribe((params) => {
-            this.SessionId = Number(params?.get('id')); //.get('product');
+    ngOnInit(): void {}
 
+    ngAfterViewInit() {
+        this._ActivatedRoute.paramMap?.subscribe((params) => {
+            this.SessionId = Number(params?.get('id'));
             this.getList();
         });
     }
@@ -43,24 +56,22 @@ export class SchoolsComponent extends AppComponentBase implements OnInit {
                 }
             }
         }
-
         this.primengTableHelper.showLoadingIndicator();
-
         this._SessionsServiceProxy
-            .getAllSessionSchool(this.SessionId, undefined, undefined, undefined)
+            .getAllSessionSchool(
+                this.SessionId,
+                this.primengTableHelper.getSorting(this.dataTable),
+                this.primengTableHelper.getSkipCount(this.paginator, event),
+                this.primengTableHelper.getMaxResultCount(this.paginator, event),
+            )
             .subscribe((result) => {
                 this.primengTableHelper.totalRecordsCount = result.totalCount;
                 this.primengTableHelper.records = result.items;
                 this.primengTableHelper.hideLoadingIndicator();
             });
     }
-
-    getAnswers() {}
-    doActions(label: any, record: any) {
-        switch (label) {
-            case 'View':
-                console.log();
-                break;
-        }
+    supervisorsAndStudents(item: any) {
+        debugger
+        this._router.navigate(['/app/main/sessions/supervisors-students', this.SessionId, item?.schoolClass?.id]);
     }
 }

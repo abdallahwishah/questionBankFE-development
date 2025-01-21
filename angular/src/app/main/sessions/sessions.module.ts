@@ -22,7 +22,7 @@ import { SessionsServiceProxy } from '@shared/service-proxies/service-proxies';
                         import('../sessions/modules/schools/schools.module').then((m) => m.SchoolsModule),
                 },
                 {
-                    path: 'supervisors-students/:id',
+                    path: 'supervisors-students/:id/:classId',
                     loadChildren: () =>
                         import('../sessions/modules/supervisors-students/supervisors-students.module').then((m) => m.SupervisorsStudentsModule),
                 }
