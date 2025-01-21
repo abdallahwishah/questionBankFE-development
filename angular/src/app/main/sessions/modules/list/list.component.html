@@ -137,7 +137,6 @@
                         {{ '___' }}
                     </td>
 
-
                     <td>
                         <span class="p-column-title">{{ l('startDate') }}</span>
                         {{ (record.session.startDate | luxonFormat: 'hh:mm a - dd/MM/yyyy') || '-' }}
@@ -147,10 +146,33 @@
                         {{ (record.session.endDate | luxonFormat:  'hh:mm a - dd/MM/yyyy') || '-' }}
                     </td>
                     <td>
-                         {{  sessionStatusEnum[record.session.status]}}
+                
 
-                    </td>
 
+                    <span class="p-column-title">{{ l('StudyLevel') }}</span>
+                    @if(record?.session?.status === sessionStatusEnum.Active){
+                       <span class="status-grean">
+                        {{l('Active')}}
+                       </span>
+                    }
+                    @else if (record?.session?.status === sessionStatusEnum.Finished) {
+                        <span class="status-grean">{{l('Finished')}}</span>
+                    }
+                    @else if (record?.session?.status === sessionStatusEnum.InCreation) {
+                        <span class="status-info">{{l('InCreation')}}</span>
+                    }
+                    @else if (record?.session?.status === sessionStatusEnum.Invalid) {
+                        <span class="status-read">{{l('Invalid')}}</span>
+                    }
+                    @else if (record?.session?.status === sessionStatusEnum.NotStarted) {
+                        <span class="status-notStarted">{{l('NotStarted')}}</span>
+                    }
+                    @else if (record?.session?.status === sessionStatusEnum.Suspended) {
+                        <span class="status-suspended">{{l('Suspended')}}</span>
+
+                    }
+
+                </td>
                     <td>
                         <app-action-button
                             [ActionsInfo]="[

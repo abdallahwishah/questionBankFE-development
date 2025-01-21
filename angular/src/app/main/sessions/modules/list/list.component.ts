@@ -40,6 +40,8 @@ export class ListComponent extends AppComponentBase implements OnInit {
                 name: key,
                 id: SessionStatusEnum[key as keyof typeof SessionStatusEnum],
             }));
+            this.sessionStatus.unshift({name:"All",id:undefined});
+
     }
     getList(event?: LazyLoadEvent) {
         if (event) {
@@ -61,10 +63,9 @@ export class ListComponent extends AppComponentBase implements OnInit {
                 undefined,
                 undefined,
                 undefined,
-                undefined,
-
-                undefined,
                 this.isStatusFilter,
+                undefined,
+                undefined,
                 this.primengTableHelper.getSorting(this.dataTable),
                 this.primengTableHelper.getSkipCount(this.paginator, event),
                 this.primengTableHelper.getMaxResultCount(this.paginator, event),

@@ -38,7 +38,7 @@
                         [placeholder]="l('Search')"
                         type="text"
                         [(ngModel)]="filter"
-                        (ngModelChange)="getAnswers()"
+                        (ngModelChange)="getList()"
                     />
                     <button class="btn btn-primary" type="submit">
                         <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -150,20 +150,13 @@
             {{ l('NoData') }}
         </div>
         <p-paginator
-            #paginator
-            [hidden]="true"
-            [rows]="primengTableHelper.defaultRecordsCountPerPage"
-            (onPageChange)="getList($event)"
-            [totalRecords]="primengTableHelper.totalRecordsCount"
-            [showCurrentPageReport]="true"
-            [rows]="primengTableHelper.defaultRecordsCountPerPage"
-            [rowsPerPageOptions]="primengTableHelper.predefinedRecordsCountPerPage"
-        ></p-paginator>
-        <app-paginator
-            [hidden]="primengTableHelper.totalRecordsCount == 0"
-            [paginator]="paginator"
-            [primengTableHelper]="primengTableHelper"
-        ></app-paginator>
+                #paginator
+                [rows]="primengTableHelper.defaultRecordsCountPerPage"
+                (onPageChange)="getList($event)"
+                [totalRecords]="primengTableHelper.totalRecordsCount"
+                [rows]="primengTableHelper.defaultRecordsCountPerPage"
+                [rowsPerPageOptions]="primengTableHelper.predefinedRecordsCountPerPage"
+            ></p-paginator>
     </div>
     <!-- End Tabel -->
 

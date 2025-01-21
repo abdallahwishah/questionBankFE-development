@@ -98,11 +98,11 @@
                             }
                         </div>
                         <div class="d-flex justify-content-between mt-4">
-                            <button class="btn btn-primary" (click)="getList()">
-                                {{ 'Save' | localize }}
+                            <button class="btn btn-primary" (click)="getList(); closeFilters()">
+                                {{ 'searchFilters' | localize }}
                             </button>
                             <button class="btn btn-outline" (click)="clearFilter()">
-                                {{ 'Reset' | localize }}
+                                {{ 'ResetFilters' | localize }}
                             </button>
                         </div>
                     </ng-container>

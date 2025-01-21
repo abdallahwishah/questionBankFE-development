@@ -26,7 +26,6 @@ export class ExamViewerAndAttemptComponent implements OnInit {
     showInstructions = true;
     sidebarVisible = false;
 
-
     constructor(
         private _examsServiceProxy: ExamsServiceProxy,
         private _activatedRoute: ActivatedRoute,

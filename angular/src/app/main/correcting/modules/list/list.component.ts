@@ -1,5 +1,6 @@
 import { Component, Injector, OnInit, ViewChild } from '@angular/core';
 import { DialogSharedService } from '@app/shared/components/dialog-shared/dialog-shared.service';
+import { FiltersComponent } from '@app/shared/components/filters/filters.component';
 import { UniqueNameComponents } from '@app/shared/Models/UniqueNameComponents';
 import { Router } from '@node_modules/@angular/router';
 import { LazyLoadEvent } from '@node_modules/primeng/api';
@@ -16,6 +17,8 @@ import { forkJoin } from 'rxjs';
 })
 export class ListComponent extends AppComponentBase implements OnInit {
     Warning_dialog = UniqueNameComponents.Warning_dialog;
+    @ViewChild(FiltersComponent) FiltersComponent: FiltersComponent;
+    
     studyLevels: any[] = [];
     studySubjects: any[] = [];
     subjectId: number;
@@ -70,7 +73,6 @@ export class ListComponent extends AppComponentBase implements OnInit {
                 },
             });
     }
-    getQuestion() {}
     getList(event?: LazyLoadEvent) {
         if (event) {
             if (this.primengTableHelper.shouldResetPaging(event)) {
@@ -122,4 +124,8 @@ export class ListComponent extends AppComponentBase implements OnInit {
     addTemplate() {
         this._DialogSharedService.showDialog(this.Warning_dialog, {});
     }
+
+    closeFilters(){
+        this.FiltersComponent.isPanelOpen = false
+     }
 }

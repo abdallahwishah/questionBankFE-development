@@ -12,6 +12,7 @@ import {
     StudyLevelsServiceProxy,
     StudySubjectsServiceProxy,
 } from '@shared/service-proxies/service-proxies';
+import { FiltersComponent } from '@app/shared/components/filters/filters.component';
 
 @Component({
     selector: 'app-list',
@@ -19,6 +20,8 @@ import {
     styleUrls: ['./list.component.css'],
 })
 export class ListComponent extends AppComponentBase implements OnInit {
+    @ViewChild(FiltersComponent) FiltersComponent: FiltersComponent;
+
     @ViewChild('dataTable', { static: true }) dataTable: Table;
     @ViewChild('paginator', { static: true }) paginator: Paginator;
 
@@ -85,7 +88,6 @@ export class ListComponent extends AppComponentBase implements OnInit {
         },
     });
     }
-    getQuestion() {}
 
     getList(event?: LazyLoadEvent) {
         if (event) {
@@ -153,6 +155,9 @@ export class ListComponent extends AppComponentBase implements OnInit {
                 break;
         }
     }
+    closeFilters(){
+        this.FiltersComponent.isPanelOpen = false
+     }
 
     CopyTemplate() {
         this._DialogSharedService.showDialog(this.Copy_Template_dialog, {});

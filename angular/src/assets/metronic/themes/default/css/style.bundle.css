@@ -49679,7 +49679,7 @@ body,
   color: var(--bs-app-sidebar-light-menu-link-color);
 }
 [data-kt-app-layout=light-sidebar] .app-sidebar .menu .menu-item .menu-link .menu-title {
-  color: var(--bs-app-sidebar-light-menu-link-color);
+  color: #565D6D ;
 }
 [data-kt-app-layout=light-sidebar] .app-sidebar .menu .menu-item .menu-link .menu-icon,
 [data-kt-app-layout=light-sidebar] .app-sidebar .menu .menu-item .menu-link .menu-icon .svg-icon,
@@ -49814,12 +49814,12 @@ body,
   color: var(--bs-primary);
 }
 [data-kt-app-layout=light-sidebar] .app-sidebar .menu .menu-item .menu-link.active .menu-title {
-  color: var(--bs-primary);
+  color: #fff;
 }
 [data-kt-app-layout=light-sidebar] .app-sidebar .menu .menu-item .menu-link.active .menu-icon,
 [data-kt-app-layout=light-sidebar] .app-sidebar .menu .menu-item .menu-link.active .menu-icon .svg-icon,
 [data-kt-app-layout=light-sidebar] .app-sidebar .menu .menu-item .menu-link.active .menu-icon i {
-  color: var(--bs-primary);
+  color: var(--bs-primary-inverse);
 }
 [data-kt-app-layout=light-sidebar] .app-sidebar .menu .menu-item .menu-link.active .menu-bullet .bullet {
   background-color: var(--bs-primary);
@@ -50468,7 +50468,7 @@ body,
         bottom: 0;
         top: 15px; */
         position: relative;
-        right: 14px;
+        right: 10px;
         left: inherit;
         float: inline-end;
         bottom: 0;

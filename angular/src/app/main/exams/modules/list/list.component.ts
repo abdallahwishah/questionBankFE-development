@@ -12,6 +12,7 @@ import { Paginator } from '@node_modules/primeng/paginator';
 import { Table } from '@node_modules/primeng/table';
 import { forkJoin } from 'rxjs';
 import { AppComponentBase } from '@shared/common/app-component-base';
+import { FiltersComponent } from '@app/shared/components/filters/filters.component';
 
 @Component({
     selector: 'app-list',
@@ -21,6 +22,8 @@ import { AppComponentBase } from '@shared/common/app-component-base';
 export class ListComponent extends AppComponentBase implements OnInit {
     @ViewChild('dataTable', { static: true }) dataTable: Table;
     @ViewChild('paginator', { static: true }) paginator: Paginator;
+    @ViewChild(FiltersComponent) FiltersComponent: FiltersComponent;
+    
 
     Add_Test_dialog = UniqueNameComponents.Add_Test_dialog;
     studyLevels: any[] = [];
@@ -92,8 +95,8 @@ export class ListComponent extends AppComponentBase implements OnInit {
                 undefined,
                 undefined,
                 undefined,
-                undefined,
-                undefined,
+                this.levelId,
+                this.subjectId,
                 this.primengTableHelper.getSorting(this.dataTable),
                 this.primengTableHelper.getSkipCount(this.paginator, event),
                 this.primengTableHelper.getMaxResultCount(this.paginator, event),
@@ -121,6 +124,10 @@ export class ListComponent extends AppComponentBase implements OnInit {
                 break;
         }
     }
+
+    closeFilters(){
+        this.FiltersComponent.isPanelOpen = false
+     }
 
     AddExam() {
         this._DialogSharedService.showDialog(this.Add_Test_dialog, {});

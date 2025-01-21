@@ -1,5 +1,7 @@
 import { Component, Injector, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { DialogSharedService } from '@app/shared/components/dialog-shared/dialog-shared.service';
+import { UniqueNameComponents } from '@app/shared/Models/UniqueNameComponents';
 import { AppComponentBase } from '@shared/common/app-component-base';
 import {
     ExamsServiceProxy,
@@ -16,6 +18,8 @@ import {
     styleUrls: ['./view-exam.component.css'],
 })
 export class ViewExamComponent extends AppComponentBase implements OnInit {
+    Add_View_exam_dialog = UniqueNameComponents.Add_View_exam_dialog;
+
     examForView: GetExamForViewDto;
     questionsType: any[] = [];
 
@@ -28,6 +32,8 @@ export class ViewExamComponent extends AppComponentBase implements OnInit {
         injector: Injector,
         private _examsServiceProxy: ExamsServiceProxy,
         private _activatedRoute: ActivatedRoute,
+        private _DialogSharedService: DialogSharedService,
+        
     ) {
         super(injector);
     }
@@ -137,5 +143,9 @@ export class ViewExamComponent extends AppComponentBase implements OnInit {
             // Optionally adjust question.order or recalc orders as needed
             // e.g., you might want to keep them sequential 1..n after reorder
         });
+    }
+
+    addNewQ(){
+        this._DialogSharedService.showDialog(this.Add_View_exam_dialog , {})
     }
 }

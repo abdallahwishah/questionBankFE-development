@@ -320,10 +320,12 @@ ul.p-autocomplete-items {
 }
 
 .p-dropdown {
-    border-radius: 0.475rem !important;
     border: 1px solid #DEE1E6 !important;
     padding: 1px !important;
     width: 100% !important;
+}
+.p-calendar  , .p-dropdown{
+    border-radius: 0.475rem !important;
 }
 
 .card .p-dropdown,
@@ -335,7 +337,8 @@ textarea,
 .p-calendar,
 .p-autocomplete-input,
 .filter-panel .p-dropdown,
-.filter-panel .form-control {
+.filter-panel .form-control ,
+.p-calendar .p-inputtext {
     background: #F8F8F8 !important;
     border-color: #F8F8F8 !important;
 }
@@ -435,11 +438,35 @@ textarea {
 .app-header {
     background: #fff !important;
 }
-
+.status-read , .status-grean , .status-info  , .status-notStarted{
+    border-radius: 25px;
+    display: inline-block;
+    padding: 3px 7px;
+    width: 75%;
+}
 .status-grean {
     background: #52C93F26;
     color: #008000;
-    border-radius: 25px;
+}
+.status-read {
+    background: rgba(237, 28, 36, 0.1);
+    color: rgba(237, 28, 36, 1);
+}
+.status-info {
+    background: rgba(28, 108, 237, 0.1);
+    color: rgba(28, 108, 237, 1);
+}
+.status-info {
+    background: rgba(28, 108, 237, 0.1);
+    color: rgba(28, 108, 237, 1);
+}
+.status-notStarted {
+    background: rgba(237, 199, 28, 0.1);
+    color: rgba(237, 199, 28, 1);
+}
+.status-suspended {
+    background: rgba(237, 125, 28, 0.1);
+    color: rgba(237, 125, 28, 1);
 }
 
 .question-box,
@@ -479,17 +506,11 @@ textarea {
 
 
 [data-kt-app-layout=light-sidebar] .app-sidebar .menu .menu-item .menu-link.active {
-    color: var(--bs-primary-inverse) !important;
-    box-shadow: 0px 8px 17px 0px #6D31ED26 !important;
+    color: var(--bs-primary-inverse) ;
+    box-shadow: 0px 8px 17px 0px #6D31ED26 ;
 
 }
 
-[data-kt-app-layout=light-sidebar] .app-sidebar .menu .menu-item .menu-link.active .menu-title,
-[data-kt-app-layout=light-sidebar] .app-sidebar .menu .menu-item .menu-link.active .menu-icon,
-[data-kt-app-layout=light-sidebar] .app-sidebar .menu .menu-item .menu-link.active .menu-icon .svg-icon,
-[data-kt-app-layout=light-sidebar] .app-sidebar .menu .menu-item .menu-link.active .menu-icon i {
-    color: var(--bs-primary-inverse) !important;
-}
 
 .btn-check:checked+.btn.btn-active-light,
 .btn-check:active+.btn.btn-active-light,
@@ -541,7 +562,7 @@ textarea {
 }
 
 [data-kt-app-layout=light-sidebar] .app-sidebar .menu .menu-item .menu-link .menu-title {
-    color: #565D6D !important;
+    color: #565D6D ;
 }
 
 .app-sidebar .menu .menu-item .menu-link.active svg path {
@@ -585,9 +606,14 @@ textarea {
 }
 
 .menu-sub .active {
-    background-color: #565D6D !important;
+    color:var(--bs-primary)!important;
+    box-shadow:none !important;
+    background-color: transparent !important;
 }
-
+.menu-sub .active .menu-title , .menu-sub .active i{
+    color:var(--bs-primary)!important;
+    font-weight: 600;
+}
 .app-main {
     min-height: 93vh;
 }
