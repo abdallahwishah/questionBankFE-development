@@ -28,7 +28,7 @@ export class SchoolsComponent extends AppComponentBase implements OnInit {
     filter: string;
     SessionId: any;
     expandedRows: any = {};
-
+    sessionName : any;
     constructor(
         private _injector: Injector,
         private _SessionsServiceProxy: SessionsServiceProxy,
@@ -38,7 +38,9 @@ export class SchoolsComponent extends AppComponentBase implements OnInit {
         super(_injector);
     }
 
-    ngOnInit(): void {}
+    ngOnInit(): void {
+        this.sessionName =   this._ActivatedRoute.snapshot.queryParams['session']
+    }
 
     ngAfterViewInit() {
         this._ActivatedRoute.paramMap?.subscribe((params) => {
@@ -72,6 +74,10 @@ export class SchoolsComponent extends AppComponentBase implements OnInit {
     }
     supervisorsAndStudents(item: any) {
         debugger
-        this._router.navigate(['/app/main/sessions/supervisors-students', this.SessionId, item?.schoolClass?.id]);
-    }
+        this._router.navigate(['/app/main/sessions/supervisors-students', this.SessionId, item?.schoolClass?.id], {
+            queryParams: {
+                school: item?.schoolName,
+            },
+        });    }
 }
+

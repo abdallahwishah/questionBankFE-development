@@ -56,7 +56,7 @@
 
 
       <!-- Start Tabel -->
-    <div class="primeng-datatable-container p-8 col-12 mt-6">
+    <div class="primeng-datatable-container col-12 mt-6">
         <p-table
             #dataTable
             [value]="primengTableHelper.records"
@@ -98,37 +98,27 @@
             <ng-template pTemplate="body" let-record="$implicit" let-i="rowIndex">
                 <tr>
                     <td>
-                        <span class="p-column-title">{{ l('Code') }}</span>
-                        {{ record.auditCase.caseCode || '-' }}
+                        {{ i + 1 }}
                     </td>
                     <td>
-                        <span class="p-column-title">{{ l('CaseTitle') }}</span>
-                        {{ record.auditCase.name || '-' }}
+                        <span class="p-column-title">{{ l('studentId') }}</span>
+                        {{ record.examAttempt.studentId || '-' }}
                     </td>
                     <td>
-                        <span class="p-column-title">{{ l('CaseOwner') }}</span>
-                        {{ record.organizationUnitDisplayName || '-' }}
+                       <!--  <span class="p-column-title">{{ l('CaseTitle') }}</span>
+                        {{ record.examAttempt.studentname || '-' }} -->
+                    </td>
+                    <td>
+                        <span class="p-column-title">{{ l('examTitle') }}</span>
+                        {{ record.examTitle || '-' }}
                     </td>
                     <td>
                         <span class="p-column-title">{{ l('RepeatCase') }}</span>
                         {{ l('') || '-' }}
                     </td>
 
-                    <td>
-                        <span class="p-column-title">{{ l('creationDate') }}</span>
-                        {{ (record.auditCase.creationTime | luxonFormat: 'dd/MM/yyyy - hh:mm a') || '-' }}
-                    </td>
-                    <td>
-                        <span class="p-column-title">{{ l('CreatedBy') }}</span>
-                        <!-- <img
-                        [src]="record.profilePictureUrl"
-                        class="img-rounded"
-                        width="25"
-                        height="25"
-                        alt=""
-                    /> -->
-                        {{ record.creatorUser || '--' }}
-                    </td>
+
+                  
                     <td>
                         <app-action-button
                             [ActionsInfo]="[
