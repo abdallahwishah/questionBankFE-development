@@ -61,118 +61,100 @@
     </div>
 
 
-      <!-- Start Tabel -->
-    <div class="primeng-datatable-container p-8 col-12 mt-6">
-        <p-table
-            #dataTable
-            [value]="primengTableHelper.records"
-            (onLazyLoad)="getList($event)"
-            rows="{{ primengTableHelper.defaultRecordsCountPerPage }}"
-            [paginator]="false"
-            [loading]="primengTableHelper.isLoading"
-            [lazy]="true"
-            [scrollable]="true"
-            ScrollWidth="100%"
-            [resizableColumns]="primengTableHelper.resizableColumns"
-        >
-            <ng-template pTemplate="header">
-                <tr>
-                    <th pSortableColumn="caseCode">
-                        {{  '#' }}
-                    </th>
-                    <th pSortableColumn="StudentNumber">
-                        {{ l('StudentNumber') }}
-                        <p-sortIcon field="StudentNumber"></p-sortIcon>
-                    </th>
-                    <th pSortableColumn="StudentName">
-                        {{ l('StudentName') }}
-                        <p-sortIcon field="StudentName"></p-sortIcon>
-                    </th>
-                    <th pSortableColumn="ExamName">
-                        {{ l('ExamName') }}
-                        <p-sortIcon field="ExamName"></p-sortIcon>
-                    </th>
-                    <th pSortableColumn="TotalPoints">
-                        {{ l('TotalPoints') }}
-                        <p-sortIcon field="TotalPoints"></p-sortIcon>
-                    </th>
+   <!-- Start Tabel -->
+   <div class="primeng-datatable-container col-12 mt-6">
+    <p-table
+        #dataTable
+        [value]="primengTableHelper.records"
+        (onLazyLoad)="getList($event)"
+        rows="{{ primengTableHelper.defaultRecordsCountPerPage }}"
+        [paginator]="false"
+        [loading]="primengTableHelper.isLoading"
+        [lazy]="true"
+        [scrollable]="true"
+        ScrollWidth="100%"
+        [resizableColumns]="primengTableHelper.resizableColumns"
+    >
+        <ng-template pTemplate="header">
+            <tr>
+                <th pSortableColumn="caseCode">
+                    {{  '#' }}
+                </th>
+                <th pSortableColumn="StudentNumber">
+                    {{ l('StudentNumber') }}
+                    <p-sortIcon field="StudentNumber"></p-sortIcon>
+                </th>
+                <th pSortableColumn="StudentName">
+                    {{ l('StudentName') }}
+                    <p-sortIcon field="StudentName"></p-sortIcon>
+                </th>
+                <th pSortableColumn="ExamName">
+                    {{ l('ExamName') }}
+                    <p-sortIcon field="ExamName"></p-sortIcon>
+                </th>
+                <th pSortableColumn="TotalPoints">
+                    {{ l('TotalPoints') }}
+                    <p-sortIcon field="TotalPoints"></p-sortIcon>
+                </th>
+                <th>
+                    {{ l('Actions') }}
+                </th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-record="$implicit" let-i="rowIndex">
+            <tr>
+                <td>
+                    {{ i + 1 }}
+                </td>
+                <td>
+                    <span class="p-column-title">{{ l('studentId') }}</span>
+                    {{ record.examAttempt.studentId || '-' }}
+                </td>
+                <td>
+                   <!--  <span class="p-column-title">{{ l('CaseTitle') }}</span>
+                    {{ record.examAttempt.studentname || '-' }} -->
+                </td>
+                <td>
+                    <span class="p-column-title">{{ l('examTitle') }}</span>
+                    {{ record.examTitle || '-' }}
+                </td>
+                <td>
+                    <span class="p-column-title">{{ l('RepeatCase') }}</span>
+                    {{ l('') || '-' }}
+                </td>
 
-                    <th>
-                        {{ l('Actions') }}
-                    </th>
-                </tr>
-            </ng-template>
-            <ng-template pTemplate="body" let-record="$implicit" let-i="rowIndex">
-                <tr>
-                    <td>
-                        <span class="p-column-title">{{ l('Code') }}</span>
-                        {{ record.auditCase.caseCode || '-' }}
-                    </td>
-                    <td>
-                        <span class="p-column-title">{{ l('CaseTitle') }}</span>
-                        {{ record.auditCase.name || '-' }}
-                    </td>
-                    <td>
-                        <span class="p-column-title">{{ l('CaseOwner') }}</span>
-                        {{ record.organizationUnitDisplayName || '-' }}
-                    </td>
-                    <td>
-                        <span class="p-column-title">{{ l('RepeatCase') }}</span>
-                        {{ l('') || '-' }}
-                    </td>
 
-                    <td>
-                        <span class="p-column-title">{{ l('creationDate') }}</span>
-                        {{ (record.auditCase.creationTime | luxonFormat: 'dd/MM/yyyy - hh:mm a') || '-' }}
-                    </td>
-                    <td>
-                        <span class="p-column-title">{{ l('CreatedBy') }}</span>
-                        <!-- <img
-                        [src]="record.profilePictureUrl"
-                        class="img-rounded"
-                        width="25"
-                        height="25"
-                        alt=""
-                    /> -->
-                        {{ record.creatorUser || '--' }}
-                    </td>
-                    <td>
-                        <app-action-button
-                            [ActionsInfo]="[
-                                { label: 'View' },
-                                {
-                                    label: 'Edit'
-                                },
-                                {
-                                    label: 'Delete'
-                                }
-                            ]"
-                            (action)="doActions($event, record)"
-                        ></app-action-button>
-                    </td>
-                </tr>
-            </ng-template>
-        </p-table>
-        <div class="primeng-no-data" *ngIf="primengTableHelper.totalRecordsCount == 0">
-            {{ l('NoData') }}
-        </div>
-        <p-paginator
+              
+                <td>
+                    <app-action-button
+                        [ActionsInfo]="[
+                            { label: 'View' },
+                            {
+                                label: 'Edit'
+                            },
+                            {
+                                label: 'Delete'
+                            }
+                        ]"
+                        (action)="doActions($event, record)"
+                    ></app-action-button>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+    <div class="primeng-no-data" *ngIf="primengTableHelper.totalRecordsCount == 0">
+        {{ l('NoData') }}
+    </div>
+    <p-paginator
             #paginator
-            [hidden]="true"
             [rows]="primengTableHelper.defaultRecordsCountPerPage"
             (onPageChange)="getList($event)"
             [totalRecords]="primengTableHelper.totalRecordsCount"
-            [showCurrentPageReport]="true"
             [rows]="primengTableHelper.defaultRecordsCountPerPage"
             [rowsPerPageOptions]="primengTableHelper.predefinedRecordsCountPerPage"
         ></p-paginator>
-        <app-paginator
-            [hidden]="primengTableHelper.totalRecordsCount == 0"
-            [paginator]="paginator"
-            [primengTableHelper]="primengTableHelper"
-        ></app-paginator>
-    </div>
-    <!-- End Tabel -->
+</div>
+<!-- End Tabel -->
 
 
 

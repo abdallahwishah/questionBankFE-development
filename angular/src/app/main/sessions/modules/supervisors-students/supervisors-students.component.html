@@ -16,7 +16,7 @@
                     fill="#999999"
                 />
             </svg>
-            {{ l('Exams') }}
+            {{ l('SessionsScreen') }}
         </span>
         <span class="mx-2">/</span>
         <span>
@@ -24,7 +24,7 @@
         </span>
         <span class="mx-2">/</span>
         <span>
-            {{ l('مدرسة السلام قاعة 1') }}
+            {{ schoolName}}
         </span>
         <span class="mx-2">/</span>
         <!-- Display the exam title if available -->
@@ -233,7 +233,7 @@
                 </div>
             </ng-template>
         <!-- Start Tabel -->
-    <!--   <div class="primeng-datatable-container p-0 col-12 ">
+       <div class="primeng-datatable-container p-0 col-12 ">
         <p-table
             #dataTable
             [value]="primengTableHelper.records"
@@ -279,8 +279,8 @@
 
 
                   <td >
-                    <span class="p-column-title">{{ l('name') }}</span>
-                    {{ record.school.name || '-' }}
+                 <!--    <span class="p-column-title">{{ l('name') }}</span>
+                    {{ record.school.name || '-' }} -->
                   </td>
                   <td></td>
                   <td></td>
@@ -299,7 +299,7 @@
                 [rows]="primengTableHelper.defaultRecordsCountPerPage"
                 [rowsPerPageOptions]="primengTableHelper.predefinedRecordsCountPerPage"
             ></p-paginator>
-      </div> -->
+      </div> 
       <!-- End Tabel -->
         </p-tabPanel>
       

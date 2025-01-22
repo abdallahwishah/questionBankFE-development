@@ -42,6 +42,8 @@ export class SupervisorsStudentsComponent extends AppComponentBase implements On
            
 /*             this.getListSupervis();
  */        });
+     this.schoolName =   this._ActivatedRoute.snapshot.queryParams['school']
+
     }
 
      getListSupervis(event?: LazyLoadEvent) {
