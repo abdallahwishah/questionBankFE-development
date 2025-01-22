@@ -347,7 +347,7 @@ textarea,
 .p-autocomplete-input,
 .filter-panel .p-dropdown,
 .filter-panel .form-control ,
-.p-calendar .p-inputtext {
+.p-calendar .p-inputtext , .p-autocomplete ul.p-autocomplete-multiple-container {
     background: #F8F8F8 !important;
     border-color: #F8F8F8 !important;
 }
@@ -868,4 +868,12 @@ td {
 }
 .instructions img{
     max-width: 100% !important;
+}
+
+.p-autocomplete ul.p-autocomplete-multiple-container li {
+    padding: 0 !important;
+}
+
+.p-autocomplete-dd .p-autocomplete-dropdown{
+    height: 43px;
 }
