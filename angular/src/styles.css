@@ -301,7 +301,6 @@ ul.p-autocomplete-items {
 }
 .btn-outline-primary2:hover{
     background: #6d31ed37;
-
 }
 
 .btn-outline-primary:hover {
@@ -866,4 +865,7 @@ td {
 }
 .p-tabview .p-tabview-nav .p-tabview-ink-bar{
     display: none;
+}
+.instructions img{
+    max-width: 100% !important;
 }
