@@ -5,7 +5,7 @@
         [ngClass]="{ 'p-inputtext-sm': true }"
         [style.min-width]="'90%'"
         [style.display]="'100%'"
-        [placeholder]="(type === 'sendEmail' ? 'EnterEmailAddress' : 'Search') | localize"
+        [placeholder]="'Search' | localize"
         [required]="required"
         [suggestions]="Filter$ | async"
         [field]="field"
@@ -16,7 +16,6 @@
         [multiple]="multiple"
         [disabled]="disabled"
         (onKeyUp)="handleKeyUp($event, autoComplete)"
-        [forceSelection]="type !== 'sendEmail'"
         emptyMessage=""
         (keydown.enter)="$event.preventDefault()"
     ></p-autoComplete>

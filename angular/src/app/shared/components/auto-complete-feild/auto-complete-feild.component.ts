@@ -146,9 +146,7 @@ export class AutoCompleteFeildComponent implements OnInit, OnDestroy, ControlVal
                     )
                     .pipe(
                         map((value) => {
-                          let a =    value.map((item: any) => item.studySubject) || [];
-
-                             return EnterInPathObj(a, this?.ConfigCustomSearch?.PathObj || ['result', 'items']);
+                            return EnterInPathObj(value, this?.ConfigCustomSearch?.PathObj || ['result', 'items']);
                         }),
                         catchError((error) => {
                             console.error('Search error:', error);
@@ -156,6 +154,9 @@ export class AutoCompleteFeildComponent implements OnInit, OnDestroy, ControlVal
                         }),
                         startWith([]),
                     );
+            }),
+            tap((valistlue) => {
+                console.log('valistlue', valistlue);
             }),
         );
     }
@@ -187,17 +188,6 @@ export class AutoCompleteFeildComponent implements OnInit, OnDestroy, ControlVal
     }
 
     completeMethod($event: any) {
-        if (this.type === 'sendEmail') {
-            // Check if it's a keydown event with Enter key
-            if ($event.originalEvent?.type === 'keydown' && $event.originalEvent?.key === 'Enter') {
-                const email = $event.query?.trim();
-                if (email && this.emailRegex.test(email)) {
-                    this.addEmailToList(email);
-                    return;
-                }
-            }
-        }
-
         if ($event.query || $event.originalEvent?.type === 'click') {
             this.autoCompleteControlChangeSub.next($event.query || 'empty');
         }
@@ -215,9 +205,7 @@ export class AutoCompleteFeildComponent implements OnInit, OnDestroy, ControlVal
     getInitials(text: string): string {
         if (!text) return '';
         const parts = text.split('@')[0].split(/[\s._-]/);
-        return parts.length > 1
-            ? (parts[0][0] + parts[1][0]).toUpperCase()
-            : text.substring(0, 2).toUpperCase();
+        return parts.length > 1 ? (parts[0][0] + parts[1][0]).toUpperCase() : text.substring(0, 2).toUpperCase();
     }
 
     formatEmailForDisplay(email: string): string {
