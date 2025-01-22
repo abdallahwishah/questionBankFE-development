@@ -38,6 +38,7 @@ export class AddQuestionComponent extends AppComponentBase implements OnInit {
     QuestionTypeEnum = QuestionTypeEnum;
     _createOrEditQuestionDto = new CreateOrEditQuestionDto();
     loading = false;
+    studyLevelsValue: any[];
 
     constructor(
         private _injector: Injector,
@@ -70,7 +71,6 @@ export class AddQuestionComponent extends AppComponentBase implements OnInit {
             ),
             this._studySubjectsProxy.getAll(undefined, undefined, undefined, undefined, undefined, undefined),
             this._subjectUnitsServiceProxy.getAll(
-                undefined,
                 undefined,
                 undefined,
                 undefined,
@@ -149,10 +149,11 @@ export class AddQuestionComponent extends AppComponentBase implements OnInit {
     addNewLinledQ() {
         this._createOrEditQuestionDto.payload.subQuestions.push(new CreateOrEditQuestionDto());
     }
-    removeLinkQ(index){
+    removeLinkQ(index) {
         this._createOrEditQuestionDto.payload.subQuestions.splice(index, 1);
     }
     Save(): void {
+        this._createOrEditQuestionDto.studyLevelIds = this.studyLevelsValue.map((x) => x?.studyLevel?.id);
         this._questionsServiceProxy.createOrEdit(this._createOrEditQuestionDto).subscribe({
             next: () => {
                 this.notify.success(this.l('SavedSuccessfully'));

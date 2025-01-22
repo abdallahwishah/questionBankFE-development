@@ -25,7 +25,7 @@ export class ExamViewerAndAttemptComponent implements OnInit {
     question: any;
     showInstructions = true;
     sidebarVisible = false;
-
+    loading = false;
     constructor(
         private _examsServiceProxy: ExamsServiceProxy,
         private _activatedRoute: ActivatedRoute,
@@ -54,11 +54,12 @@ export class ExamViewerAndAttemptComponent implements OnInit {
     prev() {
         if (this.isViewer) {
             const viewDto = new ViewExamQuestionDto();
-            viewDto.examId = this.examData.examId;
-            viewDto.questionId = this.question.question.id;
-            viewDto.questionNo = this.question.questionNo;
+            viewDto.examId = this.id;
+            viewDto.questionId = this.question.questionId;
+            viewDto.questionNo = this.examData.questionNo - 1 || 1;
             viewDto.sectionId = this.question.sectionId;
             viewDto.sectionNo = this.examData.sectionNo;
+            this.loading = true;
 
             this._examsServiceProxy.viewPreviosQuestion(viewDto).subscribe((response) => {
                 this.updateQuestion(response);
@@ -79,7 +80,7 @@ export class ExamViewerAndAttemptComponent implements OnInit {
             viewDto.questionNo = this.examData.questionNo + 1;
             viewDto.sectionId = this.question.sectionId;
             viewDto.sectionNo = this.examData.sectionNo;
-
+            this.loading = true;
             this._examsServiceProxy.viewNextQuestion(viewDto).subscribe((response) => {
                 this.updateQuestion(response);
             });
@@ -94,7 +95,7 @@ export class ExamViewerAndAttemptComponent implements OnInit {
     private prepareAnswerDto(): ExamQuestionWithAnswerDto {
         const dto = new ExamQuestionWithAnswerDto();
         dto.examId = this.id;
-        dto.questionNo = this.examData.questionNo - 1;
+        dto.questionNo = this.question.questionNo;
         dto.sectionId = this.question.sectionId;
         dto.sectionNo = this.examData.sectionNo;
         dto.type = this.question.question.type;
@@ -104,10 +105,11 @@ export class ExamViewerAndAttemptComponent implements OnInit {
     private updateQuestion(response: any) {
         this.question = response.question;
         this.examData.questionNo = response.questionNo;
-        if (this.examData.isNextSection) {
+        if (response.isNextSection) {
             this.examData.sectionNo = response.sectionNo;
             this.examData.sectionInstructions = response.sectionInstructions;
         }
+        this.loading = false;
     }
 
     getRemainingTime(seconds: number): string {

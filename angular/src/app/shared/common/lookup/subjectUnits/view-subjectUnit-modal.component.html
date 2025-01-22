@@ -4,11 +4,11 @@
             <div class="modal-header">
                 <h4 class="modal-title">
                     <span>{{l("Details")}}</span>
-                </h4>               
-                
-                
+                </h4>
+
+
                  <button type="button" class="btn-close" (click)="close()" aria-label="Close" [disabled]="saving"></button>
-             
+
             </div>
             <div class="modal-body">
 
@@ -27,10 +27,7 @@
                                 title="True"></i></div>
                         <div *ngIf="!item.subjectUnit.isActive" class="text-left"><i class="fa fa-times-circle" title="False"></i></div>
                     </div>
-                    <div class="col-6 mb-3">
-                        <h6>({{l("StudyLevel")}}) {{l("Value")}} :</h6>
-                        {{item.studyLevelValue}}
-                    </div>
+
                     <div class="col-6 mb-3">
                         <h6>({{l("StudySubject")}}) {{l("Value")}} :</h6>
                         {{item.studySubjectValue}}

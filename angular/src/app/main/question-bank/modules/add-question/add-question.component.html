@@ -73,23 +73,6 @@
 
                     <div class="row mt-6">
                         <div class="col-md-6 mb-5">
-                            <!--    <app-auto-complete-feild
-                            [label]="l('StudySubject')"
-                            field="name"
-                            [(ngModel)]="_createOrEditQuestionDto.studySubjectId"
-                            name="studySubjectId"
-                            [multiple]="false"
-                            [ConfigCustomSearch]="{
-                                api: '/api/services/app/StudySubjects/GetAll',
-                                keySearch: 'filter',
-                                PathObj: ['studySubject'],
-                                customParams: {
-                                    Sorting: '',
-                                    SkipCount: 0,
-                                    MaxResultCount: 10,
-                                },
-                            }"
-                        ></app-auto-complete-feild> -->
                             <app-dropdown-field
                                 [(ngModel)]="_createOrEditQuestionDto.studySubjectId"
                                 [options]="studySubjects"
@@ -99,13 +82,22 @@
                             ></app-dropdown-field>
                         </div>
                         <div class="col-md-6 mb-5">
-                            <app-dropdown-field
-                                [(ngModel)]="_createOrEditQuestionDto.studyLevelId"
-                                [options]="studyLevels"
-                                optionLabel="name"
-                                optionValue="id"
-                                [labelField]="l('StudyLevel')"
-                            ></app-dropdown-field>
+                            <app-auto-complete-feild
+                                [label]="l('StudyLevel')"
+                                field="studyLevel.name"
+                                [(ngModel)]="studyLevelsValue"
+                                name="StudyLevelId"
+                                [multiple]="true"
+                                [ConfigCustomSearch]="{
+                                    api: '/api/services/app/StudyLevels/GetAll',
+                                    keySearch: 'filter',
+                                    customParams: {
+                                        Sorting: '',
+                                        SkipCount: 0,
+                                        MaxResultCount: 10
+                                    }
+                                }"
+                            ></app-auto-complete-feild>
                         </div>
                         <div class="col-md-6 mb-5">
                             <app-dropdown-field

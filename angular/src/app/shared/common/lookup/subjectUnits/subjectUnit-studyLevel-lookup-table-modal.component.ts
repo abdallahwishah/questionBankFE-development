@@ -1,6 +1,6 @@
 ﻿import { Component, ViewChild, Injector, Output, EventEmitter, ViewEncapsulation} from '@angular/core';
 import { ModalDirective } from 'ngx-bootstrap/modal';
-import {SubjectUnitsServiceProxy, SubjectUnitStudyLevelLookupTableDto } from '@shared/service-proxies/service-proxies';
+import {SubjectUnitsServiceProxy } from '@shared/service-proxies/service-proxies';
 import { AppComponentBase } from '@shared/common/app-component-base';
 import { Table } from 'primeng/table';
 import { Paginator } from 'primeng/paginator';
@@ -20,7 +20,7 @@ export class SubjectUnitStudyLevelLookupTableModalComponent extends AppComponent
     filterText = '';
     id: number;
     displayName: string;
-    
+
     @Output() modalSave: EventEmitter<any> = new EventEmitter<any>();
     active = false;
     saving = false;
@@ -54,23 +54,14 @@ export class SubjectUnitStudyLevelLookupTableModalComponent extends AppComponent
 
         this.primengTableHelper.showLoadingIndicator();
 
-        this._subjectUnitsServiceProxy.getAllStudyLevelForLookupTable(
-            this.filterText,
-            this.primengTableHelper.getSorting(this.dataTable),
-            this.primengTableHelper.getSkipCount(this.paginator, event),
-            this.primengTableHelper.getMaxResultCount(this.paginator, event)
-        ).subscribe(result => {
-            this.primengTableHelper.totalRecordsCount = result.totalCount;
-            this.primengTableHelper.records = result.items;
-            this.primengTableHelper.hideLoadingIndicator();
-        });
+
     }
 
     reloadPage(): void {
         this.paginator.changePage(this.paginator.getPage());
     }
 
-    setAndSave(studyLevel: SubjectUnitStudyLevelLookupTableDto) {
+    setAndSave(studyLevel: any) {
         this.id = studyLevel.id;
         this.displayName = studyLevel.displayName;
         this.active = false;
