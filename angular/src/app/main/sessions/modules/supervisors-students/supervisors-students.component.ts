@@ -18,6 +18,8 @@ export class SupervisorsStudentsComponent extends AppComponentBase implements On
     filter: string;
     SessionId: any;
     classId: any;
+    sessionName: any;
+    schoolName: any;
 
     constructor(
         private _injector: Injector,
@@ -25,6 +27,7 @@ export class SupervisorsStudentsComponent extends AppComponentBase implements On
         private _SessionSupervisorsServiceProxy: SessionSupervisorsServiceProxy,
         private _examAttemptsServiceProxy: ExamAttemptsServiceProxy,
         private _ActivatedRoute: ActivatedRoute,
+        
     ) {
         super(_injector);
     }
@@ -33,6 +36,10 @@ export class SupervisorsStudentsComponent extends AppComponentBase implements On
         this._ActivatedRoute.paramMap?.subscribe((params) => {
             this.SessionId = Number(params?.get('id')); //.get('product');
             this.classId = Number(params?.get('classId')); //.get('product');
+             this._SessionsServiceProxy.getSessionForView(this.SessionId).subscribe(value=>{
+              this.sessionName = value.session.name
+             })
+           
 /*             this.getListSupervis();
  */        });
     }
