@@ -17,7 +17,7 @@ import { SubjectUnitStudySubjectLookupTableModalComponent } from './subjectUnit-
     templateUrl: './create-or-edit-subjectUnit-modal.component.html'
 })
 export class CreateOrEditSubjectUnitModalComponent extends AppComponentBase implements OnInit{
-   
+
     @ViewChild('createOrEditModal', { static: true }) modal: ModalDirective;
     @ViewChild('subjectUnitStudyLevelLookupTableModal', { static: true }) subjectUnitStudyLevelLookupTableModal: SubjectUnitStudyLevelLookupTableModalComponent;
     @ViewChild('subjectUnitStudySubjectLookupTableModal', { static: true }) subjectUnitStudySubjectLookupTableModal: SubjectUnitStudySubjectLookupTableModalComponent;
@@ -26,7 +26,7 @@ export class CreateOrEditSubjectUnitModalComponent extends AppComponentBase impl
 
     active = false;
     saving = false;
-    
+
 
     subjectUnit: CreateOrEditSubjectUnitDto = new CreateOrEditSubjectUnitDto();
 
@@ -42,9 +42,9 @@ export class CreateOrEditSubjectUnitModalComponent extends AppComponentBase impl
     ) {
         super(injector);
     }
-    
+
     show(subjectUnitId?: number): void {
-    
+
 
         if (!subjectUnitId) {
             this.subjectUnit = new CreateOrEditSubjectUnitDto();
@@ -59,23 +59,22 @@ export class CreateOrEditSubjectUnitModalComponent extends AppComponentBase impl
             this._subjectUnitsServiceProxy.getSubjectUnitForEdit(subjectUnitId).subscribe(result => {
                 this.subjectUnit = result.subjectUnit;
 
-                this.studyLevelValue = result.studyLevelValue;
-                this.studySubjectValue = result.studySubjectValue;
+                 this.studySubjectValue = result.studySubjectValue;
 
 
                 this.active = true;
                 this.modal.show();
             });
         }
-        
-        
+
+
     }
 
     save(): void {
             this.saving = true;
-            
-			
-			
+
+
+
             this._subjectUnitsServiceProxy.createOrEdit(this.subjectUnit)
              .pipe(finalize(() => { this.saving = false;}))
              .subscribe(() => {
@@ -86,8 +85,7 @@ export class CreateOrEditSubjectUnitModalComponent extends AppComponentBase impl
     }
 
     openSelectStudyLevelModal() {
-        this.subjectUnitStudyLevelLookupTableModal.id = this.subjectUnit.studyLevelId;
-        this.subjectUnitStudyLevelLookupTableModal.displayName = this.studyLevelValue;
+         this.subjectUnitStudyLevelLookupTableModal.displayName = this.studyLevelValue;
         this.subjectUnitStudyLevelLookupTableModal.show();
     }
     openSelectStudySubjectModal() {
@@ -102,8 +100,7 @@ export class CreateOrEditSubjectUnitModalComponent extends AppComponentBase impl
 
 
     setStudyLevelIdNull() {
-        this.subjectUnit.studyLevelId = null;
-        this.studyLevelValue = '';
+         this.studyLevelValue = '';
     }
     setStudySubjectIdNull() {
         this.subjectUnit.studySubjectId = null;
@@ -112,8 +109,7 @@ export class CreateOrEditSubjectUnitModalComponent extends AppComponentBase impl
 
 
     getNewStudyLevelId() {
-        this.subjectUnit.studyLevelId = this.subjectUnitStudyLevelLookupTableModal.id;
-        this.studyLevelValue = this.subjectUnitStudyLevelLookupTableModal.displayName;
+         this.studyLevelValue = this.subjectUnitStudyLevelLookupTableModal.displayName;
     }
     getNewStudySubjectId() {
         this.subjectUnit.studySubjectId = this.subjectUnitStudySubjectLookupTableModal.id;
@@ -131,8 +127,8 @@ export class CreateOrEditSubjectUnitModalComponent extends AppComponentBase impl
         this.active = false;
         this.modal.hide();
     }
-    
+
      ngOnInit(): void {
-        
-     }    
+
+     }
 }

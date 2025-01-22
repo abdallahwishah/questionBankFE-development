@@ -84,7 +84,6 @@ export class AddTemplateComponent extends AppComponentBase implements OnInit {
                 undefined,
                 undefined,
                 undefined,
-                undefined,
             ),
             this._complexitiesServiceProxy.getAll(undefined, undefined, undefined, undefined, undefined),
             this._categoriesServiceProxy.getAll(undefined, undefined, undefined, undefined, undefined),

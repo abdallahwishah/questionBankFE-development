@@ -23,7 +23,6 @@ export class ListComponent extends AppComponentBase implements OnInit {
     @ViewChild('dataTable', { static: true }) dataTable: Table;
     @ViewChild('paginator', { static: true }) paginator: Paginator;
     @ViewChild(FiltersComponent) FiltersComponent: FiltersComponent;
-    
 
     Add_Test_dialog = UniqueNameComponents.Add_Test_dialog;
     studyLevels: any[] = [];
@@ -111,7 +110,19 @@ export class ListComponent extends AppComponentBase implements OnInit {
     doActions(label: any, record: any) {
         switch (label) {
             case 'View':
-                this._router.navigate(['/student/exam-viewer/' + record.exam.id]);
+            //     // Construct the URL – this could be a route or an external URL
+            //     const attemptUrl = '/student/exam-attempt/' + record.exam.id;
+
+            //     // Open in a new window with minimal UI
+            //     // NOTE: This still will NOT block someone from using extensions or
+            //     // opening new tabs in a modern browser.
+            //     window.open(
+            //         attemptUrl,
+            //         '_blank',
+            //         `menubar=no,toolbar=no,location=no,status=no,scrollbars=yes,resizable=yes,width=${screen.availWidth},height=${screen.availHeight}`,
+            //     );
+            this._router.navigate(['/student/exam-viewer/' + record.exam.id]);
+
                 break;
 
             case 'Edit':
@@ -125,9 +136,9 @@ export class ListComponent extends AppComponentBase implements OnInit {
         }
     }
 
-    closeFilters(){
-        this.FiltersComponent.isPanelOpen = false
-     }
+    closeFilters() {
+        this.FiltersComponent.isPanelOpen = false;
+    }
 
     AddExam() {
         this._DialogSharedService.showDialog(this.Add_Test_dialog, {});

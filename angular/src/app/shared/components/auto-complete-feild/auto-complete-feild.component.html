@@ -19,15 +19,5 @@
         [forceSelection]="type !== 'sendEmail'"
         emptyMessage=""
         (keydown.enter)="$event.preventDefault()"
-    >
-        <ng-template let-item pTemplate="item" *ngIf="type === 'sendEmail'">
-            <div class="email-item">
-                <div class="avatar">{{ getInitials(item.name || item.value) }}</div>
-                <div class="details">
-                    <div class="name">{{ item.name || formatEmailForDisplay(item.value) }}</div>
-                    <div class="email">{{ item.value }}</div>
-                </div>
-            </div>
-        </ng-template>
-    </p-autoComplete>
+    ></p-autoComplete>
 </div>

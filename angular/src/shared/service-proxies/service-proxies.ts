@@ -24042,14 +24042,13 @@ export class SubjectUnitsServiceProxy {
      * @param filter (optional) 
      * @param codeFilter (optional) 
      * @param isActiveFilter (optional) 
-     * @param studyLevelValueFilter (optional) 
      * @param studySubjectValueFilter (optional) 
      * @param sorting (optional) 
      * @param skipCount (optional) 
      * @param maxResultCount (optional) 
      * @return Success
      */
-    getAll(filter: string | undefined, codeFilter: string | undefined, isActiveFilter: number | undefined, studyLevelValueFilter: string | undefined, studySubjectValueFilter: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfGetSubjectUnitForViewDto> {
+    getAll(filter: string | undefined, codeFilter: string | undefined, isActiveFilter: number | undefined, studySubjectValueFilter: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfGetSubjectUnitForViewDto> {
         let url_ = this.baseUrl + "/api/services/app/SubjectUnits/GetAll?";
         if (filter === null)
             throw new Error("The parameter 'filter' cannot be null.");
@@ -24063,10 +24062,6 @@ export class SubjectUnitsServiceProxy {
             throw new Error("The parameter 'isActiveFilter' cannot be null.");
         else if (isActiveFilter !== undefined)
             url_ += "IsActiveFilter=" + encodeURIComponent("" + isActiveFilter) + "&";
-        if (studyLevelValueFilter === null)
-            throw new Error("The parameter 'studyLevelValueFilter' cannot be null.");
-        else if (studyLevelValueFilter !== undefined)
-            url_ += "StudyLevelValueFilter=" + encodeURIComponent("" + studyLevelValueFilter) + "&";
         if (studySubjectValueFilter === null)
             throw new Error("The parameter 'studySubjectValueFilter' cannot be null.");
         else if (studySubjectValueFilter !== undefined)
@@ -24411,77 +24406,6 @@ export class SubjectUnitsServiceProxy {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
             result200 = FileDto.fromJS(resultData200);
-            return _observableOf(result200);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf(null as any);
-    }
-
-    /**
-     * @param filter (optional) 
-     * @param sorting (optional) 
-     * @param skipCount (optional) 
-     * @param maxResultCount (optional) 
-     * @return Success
-     */
-    getAllStudyLevelForLookupTable(filter: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfSubjectUnitStudyLevelLookupTableDto> {
-        let url_ = this.baseUrl + "/api/services/app/SubjectUnits/GetAllStudyLevelForLookupTable?";
-        if (filter === null)
-            throw new Error("The parameter 'filter' cannot be null.");
-        else if (filter !== undefined)
-            url_ += "Filter=" + encodeURIComponent("" + filter) + "&";
-        if (sorting === null)
-            throw new Error("The parameter 'sorting' cannot be null.");
-        else if (sorting !== undefined)
-            url_ += "Sorting=" + encodeURIComponent("" + sorting) + "&";
-        if (skipCount === null)
-            throw new Error("The parameter 'skipCount' cannot be null.");
-        else if (skipCount !== undefined)
-            url_ += "SkipCount=" + encodeURIComponent("" + skipCount) + "&";
-        if (maxResultCount === null)
-            throw new Error("The parameter 'maxResultCount' cannot be null.");
-        else if (maxResultCount !== undefined)
-            url_ += "MaxResultCount=" + encodeURIComponent("" + maxResultCount) + "&";
-        url_ = url_.replace(/[?&]$/, "");
-
-        let options_ : any = {
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Accept": "text/plain"
-            })
-        };
-
-        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGetAllStudyLevelForLookupTable(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processGetAllStudyLevelForLookupTable(response_ as any);
-                } catch (e) {
-                    return _observableThrow(e) as any as Observable<PagedResultDtoOfSubjectUnitStudyLevelLookupTableDto>;
-                }
-            } else
-                return _observableThrow(response_) as any as Observable<PagedResultDtoOfSubjectUnitStudyLevelLookupTableDto>;
-        }));
-    }
-
-    protected processGetAllStudyLevelForLookupTable(response: HttpResponseBase): Observable<PagedResultDtoOfSubjectUnitStudyLevelLookupTableDto> {
-        const status = response.status;
-        const responseBlob =
-            response instanceof HttpResponse ? response.body :
-            (response as any).error instanceof Blob ? (response as any).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = PagedResultDtoOfSubjectUnitStudyLevelLookupTableDto.fromJS(resultData200);
             return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
@@ -34201,7 +34125,7 @@ export class CreateOrEditQuestionDto implements ICreateOrEditQuestionDto {
     updateFromQuestionId!: number | undefined;
     payload!: QuestionPayloadDto;
     studySubjectId!: number;
-    studyLevelId!: number;
+    studyLevelIds!: number[];
     complexityId!: number;
     questionCategoryId!: number;
     subjectUnitId!: number;
@@ -34212,6 +34136,9 @@ export class CreateOrEditQuestionDto implements ICreateOrEditQuestionDto {
                 if (data.hasOwnProperty(property))
                     (<any>this)[property] = (<any>data)[property];
             }
+        }
+        if (!data) {
+            this.studyLevelIds = [];
         }
     }
 
@@ -34236,7 +34163,11 @@ export class CreateOrEditQuestionDto implements ICreateOrEditQuestionDto {
             this.updateFromQuestionId = _data["updateFromQuestionId"];
             this.payload = _data["payload"] ? QuestionPayloadDto.fromJS(_data["payload"]) : <any>undefined;
             this.studySubjectId = _data["studySubjectId"];
-            this.studyLevelId = _data["studyLevelId"];
+            if (Array.isArray(_data["studyLevelIds"])) {
+                this.studyLevelIds = [] as any;
+                for (let item of _data["studyLevelIds"])
+                    this.studyLevelIds!.push(item);
+            }
             this.complexityId = _data["complexityId"];
             this.questionCategoryId = _data["questionCategoryId"];
             this.subjectUnitId = _data["subjectUnitId"];
@@ -34271,7 +34202,11 @@ export class CreateOrEditQuestionDto implements ICreateOrEditQuestionDto {
         data["updateFromQuestionId"] = this.updateFromQuestionId;
         data["payload"] = this.payload ? this.payload.toJSON() : <any>undefined;
         data["studySubjectId"] = this.studySubjectId;
-        data["studyLevelId"] = this.studyLevelId;
+        if (Array.isArray(this.studyLevelIds)) {
+            data["studyLevelIds"] = [];
+            for (let item of this.studyLevelIds)
+                data["studyLevelIds"].push(item);
+        }
         data["complexityId"] = this.complexityId;
         data["questionCategoryId"] = this.questionCategoryId;
         data["subjectUnitId"] = this.subjectUnitId;
@@ -34299,7 +34234,7 @@ export interface ICreateOrEditQuestionDto {
     updateFromQuestionId: number | undefined;
     payload: QuestionPayloadDto;
     studySubjectId: number;
-    studyLevelId: number;
+    studyLevelIds: number[];
     complexityId: number;
     questionCategoryId: number;
     subjectUnitId: number;
@@ -35111,7 +35046,6 @@ export class CreateOrEditSubjectUnitDto implements ICreateOrEditSubjectUnitDto {
     nameL!: string;
     code!: string | undefined;
     isActive!: boolean;
-    studyLevelId!: number | undefined;
     studySubjectId!: number | undefined;
 
     constructor(data?: ICreateOrEditSubjectUnitDto) {
@@ -35130,7 +35064,6 @@ export class CreateOrEditSubjectUnitDto implements ICreateOrEditSubjectUnitDto {
             this.nameL = _data["nameL"];
             this.code = _data["code"];
             this.isActive = _data["isActive"];
-            this.studyLevelId = _data["studyLevelId"];
             this.studySubjectId = _data["studySubjectId"];
         }
     }
@@ -35149,7 +35082,6 @@ export class CreateOrEditSubjectUnitDto implements ICreateOrEditSubjectUnitDto {
         data["nameL"] = this.nameL;
         data["code"] = this.code;
         data["isActive"] = this.isActive;
-        data["studyLevelId"] = this.studyLevelId;
         data["studySubjectId"] = this.studySubjectId;
         return data;
     }
@@ -35161,7 +35093,6 @@ export interface ICreateOrEditSubjectUnitDto {
     nameL: string;
     code: string | undefined;
     isActive: boolean;
-    studyLevelId: number | undefined;
     studySubjectId: number | undefined;
 }
 
@@ -42358,7 +42289,6 @@ export class GetQuestionForEditOutput implements IGetQuestionForEditOutput {
     question!: CreateOrEditQuestionDto;
     questionBody!: string | undefined;
     studySubjectName!: string | undefined;
-    studyLevelName!: string | undefined;
     complexityName!: string | undefined;
     questionCategoryName!: string | undefined;
     subjectUnitName!: string | undefined;
@@ -42377,7 +42307,6 @@ export class GetQuestionForEditOutput implements IGetQuestionForEditOutput {
             this.question = _data["question"] ? CreateOrEditQuestionDto.fromJS(_data["question"]) : <any>undefined;
             this.questionBody = _data["questionBody"];
             this.studySubjectName = _data["studySubjectName"];
-            this.studyLevelName = _data["studyLevelName"];
             this.complexityName = _data["complexityName"];
             this.questionCategoryName = _data["questionCategoryName"];
             this.subjectUnitName = _data["subjectUnitName"];
@@ -42396,7 +42325,6 @@ export class GetQuestionForEditOutput implements IGetQuestionForEditOutput {
         data["question"] = this.question ? this.question.toJSON() : <any>undefined;
         data["questionBody"] = this.questionBody;
         data["studySubjectName"] = this.studySubjectName;
-        data["studyLevelName"] = this.studyLevelName;
         data["complexityName"] = this.complexityName;
         data["questionCategoryName"] = this.questionCategoryName;
         data["subjectUnitName"] = this.subjectUnitName;
@@ -42408,7 +42336,6 @@ export interface IGetQuestionForEditOutput {
     question: CreateOrEditQuestionDto;
     questionBody: string | undefined;
     studySubjectName: string | undefined;
-    studyLevelName: string | undefined;
     complexityName: string | undefined;
     questionCategoryName: string | undefined;
     subjectUnitName: string | undefined;
@@ -42416,7 +42343,6 @@ export interface IGetQuestionForEditOutput {
 
 export class GetQuestionForViewDto implements IGetQuestionForViewDto {
     question!: QuestionDto;
-    studyLevelName!: string | undefined;
     studySubjectName!: string | undefined;
     categoryName!: string | undefined;
     subjectUnitName!: string | undefined;
@@ -42439,7 +42365,6 @@ export class GetQuestionForViewDto implements IGetQuestionForViewDto {
     init(_data?: any) {
         if (_data) {
             this.question = _data["question"] ? QuestionDto.fromJS(_data["question"]) : <any>undefined;
-            this.studyLevelName = _data["studyLevelName"];
             this.studySubjectName = _data["studySubjectName"];
             this.categoryName = _data["categoryName"];
             this.subjectUnitName = _data["subjectUnitName"];
@@ -42466,7 +42391,6 @@ export class GetQuestionForViewDto implements IGetQuestionForViewDto {
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["question"] = this.question ? this.question.toJSON() : <any>undefined;
-        data["studyLevelName"] = this.studyLevelName;
         data["studySubjectName"] = this.studySubjectName;
         data["categoryName"] = this.categoryName;
         data["subjectUnitName"] = this.subjectUnitName;
@@ -42486,7 +42410,6 @@ export class GetQuestionForViewDto implements IGetQuestionForViewDto {
 
 export interface IGetQuestionForViewDto {
     question: QuestionDto;
-    studyLevelName: string | undefined;
     studySubjectName: string | undefined;
     categoryName: string | undefined;
     subjectUnitName: string | undefined;
@@ -44056,7 +43979,6 @@ export interface IGetSubjectGroupForViewDto {
 
 export class GetSubjectUnitForEditOutput implements IGetSubjectUnitForEditOutput {
     subjectUnit!: CreateOrEditSubjectUnitDto;
-    studyLevelValue!: string | undefined;
     studySubjectValue!: string | undefined;
 
     constructor(data?: IGetSubjectUnitForEditOutput) {
@@ -44071,7 +43993,6 @@ export class GetSubjectUnitForEditOutput implements IGetSubjectUnitForEditOutput
     init(_data?: any) {
         if (_data) {
             this.subjectUnit = _data["subjectUnit"] ? CreateOrEditSubjectUnitDto.fromJS(_data["subjectUnit"]) : <any>undefined;
-            this.studyLevelValue = _data["studyLevelValue"];
             this.studySubjectValue = _data["studySubjectValue"];
         }
     }
@@ -44086,7 +44007,6 @@ export class GetSubjectUnitForEditOutput implements IGetSubjectUnitForEditOutput
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["subjectUnit"] = this.subjectUnit ? this.subjectUnit.toJSON() : <any>undefined;
-        data["studyLevelValue"] = this.studyLevelValue;
         data["studySubjectValue"] = this.studySubjectValue;
         return data;
     }
@@ -44094,13 +44014,11 @@ export class GetSubjectUnitForEditOutput implements IGetSubjectUnitForEditOutput
 
 export interface IGetSubjectUnitForEditOutput {
     subjectUnit: CreateOrEditSubjectUnitDto;
-    studyLevelValue: string | undefined;
     studySubjectValue: string | undefined;
 }
 
 export class GetSubjectUnitForViewDto implements IGetSubjectUnitForViewDto {
     subjectUnit!: SubjectUnitDto;
-    studyLevelValue!: string | undefined;
     studySubjectValue!: string | undefined;
 
     constructor(data?: IGetSubjectUnitForViewDto) {
@@ -44115,7 +44033,6 @@ export class GetSubjectUnitForViewDto implements IGetSubjectUnitForViewDto {
     init(_data?: any) {
         if (_data) {
             this.subjectUnit = _data["subjectUnit"] ? SubjectUnitDto.fromJS(_data["subjectUnit"]) : <any>undefined;
-            this.studyLevelValue = _data["studyLevelValue"];
             this.studySubjectValue = _data["studySubjectValue"];
         }
     }
@@ -44130,7 +44047,6 @@ export class GetSubjectUnitForViewDto implements IGetSubjectUnitForViewDto {
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["subjectUnit"] = this.subjectUnit ? this.subjectUnit.toJSON() : <any>undefined;
-        data["studyLevelValue"] = this.studyLevelValue;
         data["studySubjectValue"] = this.studySubjectValue;
         return data;
     }
@@ -44138,7 +44054,6 @@ export class GetSubjectUnitForViewDto implements IGetSubjectUnitForViewDto {
 
 export interface IGetSubjectUnitForViewDto {
     subjectUnit: SubjectUnitDto;
-    studyLevelValue: string | undefined;
     studySubjectValue: string | undefined;
 }
 
@@ -51558,54 +51473,6 @@ export interface IPagedResultDtoOfSubjectGroupSupportGroupLookupTableDto {
     totalCount: number;
 }
 
-export class PagedResultDtoOfSubjectUnitStudyLevelLookupTableDto implements IPagedResultDtoOfSubjectUnitStudyLevelLookupTableDto {
-    items!: SubjectUnitStudyLevelLookupTableDto[] | undefined;
-    totalCount!: number;
-
-    constructor(data?: IPagedResultDtoOfSubjectUnitStudyLevelLookupTableDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            if (Array.isArray(_data["items"])) {
-                this.items = [] as any;
-                for (let item of _data["items"])
-                    this.items!.push(SubjectUnitStudyLevelLookupTableDto.fromJS(item));
-            }
-            this.totalCount = _data["totalCount"];
-        }
-    }
-
-    static fromJS(data: any): PagedResultDtoOfSubjectUnitStudyLevelLookupTableDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new PagedResultDtoOfSubjectUnitStudyLevelLookupTableDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        if (Array.isArray(this.items)) {
-            data["items"] = [];
-            for (let item of this.items)
-                data["items"].push(item.toJSON());
-        }
-        data["totalCount"] = this.totalCount;
-        return data;
-    }
-}
-
-export interface IPagedResultDtoOfSubjectUnitStudyLevelLookupTableDto {
-    items: SubjectUnitStudyLevelLookupTableDto[] | undefined;
-    totalCount: number;
-}
-
 export class PagedResultDtoOfSubjectUnitStudySubjectLookupTableDto implements IPagedResultDtoOfSubjectUnitStudySubjectLookupTableDto {
     items!: SubjectUnitStudySubjectLookupTableDto[] | undefined;
     totalCount!: number;
@@ -56497,7 +56364,6 @@ export class SubjectUnitDto implements ISubjectUnitDto {
     name!: string | undefined;
     code!: string | undefined;
     isActive!: boolean;
-    studyLevelId!: number | undefined;
     studySubjectId!: number | undefined;
 
     constructor(data?: ISubjectUnitDto) {
@@ -56515,7 +56381,6 @@ export class SubjectUnitDto implements ISubjectUnitDto {
             this.name = _data["name"];
             this.code = _data["code"];
             this.isActive = _data["isActive"];
-            this.studyLevelId = _data["studyLevelId"];
             this.studySubjectId = _data["studySubjectId"];
         }
     }
@@ -56533,7 +56398,6 @@ export class SubjectUnitDto implements ISubjectUnitDto {
         data["name"] = this.name;
         data["code"] = this.code;
         data["isActive"] = this.isActive;
-        data["studyLevelId"] = this.studyLevelId;
         data["studySubjectId"] = this.studySubjectId;
         return data;
     }
@@ -56544,48 +56408,7 @@ export interface ISubjectUnitDto {
     name: string | undefined;
     code: string | undefined;
     isActive: boolean;
-    studyLevelId: number | undefined;
     studySubjectId: number | undefined;
-}
-
-export class SubjectUnitStudyLevelLookupTableDto implements ISubjectUnitStudyLevelLookupTableDto {
-    id!: number;
-    displayName!: string | undefined;
-
-    constructor(data?: ISubjectUnitStudyLevelLookupTableDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.id = _data["id"];
-            this.displayName = _data["displayName"];
-        }
-    }
-
-    static fromJS(data: any): SubjectUnitStudyLevelLookupTableDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new SubjectUnitStudyLevelLookupTableDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["id"] = this.id;
-        data["displayName"] = this.displayName;
-        return data;
-    }
-}
-
-export interface ISubjectUnitStudyLevelLookupTableDto {
-    id: number;
-    displayName: string | undefined;
 }
 
 export class SubjectUnitStudySubjectLookupTableDto implements ISubjectUnitStudySubjectLookupTableDto {

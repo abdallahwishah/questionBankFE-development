@@ -72,8 +72,7 @@ export class SubjectUnitsComponent extends AppComponentBase {
             this.codeFilter,
             this.isActiveFilter,
             this.studyLevelValueFilter,
-            this.studySubjectValueFilter,
-            this.primengTableHelper.getSorting(this.dataTable),
+             this.primengTableHelper.getSorting(this.dataTable),
             this.primengTableHelper.getSkipCount(this.paginator, event),
             this.primengTableHelper.getMaxResultCount(this.paginator, event)
         ).subscribe(result => {
