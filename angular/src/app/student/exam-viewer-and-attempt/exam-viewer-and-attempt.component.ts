@@ -39,12 +39,20 @@ export class ExamViewerAndAttemptComponent implements OnInit {
     }
 
     loadExamData() {
-        this._examsServiceProxy.getApplyModel(this.id).subscribe((response) => {
-            this.examData = response;
-            this.question = response.questionWithAnswer.question;
-            console.log('questionquestion', this.question);
-            this.showInstructions = !!response.examInstructions;
-        });
+        if (this.isViewer) {
+            this._examsServiceProxy.getApplyModel(this.id).subscribe((response) => {
+                this.examData = response;
+                this.question = response.questionWithAnswer.question;
+                this.showInstructions = !!response.examInstructions;
+            });
+        } else {
+            this._examsServiceProxy.getExpectedeExam().subscribe((response) => {
+                this.examData = response.applyExamDto;
+                this.id = response.applyExamDto.examId;
+                this.question = response.applyExamDto.questionWithAnswer.question;
+                this.showInstructions = !!response.applyExamDto.examInstructions;
+            });
+        }
     }
 
     startExam() {
@@ -65,10 +73,27 @@ export class ExamViewerAndAttemptComponent implements OnInit {
                 this.updateQuestion(response);
             });
         } else {
-            const answerDto = this.prepareAnswerDto();
-            // this._examsServiceProxy.prevQuestion(answerDto).subscribe((response) => {
-            //     this.updateQuestion(response);
-            // });
+            const dto = new ExamQuestionWithAnswerDto();
+            dto.examId = this.id;
+            dto.questionId = this.question.questionId;
+            dto.questionNo = this.examData.questionNo - 1;
+            dto.sectionId = this.question.sectionId;
+            dto.sectionNo = this.examData.sectionNo;
+            dto.type = this.question.question.type;
+            dto.rearrangeAnswer = this.question.question?.rearrangeAnswer;//working
+            dto.trueFalseAnswer = this.question.question?.trueFalseAnswer;//working
+            dto.dragTableAnswer = this.question.question?.dragTableAnswer
+            dto.multipleChoiceAnswer = this.question.question?.multipleChoiceAnswer
+            dto.drawingAnswer = this.question.question?.drawingAnswer //working
+            dto.singleChoiceAnswer = this.question.question?.singleChoiceAnswer  //working
+            dto.matchAnswer = this.question.question?.matchAnswer //working
+            dto.saAnswer = this.question.question?.saAnswer//working
+            dto.dragFormAnswer = this.question.question?.dragFormAnswer
+            dto.linkedQuestionAnswer = this.question.question?.linkedQuestionAnswer
+
+            this._examsServiceProxy.backQuestion(dto).subscribe((response) => {
+                this.updateQuestion(response);
+            });
         }
     }
 
@@ -85,21 +110,30 @@ export class ExamViewerAndAttemptComponent implements OnInit {
                 this.updateQuestion(response);
             });
         } else {
-            const answerDto = this.prepareAnswerDto();
-            this._examsServiceProxy.nextQuestion(answerDto).subscribe((response) => {
+            const dto = new ExamQuestionWithAnswerDto();
+            dto.examId = this.id;
+            dto.questionId = this.question.questionId;
+            dto.questionNo = this.examData.questionNo + 1;
+            dto.sectionId = this.question.sectionId;
+            dto.sectionNo = this.examData.sectionNo;
+            dto.type = this.question.question.type;
+            dto.rearrangeAnswer = this.question.question?.rearrangeAnswer;
+            dto.trueFalseAnswer = this.question.question?.trueFalseAnswer;
+            dto.dragTableAnswer = this.question.question?.dragTableAnswer
+            dto.multipleChoiceAnswer = this.question.question?.multipleChoiceAnswer
+            dto.drawingAnswer = this.question.question?.drawingAnswer
+            dto.singleChoiceAnswer = this.question.question?.singleChoiceAnswer
+            dto.matchAnswer = this.question.question?.matchAnswer
+            dto.saAnswer = this.question.question?.saAnswer
+            dto.dragFormAnswer = this.question.question?.dragFormAnswer
+            dto.linkedQuestionAnswer = this.question.question?.linkedQuestionAnswer
+
+
+
+            this._examsServiceProxy.nextQuestion(dto).subscribe((response) => {
                 this.updateQuestion(response);
             });
         }
-    }
-
-    private prepareAnswerDto(): ExamQuestionWithAnswerDto {
-        const dto = new ExamQuestionWithAnswerDto();
-        dto.examId = this.id;
-        dto.questionNo = this.question.questionNo;
-        dto.sectionId = this.question.sectionId;
-        dto.sectionNo = this.examData.sectionNo;
-        dto.type = this.question.question.type;
-        return dto;
     }
 
     private updateQuestion(response: any) {

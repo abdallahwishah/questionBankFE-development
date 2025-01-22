@@ -38162,6 +38162,7 @@ export interface IExamQuestionQuestionLookupTableDto {
 export class ExamQuestionWithAnswerDto implements IExamQuestionWithAnswerDto {
     questionNo!: number;
     sectionId!: number;
+    questionId!: number;
     examId!: number;
     sectionNo!: number;
     type!: number;
@@ -38189,6 +38190,7 @@ export class ExamQuestionWithAnswerDto implements IExamQuestionWithAnswerDto {
         if (_data) {
             this.questionNo = _data["questionNo"];
             this.sectionId = _data["sectionId"];
+            this.questionId = _data["questionId"];
             this.examId = _data["examId"];
             this.sectionNo = _data["sectionNo"];
             this.type = _data["type"];
@@ -38240,6 +38242,7 @@ export class ExamQuestionWithAnswerDto implements IExamQuestionWithAnswerDto {
         data = typeof data === 'object' ? data : {};
         data["questionNo"] = this.questionNo;
         data["sectionId"] = this.sectionId;
+        data["questionId"] = this.questionId;
         data["examId"] = this.examId;
         data["sectionNo"] = this.sectionNo;
         data["type"] = this.type;
@@ -38284,6 +38287,7 @@ export class ExamQuestionWithAnswerDto implements IExamQuestionWithAnswerDto {
 export interface IExamQuestionWithAnswerDto {
     questionNo: number;
     sectionId: number;
+    questionId: number;
     examId: number;
     sectionNo: number;
     type: number;
@@ -42291,6 +42295,7 @@ export class GetQuestionForEditOutput implements IGetQuestionForEditOutput {
     studySubjectName!: string | undefined;
     complexityName!: string | undefined;
     questionCategoryName!: string | undefined;
+    studyLevelName!: string[] | undefined;
     subjectUnitName!: string | undefined;
 
     constructor(data?: IGetQuestionForEditOutput) {
@@ -42309,6 +42314,11 @@ export class GetQuestionForEditOutput implements IGetQuestionForEditOutput {
             this.studySubjectName = _data["studySubjectName"];
             this.complexityName = _data["complexityName"];
             this.questionCategoryName = _data["questionCategoryName"];
+            if (Array.isArray(_data["studyLevelName"])) {
+                this.studyLevelName = [] as any;
+                for (let item of _data["studyLevelName"])
+                    this.studyLevelName!.push(item);
+            }
             this.subjectUnitName = _data["subjectUnitName"];
         }
     }
@@ -42327,6 +42337,11 @@ export class GetQuestionForEditOutput implements IGetQuestionForEditOutput {
         data["studySubjectName"] = this.studySubjectName;
         data["complexityName"] = this.complexityName;
         data["questionCategoryName"] = this.questionCategoryName;
+        if (Array.isArray(this.studyLevelName)) {
+            data["studyLevelName"] = [];
+            for (let item of this.studyLevelName)
+                data["studyLevelName"].push(item);
+        }
         data["subjectUnitName"] = this.subjectUnitName;
         return data;
     }
@@ -42338,6 +42353,7 @@ export interface IGetQuestionForEditOutput {
     studySubjectName: string | undefined;
     complexityName: string | undefined;
     questionCategoryName: string | undefined;
+    studyLevelName: string[] | undefined;
     subjectUnitName: string | undefined;
 }
 
@@ -42346,6 +42362,7 @@ export class GetQuestionForViewDto implements IGetQuestionForViewDto {
     studySubjectName!: string | undefined;
     categoryName!: string | undefined;
     subjectUnitName!: string | undefined;
+    studyLevelName!: string[] | undefined;
     complexityName!: string | undefined;
     creationTime!: DateTime;
     lastModificationTime!: DateTime;
@@ -42368,6 +42385,11 @@ export class GetQuestionForViewDto implements IGetQuestionForViewDto {
             this.studySubjectName = _data["studySubjectName"];
             this.categoryName = _data["categoryName"];
             this.subjectUnitName = _data["subjectUnitName"];
+            if (Array.isArray(_data["studyLevelName"])) {
+                this.studyLevelName = [] as any;
+                for (let item of _data["studyLevelName"])
+                    this.studyLevelName!.push(item);
+            }
             this.complexityName = _data["complexityName"];
             this.creationTime = _data["creationTime"] ? DateTime.fromISO(_data["creationTime"].toString()) : <any>undefined;
             this.lastModificationTime = _data["lastModificationTime"] ? DateTime.fromISO(_data["lastModificationTime"].toString()) : <any>undefined;
@@ -42394,6 +42416,11 @@ export class GetQuestionForViewDto implements IGetQuestionForViewDto {
         data["studySubjectName"] = this.studySubjectName;
         data["categoryName"] = this.categoryName;
         data["subjectUnitName"] = this.subjectUnitName;
+        if (Array.isArray(this.studyLevelName)) {
+            data["studyLevelName"] = [];
+            for (let item of this.studyLevelName)
+                data["studyLevelName"].push(item);
+        }
         data["complexityName"] = this.complexityName;
         data["creationTime"] = this.creationTime ? this.creationTime.toString() : <any>undefined;
         data["lastModificationTime"] = this.lastModificationTime ? this.lastModificationTime.toString() : <any>undefined;
@@ -42413,6 +42440,7 @@ export interface IGetQuestionForViewDto {
     studySubjectName: string | undefined;
     categoryName: string | undefined;
     subjectUnitName: string | undefined;
+    studyLevelName: string[] | undefined;
     complexityName: string | undefined;
     creationTime: DateTime;
     lastModificationTime: DateTime;

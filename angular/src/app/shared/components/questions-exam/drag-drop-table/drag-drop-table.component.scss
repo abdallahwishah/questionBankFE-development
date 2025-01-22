@@ -18,10 +18,23 @@
         border-radius: 0.75rem;
         min-height: 80px;
         width: 100%;
+        border: 2px dashed #e2e8f0;
+        transition: border-color 0.2s ease, background-color 0.2s ease;
 
         &.cdk-drop-list-dragging {
+            border-color: #3b82f6;
+            background-color: #f1f5f9;
+
             .draggable-item:not(.cdk-drag-dragging) {
                 transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+            }
+        }
+
+        &:empty {
+            &::after {
+                content: 'Drop items here';
+                color: #94a3b8;
+                font-size: 0.875rem;
             }
         }
 
@@ -39,6 +52,7 @@
             align-items: center;
             justify-content: center;
             min-width: 60px;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
 
             &:hover {
                 background-color: #edf2f7;
@@ -46,10 +60,16 @@
                 box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
             }
 
+            &:focus-visible {
+                outline: 2px solid #3b82f6;
+                outline-offset: 2px;
+            }
+
             &.cdk-drag-preview {
                 box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
                 background-color: #fff;
                 opacity: 0.9;
+                transform: scale(1.05);
             }
 
             &.cdk-drag-placeholder {
@@ -69,6 +89,8 @@
         border: 1px solid #e2e8f0;
         border-radius: 0.5rem;
         overflow: hidden;
+        background-color: #fff;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
 
         &.disabled {
             opacity: 0.7;
@@ -85,9 +107,11 @@
             border: 1px solid #e2e8f0;
             position: relative;
             background-color: #fff;
+            transition: all 0.2s ease;
 
             &.pinned-cell {
                 background-color: #f8fafc;
+                border: 2px solid #e2e8f0;
 
                 .cell-content {
                     color: #1a202c;
@@ -98,10 +122,20 @@
             &.droppable-cell {
                 border: 2px dashed #e2e8f0;
 
-                &:not(.has-value):hover {
-                    background-color: #f7fafc;
-                    border-color: #94a3b8;
+                &:not(.has-value) {
+                    &:hover, &:focus-within {
+                        background-color: #f7fafc;
+                        border-color: #94a3b8;
+                    }
+
+                    &::after {
+                        content: '+';
+                        color: #94a3b8;
+                        font-size: 1.5rem;
+                        opacity: 0.5;
+                    }
                 }
+
                 &.cdk-drop-list-dragging {
                     background-color: #f1f5f9;
                     border-style: solid;
@@ -112,11 +146,13 @@
                     background-color: #e2e8f0;
                     border-color: #3b82f6;
                     border-style: solid;
+                    animation: pulse 1.5s infinite;
                 }
 
                 &.has-value {
                     border-style: solid;
                     border-color: #e2e8f0;
+                    background-color: #fff;
                 }
             }
 
@@ -128,6 +164,7 @@
                 min-height: 2rem;
                 position: relative;
                 padding: 0.5rem;
+                word-break: break-word;
 
                 .check-icon {
                     color: #3b82f6;
@@ -143,18 +180,31 @@
 
                 .remove-icon {
                     position: absolute;
-                    top: 0;
-                    left: 0;
+                    top: 0.25rem;
+                    left: 0.25rem;
                     color: #dc2626;
                     font-size: 1rem;
                     cursor: pointer;
                     opacity: 0;
-                    transition: opacity 0.2s ease;
+                    transition: all 0.2s ease;
                     padding: 0.25rem;
                     border-radius: 50%;
+                    width: 24px;
+                    height: 24px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    background-color: transparent;
+                    border: none;
 
-                    &:hover {
+                    &:hover, &:focus-visible {
                         background-color: #fee2e2;
+                        opacity: 1;
+                    }
+
+                    &:focus-visible {
+                        outline: 2px solid #dc2626;
+                        outline-offset: 2px;
                     }
                 }
             }
@@ -173,20 +223,26 @@
             padding: 1rem;
             text-transform: none;
             border-bottom: 2px solid #e2e8f0;
+            white-space: nowrap;
+        }
+
+        tbody tr:last-child td {
+            border-bottom: none;
         }
     }
 }
 
-// Drag preview styles
+// Drag preview and animation styles
 .cdk-drag-preview {
     box-sizing: border-box;
-    border-radius: 4px;
+    border-radius: 0.5rem;
     box-shadow:
         0 5px 5px -3px rgba(0, 0, 0, 0.2),
         0 8px 10px 1px rgba(0, 0, 0, 0.14),
         0 3px 14px 2px rgba(0, 0, 0, 0.12);
     background-color: white;
     padding: 0.75rem 1.25rem;
+    z-index: 1000;
 }
 
 .cdk-drag-placeholder {
@@ -199,4 +255,31 @@
 
 .cdk-drop-list-dragging .draggable-item:not(.cdk-drag-placeholder) {
     transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+// Keyframe animations
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.4);
+    }
+    70% {
+        box-shadow: 0 0 0 4px rgba(59, 130, 246, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(59, 130, 246, 0);
+    }
+}
+
+// Focus styles for keyboard navigation
+:focus-visible {
+    outline: 2px solid #3b82f6;
+    outline-offset: 2px;
+}
+
+// Empty state styles
+.draggable-items-container:empty,
+.droppable-cell:not(.has-value):empty {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }

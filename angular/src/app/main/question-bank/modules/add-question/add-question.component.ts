@@ -129,6 +129,15 @@ export class AddQuestionComponent extends AppComponentBase implements OnInit {
         this._questionsServiceProxy.getQuestionForEdit(id).subscribe({
             next: (val) => {
                 this._createOrEditQuestionDto = val.question;
+                this.studyLevelsValue = this._createOrEditQuestionDto.studyLevelIds.map((x, i) => {
+                    return {
+                        studyLevel: {
+                            name: val.studyLevelName[i],
+                            id: x,
+                        },
+                    };
+                });
+
                 this.loading = false;
             },
             error: (err) => {

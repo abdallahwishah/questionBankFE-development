@@ -1,30 +1,74 @@
 @switch (questionType) {
     @case (QuestionTypeEnum.SA) {
-        <app-article-questions [config]="question"></app-article-questions>
+        <app-article-questions
+            [(ngModel)]="value.saAnswer"
+            (blur)="notifyChange()"
+            [config]="question"
+        ></app-article-questions>
     }
     @case (QuestionTypeEnum.TrueAndFalse) {
-        <app-multiple-choice-one-option [config]="question"></app-multiple-choice-one-option>
+        <app-multiple-choice-one-option
+            [(ngModel)]="value.trueFalseAnswer"
+            (blur)="notifyChange()"
+            [config]="question"
+        ></app-multiple-choice-one-option>
     }
     @case (QuestionTypeEnum.SinglChoice) {
-        <app-multiple-choice-one-option [config]="question"></app-multiple-choice-one-option>
+        <app-multiple-choice-one-option
+            [(ngModel)]="value.singleChoiceAnswer"
+            (blur)="notifyChange()"
+            [config]="question"
+        ></app-multiple-choice-one-option>
     }
     @case (QuestionTypeEnum.MutliChoice) {
-        <app-multiple-choice-more-than-option [config]="question"></app-multiple-choice-more-than-option>
+        <app-multiple-choice-more-than-option
+            [(ngModel)]="value.multipleChoiceAnswer"
+            (blur)="notifyChange()"
+            [config]="question"
+        ></app-multiple-choice-more-than-option>
     }
     @case (QuestionTypeEnum.Match) {
-        <app-connecting-words [config]="question"></app-connecting-words>
+        <app-connecting-words
+            [(ngModel)]="value.matchAnswer"
+            (blur)="notifyChange()"
+            [config]="question"
+        ></app-connecting-words>
     }
     @case (QuestionTypeEnum.LinkedQuestions) {
-         <div #RelatedQuestion></div>
+        <!-- Dynamic loaded content goes here -->
+        <!-- linkedQuestionAnswer!: SubQuestionAnswer[] | undefined; -->
 
+        <div #RelatedQuestion></div>
     }
     @case (QuestionTypeEnum.Rearrange) {
-        <app-words-order [config]="question"></app-words-order>
+        <app-words-order
+            [(ngModel)]="value.rearrangeAnswer"
+            (blur)="notifyChange()"
+            [config]="question"
+        ></app-words-order>
     }
     @case (QuestionTypeEnum.Drawing) {
-        <app-cartesian-level [config]="question"></app-cartesian-level>
+        <app-cartesian-level
+            [(ngModel)]="value.drawingAnswer"
+            (blur)="notifyChange()"
+            [config]="question"
+        ></app-cartesian-level>
     }
     @case (QuestionTypeEnum.DargingTable) {
-        <app-drag-drop-table [config]="question"></app-drag-drop-table>
+        <app-drag-drop-table
+            [(ngModel)]="value.dragTableAnswer"
+            (blur)="notifyChange()"
+            [config]="question"
+        ></app-drag-drop-table>
     }
 }
+<!-- multipleChoiceAnswer!: number[] | undefined;
+singleChoiceAnswer!: number;
+trueFalseAnswer!: number;
+matchAnswer!: string[] | undefined;
+rearrangeAnswer!: string[] | undefined;
+saAnswer!: string | undefined;
+dragTableAnswer!: DragTableAnswer[] | undefined;
+dragFormAnswer!: DragFormAnswer[] | undefined;
+linkedQuestionAnswer!: SubQuestionAnswer[] | undefined;
+drawingAnswer!: string | undefined; -->

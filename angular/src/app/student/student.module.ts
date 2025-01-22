@@ -20,7 +20,7 @@ import { RouterModule } from '@node_modules/@angular/router';
                             ),
                     },
                     {
-                        path: 'exam-attempt/:id',
+                        path: 'exam-attempt',
                         loadComponent: () =>
                             import('./exam-viewer-and-attempt/exam-viewer-and-attempt.component').then(
                                 (m) => m.ExamViewerAndAttemptComponent,

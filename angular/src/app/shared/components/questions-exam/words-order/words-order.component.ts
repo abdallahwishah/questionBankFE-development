@@ -29,6 +29,7 @@ export class WordsOrderComponent extends AppComponentBase implements ControlValu
   items: WordItem[] = [];
   questionBody: string = '';
   disabled = false;
+
   draggedIndex: number = -1;
   dropIndex: number = -1;
 
@@ -47,13 +48,17 @@ export class WordsOrderComponent extends AppComponentBase implements ControlValu
 
   private initializeQuestion() {
     if (this.config) {
+      // Set question body
       this.questionBody = this.config.question?.body || '';
 
+      // Initialize items from question payload (if provided)
       if (this.config.questionPayload?.rearrange) {
-        this.items = this.config.questionPayload.rearrange.map((word: string, index: number) => ({
-          word,
-          order: (index + 1).toString()
-        }));
+        this.items = this.config.questionPayload.rearrange.map(
+          (word: string, index: number) => ({
+            word,
+            order: (index + 1).toString()
+          })
+        );
       }
     }
   }
@@ -73,6 +78,7 @@ export class WordsOrderComponent extends AppComponentBase implements ControlValu
     event.preventDefault();
     if (this.disabled || this.draggedIndex === -1 || this.dropIndex === -1) return;
 
+    // Reorder items
     const itemsCopy = [...this.items];
     const [movedItem] = itemsCopy.splice(this.draggedIndex, 1);
     itemsCopy.splice(this.dropIndex, 0, movedItem);
@@ -80,41 +86,63 @@ export class WordsOrderComponent extends AppComponentBase implements ControlValu
     this.items = itemsCopy;
     this.emitChange();
 
+    // Reset indices
     this.draggedIndex = -1;
     this.dropIndex = -1;
   }
 
+  /**
+   * Emit the new order of words (as an array of strings).
+   */
   private emitChange() {
-    const orderedIndices = this.items.map(item => item.order);
-    this.onChange(orderedIndices);
+    const orderedWords = this.items.map(item => item.word);
+    this.onChange(orderedWords);
     this.onTouched();
   }
 
+  /**
+   * Called by the forms API to write a new value to the component.
+   * Expects an array of words in the desired order.
+   */
   writeValue(value: string[]): void {
     if (value && Array.isArray(value)) {
+      // Reorder 'items' based on the new array of words
       const newItems: WordItem[] = [];
 
-      value.forEach((index, position) => {
-        const originalIndex = parseInt(index) - 1;
-        if (this.items[originalIndex]) {
-          newItems[position] = {
-            word: this.items[originalIndex].word,
-            order: index
+      value.forEach((word, index) => {
+        // Find matching item by its word
+        const matchingItem = this.items.find(i => i.word === word);
+
+        // If found, place it in the correct position
+        if (matchingItem) {
+          newItems[index] = {
+            word: matchingItem.word,
+            order: (index + 1).toString()
+          };
+        } else {
+          // If not found, create a new item (handles edge cases)
+          newItems[index] = {
+            word,
+            order: (index + 1).toString()
           };
         }
       });
 
+      // Update if the length matches or if you simply want to override
       if (newItems.length === this.items.length) {
+        this.items = newItems;
+      } else {
+        // Or you can choose to override no matter what, depending on your needs
         this.items = newItems;
       }
     }
   }
 
-  registerOnChange(fn: any): void {
+  registerOnChange(fn: (value: string[]) => void): void {
     this.onChange = fn;
   }
 
-  registerOnTouched(fn: any): void {
+  registerOnTouched(fn: () => void): void {
     this.onTouched = fn;
   }
 
@@ -123,6 +151,7 @@ export class WordsOrderComponent extends AppComponentBase implements ControlValu
   }
 
   trackByFn(index: number, item: WordItem): string {
+    // If words might be duplicated, you can adjust the track key. For now, just use 'word'.
     return item.word;
   }
 }

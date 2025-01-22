@@ -60,16 +60,18 @@
             <div class="content-page">
                 <ng-container *ngIf="examData">
                     <div *ngIf="showInstructions" class="instructions">
-                        <div [innerHTML]="examData.examInstructions" class="py-15 px-8 "></div>
+                        <div [innerHTML]="examData.examInstructions" class="py-15 px-8"></div>
                         <div class="btn-footer">
                             <button class="btn btn-primary mt-6 mb-4" (click)="startExam()">بدء الاختبار</button>
                         </div>
                     </div>
-                    <!-- [(ngModel)]="question.question" -->
+                    <!--  -->
                     <ng-container *ngIf="!loading; else loader">
+                        {{question.question?.dragTableAnswer |json}}
                         <app-dynamic-exam-question
                             *ngIf="!showInstructions && question"
                             [question]="question.question"
+                            [(ngModel)]="question.question"
                             [questionType]="question.question?.question.type"
                             style="display: block; margin-top: 1rem"
                         ></app-dynamic-exam-question>

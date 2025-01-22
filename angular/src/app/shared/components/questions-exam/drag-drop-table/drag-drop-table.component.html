@@ -7,16 +7,27 @@
         class="draggable-items-container"
         cdkDropList
         #sourceList="cdkDropList"
+        [id]="'source-list'"
         [cdkDropListData]="draggableItems"
         (cdkDropListDropped)="handleDrop($event)"
     >
         <div
-            *ngFor="let item of draggableItems"
+            *ngFor="let item of draggableItems; trackBy: trackById"
             class="draggable-item"
             cdkDrag
+            [id]="item.id"
             [cdkDragData]="item"
+            [cdkDragDisabled]="isDisabled"
+            (cdkDragStarted)="onDragStarted()"
+            (cdkDragEnded)="onDragEnded()"
         >
             {{ item.title }}
+            <!-- Preview when dragging -->
+            <div *cdkDragPreview class="drag-preview">
+                {{ item.title }}
+            </div>
+            <!-- Placeholder -->
+            <div *cdkDragPlaceholder class="drag-placeholder"></div>
         </div>
     </div>
 
@@ -31,25 +42,43 @@
             <tr *ngFor="let row of internalValue; let rowIndex = index">
                 <td
                     *ngFor="let cell of row; let colIndex = index"
+                    [id]="'cell-' + rowIndex + '-' + colIndex"
                     [ngClass]="{
                         'pinned-cell': cell.pinned,
                         'droppable-cell': !cell.pinned,
-                        'has-value': cell.value !== null
+                        'has-value': cell.value !== null,
+                        'drag-in-progress': dragInProgress && !cell.value && !cell.pinned,
+                        'drop-target': cell.isDropTarget && !cell.value && !cell.pinned
                     }"
                     cdkDropList
                     #dropList="cdkDropList"
                     [cdkDropListData]="{ rowIndex: rowIndex, colIndex: colIndex }"
                     (cdkDropListDropped)="handleDrop($event)"
+                    (cdkDropListEntered)="cell.isDropTarget = true"
+                    (cdkDropListExited)="cell.isDropTarget = false"
                 >
-                    <div class="cell-content">
+                    <div
+                        class="cell-content"
+                        [class.dragging]="dragInProgress"
+                        [attr.data-cell-id]="cell.id"
+                    >
                         <span>{{ cell.value }}</span>
-                        <!-- <span class="order-indicator" *ngIf="cell.order">{{ cell.order }}</span> -->
-                        <i
+                        <button
                             *ngIf="cell.value && !cell.pinned"
-                            class="pi pi-times remove-icon"
+                            class="remove-button"
+                            type="button"
                             (click)="removeItem(rowIndex, colIndex, $event)"
-                        ></i>
+                            [attr.aria-label]="'Remove ' + cell.value"
+                        >
+                            <i class="pi pi-times remove-icon"></i>
+                        </button>
                     </div>
+                    <!-- Drop placeholder -->
+                    <div
+                        *cdkDragPlaceholder
+                        class="cell-placeholder"
+                        [class.active]="!cell.value && !cell.pinned"
+                    ></div>
                 </td>
             </tr>
         </tbody>

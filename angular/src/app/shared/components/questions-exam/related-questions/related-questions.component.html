@@ -6,6 +6,8 @@
                 [order]="i + 1"
                 [question]="question"
                 [questionType]="question.question.type"
+                [(ngModel)]="value"
+                (ngModelChange)="onQuestionValueChange()"
             ></app-dynamic-exam-question>
         </div>
         <hr class="my-4" />
