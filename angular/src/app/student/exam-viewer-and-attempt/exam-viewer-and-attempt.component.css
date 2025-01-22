@@ -1,21 +1,24 @@
 
 
 .header-right{
-    flex-direction: column;
+/*     flex-direction: column;
     display: flex;
     gap: 10px;
-    text-align: right;
+    text-align: right; */
 }
-
+.header-right div , .header-left div{
+    display: flex;
+}
 .header-title-label{
     color: #565D6D;
 }
 
 .header-left{
-    flex-direction: column;
-    display: flex;
-    gap: 10px;
-    float: left;
+    /* text-align: end; */
+ /*    flex-direction: column; */
+ /*    display: flex; */
+ /*    gap: 10px; */
+    float: left; 
 }
 .header-left > .header-title-label-input{
     float: left;
@@ -76,11 +79,10 @@
     padding: 20px 20px;
     border: 1px solid #DEE1E6!important;
     color: #565D6D;
-
 }
 
-.content-page{
-    padding: 2rem;
+.btn-footer{
+    border-top: 1px solid #DEE1E6!important;
 }
 
 .num-box{
@@ -105,9 +107,9 @@
     .header-title-label-input{
         font-size: 12px;
     }
-    .header-center-title[_ngcontent-ng-c4262530014] {
-        font-size: 11px!important;
-        line-height: 21px!important;
+    .header-center-title {
+        font-size: 12px!important;
+        line-height: 20px!important;
     }
     .header-center{
         gap: 15px!important;
