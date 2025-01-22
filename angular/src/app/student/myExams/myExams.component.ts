@@ -4,7 +4,7 @@ import { LazyLoadEvent } from '@node_modules/primeng/api';
 import { Paginator } from '@node_modules/primeng/paginator';
 import { Table } from '@node_modules/primeng/table';
 import { AppComponentBase } from '@shared/common/app-component-base';
-import { ExamsServiceProxy } from '@shared/service-proxies/service-proxies';
+import { SessionsServiceProxy } from '@shared/service-proxies/service-proxies';
 
 @Component({
   selector: 'app-myExams',
@@ -20,7 +20,7 @@ export class MyExamsComponent extends AppComponentBase implements OnInit {
 
   constructor(
       private _injector: Injector,
-        private _examsServiceProxy: ExamsServiceProxy,
+      private _SessionsServiceProxy: SessionsServiceProxy,
       private _ActivatedRoute: ActivatedRoute,
       private _router: Router,
   ) {
@@ -46,18 +46,13 @@ export class MyExamsComponent extends AppComponentBase implements OnInit {
           }
       }
       this.primengTableHelper.showLoadingIndicator();
-     /*  this._examsServiceProxy
-          .getAll(
-              this.SessionId,
-              this.primengTableHelper.getSorting(this.dataTable),
-              this.primengTableHelper.getSkipCount(this.paginator, event),
-              this.primengTableHelper.getMaxResultCount(this.paginator, event),
-          )
+      this._SessionsServiceProxy
+          .getMyExam( )
           .subscribe((result) => {
               this.primengTableHelper.totalRecordsCount = result.totalCount;
               this.primengTableHelper.records = result.items;
               this.primengTableHelper.hideLoadingIndicator();
-          }); */
+          });
   }
   supervisorsAndStudents(item: any) {
       debugger
