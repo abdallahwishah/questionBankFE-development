@@ -80,7 +80,7 @@ export class ExamViewerAndAttemptComponent implements OnInit {
             const dto = new ExamQuestionWithAnswerDto();
             dto.examId = this.id;
             dto.questionId = this.question.questionId;
-            dto.questionNo = this.examData.questionNo - 1;
+            dto.questionNo = this.examData.questionNo - 1 || 1;
             dto.sectionId = this.question.sectionId;
             dto.sectionNo = this.examData.sectionNo;
             dto.type = this.question.question.type;
