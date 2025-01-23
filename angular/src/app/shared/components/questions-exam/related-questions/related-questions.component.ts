@@ -20,52 +20,36 @@ import { SubQuestionAnswer } from '@shared/service-proxies/service-proxies';
 })
 export class RelatedQuestionsComponent implements ControlValueAccessor {
     @Input() config: any;
-    value: SubQuestionAnswer[];
-    // Track whether the component is disabled
+    value: SubQuestionAnswer[] = [];
+
+    private onChange: (value: SubQuestionAnswer[]) => void = () => {};
+    private onTouched: () => void = () => {};
     disabled = false;
 
-    // Functions to call for onChange and onTouch
-    private onChange: (value: any) => void = () => {};
-    private onTouched: () => void = () => {};
-
-    /**
-     * Called by the forms API to write a new value to the element.
-     */
-    writeValue(value: any): void {
+    writeValue(value: SubQuestionAnswer[]): void {
         if (value) {
             this.value = value;
         } else {
-            // this.value = new SubQuestionAnswer();
+            this.value = Array(this.config?.linkedQuestions?.length || 0)
+                .fill(null)
+                .map(() => new SubQuestionAnswer());
         }
     }
 
-    /**
-     * Save the function to be called when the value changes
-     */
-    registerOnChange(fn: any): void {
+    registerOnChange(fn: (value: SubQuestionAnswer[]) => void): void {
         this.onChange = fn;
     }
 
-    /**
-     * Save the function to be called when the control is touched
-     */
-    registerOnTouched(fn: any): void {
+    registerOnTouched(fn: () => void): void {
         this.onTouched = fn;
     }
 
-    /**
-     * Called by the forms API when the control status changes to or from DISABLED
-     */
     setDisabledState(isDisabled: boolean): void {
         this.disabled = isDisabled;
     }
 
-    /**
-     * Custom handler when one of the child questions changes its value.
-     * We can re-emit the entire "config" or a subset of it if desired.
-     */
     onQuestionValueChange(): void {
-        this.onChange(this.config);
+         this.onChange(this.value);
         this.onTouched();
     }
 }

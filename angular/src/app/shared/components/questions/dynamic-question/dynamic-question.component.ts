@@ -57,17 +57,14 @@ export class DynamicQuestionComponent implements ControlValueAccessor, Validator
     // This is our model. Subcomponents bind to specific properties of `value`.
     value: QuestionPayloadDto = new QuestionPayloadDto();
     ngOnChanges(changes: SimpleChanges): void {
-        //Called before any other lifecycle hook. Use it to inject dependencies, but avoid any serious work here.
-        //Add '${implements OnChanges}' to the class.
+
         if (changes?.['questionType']) {
             this.value = new QuestionPayloadDto();
         }
     }
-    // Provided by Angular forms
-    onChange: (val: QuestionPayloadDto) => void = () => {};
+     onChange: (val: QuestionPayloadDto) => void = () => {};
     onTouched: () => void = () => {};
 
-    // CONTROL VALUE ACCESSOR METHODS ------------------------------------
 
     writeValue(obj: QuestionPayloadDto): void {
         this.value = obj || new QuestionPayloadDto();

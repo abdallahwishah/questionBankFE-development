@@ -2,14 +2,14 @@
     @case (QuestionTypeEnum.SA) {
         <app-article-questions
             [(ngModel)]="value.saAnswer"
-            (blur)="notifyChange()"
+            (ngModelChange)="notifyChange()"
             [config]="question"
         ></app-article-questions>
     }
     @case (QuestionTypeEnum.TrueAndFalse) {
         <app-multiple-choice-one-option
             [(ngModel)]="value.trueFalseAnswer"
-            (blur)="notifyChange()"
+            (ngModelChange)="notifyChange()"
             [config]="question"
         ></app-multiple-choice-one-option>
     }
@@ -17,21 +17,21 @@
         <app-multiple-choice-one-option
             [order]="order"
             [(ngModel)]="value.singleChoiceAnswer"
-            (blur)="notifyChange()"
+            (ngModelChange)="notifyChange()"
             [config]="question"
         ></app-multiple-choice-one-option>
     }
     @case (QuestionTypeEnum.MutliChoice) {
         <app-multiple-choice-more-than-option
             [(ngModel)]="value.multipleChoiceAnswer"
-            (blur)="notifyChange()"
+            (ngModelChange)="notifyChange()"
             [config]="question"
         ></app-multiple-choice-more-than-option>
     }
     @case (QuestionTypeEnum.Match) {
         <app-connecting-words
             [(ngModel)]="value.matchAnswer"
-            (blur)="notifyChange()"
+            (ngModelChange)="notifyChange()"
             [config]="question"
         ></app-connecting-words>
     }
@@ -44,21 +44,21 @@
     @case (QuestionTypeEnum.Rearrange) {
         <app-words-order
             [(ngModel)]="value.rearrangeAnswer"
-            (blur)="notifyChange()"
+            (ngModelChange)="notifyChange()"
             [config]="question"
         ></app-words-order>
     }
     @case (QuestionTypeEnum.Drawing) {
         <app-cartesian-level
             [(ngModel)]="value.drawingAnswer"
-            (blur)="notifyChange()"
+            (ngModelChange)="notifyChange()"
             [config]="question"
         ></app-cartesian-level>
     }
     @case (QuestionTypeEnum.DargingTable) {
         <app-drag-drop-table
             [(ngModel)]="value.dragTableAnswer"
-            (blur)="notifyChange()"
+            (ngModelChange)="notifyChange()"
             [config]="question"
         ></app-drag-drop-table>
     }

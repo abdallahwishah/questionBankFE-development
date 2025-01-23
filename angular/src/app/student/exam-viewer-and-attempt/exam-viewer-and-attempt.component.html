@@ -49,8 +49,8 @@
                         <div>
                             <span class="header-title-label">الوقت المتبقي</span>
                             <span class="px-1">:</span>
-                            <span class="header-title-label-input">
-                                {{ getRemainingTime(examData.remainingSeconds) }}
+                            <span class="header-title-label-input" style="direction: ltr;"  >
+                                {{ remainingTime }}
                             </span>
                         </div>
                     </div>
@@ -67,7 +67,7 @@
                     </div>
                     <!--  -->
                     <ng-container *ngIf="!loading; else loader">
-                        {{question.question?.linkedQuestionAnswer |json}}
+                        {{ question.question?.linkedQuestionAnswer | json }}
                         <app-dynamic-exam-question
                             *ngIf="!showInstructions && question"
                             [question]="question.question"

@@ -2,11 +2,13 @@
     <div [innerHTML]="config.question.body"></div>
     <ng-container *ngFor="let question of config.linkedQuestions; let i = index">
         <div class="mt-4">
-             <app-dynamic-exam-question
+            <app-dynamic-exam-question
+                *ngIf="value[i]"
                 [order]="i + 1"
                 [question]="question"
                 [questionType]="question.question.type"
-                [(ngModel)]="value"
+                [disabled]="disabled"
+                [(ngModel)]="value[i]"
                 (ngModelChange)="onQuestionValueChange()"
             ></app-dynamic-exam-question>
         </div>
