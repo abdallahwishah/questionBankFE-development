@@ -67,7 +67,7 @@
                     </div>
                     <!--  -->
                     <ng-container *ngIf="!loading; else loader">
-                        {{ question.question?.linkedQuestionAnswer | json }}
+                        {{ question.question?.dragTableAnswer | json }}
                         <app-dynamic-exam-question
                             *ngIf="!showInstructions && question"
                             [question]="question.question"

@@ -87,7 +87,7 @@ export class ExamViewerAndAttemptComponent implements OnInit {
             dto.rearrangeAnswer = this.question.question?.rearrangeAnswer; //working
             dto.trueFalseAnswer = this.question.question?.trueFalseAnswer; //working
             dto.dragTableAnswer = this.question.question?.dragTableAnswer; //working
-            dto.multipleChoiceAnswer = this.question.question?.multipleChoiceAnswer;
+            dto.multipleChoiceAnswer = this.question.question?.multipleChoiceAnswer; //testing
             dto.drawingAnswer = this.question.question?.drawingAnswer; //working
             dto.singleChoiceAnswer = this.question.question?.singleChoiceAnswer; //working
             dto.matchAnswer = this.question.question?.matchAnswer; //working
