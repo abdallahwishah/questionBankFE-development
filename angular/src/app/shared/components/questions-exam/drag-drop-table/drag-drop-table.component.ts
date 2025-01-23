@@ -10,7 +10,7 @@ import {
     QueryList,
     AfterViewInit,
     ChangeDetectorRef,
-    OnDestroy
+    OnDestroy,
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -20,8 +20,9 @@ import {
     CdkDragDrop,
     DragDropModule,
     moveItemInArray,
-    transferArrayItem
+    transferArrayItem,
 } from '@angular/cdk/drag-drop';
+import { DragTableAnswer } from '@shared/service-proxies/service-proxies';
 
 interface DragDropItem {
     title: string;
@@ -147,7 +148,7 @@ export class DragDropTableComponent implements OnInit, AfterViewInit, OnDestroy,
         this.sourceList.connectedTo = availableDropLists;
 
         // Set up connections for each drop list
-        availableDropLists.forEach(dropList => {
+        availableDropLists.forEach((dropList) => {
             dropList.connectedTo = [this.sourceList];
         });
 
@@ -170,8 +171,8 @@ export class DragDropTableComponent implements OnInit, AfterViewInit, OnDestroy,
         this.isDragging = false;
         this.dragInProgress = false;
         // Reset all drop targets
-        this.internalValue.forEach(row => {
-            row.forEach(cell => {
+        this.internalValue.forEach((row) => {
+            row.forEach((cell) => {
                 cell.isDropTarget = false;
             });
         });
@@ -228,12 +229,14 @@ export class DragDropTableComponent implements OnInit, AfterViewInit, OnDestroy,
     }
 
     private validateCellIndices(rowIndex: number, colIndex: number): boolean {
-        return typeof rowIndex === 'number' &&
-               typeof colIndex === 'number' &&
-               rowIndex >= 0 &&
-               colIndex >= 0 &&
-               rowIndex < this.internalValue.length &&
-               colIndex < this.internalValue[rowIndex].length;
+        return (
+            typeof rowIndex === 'number' &&
+            typeof colIndex === 'number' &&
+            rowIndex >= 0 &&
+            colIndex >= 0 &&
+            rowIndex < this.internalValue.length &&
+            colIndex < this.internalValue[rowIndex].length
+        );
     }
 
     private isCellAvailable(rowIndex: number, colIndex: number): boolean {
@@ -242,14 +245,11 @@ export class DragDropTableComponent implements OnInit, AfterViewInit, OnDestroy,
     }
 
     private isValidCellData(data: any): boolean {
-        return data &&
-               typeof data === 'object' &&
-               'rowIndex' in data &&
-               'colIndex' in data;
+        return data && typeof data === 'object' && 'rowIndex' in data && 'colIndex' in data;
     }
 
     private handleDropFromSource(draggedItem: DragDropItem, rowIndex: number, colIndex: number): void {
-        const itemIndex = this.draggableItems.findIndex(item => item.id === draggedItem.id);
+        const itemIndex = this.draggableItems.findIndex((item) => item.id === draggedItem.id);
         if (itemIndex !== -1) {
             this.draggableItems.splice(itemIndex, 1);
             this.updateCell(rowIndex, colIndex, draggedItem);
@@ -260,7 +260,7 @@ export class DragDropTableComponent implements OnInit, AfterViewInit, OnDestroy,
         previousData: any,
         newRowIndex: number,
         newColIndex: number,
-        draggedItem: DragDropItem
+        draggedItem: DragDropItem,
     ): void {
         const { rowIndex: prevRow, colIndex: prevCol } = previousData;
         if (this.validateCellIndices(prevRow, prevCol)) {
@@ -287,7 +287,7 @@ export class DragDropTableComponent implements OnInit, AfterViewInit, OnDestroy,
             checked: false,
             order: this.calculateOrder(rowIndex, colIndex),
             id: item.id,
-            isDropTarget: false
+            isDropTarget: false,
         };
     }
 
@@ -298,7 +298,7 @@ export class DragDropTableComponent implements OnInit, AfterViewInit, OnDestroy,
             checked: false,
             order: 0,
             id: undefined,
-            isDropTarget: false
+            isDropTarget: false,
         };
     }
 
@@ -307,7 +307,7 @@ export class DragDropTableComponent implements OnInit, AfterViewInit, OnDestroy,
         this.draggableItems.push({
             ...item,
             isPinned: false,
-            id: newId
+            id: newId,
         });
     }
 
@@ -328,7 +328,7 @@ export class DragDropTableComponent implements OnInit, AfterViewInit, OnDestroy,
             title: cell.value,
             isPinned: false,
             order: cell.order || 0,
-            id: newId
+            id: newId,
         };
 
         this.addToSource(removedItem);
@@ -343,7 +343,7 @@ export class DragDropTableComponent implements OnInit, AfterViewInit, OnDestroy,
     }
 
     private calculateOrder(rowIndex: number, colIndex: number): number {
-        return (colIndex * this.actualRows) + rowIndex + 1;
+        return colIndex * this.actualRows + rowIndex + 1;
     }
 
     private buildTableFromConfig(): void {
@@ -364,7 +364,7 @@ export class DragDropTableComponent implements OnInit, AfterViewInit, OnDestroy,
                         checked: false,
                         order: 0,
                         id: undefined,
-                        isDropTarget: false
+                        isDropTarget: false,
                     })),
             );
 
@@ -381,7 +381,7 @@ export class DragDropTableComponent implements OnInit, AfterViewInit, OnDestroy,
                             checked: true,
                             order: item.order,
                             id: this.generateUniqueId(),
-                            isDropTarget: false
+                            isDropTarget: false,
                         };
                     }
                 }
@@ -415,7 +415,7 @@ export class DragDropTableComponent implements OnInit, AfterViewInit, OnDestroy,
                 title: item.title,
                 isPinned: item.isPinned,
                 order: item.order,
-                id: this.generateUniqueId()
+                id: this.generateUniqueId(),
             }));
 
         this.draggableItems.sort((a, b) => a.order - b.order);
@@ -425,12 +425,12 @@ export class DragDropTableComponent implements OnInit, AfterViewInit, OnDestroy,
         const tv = this.tableView;
         if (!tv) return;
 
-        const existingOrders = this.internalValue.map(row =>
-            row.map(cell => ({
+        const existingOrders = this.internalValue.map((row) =>
+            row.map((cell) => ({
                 value: cell.value,
                 order: cell.order,
-                id: cell.id
-            }))
+                id: cell.id,
+            })),
         );
 
         this.internalValue = Array(this.actualRows)
@@ -446,7 +446,7 @@ export class DragDropTableComponent implements OnInit, AfterViewInit, OnDestroy,
                             checked: false,
                             order: existingCell?.order || this.calculateOrder(rowIndex, colIndex),
                             id: existingCell?.id,
-                            isDropTarget: false
+                            isDropTarget: false,
                         };
                     }),
             );
@@ -455,10 +455,9 @@ export class DragDropTableComponent implements OnInit, AfterViewInit, OnDestroy,
             columnValue.words.forEach((word, rowIndex) => {
                 if (this.internalValue[rowIndex]?.[colIndex]) {
                     const isPinned = this.isPinnedCell(rowIndex, colIndex);
-                    const order = existingOrders[rowIndex]?.[colIndex]?.order ||
-                                this.calculateOrder(rowIndex, colIndex);
-                    const id = existingOrders[rowIndex]?.[colIndex]?.id ||
-                              this.generateUniqueId();
+                    const order =
+                        existingOrders[rowIndex]?.[colIndex]?.order || this.calculateOrder(rowIndex, colIndex);
+                    const id = existingOrders[rowIndex]?.[colIndex]?.id || this.generateUniqueId();
 
                     this.internalValue[rowIndex][colIndex] = {
                         value: word,
@@ -466,7 +465,7 @@ export class DragDropTableComponent implements OnInit, AfterViewInit, OnDestroy,
                         checked: isPinned,
                         order,
                         id,
-                        isDropTarget: false
+                        isDropTarget: false,
                     };
                 }
             });
@@ -477,12 +476,15 @@ export class DragDropTableComponent implements OnInit, AfterViewInit, OnDestroy,
         const tv = this.tableView;
         if (!tv) return;
 
-        this.value = tv.headers.map((header, columnIndex) => ({
-            title: header,
-            words: this.internalValue
-                .map((row) => row[columnIndex].value)
-                .filter((word): word is string => word !== null),
-        }));
+        this.value = tv.headers.map(
+            (header, columnIndex) =>
+                new DragTableAnswer({
+                    title: header,
+                    words: this.internalValue
+                        .map((row) => row[columnIndex].value)
+                        .filter((word): word is string => word !== null),
+                }),
+        );
 
         this.onChangeFn(this.value);
     }
@@ -494,9 +496,8 @@ export class DragDropTableComponent implements OnInit, AfterViewInit, OnDestroy,
         const cell = tv.cells[rowIndex];
         if (!cell?.dargDropTableItems) return false;
 
-        return cell.dargDropTableItems.some(item =>
-            item.isPinned &&
-            this.findCellPositionByOrder(item.order).colIndex === colIndex
+        return cell.dargDropTableItems.some(
+            (item) => item.isPinned && this.findCellPositionByOrder(item.order).colIndex === colIndex,
         );
     }
 

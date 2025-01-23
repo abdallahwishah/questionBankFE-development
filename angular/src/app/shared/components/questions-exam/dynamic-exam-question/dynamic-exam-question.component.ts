@@ -137,7 +137,7 @@ import {
         // Child can notify us of changes
         if (this.dynamicListInstance.registerOnChange) {
           this.dynamicListInstance.registerOnChange((childVal: any) => {
-            this.value.linkedQuestionAnswer = childVal;
+             this.value.linkedQuestionAnswer = childVal;
             // Notify forms that the overall value changed
             this.onChange(this.value);
           });
@@ -197,6 +197,7 @@ import {
       }
     }
    notifyChange(){
+
         this.onChange(this.value);
    }
     // If needed, you can call this method on blur events in the template

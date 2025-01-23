@@ -63,7 +63,7 @@
                         [attr.data-cell-id]="cell.id"
                     >
                         <span>{{ cell.value }}</span>
-                        <button
+                        <span
                             *ngIf="cell.value && !cell.pinned"
                             class="remove-button"
                             type="button"
@@ -71,7 +71,7 @@
                             [attr.aria-label]="'Remove ' + cell.value"
                         >
                             <i class="pi pi-times remove-icon"></i>
-                        </button>
+                        </span>
                     </div>
                     <!-- Drop placeholder -->
                     <div
