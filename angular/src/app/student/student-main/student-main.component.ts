@@ -21,11 +21,11 @@ export class StudentMainComponent implements OnInit, OnDestroy {
     constructor(private _examsServiceProxy: ExamsServiceProxy) {}
 
     ngOnInit() {
-        
         this._examsServiceProxy.getExpectedeExam().subscribe((response) => {
             this.sessionName = response.sessionName;
-            let seconds =1555
-            // response?.remainingTimeInSecond;
+            let seconds = response?.remainingTimeInSecond || 0;
+            this.secondsValue = response?.remainingTimeInSecond || 0;
+
             if (seconds > 0) {
                 this.startTimer(seconds);
             }
