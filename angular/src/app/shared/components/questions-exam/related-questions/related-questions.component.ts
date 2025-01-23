@@ -20,8 +20,7 @@ import { SubQuestionAnswer } from '@shared/service-proxies/service-proxies';
 })
 export class RelatedQuestionsComponent implements ControlValueAccessor {
     @Input() config: any;
-    value = new SubQuestionAnswer();
-
+    value: SubQuestionAnswer[];
     // Track whether the component is disabled
     disabled = false;
 
@@ -36,7 +35,7 @@ export class RelatedQuestionsComponent implements ControlValueAccessor {
         if (value) {
             this.value = value;
         } else {
-            this.value = new SubQuestionAnswer();
+            // this.value = new SubQuestionAnswer();
         }
     }
 
