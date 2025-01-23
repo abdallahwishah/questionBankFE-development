@@ -877,3 +877,8 @@ td {
 .p-autocomplete-dd .p-autocomplete-dropdown{
     height: 43px;
 }
+
+
+.custom-top-bar{
+    background-color: #fff;
+}
