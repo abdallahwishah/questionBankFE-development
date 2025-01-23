@@ -886,3 +886,7 @@ td {
      z-index: 99999;
      width: 100%;
 }
+
+.pt-8rem{
+    padding-top: 8rem;
+}

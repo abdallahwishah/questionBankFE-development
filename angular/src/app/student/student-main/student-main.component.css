@@ -46,3 +46,9 @@ h4{
     font-size: 35px;
 }
 
+@media (max-width: 768px) {
+    .counter-box .num {
+        width: 40px;
+        font-size: 35px;
+    }
+}
