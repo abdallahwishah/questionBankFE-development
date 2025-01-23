@@ -39,6 +39,7 @@ export class MultipleChoiceOneOptionComponent implements ControlValueAccessor, V
      * This object contains question body, helper, choices, etc.
      */
     @Input() config!: any;
+    @Input() order!: any;
 
     /**
      * Internal numeric value storing the selected choice.

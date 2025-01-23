@@ -51,6 +51,11 @@ import { NgxSpinnerService } from 'ngx-spinner';
                 loadChildren: () => import('app/student/student.module').then((m) => m.StudentModule), //Lazy load main module
                 data: { preload: true },
             },
+            {
+                path: 'supervisor',
+                loadChildren: () => import('app/supervisor/supervisor.module').then((m) => m.SupervisorModule), //Lazy load main module
+                data: { preload: true },
+            },
         ]),
     ],
     exports: [RouterModule],

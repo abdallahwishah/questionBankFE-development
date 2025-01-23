@@ -15,6 +15,7 @@
     }
     @case (QuestionTypeEnum.SinglChoice) {
         <app-multiple-choice-one-option
+            [order]="order"
             [(ngModel)]="value.singleChoiceAnswer"
             (blur)="notifyChange()"
             [config]="question"

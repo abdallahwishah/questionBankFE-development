@@ -11,25 +11,25 @@
       Make sure you trust the source or sanitize it if needed.
     -->
     <div [innerHTML]="config.question.body"></div>
-  </div>
+</div>
 
-  <!-- 2) QUESTION HELPER (e.g., image or hint) -->
-  <div class="mb-3" *ngIf="config?.question?.questionHelper">
+<!-- 2) QUESTION HELPER (e.g., image or hint) -->
+<div class="mb-3" *ngIf="config?.question?.questionHelper">
     <div [innerHTML]="config.question.questionHelper"></div>
-  </div>
+</div>
 
-  <!-- 3) RADIO BUTTONS (Choices) -->
-  <div *ngFor="let choice of config?.questionPayload?.choices" class="mb-4">
-     <input
-      class="form-check-input"
-      type="radio"
-      [name]="'singleChoiceAnswer'+config.question.id"
-      [value]="choice.id"
-      [checked]="value === choice.id"
-      (change)="onRadioChange(choice.id)"
+<!-- 3) RADIO BUTTONS (Choices) -->
+<div *ngFor="let choice of config?.questionPayload?.choices" class="mb-4">
+    <input
+        class="form-check-input"
+        type="radio"
+        [name]="'singleChoiceAnswer' + order"
+        [value]="choice.id"
+        [checked]="value === choice.id"
+        (change)="onRadioChange(choice.id)"
     />
     <!-- Use [innerHTML] if the text is HTML;
          or {{ choice.text }} if it’s plain text.
     -->
     <label class="mx-3" [innerHTML]="choice.text"></label>
-  </div>
+</div>
