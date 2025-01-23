@@ -17,16 +17,18 @@ export class StudentMainComponent implements OnInit, OnDestroy {
     seconds: string = '00';
     private timerInterval: any;
     sessionName: any;
-    secondsValue: any=1;
+    secondsValue: any = 1;
     constructor(private _examsServiceProxy: ExamsServiceProxy) {}
 
     ngOnInit() {
         this._examsServiceProxy.getExpectedeExam().subscribe((response) => {
             this.sessionName = response.sessionName;
-            let seconds =10
-            // response?.remainingTimeInSecond;
+            let seconds = response?.remainingTimeInSecond;
             if (seconds > 0) {
                 this.startTimer(seconds);
+            }
+            if (response?.applyExamDto) {
+                this.goToExam();
             }
         });
     }
