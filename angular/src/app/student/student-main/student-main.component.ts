@@ -17,7 +17,7 @@ export class StudentMainComponent implements OnInit, OnDestroy {
     seconds: string = '00';
     private timerInterval: any;
     sessionName: any;
-    secondsValue: any=1;
+    secondsValue: any = 1;
     constructor(private _examsServiceProxy: ExamsServiceProxy) {}
 
     ngOnInit() {
@@ -28,6 +28,9 @@ export class StudentMainComponent implements OnInit, OnDestroy {
             // response?.remainingTimeInSecond;
             if (seconds > 0) {
                 this.startTimer(seconds);
+            }
+            if (response?.applyExamDto) {
+                this.goToExam();
             }
         });
     }
