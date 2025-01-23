@@ -2,10 +2,11 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ExamsServiceProxy } from '@shared/service-proxies/service-proxies';
 import { QuizComponent } from '../quiz/quiz.component';
+import { StudentHeaderComponent } from "../student-header/student-header.component";
 
 @Component({
     standalone: true,
-    imports: [CommonModule, QuizComponent],
+    imports: [CommonModule, QuizComponent, StudentHeaderComponent],
     selector: 'app-student-main',
     templateUrl: './student-main.component.html',
     styleUrls: ['./student-main.component.css'],
@@ -18,9 +19,14 @@ export class StudentMainComponent implements OnInit, OnDestroy {
     private timerInterval: any;
     sessionName: any;
     secondsValue: any = 1;
+    userName:any;
     constructor(private _examsServiceProxy: ExamsServiceProxy) {}
 
     ngOnInit() {
+<<<<<<< HEAD
+=======
+
+>>>>>>> a3b180f3b325467e9c2e9a440464616c9f94c0b5
         this._examsServiceProxy.getExpectedeExam().subscribe((response) => {
             this.sessionName = response.sessionName;
             let seconds = response?.remainingTimeInSecond || 0;
