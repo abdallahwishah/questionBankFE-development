@@ -23,10 +23,6 @@ export class StudentMainComponent implements OnInit, OnDestroy {
     constructor(private _examsServiceProxy: ExamsServiceProxy) {}
 
     ngOnInit() {
-<<<<<<< HEAD
-=======
-
->>>>>>> a3b180f3b325467e9c2e9a440464616c9f94c0b5
         this._examsServiceProxy.getExpectedeExam().subscribe((response) => {
             this.sessionName = response.sessionName;
             let seconds = response?.remainingTimeInSecond || 0;
