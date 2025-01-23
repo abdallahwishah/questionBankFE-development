@@ -13,6 +13,11 @@ import { RouterModule } from '@node_modules/@angular/router';
                 component: StudentComponent,
                 children: [
                     {
+                        path: 'main',
+                        loadComponent: () =>
+                            import('./student-main/student-main.component').then((m) => m.StudentMainComponent),
+                    },
+                    {
                         path: 'exam-viewer/:id',
                         loadComponent: () =>
                             import('./exam-viewer-and-attempt/exam-viewer-and-attempt.component').then(
@@ -26,12 +31,10 @@ import { RouterModule } from '@node_modules/@angular/router';
                                 (m) => m.ExamViewerAndAttemptComponent,
                             ),
                     },
+
                     {
                         path: 'quiz',
-                        loadComponent: () =>
-                            import('./quiz/quiz.component').then(
-                                (m) => m.QuizComponent,
-                            ),
+                        loadComponent: () => import('./quiz/quiz.component').then((m) => m.QuizComponent),
                     },
                 ],
             },
