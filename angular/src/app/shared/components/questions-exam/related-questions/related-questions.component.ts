@@ -32,7 +32,13 @@ export class RelatedQuestionsComponent implements ControlValueAccessor {
         } else {
             this.value = Array(this.config?.linkedQuestions?.length || 0)
                 .fill(null)
-                .map(() => new SubQuestionAnswer());
+                .map(
+                    (item,index) =>
+                        new SubQuestionAnswer({
+                            ...new SubQuestionAnswer(),
+                            questionId: this.config?.linkedQuestions[index]?.question?.id,
+                        }),
+                );
         }
     }
 
@@ -49,7 +55,7 @@ export class RelatedQuestionsComponent implements ControlValueAccessor {
     }
 
     onQuestionValueChange(): void {
-         this.onChange(this.value);
+        this.onChange(this.value);
         this.onTouched();
     }
 }

@@ -3,6 +3,7 @@ import { DynamicExamQuestionComponent } from '@app/shared/components/questions-e
 import {
     ExamQuestionWithAnswerDto,
     ExamsServiceProxy,
+    SubQuestionAnswer,
     ViewExamQuestionDto,
 } from './../../../shared/service-proxies/service-proxies';
 import { Component, OnInit } from '@angular/core';
@@ -10,6 +11,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { SidebarModule } from 'primeng/sidebar';
 import { AccordionModule } from 'primeng/accordion';
+import { QuestionTypeEnum } from './../../../shared/service-proxies/service-proxies';
 
 @Component({
     standalone: true,
@@ -52,6 +54,8 @@ export class ExamViewerAndAttemptComponent implements OnInit {
             this._examsServiceProxy.getExpectedeExam().subscribe((response) => {
                 this.examData = response.applyExamDto;
                 this.id = response.applyExamDto.examId;
+                this.handleQuestionWithAnswer(response.applyExamDto.questionWithAnswer);
+                console.log('response.applyExamDto.questionWithAnswer', response.applyExamDto.questionWithAnswer);
                 this.question = response.applyExamDto.questionWithAnswer.question;
                 this.showInstructions = !!response.applyExamDto.examInstructions;
                 this.startTimer(this.examData.remainingSeconds);
@@ -94,6 +98,7 @@ export class ExamViewerAndAttemptComponent implements OnInit {
             dto.saAnswer = this.question.question?.saAnswer; //working
             dto.dragFormAnswer = this.question.question?.dragFormAnswer;
             dto.linkedQuestionAnswer = this.question.question?.linkedQuestionAnswer; //working
+            this.loading = true;
 
             this._examsServiceProxy.backQuestion(dto).subscribe((response) => {
                 this.updateQuestion(response);
@@ -131,6 +136,7 @@ export class ExamViewerAndAttemptComponent implements OnInit {
             dto.saAnswer = this.question.question?.saAnswer;
             dto.dragFormAnswer = this.question.question?.dragFormAnswer;
             dto.linkedQuestionAnswer = this.question.question?.linkedQuestionAnswer;
+            this.loading = true;
 
             this._examsServiceProxy.nextQuestion(dto).subscribe((response) => {
                 this.updateQuestion(response);
@@ -160,10 +166,12 @@ export class ExamViewerAndAttemptComponent implements OnInit {
     }
 
     private updateQuestion(response: any) {
+        this.handleQuestionWithAnswer(response);
         this.question = response.question;
         this.examData.questionNo = response.questionNo;
+        this.examData.sectionNo = response.sectionNo;
+
         if (response.isNextSection) {
-            this.examData.sectionNo = response.sectionNo;
             this.examData.sectionInstructions = response.sectionInstructions;
         }
         this.loading = false;
@@ -173,5 +181,63 @@ export class ExamViewerAndAttemptComponent implements OnInit {
         if (this.timer) {
             clearInterval(this.timer);
         }
+    }
+    handleQuestionWithAnswer(questionWithAnswer: any) {
+        console.log('questionWithAnswer', questionWithAnswer);
+        let type: QuestionTypeEnum = questionWithAnswer?.question?.question?.question?.type;
+        let answer: any = {};
+
+        switch (type) {
+            case QuestionTypeEnum.MutliChoice:
+                answer.multipleChoiceAnswer = questionWithAnswer?.optionId;
+                break;
+            case QuestionTypeEnum.SinglChoice:
+                answer.singleChoiceAnswer = questionWithAnswer?.optionId?.[0];
+                break;
+            case QuestionTypeEnum.TrueAndFalse:
+                answer.trueFalseAnswer = questionWithAnswer?.optionId?.[0];
+                break;
+            case QuestionTypeEnum.SA:
+                answer.saAnswer = questionWithAnswer?.value?.[0];
+                break;
+            case QuestionTypeEnum.LinkedQuestions:
+                answer.linkedQuestionAnswer = questionWithAnswer?.linkedQuestionsSubAnswers?.map((x: any, i) => {
+                    let typex: QuestionTypeEnum =
+                        questionWithAnswer?.question?.question?.linkedQuestions[i]?.question?.type;
+                    let subAnswer: any = {};
+
+                    switch (typex) {
+                        case QuestionTypeEnum.MutliChoice:
+                            subAnswer.multipleChoiceAnswer = x.optionId;
+                            break;
+                        case QuestionTypeEnum.SinglChoice:
+                            subAnswer.singleChoiceAnswer = x.optionId?.[0];
+                            break;
+                        case QuestionTypeEnum.TrueAndFalse:
+                            subAnswer.trueFalseAnswer = x.optionId?.[0];
+                            break;
+                        case QuestionTypeEnum.SA:
+                            subAnswer.saAnswer = x.value;
+                            break;
+                        case QuestionTypeEnum.Match:
+                            subAnswer.matchAnswer = x.matchValue;
+                            break;
+                        case QuestionTypeEnum.DargingTable:
+                            subAnswer.dragTableAnswer = x.dargTableQuestionsSubAnswersWithoutPinned;
+                            break;
+                    }
+
+                    return new SubQuestionAnswer({
+                        questionId: x.subQuestionId,
+                        ...subAnswer,
+                    });
+                });
+                break;
+        }
+
+        questionWithAnswer.question.question = {
+            ...questionWithAnswer?.question?.question,
+            ...answer,
+        };
     }
 }

@@ -72,7 +72,7 @@ export class MultipleChoiceOneOptionComponent implements ControlValueAccessor, V
      * into the component’s view.
      */
     writeValue(val: number): void {
-        if (val !== undefined && val !== null) {
+         if (val !== undefined && val !== null) {
             this.value = val;
         } else {
             this.value = 0;

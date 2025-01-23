@@ -162,6 +162,7 @@ import {
     writeValue(obj: any): void {
       // Expecting 'obj' to be the entire answer object.
       // If it's null or undefined, initialize it to avoid undefined references.
+      console.log('objobjobjobjobj',obj)
       this.value = obj || {
         saAnswer: null,
         trueFalseAnswer: null,
