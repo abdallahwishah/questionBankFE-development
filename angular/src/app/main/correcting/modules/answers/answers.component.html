@@ -1,7 +1,7 @@
 <div>
     <div class="container-fluid px-5 mt-md-0 mt-7">
         <div class="d-flex align-items-center">
-            <span class="cursor-pointer text-gray-700" [routerLink]="'/app/main/audit'">
+            <span class="cursor-pointer text-gray-700" [routerLink]="'/app/main/correcting'">
                 <svg
                     width="14"
                     height="14"
@@ -15,11 +15,11 @@
                         fill="#999999"
                     />
                 </svg>
-                {{ l('AuditScreen') }}
+                {{ l('CorrectingSession') }}
             </span>
             <span class="mx-2">/</span>
-            <span class="cursor-pointer text-gray-700" [routerLink]="'/app/main/audit'">
-                {{ l('Sessions') }}
+            <span class="text-gray-700">
+                {{sessionName}}
             </span>
             <span class="mx-2">/</span>
 
@@ -105,20 +105,17 @@
                         {{ record.examAttempt.studentId || '-' }}
                     </td>
                     <td>
-                       <!--  <span class="p-column-title">{{ l('CaseTitle') }}</span>
-                        {{ record.examAttempt.studentname || '-' }} -->
+                        <span class="p-column-title">{{ l('studentname') }}</span>
+                        {{ record.studentName || '-' }} 
                     </td>
                     <td>
                         <span class="p-column-title">{{ l('examTitle') }}</span>
                         {{ record.examTitle || '-' }}
                     </td>
                     <td>
-                        <span class="p-column-title">{{ l('RepeatCase') }}</span>
-                        {{ l('') || '-' }}
+                        <span class="p-column-title">{{ l('totalScore') }}</span>
+                        {{record.examAttempt.totalScore || '-' }}
                     </td>
-
-
-                  
                     <td>
                         <app-action-button
                             [ActionsInfo]="[

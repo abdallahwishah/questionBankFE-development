@@ -12,10 +12,13 @@ import { LazyLoadEvent } from '@node_modules/primeng/api';
   styleUrls: ['./answers.component.css']
 })
 export class AnswersComponent extends AppComponentBase implements OnInit {
+    @ViewChild('dataTable', { static: true }) dataTable: Table;
+    @ViewChild('paginator', { static: true }) paginator: Paginator;
+
     filter: string;
     SessionId:any;
-      @ViewChild('dataTable', { static: true }) dataTable: Table;
-          @ViewChild('paginator', { static: true }) paginator: Paginator;
+    sessionName : any;
+
     constructor(private _injector: Injector,
         private _examAttemptsServiceProxy: ExamAttemptsServiceProxy,
         private _ActivatedRoute:ActivatedRoute,
@@ -29,6 +32,7 @@ export class AnswersComponent extends AppComponentBase implements OnInit {
         this.SessionId = Number(params?.get('id')); //.get('product');
     });
 
+    this.sessionName =   this._ActivatedRoute.snapshot.queryParams['session']
 
   }
 

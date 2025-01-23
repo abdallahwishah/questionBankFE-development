@@ -110,8 +110,11 @@ export class ListComponent extends AppComponentBase implements OnInit {
     doActions(label: any, record: any) {
         switch (label) {
             case 'ViewAnswersStudent':
-                this._router.navigate(['/app/main/correcting/answers/', record?.session?.id]);
-                console.log();
+                this._router.navigate(['/app/main/correcting/answers/', record?.session?.id], {
+                    queryParams: {
+                        session: record?.session.name,
+                    },
+                });
                 break;
         }
     }

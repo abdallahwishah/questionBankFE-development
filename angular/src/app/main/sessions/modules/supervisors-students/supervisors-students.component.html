@@ -62,7 +62,7 @@
 
       <!-- Filter & Search  -->
       <div class="row switch-serch-bar mt-9 justify-content-end" >
-        <div class="col-md-6 d-grid gap-3 align-items-end " style="margin-bottom: -69px; grid-template-columns: 2fr 1fr;">
+        <div class="col-md-6 d-grid gap-3 align-items-end " style="margin-bottom: -69px; grid-template-columns: 2fr auto;">
             <div>
                 <div class="input-group search-group" >
                     <input
@@ -121,15 +121,15 @@
       <div class="primeng-datatable-container p-0 col-12 ">
         <p-table
             #dataTable
-            [value]="primengTableHelper.records"
+            [value]="primengTableHelperForAttempts.records"
             (onLazyLoad)="getListAttempts($event)"
-            rows="{{ primengTableHelper.defaultRecordsCountPerPage }}"
+            rows="{{ primengTableHelperForAttempts.defaultRecordsCountPerPage }}"
             [paginator]="false"
-            [loading]="primengTableHelper.isLoading"
+            [loading]="primengTableHelperForAttempts.isLoading"
             [lazy]="true"
             [scrollable]="true"
             ScrollWidth="100%"
-            [resizableColumns]="primengTableHelper.resizableColumns"
+            [resizableColumns]="primengTableHelperForAttempts.resizableColumns"
         >
             <ng-template pTemplate="header">
                 <tr>
@@ -212,11 +212,11 @@
         </div>
         <p-paginator
                 #paginator
-                [rows]="primengTableHelper.defaultRecordsCountPerPage"
+                [rows]="primengTableHelperForAttempts.defaultRecordsCountPerPage"
                 (onPageChange)="getListAttempts($event)"
-                [totalRecords]="primengTableHelper.totalRecordsCount"
-                [rows]="primengTableHelper.defaultRecordsCountPerPage"
-                [rowsPerPageOptions]="primengTableHelper.predefinedRecordsCountPerPage"
+                [totalRecords]="primengTableHelperForAttempts.totalRecordsCount"
+                [rows]="primengTableHelperForAttempts.defaultRecordsCountPerPage"
+                [rowsPerPageOptions]="primengTableHelperForAttempts.predefinedRecordsCountPerPage"
             ></p-paginator>
     </div>
     <!-- End Tabel -->
@@ -236,15 +236,15 @@
        <div class="primeng-datatable-container p-0 col-12 ">
         <p-table
             #dataTable
-            [value]="primengTableHelper.records"
+            [value]="primengTableHelperForSupervisors.records"
             (onLazyLoad)="getListSupervis($event)"
-            rows="{{ primengTableHelper.defaultRecordsCountPerPage }}"
+            rows="{{ primengTableHelperForSupervisors.defaultRecordsCountPerPage }}"
             [paginator]="false"
-            [loading]="primengTableHelper.isLoading"
+            [loading]="primengTableHelperForSupervisors.isLoading"
             [lazy]="true"
             [scrollable]="true"
             ScrollWidth="100%"
-            [resizableColumns]="primengTableHelper.resizableColumns"
+            [resizableColumns]="primengTableHelperForSupervisors.resizableColumns"
         >
             <ng-template pTemplate="header">
                 <tr>
@@ -288,16 +288,16 @@
                 </tr>
             </ng-template>
         </p-table>
-        <div class="primeng-no-data" *ngIf="primengTableHelper.totalRecordsCount == 0">
+        <div class="primeng-no-data" *ngIf="primengTableHelperForSupervisors.totalRecordsCount == 0">
             {{ l('NoData') }}
         </div>
         <p-paginator
                 #paginator
-                [rows]="primengTableHelper.defaultRecordsCountPerPage"
+                [rows]="primengTableHelperForSupervisors.defaultRecordsCountPerPage"
                 (onPageChange)="getListSupervis($event)"
-                [totalRecords]="primengTableHelper.totalRecordsCount"
-                [rows]="primengTableHelper.defaultRecordsCountPerPage"
-                [rowsPerPageOptions]="primengTableHelper.predefinedRecordsCountPerPage"
+                [totalRecords]="primengTableHelperForSupervisors.totalRecordsCount"
+                [rows]="primengTableHelperForSupervisors.defaultRecordsCountPerPage"
+                [rowsPerPageOptions]="primengTableHelperForSupervisors.predefinedRecordsCountPerPage"
             ></p-paginator>
       </div> 
       <!-- End Tabel -->

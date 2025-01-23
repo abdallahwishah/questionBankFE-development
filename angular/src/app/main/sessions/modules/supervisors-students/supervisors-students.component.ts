@@ -5,6 +5,7 @@ import { ExamAttemptsServiceProxy, SessionsServiceProxy, SessionSupervisorsServi
 import { Paginator } from '@node_modules/primeng/paginator';
 import { Table } from '@node_modules/primeng/table';
 import { LazyLoadEvent } from '@node_modules/primeng/api';
+import { PrimengTableHelper } from '@shared/helpers/PrimengTableHelper';
 
 @Component({
     selector: 'app-supervisors-students',
@@ -14,6 +15,10 @@ import { LazyLoadEvent } from '@node_modules/primeng/api';
 export class SupervisorsStudentsComponent extends AppComponentBase implements OnInit {
     @ViewChild('dataTable', { static: true }) dataTable: Table;
     @ViewChild('paginator', { static: true }) paginator: Paginator;
+
+    primengTableHelperForAttempts = new PrimengTableHelper();
+    primengTableHelperForSupervisors = new PrimengTableHelper();
+
 
     filter: string;
     SessionId: any;
@@ -46,46 +51,48 @@ export class SupervisorsStudentsComponent extends AppComponentBase implements On
 
     }
 
-     getListSupervis(event?: LazyLoadEvent) {
-            if (event) {
-                if (this.primengTableHelper.shouldResetPaging(event)) {
-                    this.paginator.changePage(0);
-                    if (this.primengTableHelper.records && this.primengTableHelper.records.length > 0) {
-                        return;
-                    }
+    getListAttempts(event?: LazyLoadEvent) {
+        if (event) {
+            if (this.primengTableHelperForAttempts.shouldResetPaging(event)) {
+                this.paginator.changePage(0);
+                if (this.primengTableHelperForAttempts.records && this.primengTableHelperForAttempts.records.length > 0) {
+                    return;
                 }
             }
-    
-            this.primengTableHelper.showLoadingIndicator();
-    
-            this._SessionSupervisorsServiceProxy
-                .getAll(this.filter , this.SessionId, this.classId , undefined, undefined, undefined)
-                .subscribe((result) => {
-                    this.primengTableHelper.totalRecordsCount = result.totalCount;
-                    this.primengTableHelper.records = result.items;
-                    this.primengTableHelper.hideLoadingIndicator();
-                });
         }
-     getListAttempts(event?: LazyLoadEvent) {
-            if (event) {
-                if (this.primengTableHelper.shouldResetPaging(event)) {
-                    this.paginator.changePage(0);
-                    if (this.primengTableHelper.records && this.primengTableHelper.records.length > 0) {
-                        return;
-                    }
+    
+        this.primengTableHelperForAttempts.showLoadingIndicator();
+    
+        this._examAttemptsServiceProxy
+            .getAll(this.filter, undefined, this.SessionId, this.classId, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined)
+            .subscribe((result) => {
+                this.primengTableHelperForAttempts.totalRecordsCount = result.totalCount;
+                this.primengTableHelperForAttempts.records = result.items;
+                this.primengTableHelperForAttempts.hideLoadingIndicator();
+            });
+    }
+    
+    getListSupervis(event?: LazyLoadEvent) {
+        if (event) {
+            if (this.primengTableHelperForSupervisors.shouldResetPaging(event)) {
+                this.paginator.changePage(0);
+                if (this.primengTableHelperForSupervisors.records && this.primengTableHelperForSupervisors.records.length > 0) {
+                    return;
                 }
             }
-    
-            this.primengTableHelper.showLoadingIndicator();
-    
-            this._examAttemptsServiceProxy
-                .getAll(this.filter ,undefined , this.SessionId, this.classId , undefined,undefined, undefined , undefined , undefined , undefined, undefined , undefined)
-                .subscribe((result) => {
-                    this.primengTableHelper.totalRecordsCount = result.totalCount;
-                    this.primengTableHelper.records = result.items;
-                    this.primengTableHelper.hideLoadingIndicator();
-                });
         }
+    
+        this.primengTableHelperForSupervisors.showLoadingIndicator();
+    
+        this._SessionSupervisorsServiceProxy
+            .getAll(this.filter, this.SessionId, this.classId, undefined, undefined, undefined)
+            .subscribe((result) => {
+                this.primengTableHelperForSupervisors.totalRecordsCount = result.totalCount;
+                this.primengTableHelperForSupervisors.records = result.items;
+                this.primengTableHelperForSupervisors.hideLoadingIndicator();
+            });
+    }
+    
 
     doActions(label: any, record: any) {
         switch (label) {

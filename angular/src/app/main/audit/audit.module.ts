@@ -19,7 +19,7 @@ import { RouterModule } from '@node_modules/@angular/router';
                     {
                         path: 'answers/:id',
                         loadChildren: () =>
-                            import('../correcting/modules/answers/answers.module').then((m) => m.AnswersModule),
+                            import('./modules/answers/answers.module').then((m) => m.AnswersModule),
                     }
                 ],
             },
