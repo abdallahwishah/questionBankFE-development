@@ -38447,6 +38447,7 @@ export class ExpectedeExamDto implements IExpectedeExamDto {
     applyExamDto!: ApplyExamDto;
     remainingTime!: TimeSpan;
     sessionName!: string | undefined;
+    remainingTimeInSecond!: number | undefined;
 
     constructor(data?: IExpectedeExamDto) {
         if (data) {
@@ -38462,6 +38463,7 @@ export class ExpectedeExamDto implements IExpectedeExamDto {
             this.applyExamDto = _data["applyExamDto"] ? ApplyExamDto.fromJS(_data["applyExamDto"]) : <any>undefined;
             this.remainingTime = _data["remainingTime"] ? TimeSpan.fromJS(_data["remainingTime"]) : <any>undefined;
             this.sessionName = _data["sessionName"];
+            this.remainingTimeInSecond = _data["remainingTimeInSecond"];
         }
     }
 
@@ -38477,6 +38479,7 @@ export class ExpectedeExamDto implements IExpectedeExamDto {
         data["applyExamDto"] = this.applyExamDto ? this.applyExamDto.toJSON() : <any>undefined;
         data["remainingTime"] = this.remainingTime ? this.remainingTime.toJSON() : <any>undefined;
         data["sessionName"] = this.sessionName;
+        data["remainingTimeInSecond"] = this.remainingTimeInSecond;
         return data;
     }
 }
@@ -38485,6 +38488,7 @@ export interface IExpectedeExamDto {
     applyExamDto: ApplyExamDto;
     remainingTime: TimeSpan;
     sessionName: string | undefined;
+    remainingTimeInSecond: number | undefined;
 }
 
 export class ExpiringTenant implements IExpiringTenant {

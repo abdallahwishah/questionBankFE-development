@@ -1,4 +1,4 @@
-<div class="container mt-15">
+<div class="p-5 mt-5">
 
    <h4>الاختبارات</h4>
      <!-- Start Tabel -->
@@ -31,7 +31,7 @@
                       {{ l('مدة الاختبار') }}
                       <p-sortIcon field="EndDate"></p-sortIcon>
                   </th>
-                
+
                   <th>
                       {{ l('Actions') }}
                   </th>
@@ -58,7 +58,7 @@
                       <span class="p-column-title">{{ l('endDate') }}</span>
                       {{ (record.session.endDate | luxonFormat: 'dd/MM/yyyy - hh:mm a') || '-' }}
                   </td>
-                
+
                   <td>
                     <button class="btn btn-primary-next">{{ l('تقديم') }}</button>
                   </td>
@@ -75,7 +75,7 @@
                 [totalRecords]="primengTableHelper.totalRecordsCount"
                 [rows]="primengTableHelper.defaultRecordsCountPerPage"
                 [rowsPerPageOptions]="primengTableHelper.predefinedRecordsCountPerPage"
-            ></p-paginator> 
+            ></p-paginator>
   </div>
   <!-- End Tabel -->
 </div>

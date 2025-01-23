@@ -1,10 +1,11 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ExamsServiceProxy } from '@shared/service-proxies/service-proxies';
+import { QuizComponent } from '../quiz/quiz.component';
 
 @Component({
     standalone: true,
-    imports: [CommonModule],
+    imports: [CommonModule, QuizComponent],
     selector: 'app-student-main',
     templateUrl: './student-main.component.html',
     styleUrls: ['./student-main.component.css'],
@@ -15,15 +16,18 @@ export class StudentMainComponent implements OnInit, OnDestroy {
     minutes: string = '00';
     seconds: string = '00';
     private timerInterval: any;
-    sessionName:any
+    sessionName: any;
+    secondsValue: any=1;
     constructor(private _examsServiceProxy: ExamsServiceProxy) {}
 
     ngOnInit() {
         this._examsServiceProxy.getExpectedeExam().subscribe((response) => {
-            this.sessionName = response.sessionName
-            const remainingTime = response.remainingTime;
-            console.log('remainingTime',response,remainingTime,remainingTime.totalSeconds)
-            this.startTimer(200000);
+            this.sessionName = response.sessionName;
+            let seconds =10
+            // response?.remainingTimeInSecond;
+            if (seconds > 0) {
+                this.startTimer(seconds);
+            }
         });
     }
 
@@ -37,8 +41,10 @@ export class StudentMainComponent implements OnInit, OnDestroy {
         this.updateDisplay(totalSeconds);
 
         this.timerInterval = setInterval(() => {
+            this.secondsValue = totalSeconds;
             if (totalSeconds <= 0) {
                 clearInterval(this.timerInterval);
+                this.goToExam();
                 return;
             }
 
@@ -58,5 +64,14 @@ export class StudentMainComponent implements OnInit, OnDestroy {
         this.hours = hrs.toString().padStart(2, '0');
         this.minutes = mins.toString().padStart(2, '0');
         this.seconds = secs.toString().padStart(2, '0');
+    }
+
+    goToExam() {
+        const attemptUrl = '/student/exam-attempt/';
+        window.open(
+            attemptUrl,
+            '_blank',
+            `menubar=no,toolbar=no,location=no,status=no,scrollbars=yes,resizable=yes,width=${screen.availWidth},height=${screen.availHeight}`,
+        );
     }
 }

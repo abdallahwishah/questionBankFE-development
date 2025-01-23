@@ -9,6 +9,13 @@ import { RouterModule } from '@node_modules/@angular/router';
 
         RouterModule.forChild([
             {
+                path: 'exam-attempt',
+                loadComponent: () =>
+                    import('./exam-viewer-and-attempt/exam-viewer-and-attempt.component').then(
+                        (m) => m.ExamViewerAndAttemptComponent,
+                    ),
+            },
+            {
                 path: '',
                 component: StudentComponent,
                 children: [
@@ -19,13 +26,6 @@ import { RouterModule } from '@node_modules/@angular/router';
                     },
                     {
                         path: 'exam-viewer/:id',
-                        loadComponent: () =>
-                            import('./exam-viewer-and-attempt/exam-viewer-and-attempt.component').then(
-                                (m) => m.ExamViewerAndAttemptComponent,
-                            ),
-                    },
-                    {
-                        path: 'exam-attempt',
                         loadComponent: () =>
                             import('./exam-viewer-and-attempt/exam-viewer-and-attempt.component').then(
                                 (m) => m.ExamViewerAndAttemptComponent,
