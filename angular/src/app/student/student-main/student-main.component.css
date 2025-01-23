@@ -1,0 +1,44 @@
+.bg-cover{
+    width: 100%;
+    height: 100vh;
+    position: relative;
+    background: url(../../../assets/common/images/bg-login.png);
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    backdrop-filter:blur(3px);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+     justify-content: center;
+}
+h3{
+    color: #000;
+    font-size: 33px;
+}
+h4{
+    color: #fff;
+    font-size: 16px;
+    font-weight: 400;
+}
+.counter-box{
+    background: #0000004e;
+    border-radius: 6px;
+}
+.counter-box .num {
+    padding: 0px 12px;
+    border-radius: 5px;
+    color: #000;
+    background-color: #fff;
+    font-size: 42px;
+}
+.counter-box span{
+    color: #fff;
+    display: inline-block;
+    margin-top: 5px;
+}
+.donts{
+    color: rgba(189, 193, 202, 1);
+    font-weight: 700;
+    font-size: 35px;
+}
