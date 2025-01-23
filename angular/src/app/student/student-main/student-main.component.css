@@ -42,3 +42,11 @@ h4{
     font-weight: 700;
     font-size: 35px;
 }
+
+.btn-logout{
+    border-radius: 25px;
+    padding: 9px 20px;
+    display: inline-block;
+    background: #fff;
+    color: #000;
+}
