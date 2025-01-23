@@ -2,10 +2,11 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ExamsServiceProxy } from '@shared/service-proxies/service-proxies';
 import { QuizComponent } from '../quiz/quiz.component';
+import { StudentHeaderComponent } from "../student-header/student-header.component";
 
 @Component({
     standalone: true,
-    imports: [CommonModule, QuizComponent],
+    imports: [CommonModule, QuizComponent, StudentHeaderComponent],
     selector: 'app-student-main',
     templateUrl: './student-main.component.html',
     styleUrls: ['./student-main.component.css'],
