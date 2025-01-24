@@ -55,7 +55,15 @@ export class ListComponent extends AppComponentBase implements OnInit {
                 undefined, // maxResultCount
                 undefined, // extra param
             ),
-            this._studySubjectsProxy.getAll(undefined, undefined, undefined, undefined, undefined, undefined),
+            this._studySubjectsProxy.getAll(
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+            ),
         ]).subscribe({
             next: ([studyLevelsRes, studySubjectsRes]) => {
                 // Map each response to your arrays
@@ -110,18 +118,18 @@ export class ListComponent extends AppComponentBase implements OnInit {
     doActions(label: any, record: any) {
         switch (label) {
             case 'View':
-            //     // Construct the URL – this could be a route or an external URL
-            //     const attemptUrl = '/student/exam-attempt/' + record.exam.id;
+                //     // Construct the URL – this could be a route or an external URL
+                //     const attemptUrl = '/student/exam-attempt/' + record.exam.id;
 
-            //     // Open in a new window with minimal UI
-            //     // NOTE: This still will NOT block someone from using extensions or
-            //     // opening new tabs in a modern browser.
-            //     window.open(
-            //         attemptUrl,
-            //         '_blank',
-            //         `menubar=no,toolbar=no,location=no,status=no,scrollbars=yes,resizable=yes,width=${screen.availWidth},height=${screen.availHeight}`,
-            //     );
-            this._router.navigate(['/student/exam-viewer/' + record.exam.id]);
+                //     // Open in a new window with minimal UI
+                //     // NOTE: This still will NOT block someone from using extensions or
+                //     // opening new tabs in a modern browser.
+                //     window.open(
+                //         attemptUrl,
+                //         '_blank',
+                //         `menubar=no,toolbar=no,location=no,status=no,scrollbars=yes,resizable=yes,width=${screen.availWidth},height=${screen.availHeight}`,
+                //     );
+                this._router.navigate(['/student/exam-viewer/' + record.exam.id]);
 
                 break;
 

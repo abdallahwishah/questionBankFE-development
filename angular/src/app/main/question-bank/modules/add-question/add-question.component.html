@@ -73,15 +73,6 @@
 
                     <div class="row mt-6">
                         <div class="col-md-6 mb-5">
-                            <app-dropdown-field
-                                [(ngModel)]="_createOrEditQuestionDto.studySubjectId"
-                                [options]="studySubjects"
-                                optionLabel="name"
-                                optionValue="id"
-                                [labelField]="l('StudySubject')"
-                            ></app-dropdown-field>
-                        </div>
-                        <div class="col-md-6 mb-5">
                             <app-auto-complete-feild
                                 [label]="l('StudyLevel')"
                                 field="studyLevel.name"
@@ -100,13 +91,40 @@
                             ></app-auto-complete-feild>
                         </div>
                         <div class="col-md-6 mb-5">
-                            <app-dropdown-field
-                                [(ngModel)]="_createOrEditQuestionDto.subjectUnitId"
-                                [options]="subjectUnits"
-                                optionLabel="name"
-                                optionValue="id"
-                                [labelField]="l('StudyUnit')"
-                            ></app-dropdown-field>
+                            <app-auto-complete-feild
+                                [label]="l('StudySubject')"
+                                field="studySubject.name"
+                                [(ngModel)]="studySubject"
+                                name="studySubjectId"
+                                [ConfigCustomSearch]="{
+                                    api: '/api/services/app/StudySubjects/GetAll',
+                                    keySearch: 'filter',
+                                    customParams: {
+                                        Sorting: '',
+                                        SkipCount: 0,
+                                        MaxResultCount: 10,
+                                        StudyLeveldsFilter: studyLevelIds
+                                    }
+                                }"
+                            ></app-auto-complete-feild>
+                        </div>
+
+                        <div class="col-md-6 mb-5">
+                            <app-auto-complete-feild
+                                [label]="l('StudyUnit')"
+                                field="subjectUnit.name"
+                                [(ngModel)]="studyUnit"
+                                name="SubjectUnitId"
+                                [ConfigCustomSearch]="{
+                                    api: '/api/services/app/SubjectUnits/GetAll',
+                                    keySearch: 'filter',
+                                    customParams: {
+                                        Sorting: '',
+                                        SkipCount: 0,
+                                        MaxResultCount: 10
+                                    }
+                                }"
+                            ></app-auto-complete-feild>
                         </div>
                         <div class="col-md-6 mb-5">
                             <label class="mb-2">{{ l('PageNumber') }}</label>

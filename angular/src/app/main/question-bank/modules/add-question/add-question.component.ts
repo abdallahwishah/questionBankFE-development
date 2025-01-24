@@ -29,16 +29,15 @@ export class AddQuestionComponent extends AppComponentBase implements OnInit {
 
     filter: string;
     questionsType: any[] = [];
-    studyLevels: any[] = [];
-    studySubjects: any[] = [];
-    subjectUnits: any[] = [];
     complexities: any[] = [];
     categories: any[] = [];
     checkedExplanatoryNote: boolean = true;
     QuestionTypeEnum = QuestionTypeEnum;
     _createOrEditQuestionDto = new CreateOrEditQuestionDto();
     loading = false;
-    studyLevelsValue: any[];
+    studyLevelsValue: any[]=[]
+    studySubject: any;
+    studyUnit: any;
 
     constructor(
         private _injector: Injector,
@@ -62,42 +61,11 @@ export class AddQuestionComponent extends AppComponentBase implements OnInit {
 
         // Use forkJoin to get all references in parallel
         forkJoin([
-            this._studyLevelsServiceProxy.getAll(
-                undefined, // filter
-                undefined, // sorting
-                undefined, // skipCount
-                undefined, // maxResultCount
-                undefined, // extra param
-            ),
-            this._studySubjectsProxy.getAll(undefined, undefined, undefined, undefined, undefined, undefined),
-            this._subjectUnitsServiceProxy.getAll(
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-            ),
             this._complexitiesServiceProxy.getAll(undefined, undefined, undefined, undefined, undefined),
             this._categoriesServiceProxy.getAll(undefined, undefined, undefined, undefined, undefined),
         ]).subscribe({
-            next: ([studyLevelsRes, studySubjectsRes, subjectUnitsRes, complexitiesRes, categoriesRes]) => {
+            next: ([complexitiesRes, categoriesRes]) => {
                 // Map each response to your arrays
-                this.studyLevels = studyLevelsRes.items.map((item) => ({
-                    id: item.studyLevel.id,
-                    name: item.studyLevel.name,
-                }));
-
-                this.studySubjects = studySubjectsRes.items.map((item) => ({
-                    id: item.studySubject.id,
-                    name: item.studySubject.name,
-                }));
-
-                this.subjectUnits = subjectUnitsRes.items.map((item) => ({
-                    id: item.subjectUnit.id,
-                    name: item.subjectUnit.name,
-                }));
 
                 this.complexities = complexitiesRes.items.map((item) => ({
                     id: item.complexity.id,
@@ -137,7 +105,18 @@ export class AddQuestionComponent extends AppComponentBase implements OnInit {
                         },
                     };
                 });
-
+                this.studySubject = {
+                    studySubject: {
+                        name: val.studySubjectName,
+                        id: val.question.studySubjectId,
+                    },
+                };
+                this.studyUnit = {
+                    subjectUnit: {
+                        name: val.subjectUnitName,
+                        id: val.question.subjectUnitId,
+                    },
+                };
                 this.loading = false;
             },
             error: (err) => {
@@ -163,11 +142,17 @@ export class AddQuestionComponent extends AppComponentBase implements OnInit {
     }
     Save(): void {
         this._createOrEditQuestionDto.studyLevelIds = this.studyLevelsValue.map((x) => x?.studyLevel?.id);
+        this._createOrEditQuestionDto.studySubjectId = this.studySubject.studySubject.id;
+        this._createOrEditQuestionDto.subjectUnitId = this.studyUnit.subjectUnit.id;
+
         this._questionsServiceProxy.createOrEdit(this._createOrEditQuestionDto).subscribe({
             next: () => {
                 this.notify.success(this.l('SavedSuccessfully'));
                 this._router.navigate(['app/main/question-bank']);
             },
         });
+    }
+    get studyLevelIds(){
+        return this.studyLevelsValue?.map((x) => x?.studyLevel?.id)
     }
 }

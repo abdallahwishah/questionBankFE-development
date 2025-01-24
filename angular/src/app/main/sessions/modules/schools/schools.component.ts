@@ -28,7 +28,7 @@ export class SchoolsComponent extends AppComponentBase implements OnInit {
     filter: string;
     SessionId: any;
     expandedRows: any = {};
-    sessionName : any;
+    sessionName: any;
     constructor(
         private _injector: Injector,
         private _SessionsServiceProxy: SessionsServiceProxy,
@@ -39,7 +39,7 @@ export class SchoolsComponent extends AppComponentBase implements OnInit {
     }
 
     ngOnInit(): void {
-        this.sessionName =   this._ActivatedRoute.snapshot.queryParams['session']
+        this.sessionName = this._ActivatedRoute.snapshot.queryParams['session'];
     }
 
     ngAfterViewInit() {
@@ -68,16 +68,26 @@ export class SchoolsComponent extends AppComponentBase implements OnInit {
             )
             .subscribe((result) => {
                 this.primengTableHelper.totalRecordsCount = result.totalCount;
-                this.primengTableHelper.records = result.items;
+                this.primengTableHelper.records = result.items?.map((item) => {
+                    return {
+                        ...item,
+                    };
+                });
+                this.expandedRows = {};
+                this.primengTableHelper.records.forEach((record) => {
+                    if (record.school && record.school.id) {
+                        this.expandedRows[record.school.id] = true;
+                    }
+                });
                 this.primengTableHelper.hideLoadingIndicator();
             });
     }
-    supervisorsAndStudents(item: any) {
-        debugger
+    supervisorsAndStudents(item: any, school) {
         this._router.navigate(['/app/main/sessions/supervisors-students', this.SessionId, item?.schoolClass?.id], {
             queryParams: {
                 school: item?.schoolName,
+                schoolId: school?.school?.schoolId,
             },
-        });    }
+        });
+    }
 }
-

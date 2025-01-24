@@ -18,7 +18,7 @@
             {{ l('SessionsScreen') }}
         </span>
         <span class="mx-2">/</span>
-        <span>{{ sessionName}}</span>
+        <span>{{ sessionName }}</span>
         <span class="mx-2">/</span>
         <h2 class="fw-bolder mb-0">{{ 'المدارس' }}</h2>
     </div>
@@ -41,7 +41,7 @@
                 <tr>
                     <th style="width: 50px"></th>
                     <th style="width: 80px">#</th>
-                    <th style="width: 150px">{{ l('SchoolNo') }}</th>
+                    <th style="width: 300px">{{ l('SchoolNo') }}</th>
 
                     <th class="text-start">{{ l('اسم المدرسة') }}</th>
                 </tr>
@@ -111,7 +111,7 @@
                                             <a
                                                 href="javascript:;"
                                                 class="text-primary"
-                                                (click)="supervisorsAndStudents(class)"
+                                                (click)="supervisorsAndStudents(class,record)"
                                             >
                                                 {{ l('عرض المشرفين والطلاب') }}
                                             </a>

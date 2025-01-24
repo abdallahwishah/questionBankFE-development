@@ -5,7 +5,12 @@ import { LazyLoadEvent } from 'primeng/api';
 import { AppComponentBase } from '@shared/common/app-component-base';
 import { Table } from 'primeng/table';
 import { Paginator } from 'primeng/paginator';
-import { SessionsServiceProxy, SessionStatusEnum, StudyLevelsServiceProxy, StudySubjectsServiceProxy } from '@shared/service-proxies/service-proxies';
+import {
+    SessionsServiceProxy,
+    SessionStatusEnum,
+    StudyLevelsServiceProxy,
+    StudySubjectsServiceProxy,
+} from '@shared/service-proxies/service-proxies';
 import { Router } from '@node_modules/@angular/router';
 import { FiltersComponent } from '@app/shared/components/filters/filters.component';
 import { forkJoin } from 'rxjs';
@@ -19,7 +24,6 @@ export class ListComponent extends AppComponentBase implements OnInit {
     Warning_dialog = UniqueNameComponents.Warning_dialog;
     @ViewChild(FiltersComponent) FiltersComponent: FiltersComponent;
 
-
     studyLevels: any[] = [];
     studySubjects: any[] = [];
     subjectId: number;
@@ -27,19 +31,18 @@ export class ListComponent extends AppComponentBase implements OnInit {
     loadingFilter: boolean = false;
 
     filter: string;
-      @ViewChild('dataTable', { static: true }) dataTable: Table;
-      @ViewChild('paginator', { static: true }) paginator: Paginator;
+    @ViewChild('dataTable', { static: true }) dataTable: Table;
+    @ViewChild('paginator', { static: true }) paginator: Paginator;
 
-          sessionStatusEnum = SessionStatusEnum;
+    sessionStatusEnum = SessionStatusEnum;
 
     constructor(
         private _injector: Injector,
-        private _router:Router,
+        private _router: Router,
         private _DialogSharedService: DialogSharedService,
         private _sessionsServiceProxy: SessionsServiceProxy,
         private _studyLevelsServiceProxy: StudyLevelsServiceProxy,
         private _studySubjectsProxy: StudySubjectsServiceProxy,
-        
     ) {
         super(_injector);
     }
@@ -54,7 +57,15 @@ export class ListComponent extends AppComponentBase implements OnInit {
                 undefined, // maxResultCount
                 undefined, // extra param
             ),
-            this._studySubjectsProxy.getAll(undefined, undefined, undefined, undefined, undefined, undefined),
+            this._studySubjectsProxy.getAll(
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+            ),
         ]).subscribe({
             next: ([studyLevelsRes, studySubjectsRes]) => {
                 // Map each response to your arrays
@@ -73,7 +84,7 @@ export class ListComponent extends AppComponentBase implements OnInit {
                 this.loadingFilter = false;
             },
         });
-}
+    }
     getList(event?: LazyLoadEvent) {
         if (event) {
             if (this.primengTableHelper.shouldResetPaging(event)) {
@@ -108,7 +119,6 @@ export class ListComponent extends AppComponentBase implements OnInit {
             });
     }
 
-
     doActions(label: any, record: any) {
         switch (label) {
             case 'ViewAnswersStudent':
@@ -121,16 +131,16 @@ export class ListComponent extends AppComponentBase implements OnInit {
         }
     }
 
-    addTemplate(){
-        this._DialogSharedService.showDialog(this.Warning_dialog , {})
+    addTemplate() {
+        this._DialogSharedService.showDialog(this.Warning_dialog, {});
     }
 
     clearFilter() {
-         this.subjectId = undefined;
+        this.subjectId = undefined;
         this.levelId = undefined;
-        this.getList(); 
+        this.getList();
     }
-    closeFilters(){
-        this.FiltersComponent.isPanelOpen = false
-     }
+    closeFilters() {
+        this.FiltersComponent.isPanelOpen = false;
+    }
 }

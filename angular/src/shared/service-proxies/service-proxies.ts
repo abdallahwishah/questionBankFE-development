@@ -22549,6 +22549,7 @@ export class StudySubjectsServiceProxy {
 
     /**
      * @param filter (optional) 
+     * @param studyLeveldsFilter (optional) 
      * @param languageFilter (optional) 
      * @param isActiveFilter (optional) 
      * @param sorting (optional) 
@@ -22556,12 +22557,16 @@ export class StudySubjectsServiceProxy {
      * @param maxResultCount (optional) 
      * @return Success
      */
-    getAll(filter: string | undefined, languageFilter: number | undefined, isActiveFilter: number | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfGetStudySubjectForViewDto> {
+    getAll(filter: string | undefined, studyLeveldsFilter: number[] | undefined, languageFilter: number | undefined, isActiveFilter: number | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfGetStudySubjectForViewDto> {
         let url_ = this.baseUrl + "/api/services/app/StudySubjects/GetAll?";
         if (filter === null)
             throw new Error("The parameter 'filter' cannot be null.");
         else if (filter !== undefined)
             url_ += "Filter=" + encodeURIComponent("" + filter) + "&";
+        if (studyLeveldsFilter === null)
+            throw new Error("The parameter 'studyLeveldsFilter' cannot be null.");
+        else if (studyLeveldsFilter !== undefined)
+            studyLeveldsFilter && studyLeveldsFilter.forEach(item => { url_ += "StudyLeveldsFilter=" + encodeURIComponent("" + item) + "&"; });
         if (languageFilter === null)
             throw new Error("The parameter 'languageFilter' cannot be null.");
         else if (languageFilter !== undefined)
@@ -24780,12 +24785,13 @@ export class SupervisorsServiceProxy {
      * @param noteFilter (optional) 
      * @param schoolNameLFilter (optional) 
      * @param userNameFilter (optional) 
+     * @param execuldedIdFilter (optional) 
      * @param sorting (optional) 
      * @param skipCount (optional) 
      * @param maxResultCount (optional) 
      * @return Success
      */
-    getAll(filter: string | undefined, noteFilter: string | undefined, schoolNameLFilter: string | undefined, userNameFilter: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfGetSupervisorForViewDto> {
+    getAll(filter: string | undefined, noteFilter: string | undefined, schoolNameLFilter: string | undefined, userNameFilter: string | undefined, execuldedIdFilter: number[] | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfGetSupervisorForViewDto> {
         let url_ = this.baseUrl + "/api/services/app/Supervisors/GetAll?";
         if (filter === null)
             throw new Error("The parameter 'filter' cannot be null.");
@@ -24803,6 +24809,10 @@ export class SupervisorsServiceProxy {
             throw new Error("The parameter 'userNameFilter' cannot be null.");
         else if (userNameFilter !== undefined)
             url_ += "UserNameFilter=" + encodeURIComponent("" + userNameFilter) + "&";
+        if (execuldedIdFilter === null)
+            throw new Error("The parameter 'execuldedIdFilter' cannot be null.");
+        else if (execuldedIdFilter !== undefined)
+            execuldedIdFilter && execuldedIdFilter.forEach(item => { url_ += "ExeculdedIdFilter=" + encodeURIComponent("" + item) + "&"; });
         if (sorting === null)
             throw new Error("The parameter 'sorting' cannot be null.");
         else if (sorting !== undefined)
@@ -34702,9 +34712,9 @@ export interface ICreateOrEditSessionDto {
 
 export class CreateOrEditSessionSupervisorDto implements ICreateOrEditSessionSupervisorDto {
     id!: number | undefined;
-    note!: string | undefined;
     sessionId!: number;
     supervisorId!: number;
+    schoolClassId!: number | undefined;
 
     constructor(data?: ICreateOrEditSessionSupervisorDto) {
         if (data) {
@@ -34718,9 +34728,9 @@ export class CreateOrEditSessionSupervisorDto implements ICreateOrEditSessionSup
     init(_data?: any) {
         if (_data) {
             this.id = _data["id"];
-            this.note = _data["note"];
             this.sessionId = _data["sessionId"];
             this.supervisorId = _data["supervisorId"];
+            this.schoolClassId = _data["schoolClassId"];
         }
     }
 
@@ -34734,18 +34744,18 @@ export class CreateOrEditSessionSupervisorDto implements ICreateOrEditSessionSup
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["id"] = this.id;
-        data["note"] = this.note;
         data["sessionId"] = this.sessionId;
         data["supervisorId"] = this.supervisorId;
+        data["schoolClassId"] = this.schoolClassId;
         return data;
     }
 }
 
 export interface ICreateOrEditSessionSupervisorDto {
     id: number | undefined;
-    note: string | undefined;
     sessionId: number;
     supervisorId: number;
+    schoolClassId: number | undefined;
 }
 
 export class CreateOrEditSiteTrackerDto implements ICreateOrEditSiteTrackerDto {
@@ -43382,6 +43392,7 @@ export class GetSessionForViewDto implements IGetSessionForViewDto {
     examTemplateName!: string | undefined;
     studySubject!: string | undefined;
     studyLevel!: string | undefined;
+    numberOfSchools!: number;
     remainingTime!: TimeSpan;
     schools!: GetSchoolForViewDto[] | undefined;
 
@@ -43400,6 +43411,7 @@ export class GetSessionForViewDto implements IGetSessionForViewDto {
             this.examTemplateName = _data["examTemplateName"];
             this.studySubject = _data["studySubject"];
             this.studyLevel = _data["studyLevel"];
+            this.numberOfSchools = _data["numberOfSchools"];
             this.remainingTime = _data["remainingTime"] ? TimeSpan.fromJS(_data["remainingTime"]) : <any>undefined;
             if (Array.isArray(_data["schools"])) {
                 this.schools = [] as any;
@@ -43422,6 +43434,7 @@ export class GetSessionForViewDto implements IGetSessionForViewDto {
         data["examTemplateName"] = this.examTemplateName;
         data["studySubject"] = this.studySubject;
         data["studyLevel"] = this.studyLevel;
+        data["numberOfSchools"] = this.numberOfSchools;
         data["remainingTime"] = this.remainingTime ? this.remainingTime.toJSON() : <any>undefined;
         if (Array.isArray(this.schools)) {
             data["schools"] = [];
@@ -43437,6 +43450,7 @@ export interface IGetSessionForViewDto {
     examTemplateName: string | undefined;
     studySubject: string | undefined;
     studyLevel: string | undefined;
+    numberOfSchools: number;
     remainingTime: TimeSpan;
     schools: GetSchoolForViewDto[] | undefined;
 }
@@ -43489,6 +43503,8 @@ export class GetSessionSupervisorForViewDto implements IGetSessionSupervisorForV
     sessionSupervisor!: SessionSupervisorDto;
     sessionName!: string | undefined;
     supervisorName!: string | undefined;
+    telphoneNumber!: string | undefined;
+    supervisorRole!: string | undefined;
 
     constructor(data?: IGetSessionSupervisorForViewDto) {
         if (data) {
@@ -43504,6 +43520,8 @@ export class GetSessionSupervisorForViewDto implements IGetSessionSupervisorForV
             this.sessionSupervisor = _data["sessionSupervisor"] ? SessionSupervisorDto.fromJS(_data["sessionSupervisor"]) : <any>undefined;
             this.sessionName = _data["sessionName"];
             this.supervisorName = _data["supervisorName"];
+            this.telphoneNumber = _data["telphoneNumber"];
+            this.supervisorRole = _data["supervisorRole"];
         }
     }
 
@@ -43519,6 +43537,8 @@ export class GetSessionSupervisorForViewDto implements IGetSessionSupervisorForV
         data["sessionSupervisor"] = this.sessionSupervisor ? this.sessionSupervisor.toJSON() : <any>undefined;
         data["sessionName"] = this.sessionName;
         data["supervisorName"] = this.supervisorName;
+        data["telphoneNumber"] = this.telphoneNumber;
+        data["supervisorRole"] = this.supervisorRole;
         return data;
     }
 }
@@ -43527,6 +43547,8 @@ export interface IGetSessionSupervisorForViewDto {
     sessionSupervisor: SessionSupervisorDto;
     sessionName: string | undefined;
     supervisorName: string | undefined;
+    telphoneNumber: string | undefined;
+    supervisorRole: string | undefined;
 }
 
 export class GetSiteTrackerForEditOutput implements IGetSiteTrackerForEditOutput {

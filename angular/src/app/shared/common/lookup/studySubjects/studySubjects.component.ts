@@ -1,7 +1,11 @@
-﻿import {AppConsts} from '@shared/AppConsts';
+﻿import { AppConsts } from '@shared/AppConsts';
 import { Component, Injector, ViewEncapsulation, ViewChild } from '@angular/core';
-import { ActivatedRoute , Router} from '@angular/router';
-import { StudySubjectsServiceProxy, StudySubjectDto , QuestionLanguageEnum } from '@shared/service-proxies/service-proxies';
+import { ActivatedRoute, Router } from '@angular/router';
+import {
+    StudySubjectsServiceProxy,
+    StudySubjectDto,
+    QuestionLanguageEnum,
+} from '@shared/service-proxies/service-proxies';
 import { NotifyService } from 'abp-ng2-module';
 import { AppComponentBase } from '@shared/common/app-component-base';
 import { TokenAuthServiceProxy } from '@shared/service-proxies/service-proxies';
@@ -17,18 +21,17 @@ import { EntityTypeHistoryModalComponent } from '@app/shared/common/entityHistor
 import { filter as _filter } from 'lodash-es';
 import { DateTime } from 'luxon';
 
-             import { DateTimeService } from '@app/shared/common/timing/date-time.service';
+import { DateTimeService } from '@app/shared/common/timing/date-time.service';
 
 @Component({
     templateUrl: './studySubjects.component.html',
     encapsulation: ViewEncapsulation.None,
-    animations: [appModuleAnimation()]
+    animations: [appModuleAnimation()],
 })
 export class StudySubjectsComponent extends AppComponentBase {
-
-
     @ViewChild('entityTypeHistoryModal', { static: true }) entityTypeHistoryModal: EntityTypeHistoryModalComponent;
-    @ViewChild('createOrEditStudySubjectModal', { static: true }) createOrEditStudySubjectModal: CreateOrEditStudySubjectModalComponent;
+    @ViewChild('createOrEditStudySubjectModal', { static: true })
+    createOrEditStudySubjectModal: CreateOrEditStudySubjectModalComponent;
     @ViewChild('viewStudySubjectModal', { static: true }) viewStudySubjectModal: ViewStudySubjectModalComponent;
 
     @ViewChild('dataTable', { static: true }) dataTable: Table;
@@ -44,8 +47,6 @@ export class StudySubjectsComponent extends AppComponentBase {
     _entityTypeFullName = 'MIS.Lookups.StudySubject';
     entityHistoryEnabled = false;
 
-
-
     constructor(
         injector: Injector,
         private _studySubjectsServiceProxy: StudySubjectsServiceProxy,
@@ -53,7 +54,7 @@ export class StudySubjectsComponent extends AppComponentBase {
         private _tokenAuth: TokenAuthServiceProxy,
         private _activatedRoute: ActivatedRoute,
         private _fileDownloadService: FileDownloadService,
-             private _dateTimeService: DateTimeService
+        private _dateTimeService: DateTimeService,
     ) {
         super(injector);
     }
@@ -64,32 +65,43 @@ export class StudySubjectsComponent extends AppComponentBase {
 
     private setIsEntityHistoryEnabled(): boolean {
         let customSettings = (abp as any).custom;
-        return this.isGrantedAny('Pages.Administration.AuditLogs') && customSettings.EntityHistory && customSettings.EntityHistory.isEnabled && _filter(customSettings.EntityHistory.enabledEntities, entityType => entityType === this._entityTypeFullName).length === 1;
+        return (
+            this.isGrantedAny('Pages.Administration.AuditLogs') &&
+            customSettings.EntityHistory &&
+            customSettings.EntityHistory.isEnabled &&
+            _filter(
+                customSettings.EntityHistory.enabledEntities,
+                (entityType) => entityType === this._entityTypeFullName,
+            ).length === 1
+        );
     }
 
     getStudySubjects(event?: LazyLoadEvent) {
         if (this.primengTableHelper.shouldResetPaging(event)) {
             this.paginator.changePage(0);
-            if (this.primengTableHelper.records &&
-                this.primengTableHelper.records.length > 0) {
+            if (this.primengTableHelper.records && this.primengTableHelper.records.length > 0) {
                 return;
             }
         }
 
         this.primengTableHelper.showLoadingIndicator();
 
-        this._studySubjectsServiceProxy.getAll(
-            this.filterText,
-            this.languageFilter,
-            this.isActiveFilter,
-            this.primengTableHelper.getSorting(this.dataTable),
-            this.primengTableHelper.getSkipCount(this.paginator, event),
-            this.primengTableHelper.getMaxResultCount(this.paginator, event)
-        ).subscribe(result => {
-            this.primengTableHelper.totalRecordsCount = result.totalCount;
-            this.primengTableHelper.records = result.items;
-            this.primengTableHelper.hideLoadingIndicator();
-        });
+        this._studySubjectsServiceProxy
+            .getAll(
+                this.filterText,
+                undefined,
+
+                this.languageFilter,
+                this.isActiveFilter,
+                this.primengTableHelper.getSorting(this.dataTable),
+                this.primengTableHelper.getSkipCount(this.paginator, event),
+                this.primengTableHelper.getMaxResultCount(this.paginator, event),
+            )
+            .subscribe((result) => {
+                this.primengTableHelper.totalRecordsCount = result.totalCount;
+                this.primengTableHelper.records = result.items;
+                this.primengTableHelper.hideLoadingIndicator();
+            });
     }
 
     reloadPage(): void {
@@ -100,72 +112,62 @@ export class StudySubjectsComponent extends AppComponentBase {
         this.createOrEditStudySubjectModal.show();
     }
 
-
     showHistory(studySubject: StudySubjectDto): void {
         this.entityTypeHistoryModal.show({
             entityId: studySubject.id.toString(),
             entityTypeFullName: this._entityTypeFullName,
-            entityTypeDescription: ''
+            entityTypeDescription: '',
         });
     }
 
     deleteStudySubject(studySubject: StudySubjectDto): void {
-        this.message.confirm(
-            '',
-            this.l('AreYouSure'),
-            (isConfirmed) => {
-                if (isConfirmed) {
-                    this._studySubjectsServiceProxy.delete(studySubject.id)
-                        .subscribe(() => {
-                            this.reloadPage();
-                            this.notify.success(this.l('SuccessfullyDeleted'));
-                        });
-                }
+        this.message.confirm('', this.l('AreYouSure'), (isConfirmed) => {
+            if (isConfirmed) {
+                this._studySubjectsServiceProxy.delete(studySubject.id).subscribe(() => {
+                    this.reloadPage();
+                    this.notify.success(this.l('SuccessfullyDeleted'));
+                });
             }
-        );
+        });
     }
 
     exportToExcel(): void {
-        this._studySubjectsServiceProxy.getStudySubjectsToExcel(
-        this.filterText,
-            this.languageFilter,
-            this.isActiveFilter,
-        )
-        .subscribe(result => {
-            this._fileDownloadService.downloadTempFile(result);
-         });
+        this._studySubjectsServiceProxy
+            .getStudySubjectsToExcel(this.filterText, this.languageFilter, this.isActiveFilter)
+            .subscribe((result) => {
+                this._fileDownloadService.downloadTempFile(result);
+            });
     }
-
 
     action(event: any, record: any) {
         switch (event) {
             case 'View':
-                this.viewStudySubjectModal.show(record)
+                this.viewStudySubjectModal.show(record);
                 break;
             case 'Edit':
-                this.createOrEditStudySubjectModal.show(record.complexity.id)
+                this.createOrEditStudySubjectModal.show(record.complexity.id);
                 break;
             case 'Delete':
-                this.deleteStudySubject(record.complexity)
+                this.deleteStudySubject(record.complexity);
                 break;
             case 'History':
-                this.showHistory(record.complexity)
+                this.showHistory(record.complexity);
                 break;
         }
-
     }
 
-    changeStatus($event , record){
-        this._studySubjectsServiceProxy.updateStudyLevelStatus(record.studySubject.id ,$event.checked ).subscribe(val=>{
-           this.getStudySubjects()
-        })
-   }
-
+    changeStatus($event, record) {
+        this._studySubjectsServiceProxy
+            .updateStudyLevelStatus(record.studySubject.id, $event.checked)
+            .subscribe((val) => {
+                this.getStudySubjects();
+            });
+    }
 
     resetFilters(): void {
         this.filterText = '';
-            this.languageFilter = -1;
-    this.isActiveFilter = -1;
+        this.languageFilter = -1;
+        this.isActiveFilter = -1;
 
         this.getStudySubjects();
     }

@@ -9,26 +9,36 @@
             <form [formGroup]="FormAddSession">
                 <div class="row">
                     <div class="col-md-6 mb-5">
-                        <label class="mb-2">{{l('SessionName')}}</label>
-                        <input name="text" formControlName="name" class="form-control m-input" [placeholder]="l('EnterSessionName')" type="text" />
+                        <label class="mb-2">{{ l('SessionName') }}</label>
+                        <input
+                            name="text"
+                            formControlName="name"
+                            class="form-control m-input"
+                            [placeholder]="l('EnterSessionName')"
+                            type="text"
+                        />
                         <validation-messages [formCtrl]="FormAddSession.get('name')"></validation-messages>
-
                     </div>
                     <div class="col-md-6 mb-5">
                         <app-dropdown-field
-                         [options]="ListExamTemplates"
-                         [optionLabel]="'name'"
-                         [optionValue]="'Id'"
-                        formControlName="examTemplateId"
-                        [labelField]="l('ExamTemplate')"></app-dropdown-field>
+                            [options]="ListExamTemplates"
+                            [optionLabel]="'name'"
+                            [optionValue]="'Id'"
+                            formControlName="examTemplateId"
+                            [labelField]="l('ExamTemplate')"
+                        ></app-dropdown-field>
                         <validation-messages [formCtrl]="FormAddSession.get('examTemplateId')"></validation-messages>
-
                     </div>
 
                     <div class="col-md-6 mb-5">
                         <label class="col-form-label required">{{ l('StartDate') }}</label>
                         <div class="input-normal-form-calendar">
-                            <p-calendar formControlName="startDate" appendTo="body" [showTime]="true" class="w-100"></p-calendar>
+                            <p-calendar
+                                formControlName="startDate"
+                                appendTo="body"
+                                [showTime]="true"
+                                class="w-100"
+                            ></p-calendar>
                             <svg
                                 width="26"
                                 id="Icons_Calendar"
@@ -85,10 +95,14 @@
                         <validation-messages [formCtrl]="FormAddSession.get('startDate')"></validation-messages>
                     </div>
                     <div class="col-md-6 mb-5">
-
                         <label class="col-form-label required">{{ l('EndDate') }}</label>
                         <div class="input-normal-form-calendar">
-                            <p-calendar formControlName="endDate" appendTo="body" [showTime]="true" class="w-100"></p-calendar>
+                            <p-calendar
+                                formControlName="endDate"
+                                appendTo="body"
+                                [showTime]="true"
+                                class="w-100"
+                            ></p-calendar>
                             <svg
                                 width="26"
                                 id="Icons_Calendar"
@@ -149,29 +163,50 @@
                     </div> -->
                     <div class="col-md-6 mb-5">
                         <div class="upload-input p-1 d-flex justify-content-between align-items-center cursor-pointer">
-                            <span class="mx-3">أرفق ملف المدارس</span>
-                             <div class="icon d-inline-flex flex-center">
-                               <img src="assets/common/images/link.svg" alt="">
-                             </div>
+                            <span
+                                class="mx-3"
+                                [innerHTML]="
+                                    l(
+                                        'ImportToExcelSampleFileDownloadInfo',
+                                        '<a href=/assets/sampleFiles/ImportUsersSampleFile.xlsx>' +
+                                            l('ClickHere') +
+                                            '</a>'
+                                    )
+                                "
+                            >
+                                ملف المدارس
+                            </span>
+                            <div class="icon d-inline-flex flex-center">
+                                <img src="assets/common/images/link.svg" alt="" />
+                            </div>
                         </div>
                     </div>
                     <div class="col-md-6 mb-5">
                         <div class="upload-input p-1 d-flex justify-content-between align-items-center cursor-pointer">
-                            <span class="mx-3">أرفق ملف الطلاب</span>
-                             <div class="icon d-inline-flex flex-center">
-                               <img src="assets/common/images/eye.svg" alt="">
-                             </div>
+                            <span
+                                class="mx-3"
+                                [innerHTML]="
+                                    l(
+                                        'ImportToExcelSampleFileDownloadInfo',
+                                        '<a href=/assets/sampleFiles/ImportUsersSampleFile.xlsx>' +
+                                            l('ClickHere') +
+                                            '</a>'
+                                    )
+                                "
+                            >
+                                ملف الطلاب
+                            </span>
+                            <div class="icon d-inline-flex flex-center">
+                                <img src="assets/common/images/eye.svg" alt="" />
+                            </div>
                         </div>
                     </div>
                 </div>
             </form>
-
-
         </ng-container>
     </ng-container>
     <ng-container footerDialog>
         <button type="button" class="btn btn-primary blue" (click)="Save()">
-
             <span>{{ l('Save') }}</span>
         </button>
         <button class="btn btn-outline">{{ l('Cancel') }}</button>

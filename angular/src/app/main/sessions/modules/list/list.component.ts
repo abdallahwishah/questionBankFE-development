@@ -84,7 +84,7 @@ export class ListComponent extends AppComponentBase implements OnInit {
     }
     doActions(label: any, record: any) {
         switch (label) {
-            case 'ViewSetionSchool':
+            case 'ViewSchools':
                 this._router.navigate(['/app/main/sessions/schools/', record?.session?.id], {
                     queryParams: {
                         session: record?.session.name,

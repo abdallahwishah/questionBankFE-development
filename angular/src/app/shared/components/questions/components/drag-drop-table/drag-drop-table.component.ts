@@ -33,7 +33,7 @@ export class DragDropTableComponent extends AppComponentBase implements ControlV
     /**
      * "value" is an array of columns (not rows).
      * Each item => one column.
-     * `dragDropTableItems` => rows within that column.
+     * dragDropTableItems => rows within that column.
      */
     value: CreateOrEditTableDragQuestionDto[] = [];
 
@@ -43,7 +43,7 @@ export class DragDropTableComponent extends AppComponentBase implements ControlV
      *  tableWidth  => how many rows (for each column)
      */
     tableHeight = 3; // # of columns
-    tableWidth = 3; // # of rows
+    tableWidth = 3;  // # of rows
 
     // ControlValueAccessor callbacks
     private onChange: (val: CreateOrEditTableDragQuestionDto[]) => void = () => {};
@@ -85,21 +85,20 @@ export class DragDropTableComponent extends AppComponentBase implements ControlV
     // ---------------------------------------------
     buildOrUpdateTable(): void {
         const newColCount = Math.max(1, this.tableHeight); // columns
-        const newRowCount = Math.max(1, this.tableWidth); // rows
+        const newRowCount = Math.max(1, this.tableWidth);  // rows
 
         // If no existing data, build from scratch
         if (!this.value || this.value.length === 0) {
             this.value = this.buildNewTable(newColCount, newRowCount);
-            // Recalculate orders so each cell has a unique order (column-by-column)
             this.recalcItemOrdersColumnMajor();
-            // Notify parent form
             this.notifyValueChange();
             return;
         }
 
-        // If we already have data, preserve as best we can
+        // We already have some data, try to preserve it
         const oldColCount = this.value.length;
-        const oldRowCount = oldColCount > 0 ? this.value[0].dragDropTableItems?.length || 0 : 0;
+        const oldRowCount =
+            oldColCount > 0 ? this.value[0].dragDropTableItems?.length || 0 : 0;
 
         // If removing columns/rows, confirm
         if (newColCount < oldColCount || newRowCount < oldRowCount) {
@@ -124,7 +123,7 @@ export class DragDropTableComponent extends AppComponentBase implements ControlV
             }
         }
 
-        // Adjust row count in each column
+        // Adjust row count for each column
         this.value.forEach((colDto, colIndex) => {
             const items = colDto.dragDropTableItems || [];
             const currentRowCount = items.length;
@@ -143,11 +142,12 @@ export class DragDropTableComponent extends AppComponentBase implements ControlV
                 }
             }
 
+            // Update column index on the DTO
             colDto.dragDropTableColumnIndex = colIndex;
             colDto.dragDropTableItems = items;
         });
 
-        // Recalculate orders so each cell has a unique order (column-by-column)
+        // Recalculate orders so each column has a distinct order
         this.recalcItemOrdersColumnMajor();
 
         // Notify parent form
@@ -166,7 +166,7 @@ export class DragDropTableComponent extends AppComponentBase implements ControlV
     }
 
     /**
-     * Build one column => `CreateOrEditTableDragQuestionDto`.
+     * Build one column => CreateOrEditTableDragQuestionDto.
      * That column has rowCount items; each is just a blank cell initially.
      */
     private buildColumn(colIndex: number, rowCount: number): CreateOrEditTableDragQuestionDto {
@@ -187,38 +187,27 @@ export class DragDropTableComponent extends AppComponentBase implements ControlV
     }
 
     /**
-     * Recalculate the `order` for each cell in a **column-major** order:
-     * - Column #1 (rows 1..N) => order 1..N
-     * - Column #2 (rows 1..N) => order N+1..2N
-     * - and so on...
-     *
-     * For a 3×3 table:
-     *   col1 => row1 => order=1, row2 => order=2, row3 => order=3
-     *   col2 => row1 => order=4, row2 => order=5, row3 => order=6
-     *   col3 => row1 => order=7, row2 => order=8, row3 => order=9
+     * Recalculate the "order" to be the same across each column:
+     *   - Column #0 => order = 0 (for all rows in that column)
+     *   - Column #1 => order = 1 (for all rows in that column)
+     *   - Column #2 => order = 2
+     *   - etc.
      */
     private recalcItemOrdersColumnMajor(): void {
-        let runningOrder = 0;    // Start at zero
-
         const colCount = this.value.length;
-        if (colCount === 0) {
+        if (!colCount) {
             return;
         }
 
-        const rowCount = this.value[0].dragDropTableItems?.length || 0;
-
-        // Loop columns first, then rows
+        // For each column, set the same 'order' for each row = column index
         for (let c = 0; c < colCount; c++) {
+            const rowCount = this.value[c].dragDropTableItems?.length || 0;
             for (let r = 0; r < rowCount; r++) {
-                const item = this.value[c].dragDropTableItems?.[r];
-                if (!item) {
-                    continue;
+                const item = this.value[c].dragDropTableItems[r];
+                if (item) {
+                    item.order = c; // same order for all rows in this column
                 }
-                // Assign the current running order, then increment
-                item.order = runningOrder;
-                runningOrder++;
             }
         }
     }
-
 }

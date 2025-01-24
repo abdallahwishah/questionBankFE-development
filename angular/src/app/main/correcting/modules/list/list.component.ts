@@ -7,7 +7,12 @@ import { LazyLoadEvent } from '@node_modules/primeng/api';
 import { Paginator } from '@node_modules/primeng/paginator';
 import { Table } from '@node_modules/primeng/table';
 import { AppComponentBase } from '@shared/common/app-component-base';
-import { SessionsServiceProxy, SessionStatusEnum, StudyLevelsServiceProxy, StudySubjectsServiceProxy } from '@shared/service-proxies/service-proxies';
+import {
+    SessionsServiceProxy,
+    SessionStatusEnum,
+    StudyLevelsServiceProxy,
+    StudySubjectsServiceProxy,
+} from '@shared/service-proxies/service-proxies';
 import { forkJoin } from 'rxjs';
 
 @Component({
@@ -18,7 +23,7 @@ import { forkJoin } from 'rxjs';
 export class ListComponent extends AppComponentBase implements OnInit {
     Warning_dialog = UniqueNameComponents.Warning_dialog;
     @ViewChild(FiltersComponent) FiltersComponent: FiltersComponent;
-    
+
     studyLevels: any[] = [];
     studySubjects: any[] = [];
     subjectId: number;
@@ -44,34 +49,42 @@ export class ListComponent extends AppComponentBase implements OnInit {
     }
 
     ngOnInit() {
-            // Use forkJoin to get all references in parallel
-            forkJoin([
-                this._studyLevelsServiceProxy.getAll(
-                    undefined, // filter
-                    undefined, // sorting
-                    undefined, // skipCount
-                    undefined, // maxResultCount
-                    undefined, // extra param
-                ),
-                this._studySubjectsProxy.getAll(undefined, undefined, undefined, undefined, undefined, undefined),
-            ]).subscribe({
-                next: ([studyLevelsRes, studySubjectsRes]) => {
-                    // Map each response to your arrays
-                    this.studyLevels = studyLevelsRes.items.map((item) => ({
-                        id: item.studyLevel.id,
-                        name: item.studyLevel.name,
-                    }));
-    
-                    this.studySubjects = studySubjectsRes.items.map((item) => ({
-                        id: item.studySubject.id,
-                        name: item.studySubject.name,
-                    }));
-                },
-                error: (err) => {
-                    // Handle error if needed
-                    this.loadingFilter = false;
-                },
-            });
+        // Use forkJoin to get all references in parallel
+        forkJoin([
+            this._studyLevelsServiceProxy.getAll(
+                undefined, // filter
+                undefined, // sorting
+                undefined, // skipCount
+                undefined, // maxResultCount
+                undefined, // extra param
+            ),
+            this._studySubjectsProxy.getAll(
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+            ),
+        ]).subscribe({
+            next: ([studyLevelsRes, studySubjectsRes]) => {
+                // Map each response to your arrays
+                this.studyLevels = studyLevelsRes.items.map((item) => ({
+                    id: item.studyLevel.id,
+                    name: item.studyLevel.name,
+                }));
+
+                this.studySubjects = studySubjectsRes.items.map((item) => ({
+                    id: item.studySubject.id,
+                    name: item.studySubject.name,
+                }));
+            },
+            error: (err) => {
+                // Handle error if needed
+                this.loadingFilter = false;
+            },
+        });
     }
     getList(event?: LazyLoadEvent) {
         if (event) {
@@ -92,7 +105,7 @@ export class ListComponent extends AppComponentBase implements OnInit {
                 undefined,
                 undefined,
                 this.levelId || undefined,
-                this.subjectId ||undefined,
+                this.subjectId || undefined,
                 undefined,
                 undefined,
                 undefined,
@@ -128,7 +141,7 @@ export class ListComponent extends AppComponentBase implements OnInit {
         this._DialogSharedService.showDialog(this.Warning_dialog, {});
     }
 
-    closeFilters(){
-        this.FiltersComponent.isPanelOpen = false
-     }
+    closeFilters() {
+        this.FiltersComponent.isPanelOpen = false;
+    }
 }

@@ -25,7 +25,6 @@ export class ListComponent extends AppComponentBase implements OnInit {
     @ViewChild('paginator', { static: true }) paginator: Paginator;
     @ViewChild(FiltersComponent) FiltersComponent: FiltersComponent;
 
-
     studyLevels: any[] = [];
     studySubjects: any[] = [];
     status = [
@@ -74,7 +73,15 @@ export class ListComponent extends AppComponentBase implements OnInit {
                 undefined, // maxResultCount
                 undefined, // extra param
             ),
-            this._studySubjectsProxy.getAll(undefined, undefined, undefined, undefined, undefined, undefined),
+            this._studySubjectsProxy.getAll(
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+            ),
         ]).subscribe({
             next: ([studyLevelsRes, studySubjectsRes]) => {
                 // Map each response to your arrays
@@ -149,14 +156,14 @@ export class ListComponent extends AppComponentBase implements OnInit {
     }
 
     CheckedQuestion: any;
-    changeStatus($event , record){
-           this._questionsServiceProxy.updateQuestionStatus(record.question.id ,$event.checked ).subscribe(val=>{
-             this.getList()
-          })
-     }
-     closeFilters(){
-        this.FiltersComponent.isPanelOpen = false
-     }
+    changeStatus($event, record) {
+        this._questionsServiceProxy.updateQuestionStatus(record.question.id, $event.checked).subscribe((val) => {
+            this.getList();
+        });
+    }
+    closeFilters() {
+        this.FiltersComponent.isPanelOpen = false;
+    }
 
     doActions(label: any, record: any) {
         switch (label) {

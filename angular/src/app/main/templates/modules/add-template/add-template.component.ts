@@ -88,7 +88,15 @@ export class AddTemplateComponent extends AppComponentBase implements OnInit {
             this._complexitiesServiceProxy.getAll(undefined, undefined, undefined, undefined, undefined),
             this._categoriesServiceProxy.getAll(undefined, undefined, undefined, undefined, undefined),
             this._studyLevelsServiceProxy.getAll(undefined, undefined, undefined, undefined, undefined),
-            this._studySubjectsServiceProxy.getAll(undefined, undefined, undefined, undefined, undefined, undefined),
+            this._studySubjectsServiceProxy.getAll(
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+            ),
         ]).subscribe(
             ([unitsRes, complexitiesRes, categoriesRes, levelsRes, subjectsRes]) => {
                 // subject units

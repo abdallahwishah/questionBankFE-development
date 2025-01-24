@@ -32,8 +32,8 @@ export class ListComponent extends AppComponentBase implements OnInit {
     Copy_Template_dialog = UniqueNameComponents.Copy_Template_dialog;
 
     filter: string;
-    subjectId:number;
-    levelId:number;
+    subjectId: number;
+    levelId: number;
     loadingFilter = false;
 
     constructor(
@@ -48,45 +48,43 @@ export class ListComponent extends AppComponentBase implements OnInit {
     }
 
     ngOnInit() {
-       // Use forkJoin to get all references in parallel
-       forkJoin([
-        this._studyLevelsServiceProxy.getAll(
-            undefined, // filter
-            undefined, // sorting
-            undefined, // skipCount
-            undefined, // maxResultCount
-            undefined  // extra param
-        ),
-        this._studySubjectsProxy.getAll(
-            undefined,
-            undefined,
-            undefined,
-            undefined,
-            undefined,
-            undefined
-        )
-    ]).subscribe({
-        next: ([
-            studyLevelsRes,
-            studySubjectsRes,
-        ]) => {
-            // Map each response to your arrays
-            this.studyLevels = studyLevelsRes.items.map((item) => ({
-                id: item.studyLevel.id,
-                name: item.studyLevel.name,
-            }));
+        // Use forkJoin to get all references in parallel
+        forkJoin([
+            this._studyLevelsServiceProxy.getAll(
+                undefined, // filter
+                undefined, // sorting
+                undefined, // skipCount
+                undefined, // maxResultCount
+                undefined, // extra param
+            ),
+            this._studySubjectsProxy.getAll(
+                undefined,
+                undefined,
+                undefined,
 
-            this.studySubjects = studySubjectsRes.items.map((item) => ({
-                id: item.studySubject.id,
-                name: item.studySubject.name,
-            }));
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+            ),
+        ]).subscribe({
+            next: ([studyLevelsRes, studySubjectsRes]) => {
+                // Map each response to your arrays
+                this.studyLevels = studyLevelsRes.items.map((item) => ({
+                    id: item.studyLevel.id,
+                    name: item.studyLevel.name,
+                }));
 
-        },
-        error: (err) => {
-            // Handle error if needed
-            this.loadingFilter = false;
-        },
-    });
+                this.studySubjects = studySubjectsRes.items.map((item) => ({
+                    id: item.studySubject.id,
+                    name: item.studySubject.name,
+                }));
+            },
+            error: (err) => {
+                // Handle error if needed
+                this.loadingFilter = false;
+            },
+        });
     }
 
     getList(event?: LazyLoadEvent) {
@@ -119,11 +117,10 @@ export class ListComponent extends AppComponentBase implements OnInit {
             });
     }
 
-
-    clearFilter(){
-        this.subjectId = undefined
-        this.levelId = undefined
-        this.getList()
+    clearFilter() {
+        this.subjectId = undefined;
+        this.levelId = undefined;
+        this.getList();
     }
     doActions(label: any, record: any) {
         switch (label) {
@@ -155,9 +152,9 @@ export class ListComponent extends AppComponentBase implements OnInit {
                 break;
         }
     }
-    closeFilters(){
-        this.FiltersComponent.isPanelOpen = false
-     }
+    closeFilters() {
+        this.FiltersComponent.isPanelOpen = false;
+    }
 
     CopyTemplate() {
         this._DialogSharedService.showDialog(this.Copy_Template_dialog, {});

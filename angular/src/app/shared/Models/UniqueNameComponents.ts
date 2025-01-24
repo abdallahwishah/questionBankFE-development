@@ -15,4 +15,5 @@ export enum UniqueNameComponents {
     Copy_Class_dialog='Copy_Class_dialog',
     Add_Class_dialog='Add_Class_dialog',
     Add_Subject_dialog='Add_Subject_dialog',
+    Add_Supervisor_dialog='Add_Supervisor_dialog',
 }

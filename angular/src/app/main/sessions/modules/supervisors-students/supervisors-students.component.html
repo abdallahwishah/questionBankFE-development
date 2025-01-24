@@ -1,77 +1,88 @@
 <div class="container-fluid px-5 mt-md-5 mt-7">
-   <div class="d-flex align-items-center   justify-content-between ">
-    <div class="d-flex align-items-center">
-        <span class="cursor-pointer" [routerLink]="'/app/main/sessions'">
-            <!-- Back arrow icon -->
-            <svg
-                width="14"
-                height="14"
-                viewBox="0 0 14 14"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-                class="postion"
-            >
-                <path
-                    d="M9.3337 8.12643L5.53036 11.9298C5.3612 12.0989 5.0812 12.0989 4.91203 11.9298C4.74286 11.7606 4.74286 11.4806 4.91203 11.3114L8.71536 7.5081C8.99536 7.2281 8.99536 6.7731 8.71536 6.4931L4.91203 2.68977C4.74286 2.5206 4.74286 2.2406 4.91203 2.07143C5.0812 1.90226 5.3612 1.90226 5.53036 2.07143L9.3337 5.87476C9.64286 6.18393 9.80036 6.59227 9.80036 7.0006C9.80036 7.40893 9.64286 7.81727 9.3337 8.12643Z"
-                    fill="#999999"
-                />
-            </svg>
-            {{ l('SessionsScreen') }}
-        </span>
-        <span class="mx-2">/</span>
-        <span>
-            {{ sessionName }}
-        </span>
-        <span class="mx-2">/</span>
-        <span>
-            {{ schoolName}}
-        </span>
-        <span class="mx-2">/</span>
-        <!-- Display the exam title if available -->
-        <h2 class="fw-bolder mb-0">
-            {{ 'المشرفين والطلاب' }}
-        </h2>
-    </div>
-
-
-    <div class="d-flex gap-3">
-        <div>
-            <button class="btn btn-primary d-flex gap-2" [routerLink]="'/app/main/question-bank/addQuestion'">
-                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path fill-rule="evenodd" clip-rule="evenodd" d="M2.08325 11.0417C2.08325 6.675 5.63325 3.125 9.99992 3.125C14.3666 3.125 17.9166 6.675 17.9166 11.0417C17.9166 15.4083 14.3666 18.9583 9.99992 18.9583C5.63325 18.9583 2.08325 15.4083 2.08325 11.0417ZM3.33325 11.0417C3.33325 14.7167 6.32492 17.7083 9.99992 17.7083C13.6749 17.7083 16.6666 14.7167 16.6666 11.0417C16.6666 7.36667 13.6749 4.375 9.99992 4.375C6.32492 4.375 3.33325 7.36667 3.33325 11.0417Z" fill="white"/>
-                    <path d="M9.375 10.8334V6.66675C9.375 6.32508 9.65833 6.04175 10 6.04175C10.3417 6.04175 10.625 6.32508 10.625 6.66675V10.8334C10.625 11.1751 10.3417 11.4584 10 11.4584C9.65833 11.4584 9.375 11.1751 9.375 10.8334Z" fill="white"/>
-                    <path d="M7.5 2.29175C7.15833 2.29175 6.875 2.00841 6.875 1.66675C6.875 1.32508 7.15833 1.04175 7.5 1.04175H12.5C12.8417 1.04175 13.125 1.32508 13.125 1.66675C13.125 2.00841 12.8417 2.29175 12.5 2.29175H7.5Z" fill="white"/>
-                    </svg>
-                    
-
-                <span class="d-none d-md-inline-block">
-                    {{ l('تمديد الوقت') }}
-                </span>
-            </button>
+    <div class="d-flex align-items-center justify-content-between">
+        <div class="d-flex align-items-center">
+            <span class="cursor-pointer" [routerLink]="'/app/main/sessions'">
+                <!-- Back arrow icon -->
+                <svg
+                    width="14"
+                    height="14"
+                    viewBox="0 0 14 14"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="postion"
+                >
+                    <path
+                        d="M9.3337 8.12643L5.53036 11.9298C5.3612 12.0989 5.0812 12.0989 4.91203 11.9298C4.74286 11.7606 4.74286 11.4806 4.91203 11.3114L8.71536 7.5081C8.99536 7.2281 8.99536 6.7731 8.71536 6.4931L4.91203 2.68977C4.74286 2.5206 4.74286 2.2406 4.91203 2.07143C5.0812 1.90226 5.3612 1.90226 5.53036 2.07143L9.3337 5.87476C9.64286 6.18393 9.80036 6.59227 9.80036 7.0006C9.80036 7.40893 9.64286 7.81727 9.3337 8.12643Z"
+                        fill="#999999"
+                    />
+                </svg>
+                {{ l('SessionsScreen') }}
+            </span>
+            <span class="mx-2">/</span>
+            <span>
+                {{ sessionName }}
+            </span>
+            <span class="mx-2">/</span>
+            <span>
+                {{ schoolName }}
+            </span>
+            <span class="mx-2">/</span>
+            <!-- Display the exam title if available -->
+            <h2 class="fw-bolder mb-0">
+                {{ 'المشرفين والطلاب' }}
+            </h2>
         </div>
-        <div>
-            <button class="btn btn-read d-flex gap-2">
-                <span class="d-none d-md-inline-block" >
-                    {{ l('إنهاء الاختبار') }}
-                </span>
-            </button>
-        </div>
-    </div>
-   </div>
 
-
-      <!-- Filter & Search  -->
-      <div class="row switch-serch-bar mt-9 justify-content-end" >
-        <div class="col-md-6 d-grid gap-3 align-items-end " style="margin-bottom: -69px; grid-template-columns: 2fr auto;">
+        <div class="d-flex gap-3">
             <div>
-                <div class="input-group search-group" >
+                <button class="btn btn-primary d-flex gap-2">
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            fill-rule="evenodd"
+                            clip-rule="evenodd"
+                            d="M2.08325 11.0417C2.08325 6.675 5.63325 3.125 9.99992 3.125C14.3666 3.125 17.9166 6.675 17.9166 11.0417C17.9166 15.4083 14.3666 18.9583 9.99992 18.9583C5.63325 18.9583 2.08325 15.4083 2.08325 11.0417ZM3.33325 11.0417C3.33325 14.7167 6.32492 17.7083 9.99992 17.7083C13.6749 17.7083 16.6666 14.7167 16.6666 11.0417C16.6666 7.36667 13.6749 4.375 9.99992 4.375C6.32492 4.375 3.33325 7.36667 3.33325 11.0417Z"
+                            fill="white"
+                        />
+                        <path
+                            d="M9.375 10.8334V6.66675C9.375 6.32508 9.65833 6.04175 10 6.04175C10.3417 6.04175 10.625 6.32508 10.625 6.66675V10.8334C10.625 11.1751 10.3417 11.4584 10 11.4584C9.65833 11.4584 9.375 11.1751 9.375 10.8334Z"
+                            fill="white"
+                        />
+                        <path
+                            d="M7.5 2.29175C7.15833 2.29175 6.875 2.00841 6.875 1.66675C6.875 1.32508 7.15833 1.04175 7.5 1.04175H12.5C12.8417 1.04175 13.125 1.32508 13.125 1.66675C13.125 2.00841 12.8417 2.29175 12.5 2.29175H7.5Z"
+                            fill="white"
+                        />
+                    </svg>
+
+                    <span class="d-none d-md-inline-block">
+                        {{ l('تمديد الوقت') }}
+                    </span>
+                </button>
+            </div>
+            <div>
+                <button class="btn btn-read d-flex gap-2">
+                    <span class="d-none d-md-inline-block">
+                        {{ l('إنهاء الاختبار') }}
+                    </span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Filter & Search  -->
+    <div class="row switch-serch-bar mt-9 justify-content-end">
+        <div
+            class="col-md-6 d-grid gap-3 align-items-end"
+            style="margin-bottom: -69px; grid-template-columns: 2fr auto"
+        >
+            <div>
+                <div class="input-group search-group">
                     <input
                         name="filterText"
                         class="form-control m-input"
                         [placeholder]="l('Search')"
                         type="text"
                         [(ngModel)]="filter"
-                        (ngModelChange)="getListSupervis() ;getListAttempts()"
+                        (ngModelChange)="getListSupervis(); getListAttempts()"
                     />
                     <button class="btn btn-primary" type="submit">
                         <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -89,21 +100,34 @@
                     </button>
                 </div>
             </div>
-           <div>
-            <button class="btn btn-outline-primary2 d-flex gap-2" style="margin-bottom: 2px;" [routerLink]="'/app/main/question-bank/addQuestion'">
-                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M6.6665 10.625C6.32484 10.625 6.0415 10.3417 6.0415 10C6.0415 9.65833 6.32484 9.375 6.6665 9.375H13.3332C13.6748 9.375 13.9582 9.65833 13.9582 10C13.9582 10.3417 13.6748 10.625 13.3332 10.625H6.6665Z" fill="#6D31ED"/>
-                    <path d="M9.375 13.3334V6.66675C9.375 6.32508 9.65833 6.04175 10 6.04175C10.3417 6.04175 10.625 6.32508 10.625 6.66675V13.3334C10.625 13.6751 10.3417 13.9584 10 13.9584C9.65833 13.9584 9.375 13.6751 9.375 13.3334Z" fill="#6D31ED"/>
-                    <path fill-rule="evenodd" clip-rule="evenodd" d="M7.49984 18.9584C2.97484 18.9584 1.0415 17.0251 1.0415 12.5001V7.50008C1.0415 2.97508 2.97484 1.04175 7.49984 1.04175H12.4998C17.0248 1.04175 18.9582 2.97508 18.9582 7.50008V12.5001C18.9582 17.0251 17.0248 18.9584 12.4998 18.9584H7.49984ZM2.2915 7.50008V12.5001C2.2915 16.3417 3.65817 17.7084 7.49984 17.7084H12.4998C16.3415 17.7084 17.7082 16.3417 17.7082 12.5001V7.50008C17.7082 3.65841 16.3415 2.29175 12.4998 2.29175H7.49984C3.65817 2.29175 2.2915 3.65841 2.2915 7.50008Z" fill="#6D31ED"/>
+            <div>
+                <button
+                    class="btn btn-outline-primary2 d-flex gap-2"
+                    style="margin-bottom: 2px"
+                    (click)="addSupervisoir()"
+                >
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M6.6665 10.625C6.32484 10.625 6.0415 10.3417 6.0415 10C6.0415 9.65833 6.32484 9.375 6.6665 9.375H13.3332C13.6748 9.375 13.9582 9.65833 13.9582 10C13.9582 10.3417 13.6748 10.625 13.3332 10.625H6.6665Z"
+                            fill="#6D31ED"
+                        />
+                        <path
+                            d="M9.375 13.3334V6.66675C9.375 6.32508 9.65833 6.04175 10 6.04175C10.3417 6.04175 10.625 6.32508 10.625 6.66675V13.3334C10.625 13.6751 10.3417 13.9584 10 13.9584C9.65833 13.9584 9.375 13.6751 9.375 13.3334Z"
+                            fill="#6D31ED"
+                        />
+                        <path
+                            fill-rule="evenodd"
+                            clip-rule="evenodd"
+                            d="M7.49984 18.9584C2.97484 18.9584 1.0415 17.0251 1.0415 12.5001V7.50008C1.0415 2.97508 2.97484 1.04175 7.49984 1.04175H12.4998C17.0248 1.04175 18.9582 2.97508 18.9582 7.50008V12.5001C18.9582 17.0251 17.0248 18.9584 12.4998 18.9584H7.49984ZM2.2915 7.50008V12.5001C2.2915 16.3417 3.65817 17.7084 7.49984 17.7084H12.4998C16.3415 17.7084 17.7082 16.3417 17.7082 12.5001V7.50008C17.7082 3.65841 16.3415 2.29175 12.4998 2.29175H7.49984C3.65817 2.29175 2.2915 3.65841 2.2915 7.50008Z"
+                            fill="#6D31ED"
+                        />
                     </svg>
-                <span class="d-none d-md-inline-block">
-                    {{ l('إضافة مشرف') }}
-                </span>
-            </button>
-           </div>
+                    <span class="d-none d-md-inline-block">
+                        {{ l('إضافة مشرف') }}
+                    </span>
+                </button>
+            </div>
         </div>
-
-    
     </div>
 
     <p-tabView styleClass="tabview-custom mt-6">
@@ -111,203 +135,181 @@
             <ng-template pTemplate="header">
                 <div class="d-flex align-items-center gap-2">
                     <p class="mb-0">الطلاب</p>
-                    <span class="font-bold  m-0">
-                        150
-                    </span>
-
+                    <span class="font-bold m-0">{{ primengTableHelperForAttempts.totalRecordsCount }}</span>
                 </div>
             </ng-template>
-             <!-- Start Tabel -->
-      <div class="primeng-datatable-container p-0 col-12 ">
-        <p-table
-            #dataTable
-            [value]="primengTableHelperForAttempts.records"
-            (onLazyLoad)="getListAttempts($event)"
-            rows="{{ primengTableHelperForAttempts.defaultRecordsCountPerPage }}"
-            [paginator]="false"
-            [loading]="primengTableHelperForAttempts.isLoading"
-            [lazy]="true"
-            [scrollable]="true"
-            ScrollWidth="100%"
-            [resizableColumns]="primengTableHelperForAttempts.resizableColumns"
-        >
-            <ng-template pTemplate="header">
-                <tr>
-                    <th pSortableColumn="caseCode">
-                        {{  '#' }}
-                    </th>
-                    <th pSortableColumn="SessionName" >
-                        {{ l('اسم المدرسة') }}
-                        <p-sortIcon field="SessionName"></p-sortIcon>
-                    </th>
-                    <th pSortableColumn="SessionName" >
-                        {{ l('اسم الطالب') }}
-                        <p-sortIcon field="SessionName"></p-sortIcon>
-                    </th>
-                    <th pSortableColumn="SessionName" >
-                        {{ l('رقم الهوية') }}
-                        <p-sortIcon field="SessionName"></p-sortIcon>
-                    </th>
-                    <th pSortableColumn="SessionName" >
-                        {{ l('القسم الحالي') }}
-                        <p-sortIcon field="SessionName"></p-sortIcon>
-                    </th>
-                    <th pSortableColumn="SessionName" >
-                        {{ l('السؤال الحالي') }}
-                        <p-sortIcon field="SessionName"></p-sortIcon>
-                    </th>
-                    <th pSortableColumn="SessionName" >
-                        {{ l('الحالة') }}
-                        <p-sortIcon field="SessionName"></p-sortIcon>
-                    </th>
-                    <th pSortableColumn="SessionName" >
-                        {{ l('Actions') }}
-                        <p-sortIcon field="SessionName"></p-sortIcon>
-                    </th>
+            <!-- Start Tabel -->
+            <div class="primeng-datatable-container p-0 col-12">
+                <p-table
+                    #dataTable
+                    [value]="primengTableHelperForAttempts.records"
+                    (onLazyLoad)="getListAttempts($event)"
+                    rows="{{ primengTableHelperForAttempts.defaultRecordsCountPerPage }}"
+                    [paginator]="false"
+                    [loading]="primengTableHelperForAttempts.isLoading"
+                    [lazy]="true"
+                    [scrollable]="true"
+                    ScrollWidth="100%"
+                    [resizableColumns]="primengTableHelperForAttempts.resizableColumns"
+                >
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th pSortableColumn="caseCode">
+                                {{ '#' }}
+                            </th>
+                            <th pSortableColumn="SessionName">
+                                {{ l('اسم المدرسة') }}
+                                <p-sortIcon field="SessionName"></p-sortIcon>
+                            </th>
+                            <th pSortableColumn="SessionName">
+                                {{ l('اسم الطالب') }}
+                                <p-sortIcon field="SessionName"></p-sortIcon>
+                            </th>
+                            <th pSortableColumn="SessionName">
+                                {{ l('رقم الهوية') }}
+                                <p-sortIcon field="SessionName"></p-sortIcon>
+                            </th>
+                            <th pSortableColumn="SessionName">
+                                {{ l('القسم الحالي') }}
+                                <p-sortIcon field="SessionName"></p-sortIcon>
+                            </th>
+                            <th pSortableColumn="SessionName">
+                                {{ l('السؤال الحالي') }}
+                                <p-sortIcon field="SessionName"></p-sortIcon>
+                            </th>
+                            <th pSortableColumn="SessionName">
+                                {{ l('الحالة') }}
+                                <p-sortIcon field="SessionName"></p-sortIcon>
+                            </th>
+                            <th pSortableColumn="SessionName">
+                                {{ l('Actions') }}
+                                <p-sortIcon field="SessionName"></p-sortIcon>
+                            </th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-record="$implicit" let-i="rowIndex">
+                        <tr>
+                            <td>
+                                {{ i + 1 }}
+                            </td>
 
+                            <td></td>
+                            <td>
+                                <span class="p-column-title">{{ l('studentName') }}</span>
+                                {{ record.studentName || '-' }}
+                            </td>
 
-                </tr>
-            </ng-template>
-            <ng-template pTemplate="body" let-record="$implicit" let-i="rowIndex">
-                <tr>
-                    <td>
-                        {{ i + 1 }}
-                    </td>
-
-
-                  <td >
-                    
-                  </td>
-                  <td >
-                    <span class="p-column-title">{{ l('studentName') }}</span>
-                    {{ record.studentName || '-' }}
-                  </td>
-                 
-                  <td></td>
-                  <td >
-                    <span class="p-column-title">{{ l('currentSectionOrder') }}</span>
-                    {{ record.currentSectionOrder || '-' }}
-                  </td>
-                  <td >
-                    <span class="p-column-title">{{ l('currentQuestionNoInGeneral') }}</span>
-                    {{ record.currentQuestionNoInGeneral || '-' }}
-                  </td>
-                  <td></td>
-                  <td>
-                    <app-action-button
-                                [ActionsInfo]="[
-
-                                    {
-                                        label: 'TransferringStudent',
-                                    },
-                                ]"
-                                (action)="doActions($event, record)"
-                            ></app-action-button>
-                  </td>
-                </tr>
-            </ng-template>
-        </p-table>
-        <div class="primeng-no-data" *ngIf="primengTableHelper.totalRecordsCount == 0">
-            {{ l('NoData') }}
-        </div>
-        <p-paginator
-                #paginator
-                [rows]="primengTableHelperForAttempts.defaultRecordsCountPerPage"
-                (onPageChange)="getListAttempts($event)"
-                [totalRecords]="primengTableHelperForAttempts.totalRecordsCount"
-                [rows]="primengTableHelperForAttempts.defaultRecordsCountPerPage"
-                [rowsPerPageOptions]="primengTableHelperForAttempts.predefinedRecordsCountPerPage"
-            ></p-paginator>
-    </div>
-    <!-- End Tabel -->
+                            <td></td>
+                            <td>
+                                <span class="p-column-title">{{ l('currentSectionOrder') }}</span>
+                                {{ record.currentSectionOrder || '-' }}
+                            </td>
+                            <td>
+                                <span class="p-column-title">{{ l('currentQuestionNoInGeneral') }}</span>
+                                {{ record.currentQuestionNoInGeneral || '-' }}
+                            </td>
+                            <td></td>
+                            <td>
+                                <app-action-button
+                                    [ActionsInfo]="[
+                                        {
+                                            label: 'TransferringStudent'
+                                        }
+                                    ]"
+                                    (action)="doActions($event, record)"
+                                ></app-action-button>
+                            </td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+                <div class="primeng-no-data" *ngIf="primengTableHelper.totalRecordsCount == 0">
+                    {{ l('NoData') }}
+                </div>
+                <p-paginator
+                    #paginator
+                    [rows]="primengTableHelperForAttempts.defaultRecordsCountPerPage"
+                    (onPageChange)="getListAttempts($event)"
+                    [totalRecords]="primengTableHelperForAttempts.totalRecordsCount"
+                    [rows]="primengTableHelperForAttempts.defaultRecordsCountPerPage"
+                    [rowsPerPageOptions]="primengTableHelperForAttempts.predefinedRecordsCountPerPage"
+                ></p-paginator>
+            </div>
+            <!-- End Tabel -->
         </p-tabPanel>
         <p-tabPanel header="Header II">
             <ng-template pTemplate="header">
                 <div class="d-flex align-items-center gap-2">
-                  
                     <p class="mb-0">المشرفين</p>
 
-                    <span class="font-bold  m-0">
-                        150
-                    </span>
+                    <span class="font-bold m-0">{{ primengTableHelperForSupervisors.totalRecordsCount }}</span>
                 </div>
             </ng-template>
-        <!-- Start Tabel -->
-       <div class="primeng-datatable-container p-0 col-12 ">
-        <p-table
-            #dataTable
-            [value]="primengTableHelperForSupervisors.records"
-            (onLazyLoad)="getListSupervis($event)"
-            rows="{{ primengTableHelperForSupervisors.defaultRecordsCountPerPage }}"
-            [paginator]="false"
-            [loading]="primengTableHelperForSupervisors.isLoading"
-            [lazy]="true"
-            [scrollable]="true"
-            ScrollWidth="100%"
-            [resizableColumns]="primengTableHelperForSupervisors.resizableColumns"
-        >
-            <ng-template pTemplate="header">
-                <tr>
-                    <th pSortableColumn="caseCode">
-                        {{  '#' }}
-                    </th>
-                    <th pSortableColumn="SessionName" >
-                        {{ l('اسم المشرف') }}
-                        <p-sortIcon field="SessionName"></p-sortIcon>
-                    </th>
-                    <th pSortableColumn="SessionName" >
-                        {{ l('دور المشرف') }}
-                        <p-sortIcon field="SessionName"></p-sortIcon>
-                    </th>
-                    <th pSortableColumn="SessionName" >
-                        {{ l('رقم الموبايل') }}
-                        <p-sortIcon field="SessionName"></p-sortIcon>
-                    </th>
-                    <th pSortableColumn="SessionName" >
-                        {{ l('Actions') }}
-                        <p-sortIcon field="SessionName"></p-sortIcon>
-                    </th>
+            <!-- Start Tabel -->
+            <div class="primeng-datatable-container p-0 col-12">
+                <p-table
+                    #dataTable
+                    [value]="primengTableHelperForSupervisors.records"
+                    (onLazyLoad)="getListSupervis($event)"
+                    rows="{{ primengTableHelperForSupervisors.defaultRecordsCountPerPage }}"
+                    [paginator]="false"
+                    [loading]="primengTableHelperForSupervisors.isLoading"
+                    [lazy]="true"
+                    [scrollable]="true"
+                    ScrollWidth="100%"
+                    [resizableColumns]="primengTableHelperForSupervisors.resizableColumns"
+                >
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th pSortableColumn="caseCode">
+                                {{ '#' }}
+                            </th>
+                            <th pSortableColumn="SessionName">
+                                {{ l('اسم المشرف') }}
+                                <p-sortIcon field="SessionName"></p-sortIcon>
+                            </th>
+                            <th pSortableColumn="SessionName">
+                                {{ l('دور المشرف') }}
+                                <p-sortIcon field="SessionName"></p-sortIcon>
+                            </th>
+                            <th pSortableColumn="SessionName">
+                                {{ l('رقم الموبايل') }}
+                                <p-sortIcon field="SessionName"></p-sortIcon>
+                            </th>
+                            <th pSortableColumn="SessionName">
+                                {{ l('Actions') }}
+                                <p-sortIcon field="SessionName"></p-sortIcon>
+                            </th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-record="$implicit" let-i="rowIndex">
+                        <tr>
+                            <td>
+                                {{ i + 1 }}
+                            </td>
 
-
-                </tr>
-            </ng-template>
-            <ng-template pTemplate="body" let-record="$implicit" let-i="rowIndex">
-                <tr>
-                    <td>
-                        {{ i + 1 }}
-                    </td>
-
-
-                  <td >
-                 <!--    <span class="p-column-title">{{ l('name') }}</span>
-                    {{ record.school.name || '-' }} -->
-                  </td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                </tr>
-            </ng-template>
-        </p-table>
-        <div class="primeng-no-data" *ngIf="primengTableHelperForSupervisors.totalRecordsCount == 0">
-            {{ l('NoData') }}
-        </div>
-        <p-paginator
-                #paginator
-                [rows]="primengTableHelperForSupervisors.defaultRecordsCountPerPage"
-                (onPageChange)="getListSupervis($event)"
-                [totalRecords]="primengTableHelperForSupervisors.totalRecordsCount"
-                [rows]="primengTableHelperForSupervisors.defaultRecordsCountPerPage"
-                [rowsPerPageOptions]="primengTableHelperForSupervisors.predefinedRecordsCountPerPage"
-            ></p-paginator>
-      </div> 
-      <!-- End Tabel -->
+                            <td>
+                                {{ record.supervisorName || '-' }}
+                            </td>
+                            <td>{{ record.supervisorRole || '-' }}</td>
+                            <td>{{ record.telphoneNumber || '-' }}</td>
+                            <td></td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+                <div class="primeng-no-data" *ngIf="primengTableHelperForSupervisors.totalRecordsCount == 0">
+                    {{ l('NoData') }}
+                </div>
+                <p-paginator
+                    #paginator
+                    [rows]="primengTableHelperForSupervisors.defaultRecordsCountPerPage"
+                    (onPageChange)="getListSupervis($event)"
+                    [totalRecords]="primengTableHelperForSupervisors.totalRecordsCount"
+                    [rows]="primengTableHelperForSupervisors.defaultRecordsCountPerPage"
+                    [rowsPerPageOptions]="primengTableHelperForSupervisors.predefinedRecordsCountPerPage"
+                ></p-paginator>
+            </div>
+            <!-- End Tabel -->
         </p-tabPanel>
-      
     </p-tabView>
-    
-
-
-    
-
-
 </div>
+<app-add-supervisor [execuldedIdFilter]="execuldedIdFilter" [schoolId]="schoolId"></app-add-supervisor>

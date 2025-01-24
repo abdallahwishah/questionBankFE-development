@@ -1,0 +1,32 @@
+<app-dialog-shared [width]="'30vw'" [dialogHeader]="l('AddSupervisoir')" [dialog_name]="Add_Supervisor_dialog">
+    <ng-container bodyDialog>
+        <ng-container>
+            <div class="row">
+                <div class="col-md-12 mb-5">
+                    <app-auto-complete-feild
+                        [label]="l('Supervisor')"
+                        field="userName"
+                        [(ngModel)]="SupervisoSelected"
+                        name="execuldedIdFilter"
+                        [ConfigCustomSearch]="{
+                            api: '/api/services/app/Supervisors/GetAll',
+                            keySearch: 'filter',
+                            customParams: {
+                                Sorting: '',
+                                SkipCount: 0,
+                                MaxResultCount: 10,
+                                execuldedIdFilter: execuldedIdFilter
+                            }
+                        }"
+                    ></app-auto-complete-feild>
+                </div>
+            </div>
+        </ng-container>
+    </ng-container>
+    <ng-container footerDialog>
+        <button type="button" class="btn btn-primary blue" (click)="Save()">
+            <span>{{ l('Save') }}</span>
+        </button>
+        <button class="btn btn-outline"(click)="Close()">{{ l('Cancel') }}</button>
+    </ng-container>
+</app-dialog-shared>

@@ -152,7 +152,6 @@ export class AutoCompleteFeildComponent implements OnInit, OnDestroy, ControlVal
                             console.error('Search error:', error);
                             return of([]);
                         }),
-                        startWith([]),
                     );
             }),
             tap((valistlue) => {
