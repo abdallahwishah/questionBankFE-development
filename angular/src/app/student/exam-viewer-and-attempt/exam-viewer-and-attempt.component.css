@@ -8,6 +8,7 @@
 }
 .header-right div , .header-left div{
     display: flex;
+    margin-bottom: 10px;
 }
 .header-title-label{
     color: #565D6D;
@@ -51,7 +52,7 @@
 .header-center-label{
     color: #000;
     margin-bottom: 0;
-    font-size: 16px;
+    font-size: 18px;
 }
 .card{
     position: relative;
@@ -64,7 +65,6 @@
     bottom: 0;
     padding-top: 1rem;
     padding-bottom: 1rem;
-    border-top: 1px solid #DEE1E6;
 }
 
 .btn-primary-next{
@@ -97,8 +97,11 @@
 }
 
 @media only screen and (max-width: 991px) {
-    .footer-page{
-        bottom: 10rem;
+     .footer-page{
+       /*  bottom: 10rem; */
+    } 
+    .footer-page button{
+        margin: 0 8px;
     }
     .header-title-label{
         font-size: 11px;
@@ -113,5 +116,11 @@
     }
     .header-center{
         gap: 15px!important;
+    }
+    .header-center-label{
+        font-size: 16px;
+    }
+    .MsoNormal span{
+        font-weight: 500 !important;
     }
   }

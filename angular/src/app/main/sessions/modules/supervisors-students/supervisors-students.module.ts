@@ -8,11 +8,12 @@ import { PaginatorComponent } from '@app/shared/common/paginator/paginator.compo
 import { ActionButtonComponent } from '@app/shared/components/action-button/action-button.component';
 import { DropdownFieldComponent } from '@app/shared/components/fields/dropdown-field/dropdown-field.component';
 import { TabViewModule } from 'primeng/tabview';
-import { SessionSupervisorsServiceProxy } from '@shared/service-proxies/service-proxies';
+import { SessionSupervisorsServiceProxy, StudentsServiceProxy } from '@shared/service-proxies/service-proxies';
 import { AddSupervisorComponent } from './components/add-supervisor/add-supervisor.component';
 import { DialogSharedModule } from '@app/shared/components/dialog-shared/dialog-shared.module';
 import { AutoCompleteFeildModule } from '@app/shared/components/auto-complete-feild/auto-complete-feild.module';
 import { ExtendTimeSessionComponent } from './components/extendTimeSession/extendTimeSession.component';
+import { AddStudentComponent } from './components/add-student/add-student.component';
 
 @NgModule({
     imports: [
@@ -32,7 +33,12 @@ import { ExtendTimeSessionComponent } from './components/extendTimeSession/exten
         AutoCompleteFeildModule,
         InputNumberModule,
     ],
-    declarations: [SupervisorsStudentsComponent, AddSupervisorComponent, ExtendTimeSessionComponent],
+    declarations: [
+        SupervisorsStudentsComponent,
+        AddSupervisorComponent,
+        ExtendTimeSessionComponent,
+        AddStudentComponent,
+    ],
     providers: [SessionSupervisorsServiceProxy],
 })
 export class SupervisorsStudentsModule {}
