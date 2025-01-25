@@ -1,3 +1,4 @@
+import { InputNumberModule } from 'primeng/inputnumber';
 import { RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -11,6 +12,7 @@ import { SessionSupervisorsServiceProxy } from '@shared/service-proxies/service-
 import { AddSupervisorComponent } from './components/add-supervisor/add-supervisor.component';
 import { DialogSharedModule } from '@app/shared/components/dialog-shared/dialog-shared.module';
 import { AutoCompleteFeildModule } from '@app/shared/components/auto-complete-feild/auto-complete-feild.module';
+import { ExtendTimeSessionComponent } from './components/extendTimeSession/extendTimeSession.component';
 
 @NgModule({
     imports: [
@@ -27,9 +29,10 @@ import { AutoCompleteFeildModule } from '@app/shared/components/auto-complete-fe
         ActionButtonComponent,
         PaginatorComponent,
         DialogSharedModule,
-        AutoCompleteFeildModule
+        AutoCompleteFeildModule,
+        InputNumberModule,
     ],
-    declarations: [SupervisorsStudentsComponent, AddSupervisorComponent],
+    declarations: [SupervisorsStudentsComponent, AddSupervisorComponent, ExtendTimeSessionComponent],
     providers: [SessionSupervisorsServiceProxy],
 })
 export class SupervisorsStudentsModule {}

@@ -16,4 +16,5 @@ export enum UniqueNameComponents {
     Add_Class_dialog='Add_Class_dialog',
     Add_Subject_dialog='Add_Subject_dialog',
     Add_Supervisor_dialog='Add_Supervisor_dialog',
+    extendTimeSession_dialog='extendTimeSession_dialog',
 }

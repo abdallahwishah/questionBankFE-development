@@ -2,7 +2,7 @@ import {
     CreateOrEditSupervisorDto,
     SupervisorsServiceProxy,
 } from './../../../../../../../shared/service-proxies/service-proxies';
-import { Component, OnInit, Injector, Input } from '@angular/core';
+import { Component, OnInit, Injector, Input, Output, EventEmitter } from '@angular/core';
 import { DialogSharedService } from '@app/shared/components/dialog-shared/dialog-shared.service';
 import { UniqueNameComponents } from '@app/shared/Models/UniqueNameComponents';
 import { AppComponentBase } from '@shared/common/app-component-base';
@@ -17,7 +17,7 @@ export class AddSupervisorComponent extends AppComponentBase implements OnInit {
     SupervisoSelected: any;
     @Input() execuldedIdFilter: any;
     @Input() schoolId: any;
-
+@Output() onSupervisorAdded = new EventEmitter<any>();
     constructor(
         private Injector: Injector,
         private SupervisorsServiceProxy: SupervisorsServiceProxy,
@@ -38,6 +38,7 @@ export class AddSupervisorComponent extends AppComponentBase implements OnInit {
             }),
         ).subscribe((res) => {
             this.notify.success('Supervisor Added Successfully');
+            this.onSupervisorAdded.emit();
             this.Close();
         });
     }

@@ -6516,6 +6516,110 @@ export class ExamAttemptsServiceProxy {
      * @param body (optional) 
      * @return Success
      */
+    moveStudent(body: MoveStudentDto | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/ExamAttempts/MoveStudent";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json",
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processMoveStudent(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processMoveStudent(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<void>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<void>;
+        }));
+    }
+
+    protected processMoveStudent(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return _observableOf(null as any);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param body (optional) 
+     * @return Success
+     */
+    addStudent(body: MoveStudentDto | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/ExamAttempts/AddStudent";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json",
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processAddStudent(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processAddStudent(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<void>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<void>;
+        }));
+    }
+
+    protected processAddStudent(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return _observableOf(null as any);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param body (optional) 
+     * @return Success
+     */
     updateScore(body: UpdateScoreReqDto | undefined): Observable<void> {
         let url_ = this.baseUrl + "/api/services/app/ExamAttempts/UpdateScore";
         url_ = url_.replace(/[?&]$/, "");
@@ -20181,6 +20285,58 @@ export class SessionsServiceProxy {
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
             result200 = PagedResultDtoOfGetSessionForViewDto.fromJS(resultData200);
             return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param body (optional) 
+     * @return Success
+     */
+    extendSessionTime(body: ExtendSessionTimeDto | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/Sessions/ExtendSessionTime";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json",
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processExtendSessionTime(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processExtendSessionTime(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<void>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<void>;
+        }));
+    }
+
+    protected processExtendSessionTime(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return _observableOf(null as any);
             }));
         } else if (status !== 200 && status !== 204) {
             return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
@@ -38541,6 +38697,54 @@ export interface IExpiringTenant {
     remainingDayCount: number;
 }
 
+export class ExtendSessionTimeDto implements IExtendSessionTimeDto {
+    sessionId!: number;
+    schoolClassId!: number | undefined;
+    schoolId!: number;
+    afterMinutes!: number;
+
+    constructor(data?: IExtendSessionTimeDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.sessionId = _data["sessionId"];
+            this.schoolClassId = _data["schoolClassId"];
+            this.schoolId = _data["schoolId"];
+            this.afterMinutes = _data["afterMinutes"];
+        }
+    }
+
+    static fromJS(data: any): ExtendSessionTimeDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new ExtendSessionTimeDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["sessionId"] = this.sessionId;
+        data["schoolClassId"] = this.schoolClassId;
+        data["schoolId"] = this.schoolId;
+        data["afterMinutes"] = this.afterMinutes;
+        return data;
+    }
+}
+
+export interface IExtendSessionTimeDto {
+    sessionId: number;
+    schoolClassId: number | undefined;
+    schoolId: number;
+    afterMinutes: number;
+}
+
 export class ExternalAuthenticateModel implements IExternalAuthenticateModel {
     authProvider!: string;
     providerKey!: string;
@@ -47672,6 +47876,62 @@ export class MoveOrganizationUnitInput implements IMoveOrganizationUnitInput {
 export interface IMoveOrganizationUnitInput {
     id: number;
     newParentId: number | undefined;
+}
+
+export class MoveStudentDto implements IMoveStudentDto {
+    sessionId!: number;
+    schoolClassId!: number;
+    schoolId!: number;
+    studentId!: number[] | undefined;
+
+    constructor(data?: IMoveStudentDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.sessionId = _data["sessionId"];
+            this.schoolClassId = _data["schoolClassId"];
+            this.schoolId = _data["schoolId"];
+            if (Array.isArray(_data["studentId"])) {
+                this.studentId = [] as any;
+                for (let item of _data["studentId"])
+                    this.studentId!.push(item);
+            }
+        }
+    }
+
+    static fromJS(data: any): MoveStudentDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new MoveStudentDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["sessionId"] = this.sessionId;
+        data["schoolClassId"] = this.schoolClassId;
+        data["schoolId"] = this.schoolId;
+        if (Array.isArray(this.studentId)) {
+            data["studentId"] = [];
+            for (let item of this.studentId)
+                data["studentId"].push(item);
+        }
+        return data;
+    }
+}
+
+export interface IMoveStudentDto {
+    sessionId: number;
+    schoolClassId: number;
+    schoolId: number;
+    studentId: number[] | undefined;
 }
 
 export class MoveTenantsToAnotherEditionDto implements IMoveTenantsToAnotherEditionDto {

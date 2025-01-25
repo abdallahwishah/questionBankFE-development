@@ -9,6 +9,7 @@
         [required]="required"
         [suggestions]="Filter$ | async"
         [field]="field"
+        appendTo="body"
         [dropdown]="true"
         [formControl]="autoCompleteControl"
         (completeMethod)="completeMethod($event)"

@@ -88,6 +88,7 @@ export class SchoolsComponent extends AppComponentBase implements OnInit {
                 school: item?.schoolName,
                 schoolId: school?.school?.schoolId,
             },
+            queryParamsHandling: 'merge',
         });
     }
 }

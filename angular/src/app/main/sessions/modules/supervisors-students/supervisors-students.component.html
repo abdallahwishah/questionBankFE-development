@@ -35,7 +35,7 @@
 
         <div class="d-flex gap-3">
             <div>
-                <button class="btn btn-primary d-flex gap-2">
+                <button class="btn btn-primary d-flex gap-2" (click)="extendSessionTime()">
                     <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path
                             fill-rule="evenodd"
@@ -100,7 +100,7 @@
                     </button>
                 </div>
             </div>
-            <div>
+            <div *ngIf="activeIndex == 1">
                 <button
                     class="btn btn-outline-primary2 d-flex gap-2"
                     style="margin-bottom: 2px"
@@ -130,7 +130,7 @@
         </div>
     </div>
 
-    <p-tabView styleClass="tabview-custom mt-6">
+    <p-tabView styleClass="tabview-custom mt-6" [(activeIndex)]="activeIndex">
         <p-tabPanel>
             <ng-template pTemplate="header">
                 <div class="d-flex align-items-center gap-2">
@@ -222,7 +222,7 @@
                         </tr>
                     </ng-template>
                 </p-table>
-                <div class="primeng-no-data" *ngIf="primengTableHelper.totalRecordsCount == 0">
+                <div class="primeng-no-data" *ngIf="primengTableHelperForAttempts.totalRecordsCount == 0">
                     {{ l('NoData') }}
                 </div>
                 <p-paginator
@@ -312,4 +312,9 @@
         </p-tabPanel>
     </p-tabView>
 </div>
-<app-add-supervisor [execuldedIdFilter]="execuldedIdFilter" [schoolId]="schoolId"></app-add-supervisor>
+<app-add-supervisor
+    [execuldedIdFilter]="execuldedIdFilter"
+    [schoolId]="schoolId"
+    (onSupervisorAdded)="getListSupervis()"
+></app-add-supervisor>
+<app-extendTimeSession [sessionId]="SessionId" [schoolClassId]="classId" [schoolId]="schoolId"></app-extendTimeSession>

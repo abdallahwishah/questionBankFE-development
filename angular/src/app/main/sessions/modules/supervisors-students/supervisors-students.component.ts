@@ -31,6 +31,7 @@ export class SupervisorsStudentsComponent extends AppComponentBase implements On
     sessionName: any;
     schoolName: any;
     execuldedIdFilter: any;
+    activeIndex = 0;
     constructor(
         private _injector: Injector,
         private _SessionsServiceProxy: SessionsServiceProxy,
@@ -128,5 +129,8 @@ export class SupervisorsStudentsComponent extends AppComponentBase implements On
     }
     addSupervisoir() {
         this._dialogSharedService.showDialog(UniqueNameComponents.Add_Supervisor_dialog, {});
+    }
+    extendSessionTime() {
+        this._dialogSharedService.showDialog(UniqueNameComponents.extendTimeSession_dialog, {});
     }
 }

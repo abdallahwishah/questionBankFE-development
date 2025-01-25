@@ -1,0 +1,33 @@
+<app-dialog-shared [width]="'30vw'" [dialogHeader]="l('extendTimeSession')" [dialog_name]="extendTimeSession_dialog">
+    <ng-container bodyDialog>
+        <ng-container>
+            <div class="row">
+                <div class="col-12 d-flex justify-content-center flex-wrap">
+                    <label class="my-3 d-flex justify-content-center w-100">
+                        {{ l('الحد الأدنى للتمديد هو 5د والحد الأقصى 60 د') }}
+                    </label>
+                    <p-inputNumber
+                        class="mt-2"
+                        [(ngModel)]="_extendSessionTimeDto.afterMinutes"
+                        [showButtons]="true"
+                        buttonLayout="horizontal"
+                        spinnerMode="horizontal"
+                        [step]="1"
+                        [min]="5"
+                        [max]="60"
+                        decrementButtonClass="min"
+                        incrementButtonClass="max"
+                        incrementButtonIcon="pi pi-plus"
+                        decrementButtonIcon="pi pi-minus"
+                    ></p-inputNumber>
+                </div>
+            </div>
+        </ng-container>
+    </ng-container>
+    <ng-container footerDialog>
+        <button type="button" class="btn btn-primary blue" (click)="save()">
+            <span>{{ l('ExtendSessionTime') }}</span>
+        </button>
+        <button class="btn btn-outline" (click)="Close()">{{ l('Cancel') }}</button>
+    </ng-container>
+</app-dialog-shared>
