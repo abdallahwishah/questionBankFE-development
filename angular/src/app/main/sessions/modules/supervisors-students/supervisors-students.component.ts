@@ -5,6 +5,7 @@ import { AppComponentBase } from '@shared/common/app-component-base';
 import {
     ExamAttemptsServiceProxy,
     SessionsServiceProxy,
+    SessionStatusEnum,
     SessionSupervisorsServiceProxy,
 } from '@shared/service-proxies/service-proxies';
 import { Paginator } from '@node_modules/primeng/paginator';
@@ -21,11 +22,16 @@ import { UniqueNameComponents } from '@app/shared/Models/UniqueNameComponents';
 export class SupervisorsStudentsComponent extends AppComponentBase implements OnInit {
     @ViewChild('dataTable', { static: true }) dataTable: Table;
     @ViewChild('paginator', { static: true }) paginator: Paginator;
+    activeIndex: number = 0; // Initially select Tab 1
+    isActiveAttemptsFilter: boolean;
+    sessionStatus: any[] = [];
+    isStatusFilter: any;
 
     primengTableHelperForAttempts = new PrimengTableHelper();
     primengTableHelperForSupervisors = new PrimengTableHelper();
 
-    filter: string;
+    filterAttempts: string;
+    filterSupervis: string;
     SessionId: any;
     classId: any;
     sessionName: any;
@@ -55,6 +61,15 @@ export class SupervisorsStudentsComponent extends AppComponentBase implements On
              */
         });
         this.schoolName = this._ActivatedRoute.snapshot.queryParams['school'];
+
+        /* Covert Enum To array */
+        this.sessionStatus = Object.keys(SessionStatusEnum)
+            .filter((key) => isNaN(Number(key)))
+            .map((key) => ({
+                name: key,
+                id: SessionStatusEnum[key as keyof typeof SessionStatusEnum],
+            }));
+        this.sessionStatus.unshift({ name: 'All', id: undefined });
     }
 
     getListAttempts(event?: LazyLoadEvent) {
@@ -74,7 +89,7 @@ export class SupervisorsStudentsComponent extends AppComponentBase implements On
 
         this._examAttemptsServiceProxy
             .getAll(
-                this.filter,
+                this.filterAttempts,
                 undefined,
                 this.SessionId,
                 this.classId,
@@ -110,7 +125,7 @@ export class SupervisorsStudentsComponent extends AppComponentBase implements On
         this.primengTableHelperForSupervisors.showLoadingIndicator();
 
         this._SessionSupervisorsServiceProxy
-            .getAll(this.filter, this.SessionId, this.classId, undefined, undefined, undefined)
+            .getAll(this.filterSupervis, this.SessionId, this.classId, undefined, undefined, undefined)
             .subscribe((result) => {
                 this.primengTableHelperForSupervisors.totalRecordsCount = result.totalCount;
                 this.primengTableHelperForSupervisors.records = result.items;
@@ -119,14 +134,27 @@ export class SupervisorsStudentsComponent extends AppComponentBase implements On
             });
     }
 
-    doActions(label: any, record: any) {
+    doActionsForAttempts(label: any, record: any) {
         switch (label) {
-            case 'View':
+            case 'MoveStudent':
+                /*  this._examAttemptsServiceProxy */
+                break;
+        }
+    }
+    doActionsForSupervisor(label: any, record: any) {
+        switch (label) {
+            case 'Delete':
+                this._SessionSupervisorsServiceProxy.delete(record.sessionSupervisor.id).subscribe((val) => {
+                    this.getListSupervis();
+                });
                 console.log();
                 break;
         }
     }
     addSupervisoir() {
         this._dialogSharedService.showDialog(UniqueNameComponents.Add_Supervisor_dialog, {});
+    }
+    addStudent() {
+        this._dialogSharedService.showDialog(UniqueNameComponents.Add_Student_dialog, {});
     }
 }

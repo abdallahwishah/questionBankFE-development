@@ -1,6 +1,7 @@
 <label class="form-label" [class]="required ? 'label-required' : ''" *ngIf="isLabel">{{ label }}</label>
 <div class="autoComplete-shared">
      <p-autoComplete
+       appendTo="body"
         #autoComplete
         [ngClass]="{ 'p-inputtext-sm': true }"
         [style.min-width]="'90%'"

@@ -1,0 +1,31 @@
+<app-dialog-shared [width]="'30vw'" [dialogHeader]="l('AddStudent')" [dialog_name]="Add_Student_dialog">
+    <ng-container bodyDialog>
+        <ng-container>
+            <div class="row">
+                <div class="col-md-12 mb-5">
+                    <app-auto-complete-feild
+                        [label]="l('StudentName')"
+                        field="userName"
+                        [(ngModel)]="StudentSelected"
+                        name="student.Id"
+                        [ConfigCustomSearch]="{
+                            api: '/api/services/app/students/GetAll',
+                            keySearch: 'filter',
+                            customParams: {
+                                Sorting: '',
+                                SkipCount: 0,
+                                MaxResultCount: 10,
+                            }
+                        }"
+                    ></app-auto-complete-feild>
+                </div>
+            </div>
+        </ng-container>
+    </ng-container>
+    <ng-container footerDialog>
+        <button type="button" class="btn btn-primary blue" (click)="Save()">
+            <span>{{ l('Save') }}</span>
+        </button>
+        <button class="btn btn-outline"(click)="Close()">{{ l('Cancel') }}</button>
+    </ng-container>
+</app-dialog-shared>

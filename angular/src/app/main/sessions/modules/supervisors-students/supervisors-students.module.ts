@@ -7,10 +7,11 @@ import { PaginatorComponent } from '@app/shared/common/paginator/paginator.compo
 import { ActionButtonComponent } from '@app/shared/components/action-button/action-button.component';
 import { DropdownFieldComponent } from '@app/shared/components/fields/dropdown-field/dropdown-field.component';
 import { TabViewModule } from 'primeng/tabview';
-import { SessionSupervisorsServiceProxy } from '@shared/service-proxies/service-proxies';
+import { SessionSupervisorsServiceProxy, StudentsServiceProxy } from '@shared/service-proxies/service-proxies';
 import { AddSupervisorComponent } from './components/add-supervisor/add-supervisor.component';
 import { DialogSharedModule } from '@app/shared/components/dialog-shared/dialog-shared.module';
 import { AutoCompleteFeildModule } from '@app/shared/components/auto-complete-feild/auto-complete-feild.module';
+import { AddStudentComponent } from './components/add-student/add-student.component';
 
 @NgModule({
     imports: [
@@ -29,7 +30,7 @@ import { AutoCompleteFeildModule } from '@app/shared/components/auto-complete-fe
         DialogSharedModule,
         AutoCompleteFeildModule
     ],
-    declarations: [SupervisorsStudentsComponent, AddSupervisorComponent],
-    providers: [SessionSupervisorsServiceProxy],
+    declarations: [SupervisorsStudentsComponent, AddSupervisorComponent , AddStudentComponent],
+    providers: [SessionSupervisorsServiceProxy , StudentsServiceProxy],
 })
 export class SupervisorsStudentsModule {}

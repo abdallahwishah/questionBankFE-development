@@ -890,3 +890,10 @@ td {
 .pt-8rem{
     padding-top: 8rem;
 }
+
+@media only screen and (max-width: 991px) {
+    .MsoNormal span , .header-center-title span{
+        font-weight: 500 !important;
+    }
+    
+}
