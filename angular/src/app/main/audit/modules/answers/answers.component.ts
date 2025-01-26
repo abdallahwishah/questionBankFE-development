@@ -71,7 +71,7 @@ export class AnswersComponent extends AppComponentBase implements OnInit {
 
     doActions(label: any, record: any) {
         switch (label) {
-            case 'View':
+            case 'ViewAnswersStudent':
                 console.log();
                 break;
         }

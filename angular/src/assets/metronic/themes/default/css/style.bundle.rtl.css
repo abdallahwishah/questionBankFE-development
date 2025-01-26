@@ -49353,3 +49353,15 @@ body,
 .p-datepicker .p-datepicker-header .p-datepicker-prev, .p-datepicker .p-datepicker-header .p-datepicker-next{
   transform: rotate(180deg) !important;
 }
+.app-sidebar .menu .menu-icon {
+    margin-left: 5px !important;
+}
+
+.p-autocomplete .p-autocomplete-multiple-container .p-autocomplete-token .p-autocomplete-token-icon {
+  margin-right: 0.5rem !important;
+  margin-left: unset !important
+}
+
+.header-page .header-left{
+  float: left; 
+}

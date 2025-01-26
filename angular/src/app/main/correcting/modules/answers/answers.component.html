@@ -118,17 +118,11 @@
                     </td>
                     <td>
                         <app-action-button
-                            [ActionsInfo]="[
-                                { label: 'View' },
-                                {
-                                    label: 'Edit'
-                                },
-                                {
-                                    label: 'Delete'
-                                }
-                            ]"
-                            (action)="doActions($event, record)"
-                        ></app-action-button>
+                                [ActionsInfo]="[
+                                    { label: 'ViewAnswersStudent' }
+                                ]"
+                                (action)="doActions($event, record)"
+                                ></app-action-button>
                     </td>
                 </tr>
             </ng-template>
@@ -146,7 +140,6 @@
             ></p-paginator>
     </div>
     <!-- End Tabel -->
-
 
 
 </div>

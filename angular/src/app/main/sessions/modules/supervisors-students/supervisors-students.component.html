@@ -196,11 +196,9 @@
                 </button>
             </div>
 
-            <<<<<<< HEAD =======
         </div>
     </div>
 
-    >>>>>>> 202ef039fd23172b2ee0e40a83fb496cb5a384f3
     <p-tabView styleClass="tabview-custom mt-6" [(activeIndex)]="activeIndex">
         <p-tabPanel>
             <ng-template pTemplate="header">
@@ -252,9 +250,8 @@
                                 {{ l('الحالة') }}
                                 <p-sortIcon field="SessionName"></p-sortIcon>
                             </th>
-                            <th pSortableColumn="SessionName">
+                            <th>
                                 {{ l('Actions') }}
-                                <p-sortIcon field="SessionName"></p-sortIcon>
                             </th>
                         </tr>
                     </ng-template>
@@ -334,17 +331,17 @@
                             <th pSortableColumn="caseCode">
                                 {{ '#' }}
                             </th>
-                            <th pSortableColumn="SessionName">
+                            <th pSortableColumn="supervisorName">
                                 {{ l('اسم المشرف') }}
-                                <p-sortIcon field="SessionName"></p-sortIcon>
+                                <p-sortIcon field="supervisorName"></p-sortIcon>
                             </th>
-                            <th pSortableColumn="SessionName">
+                            <th pSortableColumn="supervisorRole">
                                 {{ l('دور المشرف') }}
-                                <p-sortIcon field="SessionName"></p-sortIcon>
+                                <p-sortIcon field="supervisorRole"></p-sortIcon>
                             </th>
-                            <th pSortableColumn="SessionName">
+                            <th pSortableColumn="telphoneNumber">
                                 {{ l('رقم الموبايل') }}
-                                <p-sortIcon field="SessionName"></p-sortIcon>
+                                <p-sortIcon field="telphoneNumber"></p-sortIcon>
                             </th>
                             <th pSortableColumn="SessionName">
                                 {{ l('Actions') }}
@@ -399,4 +396,5 @@
 ></app-add-supervisor>
 <app-add-supervisor [execuldedIdFilter]="execuldedIdFilter" [schoolId]="schoolId"></app-add-supervisor>
 <app-add-student [execuldedIdFilter]="execuldedIdFilter" [schoolName]="schoolName"></app-add-student>
+<app-move-student [schoolClassId]="classId" [schoolId]="schoolId"></app-move-student>
 <app-extendTimeSession [sessionId]="SessionId" [schoolClassId]="classId" [schoolId]="schoolId"></app-extendTimeSession>

@@ -50475,3 +50475,22 @@ body,
         top: -32px;
     }
 }
+
+.app-sidebar .menu .menu-icon {
+  margin-right: 5px !important;
+}
+.p-autocomplete-dd .p-autocomplete-dropdown {
+  border-top-right-radius: 0.475rem !important;
+  border-bottom-right-radius: 0.475rem !important;
+  background: #F8F8F8 !important;
+  color: rgb(126, 130, 153) !important;
+}
+.p-inputnumber .min{
+  border-radius: 4px 0 0 4px;
+}
+.p-inputnumber .max {
+  border-radius:  0 4px 4px 0 ;
+}
+.header-page .header-left{
+  float: right; 
+}

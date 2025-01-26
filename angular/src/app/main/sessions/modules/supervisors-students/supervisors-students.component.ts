@@ -37,7 +37,6 @@ export class SupervisorsStudentsComponent extends AppComponentBase implements On
     sessionName: any;
     schoolName: any;
     execuldedIdFilter: any;
-    activeIndex = 0;
     constructor(
         private _injector: Injector,
         private _SessionsServiceProxy: SessionsServiceProxy,
@@ -94,7 +93,7 @@ export class SupervisorsStudentsComponent extends AppComponentBase implements On
                 undefined,
                 this.SessionId,
                 this.classId,
-                undefined,
+                this.isStatusFilter,
                 undefined,
                 undefined,
                 undefined,
@@ -138,7 +137,8 @@ export class SupervisorsStudentsComponent extends AppComponentBase implements On
     doActionsForAttempts(label: any, record: any) {
         switch (label) {
             case 'MoveStudent':
-                /*  this._examAttemptsServiceProxy */
+                console.log("record.examAttempt.studentId :" , record.examAttempt.studentId)
+                this._dialogSharedService.showDialog(UniqueNameComponents.Move_Student_dialog, record.examAttempt.studentId);
                 break;
         }
     }

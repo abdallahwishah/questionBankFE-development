@@ -14,16 +14,12 @@
     color: #565D6D;
 }
 
-.header-left{
-    /* text-align: end; */
- /*    flex-direction: column; */
- /*    display: flex; */
- /*    gap: 10px; */
-    float: left; 
-}
+
+
 .header-left > .header-title-label-input{
     float: left;
 }
+
 
 .header-page{
     padding-bottom: 1rem;

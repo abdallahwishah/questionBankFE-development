@@ -14,6 +14,7 @@ import { DialogSharedModule } from '@app/shared/components/dialog-shared/dialog-
 import { AutoCompleteFeildModule } from '@app/shared/components/auto-complete-feild/auto-complete-feild.module';
 import { ExtendTimeSessionComponent } from './components/extendTimeSession/extendTimeSession.component';
 import { AddStudentComponent } from './components/add-student/add-student.component';
+import { MoveStudentComponent } from './components/move-student/move-student.component';
 
 @NgModule({
     imports: [
@@ -38,7 +39,8 @@ import { AddStudentComponent } from './components/add-student/add-student.compon
         AddSupervisorComponent,
         ExtendTimeSessionComponent,
         AddStudentComponent,
+        MoveStudentComponent
     ],
-    providers: [SessionSupervisorsServiceProxy],
+    providers: [SessionSupervisorsServiceProxy , StudentsServiceProxy],
 })
 export class SupervisorsStudentsModule {}

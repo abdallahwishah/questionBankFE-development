@@ -59,7 +59,7 @@
         ></p-inputNumber>
 
         <!-- Delete choice -->
-        <button class="btn btn-add p-3 mx-2" *ngIf="!choice.isEdit" (click)="choice.isEdit = true">
+        <button class="btn btn-edit p-3 mx-2" *ngIf="!choice.isEdit" (click)="choice.isEdit = true">
             <img src="assets/common/images/edit.svg" alt="" />
         </button>
         <button class="btn btn-edit p-3 mx-2" *ngIf="choice.isEdit" (click)="choice.isEdit = false">

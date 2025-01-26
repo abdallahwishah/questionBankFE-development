@@ -1,22 +1,20 @@
-<app-dialog-shared [width]="'30vw'" [dialogHeader]="l('AddSupervisoir')" [dialog_name]="Add_Supervisor_dialog">
+<app-dialog-shared [width]="'30vw'" [dialogHeader]="l('MoveStudent')" [dialog_name]="Move_Student_dialog">
     <ng-container bodyDialog>
         <ng-container>
             <div class="row">
                 <div class="col-md-12 mb-5">
                     <app-auto-complete-feild
-                        [label]="l('Supervisor')"
-                        field="userName"
-                        [deleteAfterSelect] = "true"
-                        [(ngModel)]="SupervisoSelected"
-                        name="execuldedIdFilter"
+                        [label]="l('SessionName')"
+                        field="session.name"
+                        [(ngModel)]="SessionSelected"
+                        name="session.Id"
                         [ConfigCustomSearch]="{
-                            api: '/api/services/app/Supervisors/GetAll',
+                            api: '/api/services/app/Sessions/GetAll',
                             keySearch: 'filter',
                             customParams: {
                                 Sorting: '',
                                 SkipCount: 0,
                                 MaxResultCount: 10,
-                                execuldedIdFilter: execuldedIdFilter
                             }
                         }"
                     ></app-auto-complete-feild>
