@@ -9,14 +9,15 @@ import { LazyLoadEvent, SharedModule } from '@node_modules/primeng/api';
 import { Paginator } from '@node_modules/primeng/paginator';
 import { Table } from '@node_modules/primeng/table';
 import { AppComponentBase } from '@shared/common/app-component-base';
-import { ExamTemplatesServiceProxy, QuestionsServiceProxy, QuestionTypeEnum } from '@shared/service-proxies/service-proxies';
+import { CreateExamQuestionDto, ExamsServiceProxy, ExamTemplatesServiceProxy, QuestionsServiceProxy, QuestionTypeEnum } from '@shared/service-proxies/service-proxies';
 import { SafeTextPipe } from "../../../../shared/pipes/safe-text.pipe";
 import { CommonModule } from '@node_modules/@angular/common';
 import { AppSharedModule } from '@app/shared/app-shared.module';
+import { ActivatedRoute } from '@node_modules/@angular/router';
 
 @Component({
   standalone: true,
-  imports: [DropdownFieldComponent, DialogSharedModule, SkeletonComponent, SafeTextPipe , AppSharedModule ,
+  imports: [DropdownFieldComponent, DialogSharedModule, SkeletonComponent,FormsModule , SafeTextPipe , AppSharedModule ,
     CommonModule,
   ],
   selector: 'app-add-view-exam-modal',
@@ -30,12 +31,16 @@ export class AddViewExamModalComponent extends AppComponentBase implements OnIni
   selectedQuestion:any
    Add_View_exam_dialog = UniqueNameComponents.Add_View_exam_dialog;
    QuestionTypeEnum = QuestionTypeEnum;
-   QuestionTypeId:any
+   QuestionTypeId = undefined
    filter:any;
+   examId:any;
   constructor(injector: Injector,
     private _DialogSharedService: DialogSharedService,
     private _questionsServiceProxy: QuestionsServiceProxy,
-    private _examTemplatesServiceProxy: ExamTemplatesServiceProxy,
+            private _examsServiceProxy: ExamsServiceProxy,
+                    private _ActivatedRoute: ActivatedRoute,
+            
+    
     
 ) { 
   super(injector);
@@ -43,6 +48,10 @@ export class AddViewExamModalComponent extends AppComponentBase implements OnIni
 }
 
   ngOnInit() {
+    this._ActivatedRoute.paramMap.subscribe((params) => {
+      this.examId = Number(params?.get('id')); 
+  });
+
   }
   getList(event?: LazyLoadEvent) {
     if (event) {
@@ -59,7 +68,7 @@ export class AddViewExamModalComponent extends AppComponentBase implements OnIni
     this._questionsServiceProxy
         .getAll(
             this.filter,
-            undefined,
+            this.QuestionTypeId,
             undefined,
             undefined,
             undefined,
@@ -76,29 +85,26 @@ export class AddViewExamModalComponent extends AppComponentBase implements OnIni
         .subscribe((result) => {
             this.primengTableHelper.totalRecordsCount = result.totalCount;
             this.primengTableHelper.records = result.items;
-/*             this.isActiveFilter = undefined;
- */            this.primengTableHelper.hideLoadingIndicator();
+            this.QuestionTypeId = undefined;
+             this.primengTableHelper.hideLoadingIndicator();
         });
 }
 
   
   Save() {
-     this._examTemplatesServiceProxy.generateExamByTemplate(this.selectedQuestion).subscribe(() => {
+     this._examsServiceProxy.addExamQuestion( 
+       new CreateExamQuestionDto({
+                          questionId: this.selectedQuestion?.question?.id,
+                          examSectionId: this.examId,
+                          isManualInerstion: false,
+                      }),
+     ).subscribe(() => {
         this.notify.info(this.l('SavedSuccessfully'));
         this.closeDialog();
     }); 
 }
 
- changeType() {
- /*  this._createOrEditQuestionDto.autoCorrection = false;
-  this._createOrEditQuestionDto.enableShuffleOptions = false;
-  if (this._createOrEditQuestionDto.type == QuestionTypeEnum.LinkedQuestions) {
-      this._createOrEditQuestionDto.payload = new QuestionPayloadDto({
-          ...new QuestionPayloadDto(),
-          subQuestions: [new CreateOrEditQuestionDto()],
-      });
-  } */
-} 
+
   
   closeDialog() {
     this._DialogSharedService.hideDialog(this.Add_View_exam_dialog);

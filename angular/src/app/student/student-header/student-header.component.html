@@ -1,13 +1,21 @@
-<div class="custom-top-bar py-3 position-absolute">
+<div class="py-3 position-absolute" [class]="showWhiteBg ? 'custom-white-top-bar' : 'custom-black-top-bar' " >
   <div class="container-fluid px-9">
      <div class="row justify-content-between align-items-center ">
-      <div class="col-md-2 col-4 d-flex">
+      <div class="col-md-3 col-4 d-flex  align-items-center gap-10">
           <img src="assets/common/images/logo.svg" class="img-fluid w-40px" alt="">
+          <span class="cursor-pointer btn-home d-flex gap-2  align-items-center">
+            <svg width="20" height="21" viewBox="0 0 20 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M9.375 15.1951V12.6951C9.375 12.3534 9.65833 12.0701 10 12.0701C10.3417 12.0701 10.625 12.3534 10.625 12.6951V15.1951C10.625 15.5367 10.3417 15.8201 10 15.8201C9.65833 15.8201 9.375 15.5367 9.375 15.1951Z" fill="white"/>
+              <path fill-rule="evenodd" clip-rule="evenodd" d="M5.33409 18.9951C3.81743 18.9951 2.43409 17.8284 2.18409 16.3368L1.07576 9.69508C0.892427 8.66175 1.40076 7.33675 2.22576 6.67842L8.00076 2.05342C9.11743 1.15342 10.8758 1.16175 12.0008 2.06175L17.7758 6.67842C18.5924 7.33675 19.0924 8.66175 18.9258 9.69508L17.8174 16.3284C17.5674 17.8034 16.1508 18.9951 14.6674 18.9951H5.33409ZM8.78409 3.02842L3.00909 7.66175C2.54243 8.03675 2.20909 8.90342 2.30909 9.49508L3.41743 16.1284C3.56743 17.0034 4.44243 17.7451 5.33409 17.7451H14.6674C15.5591 17.7451 16.4341 17.0034 16.5841 16.1201L17.6924 9.48675C17.7841 8.90342 17.4508 8.02008 16.9924 7.65342L11.2174 3.03675C10.8841 2.77008 10.4341 2.63675 9.99243 2.63675C9.55076 2.63675 9.10909 2.77008 8.78409 3.02842Z" fill="white"/>
+              </svg>
+            الرئيسية
+          </span>
+
       </div>
       <div class="col-md-3 col-8 d-flex gap-8 align-items-center justify-content-end">
         <div class="d-flex gap-3 align-items-center">
           <div class=" symbol symbol-35px symbol-md-40px"><img alt="user" [src]="profilePicture"></div>
-           <p class="mb-0 text-white">{{userName}}</p>
+           <p class="mb-0">{{userName}}</p>
         </div>
            <span class="cursor-pointer btn-logout">تسجيل الخروج</span>
       </div>

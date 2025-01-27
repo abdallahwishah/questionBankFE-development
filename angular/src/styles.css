@@ -876,13 +876,7 @@ td {
     height: 43px;
 }
 
-.custom-top-bar{
-    background-color: rgba(23, 26, 31, 0.4);
-    backdrop-filter: blur(20px);
-     top: 0;
-     z-index: 99999;
-     width: 100%;
-}
+
 
 .pt-8rem{
     padding-top: 8rem;
