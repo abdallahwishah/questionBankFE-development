@@ -10,6 +10,12 @@ import { RouterModule } from '@node_modules/@angular/router';
             {
                 component: SupervisorComponent,
                 path: '',
+                children:[
+                    {
+                        path:'supervisor-main',
+                        loadChildren: () => import('./../main/sessions/sessions.module').then((m) => m.SessionsModule),
+                    }
+                ]
             },
         ]),
     ],
