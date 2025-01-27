@@ -1,0 +1,20 @@
+<app-dialog-shared [width]="'35vw'" (close)="closeDialog()" [dialog_name]="Warning_dialog">
+    <ng-container bodyDialog>
+        <ng-container>
+            <div class="row justify-content-center">
+                <div class="col-md-10 text-center">
+                    <img src="assets/common/images/warning.svg" alt="" />
+                    <p class="fs-3 fw-bolder mt-7 mb-5">عــذراً!</p>
+                    <p class="text-gray-700 mb-0">
+                        يرجى إكمال الاختبار الحالي حتى تتمكن من تسجيل الخروج
+                    </p>
+                </div>
+            </div>
+        </ng-container>
+    </ng-container>
+    <ng-container footerDialog>
+        <button type="submit" class="btn btn-primary blue" (click)="Save()">
+            <span>{{ l('Yes') }}</span>
+        </button>
+    </ng-container>
+</app-dialog-shared>

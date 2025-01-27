@@ -15,6 +15,7 @@ import { AutoCompleteFeildModule } from '@app/shared/components/auto-complete-fe
 import { ExtendTimeSessionComponent } from './components/extendTimeSession/extendTimeSession.component';
 import { AddStudentComponent } from './components/add-student/add-student.component';
 import { MoveStudentComponent } from './components/move-student/move-student.component';
+import { RadioButtonModule } from 'primeng/radiobutton';
 
 @NgModule({
     imports: [
@@ -33,6 +34,8 @@ import { MoveStudentComponent } from './components/move-student/move-student.com
         DialogSharedModule,
         AutoCompleteFeildModule,
         InputNumberModule,
+        RadioButtonModule,
+
     ],
     declarations: [
         SupervisorsStudentsComponent,

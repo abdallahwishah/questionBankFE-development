@@ -1,0 +1,43 @@
+/* supervisor-type.component.scss */
+
+.radio-group {
+    gap: 1rem;
+  }
+  
+  /* Each choice “box” */
+  .radio-box {
+    border: 1px solid #ccc;
+    border-radius: 0.475rem;
+    padding: 0.78rem .7rem;
+    display: inline-flex;
+    align-items: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    justify-content: space-between;
+  }
+  
+  /* Hover effect (optional) */
+  .radio-box:hover {
+    box-shadow: 0 0 6px rgba(0,0,0,0.1);
+  }
+  
+  /* Active state if you want a different style for the selected box */
+  .radio-box.active {
+    border-color: var(--bs-primary); /* or your theme color */
+    background-color: #f9f1fc;
+  }
+  
+  /* PrimeNG radio circle: you can also style the ring color, etc. */
+  .radio-box .p-radiobutton .p-radiobutton-box {
+    border: 2px solid #b5b5b5; /* the unselected ring color */
+  }
+  
+  /* When checked, PrimeNG typically applies a .p-highlight class, 
+     which you can override for the color of the circle: */
+  .radio-box .p-radiobutton-box.p-highlight {
+    border-color: var(--bs-primary) !important; /* purple ring */
+  }
+  .radio-box .p-radiobutton-box.p-highlight .p-radiobutton-icon {
+    background-color: var(--bs-primary) !important; /* purple fill */
+  }
+  

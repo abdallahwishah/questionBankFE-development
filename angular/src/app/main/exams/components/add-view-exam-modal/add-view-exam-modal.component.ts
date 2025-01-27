@@ -9,7 +9,7 @@ import { LazyLoadEvent, SharedModule } from '@node_modules/primeng/api';
 import { Paginator } from '@node_modules/primeng/paginator';
 import { Table } from '@node_modules/primeng/table';
 import { AppComponentBase } from '@shared/common/app-component-base';
-import { QuestionsServiceProxy, QuestionTypeEnum } from '@shared/service-proxies/service-proxies';
+import { ExamTemplatesServiceProxy, QuestionsServiceProxy, QuestionTypeEnum } from '@shared/service-proxies/service-proxies';
 import { SafeTextPipe } from "../../../../shared/pipes/safe-text.pipe";
 import { CommonModule } from '@node_modules/@angular/common';
 import { AppSharedModule } from '@app/shared/app-shared.module';
@@ -27,13 +27,15 @@ export class AddViewExamModalComponent extends AppComponentBase implements OnIni
   @ViewChild('dataTable', { static: true }) dataTable: Table;
   @ViewChild('paginator', { static: true }) paginator: Paginator;
 
+  selectedQuestion:any
    Add_View_exam_dialog = UniqueNameComponents.Add_View_exam_dialog;
    QuestionTypeEnum = QuestionTypeEnum;
    QuestionTypeId:any
    filter:any;
   constructor(injector: Injector,
     private _DialogSharedService: DialogSharedService,
-            private _questionsServiceProxy: QuestionsServiceProxy,
+    private _questionsServiceProxy: QuestionsServiceProxy,
+    private _examTemplatesServiceProxy: ExamTemplatesServiceProxy,
     
 ) { 
   super(injector);
@@ -81,10 +83,10 @@ export class AddViewExamModalComponent extends AppComponentBase implements OnIni
 
   
   Save() {
-   /*  this._examTemplatesServiceProxy.generateExamByTemplate(this.templateId).subscribe(() => {
+     this._examTemplatesServiceProxy.generateExamByTemplate(this.selectedQuestion).subscribe(() => {
         this.notify.info(this.l('SavedSuccessfully'));
         this.closeDialog();
-    }); */
+    }); 
 }
 
  changeType() {

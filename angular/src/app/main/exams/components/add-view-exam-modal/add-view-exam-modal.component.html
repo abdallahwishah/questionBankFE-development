@@ -60,6 +60,10 @@
               [scrollable]="true"
               ScrollWidth="100%"
               [resizableColumns]="primengTableHelper.resizableColumns"
+              [(selection)]="selectedQuestion"
+              dataKey="question.id" 
+              
+          
           >
               <ng-template pTemplate="header">
                   <tr>
@@ -82,7 +86,7 @@
                       </td>
                      
                       <td>
-                         
+                        <p-tableRadioButton [value]="record" />
                       </td>
              
                   </tr>

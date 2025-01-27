@@ -25,8 +25,6 @@ export class WarningModalComponent extends AppComponentBase implements OnInit {
     ngOnInit(): void {}
 
     Save() {
-        this._DialogSharedService?.dataDialog?.[this.Warning_dialog]?.configShow?.data?.confirm();
-        this._DialogSharedService.hideDialog(this.Warning_dialog);
 
     }
 

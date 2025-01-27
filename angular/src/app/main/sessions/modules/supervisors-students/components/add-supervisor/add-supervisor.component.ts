@@ -17,6 +17,8 @@ export class AddSupervisorComponent extends AppComponentBase implements OnInit {
     SupervisoSelected: any;
     @Input() execuldedIdFilter: any;
     @Input() schoolId: any;
+    supervisorType: string = 'monitor';
+
 @Output() onSupervisorAdded = new EventEmitter<any>();
     constructor(
         private Injector: Injector,
