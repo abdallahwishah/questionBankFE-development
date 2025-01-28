@@ -29,7 +29,7 @@
             <span class="mx-2">/</span>
             <!-- Display the exam title if available -->
             <h2 class="fw-bolder mb-0">
-                {{ 'المشرفين والطلاب' }}
+                {{ l('SupervisorsAndStudents') }}
             </h2>
         </div>
 
@@ -54,14 +54,14 @@
                     </svg>
 
                     <span class="d-none d-md-inline-block">
-                        {{ l('تمديد الوقت') }}
+                        {{ l('ExtendTime') }}
                     </span>
                 </button>
             </div>
             <div>
                 <button class="btn btn-read d-flex gap-2">
                     <span class="d-none d-md-inline-block">
-                        {{ l('إنهاء الاختبار') }}
+                        {{ l('FinishTest') }}
                     </span>
                 </button>
             </div>
@@ -123,7 +123,7 @@
                         />
                     </svg>
                     <span class="d-none d-md-inline-block">
-                        {{ l('إضافة مشرف') }}
+                        {{ l('AddSupervisor') }}
                     </span>
                 </button>
             </div>
@@ -191,11 +191,10 @@
                         />
                     </svg>
                     <span class="d-none d-md-inline-block">
-                        {{ l('إضافة طالب للجلسة') }}
+                        {{ l('AddStudentToSession') }}
                     </span>
                 </button>
             </div>
-
         </div>
     </div>
 
@@ -203,7 +202,7 @@
         <p-tabPanel>
             <ng-template pTemplate="header">
                 <div class="d-flex align-items-center gap-2">
-                    <p class="mb-0">الطلاب</p>
+                    <p class="mb-0">{{ l('Students') }}</p>
                     <span class="font-bold m-0">{{ primengTableHelperForAttempts.totalRecordsCount }}</span>
                 </div>
             </ng-template>
@@ -227,27 +226,27 @@
                                 {{ '#' }}
                             </th>
                             <th pSortableColumn="SessionName">
-                                {{ l('اسم المدرسة') }}
+                                {{ l('SchoolName') }}
                                 <p-sortIcon field="SessionName"></p-sortIcon>
                             </th>
                             <th pSortableColumn="SessionName">
-                                {{ l('اسم الطالب') }}
+                                {{ l('StudentName') }}
                                 <p-sortIcon field="SessionName"></p-sortIcon>
                             </th>
                             <th pSortableColumn="SessionName">
-                                {{ l('رقم الهوية') }}
+                                {{ l('NationalID') }}
                                 <p-sortIcon field="SessionName"></p-sortIcon>
                             </th>
                             <th pSortableColumn="SessionName">
-                                {{ l('القسم الحالي') }}
+                                {{ l('CurrentSection') }}
                                 <p-sortIcon field="SessionName"></p-sortIcon>
                             </th>
                             <th pSortableColumn="SessionName">
-                                {{ l('السؤال الحالي') }}
+                                {{ l('CurrentQuestion') }}
                                 <p-sortIcon field="SessionName"></p-sortIcon>
                             </th>
                             <th pSortableColumn="SessionName">
-                                {{ l('الحالة') }}
+                                {{ l('Status') }}
                                 <p-sortIcon field="SessionName"></p-sortIcon>
                             </th>
                             <th>
@@ -307,7 +306,7 @@
         <p-tabPanel header="Header II">
             <ng-template pTemplate="header">
                 <div class="d-flex align-items-center gap-2">
-                    <p class="mb-0">المشرفين</p>
+                    <p class="mb-0">{{ l('Supervisors') }}</p>
 
                     <span class="font-bold m-0">{{ primengTableHelperForSupervisors.totalRecordsCount }}</span>
                 </div>
@@ -332,15 +331,15 @@
                                 {{ '#' }}
                             </th>
                             <th pSortableColumn="supervisorName">
-                                {{ l('اسم المشرف') }}
+                                {{ l('SupervisorName') }}
                                 <p-sortIcon field="supervisorName"></p-sortIcon>
                             </th>
                             <th pSortableColumn="supervisorRole">
-                                {{ l('دور المشرف') }}
+                                {{ l('SupervisorRole') }}
                                 <p-sortIcon field="supervisorRole"></p-sortIcon>
                             </th>
                             <th pSortableColumn="telphoneNumber">
-                                {{ l('رقم الموبايل') }}
+                                {{ l('PhoneNumber') }}
                                 <p-sortIcon field="telphoneNumber"></p-sortIcon>
                             </th>
                             <th pSortableColumn="SessionName">

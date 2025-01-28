@@ -24,7 +24,7 @@
                                     d="M7.49996 18.9584C2.97496 18.9584 1.04163 17.025 1.04163 12.5V7.50002C1.04163 2.97502 2.97496 1.04169 7.49996 1.04169H12.5C17.025 1.04169 18.9583 2.97502 18.9583 7.50002V12.5C18.9583 17.025 17.025 18.9584 12.5 18.9584H7.49996ZM2.29163 7.50002V12.5C2.29163 16.3417 3.65829 17.7084 7.49996 17.7084H12.5C16.3416 17.7084 17.7083 16.3417 17.7083 12.5V7.50002C17.7083 3.65835 16.3416 2.29169 12.5 2.29169H7.49996C3.65829 2.29169 2.29163 3.65835 2.29163 7.50002Z"
                                     fill="white" />
                             </svg>
-    
+
                             <span class="d-none d-md-inline-block">
                                 {{ l('CreateNewSupportGroup') }}
                             </span>
@@ -220,7 +220,7 @@
                                     </td>
                                     <td style="width: 130px"
                                     [hidden]="!isGrantedAny('Pages.SupportGroups.Edit', 'Pages.SupportGroups.Delete')">
-                                    <div class="btn-group dropdown" dropdown container="body">
+                                    <!-- <div class="btn-group dropdown" dropdown container="body">
                                         <button class="dropdown-toggle btn btn-sm btn-primary" dropdownToggle>
                                             <i class="fa fa-cog"></i><span class="caret"></span> {{l("Actions")}}
                                         </button>
@@ -246,7 +246,7 @@
                                                     (click)="showHistory(record.supportGroup)">{{l('History')}}</a>
                                             </li>
                                         </ul>
-                                    </div>
+                                    </div> -->
                                     <app-action-button
                                     (action)="action($event, record)"
                                     [ActionsInfo]="[

@@ -5,10 +5,10 @@
                 <h4 class="modal-title">
                     <span>{{l("PickStudyLevel")}}</span>
                 </h4>
-                
-                
+
+
                  <button type="button" class="btn-close" (click)="close()" aria-label="Close" [disabled]="saving"></button>
-             
+
             </div>
                     <div class="card card-custom gutter-b">
                         <div class="card-body">
@@ -16,15 +16,15 @@
                                 <div>
                                     <div class="row align-items-center mb-4">
                                         <div class="col-xl-12">
-                                            
-                                            
+
+
                    <div class="my-3">
                     <div class="input-group">
                         <input [(ngModel)]="filterText" name="filterText" autoFocus class="form-control m-input" [placeholder]="l('SearchWithThreeDot')" type="text">
                         <button (click)="getAll()" class="btn btn-primary" type="submit"><i class="flaticon-search-1"></i></button>
                     </div>
                 </div>
-             
+
                                         </div>
                                     </div>
                                 </div>
@@ -63,7 +63,7 @@
 											</td>
 											<td style="width:150px">
 												<span class="p-column-title"> {{l('Value')}}</span>
-												{{record.displayName}}
+												{{record.studyLevel.name}}
 											</td>
 										</tr>
 									</ng-template>
@@ -79,7 +79,7 @@
                                                      [totalRecords]="primengTableHelper.totalRecordsCount"
                                                      [rowsPerPageOptions]="primengTableHelper.predefinedRecordsCountPerPage"
                                                      [showCurrentPageReport]="true"
-                                                     [currentPageReportTemplate]="'TotalRecordsCount' | localize:primengTableHelper.totalRecordsCount"    
+                                                     [currentPageReportTemplate]="'TotalRecordsCount' | localize:primengTableHelper.totalRecordsCount"
                                         >
                                         </p-paginator>
                                     </div>

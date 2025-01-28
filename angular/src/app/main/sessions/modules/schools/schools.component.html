@@ -20,7 +20,7 @@
         <span class="mx-2">/</span>
         <span>{{ sessionName }}</span>
         <span class="mx-2">/</span>
-        <h2 class="fw-bolder mb-0">{{ 'المدارس' }}</h2>
+        <h2 class="fw-bolder mb-0">{{ l('Schools') }}</h2>
     </div>
 
     <div class="primeng-datatable-container p-0 col-12 mt-6">
@@ -43,7 +43,7 @@
                     <th style="width: 80px">#</th>
                     <th style="width: 300px">{{ l('SchoolNo') }}</th>
 
-                    <th class="text-start">{{ l('اسم المدرسة') }}</th>
+                    <th class="text-start">{{ l('SchoolName') }}</th>
                 </tr>
             </ng-template>
             <ng-template pTemplate="body" let-record="$implicit" let-i="rowIndex" let-expanded="expanded">
@@ -96,10 +96,10 @@
                             <p-table [value]="record.getSchoolClassForViewDtos">
                                 <ng-template pTemplate="header">
                                     <tr>
-                                        <th>{{ l('القاعة') }}</th>
-                                        <th>{{ l('عدد المشرفين') }}</th>
-                                        <th>{{ l('عدد الطلاب') }}</th>
-                                        <th>{{ l('عرض المشرفين والطلاب') }}</th>
+                                        <th>{{ l('Hall') }}</th>
+                                        <th>{{ l('NumberOfSupervisors') }}</th>
+                                        <th>{{ l('NumberOfStudents') }}</th>
+                                        <th>{{ l('ViewSupervisorsAndStudents') }}</th>
                                     </tr>
                                 </ng-template>
                                 <ng-template pTemplate="body" let-class>
@@ -111,9 +111,9 @@
                                             <a
                                                 href="javascript:;"
                                                 class="text-primary"
-                                                (click)="supervisorsAndStudents(class,record)"
+                                                (click)="supervisorsAndStudents(class, record)"
                                             >
-                                                {{ l('عرض المشرفين والطلاب') }}
+                                                {{ l('ViewSupervisorsAndStudents') }}
                                             </a>
                                         </td>
                                     </tr>

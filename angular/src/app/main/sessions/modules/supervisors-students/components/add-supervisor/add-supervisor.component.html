@@ -1,4 +1,4 @@
-<app-dialog-shared [width]="'30vw'" [dialogHeader]="l('AddSupervisoir')" [dialog_name]="Add_Supervisor_dialog">
+<app-dialog-shared [width]="'30vw'" [dialogHeader]="l('AddSupervisor')" [dialog_name]="Add_Supervisor_dialog">
     <ng-container bodyDialog>
         <ng-container>
             <div class="row">
@@ -6,7 +6,7 @@
                     <app-auto-complete-feild
                         [label]="l('Supervisor')"
                         field="userName"
-                        [deleteAfterSelect] = "true"
+                        [deleteAfterSelect]="true"
                         [(ngModel)]="SupervisoSelected"
                         name="execuldedIdFilter"
                         [ConfigCustomSearch]="{
@@ -24,45 +24,42 @@
                 <div class="col-12">
                     <!-- supervisor-type.component.html -->
 
-<div class="form-group">
-    <label class="form-label mb-2" style="display:block;">نوع المشرف</label>
-    <!-- Wrapper for the two radio boxes -->
-    <div class="radio-group radio-supervisor  d-grid" style="grid-template-columns:  1fr 1fr;">
-      <!-- Box #1 -->
-      <div 
-        class="radio-box" 
-        (click)="supervisorType='manager'" 
-        [class.active]="supervisorType === 'manager'"
-      >
-      <span>مراقب</span>
+                    <div class="form-group">
+                        <label class="form-label mb-2" style="display: block">{{ l('SupervisorType') }}</label>
+                        <!-- Wrapper for the two radio boxes -->
+                        <div class="radio-group radio-supervisor d-grid" style="grid-template-columns: 1fr 1fr">
+                            <!-- Box #1 -->
+                            <div
+                                class="radio-box"
+                                (click)="supervisorType = 'manager'"
+                                [class.active]="supervisorType === 'manager'"
+                            >
+                                <span>{{ l('Observer') }}</span>
 
-         <!-- PrimeNG radio button -->
-         <p-radioButton 
-         name="supervisorType" 
-         value="manager" 
-         [(ngModel)]="supervisorType"
-          
-       ></p-radioButton>
-      </div>
-  
-      <!-- Box #2 -->
-      <div 
-        class="radio-box" 
-        (click)="supervisorType='monitor'" 
-        [class.active]="supervisorType === 'monitor'"
-      >
-      <span>مدير</span>
+                                <!-- PrimeNG radio button -->
+                                <p-radioButton
+                                    name="supervisorType"
+                                    value="manager"
+                                    [(ngModel)]="supervisorType"
+                                ></p-radioButton>
+                            </div>
 
-        <p-radioButton 
-          name="supervisorType" 
-          value="monitor" 
-          [(ngModel)]="supervisorType"
-          
-        ></p-radioButton>
-      </div>
-    </div>
-  </div>
-  
+                            <!-- Box #2 -->
+                            <div
+                                class="radio-box"
+                                (click)="supervisorType = 'monitor'"
+                                [class.active]="supervisorType === 'monitor'"
+                            >
+                                <span>{{ l('Manager') }}</span>
+
+                                <p-radioButton
+                                    name="supervisorType"
+                                    value="monitor"
+                                    [(ngModel)]="supervisorType"
+                                ></p-radioButton>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </ng-container>
@@ -71,6 +68,6 @@
         <button type="button" class="btn btn-primary blue" (click)="Save()">
             <span>{{ l('Save') }}</span>
         </button>
-        <button class="btn btn-outline"(click)="Close()">{{ l('Cancel') }}</button>
+        <button class="btn btn-outline" (click)="Close()">{{ l('Cancel') }}</button>
     </ng-container>
 </app-dialog-shared>

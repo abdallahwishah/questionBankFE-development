@@ -8,7 +8,7 @@
             </div>
 
             <div>
-                <button class="btn btn-primary d-flex gap-2">
+                <button class="btn btn-primary d-flex gap-2" (click)="AddExam()">
                     <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path
                             d="M6.66663 10.625C6.32496 10.625 6.04163 10.3417 6.04163 10C6.04163 9.65833 6.32496 9.375 6.66663 9.375H13.3333C13.675 9.375 13.9583 9.65833 13.9583 10C13.9583 10.3417 13.675 10.625 13.3333 10.625H6.66663Z"
@@ -26,7 +26,7 @@
                         />
                     </svg>
 
-                    <span class="d-none d-md-inline-block" (click)="AddExam()">
+                    <span class="d-none d-md-inline-block">
                         {{ l('AddExam') }}
                     </span>
                 </button>
@@ -99,7 +99,7 @@
                         </div>
                         <div class="d-flex justify-content-between mt-4">
                             <button class="btn btn-primary" (click)="getList(); closeFilters()">
-                                {{ 'searchFilters' | localize }}
+                                {{ 'SearchFilters' | localize }}
                             </button>
                             <button class="btn btn-outline" (click)="clearFilter()">
                                 {{ 'ResetFilters' | localize }}

@@ -1,7 +1,7 @@
 <div *ngIf="!loading; else loader">
     <div class="container-fluid px-5 mt-md-0 mt-7">
         <div class="d-flex align-items-center">
-            <span class="cursor-pointer" [routerLink]="'/app/main/question-bank'">
+            <span class="cursor-pointer" [routerLink]="'/app/main/templates'">
                 <!-- Back arrow icon -->
                 <svg
                     width="14"
@@ -102,7 +102,7 @@
                                     [(ngModel)]="_createOrEditExamTemplateDto.durationTime"
                                 />
                                 <div class="time-icon">
-                                    دقيقة
+                                    {{ l('Minute') }}
 
                                     <svg
                                         width="20"
@@ -178,7 +178,7 @@
                                     </div>
                                     <!-- SectionName => section.name -->
                                     <div class="col-md-4 mb-5">
-                                        <label>{{ l('sectionType') }}</label>
+                                        <label>{{ l('SectionType') }}</label>
                                         <app-dropdown-field
                                             [enm]="SectionTypeEnum"
                                             [(ngModel)]="section.sectionType"
@@ -219,8 +219,8 @@
                                                 <ng-template pTemplate="header">
                                                     <tr class="text-center">
                                                         <th>{{ l('QuestionType') }}</th>
-                                                        <th>{{ l('subjectUnit') }}</th>
-                                                         <th>{{ l('ExcludedPages') }}</th>
+                                                        <th>{{ l('SubjectUnit') }}</th>
+                                                        <th>{{ l('ExcludedPages') }}</th>
                                                         <!-- Dynamic complexities columns -->
                                                         <th *ngFor="let comp of complexities">
                                                             {{ comp.name }}
@@ -248,8 +248,6 @@
                                                                 [(ngModel)]="criteria.subjectUnitId"
                                                             ></app-dropdown-field>
                                                         </td>
-
-
 
                                                         <!-- ExcludedPages -->
                                                         <td>

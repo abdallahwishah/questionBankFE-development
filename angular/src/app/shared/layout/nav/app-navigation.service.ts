@@ -12,10 +12,8 @@ export class AppNavigationService {
         private _appSessionService: AppSessionService,
     ) {}
 
-
-   /*  new AppMenuItem('ClassRoom', 'Pages.Administration.Roles', 'flaticon-point', '/app/main/question-ids'),
+    /*  new AppMenuItem('ClassRoom', 'Pages.Administration.Roles', 'flaticon-point', '/app/main/question-ids'),
     new AppMenuItem('Subjects', 'Pages.Administration.Users', 'flaticon-users', '/app/main/subjects'), */
-
 
     getMenu(): AppMenu {
         return new AppMenu('MainMenu', 'MainMenu', [
@@ -33,24 +31,24 @@ export class AppNavigationService {
                 '',
                 [],
                 [
-                    new AppMenuItem('categories', '', 'flaticon-app', '/app/main/categories'),
-                    new AppMenuItem('complexities', '', 'flaticon-users', '/app/main/complexities'),
-                    new AppMenuItem('studyLevels', '', 'flaticon-users', '/app/main/studyLevels'),
-                    new AppMenuItem('studySubjects', '', 'flaticon-users', '/app/main/studySubjects'),
-                    new AppMenuItem('subjectUnits', '', 'flaticon-users', '/app/main/subjectUnits'),
-                    new AppMenuItem('subjectGroups', '', 'flaticon-users', '/app/main/subjectGroups'),
-                    new AppMenuItem('supportGroupItems', '', 'flaticon-users', '/app/main/supportGroupItems'),
-                    new AppMenuItem('supportGroups', '', 'flaticon-users', '/app/main/supportGroups'),
+                    new AppMenuItem('Categories', '', 'fa fa-circle', '/app/main/categories'),
+                    new AppMenuItem('Complexities', '', 'fa fa-circle', '/app/main/complexities'),
+                    new AppMenuItem('StudyLevels', '', 'fa fa-circle', '/app/main/studyLevels'),
+                    new AppMenuItem('StudySubjects', '', 'fa fa-circle', '/app/main/studySubjects'),
+                    new AppMenuItem('SubjectUnits', '', 'fa fa-circle', '/app/main/subjectUnits'),
+                    new AppMenuItem('SubjectGroups', '', 'fa fa-circle', '/app/main/subjectGroups'),
+                    new AppMenuItem('SupportGroupItems', '', 'fa fa-circle', '/app/main/supportGroupItems'),
+                    new AppMenuItem('SupportGroups', '', 'fa fa-circle', '/app/main/supportGroups'),
                 ],
             ),
             new AppMenuItem('QuestionBank', '', 'flaticon-line-graph', '/app/main/question-bank'),
             new AppMenuItem('Templates', '', 'flaticon-line-graph', '/app/main/templates'),
             new AppMenuItem('Exams', '', 'flaticon-line-graph', '/app/main/exams'),
             new AppMenuItem('Sessions', '', 'flaticon-line-graph', '/app/main/sessions'),
-            new AppMenuItem('myExams', '', 'flaticon-line-graph', '/app/main/my-exams'),
+            new AppMenuItem('MyExams', '', 'flaticon-line-graph', '/app/main/my-exams'),
             new AppMenuItem('CorrectingSession', '', 'flaticon-line-graph', '/app/main/correcting'),
             new AppMenuItem('Audit', '', 'flaticon-line-graph', '/app/main/audit'),
-           /*  new AppMenuItem(
+            /*  new AppMenuItem(
                 'lockup',
                 '',
                 'flaticon-line-graph',

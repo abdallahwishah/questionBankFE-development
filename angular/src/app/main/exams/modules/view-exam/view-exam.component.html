@@ -1,7 +1,7 @@
 <div>
     <div class="container-fluid px-5 mt-md-0 mt-7">
         <div class="d-flex align-items-center">
-            <span class="cursor-pointer" [routerLink]="'/app/main/question-bank'">
+            <span class="cursor-pointer" [routerLink]="'/app/main/exams'">
                 <!-- Back arrow icon -->
                 <svg
                     width="14"
@@ -46,15 +46,18 @@
                                 style="cursor: pointer"
                             >
                                 <img class="cursor-pointer" src="assets/common/images/menu.svg" alt="" />
-                                <span class="text-primary fw-medium">القسم رقم {{ section.order }}</span>
+                                <span class="text-primary fw-medium">
+                                    {{ l('SectionNumber') + ' ' + section.order }}
+                                </span>
 
                                 <div class="text-muted">
                                     <div class="fw-bold sec-name">
                                         {{ section.name }}
                                     </div>
                                     <small>
-                                        {{ section.examQuestions?.length || 0 }} أسئلة | {{ l('Time') }}:
-                                        {{ section.durationTime }} دقيقة
+                                        {{ section.examQuestions?.length || 0 + ' ' + l('Questions') }} |
+                                        {{ l('Time') }}:
+                                        {{ section.durationTime + ' ' + l('Minute') }}
                                     </small>
                                 </div>
 
@@ -82,7 +85,7 @@
                                             fill="#171A1F"
                                         />
                                     </svg>
-                                    {{ section.durationTime }} دقيقة
+                                    {{ section.durationTime + ' ' + l('Minute') }}
                                 </div>
 
                                 <!-- Delete Section -->
@@ -95,7 +98,7 @@
                                 </button>
 
                                 <!-- Arrow Up/Down -->
-                                <div class="d-flex align-items-center gap-2" >
+                                <div class="d-flex align-items-center gap-2">
                                     <button class="btn btn-link chevron-icons">
                                         <div (click)="$event.stopPropagation()">
                                             <ng-container *ngIf="!openSections[i]">
@@ -129,7 +132,6 @@
                                                 </svg>
                                             </ng-container>
                                         </div>
-                                        
                                     </button>
                                 </div>
                             </div>
@@ -217,19 +219,16 @@
                                         <div class="line mt-5"></div>
                                     </div>
                                     <button
-                                    class="btn btn-outline-primary outline-dashed my-4"
-                                    (click)="addNewQ()"
-                                    style="width: 300px"
-                                >
-                                    {{ l('AddNewQuestion') }}
-                                </button>
+                                        class="btn btn-outline-primary outline-dashed my-4"
+                                        (click)="addNewQ()"
+                                        style="width: 300px"
+                                    >
+                                        {{ l('AddNewQuestion') }}
+                                    </button>
                                 </div>
                             </div>
-
-                          
                         </div>
                         <!-- End Sections -->
-                    
                     } @else {
                         <!-- Sections card -->
                         <div class="col-12 mt-6">

@@ -145,13 +145,13 @@ export class StudySubjectsComponent extends AppComponentBase {
                 this.viewStudySubjectModal.show(record);
                 break;
             case 'Edit':
-                this.createOrEditStudySubjectModal.show(record.complexity.id);
+                this.createOrEditStudySubjectModal.show(record.studySubject.id);
                 break;
             case 'Delete':
-                this.deleteStudySubject(record.complexity);
+                this.deleteStudySubject(record.studySubject);
                 break;
             case 'History':
-                this.showHistory(record.complexity);
+                this.showHistory(record.studySubject);
                 break;
         }
     }

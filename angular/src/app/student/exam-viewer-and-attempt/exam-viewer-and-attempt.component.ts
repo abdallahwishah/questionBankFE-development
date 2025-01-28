@@ -6,12 +6,13 @@ import {
     SubQuestionAnswer,
     ViewExamQuestionDto,
 } from './../../../shared/service-proxies/service-proxies';
-import { Component, OnInit } from '@angular/core';
+import { Component, Injector, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { SidebarModule } from 'primeng/sidebar';
 import { AccordionModule } from 'primeng/accordion';
 import { QuestionTypeEnum } from './../../../shared/service-proxies/service-proxies';
+import { AppComponentBase } from '@shared/common/app-component-base';
 
 @Component({
     standalone: true,
@@ -20,7 +21,7 @@ import { QuestionTypeEnum } from './../../../shared/service-proxies/service-prox
     templateUrl: './exam-viewer-and-attempt.component.html',
     styleUrls: ['./exam-viewer-and-attempt.component.css'],
 })
-export class ExamViewerAndAttemptComponent implements OnInit {
+export class ExamViewerAndAttemptComponent extends AppComponentBase implements OnInit {
     isViewer: boolean;
     id: number;
     examData: any;
@@ -32,9 +33,11 @@ export class ExamViewerAndAttemptComponent implements OnInit {
     private timer: any;
     remainingTime: string = '00 : 00 : 00';
     constructor(
+        injector: Injector,
         private _examsServiceProxy: ExamsServiceProxy,
         private _activatedRoute: ActivatedRoute,
     ) {
+        super(injector);
         this.isViewer = window?.location.href.includes('viewer');
         this.id = this._activatedRoute.snapshot.params.id;
     }

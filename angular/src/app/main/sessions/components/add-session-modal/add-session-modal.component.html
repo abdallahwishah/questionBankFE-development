@@ -174,7 +174,7 @@
                                     )
                                 "
                             >
-                                ملف المدارس
+                                {{ l('SchoolFile') }}
                             </span>
                             <div class="icon d-inline-flex flex-center">
                                 <img src="assets/common/images/link.svg" alt="" />
@@ -194,7 +194,7 @@
                                     )
                                 "
                             >
-                                ملف الطلاب
+                                {{ l('StudentFile') }}
                             </span>
                             <div class="icon d-inline-flex flex-center">
                                 <img src="assets/common/images/eye.svg" alt="" />
@@ -209,6 +209,6 @@
         <button type="button" class="btn btn-primary blue" (click)="Save()">
             <span>{{ l('Save') }}</span>
         </button>
-        <button class="btn btn-outline">{{ l('Cancel') }}</button>
+        <button class="btn btn-outline" (click)="closeDialog()">{{ l('Cancel') }}</button>
     </ng-container>
 </app-dialog-shared>
