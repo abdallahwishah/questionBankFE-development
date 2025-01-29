@@ -2,7 +2,7 @@
     <div class="bg-cover">
         <div class="mb-15">
             <h3 class="mb-8">{{ sessionName }}</h3>
-            <h4>يرجى الانتظار لحين حلول الوقت..</h4>
+            <h4>{{ l('PleaseWaitUntilTimeComes') }}</h4>
         </div>
         <div class="container">
             <div class="row justify-content-center">
@@ -13,7 +13,7 @@
                                 <div class="num">{{ seconds[0] }}</div>
                                 <div class="num">{{ seconds[1] }}</div>
                             </div>
-                            <span>ثانية</span>
+                            <span>{{ l('Second') }}</span>
                         </div>
                         <div class="donts">:</div>
                         <div class="d-flex flex-column align-items-center">
@@ -21,7 +21,7 @@
                                 <div class="num">{{ minutes[0] }}</div>
                                 <div class="num">{{ minutes[1] }}</div>
                             </div>
-                            <span>دقيقة</span>
+                            <span>{{ l('Minute') }}</span>
                         </div>
                         <div class="donts">:</div>
 
@@ -30,7 +30,7 @@
                                 <div class="num">{{ hours[0] }}</div>
                                 <div class="num">{{ hours[1] }}</div>
                             </div>
-                            <span>ساعة</span>
+                            <span>{{ l('Hour') }}</span>
                         </div>
                         <div class="donts">:</div>
 
@@ -39,7 +39,7 @@
                                 <div class="num">{{ days[0] }}</div>
                                 <div class="num">{{ days[1] }}</div>
                             </div>
-                            <span>يوم</span>
+                            <span>{{ l('Day') }}</span>
                         </div>
                     </div>
                 </div>

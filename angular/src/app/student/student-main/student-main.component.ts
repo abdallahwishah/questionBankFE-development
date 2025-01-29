@@ -1,8 +1,9 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Injector } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ExamsServiceProxy } from '@shared/service-proxies/service-proxies';
 import { QuizComponent } from '../quiz/quiz.component';
-import { StudentHeaderComponent } from "../student-header/student-header.component";
+import { StudentHeaderComponent } from '../student-header/student-header.component';
+import { AppComponentBase } from '@shared/common/app-component-base';
 
 @Component({
     standalone: true,
@@ -11,7 +12,7 @@ import { StudentHeaderComponent } from "../student-header/student-header.compone
     templateUrl: './student-main.component.html',
     styleUrls: ['./student-main.component.css'],
 })
-export class StudentMainComponent implements OnInit, OnDestroy {
+export class StudentMainComponent extends AppComponentBase implements OnInit, OnDestroy {
     days: string = '00';
     hours: string = '00';
     minutes: string = '00';
@@ -19,8 +20,13 @@ export class StudentMainComponent implements OnInit, OnDestroy {
     private timerInterval: any;
     sessionName: any;
     secondsValue: any = 1;
-    userName:any;
-    constructor(private _examsServiceProxy: ExamsServiceProxy) {}
+    userName: any;
+    constructor(
+        injector: Injector,
+        private _examsServiceProxy: ExamsServiceProxy,
+    ) {
+        super(injector);
+    }
 
     ngOnInit() {
         this._examsServiceProxy.getExpectedeExam().subscribe((response) => {
