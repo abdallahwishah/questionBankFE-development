@@ -4,7 +4,7 @@
     </label>
     <p-dropdown
         *ngIf="!loading"
-        [placeholder]="placeholder"
+        [placeholder]="l(placeholder)"
         class="w-full py-2"
         [ngClass]="{ disabled: disabled }"
         [formControl]="fieldControl"
@@ -20,5 +20,8 @@
         [virtualScrollItemSize]="38"
         [lazy]="lazy"
         (onLazyLoad)="onLoad.emit($event)"
-    ></p-dropdown>
+    >
+        <ng-template let-item pTemplate="item">{{ l(item[optionLabel]) }}</ng-template>
+        <ng-template let-item pTemplate="selectedItem">{{ l(item[optionLabel]) }}</ng-template>
+    </p-dropdown>
 </div>
