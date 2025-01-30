@@ -1,3 +1,4 @@
+import { SidebarModule } from 'primeng/sidebar';
 import { Component, OnInit, OnDestroy, Injector } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ExamsServiceProxy } from '@shared/service-proxies/service-proxies';
@@ -7,7 +8,7 @@ import { AppComponentBase } from '@shared/common/app-component-base';
 
 @Component({
     standalone: true,
-    imports: [CommonModule, QuizComponent, StudentHeaderComponent],
+    imports: [CommonModule, QuizComponent, SidebarModule],
     selector: 'app-student-main',
     templateUrl: './student-main.component.html',
     styleUrls: ['./student-main.component.css'],

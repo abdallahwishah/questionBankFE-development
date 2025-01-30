@@ -53,7 +53,10 @@
             {{ l('ViewExams') }}
         </a>
     </div>
-
-
-
 </div>
+<p-sidebar [(visible)]="sideBar" styleClass="w-40rem" position="right">
+    <ng-template pTemplate="header">
+        <span class="font-semibold text-dark fs-3">قائمة الاختبار</span>
+    </ng-template>
+    <app-quiz></app-quiz>
+</p-sidebar>
