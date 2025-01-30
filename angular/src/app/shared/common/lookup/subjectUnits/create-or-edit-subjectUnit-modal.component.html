@@ -28,8 +28,26 @@
                 <div class="modal-body">
                    <div class="row">
                     <div class="col-md-6 mb-3">
-                        <label class="form-label" for="StudyLevelValue">{{ l('StudyLevel') }}</label>
-                        <div class="input-group">
+
+                     <!--    <app-auto-complete-feild
+                                [label]="l('StudyLevel')"
+                                field="studyLevel.name"
+                                [(ngModel)]="studyLevelValue"
+                                name="studyLevel.id"
+                                [multiple]="true"
+                                [ConfigCustomSearch]="{
+                                    api: '/api/services/app/StudyLevels/GetAll',
+                                    keySearch: 'filter',
+                                    customParams: {
+                                        Sorting: '',
+                                        SkipCount: 0,
+                                        MaxResultCount: 10
+                                    }
+                                }"
+                            ></app-auto-complete-feild> -->
+                            <label class="form-label" for="StudySubjectValue">{{ l('StudyLevel') }}</label>
+
+                         <div class="input-group">
                             <input
                                 class="form-control"
                                 id="StudyLevelValue"
@@ -45,10 +63,28 @@
                             <button class="btn btn-danger btn-icon" type="button" (click)="setStudyLevelIdNull()">
                                 <i class="fa fa-times"></i>
                             </button>
-                        </div>
+                        </div> 
 
                     </div>
-                    <div class="col-md-6 mb-3">
+                     <div class="col-md-6 mb-3">
+                        <!--
+                        <app-auto-complete-feild
+                        [label]="l('StudyLevel')"
+                        field="studySubject.name"
+                        [(ngModel)]="studySubjectValue"
+                        name="studySubject.id"
+                        [multiple]="true"
+                        [ConfigCustomSearch]="{
+                            api: '/api/services/app/StudySubjects/GetAll',
+                            keySearch: 'filter',
+                            customParams: {
+                                Sorting: '',
+                                SkipCount: 0,
+                                MaxResultCount: 10
+                            }
+                        }"
+                    ></app-auto-complete-feild> -->
+
                         <label class="form-label" for="StudySubjectValue">{{ l('StudySubject') }}</label>
                         <div class="input-group">
                             <input
@@ -73,7 +109,7 @@
                             [(ngModel)]="subjectUnit.studySubjectId"
                             type="text"
                             hidden
-                        />
+                        /> 
                     </div>
                     <div class="col-md-6 mb-3">
                         <label class="form-label" for="SubjectUnit_NameF">{{ l('NameF') }} *</label>

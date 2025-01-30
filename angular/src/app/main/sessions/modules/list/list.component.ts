@@ -79,8 +79,8 @@ export class ListComponent extends AppComponentBase implements OnInit {
     }
 
     cleaerStatusFilter() {}
-    AddSession() {
-        this._DialogSharedService.showDialog(this.Add_Session_dialog, {});
+    AddSession(data?:any) {
+        this._DialogSharedService.showDialog(this.Add_Session_dialog, data);
     }
     doActions(label: any, record: any) {
         switch (label) {
@@ -91,7 +91,11 @@ export class ListComponent extends AppComponentBase implements OnInit {
                     },
                 });
                 break;
-            case 'Deleted':
+                case 'Edit':
+                 this.AddSession(record) 
+                break;
+
+            case 'Delete':
                 this.message.confirm('', this.l('AreYouSure'), (isConfirmed) => {
                     if (isConfirmed) {
                         this._sessionsServiceProxy.delete(record?.id).subscribe((res) => {

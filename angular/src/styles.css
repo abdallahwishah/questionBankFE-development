@@ -876,8 +876,6 @@ td {
     height: 43px;
 }
 
-
-
 .pt-8rem{
     padding-top: 8rem;
 }
@@ -890,4 +888,14 @@ td {
 
 .p-autocomplete-token{
     background: #e3e3e3 !important;
+}
+.p-dialog-mask {
+    z-index: 1000 !important;
+}
+.p-overlaypanel{
+    z-index: 999 !important;
+
+}
+.p-dialog-content{
+    overflow-x: hidden;
 }

@@ -9,12 +9,11 @@
                     viewBox="0 0 14 14"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
-                    class="postion"
-                >
+                    class="postion">
                     <path
                         d="M9.3337 8.12643L5.53036 11.9298C5.3612 12.0989 5.0812 12.0989 4.91203 11.9298C4.74286 11.7606 4.74286 11.4806 4.91203 11.3114L8.71536 7.5081C8.99536 7.2281 8.99536 6.7731 8.71536 6.4931L4.91203 2.68977C4.74286 2.5206 4.74286 2.2406 4.91203 2.07143C5.0812 1.90226 5.3612 1.90226 5.53036 2.07143L9.3337 5.87476C9.64286 6.18393 9.80036 6.59227 9.80036 7.0006C9.80036 7.40893 9.64286 7.81727 9.3337 8.12643Z"
                         fill="#999999"
-                    />
+  />
                 </svg>
                 {{ l('SessionsScreen') }}
             </span>
@@ -209,7 +208,7 @@
             <!-- Start Tabel -->
             <div class="primeng-datatable-container p-0 col-12">
                 <p-table
-                    #dataTable
+                    #attemptsTable
                     [value]="primengTableHelperForAttempts.records"
                     (onLazyLoad)="getListAttempts($event)"
                     rows="{{ primengTableHelperForAttempts.defaultRecordsCountPerPage }}"
@@ -293,7 +292,7 @@
                     {{ l('NoData') }}
                 </div>
                 <p-paginator
-                    #paginator
+                    #paginatorAttempts
                     [rows]="primengTableHelperForAttempts.defaultRecordsCountPerPage"
                     (onPageChange)="getListAttempts($event)"
                     [totalRecords]="primengTableHelperForAttempts.totalRecordsCount"
@@ -314,7 +313,7 @@
             <!-- Start Tabel -->
             <div class="primeng-datatable-container p-0 col-12">
                 <p-table
-                    #dataTable
+                    #supervisorsTable
                     [value]="primengTableHelperForSupervisors.records"
                     (onLazyLoad)="getListSupervis($event)"
                     rows="{{ primengTableHelperForSupervisors.defaultRecordsCountPerPage }}"
@@ -376,7 +375,7 @@
                     {{ l('NoData') }}
                 </div>
                 <p-paginator
-                    #paginator
+                    #paginatorSupervisors
                     [rows]="primengTableHelperForSupervisors.defaultRecordsCountPerPage"
                     (onPageChange)="getListSupervis($event)"
                     [totalRecords]="primengTableHelperForSupervisors.totalRecordsCount"

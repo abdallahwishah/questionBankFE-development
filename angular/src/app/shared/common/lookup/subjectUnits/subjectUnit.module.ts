@@ -9,6 +9,7 @@ import {SubjectUnitStudyLevelLookupTableModalComponent} from './subjectUnit-stud
     					import {SubjectUnitStudySubjectLookupTableModalComponent} from './subjectUnit-studySubject-lookup-table-modal.component';
 import { ActionButtonComponent } from "../../../components/action-button/action-button.component";
 import { InputSwitchModule } from 'primeng/inputswitch';
+import { AutoCompleteFeildModule } from '@app/shared/components/auto-complete-feild/auto-complete-feild.module';
 
 
 
@@ -21,7 +22,7 @@ import { InputSwitchModule } from 'primeng/inputswitch';
     					SubjectUnitStudyLevelLookupTableModalComponent,
     					SubjectUnitStudySubjectLookupTableModalComponent,
     ],
-    imports: [AppSharedModule, SubjectUnitRoutingModule, AdminSharedModule, ActionButtonComponent,InputSwitchModule],
+    imports: [AppSharedModule, SubjectUnitRoutingModule, AdminSharedModule, ActionButtonComponent,InputSwitchModule , AutoCompleteFeildModule],
 
 })
 export class SubjectUnitModule {

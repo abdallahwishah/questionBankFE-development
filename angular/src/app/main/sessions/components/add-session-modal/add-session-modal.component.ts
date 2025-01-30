@@ -1,4 +1,4 @@
-import { map } from 'rxjs';
+import { map, Subscription } from 'rxjs';
 import { Component, EventEmitter, Injector, OnInit, Output } from '@angular/core';
 import { DialogSharedService } from '@app/shared/components/dialog-shared/dialog-shared.service';
 import { UniqueNameComponents } from '@app/shared/Models/UniqueNameComponents';
@@ -18,10 +18,11 @@ export class AddSessionsModalComponent extends AppComponentBase implements OnIni
 
     @Output() OnRefresh: EventEmitter<boolean> = new EventEmitter<boolean>();
 
+    subscription: Subscription;
 
+   dataForEdit:any
 
-
-
+ 
 
 
     FormAddSession:FormGroup;
@@ -46,6 +47,16 @@ export class AddSessionsModalComponent extends AppComponentBase implements OnIni
         })
     }
     ngOnInit(): void {
+        this.subscription = this._DialogSharedService
+        .SelectorFilterByComponent$(this.Add_Session_dialog, 'configShow')
+        .subscribe(configShow => {
+            this.dataForEdit = configShow?.data
+            this.FormAddSession.patchValue({...configShow?.data.session ,
+                examTemplateId: configShow?.data.session.examTemplateId
+              })
+            console.log("configShow?.data" , configShow?.data)
+        });
+
 
         this._ExamTemplatesServiceProxy.getAll(
             undefined,
@@ -88,4 +99,9 @@ export class AddSessionsModalComponent extends AppComponentBase implements OnIni
         this.FormAddSession.reset();
         this._DialogSharedService.hideDialog(this.Add_Session_dialog);
     }
+
+    ngOnDestroy(): void {
+        // Don’t forget to clean up
+        this.subscription?.unsubscribe();
+      }
 }

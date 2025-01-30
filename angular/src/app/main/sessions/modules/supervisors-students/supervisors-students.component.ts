@@ -20,8 +20,10 @@ import { UniqueNameComponents } from '@app/shared/Models/UniqueNameComponents';
     styleUrls: ['./supervisors-students.component.css'],
 })
 export class SupervisorsStudentsComponent extends AppComponentBase implements OnInit {
-    @ViewChild('dataTable', { static: true }) dataTable: Table;
-    @ViewChild('paginator', { static: true }) paginator: Paginator;
+    @ViewChild('attemptsTable', { static: true }) attemptsTable: Table;
+    @ViewChild('supervisorsTable', { static: true }) supervisorsTable: Table;
+    @ViewChild('paginatorAttempts', { static: true }) paginatorAttempts: Paginator;
+    @ViewChild('paginatorSupervisors', { static: true }) paginatorSupervisors: Paginator;
     activeIndex: number = 0; // Initially select Tab 1
     isActiveAttemptsFilter: boolean;
     sessionStatus: any[] = [];
@@ -75,7 +77,7 @@ export class SupervisorsStudentsComponent extends AppComponentBase implements On
     getListAttempts(event?: LazyLoadEvent) {
         if (event) {
             if (this.primengTableHelperForAttempts.shouldResetPaging(event)) {
-                this.paginator.changePage(0);
+                this.paginatorAttempts.changePage(0);
                 if (
                     this.primengTableHelperForAttempts.records &&
                     this.primengTableHelperForAttempts.records.length > 0
@@ -112,7 +114,7 @@ export class SupervisorsStudentsComponent extends AppComponentBase implements On
     getListSupervis(event?: LazyLoadEvent) {
         if (event) {
             if (this.primengTableHelperForSupervisors.shouldResetPaging(event)) {
-                this.paginator.changePage(0);
+                this.paginatorSupervisors.changePage(0);
                 if (
                     this.primengTableHelperForSupervisors.records &&
                     this.primengTableHelperForSupervisors.records.length > 0

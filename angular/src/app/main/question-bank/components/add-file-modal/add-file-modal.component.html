@@ -8,7 +8,18 @@
         <ng-container>
             <div class="row">
                 <div class="col-md-12">
-                    <app-dropdown-field [labelField]="l('QuestionType')"></app-dropdown-field>
+                    @if (QuestionTypeEnum) {
+                        <app-dropdown-field
+                        [enm]="QuestionTypeEnum"
+                        [(ngModel)]="QuestionTypeId"
+                        [labelField]="l('QuestionType')"
+                        #QuestionType="ngModel"
+                        id="QuestionType"
+                    ></app-dropdown-field>
+                    }@else {
+                      <app-skeleton></app-skeleton>
+                    }
+
                 </div>
 
                 <div class="col-md-12 mt-6">

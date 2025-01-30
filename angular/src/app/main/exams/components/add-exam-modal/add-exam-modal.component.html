@@ -41,6 +41,6 @@
         [busyText]="l('Save')" -->
             <span>{{ l('Save') }}</span>
         </button>
-        <button class="btn btn-outline">{{ l('Cancel') }}</button>
+        <button class="btn btn-outline" (click)="closeDialog()">{{ l('Cancel') }}</button>
     </ng-container>
 </app-dialog-shared>

@@ -1,5 +1,6 @@
 import {
     CreateOrEditSupervisorDto,
+    RoleServiceProxy,
     SupervisorsServiceProxy,
 } from './../../../../../../../shared/service-proxies/service-proxies';
 import { Component, OnInit, Injector, Input, Output, EventEmitter } from '@angular/core';
@@ -24,11 +25,14 @@ export class AddSupervisorComponent extends AppComponentBase implements OnInit {
         private Injector: Injector,
         private SupervisorsServiceProxy: SupervisorsServiceProxy,
         private _dialogSharedService: DialogSharedService,
+        private _roleService: RoleServiceProxy
     ) {
         super(Injector);
     }
 
-    ngOnInit() {}
+    ngOnInit() {
+       /*  this._roleService.getRoles(undefined).subscribe() */
+    }
     Save() {
         this.SupervisorsServiceProxy.getAll;
         this.SupervisorsServiceProxy.createOrEdit(
