@@ -32,7 +32,7 @@ export class AppRouteGuard implements CanActivate, CanActivateChild, CanLoad {
             return of(true);
         }
         let role: any = localStorage.getItem('role');
-        if (role === 's_t_u_d_e_n_t') {
+         if (role === 's_t_u_d_e_n_t') {
             this._router.navigate(['/student/main']);
         } else if (role === 's_u_p_e_r_v_i_s_o_r') {
             this._router.navigate(['/supervisor/main']);

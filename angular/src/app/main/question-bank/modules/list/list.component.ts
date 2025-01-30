@@ -157,9 +157,7 @@ export class ListComponent extends AppComponentBase implements OnInit {
 
     CheckedQuestion: any;
     changeStatus($event, record) {
-        this._questionsServiceProxy.updateQuestionStatus(record.question.id, $event.checked).subscribe((val) => {
-            this.getList();
-        });
+        this._questionsServiceProxy.updateQuestionStatus(record.question.id, $event.checked).subscribe((val) => {});
     }
     closeFilters() {
         this.FiltersComponent.isPanelOpen = false;

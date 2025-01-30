@@ -6,6 +6,7 @@ import {
     ExamAttemptsServiceProxy,
     SessionsServiceProxy,
     SessionStatusEnum,
+    SessionSupervisorRoleEnum,
     SessionSupervisorsServiceProxy,
 } from '@shared/service-proxies/service-proxies';
 import { Paginator } from '@node_modules/primeng/paginator';
@@ -39,6 +40,7 @@ export class SupervisorsStudentsComponent extends AppComponentBase implements On
     sessionName: any;
     schoolName: any;
     execuldedIdFilter: any;
+    SessionSupervisorRoleEnum = SessionSupervisorRoleEnum;
     constructor(
         private _injector: Injector,
         private _SessionsServiceProxy: SessionsServiceProxy,
@@ -139,8 +141,11 @@ export class SupervisorsStudentsComponent extends AppComponentBase implements On
     doActionsForAttempts(label: any, record: any) {
         switch (label) {
             case 'MoveStudent':
-                console.log("record.examAttempt.studentId :" , record.examAttempt.studentId)
-                this._dialogSharedService.showDialog(UniqueNameComponents.Move_Student_dialog, record.examAttempt.studentId);
+                console.log('record.examAttempt.studentId :', record.examAttempt.studentId);
+                this._dialogSharedService.showDialog(
+                    UniqueNameComponents.Move_Student_dialog,
+                    record.examAttempt.studentId,
+                );
                 break;
         }
     }

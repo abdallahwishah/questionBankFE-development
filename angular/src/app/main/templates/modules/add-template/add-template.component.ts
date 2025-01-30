@@ -71,24 +71,15 @@ export class AddTemplateComponent extends AppComponentBase implements OnInit {
             }
         });
     }
-
+    studySubjectId: any;
     ngOnInit(): void {
         this.loading = true;
 
         // Use forkJoin to load everything in parallel
         forkJoin([
-            this._subjectUnitsServiceProxy.getAll(
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-            ),
-            this._complexitiesServiceProxy.getAll(undefined, undefined, undefined, undefined, undefined),
-            this._categoriesServiceProxy.getAll(undefined, undefined, undefined, undefined, undefined),
-            this._studyLevelsServiceProxy.getAll(undefined, undefined, undefined, undefined, undefined),
+            this._complexitiesServiceProxy.getAll(undefined, undefined, undefined, undefined, 1000),
+            this._categoriesServiceProxy.getAll(undefined, undefined, undefined, undefined, 1000),
+            this._studyLevelsServiceProxy.getAll(undefined, undefined, undefined, undefined, 1000),
             this._studySubjectsServiceProxy.getAll(
                 undefined,
                 undefined,
@@ -96,16 +87,10 @@ export class AddTemplateComponent extends AppComponentBase implements OnInit {
                 undefined,
                 undefined,
                 undefined,
-                undefined,
+                1000,
             ),
         ]).subscribe(
-            ([unitsRes, complexitiesRes, categoriesRes, levelsRes, subjectsRes]) => {
-                // subject units
-                this.subjectUnits = unitsRes.items.map((item) => ({
-                    id: item.subjectUnit.id,
-                    name: item.subjectUnit.name,
-                }));
-
+            ([complexitiesRes, categoriesRes, levelsRes, subjectsRes]) => {
                 // complexities
                 this.complexities = complexitiesRes.items.map((item) => ({
                     id: item.complexity.id,
@@ -142,6 +127,7 @@ export class AddTemplateComponent extends AppComponentBase implements OnInit {
                 // If not, add a new empty section.
                 if (this.templateId) {
                     this._examTemplatesServiceProxy.getExamTemplateForEdit(this.templateId).subscribe((val) => {
+                        this.studySubjectId = val.examTemplate.studySubjectId;
                         this._createOrEditExamTemplateDto = val.examTemplate;
                         this.studyLevelsValue = this._createOrEditExamTemplateDto.studyLevelIds.map((x, i) => {
                             return {
@@ -215,7 +201,36 @@ export class AddTemplateComponent extends AppComponentBase implements OnInit {
     removeDifficultyCriteria(section: CreateOrEditTemplateSectionDto, rowIndex: number): void {
         section.difficultyCriteria.splice(rowIndex, 1);
     }
-
+    deleteFilled() {
+        if(this.studySubjectId==this._createOrEditExamTemplateDto.studySubjectId){
+            return
+        }
+        this._createOrEditExamTemplateDto.templateSections?.forEach((value) => {
+            value?.difficultyCriteria?.forEach((criteria) => {
+                criteria.subjectUnitId = undefined;
+            });
+        });
+    }
+    getUnits() {
+        this.deleteFilled()
+        this._subjectUnitsServiceProxy
+            .getAll(
+                undefined,
+                undefined,
+                undefined,
+                this._createOrEditExamTemplateDto.studySubjectId,
+                undefined,
+                undefined,
+                1000,
+            )
+            .subscribe((unitsRes) => {
+                // subject units
+                this.subjectUnits = unitsRes.items.map((item) => ({
+                    id: item.subjectUnit.id,
+                    name: item.subjectUnit.name,
+                }));
+            });
+    }
     // Submit form
     createOrEditTemplate(): void {
         this._createOrEditExamTemplateDto.studyLevelIds = this.studyLevelsValue.map((x) => x?.studyLevel?.id);

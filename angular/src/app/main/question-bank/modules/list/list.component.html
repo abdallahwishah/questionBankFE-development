@@ -173,6 +173,9 @@
                         <th pSortableColumn="caseCode">
                             {{ '#' }}
                         </th>
+                        <th pSortableColumn="caseCode">
+                            {{ l('Id') }}
+                        </th>
                         <th pSortableColumn="TheQuestion">
                             {{ l('TheQuestion') }}
                             <p-sortIcon field="TheQuestion"></p-sortIcon>
@@ -203,7 +206,9 @@
                         <td>
                             {{ i + 1 }}
                         </td>
-
+                        <td>
+                            {{ record.question.id }}
+                        </td>
                         <td>
                             <span class="p-column-title">{{ l('body') }}</span>
                             <div [innerHTML]="record.question.body | safeText: 40"></div>

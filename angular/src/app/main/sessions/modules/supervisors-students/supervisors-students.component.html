@@ -9,11 +9,12 @@
                     viewBox="0 0 14 14"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
-                    class="postion">
+                    class="postion"
+                >
                     <path
                         d="M9.3337 8.12643L5.53036 11.9298C5.3612 12.0989 5.0812 12.0989 4.91203 11.9298C4.74286 11.7606 4.74286 11.4806 4.91203 11.3114L8.71536 7.5081C8.99536 7.2281 8.99536 6.7731 8.71536 6.4931L4.91203 2.68977C4.74286 2.5206 4.74286 2.2406 4.91203 2.07143C5.0812 1.90226 5.3612 1.90226 5.53036 2.07143L9.3337 5.87476C9.64286 6.18393 9.80036 6.59227 9.80036 7.0006C9.80036 7.40893 9.64286 7.81727 9.3337 8.12643Z"
                         fill="#999999"
-  />
+                    />
                 </svg>
                 {{ l('SessionsScreen') }}
             </span>
@@ -224,28 +225,41 @@
                             <th pSortableColumn="caseCode">
                                 {{ '#' }}
                             </th>
+                            <th pSortableColumn="studentNumber">
+                                {{ l('StudentNumber') }}
+                                <p-sortIcon field="studentNumber"></p-sortIcon>
+                            </th>
                             <th pSortableColumn="SessionName">
-                                {{ l('SchoolName') }}
+                                {{ l('IdNo') }}
                                 <p-sortIcon field="SessionName"></p-sortIcon>
                             </th>
+
                             <th pSortableColumn="SessionName">
                                 {{ l('StudentName') }}
                                 <p-sortIcon field="SessionName"></p-sortIcon>
                             </th>
                             <th pSortableColumn="SessionName">
-                                {{ l('NationalID') }}
+                                {{ l('studyLevel') }}
                                 <p-sortIcon field="SessionName"></p-sortIcon>
                             </th>
                             <th pSortableColumn="SessionName">
-                                {{ l('CurrentSection') }}
+                                {{ l('Cycle') }}
                                 <p-sortIcon field="SessionName"></p-sortIcon>
                             </th>
                             <th pSortableColumn="SessionName">
-                                {{ l('CurrentQuestion') }}
+                                {{ l('Adress') }}
                                 <p-sortIcon field="SessionName"></p-sortIcon>
                             </th>
                             <th pSortableColumn="SessionName">
-                                {{ l('Status') }}
+                                {{ l('BirthDate') }}
+                                <p-sortIcon field="SessionName"></p-sortIcon>
+                            </th>
+                            <th pSortableColumn="SessionName">
+                                {{ l('ClassName') }}
+                                <p-sortIcon field="SessionName"></p-sortIcon>
+                            </th>
+                            <th pSortableColumn="SessionName">
+                                {{ l('SchoolName') }}
                                 <p-sortIcon field="SessionName"></p-sortIcon>
                             </th>
                             <th>
@@ -258,23 +272,33 @@
                             <td>
                                 {{ i + 1 }}
                             </td>
-
-                            <td></td>
                             <td>
-                                <span class="p-column-title">{{ l('studentName') }}</span>
+                                {{ record.studentNumber || '-' }}
+                            </td>
+                            <td>
+                                {{ record.identityNumber || '-' }}
+                            </td>
+
+                            <td>
                                 {{ record.studentName || '-' }}
                             </td>
+                            <td>
+                                {{ record.studyLevel || '-' }}
+                            </td>
 
-                            <td></td>
                             <td>
-                                <span class="p-column-title">{{ l('currentSectionOrder') }}</span>
-                                {{ record.currentSectionOrder || '-' }}
+                                {{ record.year + ' ' + record?.cycleNumber || '-' }}
                             </td>
                             <td>
-                                <span class="p-column-title">{{ l('currentQuestionNoInGeneral') }}</span>
-                                {{ record.currentQuestionNoInGeneral || '-' }}
+                                {{ record.address + ' ' + record.governorate || '-' }}
                             </td>
-                            <td></td>
+                            <td>{{ record?.dateOfBirth | date }}</td>
+                            <td>
+                                {{ record.className || '-' }}
+                            </td>
+                            <td>
+                                {{ schoolName || '-' }}
+                            </td>
                             <td>
                                 <app-action-button
                                     [ActionsInfo]="[
@@ -341,6 +365,22 @@
                                 {{ l('PhoneNumber') }}
                                 <p-sortIcon field="telphoneNumber"></p-sortIcon>
                             </th>
+                            <th pSortableColumn="telphoneNumber">
+                                {{ l('Cycle') }}
+                                <p-sortIcon field="telphoneNumber"></p-sortIcon>
+                            </th>
+                            <th pSortableColumn="telphoneNumber">
+                                {{ l('Adress') }}
+                                <p-sortIcon field="telphoneNumber"></p-sortIcon>
+                            </th>
+                            <th pSortableColumn="SessionName">
+                                {{ l('ClassName') }}
+                                <p-sortIcon field="SessionName"></p-sortIcon>
+                            </th>
+                            <th pSortableColumn="SessionName">
+                                {{ l('SchoolName') }}
+                                <p-sortIcon field="SessionName"></p-sortIcon>
+                            </th>
                             <th pSortableColumn="SessionName">
                                 {{ l('Actions') }}
                                 <p-sortIcon field="SessionName"></p-sortIcon>
@@ -356,8 +396,16 @@
                             <td>
                                 {{ record.supervisorName || '-' }}
                             </td>
-                            <td>{{ record.supervisorRole || '-' }}</td>
+                            <td>{{ SessionSupervisorRoleEnum[record.sessionSupervisor?.role] || '-' }}</td>
                             <td>{{ record.telphoneNumber || '-' }}</td>
+                            <td>{{ record.cycleNumber + ' ' + record?.year || '-' }}</td>
+                            <td>{{ record.city || '-' }}</td>
+                            <td>
+                                {{ record.className || '-' }}
+                            </td>
+                            <td>
+                                {{ schoolName || '-' }}
+                            </td>
                             <td>
                                 <app-action-button
                                     [ActionsInfo]="[

@@ -153,7 +153,6 @@ export class CategoriesComponent extends AppComponentBase {
     }
     changeStatus($event, record) {
         this._categoriesServiceProxy.updateCategoryStatus(record.category.id, $event.checked).subscribe((val) => {
-            this.getCategories();
-        });
+         });
     }
 }

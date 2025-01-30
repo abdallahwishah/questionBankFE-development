@@ -359,7 +359,7 @@ export class LoginService {
             if (authenticateResult.returnUrl && !redirectUrl) {
                 redirectUrl = authenticateResult.returnUrl;
             }
-            if (authenticateResult?.isStudent) {
+             if (authenticateResult?.isStudent) {
                 redirectUrl = 'student/main';
                 localStorage.setItem('role', 's_t_u_d_e_n_t');
             } else if (authenticateResult?.isSupervisor) {
@@ -367,7 +367,7 @@ export class LoginService {
 
                 redirectUrl = 'supervisor/main';
             } else {
-                this._localStorageService.setItem('role', 'a_d_m_i_n');
+                localStorage.setItem('role', 'a_d_m_i_n');
             }
 
             this.login(

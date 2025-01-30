@@ -65,7 +65,7 @@ export class SubjectUnitsComponent extends AppComponentBase {
                 this.filterText,
                 this.codeFilter,
                 this.isActiveFilter,
-                this.studyLevelValueFilter,
+                undefined,
                 this.primengTableHelper.getSorting(this.dataTable),
                 this.primengTableHelper.getSkipCount(this.paginator, event),
                 this.primengTableHelper.getMaxResultCount(this.paginator, event),
@@ -137,7 +137,6 @@ export class SubjectUnitsComponent extends AppComponentBase {
         this._subjectUnitsServiceProxy
             .updateSubjectUnitStatus(record.subjectUnit.id, $event.checked)
             .subscribe((val) => {
-                this.getSubjectUnits();
-            });
+             });
     }
 }

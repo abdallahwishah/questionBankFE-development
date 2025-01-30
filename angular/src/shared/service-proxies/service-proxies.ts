@@ -24739,13 +24739,13 @@ export class SubjectUnitsServiceProxy {
      * @param filter (optional) 
      * @param codeFilter (optional) 
      * @param isActiveFilter (optional) 
-     * @param studySubjectValueFilter (optional) 
+     * @param studySubjectIdFilter (optional) 
      * @param sorting (optional) 
      * @param skipCount (optional) 
      * @param maxResultCount (optional) 
      * @return Success
      */
-    getAll(filter: string | undefined, codeFilter: string | undefined, isActiveFilter: number | undefined, studySubjectValueFilter: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfGetSubjectUnitForViewDto> {
+    getAll(filter: string | undefined, codeFilter: string | undefined, isActiveFilter: number | undefined, studySubjectIdFilter: number | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfGetSubjectUnitForViewDto> {
         let url_ = this.baseUrl + "/api/services/app/SubjectUnits/GetAll?";
         if (filter === null)
             throw new Error("The parameter 'filter' cannot be null.");
@@ -24759,10 +24759,10 @@ export class SubjectUnitsServiceProxy {
             throw new Error("The parameter 'isActiveFilter' cannot be null.");
         else if (isActiveFilter !== undefined)
             url_ += "IsActiveFilter=" + encodeURIComponent("" + isActiveFilter) + "&";
-        if (studySubjectValueFilter === null)
-            throw new Error("The parameter 'studySubjectValueFilter' cannot be null.");
-        else if (studySubjectValueFilter !== undefined)
-            url_ += "StudySubjectValueFilter=" + encodeURIComponent("" + studySubjectValueFilter) + "&";
+        if (studySubjectIdFilter === null)
+            throw new Error("The parameter 'studySubjectIdFilter' cannot be null.");
+        else if (studySubjectIdFilter !== undefined)
+            url_ += "StudySubjectIdFilter=" + encodeURIComponent("" + studySubjectIdFilter) + "&";
         if (sorting === null)
             throw new Error("The parameter 'sorting' cannot be null.");
         else if (sorting !== undefined)
@@ -35667,6 +35667,7 @@ export class CreateOrEditStudySubjectDto implements ICreateOrEditStudySubjectDto
     nameL!: string;
     language!: QuestionLanguageEnum;
     isActive!: boolean;
+    studyLevelIds!: number[];
 
     constructor(data?: ICreateOrEditStudySubjectDto) {
         if (data) {
@@ -35674,6 +35675,9 @@ export class CreateOrEditStudySubjectDto implements ICreateOrEditStudySubjectDto
                 if (data.hasOwnProperty(property))
                     (<any>this)[property] = (<any>data)[property];
             }
+        }
+        if (!data) {
+            this.studyLevelIds = [];
         }
     }
 
@@ -35684,6 +35688,11 @@ export class CreateOrEditStudySubjectDto implements ICreateOrEditStudySubjectDto
             this.nameL = _data["nameL"];
             this.language = _data["language"];
             this.isActive = _data["isActive"];
+            if (Array.isArray(_data["studyLevelIds"])) {
+                this.studyLevelIds = [] as any;
+                for (let item of _data["studyLevelIds"])
+                    this.studyLevelIds!.push(item);
+            }
         }
     }
 
@@ -35701,6 +35710,11 @@ export class CreateOrEditStudySubjectDto implements ICreateOrEditStudySubjectDto
         data["nameL"] = this.nameL;
         data["language"] = this.language;
         data["isActive"] = this.isActive;
+        if (Array.isArray(this.studyLevelIds)) {
+            data["studyLevelIds"] = [];
+            for (let item of this.studyLevelIds)
+                data["studyLevelIds"].push(item);
+        }
         return data;
     }
 }
@@ -35711,6 +35725,7 @@ export interface ICreateOrEditStudySubjectDto {
     nameL: string;
     language: QuestionLanguageEnum;
     isActive: boolean;
+    studyLevelIds: number[];
 }
 
 export class CreateOrEditSubjectCategoryDto implements ICreateOrEditSubjectCategoryDto {
@@ -41807,12 +41822,22 @@ export class GetExamAttemptForViewDto implements IGetExamAttemptForViewDto {
     examTitle!: string | undefined;
     sessionName!: string | undefined;
     className!: string | undefined;
+    schoolName!: string | undefined;
     studentName!: string | undefined;
     correctorName!: string | undefined;
     auditorName!: string | undefined;
     currentSectionOrder!: number;
     currentQuestionNo!: number;
     currentQuestionNoInGeneral!: number;
+    governorate!: string | undefined;
+    year!: number;
+    cycleNumber!: number;
+    studentNumber!: string | undefined;
+    studyLevelId!: number | undefined;
+    studyLevel!: string | undefined;
+    identityNumber!: string | undefined;
+    address!: string | undefined;
+    dateOfBirth!: DateTime | undefined;
 
     constructor(data?: IGetExamAttemptForViewDto) {
         if (data) {
@@ -41829,12 +41854,22 @@ export class GetExamAttemptForViewDto implements IGetExamAttemptForViewDto {
             this.examTitle = _data["examTitle"];
             this.sessionName = _data["sessionName"];
             this.className = _data["className"];
+            this.schoolName = _data["schoolName"];
             this.studentName = _data["studentName"];
             this.correctorName = _data["correctorName"];
             this.auditorName = _data["auditorName"];
             this.currentSectionOrder = _data["currentSectionOrder"];
             this.currentQuestionNo = _data["currentQuestionNo"];
             this.currentQuestionNoInGeneral = _data["currentQuestionNoInGeneral"];
+            this.governorate = _data["governorate"];
+            this.year = _data["year"];
+            this.cycleNumber = _data["cycleNumber"];
+            this.studentNumber = _data["studentNumber"];
+            this.studyLevelId = _data["studyLevelId"];
+            this.studyLevel = _data["studyLevel"];
+            this.identityNumber = _data["identityNumber"];
+            this.address = _data["address"];
+            this.dateOfBirth = _data["dateOfBirth"] ? DateTime.fromISO(_data["dateOfBirth"].toString()) : <any>undefined;
         }
     }
 
@@ -41851,12 +41886,22 @@ export class GetExamAttemptForViewDto implements IGetExamAttemptForViewDto {
         data["examTitle"] = this.examTitle;
         data["sessionName"] = this.sessionName;
         data["className"] = this.className;
+        data["schoolName"] = this.schoolName;
         data["studentName"] = this.studentName;
         data["correctorName"] = this.correctorName;
         data["auditorName"] = this.auditorName;
         data["currentSectionOrder"] = this.currentSectionOrder;
         data["currentQuestionNo"] = this.currentQuestionNo;
         data["currentQuestionNoInGeneral"] = this.currentQuestionNoInGeneral;
+        data["governorate"] = this.governorate;
+        data["year"] = this.year;
+        data["cycleNumber"] = this.cycleNumber;
+        data["studentNumber"] = this.studentNumber;
+        data["studyLevelId"] = this.studyLevelId;
+        data["studyLevel"] = this.studyLevel;
+        data["identityNumber"] = this.identityNumber;
+        data["address"] = this.address;
+        data["dateOfBirth"] = this.dateOfBirth ? this.dateOfBirth.toString() : <any>undefined;
         return data;
     }
 }
@@ -41866,12 +41911,22 @@ export interface IGetExamAttemptForViewDto {
     examTitle: string | undefined;
     sessionName: string | undefined;
     className: string | undefined;
+    schoolName: string | undefined;
     studentName: string | undefined;
     correctorName: string | undefined;
     auditorName: string | undefined;
     currentSectionOrder: number;
     currentQuestionNo: number;
     currentQuestionNoInGeneral: number;
+    governorate: string | undefined;
+    year: number;
+    cycleNumber: number;
+    studentNumber: string | undefined;
+    studyLevelId: number | undefined;
+    studyLevel: string | undefined;
+    identityNumber: string | undefined;
+    address: string | undefined;
+    dateOfBirth: DateTime | undefined;
 }
 
 export class GetExamForViewDto implements IGetExamForViewDto {
@@ -44387,7 +44442,11 @@ export class GetSessionSupervisorForViewDto implements IGetSessionSupervisorForV
     sessionName!: string | undefined;
     supervisorName!: string | undefined;
     telphoneNumber!: string | undefined;
-    supervisorRole!: string | undefined;
+    city!: string | undefined;
+    year!: number;
+    cycleNumber!: number;
+    className!: string | undefined;
+    schoolName!: string | undefined;
 
     constructor(data?: IGetSessionSupervisorForViewDto) {
         if (data) {
@@ -44404,7 +44463,11 @@ export class GetSessionSupervisorForViewDto implements IGetSessionSupervisorForV
             this.sessionName = _data["sessionName"];
             this.supervisorName = _data["supervisorName"];
             this.telphoneNumber = _data["telphoneNumber"];
-            this.supervisorRole = _data["supervisorRole"];
+            this.city = _data["city"];
+            this.year = _data["year"];
+            this.cycleNumber = _data["cycleNumber"];
+            this.className = _data["className"];
+            this.schoolName = _data["schoolName"];
         }
     }
 
@@ -44421,7 +44484,11 @@ export class GetSessionSupervisorForViewDto implements IGetSessionSupervisorForV
         data["sessionName"] = this.sessionName;
         data["supervisorName"] = this.supervisorName;
         data["telphoneNumber"] = this.telphoneNumber;
-        data["supervisorRole"] = this.supervisorRole;
+        data["city"] = this.city;
+        data["year"] = this.year;
+        data["cycleNumber"] = this.cycleNumber;
+        data["className"] = this.className;
+        data["schoolName"] = this.schoolName;
         return data;
     }
 }
@@ -44431,7 +44498,11 @@ export interface IGetSessionSupervisorForViewDto {
     sessionName: string | undefined;
     supervisorName: string | undefined;
     telphoneNumber: string | undefined;
-    supervisorRole: string | undefined;
+    city: string | undefined;
+    year: number;
+    cycleNumber: number;
+    className: string | undefined;
+    schoolName: string | undefined;
 }
 
 export class GetSiteTrackerForEditOutput implements IGetSiteTrackerForEditOutput {
@@ -44704,6 +44775,7 @@ export interface IGetStudySubjectForEditOutput {
 
 export class GetStudySubjectForViewDto implements IGetStudySubjectForViewDto {
     studySubject!: StudySubjectDto;
+    studyLevels!: string | undefined;
 
     constructor(data?: IGetStudySubjectForViewDto) {
         if (data) {
@@ -44717,6 +44789,7 @@ export class GetStudySubjectForViewDto implements IGetStudySubjectForViewDto {
     init(_data?: any) {
         if (_data) {
             this.studySubject = _data["studySubject"] ? StudySubjectDto.fromJS(_data["studySubject"]) : <any>undefined;
+            this.studyLevels = _data["studyLevels"];
         }
     }
 
@@ -44730,12 +44803,14 @@ export class GetStudySubjectForViewDto implements IGetStudySubjectForViewDto {
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["studySubject"] = this.studySubject ? this.studySubject.toJSON() : <any>undefined;
+        data["studyLevels"] = this.studyLevels;
         return data;
     }
 }
 
 export interface IGetStudySubjectForViewDto {
     studySubject: StudySubjectDto;
+    studyLevels: string | undefined;
 }
 
 export class GetSubjectCategoryForEditOutput implements IGetSubjectCategoryForEditOutput {
@@ -56331,6 +56406,8 @@ export class SessionSupervisorDto implements ISessionSupervisorDto {
     note!: string | undefined;
     sessionId!: number;
     supervisorId!: number;
+    schoolClassId!: number | undefined;
+    role!: SessionSupervisorRoleEnum;
 
     constructor(data?: ISessionSupervisorDto) {
         if (data) {
@@ -56347,6 +56424,8 @@ export class SessionSupervisorDto implements ISessionSupervisorDto {
             this.note = _data["note"];
             this.sessionId = _data["sessionId"];
             this.supervisorId = _data["supervisorId"];
+            this.schoolClassId = _data["schoolClassId"];
+            this.role = _data["role"];
         }
     }
 
@@ -56363,6 +56442,8 @@ export class SessionSupervisorDto implements ISessionSupervisorDto {
         data["note"] = this.note;
         data["sessionId"] = this.sessionId;
         data["supervisorId"] = this.supervisorId;
+        data["schoolClassId"] = this.schoolClassId;
+        data["role"] = this.role;
         return data;
     }
 }
@@ -56372,6 +56453,16 @@ export interface ISessionSupervisorDto {
     note: string | undefined;
     sessionId: number;
     supervisorId: number;
+    schoolClassId: number | undefined;
+    role: SessionSupervisorRoleEnum;
+}
+
+export enum SessionSupervisorRoleEnum {
+    HallChief = 1,
+    AssistantHallChief = 2,
+    Supervisor = 3,
+    EducationalGuide = 4,
+    Janitor = 5,
 }
 
 export class SessionTimeOutSettingsEditDto implements ISessionTimeOutSettingsEditDto {

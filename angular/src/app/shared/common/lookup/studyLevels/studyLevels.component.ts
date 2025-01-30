@@ -160,7 +160,6 @@ export class StudyLevelsComponent extends AppComponentBase {
     }
     changeStatus($event , record){
         this._studyLevelsServiceProxy.updateStudyLevelStatus(record.studyLevel.id ,$event.checked ).subscribe(val=>{
-           this.getStudyLevels()
-        })
+         })
    }
 }
