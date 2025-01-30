@@ -47,7 +47,7 @@ export class AppNavigationService {
             new AppMenuItem('Sessions', '', 'flaticon-line-graph', '/app/main/sessions'),
             // new AppMenuItem('MyExams', '', 'flaticon-line-graph', '/app/main/my-exams'),
             new AppMenuItem('CorrectingSession', '', 'flaticon-line-graph', '/app/main/correcting'),
-            new AppMenuItem('Audit', '', 'flaticon-line-graph', '/app/main/audit'),
+            new AppMenuItem('AuditScreen', '', 'flaticon-line-graph', '/app/main/audit'),
             /*  new AppMenuItem(
                 'lockup',
                 '',

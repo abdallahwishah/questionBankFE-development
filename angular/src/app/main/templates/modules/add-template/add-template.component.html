@@ -19,7 +19,9 @@
                 {{ l('Templates') }}
             </span>
             <span class="mx-2">/</span>
-            <h2 class="fw-bolder mb-0">{{ _createOrEditExamTemplateDto?.id ? 'EditTemplate' : 'AddTemplate' }}</h2>
+            <h2 class="fw-bolder mb-0">
+                {{ _createOrEditExamTemplateDto?.id ? l('EditTemplate') : l('AddTemplate') }}
+            </h2>
         </div>
     </div>
 
@@ -57,7 +59,7 @@
                                         [value]="item?.Code"
                                         [(ngModel)]="_createOrEditExamTemplateDto.templateType"
                                     />
-                                    <label [for]="'radio-' + i">{{ item?.Name }}</label>
+                                    <label [for]="'radio-' + i">{{ l(item?.Name) }}</label>
                                 </div>
                             </div>
                         </div>
@@ -70,7 +72,7 @@
                                 optionLabel="name"
                                 optionValue="id"
                                 [(ngModel)]="_createOrEditExamTemplateDto.studySubjectId"
-                                (onSelectionChange)="getUnits();"
+                                (onSelectionChange)="getUnits()"
                             ></app-dropdown-field>
                         </div>
 

@@ -19,7 +19,7 @@
             </span>
             <span class="mx-2">/</span>
 
-            <h2 class="fw-bolder mb-0">{{ _createOrEditQuestionDto?.id ? 'EditQuestion' : 'AddAQuestion' }}</h2>
+            <h2 class="fw-bolder mb-0">{{ _createOrEditQuestionDto?.id ? l('EditQuestion') : l('AddAQuestion') }}</h2>
         </div>
     </div>
 
@@ -119,7 +119,7 @@
                                     api: '/api/services/app/SubjectUnits/GetAll',
                                     keySearch: 'filter',
                                     customParams: {
-                                        studySubjectIdFilter:studySubject?.studySubject?.id,
+                                        studySubjectIdFilter: studySubject?.studySubject?.id,
                                         Sorting: '',
                                         SkipCount: 0,
                                         MaxResultCount: 10

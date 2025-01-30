@@ -1,4 +1,5 @@
-﻿import { Component, ViewChild, Injector, Output, EventEmitter, OnInit, ElementRef } from '@angular/core';
+﻿import { DialogSharedService } from './../../../components/dialog-shared/dialog-shared.service';
+import { Component, ViewChild, Injector, Output, EventEmitter, OnInit, ElementRef } from '@angular/core';
 import { ModalDirective } from 'ngx-bootstrap/modal';
 import { finalize } from 'rxjs/operators';
 import { StudySubjectsServiceProxy, CreateOrEditStudySubjectDto } from '@shared/service-proxies/service-proxies';
@@ -6,13 +7,14 @@ import { AppComponentBase } from '@shared/common/app-component-base';
 import { DateTime } from 'luxon';
 
 import { DateTimeService } from '@app/shared/common/timing/date-time.service';
+import { UniqueNameComponents } from '@app/shared/Models/UniqueNameComponents';
 
 @Component({
     selector: 'createOrEditStudySubjectModal',
     templateUrl: './create-or-edit-studySubject-modal.component.html',
 })
 export class CreateOrEditStudySubjectModalComponent extends AppComponentBase implements OnInit {
-    @ViewChild('createOrEditModal', { static: true }) modal: ModalDirective;
+    Add_Study_Subject_dialog = UniqueNameComponents.Add_Study_Subject_dialog;
 
     @Output() modalSave: EventEmitter<any> = new EventEmitter<any>();
     studyLevelsValue: any[] = [];
@@ -25,6 +27,7 @@ export class CreateOrEditStudySubjectModalComponent extends AppComponentBase imp
         injector: Injector,
         private _studySubjectsServiceProxy: StudySubjectsServiceProxy,
         private _dateTimeService: DateTimeService,
+        private dialogSharedService: DialogSharedService
     ) {
         super(injector);
     }
@@ -35,7 +38,7 @@ export class CreateOrEditStudySubjectModalComponent extends AppComponentBase imp
             this.studySubject.id = studySubjectId;
 
             this.active = true;
-            this.modal.show();
+            this.dialogSharedService.showDialog(this.Add_Study_Subject_dialog,{});
         } else {
             this._studySubjectsServiceProxy.getStudySubjectForEdit(studySubjectId).subscribe((result) => {
                 this.studySubject = result.studySubject;
@@ -48,7 +51,7 @@ export class CreateOrEditStudySubjectModalComponent extends AppComponentBase imp
                     };
                 });
                 this.active = true;
-                this.modal.show();
+                this.dialogSharedService.showDialog(this.Add_Study_Subject_dialog,{});
             });
         }
     }
@@ -74,7 +77,7 @@ export class CreateOrEditStudySubjectModalComponent extends AppComponentBase imp
 
     close(): void {
         this.active = false;
-        this.modal.hide();
+        this.dialogSharedService.hideDialog(this.Add_Study_Subject_dialog,{});
     }
 
     ngOnInit(): void {}

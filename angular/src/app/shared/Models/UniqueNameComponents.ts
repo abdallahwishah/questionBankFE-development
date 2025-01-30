@@ -19,5 +19,6 @@ export enum UniqueNameComponents {
     extendTimeSession_dialog='extendTimeSession_dialog',
     Add_Student_dialog='Add_Student_dialog',
     Move_Student_dialog='Move_Student_dialog',
+    Add_Study_Subject_dialog='Add_Study_Subject_dialog',
 }
 

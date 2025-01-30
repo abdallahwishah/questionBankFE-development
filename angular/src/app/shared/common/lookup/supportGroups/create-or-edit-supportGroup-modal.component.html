@@ -6,7 +6,7 @@
     role="dialog"
     aria-labelledby="createOrEditModal"
     aria-hidden="true"
-    [config]="{ backdrop: 'static' }"
+    [config]="{ backdrop: 'static', container: 'body' }"
 >
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -60,15 +60,15 @@
                                 id="SupportGroup_GroupType"
                                 [(ngModel)]="supportGroup.groupType"
                             >
-                                <option value="1">{{ l('Image') }}</option>
-
-                                <option value="1">{{ l('Text') }}</option>
+                                <option *ngFor="let item of supportGroupTypeEnum" [value]="item.code">
+                                    {{ l(item.name) }}
+                                </option>
                             </select>
                             <validation-messages [formCtrl]="SupportGroup_GroupType"></validation-messages>
                         </div>
                     </div>
 
-                    <br>
+                    <br />
 
                     <label class="form-check form-check-custom form-check-solid">
                         <input
