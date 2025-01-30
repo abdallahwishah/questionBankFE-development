@@ -44739,6 +44739,7 @@ export interface IGetStudyLevelForViewDto {
 
 export class GetStudySubjectForEditOutput implements IGetStudySubjectForEditOutput {
     studySubject!: CreateOrEditStudySubjectDto;
+    studyLevels!: string | undefined;
 
     constructor(data?: IGetStudySubjectForEditOutput) {
         if (data) {
@@ -44752,6 +44753,7 @@ export class GetStudySubjectForEditOutput implements IGetStudySubjectForEditOutp
     init(_data?: any) {
         if (_data) {
             this.studySubject = _data["studySubject"] ? CreateOrEditStudySubjectDto.fromJS(_data["studySubject"]) : <any>undefined;
+            this.studyLevels = _data["studyLevels"];
         }
     }
 
@@ -44765,12 +44767,14 @@ export class GetStudySubjectForEditOutput implements IGetStudySubjectForEditOutp
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["studySubject"] = this.studySubject ? this.studySubject.toJSON() : <any>undefined;
+        data["studyLevels"] = this.studyLevels;
         return data;
     }
 }
 
 export interface IGetStudySubjectForEditOutput {
     studySubject: CreateOrEditStudySubjectDto;
+    studyLevels: string | undefined;
 }
 
 export class GetStudySubjectForViewDto implements IGetStudySubjectForViewDto {

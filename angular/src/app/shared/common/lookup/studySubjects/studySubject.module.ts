@@ -7,6 +7,7 @@ import {CreateOrEditStudySubjectModalComponent} from './create-or-edit-studySubj
 import {ViewStudySubjectModalComponent} from './view-studySubject-modal.component';
 import { ActionButtonComponent } from "../../../components/action-button/action-button.component";
 import { InputSwitchModule } from 'primeng/inputswitch';
+import { AutoCompleteFeildModule } from '@app/shared/components/auto-complete-feild/auto-complete-feild.module';
 
 
 
@@ -17,7 +18,8 @@ import { InputSwitchModule } from 'primeng/inputswitch';
         ViewStudySubjectModalComponent,
 
     ],
-    imports: [AppSharedModule, StudySubjectRoutingModule, AdminSharedModule, ActionButtonComponent,InputSwitchModule],
+    imports: [AppSharedModule, StudySubjectRoutingModule, AdminSharedModule, ActionButtonComponent,InputSwitchModule,        AutoCompleteFeildModule
+    ],
 
 })
 export class StudySubjectModule {

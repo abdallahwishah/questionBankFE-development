@@ -39,7 +39,7 @@
                                 required
                             />
                             <validation-messages [formCtrl]="StudySubject_NameF"></validation-messages>
-                            </div>
+                        </div>
                         <div class="col-md-6 my-3">
                             <label class="form-label" for="StudySubject_NameL">{{ l('NameL') }} *</label>
                             <input
@@ -52,28 +52,43 @@
                                 required
                             />
                             <validation-messages [formCtrl]="StudySubject_NameL"></validation-messages>
+                        </div>
+                    </div>
 
-                            </div>
-                            </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label" for="StudySubject_Language">{{ l('Language') }}</label>
+                        <select
+                            class="form-select"
+                            #StudySubject_Language="ngModel"
+                            name="Language"
+                            id="StudySubject_Language"
+                            [(ngModel)]="studySubject.language"
+                        >
+                            <option value="0">{{ l('AR') }}</option>
 
-                            <div class="col-md-6 mb-3">
-                                <label class="form-label" for="StudySubject_Language">{{ l('Language') }}</label>
-                                <select
-                                    class="form-select"
-                                    #StudySubject_Language="ngModel"
-                                    name="Language"
-                                    id="StudySubject_Language"
-                                    [(ngModel)]="studySubject.language"
-                                >
-                                    <option value="0">{{ l('AR') }}</option>
-
-                                    <option value="1">{{ l('EN') }}</option>
-                                </select>
-                                <validation-messages [formCtrl]="StudySubject_Language"></validation-messages>
-                            </div>
-
-
-
+                            <option value="1">{{ l('EN') }}</option>
+                        </select>
+                        <validation-messages [formCtrl]="StudySubject_Language"></validation-messages>
+                    </div>
+                    <!-- Class / Study Level -->
+                    <div class="col-md-6 mb-5">
+                        <app-auto-complete-feild
+                            [label]="l('StudyLevel')"
+                            field="studyLevel.name"
+                            [(ngModel)]="studyLevelsValue"
+                            name="StudyLevelId"
+                            [multiple]="true"
+                            [ConfigCustomSearch]="{
+                                api: '/api/services/app/StudyLevels/GetAll',
+                                keySearch: 'filter',
+                                customParams: {
+                                    Sorting: '',
+                                    SkipCount: 0,
+                                    MaxResultCount: 10
+                                }
+                            }"
+                        ></app-auto-complete-feild>
+                    </div>
 
                     <br />
                     <label class="form-check form-check-custom form-check-solid">
