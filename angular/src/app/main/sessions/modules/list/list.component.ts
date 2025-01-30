@@ -98,7 +98,7 @@ export class ListComponent extends AppComponentBase implements OnInit {
             case 'Delete':
                 this.message.confirm('', this.l('AreYouSure'), (isConfirmed) => {
                     if (isConfirmed) {
-                        this._sessionsServiceProxy.delete(record?.id).subscribe((res) => {
+                        this._sessionsServiceProxy.delete(record?.session?.id).subscribe((res) => {
                             this.getList();
                         });
                     }

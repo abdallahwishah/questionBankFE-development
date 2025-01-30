@@ -24,7 +24,7 @@
                                     d="M7.49996 18.9584C2.97496 18.9584 1.04163 17.025 1.04163 12.5V7.50002C1.04163 2.97502 2.97496 1.04169 7.49996 1.04169H12.5C17.025 1.04169 18.9583 2.97502 18.9583 7.50002V12.5C18.9583 17.025 17.025 18.9584 12.5 18.9584H7.49996ZM2.29163 7.50002V12.5C2.29163 16.3417 3.65829 17.7084 7.49996 17.7084H12.5C16.3416 17.7084 17.7083 16.3417 17.7083 12.5V7.50002C17.7083 3.65835 16.3416 2.29169 12.5 2.29169H7.49996C3.65829 2.29169 2.29163 3.65835 2.29163 7.50002Z"
                                     fill="white" />
                             </svg>
-    
+
                             <span class="d-none d-md-inline-block">
                                 {{ l('CreateNewSubjectGroup') }}
                             </span>
@@ -146,19 +146,19 @@
                 <div class="row align-items-center p-0 col-12 mt-6">
                     <!--<Primeng-Datatable-Start>-->
                     <div class="primeng-datatable-container col-12" [busyIf]="primengTableHelper.isLoading">
-                        <p-table #dataTable 
+                        <p-table #dataTable
                         (onLazyLoad)="getSubjectGroups($event)"
                         [value]="primengTableHelper.records"
-                        rows="{{primengTableHelper.defaultRecordsCountPerPage}}" 
-                        [paginator]="false" 
+                        rows="{{primengTableHelper.defaultRecordsCountPerPage}}"
+                        [paginator]="false"
                         [lazy]="true"
                         [scrollable]="true"
-                        ScrollWidth="100%" 
+                        ScrollWidth="100%"
                         [tableStyle]="{'min-width': '50rem'}"
                         [resizableColumns]="primengTableHelper.resizableColumns">
                             <ng-template pTemplate="header">
                                 <tr>
-                                  
+
                                     <th style="width: 50px" pSortableColumn="caseCode">
                                         {{'#'}}
                                     </th>
@@ -187,13 +187,13 @@
                                     </td>
                                     <td style="width:150px">
                                         <span class="p-column-title"> {{l('NameL')}}</span>
-                                        {{record.supportGroupNameL}}
+                                        {{record.supportGroupName}}
                                     </td>
                                     <td style="width:150px">
                                         <span class="p-column-title"> {{l('Value')}}</span>
                                         {{record.studySubjectValue}}
                                     </td>
-                                   
+
                                     <td style="width:150px">
                                         <span class="p-column-title"> {{l('Note')}}</span>
                                         {{record.subjectGroup.note}}
@@ -237,7 +237,7 @@
                                 ]"
                             ></app-action-button>
                                     </td>
-                                   
+
 
                                 </tr>
 

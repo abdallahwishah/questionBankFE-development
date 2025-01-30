@@ -146,8 +146,12 @@ export class ListComponent extends AppComponentBase implements OnInit {
 
                 break;
             case 'Delete':
-                this._examTemplatesServiceProxy.delete(record.question.id).subscribe((val) => {
-                    this.getList();
+                this.message.confirm('', this.l('AreYouSure'), (isConfirmed) => {
+                    if (isConfirmed) {
+                        this._examTemplatesServiceProxy.delete(record.examTemplate.id).subscribe((val) => {
+                            this.getList();
+                        });
+                    }
                 });
                 break;
         }

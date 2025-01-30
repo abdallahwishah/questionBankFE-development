@@ -17,6 +17,7 @@ import {
 import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR, ReactiveFormsModule } from '@angular/forms';
 import { optionsConfigModel } from '@app/shared/Models/models';
 import { HttpService } from '@app/shared/services/http.service';
+import { AppComponentBase } from '@shared/common/app-component-base';
 import { FilterService, PrimeNGConfig } from 'primeng/api';
 import { Dropdown, DropdownModule } from 'primeng/dropdown';
 import { Subscription, map, tap } from 'rxjs';
@@ -75,6 +76,7 @@ export class DropdownFieldComponent extends Dropdown implements OnInit, ControlV
         filterService: FilterService,
         config: PrimeNGConfig,
         private http: HttpService,
+        private appComponentBase: AppComponentBase,
     ) {
         super(el, renderer, cd, zone, filterService, config);
     }
@@ -83,6 +85,10 @@ export class DropdownFieldComponent extends Dropdown implements OnInit, ControlV
         if (changes['optionsConfig']) {
             this.optionLabel = this.optionsConfig?.optionLabel;
         }
+    }
+
+    l(string) {
+        return this.appComponentBase.l(string);
     }
 
     override writeValue(obj: any): void {

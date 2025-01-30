@@ -55,7 +55,7 @@
                                         {{ section.name }}
                                     </div>
                                     <small>
-                                        {{ section.examQuestions?.length || 0 + ' ' + l('Questions') }} |
+                                        {{ (section.examQuestions?.length || 0) + ' ' + l('Questions') }} |
                                         {{ l('Time') }}:
                                         {{ section.durationTime + ' ' + l('Minute') }}
                                     </small>

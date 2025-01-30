@@ -45,7 +45,7 @@ export class AppNavigationService {
             new AppMenuItem('Templates', '', 'flaticon-line-graph', '/app/main/templates'),
             new AppMenuItem('Exams', '', 'flaticon-line-graph', '/app/main/exams'),
             new AppMenuItem('Sessions', '', 'flaticon-line-graph', '/app/main/sessions'),
-            new AppMenuItem('MyExams', '', 'flaticon-line-graph', '/app/main/my-exams'),
+            // new AppMenuItem('MyExams', '', 'flaticon-line-graph', '/app/main/my-exams'),
             new AppMenuItem('CorrectingSession', '', 'flaticon-line-graph', '/app/main/correcting'),
             new AppMenuItem('Audit', '', 'flaticon-line-graph', '/app/main/audit'),
             /*  new AppMenuItem(

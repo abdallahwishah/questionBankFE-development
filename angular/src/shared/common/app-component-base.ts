@@ -7,7 +7,7 @@
     NotifyService,
     SettingService,
 } from 'abp-ng2-module';
-import { Component, Injector, OnDestroy } from '@angular/core';
+import { Component, Injectable, Injector, OnDestroy } from '@angular/core';
 import { AppConsts } from '@shared/AppConsts';
 import { AppUrlService } from '@shared/common/nav/app-url.service';
 import { AppSessionService } from '@shared/common/session/app-session.service';
@@ -26,9 +26,12 @@ interface AbpEventSubscription {
 @Component({
     template: '',
 })
+@Injectable({
+    providedIn: 'root', // Makes it available application-wide
+})
 export abstract class AppComponentBase implements OnDestroy {
     localizationSourceName = AppConsts.localization.defaultLocalizationSourceName;
-    injector: Injector
+    injector: Injector;
 
     localization: LocalizationService;
     permission: PermissionCheckerService;
@@ -67,10 +70,9 @@ export abstract class AppComponentBase implements OnDestroy {
         return this.appSession.theme;
     }
 
-    get appLogoSkin(): string{
-        if (this.currentTheme.isTopMenuUsed || this.currentTheme.isTabMenuUsed)
-        {
-            return this.currentTheme.baseSettings.layout.darkMode ? "light" : "dark";
+    get appLogoSkin(): string {
+        if (this.currentTheme.isTopMenuUsed || this.currentTheme.isTabMenuUsed) {
+            return this.currentTheme.baseSettings.layout.darkMode ? 'light' : 'dark';
         }
 
         return this.currentTheme.baseSettings.menu.asideSkin;
@@ -79,7 +81,10 @@ export abstract class AppComponentBase implements OnDestroy {
     get containerClass(): string {
         if (this.appSession.theme.baseSettings.layout.layoutType === 'fluid') {
             return 'app-container container-fluid';
-        } else if (this.appSession.theme.baseSettings.layout.layoutType === 'fixed' || this.appSession.theme.baseSettings.layout.layoutType === 'fluid-xxl') {
+        } else if (
+            this.appSession.theme.baseSettings.layout.layoutType === 'fixed' ||
+            this.appSession.theme.baseSettings.layout.layoutType === 'fluid-xxl'
+        ) {
             return 'app-container container-xxl';
         }
 
@@ -93,7 +98,7 @@ export abstract class AppComponentBase implements OnDestroy {
     flattenDeep(array) {
         return array.reduce(
             (acc, val) => (Array.isArray(val) ? acc.concat(this.flattenDeep(val)) : acc.concat(val)),
-            []
+            [],
         );
     }
 
