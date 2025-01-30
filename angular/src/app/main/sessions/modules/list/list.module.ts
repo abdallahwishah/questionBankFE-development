@@ -13,6 +13,7 @@ import { AutoCompleteComponent } from '@app/shared/components/fields/auto-comple
 import { DateComponent } from '@app/shared/components/fields/date/date.component';
 import { DialogSharedModule } from '@app/shared/components/dialog-shared/dialog-shared.module';
 import { CalendarModule } from 'primeng/calendar';
+import { SkeletonComponent } from "../../../../shared/components/skeleton/skeleton.component";
 
 @NgModule({
  imports: [
@@ -34,8 +35,8 @@ import { CalendarModule } from 'primeng/calendar';
     DateComponent,
     AutoCompleteComponent,
     DialogSharedModule,
-    CalendarModule
-
+    CalendarModule,
+    SkeletonComponent
 ],
   declarations: [ListComponent,
     AddSessionsModalComponent

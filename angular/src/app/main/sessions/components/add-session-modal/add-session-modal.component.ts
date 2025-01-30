@@ -50,13 +50,25 @@ export class AddSessionsModalComponent extends AppComponentBase implements OnIni
         this.subscription = this._DialogSharedService
         .SelectorFilterByComponent$(this.Add_Session_dialog, 'configShow')
         .subscribe(configShow => {
-            this.dataForEdit = configShow?.data
-            this.FormAddSession.patchValue({...configShow?.data.session ,
-                examTemplateId: configShow?.data.session.examTemplateId
-              })
-            console.log("configShow?.data" , configShow?.data)
+            if(configShow?.data){
+                this.dataForEdit = configShow?.data
+                this.FormAddSession.patchValue({...configShow?.data?.session ,
+                    examTemplateId: 
+                    {
+                         name:configShow?.data?.examTemplateName ,
+                         Id:configShow?.data?.session?.examTemplateId
+                    },
+                    startDate:new Date(configShow?.data?.session?.startDate),
+                    endDate:new Date(configShow?.data?.session?.endDate),
+                  })
+               
+            }else{
+                this.FormAddSession.reset();
+            }
+           
         });
 
+        
 
         this._ExamTemplatesServiceProxy.getAll(
             undefined,
@@ -84,10 +96,23 @@ export class AddSessionsModalComponent extends AppComponentBase implements OnIni
     Save() {
 
         if(this.FormAddSession.valid){
+           if(!this.dataForEdit){
             this._SessionsServiceProxy.createOrEdit(this.FormAddSession.value).subscribe(res=>{
-             this.OnRefresh.emit();
-             this.closeDialog();
-            })
+                this.notify.success(this.l('SuccessfullySaved'));
+                this.OnRefresh.emit();
+                this.closeDialog();
+               })
+           }else{
+            this._SessionsServiceProxy.createOrEdit({...this.FormAddSession.value , 
+                examTemplateId:this.FormAddSession.get('examTemplateId')?.value?.Id
+            }).subscribe(res=>{
+                this.notify.success(this.l('SuccessfullyEdited'));
+
+                this.OnRefresh.emit();
+                this.closeDialog();
+               })
+           }
+           
         }
         else{
 
