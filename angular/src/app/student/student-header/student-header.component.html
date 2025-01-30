@@ -24,7 +24,7 @@
                     <div class="symbol symbol-35px symbol-md-40px"><img alt="user" [src]="profilePicture" /></div>
                     <p class="mb-0">{{ userName }}</p>
                 </div>
-                <span class="cursor-pointer btn-logout">{{ l('Logout') }}</span>
+                <span class="cursor-pointer btn-logout" (click)="logout()" >{{ l('Logout') }}</span>
             </div>
         </div>
     </div>

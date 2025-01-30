@@ -1,8 +1,9 @@
 import { Component, Injector, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
+import { AppAuthService } from '@app/shared/common/auth/app-auth.service';
 import { AppConsts } from '@shared/AppConsts';
 import { AppComponentBase } from '@shared/common/app-component-base';
-import { ProfileServiceProxy } from '@shared/service-proxies/service-proxies';
+import { ProfileServiceProxy, SessionServiceProxy } from '@shared/service-proxies/service-proxies';
 
 @Component({
     standalone: true,
@@ -18,7 +19,9 @@ export class StudentHeaderComponent extends AppComponentBase implements OnInit {
     constructor(
         private _injector: Injector,
         private _profileServiceProxy: ProfileServiceProxy,
-        private _router: Router
+        private _router: Router,
+        private _sessionServiceProxy: SessionServiceProxy,
+        private _appAuthService: AppAuthService,
     ) {
         super(_injector);
     }
@@ -26,13 +29,13 @@ export class StudentHeaderComponent extends AppComponentBase implements OnInit {
     ngOnInit() {
         this.userName = this.appSession.user.userName;
         this.getProfilePicture();
-        this._router.events.subscribe((event:any) => {
-              if (event.routerEvent.url.includes('supervisor') || event.routerEvent.url.includes('student')) {
+        this._router.events.subscribe((event: any) => {
+            if (event.routerEvent.url.includes('supervisor') || event.routerEvent.url.includes('student')) {
                 this.showWhiteBg = true;
-              } else {
+            } else {
                 this.showWhiteBg = false;
-              }
-          });
+            }
+        });
     }
 
     getProfilePicture(): void {
@@ -41,5 +44,8 @@ export class StudentHeaderComponent extends AppComponentBase implements OnInit {
                 this.profilePicture = 'data:image/jpeg;base64,' + result.profilePicture;
             }
         });
+    }
+    logout() {
+        this._appAuthService.logout();
     }
 }

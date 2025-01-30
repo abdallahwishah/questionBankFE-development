@@ -92,6 +92,7 @@ export class LoginComponent extends AppComponentBase implements OnInit, AfterVie
     }
 
     login(): void {
+
         let recaptchaCallback = (token: string) => {
             this.showMainSpinner();
 

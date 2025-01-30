@@ -14,7 +14,7 @@ import { StudentHeaderComponent } from '@app/student/student-header/student-head
                 path: '',
                 children:[
                     {
-                        path:'supervisor-main',
+                        path:'main',
                         loadChildren: () => import('./../main/sessions/sessions.module').then((m) => m.SessionsModule),
                     }
                 ]

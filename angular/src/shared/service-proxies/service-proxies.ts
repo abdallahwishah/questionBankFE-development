@@ -2607,7 +2607,7 @@ export class ComplexitiesServiceProxy {
      * @param body (optional) 
      * @return Success
      */
-    createOrEdit(body: CreateOrEditComplexityDto | undefined): Observable<void> {
+    createOrEdit(body: CreateOrEditComplexityDto | undefined): Observable<number> {
         let url_ = this.baseUrl + "/api/services/app/Complexities/CreateOrEdit";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -2619,6 +2619,7 @@ export class ComplexitiesServiceProxy {
             responseType: "blob",
             headers: new HttpHeaders({
                 "Content-Type": "application/json",
+                "Accept": "text/plain"
             })
         };
 
@@ -2629,14 +2630,14 @@ export class ComplexitiesServiceProxy {
                 try {
                     return this.processCreateOrEdit(response_ as any);
                 } catch (e) {
-                    return _observableThrow(e) as any as Observable<void>;
+                    return _observableThrow(e) as any as Observable<number>;
                 }
             } else
-                return _observableThrow(response_) as any as Observable<void>;
+                return _observableThrow(response_) as any as Observable<number>;
         }));
     }
 
-    protected processCreateOrEdit(response: HttpResponseBase): Observable<void> {
+    protected processCreateOrEdit(response: HttpResponseBase): Observable<number> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -2645,7 +2646,11 @@ export class ComplexitiesServiceProxy {
         let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
         if (status === 200) {
             return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            return _observableOf(null as any);
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+                result200 = resultData200 !== undefined ? resultData200 : <any>null;
+    
+            return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
             return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
@@ -8136,6 +8141,58 @@ export class ExamsServiceProxy {
     }
 
     /**
+     * @param body (optional) 
+     * @return Success
+     */
+    excelImageExport(body: string | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/Exams/ExcelImageExport";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json",
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processExcelImageExport(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processExcelImageExport(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<void>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<void>;
+        }));
+    }
+
+    protected processExcelImageExport(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return _observableOf(null as any);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
      * @param filter (optional) 
      * @param examTemplateIdFilter (optional) 
      * @param isActiveFilter (optional) 
@@ -8937,6 +8994,58 @@ export class ExamsServiceProxy {
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
             result200 = QuestionWithAnswerDto.fromJS(resultData200);
             return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param body (optional) 
+     * @return Success
+     */
+    importQuestionsFromExcel(body: ImportQuestionInput | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/Exams/ImportQuestionsFromExcel";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json",
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processImportQuestionsFromExcel(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processImportQuestionsFromExcel(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<void>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<void>;
+        }));
+    }
+
+    protected processImportQuestionsFromExcel(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return _observableOf(null as any);
             }));
         } else if (status !== 200 && status !== 204) {
             return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
@@ -9816,6 +9925,371 @@ export class FriendshipServiceProxy {
         if (status === 200) {
             return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
             return _observableOf(null as any);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+}
+
+@Injectable()
+export class GovernoratesServiceProxy {
+    private http: HttpClient;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        this.http = http;
+        this.baseUrl = baseUrl ?? "";
+    }
+
+    /**
+     * @param filter (optional) 
+     * @param isActiveFilter (optional) 
+     * @param sorting (optional) 
+     * @param skipCount (optional) 
+     * @param maxResultCount (optional) 
+     * @return Success
+     */
+    getAll(filter: string | undefined, isActiveFilter: number | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfGetGovernorateForViewDto> {
+        let url_ = this.baseUrl + "/api/services/app/Governorates/GetAll?";
+        if (filter === null)
+            throw new Error("The parameter 'filter' cannot be null.");
+        else if (filter !== undefined)
+            url_ += "Filter=" + encodeURIComponent("" + filter) + "&";
+        if (isActiveFilter === null)
+            throw new Error("The parameter 'isActiveFilter' cannot be null.");
+        else if (isActiveFilter !== undefined)
+            url_ += "IsActiveFilter=" + encodeURIComponent("" + isActiveFilter) + "&";
+        if (sorting === null)
+            throw new Error("The parameter 'sorting' cannot be null.");
+        else if (sorting !== undefined)
+            url_ += "Sorting=" + encodeURIComponent("" + sorting) + "&";
+        if (skipCount === null)
+            throw new Error("The parameter 'skipCount' cannot be null.");
+        else if (skipCount !== undefined)
+            url_ += "SkipCount=" + encodeURIComponent("" + skipCount) + "&";
+        if (maxResultCount === null)
+            throw new Error("The parameter 'maxResultCount' cannot be null.");
+        else if (maxResultCount !== undefined)
+            url_ += "MaxResultCount=" + encodeURIComponent("" + maxResultCount) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetAll(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetAll(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<PagedResultDtoOfGetGovernorateForViewDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<PagedResultDtoOfGetGovernorateForViewDto>;
+        }));
+    }
+
+    protected processGetAll(response: HttpResponseBase): Observable<PagedResultDtoOfGetGovernorateForViewDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = PagedResultDtoOfGetGovernorateForViewDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param id (optional) 
+     * @return Success
+     */
+    getGovernorateForView(id: number | undefined): Observable<GetGovernorateForViewDto> {
+        let url_ = this.baseUrl + "/api/services/app/Governorates/GetGovernorateForView?";
+        if (id === null)
+            throw new Error("The parameter 'id' cannot be null.");
+        else if (id !== undefined)
+            url_ += "id=" + encodeURIComponent("" + id) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetGovernorateForView(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetGovernorateForView(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<GetGovernorateForViewDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<GetGovernorateForViewDto>;
+        }));
+    }
+
+    protected processGetGovernorateForView(response: HttpResponseBase): Observable<GetGovernorateForViewDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = GetGovernorateForViewDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param id (optional) 
+     * @return Success
+     */
+    getGovernorateForEdit(id: number | undefined): Observable<GetGovernorateForEditOutput> {
+        let url_ = this.baseUrl + "/api/services/app/Governorates/GetGovernorateForEdit?";
+        if (id === null)
+            throw new Error("The parameter 'id' cannot be null.");
+        else if (id !== undefined)
+            url_ += "Id=" + encodeURIComponent("" + id) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetGovernorateForEdit(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetGovernorateForEdit(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<GetGovernorateForEditOutput>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<GetGovernorateForEditOutput>;
+        }));
+    }
+
+    protected processGetGovernorateForEdit(response: HttpResponseBase): Observable<GetGovernorateForEditOutput> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = GetGovernorateForEditOutput.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param body (optional) 
+     * @return Success
+     */
+    createOrEdit(body: CreateOrEditGovernorateDto | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/Governorates/CreateOrEdit";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json",
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processCreateOrEdit(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processCreateOrEdit(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<void>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<void>;
+        }));
+    }
+
+    protected processCreateOrEdit(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return _observableOf(null as any);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param id (optional) 
+     * @return Success
+     */
+    delete(id: number | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/Governorates/Delete?";
+        if (id === null)
+            throw new Error("The parameter 'id' cannot be null.");
+        else if (id !== undefined)
+            url_ += "Id=" + encodeURIComponent("" + id) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+            })
+        };
+
+        return this.http.request("delete", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processDelete(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processDelete(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<void>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<void>;
+        }));
+    }
+
+    protected processDelete(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return _observableOf(null as any);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param filter (optional) 
+     * @param isActiveFilter (optional) 
+     * @return Success
+     */
+    getGovernoratesToExcel(filter: string | undefined, isActiveFilter: number | undefined): Observable<FileDto> {
+        let url_ = this.baseUrl + "/api/services/app/Governorates/GetGovernoratesToExcel?";
+        if (filter === null)
+            throw new Error("The parameter 'filter' cannot be null.");
+        else if (filter !== undefined)
+            url_ += "Filter=" + encodeURIComponent("" + filter) + "&";
+        if (isActiveFilter === null)
+            throw new Error("The parameter 'isActiveFilter' cannot be null.");
+        else if (isActiveFilter !== undefined)
+            url_ += "IsActiveFilter=" + encodeURIComponent("" + isActiveFilter) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetGovernoratesToExcel(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetGovernoratesToExcel(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<FileDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<FileDto>;
+        }));
+    }
+
+    protected processGetGovernoratesToExcel(response: HttpResponseBase): Observable<FileDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = FileDto.fromJS(resultData200);
+            return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
             return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
@@ -15137,7 +15611,7 @@ export class QuestionComplexitiesServiceProxy {
      * @param body (optional) 
      * @return Success
      */
-    createOrEdit(body: CreateOrEditQuestionComplexitiyDto | undefined): Observable<void> {
+    createOrEdit(body: CreateOrEditQuestionComplexitiyDto | undefined): Observable<number> {
         let url_ = this.baseUrl + "/api/services/app/QuestionComplexities/CreateOrEdit";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -15149,6 +15623,7 @@ export class QuestionComplexitiesServiceProxy {
             responseType: "blob",
             headers: new HttpHeaders({
                 "Content-Type": "application/json",
+                "Accept": "text/plain"
             })
         };
 
@@ -15159,14 +15634,14 @@ export class QuestionComplexitiesServiceProxy {
                 try {
                     return this.processCreateOrEdit(response_ as any);
                 } catch (e) {
-                    return _observableThrow(e) as any as Observable<void>;
+                    return _observableThrow(e) as any as Observable<number>;
                 }
             } else
-                return _observableThrow(response_) as any as Observable<void>;
+                return _observableThrow(response_) as any as Observable<number>;
         }));
     }
 
-    protected processCreateOrEdit(response: HttpResponseBase): Observable<void> {
+    protected processCreateOrEdit(response: HttpResponseBase): Observable<number> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -15175,7 +15650,11 @@ export class QuestionComplexitiesServiceProxy {
         let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
         if (status === 200) {
             return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            return _observableOf(null as any);
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+                result200 = resultData200 !== undefined ? resultData200 : <any>null;
+    
+            return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
             return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
@@ -18563,6 +19042,58 @@ export class QuestionSubjectUnitsServiceProxy {
     }
 
     protected processCreateOrEdit(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return _observableOf(null as any);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param body (optional) 
+     * @return Success
+     */
+    createOrEditInternal(body: CreateOrEditQuestionSubjectUnitDto | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/QuestionSubjectUnits/CreateOrEditInternal";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json",
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processCreateOrEditInternal(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processCreateOrEditInternal(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<void>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<void>;
+        }));
+    }
+
+    protected processCreateOrEditInternal(response: HttpResponseBase): Observable<void> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -22905,7 +23436,7 @@ export class StudySubjectsServiceProxy {
      * @param body (optional) 
      * @return Success
      */
-    createOrEdit(body: CreateOrEditStudySubjectDto | undefined): Observable<void> {
+    createOrEdit(body: CreateOrEditStudySubjectDto | undefined): Observable<number> {
         let url_ = this.baseUrl + "/api/services/app/StudySubjects/CreateOrEdit";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -22917,6 +23448,7 @@ export class StudySubjectsServiceProxy {
             responseType: "blob",
             headers: new HttpHeaders({
                 "Content-Type": "application/json",
+                "Accept": "text/plain"
             })
         };
 
@@ -22927,14 +23459,14 @@ export class StudySubjectsServiceProxy {
                 try {
                     return this.processCreateOrEdit(response_ as any);
                 } catch (e) {
-                    return _observableThrow(e) as any as Observable<void>;
+                    return _observableThrow(e) as any as Observable<number>;
                 }
             } else
-                return _observableThrow(response_) as any as Observable<void>;
+                return _observableThrow(response_) as any as Observable<number>;
         }));
     }
 
-    protected processCreateOrEdit(response: HttpResponseBase): Observable<void> {
+    protected processCreateOrEdit(response: HttpResponseBase): Observable<number> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -22943,7 +23475,11 @@ export class StudySubjectsServiceProxy {
         let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
         if (status === 200) {
             return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            return _observableOf(null as any);
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+                result200 = resultData200 !== undefined ? resultData200 : <any>null;
+    
+            return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
             return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
@@ -32466,6 +33002,8 @@ export class AuthenticateResultModel implements IAuthenticateResultModel {
     refreshToken!: string | undefined;
     refreshTokenExpireInSeconds!: number;
     c!: string | undefined;
+    isStudent!: boolean;
+    isSupervisor!: boolean;
 
     constructor(data?: IAuthenticateResultModel) {
         if (data) {
@@ -32496,6 +33034,8 @@ export class AuthenticateResultModel implements IAuthenticateResultModel {
             this.refreshToken = _data["refreshToken"];
             this.refreshTokenExpireInSeconds = _data["refreshTokenExpireInSeconds"];
             this.c = _data["c"];
+            this.isStudent = _data["isStudent"];
+            this.isSupervisor = _data["isSupervisor"];
         }
     }
 
@@ -32526,6 +33066,8 @@ export class AuthenticateResultModel implements IAuthenticateResultModel {
         data["refreshToken"] = this.refreshToken;
         data["refreshTokenExpireInSeconds"] = this.refreshTokenExpireInSeconds;
         data["c"] = this.c;
+        data["isStudent"] = this.isStudent;
+        data["isSupervisor"] = this.isSupervisor;
         return data;
     }
 }
@@ -32545,6 +33087,8 @@ export interface IAuthenticateResultModel {
     refreshToken: string | undefined;
     refreshTokenExpireInSeconds: number;
     c: string | undefined;
+    isStudent: boolean;
+    isSupervisor: boolean;
 }
 
 export class BlockUserInput implements IBlockUserInput {
@@ -34050,7 +34594,7 @@ export class CreateOrEditExamTemplateDto implements ICreateOrEditExamTemplateDto
     instructions!: string | undefined;
     hasInstructions!: boolean;
     versionCount!: number;
-    studyLevelId!: number;
+    studyLevelIds!: number[];
     studySubjectId!: number;
     templateType!: TemplateTypeEnum;
     generateDifferentQuestionsForEachVersion!: boolean;
@@ -34063,6 +34607,9 @@ export class CreateOrEditExamTemplateDto implements ICreateOrEditExamTemplateDto
                     (<any>this)[property] = (<any>data)[property];
             }
         }
+        if (!data) {
+            this.studyLevelIds = [];
+        }
     }
 
     init(_data?: any) {
@@ -34073,7 +34620,11 @@ export class CreateOrEditExamTemplateDto implements ICreateOrEditExamTemplateDto
             this.instructions = _data["instructions"];
             this.hasInstructions = _data["hasInstructions"];
             this.versionCount = _data["versionCount"];
-            this.studyLevelId = _data["studyLevelId"];
+            if (Array.isArray(_data["studyLevelIds"])) {
+                this.studyLevelIds = [] as any;
+                for (let item of _data["studyLevelIds"])
+                    this.studyLevelIds!.push(item);
+            }
             this.studySubjectId = _data["studySubjectId"];
             this.templateType = _data["templateType"];
             this.generateDifferentQuestionsForEachVersion = _data["generateDifferentQuestionsForEachVersion"];
@@ -34100,7 +34651,11 @@ export class CreateOrEditExamTemplateDto implements ICreateOrEditExamTemplateDto
         data["instructions"] = this.instructions;
         data["hasInstructions"] = this.hasInstructions;
         data["versionCount"] = this.versionCount;
-        data["studyLevelId"] = this.studyLevelId;
+        if (Array.isArray(this.studyLevelIds)) {
+            data["studyLevelIds"] = [];
+            for (let item of this.studyLevelIds)
+                data["studyLevelIds"].push(item);
+        }
         data["studySubjectId"] = this.studySubjectId;
         data["templateType"] = this.templateType;
         data["generateDifferentQuestionsForEachVersion"] = this.generateDifferentQuestionsForEachVersion;
@@ -34120,11 +34675,59 @@ export interface ICreateOrEditExamTemplateDto {
     instructions: string | undefined;
     hasInstructions: boolean;
     versionCount: number;
-    studyLevelId: number;
+    studyLevelIds: number[];
     studySubjectId: number;
     templateType: TemplateTypeEnum;
     generateDifferentQuestionsForEachVersion: boolean;
     templateSections: CreateOrEditTemplateSectionDto[] | undefined;
+}
+
+export class CreateOrEditGovernorateDto implements ICreateOrEditGovernorateDto {
+    id!: number | undefined;
+    nameF!: string;
+    nameL!: string;
+    isActive!: boolean;
+
+    constructor(data?: ICreateOrEditGovernorateDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.nameF = _data["nameF"];
+            this.nameL = _data["nameL"];
+            this.isActive = _data["isActive"];
+        }
+    }
+
+    static fromJS(data: any): CreateOrEditGovernorateDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new CreateOrEditGovernorateDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["nameF"] = this.nameF;
+        data["nameL"] = this.nameL;
+        data["isActive"] = this.isActive;
+        return data;
+    }
+}
+
+export interface ICreateOrEditGovernorateDto {
+    id: number | undefined;
+    nameF: string;
+    nameL: string;
+    isActive: boolean;
 }
 
 export class CreateOrEditMatchQuestionDto implements ICreateOrEditMatchQuestionDto {
@@ -38032,9 +38635,9 @@ export interface IExamAnswerQuestionOptionLookupTableDto {
 export class ExamAttemptDto implements IExamAttemptDto {
     id!: string;
     totalScore!: number | undefined;
-    attemptDate!: DateTime;
-    auditedDate!: DateTime;
-    correctionDate!: DateTime;
+    attemptDate!: DateTime | undefined;
+    auditedDate!: DateTime | undefined;
+    correctionDate!: DateTime | undefined;
     isManualCorrected!: boolean;
     isSubQuestionManualCorrected!: boolean;
     note!: string | undefined;
@@ -38100,9 +38703,9 @@ export class ExamAttemptDto implements IExamAttemptDto {
 export interface IExamAttemptDto {
     id: string;
     totalScore: number | undefined;
-    attemptDate: DateTime;
-    auditedDate: DateTime;
-    correctionDate: DateTime;
+    attemptDate: DateTime | undefined;
+    auditedDate: DateTime | undefined;
+    correctionDate: DateTime | undefined;
     isManualCorrected: boolean;
     isSubQuestionManualCorrected: boolean;
     note: string | undefined;
@@ -38342,6 +38945,7 @@ export class ExamQuestionWithAnswerDto implements IExamQuestionWithAnswerDto {
     dragFormAnswer!: DragFormAnswer[] | undefined;
     linkedQuestionAnswer!: SubQuestionAnswer[] | undefined;
     drawingAnswer!: string | undefined;
+    drawingPoints!: any | undefined;
 
     constructor(data?: IExamQuestionWithAnswerDto) {
         if (data) {
@@ -38394,6 +38998,7 @@ export class ExamQuestionWithAnswerDto implements IExamQuestionWithAnswerDto {
                     this.linkedQuestionAnswer!.push(SubQuestionAnswer.fromJS(item));
             }
             this.drawingAnswer = _data["drawingAnswer"];
+            this.drawingPoints = _data["drawingPoints"];
         }
     }
 
@@ -38446,6 +39051,7 @@ export class ExamQuestionWithAnswerDto implements IExamQuestionWithAnswerDto {
                 data["linkedQuestionAnswer"].push(item.toJSON());
         }
         data["drawingAnswer"] = this.drawingAnswer;
+        data["drawingPoints"] = this.drawingPoints;
         return data;
     }
 }
@@ -38467,6 +39073,7 @@ export interface IExamQuestionWithAnswerDto {
     dragFormAnswer: DragFormAnswer[] | undefined;
     linkedQuestionAnswer: SubQuestionAnswer[] | undefined;
     drawingAnswer: string | undefined;
+    drawingPoints: any | undefined;
 }
 
 export class ExamSectionDto implements IExamSectionDto {
@@ -41669,6 +42276,78 @@ export interface IGetGeneralStatsOutput {
     transactionPercent: number;
     newVisitPercent: number;
     bouncePercent: number;
+}
+
+export class GetGovernorateForEditOutput implements IGetGovernorateForEditOutput {
+    governorate!: CreateOrEditGovernorateDto;
+
+    constructor(data?: IGetGovernorateForEditOutput) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.governorate = _data["governorate"] ? CreateOrEditGovernorateDto.fromJS(_data["governorate"]) : <any>undefined;
+        }
+    }
+
+    static fromJS(data: any): GetGovernorateForEditOutput {
+        data = typeof data === 'object' ? data : {};
+        let result = new GetGovernorateForEditOutput();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["governorate"] = this.governorate ? this.governorate.toJSON() : <any>undefined;
+        return data;
+    }
+}
+
+export interface IGetGovernorateForEditOutput {
+    governorate: CreateOrEditGovernorateDto;
+}
+
+export class GetGovernorateForViewDto implements IGetGovernorateForViewDto {
+    governorate!: GovernorateDto;
+
+    constructor(data?: IGetGovernorateForViewDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.governorate = _data["governorate"] ? GovernorateDto.fromJS(_data["governorate"]) : <any>undefined;
+        }
+    }
+
+    static fromJS(data: any): GetGovernorateForViewDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new GetGovernorateForViewDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["governorate"] = this.governorate ? this.governorate.toJSON() : <any>undefined;
+        return data;
+    }
+}
+
+export interface IGetGovernorateForViewDto {
+    governorate: GovernorateDto;
 }
 
 export class GetIncomeStatisticsDataOutput implements IGetIncomeStatisticsDataOutput {
@@ -44959,6 +45638,50 @@ export interface IGoogleExternalLoginProviderSettings {
     userInfoEndpoint: string | undefined;
 }
 
+export class GovernorateDto implements IGovernorateDto {
+    id!: number;
+    name!: string | undefined;
+    isActive!: boolean;
+
+    constructor(data?: IGovernorateDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.name = _data["name"];
+            this.isActive = _data["isActive"];
+        }
+    }
+
+    static fromJS(data: any): GovernorateDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new GovernorateDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["name"] = this.name;
+        data["isActive"] = this.isActive;
+        return data;
+    }
+}
+
+export interface IGovernorateDto {
+    id: number;
+    name: string | undefined;
+    isActive: boolean;
+}
+
 export class HostBillingSettingsEditDto implements IHostBillingSettingsEditDto {
     legalName!: string | undefined;
     address!: string | undefined;
@@ -45498,6 +46221,42 @@ export interface IImpersonatedAuthenticateResultModel {
     accessToken: string | undefined;
     encryptedAccessToken: string | undefined;
     expireInSeconds: number;
+}
+
+export class ImportQuestionInput implements IImportQuestionInput {
+    fileToken!: string | undefined;
+
+    constructor(data?: IImportQuestionInput) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.fileToken = _data["fileToken"];
+        }
+    }
+
+    static fromJS(data: any): ImportQuestionInput {
+        data = typeof data === 'object' ? data : {};
+        let result = new ImportQuestionInput();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["fileToken"] = this.fileToken;
+        return data;
+    }
+}
+
+export interface IImportQuestionInput {
+    fileToken: string | undefined;
 }
 
 export class IncomeStastistic implements IIncomeStastistic {
@@ -49384,6 +50143,54 @@ export class PagedResultDtoOfGetExamTemplateForViewDto implements IPagedResultDt
 
 export interface IPagedResultDtoOfGetExamTemplateForViewDto {
     items: GetExamTemplateForViewDto[] | undefined;
+    totalCount: number;
+}
+
+export class PagedResultDtoOfGetGovernorateForViewDto implements IPagedResultDtoOfGetGovernorateForViewDto {
+    items!: GetGovernorateForViewDto[] | undefined;
+    totalCount!: number;
+
+    constructor(data?: IPagedResultDtoOfGetGovernorateForViewDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            if (Array.isArray(_data["items"])) {
+                this.items = [] as any;
+                for (let item of _data["items"])
+                    this.items!.push(GetGovernorateForViewDto.fromJS(item));
+            }
+            this.totalCount = _data["totalCount"];
+        }
+    }
+
+    static fromJS(data: any): PagedResultDtoOfGetGovernorateForViewDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new PagedResultDtoOfGetGovernorateForViewDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        if (Array.isArray(this.items)) {
+            data["items"] = [];
+            for (let item of this.items)
+                data["items"].push(item.toJSON());
+        }
+        data["totalCount"] = this.totalCount;
+        return data;
+    }
+}
+
+export interface IPagedResultDtoOfGetGovernorateForViewDto {
+    items: GetGovernorateForViewDto[] | undefined;
     totalCount: number;
 }
 

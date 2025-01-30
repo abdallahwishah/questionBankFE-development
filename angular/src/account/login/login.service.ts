@@ -70,7 +70,7 @@ export class LoginService {
         private oauthService: OAuthService,
         private spinnerService: NgxSpinnerService,
         private _localStorageService: LocalStorageService,
-        private _twitterService: TwitterServiceProxy
+        private _twitterService: TwitterServiceProxy,
     ) {
         this.clear();
     }
@@ -125,19 +125,14 @@ export class LoginService {
             });
         } else if (loginProvider.name === ExternalLoginProvider.GOOGLE) {
             new ScriptLoaderService()
-                .load(
-                    'https://apis.google.com/js/api.js',
-                    'https://accounts.google.com/gsi/client'
-                )
+                .load('https://apis.google.com/js/api.js', 'https://accounts.google.com/gsi/client')
                 .then(() => {
                     gapi.load('client', () => {
-                        gapi.client
-                            .init({})
-                            .then(() => {
-                                gapi.client.load('oauth2', 'v2', () => {
-                                    callback();
-                                });
+                        gapi.client.init({}).then(() => {
+                            gapi.client.load('oauth2', 'v2', () => {
+                                callback();
                             });
+                        });
                     });
                 });
         } else if (loginProvider.name === ExternalLoginProvider.MICROSOFT) {
@@ -177,7 +172,7 @@ export class LoginService {
                 .pipe(
                     finalize(() => {
                         this.spinnerService.hide();
-                    })
+                    }),
                 )
                 .subscribe((result: ExternalAuthenticateResultModel) => {
                     if (result.waitingForActivation) {
@@ -193,7 +188,7 @@ export class LoginService {
                         result.refreshTokenExpireInSeconds,
                         false,
                         '',
-                        result.returnUrl
+                        result.returnUrl,
                     );
                 });
         });
@@ -224,7 +219,7 @@ export class LoginService {
                 result.refreshTokenExpireInSeconds,
                 false,
                 '',
-                result.returnUrl
+                result.returnUrl,
             );
         });
     }
@@ -254,7 +249,7 @@ export class LoginService {
                     .pipe(
                         finalize(() => {
                             this.spinnerService.hide();
-                        })
+                        }),
                     )
                     .subscribe((result: ExternalAuthenticateResultModel) => {
                         if (result.waitingForActivation) {
@@ -270,7 +265,7 @@ export class LoginService {
                             result.refreshTokenExpireInSeconds,
                             false,
                             '',
-                            result.returnUrl
+                            result.returnUrl,
                         );
                     });
             });
@@ -284,7 +279,7 @@ export class LoginService {
                     (response) => {
                         this.facebookLoginStatusChangeCallback(response);
                     },
-                    { scope: 'email' }
+                    { scope: 'email' },
                 );
             } else if (provider.name === ExternalLoginProvider.GOOGLE) {
                 let gisGoogleTokenClient = google.accounts.oauth2.initTokenClient({
@@ -292,12 +287,12 @@ export class LoginService {
                     scope: 'openid profile email',
                     callback: (resp) => {
                         if (resp.error !== undefined) {
-                            throw (resp);
+                            throw resp;
                         }
 
                         // GIS has automatically updated gapi.client with the newly issued access token
                         this.googleLoginStatusChangeCallback(resp);
-                    }
+                    },
                 });
 
                 // Conditionally ask users to select the Google Account they'd like to use,
@@ -311,7 +306,6 @@ export class LoginService {
                     // Skip display of account chooser and consent dialog for an existing session.
                     gisGoogleTokenClient.requestAccessToken({ prompt: '' });
                 }
-
             } else if (provider.name === ExternalLoginProvider.MICROSOFT) {
                 let scopes = ['user.read'];
                 this.spinnerService.show();
@@ -320,16 +314,18 @@ export class LoginService {
                 }).then((idTokenResponse: AuthenticationResult) => {
                     this.MSAL.acquireTokenSilent({
                         account: this.MSAL.getAllAccounts()[0],
-                        scopes: scopes
-                    }).then((accessTokenResponse: AuthenticationResult) => {
-                        this.microsoftLoginCallback(accessTokenResponse);
-                        this.spinnerService.hide();
-                    }).catch((error) => {
-                        abp.log.error(error);
-                        abp.message.error(
-                            this.localization.localize('CouldNotValidateExternalUser', this.localizationSourceName)
-                        );
-                    });
+                        scopes: scopes,
+                    })
+                        .then((accessTokenResponse: AuthenticationResult) => {
+                            this.microsoftLoginCallback(accessTokenResponse);
+                            this.spinnerService.hide();
+                        })
+                        .catch((error) => {
+                            abp.log.error(error);
+                            abp.message.error(
+                                this.localization.localize('CouldNotValidateExternalUser', this.localizationSourceName),
+                            );
+                        });
                 });
             } else if (provider.name === ExternalLoginProvider.TWITTER) {
                 this.startTwitterLogin();
@@ -343,7 +339,6 @@ export class LoginService {
 
     private processAuthenticateResult(authenticateResult: AuthenticateResultModel, redirectUrl?: string) {
         this.authenticateResult = authenticateResult;
-
         if (authenticateResult.shouldResetPassword) {
             // Password reset
 
@@ -364,6 +359,16 @@ export class LoginService {
             if (authenticateResult.returnUrl && !redirectUrl) {
                 redirectUrl = authenticateResult.returnUrl;
             }
+            if (authenticateResult?.isStudent) {
+                redirectUrl = 'student/main';
+                localStorage.setItem('role', 's_t_u_d_e_n_t');
+            } else if (authenticateResult?.isSupervisor) {
+                localStorage.setItem('role', 's_u_p_e_r_v_i_s_o_r');
+
+                redirectUrl = 'supervisor/main';
+            } else {
+                this._localStorageService.setItem('role', 'a_d_m_i_n');
+            }
 
             this.login(
                 authenticateResult.accessToken,
@@ -373,7 +378,7 @@ export class LoginService {
                 authenticateResult.refreshTokenExpireInSeconds,
                 this.rememberMe,
                 authenticateResult.twoFactorRememberClientToken,
-                redirectUrl
+                redirectUrl,
             );
         } else {
             // Unexpected result!
@@ -391,7 +396,7 @@ export class LoginService {
         refreshTokenExpireInSeconds: number,
         rememberMe?: boolean,
         twoFactorRememberClientToken?: string,
-        redirectUrl?: string
+        redirectUrl?: string,
     ): void {
         let tokenExpireDate = rememberMe ? new Date(new Date().getTime() + 1000 * expireInSeconds) : undefined;
 
@@ -421,12 +426,12 @@ export class LoginService {
                         },
                         () => {
                             self.redirectToLoginResult(redirectUrl);
-                        }
+                        },
                     );
                 } else {
-                    self.redirectToLoginResult(redirectUrl);
+                    self.redirectToLoginResult(redirectUrl!);
                 }
-            }
+            },
         );
     }
 
@@ -513,7 +518,7 @@ export class LoginService {
                     result.refreshTokenExpireInSeconds,
                     false,
                     '',
-                    result.returnUrl
+                    result.returnUrl,
                 );
             });
         }
@@ -528,7 +533,7 @@ export class LoginService {
                 if (result.confirmed) {
                     window.location.href = result.redirectUrl;
                 } else {
-                    this._messageService.error('Couldn\'t get twitter request token !');
+                    this._messageService.error("Couldn't get twitter request token !");
                 }
             });
     }
@@ -548,24 +553,26 @@ export class LoginService {
             model.singleSignIn = UrlHelper.getSingleSignIn();
             model.returnUrl = UrlHelper.getReturnUrl();
 
-            _$this._tokenAuthService.externalAuthenticate(model).subscribe((result: ExternalAuthenticateResultModel) => {
-                if (result.waitingForActivation) {
-                    _$this._messageService.info('You have successfully registered. Waiting for activation!');
-                    return;
-                }
+            _$this._tokenAuthService
+                .externalAuthenticate(model)
+                .subscribe((result: ExternalAuthenticateResultModel) => {
+                    if (result.waitingForActivation) {
+                        _$this._messageService.info('You have successfully registered. Waiting for activation!');
+                        return;
+                    }
 
-                _$this.login(
-                    result.accessToken,
-                    result.encryptedAccessToken,
-                    result.expireInSeconds,
-                    result.refreshToken,
-                    result.refreshTokenExpireInSeconds,
-                    false,
-                    '',
-                    result.returnUrl
-                );
-            });
-        })
+                    _$this.login(
+                        result.accessToken,
+                        result.encryptedAccessToken,
+                        result.expireInSeconds,
+                        result.refreshToken,
+                        result.refreshTokenExpireInSeconds,
+                        false,
+                        '',
+                        result.returnUrl,
+                    );
+                });
+        });
     }
 
     private microsoftLoginCallback(response: AuthenticationResult) {
@@ -592,7 +599,7 @@ export class LoginService {
                 result.refreshTokenExpireInSeconds,
                 false,
                 '',
-                result.returnUrl
+                result.returnUrl,
             );
             this.spinnerService.hide();
         });

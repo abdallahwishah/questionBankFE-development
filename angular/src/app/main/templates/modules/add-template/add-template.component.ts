@@ -49,6 +49,7 @@ export class AddTemplateComponent extends AppComponentBase implements OnInit {
 
     loading = false;
     private templateId: number | undefined;
+    studyLevelsValue: any[] = [];
 
     constructor(
         injector: Injector,
@@ -142,6 +143,14 @@ export class AddTemplateComponent extends AppComponentBase implements OnInit {
                 if (this.templateId) {
                     this._examTemplatesServiceProxy.getExamTemplateForEdit(this.templateId).subscribe((val) => {
                         this._createOrEditExamTemplateDto = val.examTemplate;
+                        this.studyLevelsValue = this._createOrEditExamTemplateDto.studyLevelIds.map((x, i) => {
+                            return {
+                                studyLevel: {
+                                    name: val.studyLevelValue?.split(',')?.[i],
+                                    id: x,
+                                },
+                            };
+                        });
                         this.checked = this._createOrEditExamTemplateDto.hasInstructions ?? true;
                         this.loading = false;
                     });
@@ -209,6 +218,8 @@ export class AddTemplateComponent extends AppComponentBase implements OnInit {
 
     // Submit form
     createOrEditTemplate(): void {
+        this._createOrEditExamTemplateDto.studyLevelIds = this.studyLevelsValue.map((x) => x?.studyLevel?.id);
+
         this._examTemplatesServiceProxy.createOrEdit(this._createOrEditExamTemplateDto).subscribe(() => {
             this.notify.success(this.l('SavedSuccessfully'));
             this._router.navigate(['app/main/templates']);

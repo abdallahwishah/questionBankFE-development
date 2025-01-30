@@ -75,13 +75,22 @@
 
                         <!-- Class / Study Level -->
                         <div class="col-md-6 mb-5">
-                            <label class="mb-2">{{ l('StudyLevel') }}</label>
-                            <app-dropdown-field
-                                [options]="studyLevels"
-                                optionLabel="name"
-                                optionValue="id"
-                                [(ngModel)]="_createOrEditExamTemplateDto.studyLevelId"
-                            ></app-dropdown-field>
+                            <app-auto-complete-feild
+                                [label]="l('StudyLevel')"
+                                field="studyLevel.name"
+                                [(ngModel)]="studyLevelsValue"
+                                name="StudyLevelId"
+                                [multiple]="true"
+                                [ConfigCustomSearch]="{
+                                    api: '/api/services/app/StudyLevels/GetAll',
+                                    keySearch: 'filter',
+                                    customParams: {
+                                        Sorting: '',
+                                        SkipCount: 0,
+                                        MaxResultCount: 10
+                                    }
+                                }"
+                            ></app-auto-complete-feild>
                         </div>
 
                         <div class="col-md-6 mb-5">

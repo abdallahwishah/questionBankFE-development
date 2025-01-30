@@ -10,7 +10,13 @@ export class LocalStorageService {
 
         localForage.getItem(key, callback);
     }
+    getItemString(key: string) {
+        if (!localForage) {
+            return;
+        }
 
+        return localForage.getItem(key);
+    }
     setItem(key, value, callback?: any): void {
         if (!localForage) {
             return;

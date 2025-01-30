@@ -86,4 +86,5 @@ export class StudentMainComponent extends AppComponentBase implements OnInit, On
             `menubar=no,toolbar=no,location=no,status=no,scrollbars=yes,resizable=yes,width=${screen.availWidth},height=${screen.availHeight}`,
         );
     }
+    sideBar = false;
 }

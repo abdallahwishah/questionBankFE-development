@@ -12,6 +12,7 @@ import { AppSessionService } from '@shared/common/session/app-session.service';
 import { UrlHelper } from '@shared/helpers/UrlHelper';
 import { Observable } from 'rxjs/internal/Observable';
 import { of, Subject } from 'rxjs';
+import { LocalStorageService } from '@shared/utils/local-storage.service';
 
 @Injectable()
 export class AppRouteGuard implements CanActivate, CanActivateChild, CanLoad {
@@ -19,12 +20,22 @@ export class AppRouteGuard implements CanActivate, CanActivateChild, CanLoad {
         private _permissionChecker: PermissionCheckerService,
         private _router: Router,
         private _sessionService: AppSessionService,
-        private _refreshTokenService: RefreshTokenService
+        private _refreshTokenService: RefreshTokenService,
+        private _localStorageService: LocalStorageService,
     ) {}
 
     canActivateInternal(data: any, state: RouterStateSnapshot): Observable<boolean> {
         if (UrlHelper.isInstallUrl(location.href)) {
             return of(true);
+        }
+        if (UrlHelper.isInstallUrl(location.href)) {
+            return of(true);
+        }
+        let role: any = localStorage.getItem('role');
+        if (role === 's_t_u_d_e_n_t') {
+            this._router.navigate(['/student/main']);
+        } else if (role === 's_u_p_e_r_v_i_s_o_r') {
+            this._router.navigate(['/supervisor/main']);
         }
 
         if (!this._sessionService.user) {
@@ -46,7 +57,7 @@ export class AppRouteGuard implements CanActivate, CanActivateChild, CanLoad {
                     sessionObservable.next(false);
                     sessionObservable.complete();
                     this._router.navigate(['/account/login']);
-                }
+                },
             );
             return sessionObservable;
         }
