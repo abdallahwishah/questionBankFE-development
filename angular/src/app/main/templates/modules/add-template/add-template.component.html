@@ -48,7 +48,12 @@
                         <!-- Example: NumberOfTemplates (unbound or separate) -->
                         <div class="col-md-6 mb-5">
                             <label class="mb-2">{{ l('NumberOfTemplates') }}</label>
-                            <input name="numberOfTemplates" class="form-control m-input" type="text" />
+                            <input
+                                name="numberOfTemplates"
+                                class="form-control m-input"
+                                type="text"
+                                [(ngModel)]="_createOrEditExamTemplateDto.versionCount"
+                            />
                             <div class="d-flex gap-5 mt-4">
                                 <div class="d-flex gap-2" *ngFor="let item of TemplateTypes; index as i">
                                     <input
@@ -63,19 +68,6 @@
                                 </div>
                             </div>
                         </div>
-
-                        <!-- Study Subject -->
-                        <div class="col-md-6 mb-5">
-                            <label class="mb-2">{{ l('StudySubject') }}</label>
-                            <app-dropdown-field
-                                [options]="studySubjects"
-                                optionLabel="name"
-                                optionValue="id"
-                                [(ngModel)]="_createOrEditExamTemplateDto.studySubjectId"
-                                (onSelectionChange)="getUnits()"
-                            ></app-dropdown-field>
-                        </div>
-
                         <!-- Class / Study Level -->
                         <div class="col-md-6 mb-5">
                             <app-auto-complete-feild
@@ -96,15 +88,27 @@
                             ></app-auto-complete-feild>
                         </div>
 
+                        <!-- Study Subject -->
                         <div class="col-md-6 mb-5">
-                            <label class="mb-2">{{ l('VersionCount') }}</label>
-                            <input
-                                name="VersionCount"
-                                [(ngModel)]="_createOrEditExamTemplateDto.versionCount"
-                                class="form-control m-input"
-                                type="text"
-                            />
+                            <app-auto-complete-feild
+                                [label]="l('StudySubject')"
+                                field="studySubject.name"
+                                [(ngModel)]="studySubject"
+                                name="studySubjectId"
+                                (onSelectionChange)="getUnits()"
+                                [ConfigCustomSearch]="{
+                                    api: '/api/services/app/StudySubjects/GetAll',
+                                    keySearch: 'filter',
+                                    customParams: {
+                                        Sorting: '',
+                                        SkipCount: 0,
+                                        MaxResultCount: 10,
+                                        StudyLeveldsFilter: studyLevelIds
+                                    }
+                                }"
+                            ></app-auto-complete-feild>
                         </div>
+
                         <div class="col-md-6 mb-5">
                             <label>{{ l('Time') }}</label>
                             <div class="time-group">
@@ -112,6 +116,7 @@
                                     class="form-control m-input"
                                     type="number"
                                     [(ngModel)]="_createOrEditExamTemplateDto.durationTime"
+                                    [required]="true"
                                 />
                                 <div class="time-icon">
                                     {{ l('Minute') }}
@@ -141,8 +146,20 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
+                </div>
+                <!-- Main Instructions -->
+                <div class="card px-8 py-6">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h3>{{ l('Instructions') }}</h3>
+                        <!-- [(ngModel)]="checked" -->
 
-                        <!-- Main Instructions -->
+                        <div class="d-flex align-items-center gap-5">
+                            <p-inputSwitch [(ngModel)]="_createOrEditExamTemplateDto.hasInstructions"></p-inputSwitch>
+                            <span class="mt-2">{{ l('HasInstructions') }}</span>
+                        </div>
+                    </div>
+                    <div class="row mt-6" *ngIf="_createOrEditExamTemplateDto.hasInstructions">
                         <div class="col-12 mb-2">
                             <app-editor
                                 name="instructions"
@@ -151,7 +168,6 @@
                         </div>
                     </div>
                 </div>
-
                 <!-- Sections card -->
                 <div class="col-12 mt-6">
                     <div class="card px-8 py-6">
@@ -189,13 +205,6 @@
                                         <input class="form-control m-input" type="text" [(ngModel)]="section.name" />
                                     </div>
                                     <!-- SectionName => section.name -->
-                                    <div class="col-md-4 mb-5">
-                                        <label>{{ l('SectionType') }}</label>
-                                        <app-dropdown-field
-                                            [enm]="SectionTypeEnum"
-                                            [(ngModel)]="section.sectionType"
-                                        ></app-dropdown-field>
-                                    </div>
 
                                     <!-- Time => section.durationTime -->
 
@@ -340,7 +349,11 @@
                                 </div>
                                 <div>
                                     <!-- Save -->
-                                    <button class="btn btn-primary" (click)="createOrEditTemplate()">
+                                    <button
+                                        class="btn btn-primary"
+                                        [disabled]="!_createOrEditExamTemplateDto.durationTime"
+                                        (click)="createOrEditTemplate()"
+                                    >
                                         {{ 'Save' | localize }}
                                     </button>
                                     <!-- Reset -->

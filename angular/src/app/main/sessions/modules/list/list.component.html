@@ -154,11 +154,11 @@
 
                         <td>
                             <span class="p-column-title">{{ l('startDate') }}</span>
-                            {{ (record.session.startDate | luxonFormat: 'hh:mm a - dd/MM/yyyy') || '-' }}
+                            {{ (record.session.startDate | luxonFormat: 'dd/MM/yyyy hh:mm a') || '-' }}
                         </td>
                         <td>
                             <span class="p-column-title">{{ l('endDate') }}</span>
-                            {{ (record.session.endDate | luxonFormat: 'hh:mm a - dd/MM/yyyy') || '-' }}
+                            {{ (record.session.endDate | luxonFormat: 'dd/MM/yyyy hh:mm a') || '-' }}
                         </td>
                         <td>
                             <span class="p-column-title">{{ l('StudyLevel') }}</span>

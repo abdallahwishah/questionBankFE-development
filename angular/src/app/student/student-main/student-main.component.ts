@@ -5,6 +5,7 @@ import { ExamsServiceProxy } from '@shared/service-proxies/service-proxies';
 import { QuizComponent } from '../quiz/quiz.component';
 import { StudentHeaderComponent } from '../student-header/student-header.component';
 import { AppComponentBase } from '@shared/common/app-component-base';
+import { Router } from '@node_modules/@angular/router';
 
 @Component({
     standalone: true,
@@ -25,6 +26,7 @@ export class StudentMainComponent extends AppComponentBase implements OnInit, On
     constructor(
         injector: Injector,
         private _examsServiceProxy: ExamsServiceProxy,
+        private router: Router,
     ) {
         super(injector);
     }
@@ -81,11 +83,12 @@ export class StudentMainComponent extends AppComponentBase implements OnInit, On
 
     goToExam() {
         const attemptUrl = '/student/exam-attempt/';
-        window.open(
-            attemptUrl,
-            '_blank',
-            `menubar=no,toolbar=no,location=no,status=no,scrollbars=yes,resizable=yes,width=${screen.availWidth},height=${screen.availHeight}`,
-        );
+        this.router.navigate([attemptUrl]);
+        // window.open(
+        //     attemptUrl,
+        //     '_blank',
+        //     `menubar=no,toolbar=no,location=no,status=no,scrollbars=yes,resizable=yes,width=${screen.availWidth},height=${screen.availHeight}`,
+        // );
     }
     sideBar = false;
 }

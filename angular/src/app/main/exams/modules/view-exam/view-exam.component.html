@@ -56,8 +56,8 @@
                                     </div>
                                     <small>
                                         {{ (section.examQuestions?.length || 0) + ' ' + l('Questions') }} |
-                                        {{ l('Time') }}:
-                                        {{ section.durationTime + ' ' + l('Minute') }}
+                                        <!-- {{ l('Time') }}:
+                                        {{ section.durationTime + ' ' + l('Minute') }} -->
                                     </small>
                                 </div>
 
@@ -100,7 +100,7 @@
                                 <!-- Arrow Up/Down -->
                                 <div class="d-flex align-items-center gap-2">
                                     <button class="btn btn-link chevron-icons">
-                                        <div (click)="$event.stopPropagation()">
+                                        <div>
                                             <ng-container *ngIf="!openSections[i]">
                                                 <!-- arrow-down icon -->
                                                 <svg

@@ -48,6 +48,8 @@ export class DropdownFieldComponent extends Dropdown implements OnInit, ControlV
     onTouch: any = () => {};
     @Input() labelField: string;
     @Input() lookupKey: string;
+    @Input() excludeIds: any[] = [];
+    @Input() disableddisabled: string;
 
     @Input() sharedLookup: any;
     @Input() optionsFromApiLink: any;
@@ -159,6 +161,10 @@ export class DropdownFieldComponent extends Dropdown implements OnInit, ControlV
 
             this.optionLabel = 'Name';
             this.optionValue = 'Code';
+            // excludeIds
+            if (this.excludeIds.length > 0) {
+                this.options = this.options.filter((item) => !this.excludeIds.includes(item['Code']));
+            }
         }
         this.controlSubscription.add(
             this.fieldControl.valueChanges.subscribe((value) => {

@@ -21,6 +21,7 @@
                     </div>
                     <div class="col-md-6 mb-5">
                         <app-dropdown-field
+                            [disableddisabled]="FormAddSession?.value?.id"
                             [options]="ListExamTemplates"
                             [optionLabel]="'name'"
                             [optionValue]="'Id'"
@@ -30,10 +31,11 @@
                         <validation-messages [formCtrl]="FormAddSession.get('examTemplateId')"></validation-messages>
                     </div>
 
-                    <div class="col-md-6 mb-5">
+                    <div class="col-md-12 mb-5">
                         <label class="col-form-label required">{{ l('StartDate') }}</label>
                         <div class="input-normal-form-calendar">
                             <p-calendar
+                                [disabled]="FormAddSession?.value?.id"
                                 formControlName="startDate"
                                 appendTo="body"
                                 [showTime]="true"
@@ -94,7 +96,7 @@
                         </div>
                         <validation-messages [formCtrl]="FormAddSession.get('startDate')"></validation-messages>
                     </div>
-                    <div class="col-md-6 mb-5">
+                    <!-- <div class="col-md-6 mb-5">
                         <label class="col-form-label required">{{ l('EndDate') }}</label>
                         <div class="input-normal-form-calendar">
                             <p-calendar
@@ -157,13 +159,16 @@
                             </svg>
                         </div>
                         <validation-messages [formCtrl]="FormAddSession.get('endDate')"></validation-messages>
-                    </div>
+                    </div> -->
                     <!-- <div class="col-12 mb-5">
                         <app-auto-complete [label]="l('Supervisor')" [placeholder]="l('ChooseTheSessionSupervisor')"></app-auto-complete>
                     </div> -->
                     <div class="col-md-6 mb-5">
+                        <label class="col-form-label">{{ l('SupervisorsFile') }}</label>
+
                         <div class="upload-input p-1 d-flex justify-content-between align-items-center cursor-pointer">
                             <span
+                                *ngIf="!fileSuper"
                                 class="mx-3"
                                 [innerHTML]="
                                     l(
@@ -173,17 +178,21 @@
                                             '</a>'
                                     )
                                 "
-                            >
-                                {{ l('SchoolFile') }}
+                            ></span>
+                            <span *ngIf="fileSuper" class="mx-3">
+                                {{ fileSuper?.name }}
                             </span>
-                            <div class="icon d-inline-flex flex-center">
+                            <div class="icon d-inline-flex flex-center" (click)="uploadFileSuper.click()">
                                 <img src="assets/common/images/link.svg" alt="" />
                             </div>
                         </div>
                     </div>
                     <div class="col-md-6 mb-5">
+                        <label class="col-form-label">{{ l('StudentsFile') }}</label>
+
                         <div class="upload-input p-1 d-flex justify-content-between align-items-center cursor-pointer">
                             <span
+                                *ngIf="!fileStudent"
                                 class="mx-3"
                                 [innerHTML]="
                                     l(
@@ -193,17 +202,21 @@
                                             '</a>'
                                     )
                                 "
-                            >
-                                {{ l('StudentFile') }}
+                            ></span>
+                            <span *ngIf="fileStudent" class="mx-3">
+                                {{ fileStudent?.name }}
                             </span>
-                            <div class="icon d-inline-flex flex-center">
-                                <img src="assets/common/images/eye.svg" alt="" />
+
+                            <div class="icon d-inline-flex flex-center" (click)="uploadFileStudent.click()">
+                                <img src="assets/common/images/link.svg" alt="" />
                             </div>
                         </div>
                     </div>
                 </div>
             </form>
         </ng-container>
+        <input #uploadFileSuper (change)="uploadSuper($event)" type="file" class="d-none" />
+        <input #uploadFileStudent (change)="uploadStudent($event)" type="file" class="d-none" />
     </ng-container>
     <ng-container footerDialog>
         <button type="button" class="btn btn-primary blue" (click)="Save()">

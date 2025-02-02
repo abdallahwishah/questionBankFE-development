@@ -1,4 +1,5 @@
-﻿import { AppConsts } from '@shared/AppConsts';
+﻿import { DialogSharedService } from './../../../components/dialog-shared/dialog-shared.service';
+import { AppConsts } from '@shared/AppConsts';
 import { Component, Injector, ViewEncapsulation, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SubjectUnitsServiceProxy, SubjectUnitDto } from '@shared/service-proxies/service-proxies';
@@ -17,6 +18,7 @@ import { filter as _filter } from 'lodash-es';
 import { DateTime } from 'luxon';
 
 import { DateTimeService } from '@app/shared/common/timing/date-time.service';
+import { UniqueNameComponents } from '@app/shared/Models/UniqueNameComponents';
 
 @Component({
     templateUrl: './subjectUnits.component.html',
@@ -24,8 +26,6 @@ import { DateTimeService } from '@app/shared/common/timing/date-time.service';
     animations: [appModuleAnimation()],
 })
 export class SubjectUnitsComponent extends AppComponentBase {
-    @ViewChild('createOrEditSubjectUnitModal', { static: true })
-    createOrEditSubjectUnitModal: CreateOrEditSubjectUnitModalComponent;
     @ViewChild('viewSubjectUnitModal', { static: true }) viewSubjectUnitModal: ViewSubjectUnitModalComponent;
 
     @ViewChild('dataTable', { static: true }) dataTable: Table;
@@ -37,6 +37,7 @@ export class SubjectUnitsComponent extends AppComponentBase {
     isActiveFilter = -1;
     studyLevelValueFilter = '';
     studySubjectValueFilter = '';
+    Add_Unit = UniqueNameComponents.Add_Unit;
 
     constructor(
         injector: Injector,
@@ -46,6 +47,7 @@ export class SubjectUnitsComponent extends AppComponentBase {
         private _activatedRoute: ActivatedRoute,
         private _fileDownloadService: FileDownloadService,
         private _dateTimeService: DateTimeService,
+        private _dialogSharedService: DialogSharedService,
     ) {
         super(injector);
     }
@@ -82,7 +84,7 @@ export class SubjectUnitsComponent extends AppComponentBase {
     }
 
     createSubjectUnit(): void {
-        this.createOrEditSubjectUnitModal.show();
+        this._dialogSharedService.showDialog(this.Add_Unit, {});
     }
 
     deleteSubjectUnit(subjectUnit: SubjectUnitDto): void {
@@ -116,7 +118,8 @@ export class SubjectUnitsComponent extends AppComponentBase {
                 this.viewSubjectUnitModal.show(record);
                 break;
             case 'Edit':
-                this.createOrEditSubjectUnitModal.show(record.subjectUnit.id);
+                this._dialogSharedService.showDialog(this.Add_Unit, { id: record.subjectUnit.id });
+
                 break;
             case 'Delete':
                 this.deleteSubjectUnit(record.subjectUnit);
@@ -136,7 +139,6 @@ export class SubjectUnitsComponent extends AppComponentBase {
     changeStatus($event, record) {
         this._subjectUnitsServiceProxy
             .updateSubjectUnitStatus(record.subjectUnit.id, $event.checked)
-            .subscribe((val) => {
-             });
+            .subscribe((val) => {});
     }
 }

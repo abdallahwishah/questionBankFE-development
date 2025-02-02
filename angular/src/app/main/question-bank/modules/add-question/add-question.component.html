@@ -202,6 +202,7 @@
                     <div class="row mt-6">
                         <div class="col-md-6 mb-5">
                             <app-dropdown-field
+                                [excludeIds]="[512, 256, 128, 64, 32, 8, 1]"
                                 [enm]="QuestionTypeEnum"
                                 [(ngModel)]="_createOrEditQuestionDto.type"
                                 [labelField]="l('QuestionType')"
@@ -275,6 +276,7 @@
                                 <div class="row mt-6">
                                     <div class="col-md-6 mb-5">
                                         <app-dropdown-field
+                                            [excludeIds]="[512, 256, 128, 64, 32, 8, 1,16]"
                                             [labelField]="l('QuestionType')"
                                             [enm]="QuestionTypeEnum"
                                             [(ngModel)]="question.type"

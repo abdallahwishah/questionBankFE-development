@@ -159,9 +159,7 @@ export class StudySubjectsComponent extends AppComponentBase {
     changeStatus($event, record) {
         this._studySubjectsServiceProxy
             .updateStudyLevelStatus(record.studySubject.id, $event.checked)
-            .subscribe((val) => {
-                this.getStudySubjects();
-            });
+            .subscribe((val) => {});
     }
 
     resetFilters(): void {

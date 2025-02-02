@@ -24,7 +24,7 @@
                 <div class="col-md-6 order-md-2 order-3 mt-md-0 mt-8">
                     <div class="header-center">
                         <div>
-                            <h3 class="header-center-label">{{ l('Exam') + ' ' + examData.examId }}</h3>
+                            <h3 class="header-center-label">{{ examData.subjectName }}</h3>
                         </div>
                         <div>
                             <span class="header-center-bio">
@@ -43,13 +43,13 @@
                             <span class="px-1">:</span>
                             <span class="header-title-label-input">{{ examData.sectionNo }}</span>
                         </div>
-                        <div>
+                        <!-- <div>
                             <span class="header-title-label">{{ l('ExamDuration') }}</span>
                             <span class="px-1">:</span>
                             <span class="header-title-label-input">
                                 {{ examData.sectionDuration + ' ' + l('Minute') }}
                             </span>
-                        </div>
+                        </div> -->
                         <div>
                             <span class="header-title-label">{{ l('RemainingTime') }}</span>
                             <span class="px-1">:</span>
@@ -105,7 +105,10 @@
                             </button>
                         </div>
                         <div>
-                            <button class="btn btn-primary-next" (click)="next()">{{ l('Next') }}</button>
+                            <!-- <button class="btn btn-primary-next" (click)="next()">
+                                {{examData.isLastQuestionInSection &&
+                                ? l('EndExam') : l('Next') }}
+                            </button> -->
                         </div>
                     </div>
                 </div>

@@ -7,29 +7,26 @@
     <ng-container bodyDialog>
         <ng-container>
             <div class="row">
-                <div class="col-md-12">
-                    @if (QuestionTypeEnum) {
-                        <app-dropdown-field
-                        [enm]="QuestionTypeEnum"
-                        [(ngModel)]="QuestionTypeId"
-                        [labelField]="l('QuestionType')"
-                        #QuestionType="ngModel"
-                        id="QuestionType"
-                    ></app-dropdown-field>
-                    }@else {
-                      <app-skeleton></app-skeleton>
-                    }
-
-                </div>
-
                 <div class="col-md-12 mt-6">
                     <div class="upload-box py-7 px-3 text-center">
-                        <img src="assets/common/images/drag-and-drop.svg" alt="" />
-                        <p class="mt-4 mb-1">
-                            {{ l('DragAndDropFile') }}
-                            <span class="text-primary cursor-pointer">{{ l('ChooseFile') }}</span>
-                        </p>
-                        <small>{{ l('MaxAllowedSize') }}</small>
+                        <ng-container *ngIf="!uploadedFile">
+                            <img src="assets/common/images/drag-and-drop.svg" alt="" />
+                            <p class="mt-4 mb-1">
+                                {{ l('DragAndDropFile') }}
+                                <span class="text-primary cursor-pointer" (click)="uploadFile.click()">
+                                    {{ l('ChooseFile') }}
+                                </span>
+                            </p>
+                            <small>{{ l('MaxAllowedSize') }}</small>
+                        </ng-container>
+                        <ng-container *ngIf="uploadedFile">
+                            <img src="assets/common/images/drag-and-drop.svg" alt="" />
+                            <p class="mt-4 mb-1">
+                                <span class="text-primary cursor-pointer" (click)="uploadFile.click()">
+                                    {{ uploadedFile?.name }}
+                                </span>
+                            </p>
+                        </ng-container>
                     </div>
                 </div>
             </div>
@@ -41,6 +38,7 @@
         [busyText]="l('Save')" -->
             <span>{{ l('FileEntry') }}</span>
         </button>
-        <button class="btn btn-outline-primary">{{ l('DownloadTemplate') }}</button>
+        <!-- <button class="btn btn-outline-primary">{{ l('DownloadTemplate') }}</button> -->
     </ng-container>
 </app-dialog-shared>
+<input #uploadFile (change)="upload($event)" type="file" class="d-none" />

@@ -137,6 +137,12 @@ export class AddTemplateComponent extends AppComponentBase implements OnInit {
                                 },
                             };
                         });
+                        this.studySubject = {
+                            studySubject: {
+                                name: val.studySubjectValue,
+                                id: val.examTemplate.studySubjectId,
+                            },
+                        };
                         this.checked = this._createOrEditExamTemplateDto.hasInstructions ?? true;
                         this.loading = false;
                     });
@@ -152,7 +158,10 @@ export class AddTemplateComponent extends AppComponentBase implements OnInit {
             },
         );
     }
-
+    studySubject: any;
+    get studyLevelIds() {
+        return this.studyLevelsValue?.map((x) => x?.studyLevel?.id);
+    }
     // Track p-inputSwitch
     getChecked($event: any) {
         this.checked = !!$event.checked;
@@ -170,6 +179,7 @@ export class AddTemplateComponent extends AppComponentBase implements OnInit {
         newSection.durationTime = 0;
         (newSection as any).order = ''; // store as string for demonstration
         newSection.instructions = '';
+        newSection.sectionType = SectionTypeEnum.Exam;
         newSection.difficultyCriteria = [];
 
         this._createOrEditExamTemplateDto.templateSections.push(newSection);
@@ -202,8 +212,8 @@ export class AddTemplateComponent extends AppComponentBase implements OnInit {
         section.difficultyCriteria.splice(rowIndex, 1);
     }
     deleteFilled() {
-        if(this.studySubjectId==this._createOrEditExamTemplateDto.studySubjectId){
-            return
+        if (this.studySubjectId == this._createOrEditExamTemplateDto.studySubjectId) {
+            return;
         }
         this._createOrEditExamTemplateDto.templateSections?.forEach((value) => {
             value?.difficultyCriteria?.forEach((criteria) => {
@@ -212,13 +222,13 @@ export class AddTemplateComponent extends AppComponentBase implements OnInit {
         });
     }
     getUnits() {
-        this.deleteFilled()
+        this.deleteFilled();
         this._subjectUnitsServiceProxy
             .getAll(
                 undefined,
                 undefined,
                 undefined,
-                this._createOrEditExamTemplateDto.studySubjectId,
+                this.studySubject?.studySubject?.id,
                 undefined,
                 undefined,
                 1000,
@@ -234,7 +244,7 @@ export class AddTemplateComponent extends AppComponentBase implements OnInit {
     // Submit form
     createOrEditTemplate(): void {
         this._createOrEditExamTemplateDto.studyLevelIds = this.studyLevelsValue.map((x) => x?.studyLevel?.id);
-
+        this._createOrEditExamTemplateDto.studySubjectId = this.studySubject?.studySubject?.id;
         this._examTemplatesServiceProxy.createOrEdit(this._createOrEditExamTemplateDto).subscribe(() => {
             this.notify.success(this.l('SavedSuccessfully'));
             this._router.navigate(['app/main/templates']);

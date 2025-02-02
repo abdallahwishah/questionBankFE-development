@@ -35,7 +35,7 @@ export class AddQuestionComponent extends AppComponentBase implements OnInit {
     QuestionTypeEnum = QuestionTypeEnum;
     _createOrEditQuestionDto = new CreateOrEditQuestionDto();
     loading = false;
-    studyLevelsValue: any[]=[]
+    studyLevelsValue: any[] = [];
     studySubject: any;
     studyUnit: any;
 
@@ -125,8 +125,6 @@ export class AddQuestionComponent extends AppComponentBase implements OnInit {
         });
     }
     changeType() {
-        this._createOrEditQuestionDto.autoCorrection = false;
-        this._createOrEditQuestionDto.enableShuffleOptions = false;
         if (this._createOrEditQuestionDto.type == QuestionTypeEnum.LinkedQuestions) {
             this._createOrEditQuestionDto.payload = new QuestionPayloadDto({
                 ...new QuestionPayloadDto(),
@@ -152,7 +150,7 @@ export class AddQuestionComponent extends AppComponentBase implements OnInit {
             },
         });
     }
-    get studyLevelIds(){
-        return this.studyLevelsValue?.map((x) => x?.studyLevel?.id)
+    get studyLevelIds() {
+        return this.studyLevelsValue?.map((x) => x?.studyLevel?.id);
     }
 }

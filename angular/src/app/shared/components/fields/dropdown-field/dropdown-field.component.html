@@ -8,6 +8,7 @@
         class="w-full py-2"
         [ngClass]="{ disabled: disabled }"
         [formControl]="fieldControl"
+        [disabled]="disabled||disableddisabled"
         [options]="options"
         [optionLabel]="optionLabel"
         [optionValue]="optionValue"

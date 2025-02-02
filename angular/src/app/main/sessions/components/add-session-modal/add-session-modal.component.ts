@@ -6,6 +6,7 @@ import { AppComponentBase } from '@shared/common/app-component-base';
 
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ExamTemplatesServiceProxy, SessionsServiceProxy } from '@shared/service-proxies/service-proxies';
+import { UploaderService } from '@app/shared/services/uploader.service';
 
 @Component({
     selector: 'app-add-sessions-modal',
@@ -20,106 +21,90 @@ export class AddSessionsModalComponent extends AppComponentBase implements OnIni
 
     subscription: Subscription;
 
-   dataForEdit:any
+    dataForEdit: any;
 
- 
+    FormAddSession: FormGroup;
 
-
-    FormAddSession:FormGroup;
-
-    ListExamTemplates:any[]=[];
+    ListExamTemplates: any[] = [];
     constructor(
         injector: Injector,
         private _DialogSharedService: DialogSharedService,
-        private _fb:FormBuilder,
-        private _ExamTemplatesServiceProxy:ExamTemplatesServiceProxy,
-        private _SessionsServiceProxy:SessionsServiceProxy,
+        private _fb: FormBuilder,
+        private _ExamTemplatesServiceProxy: ExamTemplatesServiceProxy,
+        private _SessionsServiceProxy: SessionsServiceProxy,
+        private _uploaderService: UploaderService,
     ) {
         super(injector);
-        this.FormAddSession=this._fb.group({
-            id:[null],
-            name:[null,Validators.required],
-            startDate:[null,Validators.required],
-            endDate:[null,Validators.required],
-            examTemplateId:[null,Validators.required],
-            supervisorFileToken:[null],
-            studentFileToken:[null],
-        })
+        this.FormAddSession = this._fb.group({
+            id: [null],
+            name: [null, Validators.required],
+            startDate: [null, Validators.required],
+            endDate: [null, Validators.required],
+            examTemplateId: [null, Validators.required],
+            supervisorFileToken: [null],
+            studentFileToken: [null],
+        });
     }
     ngOnInit(): void {
         this.subscription = this._DialogSharedService
-        .SelectorFilterByComponent$(this.Add_Session_dialog, 'configShow')
-        .subscribe(configShow => {
-            if(configShow?.data){
-                this.dataForEdit = configShow?.data
-                this.FormAddSession.patchValue({...configShow?.data?.session ,
-                    examTemplateId: 
-                    {
-                         name:configShow?.data?.examTemplateName ,
-                         Id:configShow?.data?.session?.examTemplateId
-                    },
-                    startDate:new Date(configShow?.data?.session?.startDate),
-                    endDate:new Date(configShow?.data?.session?.endDate),
-                  })
-               
-            }else{
-                this.FormAddSession.reset();
-            }
-           
-        });
-
-        
-
-        this._ExamTemplatesServiceProxy.getAll(
-            undefined,
-            undefined,
-            undefined,
-            undefined,
-            undefined,
-            undefined,
-            undefined,
-            undefined
-        ).subscribe((res:any)=>{
-            this.ListExamTemplates=res?.items.map((val:any)=>{
-             return {
-                Id:val?.examTemplate?.id,
-                name:val?.examTemplate?.name,
-             }
+            .SelectorFilterByComponent$(this.Add_Session_dialog, 'configShow')
+            .subscribe((configShow) => {
+                if (configShow?.data) {
+                    this.dataForEdit = configShow?.data;
+                    this.FormAddSession.patchValue({
+                        ...configShow?.data?.session,
+                        startDate: new Date(configShow?.data?.session?.startDate),
+                    });
+                } else {
+                    this.FormAddSession.reset();
+                }
             });
 
-        });
-
-
-
+        this._ExamTemplatesServiceProxy
+            .getAll(undefined, undefined, undefined, undefined, undefined, undefined, undefined, 100000)
+            .subscribe((res: any) => {
+                this.ListExamTemplates = res?.items.map((val: any) => {
+                    return {
+                        Id: val?.examTemplate?.id,
+                        name: val?.examTemplate?.name,
+                    };
+                });
+            });
     }
 
     Save() {
-
-        if(this.FormAddSession.valid){
-           if(!this.dataForEdit){
-            this._SessionsServiceProxy.createOrEdit(this.FormAddSession.value).subscribe(res=>{
-                this.notify.success(this.l('SuccessfullySaved'));
-                this.OnRefresh.emit();
-                this.closeDialog();
-               })
-           }else{
-            this._SessionsServiceProxy.createOrEdit({...this.FormAddSession.value , 
-                examTemplateId:this.FormAddSession.get('examTemplateId')?.value?.Id
-            }).subscribe(res=>{
+        this._SessionsServiceProxy
+            .createOrEdit({
+                ...this.FormAddSession.value,
+                examTemplateId: this.FormAddSession.get('examTemplateId')?.value,
+                supervisorFileToken: this.fileSuperToken,
+                studentFileToken: this.fileStudentToken,
+            })
+            .subscribe((res) => {
                 this.notify.success(this.l('SuccessfullyEdited'));
 
                 this.OnRefresh.emit();
                 this.closeDialog();
-               })
-           }
-           
-        }
-        else{
-
-        }
-
+            });
     }
+    fileSuper: any;
+    fileStudent: any;
 
+    fileSuperToken: any;
+    fileStudentToken: any;
+    uploadSuper(file) {
+        this.fileSuper = file?.target?.files[0];
+        this._uploaderService.uploadFileOrFiles(this.fileSuper).subscribe((value: any) => {
+            this.fileSuperToken = value?.result?.fileToken;
+        });
+    }
+    uploadStudent(file) {
+        this.fileStudent = file?.target?.files[0];
+        console.log('fileStudent', this.fileStudent);
+        this._uploaderService.uploadFileOrFiles(this.fileStudent).subscribe((value: any) => {
+            this.fileStudentToken = value?.result?.fileToken;
+        });
+    }
     closeDialog() {
         this.FormAddSession.reset();
         this._DialogSharedService.hideDialog(this.Add_Session_dialog);
@@ -128,5 +113,5 @@ export class AddSessionsModalComponent extends AppComponentBase implements OnIni
     ngOnDestroy(): void {
         // Don’t forget to clean up
         this.subscription?.unsubscribe();
-      }
+    }
 }

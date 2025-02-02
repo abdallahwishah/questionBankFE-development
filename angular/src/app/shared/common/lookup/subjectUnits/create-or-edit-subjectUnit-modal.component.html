@@ -1,81 +1,20 @@
-﻿<div
-    bsModal
-    #createOrEditModal="bs-modal"
-    class="modal fade"
-    tabindex="-1"
-    role="dialog"
-    aria-labelledby="createOrEditModal"
-    aria-hidden="true"
-    [config]="{ backdrop: 'static' }"
+﻿<app-dialog-shared
+    [width]="'50vw'"
+    [dialogHeader]="subjectUnit.id ? l('EditSubjectUnit') : l('CreateNewSubjectUnit')"
+    [dialog_name]="Add_Unit"
 >
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <form *ngIf="active" #subjectUnitForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
-                <div class="modal-header">
-                    <h4 class="modal-title">
-                        <span *ngIf="subjectUnit.id">{{ l('EditSubjectUnit') }}</span>
-                        <span *ngIf="!subjectUnit.id">{{ l('CreateNewSubjectUnit') }}</span>
-                    </h4>
-
-                    <button
-                        type="button"
-                        class="btn-close"
-                        (click)="close()"
-                        aria-label="Close"
-                        [disabled]="saving"
-                    ></button>
-                </div>
-                <div class="modal-body">
-                   <div class="row">
-                    <div class="col-md-6 mb-3">
-
-                     <!--    <app-auto-complete-feild
-                                [label]="l('StudyLevel')"
-                                field="studyLevel.name"
-                                [(ngModel)]="studyLevelValue"
-                                name="studyLevel.id"
-                                [multiple]="true"
-                                [ConfigCustomSearch]="{
-                                    api: '/api/services/app/StudyLevels/GetAll',
-                                    keySearch: 'filter',
-                                    customParams: {
-                                        Sorting: '',
-                                        SkipCount: 0,
-                                        MaxResultCount: 10
-                                    }
-                                }"
-                            ></app-auto-complete-feild> -->
-                            <label class="form-label" for="StudySubjectValue">{{ l('StudyLevel') }}</label>
-
-                         <div class="input-group">
-                            <input
-                                class="form-control"
-                                id="StudyLevelValue"
-                                name="studyLevelValue"
-                                [(ngModel)]="studyLevelValue"
-                                type="text"
-                                disabled
-                            />
-                            <button class="btn btn-primary blue" (click)="openSelectStudyLevelModal()" type="button">
-                                <i class="fa fa-search"></i>
-                                {{ l('Pick') }}
-                            </button>
-                            <button class="btn btn-danger btn-icon" type="button" (click)="setStudyLevelIdNull()">
-                                <i class="fa fa-times"></i>
-                            </button>
-                        </div> 
-
-                    </div>
-                     <div class="col-md-6 mb-3">
-                        <!--
-                        <app-auto-complete-feild
+    <ng-container bodyDialog>
+        <form #subjectUnitForm="ngForm" novalidate>
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <app-auto-complete-feild
                         [label]="l('StudyLevel')"
-                        field="studySubject.name"
-                        [(ngModel)]="studySubjectValue"
-                        name="studySubject.id"
+                        field="studyLevel.name"
+                        [(ngModel)]="studyLevel"
                         [multiple]="true"
+                        name="StudyLevelId"
                         [ConfigCustomSearch]="{
-                            api: '/api/services/app/StudySubjects/GetAll',
+                            api: '/api/services/app/StudyLevels/GetAll',
                             keySearch: 'filter',
                             customParams: {
                                 Sorting: '',
@@ -83,114 +22,97 @@
                                 MaxResultCount: 10
                             }
                         }"
-                    ></app-auto-complete-feild> -->
-
-                        <label class="form-label" for="StudySubjectValue">{{ l('StudySubject') }}</label>
-                        <div class="input-group">
-                            <input
-                                class="form-control"
-                                id="StudySubjectValue"
-                                name="studySubjectValue"
-                                [(ngModel)]="studySubjectValue"
-                                type="text"
-                                disabled
-                            />
-                            <button class="btn btn-primary blue" (click)="openSelectStudySubjectModal()" type="button">
-                                <i class="fa fa-search"></i>
-                                {{ l('Pick') }}
-                            </button>
-                            <button class="btn btn-danger btn-icon" type="button" (click)="setStudySubjectIdNull()">
-                                <i class="fa fa-times"></i>
-                            </button>
-                        </div>
-                        <input
-                            class="form-control"
-                            name="subjectUnit.studySubjectId"
-                            [(ngModel)]="subjectUnit.studySubjectId"
-                            type="text"
-                            hidden
-                        /> 
-                    </div>
-                    <div class="col-md-6 mb-3">
-                        <label class="form-label" for="SubjectUnit_NameF">{{ l('NameF') }} *</label>
-                        <input
-                            type="text"
-                            #SubjectUnit_NameF="ngModel"
-                            id="SubjectUnit_NameF"
-                            class="form-control"
-                            [(ngModel)]="subjectUnit.nameF"
-                            name="NameF"
-                            required
-                        />
-                        <validation-messages [formCtrl]="SubjectUnit_NameF"></validation-messages>
-                    </div>
-                    <div class="col-md-6 mb-3">
-                        <label class="form-label" for="SubjectUnit_NameL">{{ l('NameL') }} *</label>
-                        <input
-                            type="text"
-                            #SubjectUnit_NameL="ngModel"
-                            id="SubjectUnit_NameL"
-                            class="form-control"
-                            [(ngModel)]="subjectUnit.nameL"
-                            name="NameL"
-                            required
-                        />
-                        <validation-messages [formCtrl]="SubjectUnit_NameL"></validation-messages>
-                    </div>
-                    <div class="col-md-6 mb-3">
-                        <label class="form-label" for="SubjectUnit_Code">{{ l('Code') }}</label>
-                        <input
-                            type="text"
-                            #SubjectUnit_Code="ngModel"
-                            id="SubjectUnit_Code"
-                            class="form-control"
-                            [(ngModel)]="subjectUnit.code"
-                            name="Code"
-                        />
-                        <validation-messages [formCtrl]="SubjectUnit_Code"></validation-messages>
-                    </div>
-                   </div>
-
-                    <br />
-                    <label class="form-check form-check-custom form-check-solid">
-                        <input
-                            id="SubjectUnit_IsActive"
-                            #SubjectUnit_IsActive="ngModel"
-                            name="IsActive"
-                            [(ngModel)]="subjectUnit.isActive"
-                            type="checkbox"
-                            class="form-check-input"
-                        />
-                        <span class="form-check-label">
-                            {{ l('IsActive') }}
-                        </span>
-                    </label>
-                    <validation-messages [formCtrl]="SubjectUnit_IsActive"></validation-messages>
+                    ></app-auto-complete-feild>
                 </div>
-                <div class="modal-footer">
-                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">
-                        {{ l('Cancel') }}
-                    </button>
-                    <button
-                        type="submit"
-                        class="btn btn-primary blue"
-                        [disabled]="!subjectUnitForm.form.valid"
-                        [buttonBusy]="saving"
-                        [busyText]="l('SavingWithThreeDot')"
-                    >
-                        <i class="fa fa-save"></i>
-                        <span>{{ l('Save') }}</span>
-                    </button>
+                <div class="col-md-6 mb-3">
+                    <app-auto-complete-feild
+                        [label]="l('StudySubject')"
+                        field="studySubject.name"
+                        [(ngModel)]="studySubject"
+                        name="studySubjectId"
+                        [ConfigCustomSearch]="{
+                            api: '/api/services/app/StudySubjects/GetAll',
+                            keySearch: 'filter',
+                            customParams: {
+                                Sorting: '',
+                                SkipCount: 0,
+                                MaxResultCount: 10,
+                                StudyLeveldsFilter: studyLevelIds
+                            }
+                        }"
+                    ></app-auto-complete-feild>
                 </div>
-            </form>
-        </div>
-    </div>
-    <subjectUnitStudyLevelLookupTableModal
-        #subjectUnitStudyLevelLookupTableModal
-        (modalSave)="getNewStudyLevelId()"
-    ></subjectUnitStudyLevelLookupTableModal>
-    <subjectUnitStudySubjectLookupTableModal
-        #subjectUnitStudySubjectLookupTableModal
-        (modalSave)="getNewStudySubjectId()"
-    ></subjectUnitStudySubjectLookupTableModal>
-</div>
+                <div class="col-md-6 mb-3">
+                    <label class="form-label" for="SubjectUnit_NameF">{{ l('NameF') }} *</label>
+                    <input
+                        type="text"
+                        #SubjectUnit_NameF="ngModel"
+                        id="SubjectUnit_NameF"
+                        class="form-control"
+                        [(ngModel)]="subjectUnit.nameF"
+                        name="NameF"
+                        required
+                    />
+                    <validation-messages [formCtrl]="SubjectUnit_NameF"></validation-messages>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label class="form-label" for="SubjectUnit_NameL">{{ l('NameL') }} *</label>
+                    <input
+                        type="text"
+                        #SubjectUnit_NameL="ngModel"
+                        id="SubjectUnit_NameL"
+                        class="form-control"
+                        [(ngModel)]="subjectUnit.nameL"
+                        name="NameL"
+                        required
+                    />
+                    <validation-messages [formCtrl]="SubjectUnit_NameL"></validation-messages>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label class="form-label" for="SubjectUnit_Code">{{ l('Code') }}</label>
+                    <input
+                        type="text"
+                        #SubjectUnit_Code="ngModel"
+                        id="SubjectUnit_Code"
+                        class="form-control"
+                        [(ngModel)]="subjectUnit.code"
+                        name="Code"
+                    />
+                    <validation-messages [formCtrl]="SubjectUnit_Code"></validation-messages>
+                </div>
+            </div>
+
+            <br />
+            <label class="form-check form-check-custom form-check-solid">
+                <input
+                    id="SubjectUnit_IsActive"
+                    #SubjectUnit_IsActive="ngModel"
+                    name="IsActive"
+                    [(ngModel)]="subjectUnit.isActive"
+                    type="checkbox"
+                    class="form-check-input"
+                />
+                <span class="form-check-label">
+                    {{ l('IsActive') }}
+                </span>
+            </label>
+            <validation-messages [formCtrl]="SubjectUnit_IsActive"></validation-messages>
+        </form>
+    </ng-container>
+    <ng-container footerDialog>
+        <button
+            type="button"
+            class="btn btn-primary blue"
+            (click)="save()"
+            [disabled]="!subjectUnitForm.form.valid"
+            [buttonBusy]="saving"
+            [busyText]="l('SavingWithThreeDot')"
+        >
+            <i class="fa fa-save"></i>
+            <span>{{ l('Save') }}</span>
+        </button>
+        <button [disabled]="saving" type="button" class="btn btn-outline" (click)="close()">
+            {{ l('Cancel') }}
+        </button>
+    </ng-container>
+</app-dialog-shared>

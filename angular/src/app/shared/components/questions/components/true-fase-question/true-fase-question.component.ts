@@ -87,15 +87,8 @@ export class TrueFaseQuestionComponent extends AppComponentBase implements OnIni
      */
     private ensureTrueFalse(): void {
         if (!this.value || this.value.length === 0) {
-            // Start fresh with 2 items
             this.value = [this.createChoice(this.l('True')), this.createChoice(this.l('False'))];
-        } else if (this.value.length < 2) {
-            // Add extras until we have 2
-            while (this.value.length < 2) {
-                this.value.push(this.createChoice(this.l('ExtraOption')));
-            }
-        } else if (this.value.length > 2) {
-            // Slice down to 2
+        } else {
             this.value = this.value.slice(0, 2);
         }
     }

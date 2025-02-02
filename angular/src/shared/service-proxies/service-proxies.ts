@@ -8398,6 +8398,64 @@ export class ExamsServiceProxy {
     /**
      * @return Success
      */
+    getAnsurStudentCurrentQuestion(): Observable<QuestionWithAnswerDto[]> {
+        let url_ = this.baseUrl + "/api/services/app/Exams/GetAnsurStudentCurrentQuestion";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetAnsurStudentCurrentQuestion(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetAnsurStudentCurrentQuestion(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<QuestionWithAnswerDto[]>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<QuestionWithAnswerDto[]>;
+        }));
+    }
+
+    protected processGetAnsurStudentCurrentQuestion(response: HttpResponseBase): Observable<QuestionWithAnswerDto[]> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(QuestionWithAnswerDto.fromJS(item));
+            }
+            else {
+                result200 = <any>null;
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @return Success
+     */
     getStudentCurrentQuestion(): Observable<ApplyExamDto> {
         let url_ = this.baseUrl + "/api/services/app/Exams/GetStudentCurrentQuestion";
         url_ = url_.replace(/[?&]$/, "");
@@ -19042,58 +19100,6 @@ export class QuestionSubjectUnitsServiceProxy {
     }
 
     protected processCreateOrEdit(response: HttpResponseBase): Observable<void> {
-        const status = response.status;
-        const responseBlob =
-            response instanceof HttpResponse ? response.body :
-            (response as any).error instanceof Blob ? (response as any).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            return _observableOf(null as any);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf(null as any);
-    }
-
-    /**
-     * @param body (optional) 
-     * @return Success
-     */
-    createOrEditInternal(body: CreateOrEditQuestionSubjectUnitDto | undefined): Observable<void> {
-        let url_ = this.baseUrl + "/api/services/app/QuestionSubjectUnits/CreateOrEditInternal";
-        url_ = url_.replace(/[?&]$/, "");
-
-        const content_ = JSON.stringify(body);
-
-        let options_ : any = {
-            body: content_,
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Content-Type": "application/json",
-            })
-        };
-
-        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processCreateOrEditInternal(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processCreateOrEditInternal(response_ as any);
-                } catch (e) {
-                    return _observableThrow(e) as any as Observable<void>;
-                }
-            } else
-                return _observableThrow(response_) as any as Observable<void>;
-        }));
-    }
-
-    protected processCreateOrEditInternal(response: HttpResponseBase): Observable<void> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -35413,7 +35419,6 @@ export class CreateOrEditSessionDto implements ICreateOrEditSessionDto {
     id!: number | undefined;
     name!: string;
     startDate!: DateTime;
-    endDate!: DateTime;
     examTemplateId!: number;
     supervisorFileToken!: string | undefined;
     studentFileToken!: string | undefined;
@@ -35432,7 +35437,6 @@ export class CreateOrEditSessionDto implements ICreateOrEditSessionDto {
             this.id = _data["id"];
             this.name = _data["name"];
             this.startDate = _data["startDate"] ? DateTime.fromISO(_data["startDate"].toString()) : <any>undefined;
-            this.endDate = _data["endDate"] ? DateTime.fromISO(_data["endDate"].toString()) : <any>undefined;
             this.examTemplateId = _data["examTemplateId"];
             this.supervisorFileToken = _data["supervisorFileToken"];
             this.studentFileToken = _data["studentFileToken"];
@@ -35451,7 +35455,6 @@ export class CreateOrEditSessionDto implements ICreateOrEditSessionDto {
         data["id"] = this.id;
         data["name"] = this.name;
         data["startDate"] = this.startDate ? this.startDate.toString() : <any>undefined;
-        data["endDate"] = this.endDate ? this.endDate.toString() : <any>undefined;
         data["examTemplateId"] = this.examTemplateId;
         data["supervisorFileToken"] = this.supervisorFileToken;
         data["studentFileToken"] = this.studentFileToken;
@@ -35463,7 +35466,6 @@ export interface ICreateOrEditSessionDto {
     id: number | undefined;
     name: string;
     startDate: DateTime;
-    endDate: DateTime;
     examTemplateId: number;
     supervisorFileToken: string | undefined;
     studentFileToken: string | undefined;
@@ -35831,6 +35833,7 @@ export class CreateOrEditSubjectUnitDto implements ICreateOrEditSubjectUnitDto {
     code!: string | undefined;
     isActive!: boolean;
     studySubjectId!: number | undefined;
+    studyLevelIds!: number[] | undefined;
 
     constructor(data?: ICreateOrEditSubjectUnitDto) {
         if (data) {
@@ -35849,6 +35852,11 @@ export class CreateOrEditSubjectUnitDto implements ICreateOrEditSubjectUnitDto {
             this.code = _data["code"];
             this.isActive = _data["isActive"];
             this.studySubjectId = _data["studySubjectId"];
+            if (Array.isArray(_data["studyLevelIds"])) {
+                this.studyLevelIds = [] as any;
+                for (let item of _data["studyLevelIds"])
+                    this.studyLevelIds!.push(item);
+            }
         }
     }
 
@@ -35867,6 +35875,11 @@ export class CreateOrEditSubjectUnitDto implements ICreateOrEditSubjectUnitDto {
         data["code"] = this.code;
         data["isActive"] = this.isActive;
         data["studySubjectId"] = this.studySubjectId;
+        if (Array.isArray(this.studyLevelIds)) {
+            data["studyLevelIds"] = [];
+            for (let item of this.studyLevelIds)
+                data["studyLevelIds"].push(item);
+        }
         return data;
     }
 }
@@ -35878,6 +35891,7 @@ export interface ICreateOrEditSubjectUnitDto {
     code: string | undefined;
     isActive: boolean;
     studySubjectId: number | undefined;
+    studyLevelIds: number[] | undefined;
 }
 
 export class CreateOrEditSupervisorDto implements ICreateOrEditSupervisorDto {
@@ -41838,6 +41852,7 @@ export class GetExamAttemptForViewDto implements IGetExamAttemptForViewDto {
     identityNumber!: string | undefined;
     address!: string | undefined;
     dateOfBirth!: DateTime | undefined;
+    profilePictureId!: string | undefined;
 
     constructor(data?: IGetExamAttemptForViewDto) {
         if (data) {
@@ -41870,6 +41885,7 @@ export class GetExamAttemptForViewDto implements IGetExamAttemptForViewDto {
             this.identityNumber = _data["identityNumber"];
             this.address = _data["address"];
             this.dateOfBirth = _data["dateOfBirth"] ? DateTime.fromISO(_data["dateOfBirth"].toString()) : <any>undefined;
+            this.profilePictureId = _data["profilePictureId"];
         }
     }
 
@@ -41902,6 +41918,7 @@ export class GetExamAttemptForViewDto implements IGetExamAttemptForViewDto {
         data["identityNumber"] = this.identityNumber;
         data["address"] = this.address;
         data["dateOfBirth"] = this.dateOfBirth ? this.dateOfBirth.toString() : <any>undefined;
+        data["profilePictureId"] = this.profilePictureId;
         return data;
     }
 }
@@ -41927,6 +41944,7 @@ export interface IGetExamAttemptForViewDto {
     identityNumber: string | undefined;
     address: string | undefined;
     dateOfBirth: DateTime | undefined;
+    profilePictureId: string | undefined;
 }
 
 export class GetExamForViewDto implements IGetExamForViewDto {
@@ -44996,6 +45014,7 @@ export interface IGetSubjectGroupForViewDto {
 export class GetSubjectUnitForEditOutput implements IGetSubjectUnitForEditOutput {
     subjectUnit!: CreateOrEditSubjectUnitDto;
     studySubjectValue!: string | undefined;
+    studyLevels!: string | undefined;
 
     constructor(data?: IGetSubjectUnitForEditOutput) {
         if (data) {
@@ -45010,6 +45029,7 @@ export class GetSubjectUnitForEditOutput implements IGetSubjectUnitForEditOutput
         if (_data) {
             this.subjectUnit = _data["subjectUnit"] ? CreateOrEditSubjectUnitDto.fromJS(_data["subjectUnit"]) : <any>undefined;
             this.studySubjectValue = _data["studySubjectValue"];
+            this.studyLevels = _data["studyLevels"];
         }
     }
 
@@ -45024,6 +45044,7 @@ export class GetSubjectUnitForEditOutput implements IGetSubjectUnitForEditOutput
         data = typeof data === 'object' ? data : {};
         data["subjectUnit"] = this.subjectUnit ? this.subjectUnit.toJSON() : <any>undefined;
         data["studySubjectValue"] = this.studySubjectValue;
+        data["studyLevels"] = this.studyLevels;
         return data;
     }
 }
@@ -45031,11 +45052,13 @@ export class GetSubjectUnitForEditOutput implements IGetSubjectUnitForEditOutput
 export interface IGetSubjectUnitForEditOutput {
     subjectUnit: CreateOrEditSubjectUnitDto;
     studySubjectValue: string | undefined;
+    studyLevels: string | undefined;
 }
 
 export class GetSubjectUnitForViewDto implements IGetSubjectUnitForViewDto {
     subjectUnit!: SubjectUnitDto;
     studySubjectValue!: string | undefined;
+    studyLevels!: string | undefined;
 
     constructor(data?: IGetSubjectUnitForViewDto) {
         if (data) {
@@ -45050,6 +45073,7 @@ export class GetSubjectUnitForViewDto implements IGetSubjectUnitForViewDto {
         if (_data) {
             this.subjectUnit = _data["subjectUnit"] ? SubjectUnitDto.fromJS(_data["subjectUnit"]) : <any>undefined;
             this.studySubjectValue = _data["studySubjectValue"];
+            this.studyLevels = _data["studyLevels"];
         }
     }
 
@@ -45064,6 +45088,7 @@ export class GetSubjectUnitForViewDto implements IGetSubjectUnitForViewDto {
         data = typeof data === 'object' ? data : {};
         data["subjectUnit"] = this.subjectUnit ? this.subjectUnit.toJSON() : <any>undefined;
         data["studySubjectValue"] = this.studySubjectValue;
+        data["studyLevels"] = this.studyLevels;
         return data;
     }
 }
@@ -45071,6 +45096,7 @@ export class GetSubjectUnitForViewDto implements IGetSubjectUnitForViewDto {
 export interface IGetSubjectUnitForViewDto {
     subjectUnit: SubjectUnitDto;
     studySubjectValue: string | undefined;
+    studyLevels: string | undefined;
 }
 
 export class GetSupervisorForEditOutput implements IGetSupervisorForEditOutput {

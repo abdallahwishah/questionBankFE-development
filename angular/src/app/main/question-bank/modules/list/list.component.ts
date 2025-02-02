@@ -33,7 +33,6 @@ export class ListComponent extends AppComponentBase implements OnInit {
         { name: 'NoActive', id: false },
     ];
 
-    Add_File_dialog = UniqueNameComponents.Add_File_dialog;
     filter: string;
     QuestionTypeEnum = QuestionTypeEnum;
     isActiveFilter: boolean;
@@ -151,9 +150,6 @@ export class ListComponent extends AppComponentBase implements OnInit {
         this.getList();
     }
 
-    addFile() {
-        this._DialogSharedService.showDialog(this.Add_File_dialog, {});
-    }
 
     CheckedQuestion: any;
     changeStatus($event, record) {

@@ -32,6 +32,7 @@ export class ListComponent extends AppComponentBase implements OnInit {
     levelId: number;
 
     filter: string;
+    Add_File_dialog = UniqueNameComponents.Add_File_dialog;
 
     constructor(
         private _injector: Injector,
@@ -82,6 +83,9 @@ export class ListComponent extends AppComponentBase implements OnInit {
                 this.loadingFilter = false;
             },
         });
+    }
+    addFile() {
+        this._DialogSharedService.showDialog(this.Add_File_dialog, {});
     }
 
     getList(event?: LazyLoadEvent) {
