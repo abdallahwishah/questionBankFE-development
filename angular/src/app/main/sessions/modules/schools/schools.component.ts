@@ -83,12 +83,14 @@ export class SchoolsComponent extends AppComponentBase implements OnInit {
             });
     }
     supervisorsAndStudents(item: any, school) {
-        this._router.navigate(['/app/main/sessions/supervisors-students', this.SessionId, item?.schoolClass?.id], {
+        this._router.navigate(['../../supervisors-students', this.SessionId, item?.schoolClass?.id], {
             queryParams: {
                 school: item?.schoolName,
                 schoolId: school?.school?.schoolId,
             },
             queryParamsHandling: 'merge',
+            relativeTo: this._ActivatedRoute,
+
         });
     }
 }

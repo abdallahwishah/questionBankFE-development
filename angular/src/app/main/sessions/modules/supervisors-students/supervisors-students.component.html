@@ -58,13 +58,13 @@
                     </span>
                 </button>
             </div>
-            <div>
+            <!-- <div>
                 <button class="btn btn-read d-flex gap-2">
                     <span class="d-none d-md-inline-block">
                         {{ l('FinishTest') }}
                     </span>
                 </button>
-            </div>
+            </div> -->
         </div>
     </div>
 
@@ -359,6 +359,11 @@
                                 {{ l('SupervisorName') }}
                                 <p-sortIcon field="supervisorName"></p-sortIcon>
                             </th>
+                            <th pSortableColumn="SessionName">
+                                {{ l('IdNo') }}
+                                <p-sortIcon field="SessionName"></p-sortIcon>
+                            </th>
+
                             <th pSortableColumn="supervisorRole">
                                 {{ l('SupervisorRole') }}
                                 <p-sortIcon field="supervisorRole"></p-sortIcon>
@@ -398,10 +403,15 @@
                             <td>
                                 {{ record.supervisorName || '-' }}
                             </td>
+                            <td>
+                                {{ record.identityNumber || '-' }}
+                            </td>
                             <td>{{ SessionSupervisorRoleEnum[record.sessionSupervisor?.role] || '-' }}</td>
                             <td>{{ record.telphoneNumber || '-' }}</td>
                             <td>{{ record.cycleNumber + ' ' + record?.year || '-' }}</td>
-                            <td>{{ record.city || '-' }}</td>
+                            <td>
+                                {{ record.address + ' ' + record.governorate || '-' }}
+                            </td>
                             <td>
                                 {{ record.className || '-' }}
                             </td>

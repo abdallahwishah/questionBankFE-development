@@ -1,12 +1,14 @@
 import { Component, Injector, OnInit } from '@angular/core';
-import { NavigationEnd, Router } from '@angular/router';
+import { NavigationEnd, Router, RouterModule } from '@angular/router';
 import { AppAuthService } from '@app/shared/common/auth/app-auth.service';
+import { CommonModule } from '@node_modules/@angular/common';
 import { AppConsts } from '@shared/AppConsts';
 import { AppComponentBase } from '@shared/common/app-component-base';
 import { ProfileServiceProxy, SessionServiceProxy } from '@shared/service-proxies/service-proxies';
 
 @Component({
     standalone: true,
+    imports: [CommonModule, RouterModule],
     selector: 'app-student-header',
     templateUrl: './student-header.component.html',
     styleUrls: ['./student-header.component.css'],

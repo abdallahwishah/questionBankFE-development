@@ -44531,11 +44531,14 @@ export class GetSessionSupervisorForViewDto implements IGetSessionSupervisorForV
     sessionName!: string | undefined;
     supervisorName!: string | undefined;
     telphoneNumber!: string | undefined;
+    identityNumber!: string | undefined;
     city!: string | undefined;
     year!: number;
     cycleNumber!: number;
     className!: string | undefined;
     schoolName!: string | undefined;
+    governorateName!: string | undefined;
+    address!: string | undefined;
 
     constructor(data?: IGetSessionSupervisorForViewDto) {
         if (data) {
@@ -44552,11 +44555,14 @@ export class GetSessionSupervisorForViewDto implements IGetSessionSupervisorForV
             this.sessionName = _data["sessionName"];
             this.supervisorName = _data["supervisorName"];
             this.telphoneNumber = _data["telphoneNumber"];
+            this.identityNumber = _data["identityNumber"];
             this.city = _data["city"];
             this.year = _data["year"];
             this.cycleNumber = _data["cycleNumber"];
             this.className = _data["className"];
             this.schoolName = _data["schoolName"];
+            this.governorateName = _data["governorateName"];
+            this.address = _data["address"];
         }
     }
 
@@ -44573,11 +44579,14 @@ export class GetSessionSupervisorForViewDto implements IGetSessionSupervisorForV
         data["sessionName"] = this.sessionName;
         data["supervisorName"] = this.supervisorName;
         data["telphoneNumber"] = this.telphoneNumber;
+        data["identityNumber"] = this.identityNumber;
         data["city"] = this.city;
         data["year"] = this.year;
         data["cycleNumber"] = this.cycleNumber;
         data["className"] = this.className;
         data["schoolName"] = this.schoolName;
+        data["governorateName"] = this.governorateName;
+        data["address"] = this.address;
         return data;
     }
 }
@@ -44587,11 +44596,14 @@ export interface IGetSessionSupervisorForViewDto {
     sessionName: string | undefined;
     supervisorName: string | undefined;
     telphoneNumber: string | undefined;
+    identityNumber: string | undefined;
     city: string | undefined;
     year: number;
     cycleNumber: number;
     className: string | undefined;
     schoolName: string | undefined;
+    governorateName: string | undefined;
+    address: string | undefined;
 }
 
 export class GetSiteTrackerForEditOutput implements IGetSiteTrackerForEditOutput {

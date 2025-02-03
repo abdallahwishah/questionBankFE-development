@@ -14,9 +14,14 @@ import { StudentHeaderComponent } from '@app/student/student-header/student-head
                 path: '',
                 children:[
                     {
+                        path:'',
+                        loadChildren: () => import('./../main/sessions/sessions.module').then((m) => m.SessionsModule),
+                    },
+                    {
                         path:'main',
                         loadChildren: () => import('./../main/sessions/sessions.module').then((m) => m.SessionsModule),
-                    }
+                    },
+
                 ]
             },
         ]),

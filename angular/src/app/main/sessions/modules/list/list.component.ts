@@ -2,7 +2,7 @@ import { SessionsServiceProxy, SessionStatusEnum } from './../../../../../shared
 import { Component, Injector, OnInit, ViewChild } from '@angular/core';
 import { DialogSharedService } from '@app/shared/components/dialog-shared/dialog-shared.service';
 import { UniqueNameComponents } from '@app/shared/Models/UniqueNameComponents';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { LazyLoadEvent } from '@node_modules/primeng/api';
 import { Paginator } from 'primeng/paginator';
 import { Table } from 'primeng/table';
@@ -28,6 +28,7 @@ export class ListComponent extends AppComponentBase implements OnInit {
         private _DialogSharedService: DialogSharedService,
         private _sessionsServiceProxy: SessionsServiceProxy,
         private _router: Router,
+        private _activatedRoute: ActivatedRoute,
     ) {
         super(_injector);
     }
@@ -40,8 +41,7 @@ export class ListComponent extends AppComponentBase implements OnInit {
                 name: key,
                 id: SessionStatusEnum[key as keyof typeof SessionStatusEnum],
             }));
-            this.sessionStatus.unshift({name:"All",id:undefined});
-
+        this.sessionStatus.unshift({ name: 'All', id: undefined });
     }
     getList(event?: LazyLoadEvent) {
         if (event) {
@@ -79,20 +79,21 @@ export class ListComponent extends AppComponentBase implements OnInit {
     }
 
     cleaerStatusFilter() {}
-    AddSession(data?:any) {
+    AddSession(data?: any) {
         this._DialogSharedService.showDialog(this.Add_Session_dialog, data);
     }
     doActions(label: any, record: any) {
         switch (label) {
             case 'ViewSchools':
-                this._router.navigate(['/app/main/sessions/schools/', record?.session?.id], {
+                this._router.navigate(['schools', record?.session?.id], {
                     queryParams: {
                         session: record?.session.name,
                     },
+                    relativeTo: this._activatedRoute,
                 });
                 break;
-                case 'Edit':
-                 this.AddSession(record) 
+            case 'Edit':
+                this.AddSession(record);
                 break;
 
             case 'Delete':

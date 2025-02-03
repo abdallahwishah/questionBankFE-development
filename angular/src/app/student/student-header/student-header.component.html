@@ -3,7 +3,7 @@
         <div class="row justify-content-between align-items-center">
             <div class="col-md-3 col-4 d-flex align-items-center gap-10">
                 <img src="assets/common/images/logo.svg" class="img-fluid w-40px" alt="" />
-                <span class="cursor-pointer btn-home d-flex gap-2 align-items-center">
+                <span class="cursor-pointer btn-home d-flex gap-2 align-items-center" [routerLink]="['./']">
                     <svg width="20" height="21" viewBox="0 0 20 21" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path
                             d="M9.375 15.1951V12.6951C9.375 12.3534 9.65833 12.0701 10 12.0701C10.3417 12.0701 10.625 12.3534 10.625 12.6951V15.1951C10.625 15.5367 10.3417 15.8201 10 15.8201C9.65833 15.8201 9.375 15.5367 9.375 15.1951Z"
@@ -24,7 +24,7 @@
                     <div class="symbol symbol-35px symbol-md-40px"><img alt="user" [src]="profilePicture" /></div>
                     <p class="mb-0">{{ userName }}</p>
                 </div>
-                <span class="cursor-pointer btn-logout" (click)="logout()" >{{ l('Logout') }}</span>
+                <span class="cursor-pointer btn-logout" (click)="logout()">{{ l('Logout') }}</span>
             </div>
         </div>
     </div>
