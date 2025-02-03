@@ -25,7 +25,7 @@
         type="radio"
         [name]="'singleChoiceAnswer' + order"
         [value]="choice.id"
-        [checked]="value === choice.id"
+        [checked]="value == choice.id"
         (change)="onRadioChange(choice.id)"
     />
     <!-- Use [innerHTML] if the text is HTML;

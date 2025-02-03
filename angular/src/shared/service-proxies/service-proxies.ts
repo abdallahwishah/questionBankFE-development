@@ -8398,6 +8398,127 @@ export class ExamsServiceProxy {
     /**
      * @return Success
      */
+    getCureentExamAnsweredQuestion(): Observable<QuestionWithAnswerDto[]> {
+        let url_ = this.baseUrl + "/api/services/app/Exams/GetCureentExamAnsweredQuestion";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetCureentExamAnsweredQuestion(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetCureentExamAnsweredQuestion(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<QuestionWithAnswerDto[]>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<QuestionWithAnswerDto[]>;
+        }));
+    }
+
+    protected processGetCureentExamAnsweredQuestion(response: HttpResponseBase): Observable<QuestionWithAnswerDto[]> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(QuestionWithAnswerDto.fromJS(item));
+            }
+            else {
+                result200 = <any>null;
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param questionId (optional) 
+     * @return Success
+     */
+    getSelectedQuestion(questionId: number | undefined): Observable<QuestionWithAnswerDto[]> {
+        let url_ = this.baseUrl + "/api/services/app/Exams/GetSelectedQuestion?";
+        if (questionId === null)
+            throw new Error("The parameter 'questionId' cannot be null.");
+        else if (questionId !== undefined)
+            url_ += "QuestionId=" + encodeURIComponent("" + questionId) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetSelectedQuestion(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetSelectedQuestion(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<QuestionWithAnswerDto[]>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<QuestionWithAnswerDto[]>;
+        }));
+    }
+
+    protected processGetSelectedQuestion(response: HttpResponseBase): Observable<QuestionWithAnswerDto[]> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(QuestionWithAnswerDto.fromJS(item));
+            }
+            else {
+                result200 = <any>null;
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @return Success
+     */
     getStudentCurrentQuestion(): Observable<ApplyExamDto> {
         let url_ = this.baseUrl + "/api/services/app/Exams/GetStudentCurrentQuestion";
         url_ = url_.replace(/[?&]$/, "");
@@ -32552,6 +32673,7 @@ export class ApplyExamDto implements IApplyExamDto {
     type!: SectionTypeEnum;
     currentQuestionIndex!: number;
     totalQuestionsCount!: number;
+    formName!: string | undefined;
 
     constructor(data?: IApplyExamDto) {
         if (data) {
@@ -32584,6 +32706,7 @@ export class ApplyExamDto implements IApplyExamDto {
             this.type = _data["type"];
             this.currentQuestionIndex = _data["currentQuestionIndex"];
             this.totalQuestionsCount = _data["totalQuestionsCount"];
+            this.formName = _data["formName"];
         }
     }
 
@@ -32616,6 +32739,7 @@ export class ApplyExamDto implements IApplyExamDto {
         data["type"] = this.type;
         data["currentQuestionIndex"] = this.currentQuestionIndex;
         data["totalQuestionsCount"] = this.totalQuestionsCount;
+        data["formName"] = this.formName;
         return data;
     }
 }
@@ -32641,6 +32765,7 @@ export interface IApplyExamDto {
     type: SectionTypeEnum;
     currentQuestionIndex: number;
     totalQuestionsCount: number;
+    formName: string | undefined;
 }
 
 export class Assembly implements IAssembly {

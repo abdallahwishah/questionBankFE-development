@@ -82,7 +82,7 @@
             </a>
         </div>
         <!-- Linked Accounts -->
-        <div class="menu-item px-5" data-kt-menu-trigger="hover" data-kt-menu-placement="left-start">
+        <!-- <div class="menu-item px-5" data-kt-menu-trigger="hover" data-kt-menu-placement="left-start">
             <a
                 href="javascript:;"
                 (click)="recentlyLinkedUsers?.length == 0 && showLinkedAccounts()"
@@ -130,9 +130,9 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
         <!-- User Delegation -->
-        <div *ngIf="appSession.application.userDelegationIsEnabled && !isImpersonatedLogin" class="menu-item px-5">
+        <!-- <div *ngIf="appSession.application.userDelegationIsEnabled && !isImpersonatedLogin" class="menu-item px-5">
             <a href="javascript:;" (click)="showUserDelegations()" class="menu-link px-5" id="ManageUserDelegations">
                 <span class="menu-icon">
                     <span class="svg-icon svg-icon-muted svg-icon-1">
@@ -152,7 +152,7 @@
                 </span>
                 {{ 'ManageUserDelegations' | localize }}
             </a>
-        </div>
+        </div> -->
         <!-- Change Password -->
         <div class="menu-item px-5">
             <a href="javascript:;" (click)="changePassword()" class="menu-link px-5" id="UserProfileChangePasswordLink">
@@ -170,7 +170,7 @@
             </a>
         </div>
         <!-- Login Attempts -->
-        <div class="menu-item px-5">
+        <!-- <div class="menu-item px-5">
             <a href="javascript:;" (click)="showLoginAttempts()" class="menu-link px-5" id="ShowLoginAttemptsLink">
                 <span class="menu-icon">
                     <span class="svg-icon svg-icon-muted svg-icon-1">
@@ -189,7 +189,7 @@
                 </span>
                 {{ 'LoginAttempts' | localize }}
             </a>
-        </div>
+        </div> -->
         <!-- Profile Picture -->
         <div class="menu-item px-5 d-flex">
             <a
@@ -217,7 +217,7 @@
             </a>
         </div>
         <!-- My Settings -->
-        <div class="menu-item px-5 d-flex">
+        <!-- <div class="menu-item px-5 d-flex">
             <a href="javascript:;" (click)="changeMySettings()" class="menu-link px-5" id="UserProfileMySettingsLink">
                 <span class="menu-icon">
                     <span class="svg-icon svg-icon-muted svg-icon-1">
@@ -236,9 +236,9 @@
                 </span>
                 {{ 'MySettings' | localize }}
             </a>
-        </div>
+        </div> -->
         <!-- Visual Settings -->
-        <div *ngIf="!('Pages.Administration.UiCustomization' | permission)" class="menu-item px-5 d-flex">
+        <!-- <div *ngIf="!('Pages.Administration.UiCustomization' | permission)" class="menu-item px-5 d-flex">
             <a routerLink="admin/ui-customization" class="menu-link px-5" id="UserProfileVisualSettingsLink">
                 <span class="menu-icon">
                     <span class="svg-icon svg-icon-muted svg-icon-1">
@@ -257,9 +257,9 @@
                 </span>
                 {{ 'VisualSettings' | localize }}
             </a>
-        </div>
+        </div> -->
         <!-- GDPR -->
-        <div class="menu-item px-5 d-flex">
+        <!-- <div class="menu-item px-5 d-flex">
             <a
                 href="javascript:;"
                 (click)="downloadCollectedData()"
@@ -284,7 +284,7 @@
                 </span>
                 {{ 'DownloadCollectedData' | localize }}
             </a>
-        </div>
+        </div> -->
         <div class="separator my-2"></div>
         <div class="menu-item px-5 d-flex">
             <a href="javascript:;" (click)="logout()" class="menu-link px-5">

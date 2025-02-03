@@ -57,6 +57,8 @@ export class ExamViewerAndAttemptComponent extends AppComponentBase implements O
         } else {
             this._examsServiceProxy.getExpectedeExam().subscribe((response) => {
                 this.examData = response.applyExamDto;
+                this.examData.isLastQuestionInSection = this.examData.isLastQuestionInSection;
+                this.examData.sectionCountInExam = this.examData?.questionWithAnswer.sectionCountInExam;
                 this.id = response.applyExamDto.examId;
                 this.handleQuestionWithAnswer(response.applyExamDto.questionWithAnswer);
                 console.log('response.applyExamDto.questionWithAnswer', response.applyExamDto.questionWithAnswer);
@@ -110,7 +112,7 @@ export class ExamViewerAndAttemptComponent extends AppComponentBase implements O
         }
     }
 
-    next() {
+    next(isLast = false) {
         if (this.isViewer) {
             const viewDto = new ViewExamQuestionDto();
             viewDto.examId = this.id;
@@ -143,7 +145,11 @@ export class ExamViewerAndAttemptComponent extends AppComponentBase implements O
             this.loading = true;
 
             this._examsServiceProxy.nextQuestion(dto).subscribe((response) => {
-                this.updateQuestion(response);
+                if (isLast) {
+                    this.end();
+                } else {
+                    this.updateQuestion(response);
+                }
             });
         }
     }
@@ -210,7 +216,20 @@ export class ExamViewerAndAttemptComponent extends AppComponentBase implements O
                 answer.saAnswer = questionWithAnswer?.value?.[0];
                 break;
             case QuestionTypeEnum.LinkedQuestions:
-                answer.linkedQuestionAnswer = questionWithAnswer?.linkedQuestionsSubAnswers?.map((x: any, i) => {
+                // reorder questionWithAnswer?.linkedQuestionsSubAnswers as per linkedQuestions
+                let linkedQuestionsSubAnswersOrdered = questionWithAnswer?.linkedQuestionsSubAnswers?.sort(
+                    (a: any, b: any) => {
+                        return (
+                            questionWithAnswer?.question?.question?.linkedQuestions.findIndex(
+                                (x: any) => x.question.id === a.subQuestionId,
+                            ) -
+                            questionWithAnswer?.question?.question?.linkedQuestions.findIndex(
+                                (x: any) => x.question.id === b.subQuestionId,
+                            )
+                        );
+                    },
+                );
+                answer.linkedQuestionAnswer = linkedQuestionsSubAnswersOrdered?.map((x: any, i) => {
                     let typex: QuestionTypeEnum =
                         questionWithAnswer?.question?.question?.linkedQuestions[i]?.question?.type;
                     let subAnswer: any = {};

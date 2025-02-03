@@ -28,7 +28,7 @@
                         </div>
                         <div>
                             <span class="header-center-bio">
-                                {{ l('ModelNumber') + ' ' + examData.examSectionId }}
+                                {{ examData.formName }}
                             </span>
                         </div>
                         <div *ngIf="!showInstructions">
@@ -107,7 +107,7 @@
                         <div>
                             <button
                                 class="btn btn-primary-next"
-                                (click)="end()"
+                                (click)="next(true)"
                                 *ngIf="
                                     examData.isLastQuestionInSection &&
                                     examData?.sectionCountInExam == examData?.sectionNo
