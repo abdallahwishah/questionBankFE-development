@@ -41918,6 +41918,7 @@ export class GetExamAttemptForViewDto implements IGetExamAttemptForViewDto {
     studyLevel!: string | undefined;
     identityNumber!: string | undefined;
     address!: string | undefined;
+    versionNo!: number;
     dateOfBirth!: DateTime | undefined;
     profilePictureId!: string | undefined;
     userId!: number;
@@ -41952,6 +41953,7 @@ export class GetExamAttemptForViewDto implements IGetExamAttemptForViewDto {
             this.studyLevel = _data["studyLevel"];
             this.identityNumber = _data["identityNumber"];
             this.address = _data["address"];
+            this.versionNo = _data["versionNo"];
             this.dateOfBirth = _data["dateOfBirth"] ? DateTime.fromISO(_data["dateOfBirth"].toString()) : <any>undefined;
             this.profilePictureId = _data["profilePictureId"];
             this.userId = _data["userId"];
@@ -41986,6 +41988,7 @@ export class GetExamAttemptForViewDto implements IGetExamAttemptForViewDto {
         data["studyLevel"] = this.studyLevel;
         data["identityNumber"] = this.identityNumber;
         data["address"] = this.address;
+        data["versionNo"] = this.versionNo;
         data["dateOfBirth"] = this.dateOfBirth ? this.dateOfBirth.toString() : <any>undefined;
         data["profilePictureId"] = this.profilePictureId;
         data["userId"] = this.userId;
@@ -42013,6 +42016,7 @@ export interface IGetExamAttemptForViewDto {
     studyLevel: string | undefined;
     identityNumber: string | undefined;
     address: string | undefined;
+    versionNo: number;
     dateOfBirth: DateTime | undefined;
     profilePictureId: string | undefined;
     userId: number;

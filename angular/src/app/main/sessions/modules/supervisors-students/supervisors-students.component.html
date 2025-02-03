@@ -242,6 +242,10 @@
                                 {{ l('StudyLevel') }}
                                 <p-sortIcon field="SessionName"></p-sortIcon>
                             </th>
+                            <th pSortableColumn="VersionNo">
+                                {{ l('VersionNo') }}
+                                <p-sortIcon field="VersionNo"></p-sortIcon>
+                            </th>
                             <th pSortableColumn="SessionName">
                                 {{ l('Cycle') }}
                                 <p-sortIcon field="SessionName"></p-sortIcon>
@@ -287,7 +291,9 @@
                             <td>
                                 {{ record.studyLevel || '-' }}
                             </td>
-
+                            <td>
+                                {{ l('FormNameWithVertion', record.versionNo) || '-' }}
+                            </td>
                             <td>
                                 {{ record.year + ' ' + record?.cycleNumber || '-' }}
                             </td>
