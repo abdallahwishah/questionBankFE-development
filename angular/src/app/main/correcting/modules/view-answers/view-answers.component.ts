@@ -5,19 +5,28 @@ import { UniqueNameComponents } from '@app/shared/Models/UniqueNameComponents';
 import { CommonModule } from '@node_modules/@angular/common';
 import { ActivatedRoute } from '@node_modules/@angular/router';
 import { AppComponentBase } from '@shared/common/app-component-base';
-import { GetExamForViewDto, QuestionTypeEnum, ExamsServiceProxy, ExamQuestionDto, OrderMode, ReOrderExamQuestionDto, StudentsServiceProxy, SessionsServiceProxy, ExamAttemptsServiceProxy } from '@shared/service-proxies/service-proxies';
+import {
+    GetExamForViewDto,
+    QuestionTypeEnum,
+    ExamsServiceProxy,
+    ExamQuestionDto,
+    OrderMode,
+    ReOrderExamQuestionDto,
+    StudentsServiceProxy,
+    SessionsServiceProxy,
+    ExamAttemptsServiceProxy,
+} from '@shared/service-proxies/service-proxies';
 
 @Component({
-  selector: 'app-view-answers',
-  templateUrl: './view-answers.component.html',
-  styleUrls: ['./view-answers.component.css']
+    selector: 'app-view-answers',
+    templateUrl: './view-answers.component.html',
+    styleUrls: ['./view-answers.component.css'],
 })
 export class ViewAnswersComponent extends AppComponentBase implements OnInit {
-
-    examForView: GetExamForViewDto;
+    examForView: any;
     questionsType: any[] = [];
 
-    QuestionTypeEnum=QuestionTypeEnum
+    QuestionTypeEnum = QuestionTypeEnum;
 
     // Track which sections are open (for accordion)
     openSections: boolean[] = [];
@@ -28,8 +37,6 @@ export class ViewAnswersComponent extends AppComponentBase implements OnInit {
         private _activatedRoute: ActivatedRoute,
         private _DialogSharedService: DialogSharedService,
         private _examAttemptsServiceProxy: ExamAttemptsServiceProxy,
-        
-        
     ) {
         super(injector);
     }
@@ -47,12 +54,12 @@ export class ViewAnswersComponent extends AppComponentBase implements OnInit {
 
         // Load exam once
         this._examAttemptsServiceProxy.getAnswersByExamAttempt(id).subscribe((val) => {
-/*             this.examForView = val;
- */
+            this.examForView = val;
+
             // Initialize openSections for each examSection
-            if (this.examForView?.exam?.examSections) {
-                this.openSections = this.examForView.exam.examSections.map(() => false);
-            }
+            // if (this.examForView?.exam?.examSections) {
+            //     this.openSections = this.examForView.exam.examSections.map(() => false);
+            // }
         });
     }
 
@@ -62,6 +69,4 @@ export class ViewAnswersComponent extends AppComponentBase implements OnInit {
     toggleAccordion(index: number): void {
         this.openSections[index] = !this.openSections[index];
     }
-
-  
 }

@@ -1,8 +1,10 @@
 import { ActivatedRoute, Router } from '@angular/router';
 import { DynamicExamQuestionComponent } from '@app/shared/components/questions-exam/dynamic-exam-question/dynamic-exam-question.component';
 import {
+    ApplyExamDto,
     ExamQuestionWithAnswerDto,
     ExamsServiceProxy,
+    StudentExamStatus,
     SubQuestionAnswer,
     ViewExamQuestionDto,
 } from './../../../shared/service-proxies/service-proxies';
@@ -111,7 +113,13 @@ export class ExamViewerAndAttemptComponent extends AppComponentBase implements O
             });
         }
     }
-
+    nextCon() {
+        this.message.confirm('', this.l('AreYouSure'), (isConfirmed) => {
+            if (isConfirmed) {
+                this.next(true);
+            }
+        });
+    }
     next(isLast = false) {
         if (this.isViewer) {
             const viewDto = new ViewExamQuestionDto();
@@ -178,13 +186,27 @@ export class ExamViewerAndAttemptComponent extends AppComponentBase implements O
     }
 
     private updateQuestion(response: any) {
+        switch (this.examData.questionWithAnswer.status) {
+            case StudentExamStatus.ReachedExamEnd:
+                this.end();
+                break;
+            case StudentExamStatus.StudentAlreadyFinished:
+                this.end();
+                break;
+            case StudentExamStatus.ExamAlreadyEnd:
+                this.end();
+                break;
+            case StudentExamStatus.SomethingWrong:
+                window.location.reload();
+                break;
+        }
         this.handleQuestionWithAnswer(response);
         this.question = response.question;
         this.examData.questionNo = response.questionNo;
         this.examData.sectionNo = response.sectionNo;
         this.examData.isLastQuestionInSection = response.isLastQuestionInSection;
         this.examData.sectionNo = response.sectionNo;
-        this.examData.sectionCountInExam = response.sectionCountInExam;
+        (this.examData as any).sectionCountInExam = response.sectionCountInExam;
 
         if (response.isNextSection) {
             this.examData.sectionInstructions = response.sectionInstructions;

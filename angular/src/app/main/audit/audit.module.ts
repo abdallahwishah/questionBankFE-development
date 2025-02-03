@@ -18,13 +18,19 @@ import { RouterModule } from '@node_modules/@angular/router';
                     },
                     {
                         path: 'answers/:id',
+                        loadChildren: () => import('./modules/answers/answers.module').then((m) => m.AnswersModule),
+                    },
+                    {
+                        path: 'view/:id',
                         loadChildren: () =>
-                            import('./modules/answers/answers.module').then((m) => m.AnswersModule),
-                    }
+                            import('../correcting/modules/view-answers/view-answers.module').then(
+                                (m) => m.ViewAnswersModule,
+                            ),
+                    },
                 ],
             },
         ]),
     ],
-    declarations: [AuditComponent]
+    declarations: [AuditComponent],
 })
-export class AuditModule { }
+export class AuditModule {}

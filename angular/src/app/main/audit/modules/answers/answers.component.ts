@@ -1,5 +1,5 @@
 import { Component, Injector, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute } from '@node_modules/@angular/router';
+import { ActivatedRoute, Router } from '@node_modules/@angular/router';
 import { LazyLoadEvent } from '@node_modules/primeng/api';
 import { Paginator } from '@node_modules/primeng/paginator';
 import { Table } from '@node_modules/primeng/table';
@@ -23,6 +23,7 @@ export class AnswersComponent extends AppComponentBase implements OnInit {
         private _injector: Injector,
         private _examAttemptsServiceProxy: ExamAttemptsServiceProxy,
         private _ActivatedRoute: ActivatedRoute,
+        private _router: Router,
     ) {
         super(_injector);
     }
@@ -72,7 +73,11 @@ export class AnswersComponent extends AppComponentBase implements OnInit {
     doActions(label: any, record: any) {
         switch (label) {
             case 'ViewAnswersStudent':
-                console.log();
+                this._router.navigate(['/app/main/correcting/view/', record.examAttempt.id], {
+                    queryParams: {
+                        examTitle: record.examTitle,
+                    },
+                });
                 break;
         }
     }
