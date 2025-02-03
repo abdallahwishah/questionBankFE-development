@@ -273,6 +273,8 @@
                                 {{ i + 1 }}
                             </td>
                             <td>
+                                <app-userImage [userId]="record?.userId"></app-userImage>
+
                                 {{ record.studentNumber || '-' }}
                             </td>
                             <td>

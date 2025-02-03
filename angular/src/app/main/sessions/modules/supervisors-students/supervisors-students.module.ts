@@ -16,6 +16,7 @@ import { ExtendTimeSessionComponent } from './components/extendTimeSession/exten
 import { AddStudentComponent } from './components/add-student/add-student.component';
 import { MoveStudentComponent } from './components/move-student/move-student.component';
 import { RadioButtonModule } from 'primeng/radiobutton';
+import { UserImageComponent } from '@app/shared/components/userImage/userImage.component';
 
 @NgModule({
     imports: [
@@ -35,15 +36,15 @@ import { RadioButtonModule } from 'primeng/radiobutton';
         AutoCompleteFeildModule,
         InputNumberModule,
         RadioButtonModule,
-
+        UserImageComponent,
     ],
     declarations: [
         SupervisorsStudentsComponent,
         AddSupervisorComponent,
         ExtendTimeSessionComponent,
         AddStudentComponent,
-        MoveStudentComponent
+        MoveStudentComponent,
     ],
-    providers: [SessionSupervisorsServiceProxy , StudentsServiceProxy],
+    providers: [SessionSupervisorsServiceProxy, StudentsServiceProxy],
 })
 export class SupervisorsStudentsModule {}

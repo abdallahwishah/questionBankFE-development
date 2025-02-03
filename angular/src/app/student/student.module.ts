@@ -8,10 +8,7 @@ import { StudentHeaderComponent } from "./student-header/student-header.componen
     imports: [
     CommonModule,
     RouterModule.forChild([
-        {
-            path: 'exam-attempt',
-            loadComponent: () => import('./exam-viewer-and-attempt/exam-viewer-and-attempt.component').then((m) => m.ExamViewerAndAttemptComponent),
-        },
+
         {
             path: '',
             component: StudentComponent,
@@ -27,6 +24,10 @@ import { StudentHeaderComponent } from "./student-header/student-header.componen
                 {
                     path: 'quiz',
                     loadComponent: () => import('./quiz/quiz.component').then((m) => m.QuizComponent),
+                },
+                {
+                    path: 'exam-attempt',
+                    loadComponent: () => import('./exam-viewer-and-attempt/exam-viewer-and-attempt.component').then((m) => m.ExamViewerAndAttemptComponent),
                 },
             ],
         },

@@ -1,4 +1,4 @@
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { DynamicExamQuestionComponent } from '@app/shared/components/questions-exam/dynamic-exam-question/dynamic-exam-question.component';
 import {
     ExamQuestionWithAnswerDto,
@@ -36,6 +36,7 @@ export class ExamViewerAndAttemptComponent extends AppComponentBase implements O
         injector: Injector,
         private _examsServiceProxy: ExamsServiceProxy,
         private _activatedRoute: ActivatedRoute,
+        private router: Router,
     ) {
         super(injector);
         this.isViewer = window?.location.href.includes('viewer');
@@ -146,7 +147,9 @@ export class ExamViewerAndAttemptComponent extends AppComponentBase implements O
             });
         }
     }
-
+    end() {
+        this.router.navigate(['/student/main']);
+    }
     startTimer(seconds: number) {
         let time = Math.floor(seconds);
         this.updateDisplay(time);
@@ -173,6 +176,9 @@ export class ExamViewerAndAttemptComponent extends AppComponentBase implements O
         this.question = response.question;
         this.examData.questionNo = response.questionNo;
         this.examData.sectionNo = response.sectionNo;
+        this.examData.isLastQuestionInSection = response.isLastQuestionInSection;
+        this.examData.sectionNo = response.sectionNo;
+        this.examData.sectionCountInExam = response.sectionCountInExam;
 
         if (response.isNextSection) {
             this.examData.sectionInstructions = response.sectionInstructions;

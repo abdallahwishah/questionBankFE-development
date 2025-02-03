@@ -105,10 +105,28 @@
                             </button>
                         </div>
                         <div>
-                            <!-- <button class="btn btn-primary-next" (click)="next()">
-                                {{examData.isLastQuestionInSection &&
-                                ? l('EndExam') : l('Next') }}
-                            </button> -->
+                            <button
+                                class="btn btn-primary-next"
+                                (click)="end()"
+                                *ngIf="
+                                    examData.isLastQuestionInSection &&
+                                    examData?.sectionCountInExam == examData?.sectionNo
+                                "
+                            >
+                                {{ l('EndExam') }}
+                            </button>
+                            <button
+                                class="btn btn-primary-next"
+                                (click)="next()"
+                                *ngIf="
+                                    !(
+                                        examData.isLastQuestionInSection &&
+                                        examData?.sectionCountInExam == examData?.sectionNo
+                                    )
+                                "
+                            >
+                                {{ l('Next') }}
+                            </button>
                         </div>
                     </div>
                 </div>
