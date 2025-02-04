@@ -220,7 +220,7 @@
                                     </div>
                                     <button
                                         class="btn btn-outline-primary outline-dashed my-4"
-                                        (click)="addNewQ()"
+                                        (click)="addNewQ(section.id)"
                                         style="width: 300px"
                                     >
                                         {{ l('AddNewQuestion') }}
@@ -244,4 +244,4 @@
     </div>
 </div>
 
-<app-add-view-exam-modal></app-add-view-exam-modal>
+<app-add-view-exam-modal [examSectionId]="examSectionId"></app-add-view-exam-modal>

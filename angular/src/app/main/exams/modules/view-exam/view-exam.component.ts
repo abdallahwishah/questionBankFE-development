@@ -33,7 +33,7 @@ export class ViewExamComponent extends AppComponentBase implements OnInit {
         private _examsServiceProxy: ExamsServiceProxy,
         private _activatedRoute: ActivatedRoute,
         private _DialogSharedService: DialogSharedService,
-        
+
     ) {
         super(injector);
     }
@@ -144,8 +144,9 @@ export class ViewExamComponent extends AppComponentBase implements OnInit {
             // e.g., you might want to keep them sequential 1..n after reorder
         });
     }
-
-    addNewQ(){
+    examSectionId
+    addNewQ(examSectionId){
+        this.examSectionId=examSectionId
         this._DialogSharedService.showDialog(this.Add_View_exam_dialog , {})
     }
 }
