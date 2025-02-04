@@ -40,7 +40,7 @@ export class AddSessionsModalComponent extends AppComponentBase implements OnIni
             name: [null, Validators.required],
             startDate: [null, Validators.required],
             endDate: [null, Validators.required],
-            examTemplateId: [null, Validators.required],
+            examTemplateId: [null],
             supervisorFileToken: [null],
             studentFileToken: [null],
         });
@@ -82,7 +82,7 @@ export class AddSessionsModalComponent extends AppComponentBase implements OnIni
             })
             .subscribe((res) => {
                 this.notify.success(this.l('SuccessfullyEdited'));
-
+                this.clear();
                 this.OnRefresh.emit();
                 this.closeDialog();
             });
@@ -109,7 +109,13 @@ export class AddSessionsModalComponent extends AppComponentBase implements OnIni
         this.FormAddSession.reset();
         this._DialogSharedService.hideDialog(this.Add_Session_dialog);
     }
-
+    clear() {
+        this.FormAddSession.reset();
+        this.fileStudentToken = null;
+        this.fileSuperToken = null;
+        this.fileSuper = null;
+        this.fileStudent = null;
+    }
     ngOnDestroy(): void {
         // Don’t forget to clean up
         this.subscription?.unsubscribe();

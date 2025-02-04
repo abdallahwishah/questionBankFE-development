@@ -274,16 +274,25 @@
                                 </div>
 
                                 <div class="row mt-6">
-                                    <div class="col-md-6 mb-5">
+                                    <div class="col-md-4 mb-5">
                                         <app-dropdown-field
-                                            [excludeIds]="[512, 256, 128, 64, 32, 8, 1,16]"
+                                            [excludeIds]="[512, 256, 128, 64, 32, 8, 1, 16]"
                                             [labelField]="l('QuestionType')"
                                             [enm]="QuestionTypeEnum"
                                             [(ngModel)]="question.type"
                                             (ngModelChange)="question.autoCorrection = false"
                                         ></app-dropdown-field>
                                     </div>
-                                    <div class="col-md-3 mb-5 d-flex align-items-end">
+                                    <div class="col-md-4 mb-5  ">
+                                        <app-dropdown-field
+                                            [(ngModel)]="question.complexityId"
+                                            [options]="complexities"
+                                            optionLabel="name"
+                                            optionValue="id"
+                                            [labelField]="l('DifficultyLevel')"
+                                        ></app-dropdown-field>
+                                    </div>
+                                    <div class="col-md-2 mb-5 d-flex align-items-end">
                                         <input
                                             name="text"
                                             class="form-control m-input"
@@ -292,7 +301,7 @@
                                             [(ngModel)]="question.maxPoints"
                                         />
                                     </div>
-                                    <div class="col-md-3 mb-5 d-flex align-items-end">
+                                    <div class="col-md-2 mb-5 d-flex align-items-end">
                                         <input
                                             name="text"
                                             class="form-control m-input"

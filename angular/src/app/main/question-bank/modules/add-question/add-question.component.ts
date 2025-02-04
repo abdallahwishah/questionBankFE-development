@@ -142,7 +142,11 @@ export class AddQuestionComponent extends AppComponentBase implements OnInit {
         this._createOrEditQuestionDto.studyLevelIds = this.studyLevelsValue.map((x) => x?.studyLevel?.id);
         this._createOrEditQuestionDto.studySubjectId = this.studySubject.studySubject.id;
         this._createOrEditQuestionDto.subjectUnitId = this.studyUnit.subjectUnit.id;
-
+        if (this._createOrEditQuestionDto?.payload?.subQuestions?.length) {
+            this._createOrEditQuestionDto.payload.subQuestions.forEach((x) => {
+                delete x.id;
+            });
+        }
         this._questionsServiceProxy.createOrEdit(this._createOrEditQuestionDto).subscribe({
             next: () => {
                 this.notify.success(this.l('SavedSuccessfully'));

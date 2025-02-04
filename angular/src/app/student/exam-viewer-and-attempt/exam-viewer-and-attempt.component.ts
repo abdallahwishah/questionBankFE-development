@@ -15,10 +15,20 @@ import { SidebarModule } from 'primeng/sidebar';
 import { AccordionModule } from 'primeng/accordion';
 import { QuestionTypeEnum } from './../../../shared/service-proxies/service-proxies';
 import { AppComponentBase } from '@shared/common/app-component-base';
+import { WarningModalComponent } from './componets/warning-modal/warning-modal.component';
+import { DialogSharedService } from '@app/shared/components/dialog-shared/dialog-shared.service';
+import { UniqueNameComponents } from '@app/shared/Models/UniqueNameComponents';
 
 @Component({
     standalone: true,
-    imports: [DynamicExamQuestionComponent, CommonModule, FormsModule, SidebarModule, AccordionModule],
+    imports: [
+        DynamicExamQuestionComponent,
+        CommonModule,
+        FormsModule,
+        SidebarModule,
+        AccordionModule,
+        WarningModalComponent,
+    ],
     selector: 'app-exam-viewer-and-attempt',
     templateUrl: './exam-viewer-and-attempt.component.html',
     styleUrls: ['./exam-viewer-and-attempt.component.css'],
@@ -39,6 +49,7 @@ export class ExamViewerAndAttemptComponent extends AppComponentBase implements O
         private _examsServiceProxy: ExamsServiceProxy,
         private _activatedRoute: ActivatedRoute,
         private router: Router,
+        private _DialogSharedService: DialogSharedService,
     ) {
         super(injector);
         this.isViewer = window?.location.href.includes('viewer');
@@ -113,11 +124,12 @@ export class ExamViewerAndAttemptComponent extends AppComponentBase implements O
             });
         }
     }
+    Warning_dialog = UniqueNameComponents.Warning_dialog;
     nextCon() {
-        this.message.confirm('', this.l('AreYouSure'), (isConfirmed) => {
-            if (isConfirmed) {
+        this._DialogSharedService.showDialog(this.Warning_dialog, {
+            confirm: () => {
                 this.next(true);
-            }
+            },
         });
     }
     next(isLast = false) {

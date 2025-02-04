@@ -15,7 +15,7 @@ import { AppComponentBase } from '@shared/common/app-component-base';
 export class WarningModalComponent extends AppComponentBase implements OnInit {
     Warning_dialog = UniqueNameComponents.Warning_dialog;
     saving = false;
-
+    @Input() title = 'TemplateTestCreationConfirmation';
     constructor(
         injector: Injector,
         private _DialogSharedService: DialogSharedService,
@@ -27,7 +27,6 @@ export class WarningModalComponent extends AppComponentBase implements OnInit {
     Save() {
         this._DialogSharedService?.dataDialog?.[this.Warning_dialog]?.configShow?.data?.confirm();
         this._DialogSharedService.hideDialog(this.Warning_dialog);
-
     }
 
     closeDialog() {

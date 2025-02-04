@@ -32,7 +32,7 @@ export class ListComponent extends AppComponentBase implements OnInit {
     ) {
         super(_injector);
     }
-
+    skipCount = 0;
     ngOnInit() {
         /* Covert Enum To array */
         this.sessionStatus = Object.keys(SessionStatusEnum)
@@ -52,7 +52,7 @@ export class ListComponent extends AppComponentBase implements OnInit {
                 }
             }
         }
-
+        this.skipCount = this.primengTableHelper.getSkipCount(this.paginator, event);
         this.primengTableHelper.showLoadingIndicator();
 
         this._sessionsServiceProxy
@@ -67,7 +67,7 @@ export class ListComponent extends AppComponentBase implements OnInit {
                 undefined,
                 undefined,
                 this.primengTableHelper.getSorting(this.dataTable),
-                this.primengTableHelper.getSkipCount(this.paginator, event),
+                this.skipCount,
                 this.primengTableHelper.getMaxResultCount(this.paginator, event),
             )
             .subscribe((result) => {
