@@ -1,12 +1,15 @@
+<!-- dropdown
+data-toggle="dropdown"
+aria-expanded="true"
+container="body" -->
+
 <div
-    dropdown
+   (click)="sidebarVisible = true" 
     class="d-flex header-icon align-items-center ms-1 ms-lg-3"
-    data-toggle="dropdown"
-    aria-expanded="true"
-    container="body"
+   
 >
-    <div dropdownToggle [class]="customStyle" id="notificationIcon">
-       <!--  <i [class]="iconStyle" *ngIf="unreadNotificationCount"></i> -->
+<!-- dropdownToggle -->
+     <div  [class]="customStyle" id="notificationIcon">
         <span
             class="position-absolute top-0 start-100 translate-middle badge badge-circle badge-warning"
             *ngIf="unreadNotificationCount"
@@ -19,8 +22,7 @@
             <path d="M7.6001 18.9186C6.96676 18.2852 6.6001 17.4102 6.6001 16.5186H7.8501C7.8501 17.0852 8.08343 17.6352 8.48343 18.0352C8.88343 18.4352 9.43343 18.6686 10.0001 18.6686C11.1834 18.6686 12.1501 17.7019 12.1501 16.5186H13.4001C13.4001 18.3936 11.8751 19.9186 10.0001 19.9186C9.10843 19.9186 8.23343 19.5519 7.6001 18.9186Z" fill="#352F36"/>
             </svg>
 
-        <!-- <i class="flaticon-alarm" *ngIf="!unreadNotificationCount"></i> -->
-    </div>
+    </div> 
     <ng-container *ngIf="isRight">
         <div
             *dropdownMenu
@@ -137,3 +139,104 @@
         </div>
     </div>
 </ng-template>
+
+
+
+
+
+
+ <p-sidebar [(visible)]="sidebarVisible"   [baseZIndex]="1200" 
+    styleClass="w-40rem" position="right">
+
+    <ng-template pTemplate="header">
+        
+        <h2>{{ 'Notifications' | localize }}</h2>
+
+    </ng-template>
+
+    <div class="px-4">
+        <div
+            class="scroll pt-5"
+            data-scroll="true"
+            data-height="300"
+            data-mobile-height="200"
+            style="height: 300px; overflow: hidden"
+        >
+            <div
+                *ngFor="let notification of notifications"
+                class="d-flex align-items-sm-center mb-7 pb-7 notification-item user-notification-item-clickable user-notification-item-unread"
+                (click)="gotoUrl(notification.url)"
+                [ngClass]="{
+                    'user-notification-item-clickable': notification.url,
+                    'user-notification-item-unread': notification.isUnread
+                }"
+            >
+                <div class="symbol symbol-50px me-5">
+                    <span class="symbol-label">
+                        <i class="{{ notification.icon }} {{ notification.iconFontClass }} icon-lg"></i>
+                    </span>
+                </div>
+                <div class="d-flex align-items-center flex-row-fluid flex-wrap">
+                    <div class="flex-grow-1 me-2">
+                        <a
+                            class="text-hover-primary fs-6 fw-bolder"
+                            [ngClass]="{ 'text-muted': !notification.isUnread }"
+                        >
+                            {{ notification.text }}
+                        </a>
+                    </div>
+                    <span class="text-muted fw-bold d-block fs-7">
+                        {{ notification.creationTime | luxonFromNow }}
+                    </span>
+                    <span
+                        *ngIf="notification.isUnread"
+                        class="btn btn-link-success text-success set-notification-as-read fs-7 py-0 my-0 set-notification-as-read"
+                        (click)="setNotificationAsRead(notification); $event.preventDefault(); $event.stopPropagation()"
+                    >
+                        {{ 'SetAsRead' | localize }}
+                    </span>
+                </div>
+            </div>
+
+            <span *ngIf="!notifications.length" class="notification-empty-text text-center p-5">
+                {{ 'ThereAreNoNotifications' | localize }}
+            </span>
+        </div>
+       
+    </div>
+
+
+    <ng-template pTemplate="footer">
+        
+        <hr *ngIf="notifications.length" />
+        <div
+            class="m-1 mb-4 d-flex"
+            style="align-items: center; justify-content: space-between"
+            *ngIf="notifications.length"
+        >
+            <a
+                href="javascript:;"
+                class="btn btn-secondary col-md-6 col-xs-12"
+                (click)="setAllNotificationsAsRead(); $event.preventDefault(); $event.stopPropagation()"
+                id="setAllNotificationsAsReadLink"
+                *ngIf="unreadNotificationCount"
+            >
+                {{ 'SetAllAsRead' | localize }}
+            </a>
+
+            <a
+                routerLink="notifications"
+                [class.col-md-6]="unreadNotificationCount"
+                [class.col-md-12]="!unreadNotificationCount"
+                class="btn btn-primary col-xs-12"
+            >
+                {{ 'SeeAllNotifications' | localize }}
+            </a>
+        </div>
+
+    </ng-template>
+    
+
+
+    </p-sidebar>
+    

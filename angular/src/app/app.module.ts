@@ -96,6 +96,7 @@ import { ViewRecoveryCodesModalComponent } from './shared/layout/profile/view-re
 import { AddFriendModalComponent } from './shared/layout/chat/add-friend-modal.component';
 import { AddFromDifferentTenantModalComponent } from './shared/layout/chat/add-from-different-tenant-modal.component';
 import { FriendsLookupTableComponent } from './shared/layout/chat/friends-lookup-table.component';
+import { SidebarModule } from 'primeng/sidebar';
 
 @NgModule({
     declarations: [
@@ -201,7 +202,9 @@ import { FriendsLookupTableComponent } from './shared/layout/chat/friends-lookup
         NgxSpinnerModule,
         AppBsModalModule,
         SubheaderModule,
-        ChangeProfilePictureModalModule
+        ChangeProfilePictureModalModule,
+        SidebarModule
+
     ]
 })
 export class AppModule { }

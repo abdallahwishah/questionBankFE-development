@@ -102,9 +102,10 @@ export class SupervisorsStudentsComponent extends AppComponentBase implements On
                 undefined,
                 undefined,
                 undefined,
-                undefined,
-                undefined,
-                undefined,
+                this.primengTableHelper.getSorting(this.attemptsTable),
+                this.primengTableHelper.getSkipCount(this.paginatorAttempts, event),
+                this.primengTableHelper.getMaxResultCount(this.paginatorAttempts, event),
+
             )
             .subscribe((result) => {
                 this.primengTableHelperForAttempts.totalRecordsCount = result.totalCount;
@@ -129,7 +130,11 @@ export class SupervisorsStudentsComponent extends AppComponentBase implements On
         this.primengTableHelperForSupervisors.showLoadingIndicator();
 
         this._SessionSupervisorsServiceProxy
-            .getAll(this.filterSupervis, this.SessionId, this.classId, undefined, undefined, undefined)
+            .getAll(this.filterSupervis, this.SessionId, this.classId,           
+            this.primengTableHelper.getSorting(this.supervisorsTable),
+            this.primengTableHelper.getSkipCount(this.paginatorSupervisors, event),
+            this.primengTableHelper.getMaxResultCount(this.paginatorSupervisors, event),
+)
             .subscribe((result) => {
                 this.primengTableHelperForSupervisors.totalRecordsCount = result.totalCount;
                 this.primengTableHelperForSupervisors.records = result.items;

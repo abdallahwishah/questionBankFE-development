@@ -18,7 +18,7 @@ export class HeaderNotificationsComponent extends AppComponentBase implements On
 
     notifications: IFormattedUserNotification[] = [];
     unreadNotificationCount = 0;
-
+    sidebarVisible:boolean = false;
     constructor(
         injector: Injector,
         private _notificationService: NotificationServiceProxy,

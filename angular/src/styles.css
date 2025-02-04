@@ -881,6 +881,24 @@ td {
     height: 43px;
 }
 
+.p-sidebar-icon{
+    background: #f7f7f7;
+    border: 1px solid #dedede;
+    color: #999999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    font-size: 8px;
+    cursor: pointer;
+    transition: 0.3s all ;
+    width: 27px;
+    height: 27px;
+}
+.p-sidebar-ico:hover{
+    color: #ED1C24;
+}
+
 .pt-8rem{
     padding-top: 8rem;
 }
@@ -904,6 +922,16 @@ td {
 .p-dialog-content{
     overflow-x: hidden;
 }
-span.cke_button_icon.cke_button__about_icon {
+span.cke_button_icon.cke_button__about_icon  {
     display: none;
 }
+/*  .p-component-overlay{
+    z-index: 99 !important;
+ } */
+
+@media (min-width: 992px) {
+    [data-kt-app-sidebar-fixed=true] .app-sidebar {
+        z-index: 11 !important;
+    }
+}
+
