@@ -1,9 +1,8 @@
 <div class="bg-cover">
     <div class="mb-15">
         <h3 class="mb-8">{{ sessionName }}</h3>
-        <h4 *ngIf="totalSeconds" >{{ l('PleaseWaitUntilTimeComes') }}</h4>
-        <h4 *ngIf="!totalSeconds" >{{ l('ThereIsNoExamsForYou') }}</h4>
-
+        <h4 *ngIf="totalSeconds" style="color: #000">{{ l('PleaseWaitUntilTimeComes') }}</h4>
+        <h4 *ngIf="!totalSeconds" style="color: #000">{{ l('ThereIsNoExamsForYou') }}</h4>
     </div>
     <ng-container *ngIf="totalSeconds">
         <div class="container">

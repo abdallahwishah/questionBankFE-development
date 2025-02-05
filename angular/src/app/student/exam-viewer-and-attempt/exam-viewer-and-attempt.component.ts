@@ -3,6 +3,7 @@ import { DynamicExamQuestionComponent } from '@app/shared/components/questions-e
 import {
     ApplyExamDto,
     ExamQuestionWithAnswerDto,
+    ExamSectionDto,
     ExamsServiceProxy,
     StudentExamStatus,
     SubQuestionAnswer,
@@ -15,9 +16,11 @@ import { SidebarModule } from 'primeng/sidebar';
 import { AccordionModule } from 'primeng/accordion';
 import { QuestionTypeEnum } from './../../../shared/service-proxies/service-proxies';
 import { AppComponentBase } from '@shared/common/app-component-base';
-import { WarningModalComponent } from './componets/warning-modal/warning-modal.component';
 import { DialogSharedService } from '@app/shared/components/dialog-shared/dialog-shared.service';
 import { UniqueNameComponents } from '@app/shared/Models/UniqueNameComponents';
+import { WarningModalComponent } from '@app/main/templates/components/warning-modal/warning-modal.component';
+import { GetExamForViewDto } from './../../../shared/service-proxies/service-proxies';
+import { SafeTextPipe } from '@app/shared/pipes/safe-text.pipe';
 
 @Component({
     standalone: true,
@@ -28,6 +31,7 @@ import { UniqueNameComponents } from '@app/shared/Models/UniqueNameComponents';
         SidebarModule,
         AccordionModule,
         WarningModalComponent,
+        SafeTextPipe,
     ],
     selector: 'app-exam-viewer-and-attempt',
     templateUrl: './exam-viewer-and-attempt.component.html',
@@ -70,6 +74,10 @@ export class ExamViewerAndAttemptComponent extends AppComponentBase implements O
         } else {
             this._examsServiceProxy.getExpectedeExam().subscribe((response) => {
                 this.examData = response.applyExamDto;
+                if (!this.examData) {
+                    this.router.navigate(['/student/main']);
+                }
+                this.loadQuestionList();
                 this.examData.isLastQuestionInSection = this.examData.isLastQuestionInSection;
                 this.examData.sectionCountInExam = this.examData?.questionWithAnswer.sectionCountInExam;
                 this.id = response.applyExamDto.examId;
@@ -119,6 +127,22 @@ export class ExamViewerAndAttemptComponent extends AppComponentBase implements O
             dto.linkedQuestionAnswer = this.question.question?.linkedQuestionAnswer; //working
             this.loading = true;
 
+            if (
+                !dto.rearrangeAnswer &&
+                !dto.trueFalseAnswer &&
+                !dto.dragTableAnswer &&
+                !dto.multipleChoiceAnswer &&
+                !dto.drawingAnswer &&
+                !dto.singleChoiceAnswer &&
+                !dto.matchAnswer &&
+                !dto.saAnswer &&
+                !dto.dragFormAnswer &&
+                !dto.linkedQuestionAnswer
+            ) {
+                alert('يرجى تقديم إجابة قبل المتابعة.');
+                this.loading = false;
+                return;
+            }
             this._examsServiceProxy.backQuestion(dto).subscribe((response) => {
                 this.updateQuestion(response);
             });
@@ -162,6 +186,23 @@ export class ExamViewerAndAttemptComponent extends AppComponentBase implements O
             dto.saAnswer = this.question.question?.saAnswer;
             dto.dragFormAnswer = this.question.question?.dragFormAnswer;
             dto.linkedQuestionAnswer = this.question.question?.linkedQuestionAnswer;
+
+            if (
+                !dto.rearrangeAnswer &&
+                !dto.trueFalseAnswer &&
+                !dto.dragTableAnswer &&
+                !dto.multipleChoiceAnswer &&
+                !dto.drawingAnswer &&
+                !dto.singleChoiceAnswer &&
+                !dto.matchAnswer &&
+                !dto.saAnswer &&
+                !dto.dragFormAnswer &&
+                !dto.linkedQuestionAnswer
+            ) {
+                alert('يرجى تقديم إجابة قبل المتابعة.');
+                this.loading = false;
+                return;
+            }
             this.loading = true;
 
             this._examsServiceProxy.nextQuestion(dto).subscribe((response) => {
@@ -169,6 +210,7 @@ export class ExamViewerAndAttemptComponent extends AppComponentBase implements O
                     this.end();
                 } else {
                     this.updateQuestion(response);
+                    this.loadQuestionList();
                 }
             });
         }
@@ -301,5 +343,56 @@ export class ExamViewerAndAttemptComponent extends AppComponentBase implements O
             ...questionWithAnswer?.question?.question,
             ...answer,
         };
+    }
+    questionlist: ExamSectionDto[];
+    loadQuestionList() {
+        this._examsServiceProxy.viewCurrentEXamQuestion().subscribe((response) => {
+            this.questionlist = response.exam.examSections;
+        });
+    }
+    get arrayOfIndexes() {
+        // questionlist
+        return Array.from({ length: this.questionlist.length }, (_, i) => i)?.join(',');
+    }
+    activeIndex;
+    GetSelectedQuestion(section, question) {
+        this.loading = true;
+        let examId = this.examData?.id;
+        let questionId = question?.id;
+        let questionNo = question.questionNo;
+        let questionNoInGeneral = question?.questionNoInGeneral;
+        let sectionId = question?.sectionId;
+        let sectionNo = question?.sectionNo;
+        this._examsServiceProxy
+            .getSelectedQuestion(
+                questionNoInGeneral,
+                questionNo,
+                sectionId,
+                questionId,
+                examId,
+                sectionNo,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+            )
+            .subscribe(
+                (response) => {
+                    this.updateQuestion(response);
+                    this.sidebarVisible = false;
+                    this.loading = false;
+                },
+                (err) => {
+                    this.loading = false;
+                },
+            );
     }
 }

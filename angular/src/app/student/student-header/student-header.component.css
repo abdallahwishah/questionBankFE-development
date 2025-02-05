@@ -2,8 +2,9 @@
 .custom-white-top-bar{
     background-color: rgb(255, 255, 255);
      top: 0;
-     z-index: 99999;
+     z-index: 1000;
      width: 100%;
+
 }
 .custom-black-top-bar{
     background-color: rgba(23, 26, 31, 0.4);

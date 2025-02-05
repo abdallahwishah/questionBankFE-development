@@ -14,6 +14,10 @@ import { StudentHeaderComponent } from "./student-header/student-header.componen
             component: StudentComponent,
             children: [
                 {
+                    path: '',
+                    loadComponent: () => import('./student-main/student-main.component').then((m) => m.StudentMainComponent),
+                },
+                {
                     path: 'main',
                     loadComponent: () => import('./student-main/student-main.component').then((m) => m.StudentMainComponent),
                 },

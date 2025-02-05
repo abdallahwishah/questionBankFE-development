@@ -8347,6 +8347,57 @@ export class ExamsServiceProxy {
     /**
      * @return Success
      */
+    getCurrentExamRemainingTime(): Observable<TimeSpan> {
+        let url_ = this.baseUrl + "/api/services/app/Exams/GetCurrentExamRemainingTime";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetCurrentExamRemainingTime(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetCurrentExamRemainingTime(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<TimeSpan>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<TimeSpan>;
+        }));
+    }
+
+    protected processGetCurrentExamRemainingTime(response: HttpResponseBase): Observable<TimeSpan> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = TimeSpan.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @return Success
+     */
     getExpectedeExam(): Observable<ExpectedeExamDto> {
         let url_ = this.baseUrl + "/api/services/app/Exams/GetExpectedeExam";
         url_ = url_.replace(/[?&]$/, "");
@@ -8454,15 +8505,115 @@ export class ExamsServiceProxy {
     }
 
     /**
+     * @param questionNoInGeneral (optional) 
+     * @param questionNo (optional) 
+     * @param sectionId (optional) 
      * @param questionId (optional) 
+     * @param examId (optional) 
+     * @param sectionNo (optional) 
+     * @param type (optional) 
+     * @param multipleChoiceAnswer (optional) 
+     * @param singleChoiceAnswer (optional) 
+     * @param trueFalseAnswer (optional) 
+     * @param matchAnswer (optional) 
+     * @param rearrangeAnswer (optional) 
+     * @param saAnswer (optional) 
+     * @param dragTableAnswer (optional) 
+     * @param dragFormAnswer (optional) 
+     * @param linkedQuestionAnswer (optional) 
+     * @param drawingAnswer (optional) 
+     * @param drawingPoints (optional) 
      * @return Success
      */
-    getSelectedQuestion(questionId: number | undefined): Observable<QuestionWithAnswerDto[]> {
+    getSelectedQuestion(questionNoInGeneral: number | undefined, questionNo: number | undefined, sectionId: number | undefined, questionId: number | undefined, examId: number | undefined, sectionNo: number | undefined, type: number | undefined, multipleChoiceAnswer: number[] | undefined, singleChoiceAnswer: number | undefined, trueFalseAnswer: number | undefined, matchAnswer: string[] | undefined, rearrangeAnswer: string[] | undefined, saAnswer: string | undefined, dragTableAnswer: DragTableAnswer[] | undefined, dragFormAnswer: DragFormAnswer[] | undefined, linkedQuestionAnswer: SubQuestionAnswer[] | undefined, drawingAnswer: string | undefined, drawingPoints: any | undefined): Observable<QuestionWithAnswerDto> {
         let url_ = this.baseUrl + "/api/services/app/Exams/GetSelectedQuestion?";
+        if (questionNoInGeneral === null)
+            throw new Error("The parameter 'questionNoInGeneral' cannot be null.");
+        else if (questionNoInGeneral !== undefined)
+            url_ += "QuestionNoInGeneral=" + encodeURIComponent("" + questionNoInGeneral) + "&";
+        if (questionNo === null)
+            throw new Error("The parameter 'questionNo' cannot be null.");
+        else if (questionNo !== undefined)
+            url_ += "QuestionNo=" + encodeURIComponent("" + questionNo) + "&";
+        if (sectionId === null)
+            throw new Error("The parameter 'sectionId' cannot be null.");
+        else if (sectionId !== undefined)
+            url_ += "SectionId=" + encodeURIComponent("" + sectionId) + "&";
         if (questionId === null)
             throw new Error("The parameter 'questionId' cannot be null.");
         else if (questionId !== undefined)
             url_ += "QuestionId=" + encodeURIComponent("" + questionId) + "&";
+        if (examId === null)
+            throw new Error("The parameter 'examId' cannot be null.");
+        else if (examId !== undefined)
+            url_ += "ExamId=" + encodeURIComponent("" + examId) + "&";
+        if (sectionNo === null)
+            throw new Error("The parameter 'sectionNo' cannot be null.");
+        else if (sectionNo !== undefined)
+            url_ += "SectionNo=" + encodeURIComponent("" + sectionNo) + "&";
+        if (type === null)
+            throw new Error("The parameter 'type' cannot be null.");
+        else if (type !== undefined)
+            url_ += "Type=" + encodeURIComponent("" + type) + "&";
+        if (multipleChoiceAnswer === null)
+            throw new Error("The parameter 'multipleChoiceAnswer' cannot be null.");
+        else if (multipleChoiceAnswer !== undefined)
+            multipleChoiceAnswer && multipleChoiceAnswer.forEach(item => { url_ += "MultipleChoiceAnswer=" + encodeURIComponent("" + item) + "&"; });
+        if (singleChoiceAnswer === null)
+            throw new Error("The parameter 'singleChoiceAnswer' cannot be null.");
+        else if (singleChoiceAnswer !== undefined)
+            url_ += "SingleChoiceAnswer=" + encodeURIComponent("" + singleChoiceAnswer) + "&";
+        if (trueFalseAnswer === null)
+            throw new Error("The parameter 'trueFalseAnswer' cannot be null.");
+        else if (trueFalseAnswer !== undefined)
+            url_ += "TrueFalseAnswer=" + encodeURIComponent("" + trueFalseAnswer) + "&";
+        if (matchAnswer === null)
+            throw new Error("The parameter 'matchAnswer' cannot be null.");
+        else if (matchAnswer !== undefined)
+            matchAnswer && matchAnswer.forEach(item => { url_ += "MatchAnswer=" + encodeURIComponent("" + item) + "&"; });
+        if (rearrangeAnswer === null)
+            throw new Error("The parameter 'rearrangeAnswer' cannot be null.");
+        else if (rearrangeAnswer !== undefined)
+            rearrangeAnswer && rearrangeAnswer.forEach(item => { url_ += "RearrangeAnswer=" + encodeURIComponent("" + item) + "&"; });
+        if (saAnswer === null)
+            throw new Error("The parameter 'saAnswer' cannot be null.");
+        else if (saAnswer !== undefined)
+            url_ += "SaAnswer=" + encodeURIComponent("" + saAnswer) + "&";
+        if (dragTableAnswer === null)
+            throw new Error("The parameter 'dragTableAnswer' cannot be null.");
+        else if (dragTableAnswer !== undefined)
+            dragTableAnswer && dragTableAnswer.forEach((item, index) => {
+                for (const attr in item)
+        			if (item.hasOwnProperty(attr)) {
+        				url_ += "DragTableAnswer[" + index + "]." + attr + "=" + encodeURIComponent("" + (item as any)[attr]) + "&";
+        			}
+            });
+        if (dragFormAnswer === null)
+            throw new Error("The parameter 'dragFormAnswer' cannot be null.");
+        else if (dragFormAnswer !== undefined)
+            dragFormAnswer && dragFormAnswer.forEach((item, index) => {
+                for (const attr in item)
+        			if (item.hasOwnProperty(attr)) {
+        				url_ += "DragFormAnswer[" + index + "]." + attr + "=" + encodeURIComponent("" + (item as any)[attr]) + "&";
+        			}
+            });
+        if (linkedQuestionAnswer === null)
+            throw new Error("The parameter 'linkedQuestionAnswer' cannot be null.");
+        else if (linkedQuestionAnswer !== undefined)
+            linkedQuestionAnswer && linkedQuestionAnswer.forEach((item, index) => {
+                for (const attr in item)
+        			if (item.hasOwnProperty(attr)) {
+        				url_ += "LinkedQuestionAnswer[" + index + "]." + attr + "=" + encodeURIComponent("" + (item as any)[attr]) + "&";
+        			}
+            });
+        if (drawingAnswer === null)
+            throw new Error("The parameter 'drawingAnswer' cannot be null.");
+        else if (drawingAnswer !== undefined)
+            url_ += "DrawingAnswer=" + encodeURIComponent("" + drawingAnswer) + "&";
+        if (drawingPoints === null)
+            throw new Error("The parameter 'drawingPoints' cannot be null.");
+        else if (drawingPoints !== undefined)
+            url_ += "DrawingPoints=" + encodeURIComponent("" + drawingPoints) + "&";
         url_ = url_.replace(/[?&]$/, "");
 
         let options_ : any = {
@@ -8480,14 +8631,14 @@ export class ExamsServiceProxy {
                 try {
                     return this.processGetSelectedQuestion(response_ as any);
                 } catch (e) {
-                    return _observableThrow(e) as any as Observable<QuestionWithAnswerDto[]>;
+                    return _observableThrow(e) as any as Observable<QuestionWithAnswerDto>;
                 }
             } else
-                return _observableThrow(response_) as any as Observable<QuestionWithAnswerDto[]>;
+                return _observableThrow(response_) as any as Observable<QuestionWithAnswerDto>;
         }));
     }
 
-    protected processGetSelectedQuestion(response: HttpResponseBase): Observable<QuestionWithAnswerDto[]> {
+    protected processGetSelectedQuestion(response: HttpResponseBase): Observable<QuestionWithAnswerDto> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -8498,14 +8649,7 @@ export class ExamsServiceProxy {
             return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            if (Array.isArray(resultData200)) {
-                result200 = [] as any;
-                for (let item of resultData200)
-                    result200!.push(QuestionWithAnswerDto.fromJS(item));
-            }
-            else {
-                result200 = <any>null;
-            }
+            result200 = QuestionWithAnswerDto.fromJS(resultData200);
             return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
@@ -8557,6 +8701,57 @@ export class ExamsServiceProxy {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
             result200 = ApplyExamDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @return Success
+     */
+    viewCurrentEXamQuestion(): Observable<GetExamForViewDto> {
+        let url_ = this.baseUrl + "/api/services/app/Exams/ViewCurrentEXamQuestion";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processViewCurrentEXamQuestion(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processViewCurrentEXamQuestion(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<GetExamForViewDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<GetExamForViewDto>;
+        }));
+    }
+
+    protected processViewCurrentEXamQuestion(response: HttpResponseBase): Observable<GetExamForViewDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = GetExamForViewDto.fromJS(resultData200);
             return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
@@ -8940,57 +9135,6 @@ export class ExamsServiceProxy {
     }
 
     protected processViewPreviosQuestion(response: HttpResponseBase): Observable<QuestionWithAnswerDto> {
-        const status = response.status;
-        const responseBlob =
-            response instanceof HttpResponse ? response.body :
-            (response as any).error instanceof Blob ? (response as any).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = QuestionWithAnswerDto.fromJS(resultData200);
-            return _observableOf(result200);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf(null as any);
-    }
-
-    /**
-     * @return Success
-     */
-    moveNextSection(): Observable<QuestionWithAnswerDto> {
-        let url_ = this.baseUrl + "/api/services/app/Exams/MoveNextSection";
-        url_ = url_.replace(/[?&]$/, "");
-
-        let options_ : any = {
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Accept": "text/plain"
-            })
-        };
-
-        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processMoveNextSection(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processMoveNextSection(response_ as any);
-                } catch (e) {
-                    return _observableThrow(e) as any as Observable<QuestionWithAnswerDto>;
-                }
-            } else
-                return _observableThrow(response_) as any as Observable<QuestionWithAnswerDto>;
-        }));
-    }
-
-    protected processMoveNextSection(response: HttpResponseBase): Observable<QuestionWithAnswerDto> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -38884,6 +39028,10 @@ export class ExamQuestionDto implements IExamQuestionDto {
     id!: number;
     isManualInsertion!: boolean;
     order!: number;
+    questionNo!: number;
+    questionNoInGeneral!: number;
+    sectionNo!: number;
+    hasAnswer!: boolean;
     note!: string | undefined;
     questionId!: number;
     sectionId!: number;
@@ -38904,6 +39052,10 @@ export class ExamQuestionDto implements IExamQuestionDto {
             this.id = _data["id"];
             this.isManualInsertion = _data["isManualInsertion"];
             this.order = _data["order"];
+            this.questionNo = _data["questionNo"];
+            this.questionNoInGeneral = _data["questionNoInGeneral"];
+            this.sectionNo = _data["sectionNo"];
+            this.hasAnswer = _data["hasAnswer"];
             this.note = _data["note"];
             this.questionId = _data["questionId"];
             this.sectionId = _data["sectionId"];
@@ -38924,6 +39076,10 @@ export class ExamQuestionDto implements IExamQuestionDto {
         data["id"] = this.id;
         data["isManualInsertion"] = this.isManualInsertion;
         data["order"] = this.order;
+        data["questionNo"] = this.questionNo;
+        data["questionNoInGeneral"] = this.questionNoInGeneral;
+        data["sectionNo"] = this.sectionNo;
+        data["hasAnswer"] = this.hasAnswer;
         data["note"] = this.note;
         data["questionId"] = this.questionId;
         data["sectionId"] = this.sectionId;
@@ -38937,6 +39093,10 @@ export interface IExamQuestionDto {
     id: number;
     isManualInsertion: boolean;
     order: number;
+    questionNo: number;
+    questionNoInGeneral: number;
+    sectionNo: number;
+    hasAnswer: boolean;
     note: string | undefined;
     questionId: number;
     sectionId: number;
@@ -39025,6 +39185,7 @@ export interface IExamQuestionQuestionLookupTableDto {
 }
 
 export class ExamQuestionWithAnswerDto implements IExamQuestionWithAnswerDto {
+    questionNoInGeneral!: number;
     questionNo!: number;
     sectionId!: number;
     questionId!: number;
@@ -39054,6 +39215,7 @@ export class ExamQuestionWithAnswerDto implements IExamQuestionWithAnswerDto {
 
     init(_data?: any) {
         if (_data) {
+            this.questionNoInGeneral = _data["questionNoInGeneral"];
             this.questionNo = _data["questionNo"];
             this.sectionId = _data["sectionId"];
             this.questionId = _data["questionId"];
@@ -39107,6 +39269,7 @@ export class ExamQuestionWithAnswerDto implements IExamQuestionWithAnswerDto {
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
+        data["questionNoInGeneral"] = this.questionNoInGeneral;
         data["questionNo"] = this.questionNo;
         data["sectionId"] = this.sectionId;
         data["questionId"] = this.questionId;
@@ -39153,6 +39316,7 @@ export class ExamQuestionWithAnswerDto implements IExamQuestionWithAnswerDto {
 }
 
 export interface IExamQuestionWithAnswerDto {
+    questionNoInGeneral: number;
     questionNo: number;
     sectionId: number;
     questionId: number;
@@ -39181,6 +39345,7 @@ export class ExamSectionDto implements IExamSectionDto {
     type!: SectionTypeEnum;
     examId!: number;
     examQuestions!: ExamQuestionDto[] | undefined;
+    sectionNo!: number;
 
     constructor(data?: IExamSectionDto) {
         if (data) {
@@ -39205,6 +39370,7 @@ export class ExamSectionDto implements IExamSectionDto {
                 for (let item of _data["examQuestions"])
                     this.examQuestions!.push(ExamQuestionDto.fromJS(item));
             }
+            this.sectionNo = _data["sectionNo"];
         }
     }
 
@@ -39229,6 +39395,7 @@ export class ExamSectionDto implements IExamSectionDto {
             for (let item of this.examQuestions)
                 data["examQuestions"].push(item.toJSON());
         }
+        data["sectionNo"] = this.sectionNo;
         return data;
     }
 }
@@ -39242,6 +39409,7 @@ export interface IExamSectionDto {
     type: SectionTypeEnum;
     examId: number;
     examQuestions: ExamQuestionDto[] | undefined;
+    sectionNo: number;
 }
 
 export class ExamTemplateDto implements IExamTemplateDto {
@@ -39316,6 +39484,7 @@ export class ExpectedeExamDto implements IExpectedeExamDto {
     applyExamDto!: ApplyExamDto;
     remainingTime!: TimeSpan;
     sessionName!: string | undefined;
+    sessionId!: number | undefined;
     remainingTimeInSecond!: number | undefined;
 
     constructor(data?: IExpectedeExamDto) {
@@ -39332,6 +39501,7 @@ export class ExpectedeExamDto implements IExpectedeExamDto {
             this.applyExamDto = _data["applyExamDto"] ? ApplyExamDto.fromJS(_data["applyExamDto"]) : <any>undefined;
             this.remainingTime = _data["remainingTime"] ? TimeSpan.fromJS(_data["remainingTime"]) : <any>undefined;
             this.sessionName = _data["sessionName"];
+            this.sessionId = _data["sessionId"];
             this.remainingTimeInSecond = _data["remainingTimeInSecond"];
         }
     }
@@ -39348,6 +39518,7 @@ export class ExpectedeExamDto implements IExpectedeExamDto {
         data["applyExamDto"] = this.applyExamDto ? this.applyExamDto.toJSON() : <any>undefined;
         data["remainingTime"] = this.remainingTime ? this.remainingTime.toJSON() : <any>undefined;
         data["sessionName"] = this.sessionName;
+        data["sessionId"] = this.sessionId;
         data["remainingTimeInSecond"] = this.remainingTimeInSecond;
         return data;
     }
@@ -39357,6 +39528,7 @@ export interface IExpectedeExamDto {
     applyExamDto: ApplyExamDto;
     remainingTime: TimeSpan;
     sessionName: string | undefined;
+    sessionId: number | undefined;
     remainingTimeInSecond: number | undefined;
 }
 
@@ -39403,7 +39575,8 @@ export interface IExpiringTenant {
 export class ExtendSessionTimeDto implements IExtendSessionTimeDto {
     sessionId!: number;
     schoolClassId!: number | undefined;
-    schoolId!: number;
+    schoolId!: number | undefined;
+    studentId!: number | undefined;
     afterMinutes!: number;
 
     constructor(data?: IExtendSessionTimeDto) {
@@ -39420,6 +39593,7 @@ export class ExtendSessionTimeDto implements IExtendSessionTimeDto {
             this.sessionId = _data["sessionId"];
             this.schoolClassId = _data["schoolClassId"];
             this.schoolId = _data["schoolId"];
+            this.studentId = _data["studentId"];
             this.afterMinutes = _data["afterMinutes"];
         }
     }
@@ -39436,6 +39610,7 @@ export class ExtendSessionTimeDto implements IExtendSessionTimeDto {
         data["sessionId"] = this.sessionId;
         data["schoolClassId"] = this.schoolClassId;
         data["schoolId"] = this.schoolId;
+        data["studentId"] = this.studentId;
         data["afterMinutes"] = this.afterMinutes;
         return data;
     }
@@ -39444,7 +39619,8 @@ export class ExtendSessionTimeDto implements IExtendSessionTimeDto {
 export interface IExtendSessionTimeDto {
     sessionId: number;
     schoolClassId: number | undefined;
-    schoolId: number;
+    schoolId: number | undefined;
+    studentId: number | undefined;
     afterMinutes: number;
 }
 

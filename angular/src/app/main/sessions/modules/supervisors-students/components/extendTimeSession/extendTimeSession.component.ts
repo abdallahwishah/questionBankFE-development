@@ -25,10 +25,10 @@ export class ExtendTimeSessionComponent extends AppComponentBase implements OnIn
 
     ngOnInit() {}
     save() {
-        this._extendSessionTimeDto.sessionId = this.sessionId;
-        this._extendSessionTimeDto.schoolClassId = this.schoolClassId;
-        this._extendSessionTimeDto.schoolId = this.schoolId;
-
+        this._extendSessionTimeDto.sessionId = this.sessionId || undefined;
+        this._extendSessionTimeDto.schoolClassId = this.schoolClassId || undefined;
+        this._extendSessionTimeDto.schoolId = this.schoolId || undefined;
+        this._extendSessionTimeDto.afterMinutes = this._extendSessionTimeDto.afterMinutes || undefined;
         this._sessionServiceProxy.extendSessionTime(this._extendSessionTimeDto).subscribe((value) => {
             this.notify.success('Session Time Extended Successfully');
             this.Close();
