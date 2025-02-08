@@ -1,9 +1,9 @@
 <!-- Start -->
-<div class="container-fluid mt-8 px-5">
+<div class="container-fluid mt-8 px-5" #printSection>
     <div class="row">
         <div class="col-12">
             <div class="card px-8 py-6">
-                <h3>{{ l('Sections') }}</h3>
+                <h3>{{ examForView?.exam?.title }}</h3>
 
                 @if (examForView?.exam?.examSections) {
                     <!-- Loop sections -->
@@ -11,7 +11,13 @@
                         class="accordion border rounded my-5"
                         *ngFor="let section of examForView?.exam?.examSections; let i = index"
                     >
-                        <div class="accordion-content overflow-hidden" style="transition: max-height 0.3s ease-in-out">
+                        <div
+                            class="accordion-content overflow-hidden"
+                            style="transition: max-height 0.3s ease-in-out"
+                            [style]="{
+                                'max-height': true ? '9999px' : '0px'
+                            }"
+                        >
                             <div class="px-5 py-2">
                                 <!-- Loop over questions in this section -->
                                 <div

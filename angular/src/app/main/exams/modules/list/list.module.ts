@@ -10,7 +10,6 @@ import { AddExamModalComponent } from '../../components/add-exam-modal/add-exam-
 import { DropdownFieldComponent } from '@app/shared/components/fields/dropdown-field/dropdown-field.component';
 import { SkeletonComponent } from '../../../../shared/components/skeleton/skeleton.component';
 import { AddFileModalComponent } from '@app/main/question-bank/components/add-file-modal/add-file-modal.component';
-import { ViewExamPrintComponent } from '../view-exam-print/view-exam-print.component';
 
 @NgModule({
     imports: [
@@ -29,8 +28,7 @@ import { ViewExamPrintComponent } from '../view-exam-print/view-exam-print.compo
         DropdownFieldComponent,
         SkeletonComponent,
         AddFileModalComponent,
-        ViewExamPrintComponent
-    ],
+     ],
     declarations: [ListComponent],
 })
 export class ListModule {}

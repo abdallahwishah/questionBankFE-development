@@ -41,6 +41,7 @@ export class SupervisorsStudentsComponent extends AppComponentBase implements On
     schoolName: any;
     execuldedIdFilter: any;
     SessionSupervisorRoleEnum = SessionSupervisorRoleEnum;
+    selectedProducts: any[] = [];
     constructor(
         private _injector: Injector,
         private _SessionsServiceProxy: SessionsServiceProxy,
@@ -105,7 +106,6 @@ export class SupervisorsStudentsComponent extends AppComponentBase implements On
                 this.primengTableHelper.getSorting(this.attemptsTable),
                 this.primengTableHelper.getSkipCount(this.paginatorAttempts, event),
                 this.primengTableHelper.getMaxResultCount(this.paginatorAttempts, event),
-
             )
             .subscribe((result) => {
                 this.primengTableHelperForAttempts.totalRecordsCount = result.totalCount;
@@ -130,11 +130,14 @@ export class SupervisorsStudentsComponent extends AppComponentBase implements On
         this.primengTableHelperForSupervisors.showLoadingIndicator();
 
         this._SessionSupervisorsServiceProxy
-            .getAll(this.filterSupervis, this.SessionId, this.classId,           
-            this.primengTableHelper.getSorting(this.supervisorsTable),
-            this.primengTableHelper.getSkipCount(this.paginatorSupervisors, event),
-            this.primengTableHelper.getMaxResultCount(this.paginatorSupervisors, event),
-)
+            .getAll(
+                this.filterSupervis,
+                this.SessionId,
+                this.classId,
+                this.primengTableHelper.getSorting(this.supervisorsTable),
+                this.primengTableHelper.getSkipCount(this.paginatorSupervisors, event),
+                this.primengTableHelper.getMaxResultCount(this.paginatorSupervisors, event),
+            )
             .subscribe((result) => {
                 this.primengTableHelperForSupervisors.totalRecordsCount = result.totalCount;
                 this.primengTableHelperForSupervisors.records = result.items;
@@ -172,5 +175,11 @@ export class SupervisorsStudentsComponent extends AppComponentBase implements On
     }
     addStudent() {
         this._dialogSharedService.showDialog(UniqueNameComponents.Add_Student_dialog, {});
+    }
+    MoveStudent() {
+        this._dialogSharedService.showDialog(
+            UniqueNameComponents.Move_Student_dialog,
+            this.selectedProducts?.map((value) => value?.value?.id),
+        );
     }
 }

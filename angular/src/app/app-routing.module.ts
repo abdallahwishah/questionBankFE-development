@@ -56,6 +56,14 @@ import { NgxSpinnerService } from 'ngx-spinner';
                 loadChildren: () => import('app/supervisor/supervisor.module').then((m) => m.SupervisorModule), //Lazy load main module
                 data: { preload: true },
             },
+            {
+                path: 'printer-exam/:id',
+                loadComponent: () =>
+                    import('app/main/exams/modules/view-exam-print/view-exam-print.component').then(
+                        (m) => m.ViewExamPrintComponent,
+                    ), //Lazy load main module
+                data: { preload: true },
+            },
         ]),
     ],
     exports: [RouterModule],

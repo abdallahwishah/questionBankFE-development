@@ -135,7 +135,9 @@ export class ListComponent extends AppComponentBase implements OnInit {
                 });
                 break;
             case 'Print':
-                break;
+                this._router.navigate(['/printer-exam/' + record.exam.id]);
+
+                 break;
         }
     }
 
