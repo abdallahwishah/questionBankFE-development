@@ -98,6 +98,24 @@
                     </button>
                 </div>
             </div>
+            <div class="col-md-3 d-grid justify-content-end gap-5" style="grid-template-columns: 1fr auto">
+                <app-auto-complete-feild
+                    [label]="l('StudySubject')"
+                    field="studySubject.name"
+                    [(ngModel)]="studySubject"
+                    (ngModelChange)="getSubjectUnits()"
+                    name="studySubjectId"
+                    [ConfigCustomSearch]="{
+                        api: '/api/services/app/StudySubjects/GetAll',
+                        keySearch: 'filter',
+                        customParams: {
+                            Sorting: '',
+                            SkipCount: 0,
+                            MaxResultCount: 10
+                        }
+                    }"
+                ></app-auto-complete-feild>
+            </div>
         </div>
         <div class="card-custom gutter-b">
             <div class="card-body">

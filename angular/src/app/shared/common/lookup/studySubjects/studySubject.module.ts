@@ -9,6 +9,7 @@ import { ActionButtonComponent } from '../../../components/action-button/action-
 import { InputSwitchModule } from 'primeng/inputswitch';
 import { AutoCompleteFeildModule } from '@app/shared/components/auto-complete-feild/auto-complete-feild.module';
 import { DialogSharedModule } from '@app/shared/components/dialog-shared/dialog-shared.module';
+import { DropdownFieldComponent } from '@app/shared/components/fields/dropdown-field/dropdown-field.component';
 
 @NgModule({
     declarations: [StudySubjectsComponent, CreateOrEditStudySubjectModalComponent, ViewStudySubjectModalComponent],
@@ -20,6 +21,7 @@ import { DialogSharedModule } from '@app/shared/components/dialog-shared/dialog-
         InputSwitchModule,
         AutoCompleteFeildModule,
         DialogSharedModule,
+        DropdownFieldComponent,
     ],
 })
 export class StudySubjectModule {}

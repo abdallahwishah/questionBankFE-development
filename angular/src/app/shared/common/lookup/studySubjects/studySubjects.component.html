@@ -99,6 +99,25 @@
                             </button>
                         </div>
                     </div>
+                    <div class="col-md-3 d-grid justify-content-end gap-5" style="grid-template-columns: 1fr auto">
+                        <app-auto-complete-feild
+                            [placeholder]="'StudyLevel'"
+                            field="studyLevel.name"
+                            [(ngModel)]="levelIds"
+                            (ngModelChange)="getStudySubjects()"
+                            name="StudyLevelId"
+                            [multiple]="true"
+                            [ConfigCustomSearch]="{
+                                api: '/api/services/app/StudyLevels/GetAll',
+                                keySearch: 'filter',
+                                customParams: {
+                                    Sorting: '',
+                                    SkipCount: 0,
+                                    MaxResultCount: 10
+                                }
+                            }"
+                        ></app-auto-complete-feild>
+                    </div>
                 </div>
                 <!-- <form class="form" autocomplete="off">
                     <div>

@@ -7,7 +7,7 @@
                 <span class="text-dark">{{ primengTableHelper.totalRecordsCount }}</span>
             </div>
 
-            <div class="d-flex gap-3"  >
+            <div class="d-flex gap-3">
                 <button class="btn btn-primary d-flex gap-2" (click)="AddExam()">
                     <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path
@@ -219,6 +219,9 @@
                                     },
                                     {
                                         label: 'Delete'
+                                    },
+                                    {
+                                        label: 'print'
                                     }
                                 ]"
                                 (action)="doActions($event, record)"
@@ -253,3 +256,4 @@
 
 <!-- Modals -->
 <app-add-file-modal></app-add-file-modal>
+<app-view-exam-print #printer></app-view-exam-print>

@@ -13,6 +13,7 @@ import { Table } from '@node_modules/primeng/table';
 import { forkJoin } from 'rxjs';
 import { AppComponentBase } from '@shared/common/app-component-base';
 import { FiltersComponent } from '@app/shared/components/filters/filters.component';
+import { ViewExamPrintComponent } from '../view-exam-print/view-exam-print.component';
 
 @Component({
     selector: 'app-list',
@@ -33,7 +34,7 @@ export class ListComponent extends AppComponentBase implements OnInit {
 
     filter: string;
     Add_File_dialog = UniqueNameComponents.Add_File_dialog;
-
+    @ViewChild('printer') printer: ViewExamPrintComponent;
     constructor(
         private _injector: Injector,
         private _DialogSharedService: DialogSharedService,
@@ -122,19 +123,7 @@ export class ListComponent extends AppComponentBase implements OnInit {
     doActions(label: any, record: any) {
         switch (label) {
             case 'View':
-                //     // Construct the URL – this could be a route or an external URL
-                //     const attemptUrl = '/student/exam-attempt/' + record.exam.id;
-
-                //     // Open in a new window with minimal UI
-                //     // NOTE: This still will NOT block someone from using extensions or
-                //     // opening new tabs in a modern browser.
-                //     window.open(
-                //         attemptUrl,
-                //         '_blank',
-                //         `menubar=no,toolbar=no,location=no,status=no,scrollbars=yes,resizable=yes,width=${screen.availWidth},height=${screen.availHeight}`,
-                //     );
                 this._router.navigate(['/student/exam-viewer/' + record.exam.id]);
-
                 break;
 
             case 'Edit':
@@ -144,6 +133,8 @@ export class ListComponent extends AppComponentBase implements OnInit {
                 this._examsServiceProxy.deleteExamQuestion(record.question.id).subscribe((val) => {
                     this.getList();
                 });
+                break;
+            case 'Print':
                 break;
         }
     }

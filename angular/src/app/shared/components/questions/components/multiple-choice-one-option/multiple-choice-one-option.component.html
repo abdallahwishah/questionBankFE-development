@@ -23,21 +23,20 @@
     <!-- Editor or name field -->
     <div class="col-md-7 col-9 mb-md-0 mb-3">
         <!-- Using a WYSIWYG editor for the choice text -->
-        <div class="d-inline-flex align-items-center ">
-
-        <app-editor
-            *ngIf="choice.isEdit"
-            class="w-100"
-            [(ngModel)]="choice.name"
-            (ngModelChange)="notifyChange()"
-        ></app-editor>
+        <div class="d-inline-flex align-items-center">
+            <app-editor
+                *ngIf="choice.isEdit"
+                class="w-100"
+                [(ngModel)]="choice.name"
+                (ngModelChange)="notifyChange()"
+            ></app-editor>
             <p class="mb-0" *ngIf="!choice.isEdit" [innerHtml]="choice.name"></p>
             <!-- if this seleted need to show correct asswer -->
-           <div>
-            <span class="badge bg-success ms-2" *ngIf="choice.optionType === QuestionOptionTypeEnum.Pinned">
-                {{ l('CorrectAnswer') }}
-            </span>
-           </div>
+            <div>
+                <span class="badge bg-success ms-2" *ngIf="choice.optionType === QuestionOptionTypeEnum.Pinned">
+                    {{ l('CorrectAnswer') }}
+                </span>
+            </div>
         </div>
     </div>
 
@@ -45,6 +44,7 @@
     <div class="col-md-4 d-flex align-items-center justify-content-end">
         <!-- Points -->
         <p-inputNumber
+            *ngIf="choice.optionType === QuestionOptionTypeEnum.Pinned"
             class="mx-2"
             [(ngModel)]="choice.point"
             (ngModelChange)="notifyChange()"

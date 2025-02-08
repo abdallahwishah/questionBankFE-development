@@ -1,12 +1,12 @@
 <label class="form-label" [class]="required ? 'label-required' : ''" *ngIf="isLabel">{{ label }}</label>
 <div class="autoComplete-shared">
-      <p-autoComplete
-       appendTo="body"
+    <p-autoComplete
+        appendTo="body"
         #autoComplete
         [ngClass]="{ 'p-inputtext-sm': true }"
         [style.min-width]="'90%'"
         [style.display]="'100%'"
-        [placeholder]="'Search' | localize"
+        [placeholder]="placeholder | localize"
         [required]="required"
         [suggestions]="Filter$ | async"
         [field]="field"

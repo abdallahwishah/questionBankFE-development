@@ -30,7 +30,7 @@ export class SubjectUnitsComponent extends AppComponentBase {
 
     @ViewChild('dataTable', { static: true }) dataTable: Table;
     @ViewChild('paginator', { static: true }) paginator: Paginator;
-
+    studySubject: any;
     advancedFiltersAreShown = false;
     filterText = '';
     codeFilter = '';
@@ -67,7 +67,7 @@ export class SubjectUnitsComponent extends AppComponentBase {
                 this.filterText,
                 this.codeFilter,
                 this.isActiveFilter,
-                undefined,
+                this.studySubject?.studySubject?.id,
                 this.primengTableHelper.getSorting(this.dataTable),
                 this.primengTableHelper.getSkipCount(this.paginator, event),
                 this.primengTableHelper.getMaxResultCount(this.paginator, event),

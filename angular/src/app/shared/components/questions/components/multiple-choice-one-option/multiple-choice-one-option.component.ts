@@ -60,7 +60,7 @@ export class MultipleChoiceOneOptionComponent extends AppComponentBase implement
         if (!this.value.length) {
             const defaultChoice = new CreateOrEditChoiceQuestionDto();
             defaultChoice.name = '';
-            defaultChoice.point = 1;
+            defaultChoice.point = 0;
             (defaultChoice as any).isEdit = true;
             defaultChoice.optionType = QuestionOptionTypeEnum.Normal;
             this.value.push(defaultChoice);
@@ -93,6 +93,11 @@ export class MultipleChoiceOneOptionComponent extends AppComponentBase implement
      * so that the parent form is notified.
      */
     notifyChange(): void {
+        this.value?.forEach((ch) => {
+            if (ch.optionType != QuestionOptionTypeEnum.Pinned) {
+                ch.point = 0;
+            }
+        });
         this.onChange(this.value);
         this.onTouched();
     }
@@ -117,7 +122,7 @@ export class MultipleChoiceOneOptionComponent extends AppComponentBase implement
     addChoice(): void {
         const newChoice = new CreateOrEditChoiceQuestionDto();
         newChoice.name = '';
-        newChoice.point = 1;
+        newChoice.point = 0;
         (newChoice as any).isEdit = true;
         newChoice.optionType = QuestionOptionTypeEnum.Normal;
         this.value.push(newChoice);

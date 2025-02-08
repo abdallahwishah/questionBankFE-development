@@ -33,7 +33,7 @@ export class StudySubjectsComponent extends AppComponentBase {
     @ViewChild('createOrEditStudySubjectModal', { static: true })
     createOrEditStudySubjectModal: CreateOrEditStudySubjectModalComponent;
     @ViewChild('viewStudySubjectModal', { static: true }) viewStudySubjectModal: ViewStudySubjectModalComponent;
-
+    levelIds: any;
     @ViewChild('dataTable', { static: true }) dataTable: Table;
     @ViewChild('paginator', { static: true }) paginator: Paginator;
 
@@ -89,7 +89,7 @@ export class StudySubjectsComponent extends AppComponentBase {
         this._studySubjectsServiceProxy
             .getAll(
                 this.filterText,
-                undefined,
+                this.levelIds?.map((x) => x?.studyLevel?.id),
 
                 this.languageFilter,
                 this.isActiveFilter,

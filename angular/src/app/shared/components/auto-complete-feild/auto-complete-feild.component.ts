@@ -44,6 +44,8 @@ import { EnterInPathObj } from '@app/shared/Functions/FunctionsForHandelObj';
 export class AutoCompleteFeildComponent implements OnInit, OnDestroy, ControlValueAccessor {
     @Input() isLabel: boolean = true;
     @Input() field: string = 'displayName';
+    @Input() placeholder: string = 'Search';
+
     @Input() label: string = '';
     @Input() deleteAfterSelect: boolean = false;
     @Input() multiple: boolean = false;

@@ -164,11 +164,6 @@
                     <div class="d-flex justify-content-between align-items-center">
                         <h3>{{ l('QuestionText') }}</h3>
                         <!-- [(ngModel)]="checked" -->
-
-                        <div class="d-flex align-items-center gap-5">
-                            <p-inputSwitch [(ngModel)]="_createOrEditQuestionDto.hasQuestionHelper"></p-inputSwitch>
-                            <span class="mt-2">{{ l('HasDescription') }}</span>
-                        </div>
                     </div>
                     <div class="row mt-6">
                         <div class="col-12 mb-2">
@@ -179,20 +174,27 @@
             </div>
 
             <!-- third card -->
-            @if (_createOrEditQuestionDto.hasQuestionHelper) {
-                <div class="col-12 mt-6">
-                    <div class="card px-8 py-6">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <h3 class="fs-3 fw-medium">{{ l('ExplanatoryNote') }}</h3>
+
+            <div class="col-12 mt-6">
+                <div class="card px-8 py-6">
+                    <div class="d-flex justify-content-between align-items-center"></div>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h3 class="fs-3 fw-medium">{{ l('ExplanatoryNote') }}</h3>
+
+                        <div class="d-flex align-items-center gap-5">
+                            <p-inputSwitch [(ngModel)]="_createOrEditQuestionDto.hasQuestionHelper"></p-inputSwitch>
+                            <span class="mt-2">{{ l('HasDescription') }}</span>
                         </div>
-                        <div class="row mt-6">
+                    </div>
+                    <div class="row mt-6">
+                        @if (_createOrEditQuestionDto.hasQuestionHelper) {
                             <div class="col-12 mb-2">
                                 <app-editor [(ngModel)]="_createOrEditQuestionDto.questionHelper"></app-editor>
                             </div>
-                        </div>
+                        }
                     </div>
                 </div>
-            }
+            </div>
 
             <!-- forth card -->
             <div class="col-12 mt-6">
@@ -283,7 +285,7 @@
                                             (ngModelChange)="question.autoCorrection = false"
                                         ></app-dropdown-field>
                                     </div>
-                                    <div class="col-md-4 mb-5  ">
+                                    <div class="col-md-4 mb-5">
                                         <app-dropdown-field
                                             [(ngModel)]="question.complexityId"
                                             [options]="complexities"
@@ -350,7 +352,14 @@
 
                             <label class="pt-3">{{ l('AutomaticallyCorrectTheQuestion') }}</label>
                         </div>
-                        <div class="col-md-3 mb-2 d-flex justify-content-start align-items-center gap-4">
+                        <div
+                            class="col-md-3 mb-2 d-flex justify-content-start align-items-center gap-4"
+                            *ngIf="
+                                _createOrEditQuestionDto.type == QuestionTypeEnum.SinglChoice ||
+                                _createOrEditQuestionDto.type == QuestionTypeEnum.MutliChoice ||
+                                _createOrEditQuestionDto.type == QuestionTypeEnum.TrueAndFalse
+                            "
+                        >
                             <p-inputSwitch [(ngModel)]="_createOrEditQuestionDto.enableShuffleOptions"></p-inputSwitch>
                             <label class="pt-3">{{ l('MixingAnswers') }}</label>
                         </div>
