@@ -45,7 +45,7 @@
                         </div>
                     </div>
 
-                    <div class="my-3">
+                    <!-- <div class="my-3">
                         <label class="form-label" for="OrganizationUnitDisplayName">{{ l('OrganizationUnit') }}</label>
                         <div class="input-group">
                             <input
@@ -68,9 +68,9 @@
                                 <i class="fa fa-times"></i>
                             </button>
                         </div>
-                    </div>
+                    </div> -->
 
-                    <div class="my-3">
+                    <!-- <div class="my-3">
                         <label class="form-label required" for="MassNotification_Severity">{{ l('Severity') }}</label>
                         <select
                             required
@@ -87,9 +87,9 @@
                             <option value="4">{{ l('Fatal') }}</option>
                         </select>
                         <validation-messages [formCtrl]="MassNotification_Severity"></validation-messages>
-                    </div>
+                    </div> -->
 
-                    <div class="my-3">
+                    <!-- <div class="my-3">
                         <label class="form-label" for="MassNotification_TargetNotifiers">
                             {{ l('TargetNotifiers') }}*
                         </label>
@@ -102,13 +102,12 @@
                             [(ngModel)]="createMassNotificationInput.targetNotifiers"
                             (change)="onTargetNotifiersChanged()"
                         >
-                            >
-                            <option *ngFor="let web of notifiers" [value]="web">{{ web | localize }}</option>
+                            <option *ngFor="let web of notifiers" [value]="web">{{ web    }}</option>
                         </select>
                         <small *ngIf="showSMSTargetNotifierMessage" class="form-text text-muted">
                             {{ 'NotificationTargetNotifierSmsLengthInfo' | localize }}
                         </small>
-                    </div>
+                    </div> -->
 
                     <div class="my-3">
                         <label class="form-label required" for="MassNotification_Message">{{ l('Message') }}</label>
