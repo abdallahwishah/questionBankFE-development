@@ -277,11 +277,19 @@
                     <tr>
                         <th pSortableColumn="caseCode">
                             {{ '#' }}
-                        </th>
-                        <th pSortableColumn="SessionName">
+                        </th>    <th pSortableColumn="SessionName">
                             {{ l('SessionName') }}
                             <p-sortIcon field="SessionName"></p-sortIcon>
                         </th>
+                        <th pSortableColumn="studyLevel">
+                            {{ l('StudyLevel') }}
+                            <p-sortIcon field="studyLevel"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="studySubject">
+                            {{ l('StudySubject') }}
+                            <p-sortIcon field="studySubject"></p-sortIcon>
+                        </th>
+
                         <th pSortableColumn="">
                             {{ l('NumberOfSchools') }}
                             <p-sortIcon field=""></p-sortIcon>
@@ -311,6 +319,12 @@
                         <td>
                             <span class="p-column-title">{{ l('name') }}</span>
                             {{ record.session.name || '-' }}
+                        </td>
+                        <td>
+                             {{ record.studyLevel || '-' }}
+                        </td>
+                        <td>
+                             {{ record.studySubject || '-' }}
                         </td>
                         <td>
                             <span class="p-column-title">{{ l('NumberOfSchools') }}</span>
@@ -352,6 +366,9 @@
                                     },
                                     {
                                         label: 'Delete'
+                                    },
+                                    {
+                                        label: 'Export'
                                     }
                                 ]"
                                 (action)="doActions($event, record)"
@@ -378,3 +395,4 @@
 
 <!-- Modals -->
 <app-add-sessions-modal (OnRefresh)="getList()"></app-add-sessions-modal>
+<app-exportByLevel></app-exportByLevel>

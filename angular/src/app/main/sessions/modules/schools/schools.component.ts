@@ -7,6 +7,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { LazyLoadEvent } from '@node_modules/primeng/api';
 import { Table } from '@node_modules/primeng/table';
 import { Paginator } from '@node_modules/primeng/paginator';
+import { FiltersComponent } from '@app/shared/components/filters/filters.component';
 
 interface SchoolClass {
     schoolClass: {
@@ -29,6 +30,7 @@ export class SchoolsComponent extends AppComponentBase implements OnInit {
     SessionId: any;
     expandedRows: any = {};
     sessionName: any;
+    governorateIdFilter: any;
     constructor(
         private _injector: Injector,
         private _SessionsServiceProxy: SessionsServiceProxy,
@@ -40,7 +42,6 @@ export class SchoolsComponent extends AppComponentBase implements OnInit {
 
     ngOnInit(): void {
         this.sessionName = this._ActivatedRoute.snapshot.queryParams['session'];
-
     }
 
     ngAfterViewInit() {
@@ -62,7 +63,9 @@ export class SchoolsComponent extends AppComponentBase implements OnInit {
         this.primengTableHelper.showLoadingIndicator();
         this._SessionsServiceProxy
             .getAllSessionSchool(
+                this.filter,
                 this.SessionId,
+                this.governorateIdFilter?.governorate?.id,
                 this.primengTableHelper.getSorting(this.dataTable),
                 this.primengTableHelper.getSkipCount(this.paginator, event),
                 this.primengTableHelper.getMaxResultCount(this.paginator, event),
@@ -91,7 +94,15 @@ export class SchoolsComponent extends AppComponentBase implements OnInit {
             },
             queryParamsHandling: 'merge',
             relativeTo: this._ActivatedRoute,
-
         });
+    }
+    @ViewChild(FiltersComponent) FiltersComponent: FiltersComponent;
+
+    closeFilters() {
+        this.FiltersComponent.isPanelOpen = false;
+    }
+    clearFilter() {
+        this.FiltersComponent.isPanelOpen = false;
+        this.governorateIdFilter = undefined;
     }
 }

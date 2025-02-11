@@ -15,6 +15,7 @@ import { DialogSharedModule } from '@app/shared/components/dialog-shared/dialog-
 import { CalendarModule } from 'primeng/calendar';
 import { SkeletonComponent } from '../../../../shared/components/skeleton/skeleton.component';
 import { AutoCompleteFeildModule } from '@app/shared/components/auto-complete-feild/auto-complete-feild.module';
+import { ExportByLevelComponent } from '../../components/exportByLevel/exportByLevel.component';
 
 @NgModule({
     imports: [
@@ -40,6 +41,6 @@ import { AutoCompleteFeildModule } from '@app/shared/components/auto-complete-fe
         SkeletonComponent,
         AutoCompleteFeildModule,
     ],
-    declarations: [ListComponent, AddSessionsModalComponent],
+    declarations: [ListComponent, AddSessionsModalComponent,ExportByLevelComponent],
 })
 export class ListModule {}

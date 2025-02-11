@@ -23,6 +23,68 @@
         <h2 class="fw-bolder mb-0">{{ l('Schools') }}</h2>
     </div>
 
+    <div class="row justify-content-between switch-serch-bar mt-9">
+        <div class="col-md-4">
+            <div class="input-group search-group">
+                <input
+                    name="filterText"
+                    class="form-control m-input"
+                    [placeholder]="l('Search')"
+                    type="text"
+                    [(ngModel)]="filter"
+                    (ngModelChange)="getList()"
+                />
+                <button class="btn btn-primary" type="submit">
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            fill-rule="evenodd"
+                            clip-rule="evenodd"
+                            d="M18.9584 9.58317C18.9584 4.87484 15.125 1.0415 10.4167 1.0415C5.70837 1.0415 1.87504 4.87484 1.87504 9.58317C1.87504 14.2915 5.70837 18.1248 10.4167 18.1248C15.125 18.1248 18.9584 14.2915 18.9584 9.58317ZM17.7084 9.58317C17.7084 13.5998 14.4417 16.8748 10.4167 16.8748C6.39171 16.8748 3.12504 13.5998 3.12504 9.58317C3.12504 5.5665 6.39171 2.2915 10.4167 2.2915C14.4417 2.2915 17.7084 5.5665 17.7084 9.58317Z"
+                            fill="#6D31ED"
+                        />
+                        <path
+                            d="M2.10802 18.7752L3.77468 17.1085C4.01635 16.8669 4.01635 16.4669 3.77468 16.2252C3.53302 15.9835 3.13301 15.9835 2.89135 16.2252L1.22468 17.8919C0.983015 18.1335 0.983015 18.5335 1.22468 18.7752C1.34968 18.9002 1.50802 18.9585 1.66635 18.9585C1.82468 18.9585 1.98302 18.9002 2.10802 18.7752Z"
+                            fill="#6D31ED"
+                        />
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <div class="col-md-3 d-grid justify-content-end">
+            <app-filters>
+                <ng-container filterBody>
+                    <div class="row">
+                        <div class="col-12 mb-5">
+                            <app-auto-complete-feild
+                                [label]="l('Governorate')"
+                                field="governorate.name"
+                                [(ngModel)]="governorateIdFilter"
+                                [ConfigCustomSearch]="{
+                                    api: '/api/services/app/Governorates/GetAll',
+                                    keySearch: 'filter',
+                                    customParams: {
+                                        Sorting: '',
+                                        SkipCount: 0,
+                                        MaxResultCount: 10
+                                    }
+                                }"
+                            ></app-auto-complete-feild>
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-between mt-4">
+                        <button class="btn btn-primary" (click)="getList(); closeFilters()">
+                            {{ 'SearchFilters' | localize }}
+                        </button>
+                        <button class="btn btn-outline" (click)="clearFilter()">
+                            {{ 'ResetFilters' | localize }}
+                        </button>
+                    </div>
+                </ng-container>
+            </app-filters>
+        </div>
+    </div>
+
     <div class="primeng-datatable-container p-0 col-12 mt-6">
         <p-table
             #dataTable
@@ -44,10 +106,11 @@
                     <th style="width: 300px">{{ l('SchoolNo') }}</th>
 
                     <th class="text-start">{{ l('SchoolName') }}</th>
+                    <th class="text-start">{{ l('GovernorateName') }}</th>
                 </tr>
             </ng-template>
             <ng-template pTemplate="body" let-record="$implicit" let-i="rowIndex" let-expanded="expanded">
-                <tr>
+                <tr class="parent">
                     <td>
                         <span class="cursor-pointer" [pRowToggler]="record">
                             <svg
@@ -87,11 +150,15 @@
                         <span class="p-column-title">{{ l('name') }}</span>
                         {{ record.school.name || '-' }}
                     </td>
+                    <td class="text-start">
+                        <span class="p-column-title">{{ l('governorateName') }}</span>
+                        {{ record.school.governorateName || '-' }}
+                    </td>
                 </tr>
             </ng-template>
             <ng-template pTemplate="rowexpansion" let-record>
                 <tr>
-                    <td colspan="4">
+                    <td colspan="5">
                         <div class="p-3">
                             <p-table [value]="record.getSchoolClassForViewDtos">
                                 <ng-template pTemplate="header">

@@ -21,4 +21,5 @@ export enum UniqueNameComponents {
     Move_Student_dialog = 'Move_Student_dialog',
     Add_Study_Subject_dialog = 'Add_Study_Subject_dialog',
     Add_Unit = 'Add_Unit',
+    Export_By_Level_dialog = 'Export_By_Level_dialog',
 }

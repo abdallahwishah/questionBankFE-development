@@ -1,0 +1,29 @@
+<app-dialog-shared [width]="'30vw'" [dialogHeader]="l('ExportByLevel')" [dialog_name]="Export_By_Level_dialog">
+    <ng-container bodyDialog>
+        <div class="row">
+            <div class="col-12">
+                <app-auto-complete-feild
+                    [label]="l('StudyLevel')"
+                    field="studyLevel.name"
+                    [(ngModel)]="studyLevel"
+                    name="StudyLevelId"
+                    [ConfigCustomSearch]="{
+                        api: '/api/services/app/StudyLevels/GetAll',
+                        keySearch: 'filter',
+                        customParams: {
+                            Sorting: '',
+                            SkipCount: 0,
+                            MaxResultCount: 10
+                        }
+                    }"
+                ></app-auto-complete-feild>
+            </div>
+        </div>
+    </ng-container>
+    <ng-container footerDialog>
+        <button type="button" class="btn btn-primary blue" (click)="Save()">
+            <span>{{ l('Export') }}</span>
+        </button>
+        <button class="btn btn-outline" (click)="closeDialog()">{{ l('Cancel') }}</button>
+    </ng-container>
+</app-dialog-shared>

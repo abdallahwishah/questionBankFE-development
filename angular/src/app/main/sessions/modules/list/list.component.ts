@@ -64,8 +64,8 @@ export class ListComponent extends AppComponentBase implements OnInit {
         this._sessionsServiceProxy
             .getAll(
                 this.filter,
-                this.toDate?this.DateTimeService.fromJSDate(this.toDate):undefined,
-                this.fromDate?this.DateTimeService.fromJSDate(this.fromDate):undefined,
+                this.toDate ? this.DateTimeService.fromJSDate(this.toDate) : undefined,
+                this.fromDate ? this.DateTimeService.fromJSDate(this.fromDate) : undefined,
                 undefined,
                 this.studyLevel?.studyLevel?.id,
                 this.studySubject?.studySubject?.id,
@@ -100,6 +100,11 @@ export class ListComponent extends AppComponentBase implements OnInit {
                 break;
             case 'Edit':
                 this.AddSession(record);
+                break;
+            case 'Export':
+                this._DialogSharedService.showDialog(UniqueNameComponents.Export_By_Level_dialog, {
+                    sessionId: record?.session?.id,
+                });
                 break;
 
             case 'Delete':

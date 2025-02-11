@@ -138,7 +138,7 @@ export class UsersComponent extends AppComponentBase implements AfterViewInit {
                 this.primengTableHelper.getSorting(this.dataTable)
             )
             .subscribe((result) => {
-                this._fileDownloadService.downloadTempFile(result);
+                        this._fileDownloadService.downloadTempFile(result);
             });
     }
 
@@ -164,7 +164,7 @@ export class UsersComponent extends AppComponentBase implements AfterViewInit {
     }
     action(event: any, record: any) {
         switch (event) {
-           
+
             case 'Edit':
                 this.createOrEditUserModal.show(record.id)
                 break;
@@ -174,7 +174,7 @@ export class UsersComponent extends AppComponentBase implements AfterViewInit {
             case 'Delete':
                 this.deleteUser(record)
                 break;
-            
+
         }
 
     }

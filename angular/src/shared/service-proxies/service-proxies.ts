@@ -7390,6 +7390,11 @@ export class ExamAttemptsServiceProxy {
 
     /**
      * @param filter (optional) 
+     * @param studySubjectIdFilter (optional) 
+     * @param yearFilter (optional) 
+     * @param paperIdFilter (optional) 
+     * @param studyLevelIdFilter (optional) 
+     * @param sessionIdFilter (optional) 
      * @param maxTotalScoreFilter (optional) 
      * @param minTotalScoreFilter (optional) 
      * @param maxAttemptDateFilter (optional) 
@@ -7408,12 +7413,32 @@ export class ExamAttemptsServiceProxy {
      * @param userName2Filter (optional) 
      * @return Success
      */
-    getExamAttemptsToExcel(filter: string | undefined, maxTotalScoreFilter: number | undefined, minTotalScoreFilter: number | undefined, maxAttemptDateFilter: DateTime | undefined, minAttemptDateFilter: DateTime | undefined, maxAuditedDateFilter: DateTime | undefined, minAuditedDateFilter: DateTime | undefined, maxCorrectionDateFilter: DateTime | undefined, minCorrectionDateFilter: DateTime | undefined, isManualCorrectedFilter: number | undefined, isSubQuestionManualCorrectedFilter: number | undefined, noteFilter: string | undefined, examTitleFilter: string | undefined, sessionNameLFilter: string | undefined, studentClassNameFilter: string | undefined, userNameFilter: string | undefined, userName2Filter: string | undefined): Observable<FileDto> {
+    getExamAttemptsToExcel(filter: string | undefined, studySubjectIdFilter: number | undefined, yearFilter: number | undefined, paperIdFilter: number | undefined, studyLevelIdFilter: number | undefined, sessionIdFilter: number | undefined, maxTotalScoreFilter: number | undefined, minTotalScoreFilter: number | undefined, maxAttemptDateFilter: DateTime | undefined, minAttemptDateFilter: DateTime | undefined, maxAuditedDateFilter: DateTime | undefined, minAuditedDateFilter: DateTime | undefined, maxCorrectionDateFilter: DateTime | undefined, minCorrectionDateFilter: DateTime | undefined, isManualCorrectedFilter: number | undefined, isSubQuestionManualCorrectedFilter: number | undefined, noteFilter: string | undefined, examTitleFilter: string | undefined, sessionNameLFilter: string | undefined, studentClassNameFilter: string | undefined, userNameFilter: string | undefined, userName2Filter: string | undefined): Observable<FileDto> {
         let url_ = this.baseUrl + "/api/services/app/ExamAttempts/GetExamAttemptsToExcel?";
         if (filter === null)
             throw new Error("The parameter 'filter' cannot be null.");
         else if (filter !== undefined)
             url_ += "Filter=" + encodeURIComponent("" + filter) + "&";
+        if (studySubjectIdFilter === null)
+            throw new Error("The parameter 'studySubjectIdFilter' cannot be null.");
+        else if (studySubjectIdFilter !== undefined)
+            url_ += "StudySubjectIdFilter=" + encodeURIComponent("" + studySubjectIdFilter) + "&";
+        if (yearFilter === null)
+            throw new Error("The parameter 'yearFilter' cannot be null.");
+        else if (yearFilter !== undefined)
+            url_ += "YearFilter=" + encodeURIComponent("" + yearFilter) + "&";
+        if (paperIdFilter === null)
+            throw new Error("The parameter 'paperIdFilter' cannot be null.");
+        else if (paperIdFilter !== undefined)
+            url_ += "PaperIdFilter=" + encodeURIComponent("" + paperIdFilter) + "&";
+        if (studyLevelIdFilter === null)
+            throw new Error("The parameter 'studyLevelIdFilter' cannot be null.");
+        else if (studyLevelIdFilter !== undefined)
+            url_ += "StudyLevelIdFilter=" + encodeURIComponent("" + studyLevelIdFilter) + "&";
+        if (sessionIdFilter === null)
+            throw new Error("The parameter 'sessionIdFilter' cannot be null.");
+        else if (sessionIdFilter !== undefined)
+            url_ += "SessionIdFilter=" + encodeURIComponent("" + sessionIdFilter) + "&";
         if (maxTotalScoreFilter === null)
             throw new Error("The parameter 'maxTotalScoreFilter' cannot be null.");
         else if (maxTotalScoreFilter !== undefined)
@@ -21256,18 +21281,28 @@ export class SessionsServiceProxy {
     }
 
     /**
+     * @param filter (optional) 
      * @param sessionIdFilter (optional) 
+     * @param governorateIdFilter (optional) 
      * @param sorting (optional) 
      * @param skipCount (optional) 
      * @param maxResultCount (optional) 
      * @return Success
      */
-    getAllSessionSchool(sessionIdFilter: number | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfGetSchoolForViewDto> {
+    getAllSessionSchool(filter: string | undefined, sessionIdFilter: number | undefined, governorateIdFilter: number | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfGetSchoolForViewDto> {
         let url_ = this.baseUrl + "/api/services/app/Sessions/GetAllSessionSchool?";
+        if (filter === null)
+            throw new Error("The parameter 'filter' cannot be null.");
+        else if (filter !== undefined)
+            url_ += "Filter=" + encodeURIComponent("" + filter) + "&";
         if (sessionIdFilter === null)
             throw new Error("The parameter 'sessionIdFilter' cannot be null.");
         else if (sessionIdFilter !== undefined)
             url_ += "SessionIdFilter=" + encodeURIComponent("" + sessionIdFilter) + "&";
+        if (governorateIdFilter === null)
+            throw new Error("The parameter 'governorateIdFilter' cannot be null.");
+        else if (governorateIdFilter !== undefined)
+            url_ += "GovernorateIdFilter=" + encodeURIComponent("" + governorateIdFilter) + "&";
         if (sorting === null)
             throw new Error("The parameter 'sorting' cannot be null.");
         else if (sorting !== undefined)
@@ -35914,6 +35949,7 @@ export class CreateOrEditSessionDto implements ICreateOrEditSessionDto {
     id!: number | undefined;
     name!: string;
     startDate!: DateTime;
+    sessionNumber!: number;
     examTemplateId!: number;
     supervisorFileToken!: string | undefined;
     studentFileToken!: string | undefined;
@@ -35932,6 +35968,7 @@ export class CreateOrEditSessionDto implements ICreateOrEditSessionDto {
             this.id = _data["id"];
             this.name = _data["name"];
             this.startDate = _data["startDate"] ? DateTime.fromISO(_data["startDate"].toString()) : <any>undefined;
+            this.sessionNumber = _data["sessionNumber"];
             this.examTemplateId = _data["examTemplateId"];
             this.supervisorFileToken = _data["supervisorFileToken"];
             this.studentFileToken = _data["studentFileToken"];
@@ -35950,6 +35987,7 @@ export class CreateOrEditSessionDto implements ICreateOrEditSessionDto {
         data["id"] = this.id;
         data["name"] = this.name;
         data["startDate"] = this.startDate ? this.startDate.toString() : <any>undefined;
+        data["sessionNumber"] = this.sessionNumber;
         data["examTemplateId"] = this.examTemplateId;
         data["supervisorFileToken"] = this.supervisorFileToken;
         data["studentFileToken"] = this.studentFileToken;
@@ -35961,6 +35999,7 @@ export interface ICreateOrEditSessionDto {
     id: number | undefined;
     name: string;
     startDate: DateTime;
+    sessionNumber: number;
     examTemplateId: number;
     supervisorFileToken: string | undefined;
     studentFileToken: string | undefined;
@@ -39166,6 +39205,8 @@ export interface IExamAnswerQuestionOptionLookupTableDto {
 
 export class ExamAttemptDto implements IExamAttemptDto {
     id!: string;
+    year!: number;
+    cycleNumber!: number;
     totalScore!: number | undefined;
     attemptDate!: DateTime | undefined;
     auditedDate!: DateTime | undefined;
@@ -39191,6 +39232,8 @@ export class ExamAttemptDto implements IExamAttemptDto {
     init(_data?: any) {
         if (_data) {
             this.id = _data["id"];
+            this.year = _data["year"];
+            this.cycleNumber = _data["cycleNumber"];
             this.totalScore = _data["totalScore"];
             this.attemptDate = _data["attemptDate"] ? DateTime.fromISO(_data["attemptDate"].toString()) : <any>undefined;
             this.auditedDate = _data["auditedDate"] ? DateTime.fromISO(_data["auditedDate"].toString()) : <any>undefined;
@@ -39216,6 +39259,8 @@ export class ExamAttemptDto implements IExamAttemptDto {
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["id"] = this.id;
+        data["year"] = this.year;
+        data["cycleNumber"] = this.cycleNumber;
         data["totalScore"] = this.totalScore;
         data["attemptDate"] = this.attemptDate ? this.attemptDate.toString() : <any>undefined;
         data["auditedDate"] = this.auditedDate ? this.auditedDate.toString() : <any>undefined;
@@ -39234,6 +39279,8 @@ export class ExamAttemptDto implements IExamAttemptDto {
 
 export interface IExamAttemptDto {
     id: string;
+    year: number;
+    cycleNumber: number;
     totalScore: number | undefined;
     attemptDate: DateTime | undefined;
     auditedDate: DateTime | undefined;
@@ -42378,9 +42425,9 @@ export class GetExamAttemptForViewDto implements IGetExamAttemptForViewDto {
     currentSectionOrder!: number;
     currentQuestionNo!: number;
     currentQuestionNoInGeneral!: number;
+    studySubjectId!: number;
+    studySubjectName!: string | undefined;
     governorate!: string | undefined;
-    year!: number;
-    cycleNumber!: number;
     studentNumber!: string | undefined;
     studyLevelId!: number | undefined;
     studyLevel!: string | undefined;
@@ -42390,6 +42437,7 @@ export class GetExamAttemptForViewDto implements IGetExamAttemptForViewDto {
     dateOfBirth!: DateTime | undefined;
     profilePictureId!: string | undefined;
     userId!: number;
+    paperNumber!: number;
 
     constructor(data?: IGetExamAttemptForViewDto) {
         if (data) {
@@ -42413,9 +42461,9 @@ export class GetExamAttemptForViewDto implements IGetExamAttemptForViewDto {
             this.currentSectionOrder = _data["currentSectionOrder"];
             this.currentQuestionNo = _data["currentQuestionNo"];
             this.currentQuestionNoInGeneral = _data["currentQuestionNoInGeneral"];
+            this.studySubjectId = _data["studySubjectId"];
+            this.studySubjectName = _data["studySubjectName"];
             this.governorate = _data["governorate"];
-            this.year = _data["year"];
-            this.cycleNumber = _data["cycleNumber"];
             this.studentNumber = _data["studentNumber"];
             this.studyLevelId = _data["studyLevelId"];
             this.studyLevel = _data["studyLevel"];
@@ -42425,6 +42473,7 @@ export class GetExamAttemptForViewDto implements IGetExamAttemptForViewDto {
             this.dateOfBirth = _data["dateOfBirth"] ? DateTime.fromISO(_data["dateOfBirth"].toString()) : <any>undefined;
             this.profilePictureId = _data["profilePictureId"];
             this.userId = _data["userId"];
+            this.paperNumber = _data["paperNumber"];
         }
     }
 
@@ -42448,9 +42497,9 @@ export class GetExamAttemptForViewDto implements IGetExamAttemptForViewDto {
         data["currentSectionOrder"] = this.currentSectionOrder;
         data["currentQuestionNo"] = this.currentQuestionNo;
         data["currentQuestionNoInGeneral"] = this.currentQuestionNoInGeneral;
+        data["studySubjectId"] = this.studySubjectId;
+        data["studySubjectName"] = this.studySubjectName;
         data["governorate"] = this.governorate;
-        data["year"] = this.year;
-        data["cycleNumber"] = this.cycleNumber;
         data["studentNumber"] = this.studentNumber;
         data["studyLevelId"] = this.studyLevelId;
         data["studyLevel"] = this.studyLevel;
@@ -42460,6 +42509,7 @@ export class GetExamAttemptForViewDto implements IGetExamAttemptForViewDto {
         data["dateOfBirth"] = this.dateOfBirth ? this.dateOfBirth.toString() : <any>undefined;
         data["profilePictureId"] = this.profilePictureId;
         data["userId"] = this.userId;
+        data["paperNumber"] = this.paperNumber;
         return data;
     }
 }
@@ -42476,9 +42526,9 @@ export interface IGetExamAttemptForViewDto {
     currentSectionOrder: number;
     currentQuestionNo: number;
     currentQuestionNoInGeneral: number;
+    studySubjectId: number;
+    studySubjectName: string | undefined;
     governorate: string | undefined;
-    year: number;
-    cycleNumber: number;
     studentNumber: string | undefined;
     studyLevelId: number | undefined;
     studyLevel: string | undefined;
@@ -42488,6 +42538,7 @@ export interface IGetExamAttemptForViewDto {
     dateOfBirth: DateTime | undefined;
     profilePictureId: string | undefined;
     userId: number;
+    paperNumber: number;
 }
 
 export class GetExamForViewDto implements IGetExamForViewDto {
@@ -56698,6 +56749,7 @@ export class SchoolDto implements ISchoolDto {
     id!: number;
     schoolNo!: string | undefined;
     name!: string | undefined;
+    governorateName!: string | undefined;
 
     constructor(data?: ISchoolDto) {
         if (data) {
@@ -56713,6 +56765,7 @@ export class SchoolDto implements ISchoolDto {
             this.id = _data["id"];
             this.schoolNo = _data["schoolNo"];
             this.name = _data["name"];
+            this.governorateName = _data["governorateName"];
         }
     }
 
@@ -56728,6 +56781,7 @@ export class SchoolDto implements ISchoolDto {
         data["id"] = this.id;
         data["schoolNo"] = this.schoolNo;
         data["name"] = this.name;
+        data["governorateName"] = this.governorateName;
         return data;
     }
 }
@@ -56736,6 +56790,7 @@ export interface ISchoolDto {
     id: number;
     schoolNo: string | undefined;
     name: string | undefined;
+    governorateName: string | undefined;
 }
 
 export enum SectionTypeEnum {
