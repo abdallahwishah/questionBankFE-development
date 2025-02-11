@@ -193,6 +193,7 @@
                                     }"
                                 ></app-auto-complete-feild>
                             </div>
+
                         </div>
                         <div class="d-flex justify-content-between mt-4">
                             <button class="btn btn-primary" (click)="getListAttempts(); closeFilters()">
@@ -497,6 +498,6 @@
     (onSupervisorAdded)="getListSupervis()"
 ></app-add-supervisor>
 <app-add-student [execuldedIdFilter]="execuldedIdFilter" [schoolName]="schoolName"></app-add-student>
-<app-move-student ></app-move-student>
+<app-move-student></app-move-student>
 <app-extendTimeSession [sessionId]="SessionId" [schoolClassId]="classId" [schoolId]="schoolId"></app-extendTimeSession>
 <!-- [schoolClassId]="classId" [schoolId]="schoolId" -->

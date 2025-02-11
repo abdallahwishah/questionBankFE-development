@@ -6997,63 +6997,6 @@ export class ExamAttemptsServiceProxy {
     }
 
     /**
-     * @param hideAutoCorrect (optional) 
-     * @param body (optional) 
-     * @return Success
-     */
-    addExtraDataToQuestion(hideAutoCorrect: boolean | undefined, body: CreateOrEditQuestionDto | undefined): Observable<void> {
-        let url_ = this.baseUrl + "/api/services/app/ExamAttempts/AddExtraDataToQuestion?";
-        if (hideAutoCorrect === null)
-            throw new Error("The parameter 'hideAutoCorrect' cannot be null.");
-        else if (hideAutoCorrect !== undefined)
-            url_ += "hideAutoCorrect=" + encodeURIComponent("" + hideAutoCorrect) + "&";
-        url_ = url_.replace(/[?&]$/, "");
-
-        const content_ = JSON.stringify(body);
-
-        let options_ : any = {
-            body: content_,
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Content-Type": "application/json",
-            })
-        };
-
-        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processAddExtraDataToQuestion(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processAddExtraDataToQuestion(response_ as any);
-                } catch (e) {
-                    return _observableThrow(e) as any as Observable<void>;
-                }
-            } else
-                return _observableThrow(response_) as any as Observable<void>;
-        }));
-    }
-
-    protected processAddExtraDataToQuestion(response: HttpResponseBase): Observable<void> {
-        const status = response.status;
-        const responseBlob =
-            response instanceof HttpResponse ? response.body :
-            (response as any).error instanceof Blob ? (response as any).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            return _observableOf(null as any);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf(null as any);
-    }
-
-    /**
      * @param filter (optional) 
      * @param examIdFilter (optional) 
      * @param sessionIdFilter (optional) 
@@ -21153,6 +21096,110 @@ export class SessionsServiceProxy {
     }
 
     /**
+     * @param body (optional) 
+     * @return Success
+     */
+    stopSession(body: StopSessionDto | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/Sessions/StopSession";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json",
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processStopSession(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processStopSession(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<void>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<void>;
+        }));
+    }
+
+    protected processStopSession(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return _observableOf(null as any);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param body (optional) 
+     * @return Success
+     */
+    resetSessionCache(body: ResetSessionCacheDto | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/Sessions/ResetSessionCache";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json",
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processResetSessionCache(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processResetSessionCache(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<void>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<void>;
+        }));
+    }
+
+    protected processResetSessionCache(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return _observableOf(null as any);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
      * @param id (optional) 
      * @return Success
      */
@@ -32633,13 +32680,13 @@ export class AnswerAttemptDto implements IAnswerAttemptDto {
     id!: string;
     examAttemptId!: string;
     questionId!: number;
-    question!: CreateOrEditQuestionDto;
+    question!: GetQuestionForViewDto;
     optionId!: number[] | undefined;
     option!: QuestionOptionDto;
     value!: string[] | undefined;
     score!: number | undefined;
-    minScore!: number;
-    maxScore!: number;
+    minScore!: number | undefined;
+    maxScore!: number | undefined;
     linkedQuestionsSubAnswers!: LinkedQuestionsSubAnswers[] | undefined;
     dargFormQuestionsSubAnswers!: DargFormQuestionsSubAnswers[] | undefined;
     dargTableQuestionsSubAnswers!: DargTableQuestionsSubAnswers[] | undefined;
@@ -32660,7 +32707,7 @@ export class AnswerAttemptDto implements IAnswerAttemptDto {
             this.id = _data["id"];
             this.examAttemptId = _data["examAttemptId"];
             this.questionId = _data["questionId"];
-            this.question = _data["question"] ? CreateOrEditQuestionDto.fromJS(_data["question"]) : <any>undefined;
+            this.question = _data["question"] ? GetQuestionForViewDto.fromJS(_data["question"]) : <any>undefined;
             if (Array.isArray(_data["optionId"])) {
                 this.optionId = [] as any;
                 for (let item of _data["optionId"])
@@ -32759,13 +32806,13 @@ export interface IAnswerAttemptDto {
     id: string;
     examAttemptId: string;
     questionId: number;
-    question: CreateOrEditQuestionDto;
+    question: GetQuestionForViewDto;
     optionId: number[] | undefined;
     option: QuestionOptionDto;
     value: string[] | undefined;
     score: number | undefined;
-    minScore: number;
-    maxScore: number;
+    minScore: number | undefined;
+    maxScore: number | undefined;
     linkedQuestionsSubAnswers: LinkedQuestionsSubAnswers[] | undefined;
     dargFormQuestionsSubAnswers: DargFormQuestionsSubAnswers[] | undefined;
     dargTableQuestionsSubAnswers: DargTableQuestionsSubAnswers[] | undefined;
@@ -56117,6 +56164,54 @@ export interface IResetPasswordOutput {
     userName: string | undefined;
 }
 
+export class ResetSessionCacheDto implements IResetSessionCacheDto {
+    sessionId!: number;
+    schoolClassId!: number | undefined;
+    schoolId!: number | undefined;
+    studentId!: number | undefined;
+
+    constructor(data?: IResetSessionCacheDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.sessionId = _data["sessionId"];
+            this.schoolClassId = _data["schoolClassId"];
+            this.schoolId = _data["schoolId"];
+            this.studentId = _data["studentId"];
+        }
+    }
+
+    static fromJS(data: any): ResetSessionCacheDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new ResetSessionCacheDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["sessionId"] = this.sessionId;
+        data["schoolClassId"] = this.schoolClassId;
+        data["schoolId"] = this.schoolId;
+        data["studentId"] = this.studentId;
+        return data;
+    }
+}
+
+export interface IResetSessionCacheDto {
+    sessionId: number;
+    schoolClassId: number | undefined;
+    schoolId: number | undefined;
+    studentId: number | undefined;
+}
+
 export class ResolveTenantIdInput implements IResolveTenantIdInput {
     c!: string | undefined;
 
@@ -57420,6 +57515,54 @@ export class StartUpgradeSubscriptionOutput implements IStartUpgradeSubscription
 export interface IStartUpgradeSubscriptionOutput {
     paymentId: number | undefined;
     upgraded: boolean;
+}
+
+export class StopSessionDto implements IStopSessionDto {
+    sessionId!: number;
+    schoolClassId!: number | undefined;
+    schoolId!: number | undefined;
+    studentId!: number | undefined;
+
+    constructor(data?: IStopSessionDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.sessionId = _data["sessionId"];
+            this.schoolClassId = _data["schoolClassId"];
+            this.schoolId = _data["schoolId"];
+            this.studentId = _data["studentId"];
+        }
+    }
+
+    static fromJS(data: any): StopSessionDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new StopSessionDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["sessionId"] = this.sessionId;
+        data["schoolClassId"] = this.schoolClassId;
+        data["schoolId"] = this.schoolId;
+        data["studentId"] = this.studentId;
+        return data;
+    }
+}
+
+export interface IStopSessionDto {
+    sessionId: number;
+    schoolClassId: number | undefined;
+    schoolId: number | undefined;
+    studentId: number | undefined;
 }
 
 export class StringOutput implements IStringOutput {

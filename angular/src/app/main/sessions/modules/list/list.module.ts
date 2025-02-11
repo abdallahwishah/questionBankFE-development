@@ -13,33 +13,33 @@ import { AutoCompleteComponent } from '@app/shared/components/fields/auto-comple
 import { DateComponent } from '@app/shared/components/fields/date/date.component';
 import { DialogSharedModule } from '@app/shared/components/dialog-shared/dialog-shared.module';
 import { CalendarModule } from 'primeng/calendar';
-import { SkeletonComponent } from "../../../../shared/components/skeleton/skeleton.component";
+import { SkeletonComponent } from '../../../../shared/components/skeleton/skeleton.component';
+import { AutoCompleteFeildModule } from '@app/shared/components/auto-complete-feild/auto-complete-feild.module';
 
 @NgModule({
- imports: [
-    CommonModule,
-    AppSharedModule,
-    FormsModule,
-    ReactiveFormsModule,
-    RouterModule.forChild([
-        {
-            path: '',
-            component: ListComponent,
-        },
-    ]),
-    FiltersComponent,
-    DropdownFieldComponent,
-    ActionButtonComponent,
-    PaginatorComponent,
-    DropdownFieldComponent,
-    DateComponent,
-    AutoCompleteComponent,
-    DialogSharedModule,
-    CalendarModule,
-    SkeletonComponent
-],
-  declarations: [ListComponent,
-    AddSessionsModalComponent
-  ]
+    imports: [
+        CommonModule,
+        AppSharedModule,
+        FormsModule,
+        ReactiveFormsModule,
+        RouterModule.forChild([
+            {
+                path: '',
+                component: ListComponent,
+            },
+        ]),
+        FiltersComponent,
+        DropdownFieldComponent,
+        ActionButtonComponent,
+        PaginatorComponent,
+        DropdownFieldComponent,
+        DateComponent,
+        AutoCompleteComponent,
+        DialogSharedModule,
+        CalendarModule,
+        SkeletonComponent,
+        AutoCompleteFeildModule,
+    ],
+    declarations: [ListComponent, AddSessionsModalComponent],
 })
-export class ListModule { }
+export class ListModule {}

@@ -40,7 +40,10 @@ export class MultipleChoiceOneOptionComponent implements ControlValueAccessor, V
      */
     @Input() config!: any;
     @Input() order!: any;
-
+ ngOnInit(): void {
+    //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
+    //Add 'implements OnInit' to the class.
+  }
     /**
      * Internal numeric value storing the selected choice.
      * For example: 1, 2, 3, or 4.

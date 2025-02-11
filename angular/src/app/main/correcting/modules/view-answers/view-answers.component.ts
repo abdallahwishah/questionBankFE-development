@@ -15,6 +15,8 @@ import {
     StudentsServiceProxy,
     SessionsServiceProxy,
     ExamAttemptsServiceProxy,
+    SubQuestionAnswer,
+    UpdateScoreReqDto,
 } from '@shared/service-proxies/service-proxies';
 
 @Component({
@@ -30,7 +32,7 @@ export class ViewAnswersComponent extends AppComponentBase implements OnInit {
 
     // Track which sections are open (for accordion)
     openSections: boolean[] = [];
-
+    loading = false;
     constructor(
         injector: Injector,
         private _examsServiceProxy: ExamsServiceProxy,
@@ -40,9 +42,9 @@ export class ViewAnswersComponent extends AppComponentBase implements OnInit {
     ) {
         super(injector);
     }
-
+    id: any;
     ngOnInit() {
-        const id = this._activatedRoute.snapshot.params.id;
+        this.id = this._activatedRoute.snapshot.params.id;
 
         // Example of building questionType array if needed
         this.questionsType = Object.entries(QuestionTypeEnum)
@@ -51,15 +53,15 @@ export class ViewAnswersComponent extends AppComponentBase implements OnInit {
                 name: key,
                 code: value,
             }));
-
+        this.loading = true;
         // Load exam once
-        this._examAttemptsServiceProxy.getAnswersByExamAttempt(id).subscribe((val) => {
+        this._examAttemptsServiceProxy.getAnswersByExamAttempt(this.id).subscribe((val) => {
             this.examForView = val;
-
-            // Initialize openSections for each examSection
-            // if (this.examForView?.exam?.examSections) {
-            //     this.openSections = this.examForView.exam.examSections.map(() => false);
-            // }
+            this.examForView?.forEach((value) => {
+                this.handleQuestionWithAnswer(value);
+            });
+            console.log('examForView', this.examForView);
+            this.loading = false;
         });
     }
 
@@ -68,5 +70,91 @@ export class ViewAnswersComponent extends AppComponentBase implements OnInit {
      */
     toggleAccordion(index: number): void {
         this.openSections[index] = !this.openSections[index];
+    }
+
+    handleQuestionWithAnswer(questionWithAnswer: any) {
+        let type: QuestionTypeEnum = questionWithAnswer?.question?.question?.type;
+        let answer: any = {};
+
+        switch (type) {
+            case QuestionTypeEnum.MutliChoice:
+                answer.multipleChoiceAnswer = questionWithAnswer?.optionId;
+                break;
+            case QuestionTypeEnum.SinglChoice:
+                answer.singleChoiceAnswer = questionWithAnswer?.optionId?.[0];
+                break;
+            case QuestionTypeEnum.TrueAndFalse:
+                answer.trueFalseAnswer = questionWithAnswer?.optionId?.[0];
+                break;
+            case QuestionTypeEnum.SA:
+                answer.saAnswer = questionWithAnswer?.value?.[0];
+                break;
+            case QuestionTypeEnum.LinkedQuestions:
+                console.log('questionWithAnswer', questionWithAnswer);
+                // reorder questionWithAnswer?.linkedQuestionsSubAnswers as per linkedQuestions
+                let linkedQuestionsSubAnswersOrdered = questionWithAnswer?.linkedQuestionsSubAnswers?.sort(
+                    (a: any, b: any) => {
+                        return (
+                            questionWithAnswer?.question?.linkedQuestions.findIndex(
+                                (x: any) => x.question.id === a.subQuestionId,
+                            ) -
+                            questionWithAnswer?.question?.linkedQuestions.findIndex(
+                                (x: any) => x.question.id === b.subQuestionId,
+                            )
+                        );
+                    },
+                );
+                answer.linkedQuestionAnswer = linkedQuestionsSubAnswersOrdered?.map((x: any, i) => {
+                    let typex: QuestionTypeEnum = questionWithAnswer?.question?.linkedQuestions[i]?.question?.type;
+                    let subAnswer: any = {};
+
+                    switch (typex) {
+                        case QuestionTypeEnum.MutliChoice:
+                            subAnswer.multipleChoiceAnswer = x.optionId;
+                            break;
+                        case QuestionTypeEnum.SinglChoice:
+                            subAnswer.singleChoiceAnswer = x.optionId?.[0];
+                            break;
+                        case QuestionTypeEnum.TrueAndFalse:
+                            subAnswer.trueFalseAnswer = x.optionId?.[0];
+                            break;
+                        case QuestionTypeEnum.SA:
+                            subAnswer.saAnswer = x.value;
+                            break;
+                        case QuestionTypeEnum.Match:
+                            subAnswer.matchAnswer = x.matchValue;
+                            break;
+                        case QuestionTypeEnum.DargingTable:
+                            subAnswer.dragTableAnswer = x.dargTableQuestionsSubAnswersWithoutPinned;
+                            break;
+                    }
+
+                    return new SubQuestionAnswer({
+                        questionId: x.subQuestionId,
+                        ...subAnswer,
+                    });
+                });
+                break;
+        }
+
+        questionWithAnswer.question = {
+            ...questionWithAnswer?.question,
+            ...answer,
+        };
+    }
+    Save() {
+        this._examAttemptsServiceProxy
+            .updateScoreAll(
+                this.examForView?.map((value) => {
+                    return new UpdateScoreReqDto({
+                        id: undefined,
+                        score: value.score,
+                        questionId: value?.question?.question?.id,
+                        examAttemptId: this.id,
+                        subId: undefined,
+                    });
+                }),
+            )
+            .subscribe((value) => {});
     }
 }

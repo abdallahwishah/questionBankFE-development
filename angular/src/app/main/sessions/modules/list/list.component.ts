@@ -1,3 +1,4 @@
+import { DateTimeService } from './../../../../shared/common/timing/date-time.service';
 import { SessionsServiceProxy, SessionStatusEnum } from './../../../../../shared/service-proxies/service-proxies';
 import { Component, Injector, OnInit, ViewChild } from '@angular/core';
 import { DialogSharedService } from '@app/shared/components/dialog-shared/dialog-shared.service';
@@ -7,6 +8,7 @@ import { LazyLoadEvent } from '@node_modules/primeng/api';
 import { Paginator } from 'primeng/paginator';
 import { Table } from 'primeng/table';
 import { AppComponentBase } from '@shared/common/app-component-base';
+import { FiltersComponent } from '@app/shared/components/filters/filters.component';
 
 @Component({
     selector: 'app-list',
@@ -20,8 +22,11 @@ export class ListComponent extends AppComponentBase implements OnInit {
     isStatusFilter: any;
     sessionStatusEnum = SessionStatusEnum;
     Add_Session_dialog = UniqueNameComponents.Add_Session_dialog;
-
+    studyLevel;
     filter: string;
+    studySubject;
+    fromDate: any;
+    toDate: any;
 
     constructor(
         private _injector: Injector,
@@ -29,6 +34,7 @@ export class ListComponent extends AppComponentBase implements OnInit {
         private _sessionsServiceProxy: SessionsServiceProxy,
         private _router: Router,
         private _activatedRoute: ActivatedRoute,
+        private DateTimeService: DateTimeService,
     ) {
         super(_injector);
     }
@@ -58,11 +64,11 @@ export class ListComponent extends AppComponentBase implements OnInit {
         this._sessionsServiceProxy
             .getAll(
                 this.filter,
+                this.toDate?this.DateTimeService.fromJSDate(this.toDate):undefined,
+                this.fromDate?this.DateTimeService.fromJSDate(this.fromDate):undefined,
                 undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
+                this.studyLevel?.studyLevel?.id,
+                this.studySubject?.studySubject?.id,
                 this.isStatusFilter,
                 undefined,
                 undefined,
@@ -106,5 +112,22 @@ export class ListComponent extends AppComponentBase implements OnInit {
                 });
                 break;
         }
+    }
+    @ViewChild(FiltersComponent) FiltersComponent: FiltersComponent;
+
+    closeFilters() {
+        this.FiltersComponent.isPanelOpen = false;
+    }
+    clearFilter() {
+        this.filter = '';
+        this.toDate = undefined;
+        this.fromDate = undefined;
+        this.studyLevel = undefined;
+        this.studySubject = undefined;
+        this.getList();
+        this.FiltersComponent.isPanelOpen = false;
+    }
+    get studyLevelIds() {
+        return [this.studyLevel?.studyLevel?.id];
     }
 }

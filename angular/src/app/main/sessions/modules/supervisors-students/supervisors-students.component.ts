@@ -30,7 +30,7 @@ export class SupervisorsStudentsComponent extends AppComponentBase implements On
     isActiveAttemptsFilter: boolean;
     sessionStatus: any[] = [];
     isStatusFilter: any;
-
+    studyLevel
     primengTableHelperForAttempts = new PrimengTableHelper();
     primengTableHelperForSupervisors = new PrimengTableHelper();
 
