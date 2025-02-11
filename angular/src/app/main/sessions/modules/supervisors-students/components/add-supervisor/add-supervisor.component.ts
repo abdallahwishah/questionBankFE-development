@@ -9,6 +9,7 @@ import { Component, OnInit, Injector, Input, Output, EventEmitter } from '@angul
 import { DialogSharedService } from '@app/shared/components/dialog-shared/dialog-shared.service';
 import { UniqueNameComponents } from '@app/shared/Models/UniqueNameComponents';
 import { AppComponentBase } from '@shared/common/app-component-base';
+import { SessionSupervisorRoleEnum } from './../../../../../../../shared/service-proxies/service-proxies';
 
 @Component({
     selector: 'app-add-supervisor',
@@ -25,7 +26,9 @@ export class AddSupervisorComponent extends AppComponentBase implements OnInit {
     @Input() schoolClassId;
 
     supervisorType: string = 'monitor';
-
+    SessionSupervisorRoleEnum = SessionSupervisorRoleEnum;
+    roles;
+    Role: any;
     @Output() onSupervisorAdded = new EventEmitter<any>();
     constructor(
         private Injector: Injector,
@@ -37,9 +40,7 @@ export class AddSupervisorComponent extends AppComponentBase implements OnInit {
         super(Injector);
     }
 
-    ngOnInit() {
-        /*  this._roleService.getRoles(undefined).subscribe() */
-    }
+    ngOnInit() {}
     Save() {
         this._SessionSupervisorsServiceProxy
             .createOrEdit(
@@ -48,9 +49,11 @@ export class AddSupervisorComponent extends AppComponentBase implements OnInit {
                     schoolClassId: this.schoolClassId,
                     sessionId: this.sessionId,
                     supervisorId: this.SupervisoSelected?.supervisor.id,
+                    role: this.Role,
                 }),
             )
             .subscribe((res) => {
+                this.SupervisoSelected = undefined;
                 this.notify.success('Supervisor Added Successfully');
                 this.onSupervisorAdded.emit();
                 this.Close();

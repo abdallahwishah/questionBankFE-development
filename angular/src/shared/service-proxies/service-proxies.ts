@@ -36030,6 +36030,7 @@ export class CreateOrEditSessionSupervisorDto implements ICreateOrEditSessionSup
     sessionId!: number;
     supervisorId!: number;
     schoolClassId!: number | undefined;
+    role!: SessionSupervisorRoleEnum;
 
     constructor(data?: ICreateOrEditSessionSupervisorDto) {
         if (data) {
@@ -36046,6 +36047,7 @@ export class CreateOrEditSessionSupervisorDto implements ICreateOrEditSessionSup
             this.sessionId = _data["sessionId"];
             this.supervisorId = _data["supervisorId"];
             this.schoolClassId = _data["schoolClassId"];
+            this.role = _data["role"];
         }
     }
 
@@ -36062,6 +36064,7 @@ export class CreateOrEditSessionSupervisorDto implements ICreateOrEditSessionSup
         data["sessionId"] = this.sessionId;
         data["supervisorId"] = this.supervisorId;
         data["schoolClassId"] = this.schoolClassId;
+        data["role"] = this.role;
         return data;
     }
 }
@@ -36071,6 +36074,7 @@ export interface ICreateOrEditSessionSupervisorDto {
     sessionId: number;
     supervisorId: number;
     schoolClassId: number | undefined;
+    role: SessionSupervisorRoleEnum;
 }
 
 export class CreateOrEditSiteTrackerDto implements ICreateOrEditSiteTrackerDto {
