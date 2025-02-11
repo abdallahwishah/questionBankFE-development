@@ -8,7 +8,7 @@
     aria-hidden="true"
     [config]="{ backdrop: 'static' }"
 >
-    <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title">
@@ -25,14 +25,16 @@
             </div>
             <div class="card card-custom gutter-b">
                 <div class="card-body">
-                    <form class="form" autocomplete="off">
+                    <form class="form">
                         <div>
                             <div class="row align-items-center mb-4">
                                 <div class="col-xl-6">
                                     <app-auto-complete-feild
                                         [label]="l('Governorate')"
                                         field="governorate.name"
+                                        name="sss"
                                         [(ngModel)]="governorateIdFilter"
+                                        (ngModelChange)="getAll()"
                                         [ConfigCustomSearch]="{
                                             api: '/api/services/app/Governorates/GetAll',
                                             keySearch: 'filter',
@@ -48,14 +50,15 @@
                                     <app-auto-complete-feild
                                         [label]="l('Role')"
                                         field="displayName"
+                                        name="dd"
                                         [(ngModel)]="RoleId"
+                                        (ngModelChange)="getAll()"
                                         [ConfigCustomSearch]="{
                                             api: '/api/services/app/Role/GetRoles',
                                             keySearch: 'filter',
                                             customParams: {
-                                                Sorting: '',
-                                                SkipCount: 0,
-                                                MaxResultCount: 10
+                                                MaxResultCount: 10,
+                                                permissions: []
                                             }
                                         }"
                                     ></app-auto-complete-feild>
@@ -105,6 +108,14 @@
                                             {{ l('Name') }}
                                             <p-sortIcon field="displayName"></p-sortIcon>
                                         </th>
+                                        <th style="width: 150px" pSortableColumn="identityNumber">
+                                            {{ l('IdentityNumber') }}
+                                            <p-sortIcon field="identityNumber"></p-sortIcon>
+                                        </th>
+                                        <th style="width: 150px" pSortableColumn="governorate">
+                                            {{ l('Governorate') }}
+                                            <p-sortIcon field="governorate"></p-sortIcon>
+                                        </th>
                                     </tr>
                                 </ng-template>
                                 <ng-template pTemplate="body" let-record="$implicit">
@@ -118,6 +129,14 @@
                                         <td style="width: 150px">
                                             <span class="p-column-title">{{ l('Name') }}</span>
                                             {{ record.displayName }}
+                                        </td>
+                                        <td style="width: 150px">
+                                            <span class="p-column-title">{{ l('Name') }}</span>
+                                            {{ record.identityNumber }}
+                                        </td>
+                                        <td style="width: 150px">
+                                            <span class="p-column-title">{{ l('Name') }}</span>
+                                            {{ record.governorate }}
                                         </td>
                                     </tr>
                                 </ng-template>

@@ -935,3 +935,7 @@ span.cke_button_icon.cke_button__about_icon  {
     }
 }
 
+.p-overlay.p-component{
+    z-index: 999999999 !important;
+
+}
