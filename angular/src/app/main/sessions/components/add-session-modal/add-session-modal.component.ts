@@ -43,6 +43,7 @@ export class AddSessionsModalComponent extends AppComponentBase implements OnIni
             examTemplateId: [null],
             supervisorFileToken: [null],
             studentFileToken: [null],
+            sessionNumber: [1],
         });
     }
     ngOnInit(): void {

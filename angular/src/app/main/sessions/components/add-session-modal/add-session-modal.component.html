@@ -31,7 +31,7 @@
                         <validation-messages [formCtrl]="FormAddSession.get('examTemplateId')"></validation-messages>
                     </div>
 
-                    <div class="col-md-12 mb-5">
+                    <div class="col-md-6 mb-5">
                         <label class="col-form-label required">{{ l('StartDate') }}</label>
                         <div class="input-normal-form-calendar">
                             <p-calendar
@@ -95,6 +95,15 @@
                             </svg>
                         </div>
                         <validation-messages [formCtrl]="FormAddSession.get('startDate')"></validation-messages>
+                    </div>
+                    <div class="col-md-6 mb-5">
+                        <label class="col-form-label required">{{ l('SessionNumber') }}</label>
+                        <input
+                            name="sessionNumber"
+                            class="form-control m-input"
+                            type="text"
+                            formControlName="sessionNumber"
+                        />
                     </div>
                     <!-- <div class="col-md-6 mb-5">
                         <label class="col-form-label required">{{ l('EndDate') }}</label>

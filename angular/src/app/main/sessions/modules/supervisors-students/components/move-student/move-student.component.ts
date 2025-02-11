@@ -1,7 +1,9 @@
 import {
     ExamAttemptsServiceProxy,
     MoveStudentDto,
+    MoveSupervisorDto,
     SessionsServiceProxy,
+    SessionSupervisorsServiceProxy,
 } from './../../../../../../../shared/service-proxies/service-proxies';
 import { Component, OnInit, Injector, Input } from '@angular/core';
 import { DialogSharedService } from '@app/shared/components/dialog-shared/dialog-shared.service';
@@ -22,11 +24,13 @@ export class MoveStudentComponent extends AppComponentBase implements OnInit {
     studentId: any;
     schoolClassId;
     schoolId;
+    sessionSupervisor: any;
     constructor(
         private Injector: Injector,
         private _examAttemptsServiceProxy: ExamAttemptsServiceProxy,
         private _dialogSharedService: DialogSharedService,
         private _sessionsServiceProxy: SessionsServiceProxy,
+        private _SessionSupervisorsServiceProxy: SessionSupervisorsServiceProxy,
     ) {
         super(Injector);
     }
@@ -35,11 +39,39 @@ export class MoveStudentComponent extends AppComponentBase implements OnInit {
         this.subscription = this._dialogSharedService
             .SelectorFilterByComponent$(this.Move_Student_dialog, 'configShow')
             .subscribe((configShow) => {
-                this.studentId = configShow?.data;
+                this.sessionSupervisor = undefined;
+                this.studentId = undefined;
+                if (configShow?.data?.sessionSupervisor) {
+                    this.sessionSupervisor = configShow?.data?.sessionSupervisor;
+                } else {
+                    this.studentId = configShow?.data;
+                }
             });
     }
 
     Save() {
+        if (this.sessionSupervisor) {
+            this._SessionSupervisorsServiceProxy
+                .moveSupervisors(
+                    new MoveSupervisorDto({
+                        sessionId: this.SessionSelected,
+                        schoolClassId: this.schoolClassId,
+                        schoolId: this.schoolId?.school.id,
+                        supervisorIds: [this.sessionSupervisor],
+                    }),
+                )
+                .subscribe((res) => {
+                    this.SessionSelected = undefined;
+                    this.schoolClassId = undefined;
+                    this.schoolId = undefined;
+                    this.studentId = undefined;
+                    this.sessionSupervisor = undefined;
+
+                    this.notify.success('  Moved Successfully');
+                    this.Close();
+                });
+        } else {
+        }
         this._examAttemptsServiceProxy
             .moveStudent(
                 new MoveStudentDto({
@@ -54,6 +86,8 @@ export class MoveStudentComponent extends AppComponentBase implements OnInit {
                 this.schoolClassId = undefined;
                 this.schoolId = undefined;
                 this.studentId = undefined;
+                this.sessionSupervisor = undefined;
+
                 this.notify.success('Student Added Successfully');
                 this.Close();
             });

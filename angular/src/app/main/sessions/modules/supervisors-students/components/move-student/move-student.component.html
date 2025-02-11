@@ -1,4 +1,8 @@
-<app-dialog-shared [width]="'30vw'" [dialogHeader]="l('MoveStudent')" [dialog_name]="Move_Student_dialog">
+<app-dialog-shared
+    [width]="'30vw'"
+    [dialogHeader]="sessionSupervisor ? l('MoveSupervisor') : l('MoveStudent')"
+    [dialog_name]="Move_Student_dialog"
+>
     <ng-container bodyDialog>
         <ng-container>
             <div class="row">

@@ -114,7 +114,7 @@ export class SupervisorsStudentsComponent extends AppComponentBase implements On
                 this.primengTableHelperForAttempts.hideLoadingIndicator();
             });
     }
-
+    supervisour: any;
     getListSupervis(event?: LazyLoadEvent) {
         if (event) {
             if (this.primengTableHelperForSupervisors.shouldResetPaging(event)) {
@@ -191,6 +191,11 @@ export class SupervisorsStudentsComponent extends AppComponentBase implements On
                     this.getListSupervis();
                 });
                 console.log();
+                break;
+            case 'MoveSupervisor':
+                this._dialogSharedService.showDialog(UniqueNameComponents.Move_Student_dialog, {
+                    sessionSupervisor: record.sessionSupervisor.id,
+                });
                 break;
         }
     }
