@@ -14,7 +14,10 @@ export class AddStudentComponent extends AppComponentBase implements OnInit {
     Add_Student_dialog = UniqueNameComponents.Add_Student_dialog;
     StudentSelected: any;
     @Input() execuldedIdFilter: any;
-    @Input() schoolName: any;
+    @Input() sessionId;
+    @Input() schoolClassId;
+    @Input() schoolId;
+    @Input() studentId;
 
     constructor(
         private Injector: Injector,
@@ -29,15 +32,19 @@ export class AddStudentComponent extends AppComponentBase implements OnInit {
         console.log('this.StudentSelected :', this.StudentSelected);
     }
     Save() {
-        // this._examAttemptsServiceProxy
-        //     .addStudent(
-        //         new MoveStudentDto({
-        //          }),
-        //     )
-        //     .subscribe((res) => {
-        //         this.notify.success('Student Added Successfully');
-        //         this.Close();
-        //     });
+        this._examAttemptsServiceProxy
+            .addStudent(
+                new MoveStudentDto({
+                    schoolClassId: this.schoolClassId,
+                    schoolId: this.schoolId,
+                    sessionId: this.sessionId,
+                    studentId: this.studentId,
+                }),
+            )
+            .subscribe((res) => {
+                this.notify.success('Student Added Successfully');
+                this.Close();
+            });
     }
     Close() {
         this._dialogSharedService.hideDialog(this.Add_Student_dialog);

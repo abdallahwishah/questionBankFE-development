@@ -28,6 +28,38 @@
                     <form class="form" autocomplete="off">
                         <div>
                             <div class="row align-items-center mb-4">
+                                <div class="col-xl-6">
+                                    <app-auto-complete-feild
+                                        [label]="l('Governorate')"
+                                        field="governorate.name"
+                                        [(ngModel)]="governorateIdFilter"
+                                        [ConfigCustomSearch]="{
+                                            api: '/api/services/app/Governorates/GetAll',
+                                            keySearch: 'filter',
+                                            customParams: {
+                                                Sorting: '',
+                                                SkipCount: 0,
+                                                MaxResultCount: 10
+                                            }
+                                        }"
+                                    ></app-auto-complete-feild>
+                                </div>
+                                <div class="col-xl-6">
+                                    <app-auto-complete-feild
+                                        [label]="l('Role')"
+                                        field="displayName"
+                                        [(ngModel)]="RoleId"
+                                        [ConfigCustomSearch]="{
+                                            api: '/api/services/app/Role/GetRoles',
+                                            keySearch: 'filter',
+                                            customParams: {
+                                                Sorting: '',
+                                                SkipCount: 0,
+                                                MaxResultCount: 10
+                                            }
+                                        }"
+                                    ></app-auto-complete-feild>
+                                </div>
                                 <div class="col-xl-12">
                                     <div class="my-3">
                                         <div class="input-group">
@@ -60,7 +92,7 @@
                                 [lazy]="true"
                                 [scrollable]="true"
                                 ScrollWidth="100%"
-                                [tableStyle]="{'min-width': '25rem'}"
+                                [tableStyle]="{ 'min-width': '25rem' }"
                                 [(selection)]="selectedUsers"
                                 selectionMode="multiple"
                             >

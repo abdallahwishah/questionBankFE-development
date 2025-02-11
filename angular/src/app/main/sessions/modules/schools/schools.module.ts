@@ -8,6 +8,7 @@ import { PaginatorComponent } from '@app/shared/common/paginator/paginator.compo
 import { ActionButtonComponent } from '@app/shared/components/action-button/action-button.component';
 import { AutoCompleteFeildModule } from '@app/shared/components/auto-complete-feild/auto-complete-feild.module';
 import { FiltersComponent } from '@app/shared/components/filters/filters.component';
+import { ExtendTimeSessionComponent } from '../supervisors-students/components/extendTimeSession/extendTimeSession.component';
 
 @NgModule({
     imports: [
@@ -23,7 +24,7 @@ import { FiltersComponent } from '@app/shared/components/filters/filters.compone
         ActionButtonComponent,
         PaginatorComponent,
         AutoCompleteFeildModule,
-        FiltersComponent,
+        FiltersComponent,ExtendTimeSessionComponent
     ],
     declarations: [SchoolsComponent],
 })

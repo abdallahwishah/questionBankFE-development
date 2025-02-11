@@ -1,4 +1,4 @@
-import { SupervisorDto } from './../../../../../shared/service-proxies/service-proxies';
+import { StopSessionDto, SupervisorDto } from './../../../../../shared/service-proxies/service-proxies';
 // schools.component.ts
 import { Component, Injector, OnInit, ViewChild } from '@angular/core';
 import { AppComponentBase } from '@shared/common/app-component-base';
@@ -8,6 +8,8 @@ import { LazyLoadEvent } from '@node_modules/primeng/api';
 import { Table } from '@node_modules/primeng/table';
 import { Paginator } from '@node_modules/primeng/paginator';
 import { FiltersComponent } from '@app/shared/components/filters/filters.component';
+import { UniqueNameComponents } from '@app/shared/Models/UniqueNameComponents';
+import { DialogSharedService } from '@app/shared/components/dialog-shared/dialog-shared.service';
 
 interface SchoolClass {
     schoolClass: {
@@ -31,11 +33,15 @@ export class SchoolsComponent extends AppComponentBase implements OnInit {
     expandedRows: any = {};
     sessionName: any;
     governorateIdFilter: any;
+    schoolId;
+    schoolClassId;
     constructor(
         private _injector: Injector,
         private _SessionsServiceProxy: SessionsServiceProxy,
         private _ActivatedRoute: ActivatedRoute,
         private _router: Router,
+        private _DialogSharedService: DialogSharedService,
+        private _sessionsServiceProxy: SessionsServiceProxy,
     ) {
         super(_injector);
     }
@@ -90,7 +96,7 @@ export class SchoolsComponent extends AppComponentBase implements OnInit {
         this._router.navigate(['../../supervisors-students', this.SessionId, item?.schoolClass?.id], {
             queryParams: {
                 school: item?.schoolName,
-                schoolId: school?.school?.schoolId,
+                schoolId: school?.school?.id,
             },
             queryParamsHandling: 'merge',
             relativeTo: this._ActivatedRoute,
@@ -104,5 +110,62 @@ export class SchoolsComponent extends AppComponentBase implements OnInit {
     clearFilter() {
         this.FiltersComponent.isPanelOpen = false;
         this.governorateIdFilter = undefined;
+    }
+    doActions(label: any, record: any) {
+        this.schoolId = record?.school?.id;
+         this.schoolClassId = undefined;
+        switch (label) {
+            case 'Stop':
+                this.message.confirm('', this.l('AreYouSure'), (isConfirmed) => {
+                    if (isConfirmed) {
+                        this._sessionsServiceProxy
+                            .stopSession(
+                                new StopSessionDto({
+                                    schoolClassId: undefined,
+                                    schoolId:this.schoolId,
+                                    sessionId: this.SessionId,
+                                    studentId: undefined,
+                                }),
+                            )
+                            .subscribe((res) => {
+                                this.getList();
+                            });
+                    }
+                });
+                break;
+            case 'Extend':
+                this._DialogSharedService.showDialog(UniqueNameComponents.extendTimeSession_dialog, {});
+                break;
+        }
+    }
+    doActionsClass(label: any, record: any, school) {
+        this.schoolId = school?.school?.id;
+        this.schoolClassId = record?.schoolClass?.id;
+        switch (label) {
+            case 'View':
+                this.supervisorsAndStudents(record, school);
+                break;
+            case 'Stop':
+                this.message.confirm('', this.l('AreYouSure'), (isConfirmed) => {
+                    if (isConfirmed) {
+                        this._sessionsServiceProxy
+                            .stopSession(
+                                new StopSessionDto({
+                                    schoolClassId:this.schoolClassId,
+                                    schoolId: school?.school?.id,
+                                    sessionId: this.SessionId,
+                                    studentId: undefined,
+                                }),
+                            )
+                            .subscribe((res) => {
+                                this.getList();
+                            });
+                    }
+                });
+                break;
+            case 'Extend':
+                this._DialogSharedService.showDialog(UniqueNameComponents.extendTimeSession_dialog, {});
+                break;
+        }
     }
 }

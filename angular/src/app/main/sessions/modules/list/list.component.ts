@@ -1,5 +1,9 @@
 import { DateTimeService } from './../../../../shared/common/timing/date-time.service';
-import { SessionsServiceProxy, SessionStatusEnum } from './../../../../../shared/service-proxies/service-proxies';
+import {
+    SessionsServiceProxy,
+    SessionStatusEnum,
+    StopSessionDto,
+} from './../../../../../shared/service-proxies/service-proxies';
 import { Component, Injector, OnInit, ViewChild } from '@angular/core';
 import { DialogSharedService } from '@app/shared/components/dialog-shared/dialog-shared.service';
 import { UniqueNameComponents } from '@app/shared/Models/UniqueNameComponents';
@@ -88,6 +92,7 @@ export class ListComponent extends AppComponentBase implements OnInit {
     AddSession(data?: any) {
         this._DialogSharedService.showDialog(this.Add_Session_dialog, data);
     }
+    sessionId: any;
     doActions(label: any, record: any) {
         switch (label) {
             case 'ViewSchools':
@@ -115,6 +120,28 @@ export class ListComponent extends AppComponentBase implements OnInit {
                         });
                     }
                 });
+                break;
+            case 'Stop':
+                this.message.confirm('', this.l('AreYouSure'), (isConfirmed) => {
+                    if (isConfirmed) {
+                        this._sessionsServiceProxy
+                            .stopSession(
+                                new StopSessionDto({
+                                    schoolClassId: undefined,
+                                    schoolId: undefined,
+                                    sessionId: record?.session?.id,
+                                    studentId: undefined,
+                                }),
+                            )
+                            .subscribe((res) => {
+                                this.getList();
+                            });
+                    }
+                });
+                break;
+            case 'Extend':
+                this.sessionId = record?.session?.id;
+                this._DialogSharedService.showDialog(UniqueNameComponents.extendTimeSession_dialog, {});
                 break;
         }
     }

@@ -8,6 +8,7 @@ import {
     SessionStatusEnum,
     SessionSupervisorRoleEnum,
     SessionSupervisorsServiceProxy,
+    StopSessionDto,
 } from '@shared/service-proxies/service-proxies';
 import { Paginator } from '@node_modules/primeng/paginator';
 import { Table } from '@node_modules/primeng/table';
@@ -30,7 +31,7 @@ export class SupervisorsStudentsComponent extends AppComponentBase implements On
     isActiveAttemptsFilter: boolean;
     sessionStatus: any[] = [];
     isStatusFilter: any;
-    studyLevel
+    studyLevel;
     primengTableHelperForAttempts = new PrimengTableHelper();
     primengTableHelperForSupervisors = new PrimengTableHelper();
 
@@ -146,7 +147,7 @@ export class SupervisorsStudentsComponent extends AppComponentBase implements On
                 this.execuldedIdFilter = result.items.map((item) => item.sessionSupervisor.id);
             });
     }
-
+    studentId: any;
     doActionsForAttempts(label: any, record: any) {
         switch (label) {
             case 'MoveStudent':
@@ -155,6 +156,31 @@ export class SupervisorsStudentsComponent extends AppComponentBase implements On
                     UniqueNameComponents.Move_Student_dialog,
                     record.examAttempt.studentId,
                 );
+                break;
+            case 'Extend':
+                this.studentId = record.examAttempt.studentId;
+                this._dialogSharedService.showDialog(
+                    UniqueNameComponents.extendTimeSession_dialog,
+                    record.examAttempt.studentId,
+                );
+                break;
+            case 'Stop':
+                this.message.confirm('', this.l('AreYouSure'), (isConfirmed) => {
+                    if (isConfirmed) {
+                        this._SessionsServiceProxy
+                            .stopSession(
+                                new StopSessionDto({
+                                    schoolClassId: this.classId,
+                                    schoolId: this.schoolId,
+                                    sessionId: this.SessionId,
+                                    studentId: record.examAttempt.studentId,
+                                }),
+                            )
+                            .subscribe((res) => {
+                                this.getListAttempts();
+                            });
+                    }
+                });
                 break;
         }
     }
@@ -180,7 +206,7 @@ export class SupervisorsStudentsComponent extends AppComponentBase implements On
     MoveStudent() {
         this._dialogSharedService.showDialog(
             UniqueNameComponents.Move_Student_dialog,
-            this.selectedProducts?.map((value) => value?.value?.id),
+            this.selectedProducts?.map((value) => value?.examAttempt?.studentId),
         );
     }
     @ViewChild(FiltersComponent) FiltersComponent: FiltersComponent;

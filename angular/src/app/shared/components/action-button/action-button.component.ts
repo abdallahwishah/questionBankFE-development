@@ -94,6 +94,10 @@ export class ActionButtonComponent extends AppComponentBase {
                 return 'fas fa-plus';
             case 'WorkFlow':
                 return 'fas fa-project-diagram';
+            case 'Stop':
+                return 'fas fa-stop';
+            case 'Extend':
+                return 'fas fa-clock';
             default:
                 return customIcon; // return customIcon if no label matches
         }

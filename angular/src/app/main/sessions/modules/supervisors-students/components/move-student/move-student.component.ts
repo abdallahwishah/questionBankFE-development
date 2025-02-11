@@ -18,10 +18,10 @@ export class MoveStudentComponent extends AppComponentBase implements OnInit {
     subscription: Subscription;
 
     Move_Student_dialog = UniqueNameComponents.Move_Student_dialog;
-    SessionSelected: any;
+    @Input() SessionSelected: any;
     studentId: any;
-    schoolClassId
-    schoolId
+    schoolClassId;
+    schoolId;
     constructor(
         private Injector: Injector,
         private _examAttemptsServiceProxy: ExamAttemptsServiceProxy,
@@ -43,19 +43,32 @@ export class MoveStudentComponent extends AppComponentBase implements OnInit {
         this._examAttemptsServiceProxy
             .moveStudent(
                 new MoveStudentDto({
-                    sessionId: this.SessionSelected?.session.id,
+                    sessionId: this.SessionSelected,
                     schoolClassId: this.schoolClassId,
-                    schoolId: this.schoolId,
+                    schoolId: this.schoolId?.school.id,
                     studentId: this.studentId?.length ? this.studentId : [this.studentId],
                 }),
             )
             .subscribe((res) => {
+                this.SessionSelected = undefined;
+                this.schoolClassId = undefined;
+                this.schoolId = undefined;
+                this.studentId = undefined;
                 this.notify.success('Student Added Successfully');
                 this.Close();
             });
     }
     Close() {
         this._dialogSharedService.hideDialog(this.Move_Student_dialog);
+    }
+    getSchoolClassForViewDtos: any;
+    get() {
+        this.getSchoolClassForViewDtos = this.schoolId?.getSchoolClassForViewDtos?.map((value) => {
+            return {
+                id: value?.schoolClass?.id,
+                name: value?.schoolClass?.name,
+            };
+        });
     }
 
     ngOnDestroy(): void {

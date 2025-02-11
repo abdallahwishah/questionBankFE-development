@@ -7,10 +7,12 @@
                         [label]="l('School')"
                         field="school.name"
                         [(ngModel)]="schoolId"
+                        (ngModelChange)="get()"
                         [ConfigCustomSearch]="{
                             api: '/api/services/app/Sessions/GetAllSessionSchool',
                             keySearch: 'filter',
                             customParams: {
+                                sessionIdFilter: SessionSelected,
                                 Sorting: '',
                                 SkipCount: 0,
                                 MaxResultCount: 10
@@ -19,20 +21,13 @@
                     ></app-auto-complete-feild>
                 </div>
                 <div class="col-md-12 mb-5">
-                    <app-auto-complete-feild
-                        [label]="l('School')"
-                        field="school.name"
-                        [(ngModel)]="schoolId"
-                        [ConfigCustomSearch]="{
-                            api: '/api/services/app/Sessions/GetAllSessionSchool',
-                            keySearch: 'filter',
-                            customParams: {
-                                Sorting: '',
-                                SkipCount: 0,
-                                MaxResultCount: 10
-                            }
-                        }"
-                    ></app-auto-complete-feild>
+                    <app-dropdown-field
+                        [labelField]="l('Class')"
+                        optionLabel="name"
+                        optionValue="id"
+                        [options]="getSchoolClassForViewDtos"
+                        [(ngModel)]="schoolClassId"
+                    ></app-dropdown-field>
                 </div>
             </div>
         </ng-container>

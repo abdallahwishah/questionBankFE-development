@@ -154,11 +154,24 @@
                         <span class="p-column-title">{{ l('governorateName') }}</span>
                         {{ record.school.governorateName || '-' }}
                     </td>
+                    <td class="text-start">
+                        <app-action-button
+                            [ActionsInfo]="[
+                                {
+                                    label: 'Stop'
+                                },
+                                {
+                                    label: 'Extend'
+                                }
+                            ]"
+                            (action)="doActions($event, record)"
+                        ></app-action-button>
+                    </td>
                 </tr>
             </ng-template>
             <ng-template pTemplate="rowexpansion" let-record>
                 <tr>
-                    <td colspan="5">
+                    <td colspan="6">
                         <div class="p-3">
                             <p-table [value]="record.getSchoolClassForViewDtos">
                                 <ng-template pTemplate="header">
@@ -175,13 +188,20 @@
                                         <td>{{ class.numberOfSupervisor }}</td>
                                         <td>{{ class.numberOfAttempt }}</td>
                                         <td>
-                                            <a
-                                                href="javascript:;"
-                                                class="text-primary"
-                                                (click)="supervisorsAndStudents(class, record)"
-                                            >
-                                                {{ l('ViewSupervisorsAndStudents') }}
-                                            </a>
+                                            <app-action-button
+                                                [ActionsInfo]="[
+                                                    {
+                                                        label: 'View'
+                                                    },
+                                                    {
+                                                        label: 'Stop'
+                                                    },
+                                                    {
+                                                        label: 'Extend'
+                                                    }
+                                                ]"
+                                                (action)="doActionsClass($event, class, record)"
+                                            ></app-action-button>
                                         </td>
                                     </tr>
                                 </ng-template>
@@ -205,3 +225,4 @@
         ></p-paginator>
     </div>
 </div>
+<app-extendTimeSession [sessionId]="SessionId" [schoolId]="schoolId" [schoolClassId]="schoolClassId"></app-extendTimeSession>

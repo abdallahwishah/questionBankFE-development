@@ -16,6 +16,7 @@ import { CalendarModule } from 'primeng/calendar';
 import { SkeletonComponent } from '../../../../shared/components/skeleton/skeleton.component';
 import { AutoCompleteFeildModule } from '@app/shared/components/auto-complete-feild/auto-complete-feild.module';
 import { ExportByLevelComponent } from '../../components/exportByLevel/exportByLevel.component';
+import { ExtendTimeSessionComponent } from '../supervisors-students/components/extendTimeSession/extendTimeSession.component';
 
 @NgModule({
     imports: [
@@ -40,7 +41,8 @@ import { ExportByLevelComponent } from '../../components/exportByLevel/exportByL
         CalendarModule,
         SkeletonComponent,
         AutoCompleteFeildModule,
+        ExtendTimeSessionComponent,
     ],
-    declarations: [ListComponent, AddSessionsModalComponent,ExportByLevelComponent],
+    declarations: [ListComponent, AddSessionsModalComponent, ExportByLevelComponent],
 })
 export class ListModule {}

@@ -12329,17 +12329,27 @@ export class NotificationServiceProxy {
 
     /**
      * @param filter (optional) 
+     * @param governorateIdFilter (optional) 
+     * @param roleIdFilter (optional) 
      * @param sorting (optional) 
      * @param skipCount (optional) 
      * @param maxResultCount (optional) 
      * @return Success
      */
-    getAllUserForLookupTable(filter: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfMassNotificationUserLookupTableDto> {
+    getAllUserForLookupTable(filter: string | undefined, governorateIdFilter: number | undefined, roleIdFilter: number | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfMassNotificationUserLookupTableDto> {
         let url_ = this.baseUrl + "/api/services/app/Notification/GetAllUserForLookupTable?";
         if (filter === null)
             throw new Error("The parameter 'filter' cannot be null.");
         else if (filter !== undefined)
             url_ += "Filter=" + encodeURIComponent("" + filter) + "&";
+        if (governorateIdFilter === null)
+            throw new Error("The parameter 'governorateIdFilter' cannot be null.");
+        else if (governorateIdFilter !== undefined)
+            url_ += "GovernorateIdFilter=" + encodeURIComponent("" + governorateIdFilter) + "&";
+        if (roleIdFilter === null)
+            throw new Error("The parameter 'roleIdFilter' cannot be null.");
+        else if (roleIdFilter !== undefined)
+            url_ += "RoleIdFilter=" + encodeURIComponent("" + roleIdFilter) + "&";
         if (sorting === null)
             throw new Error("The parameter 'sorting' cannot be null.");
         else if (sorting !== undefined)
@@ -12400,17 +12410,27 @@ export class NotificationServiceProxy {
 
     /**
      * @param filter (optional) 
+     * @param governorateIdFilter (optional) 
+     * @param roleIdFilter (optional) 
      * @param sorting (optional) 
      * @param skipCount (optional) 
      * @param maxResultCount (optional) 
      * @return Success
      */
-    getAllOrganizationUnitForLookupTable(filter: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfMassNotificationOrganizationUnitLookupTableDto> {
+    getAllOrganizationUnitForLookupTable(filter: string | undefined, governorateIdFilter: number | undefined, roleIdFilter: number | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfMassNotificationOrganizationUnitLookupTableDto> {
         let url_ = this.baseUrl + "/api/services/app/Notification/GetAllOrganizationUnitForLookupTable?";
         if (filter === null)
             throw new Error("The parameter 'filter' cannot be null.");
         else if (filter !== undefined)
             url_ += "Filter=" + encodeURIComponent("" + filter) + "&";
+        if (governorateIdFilter === null)
+            throw new Error("The parameter 'governorateIdFilter' cannot be null.");
+        else if (governorateIdFilter !== undefined)
+            url_ += "GovernorateIdFilter=" + encodeURIComponent("" + governorateIdFilter) + "&";
+        if (roleIdFilter === null)
+            throw new Error("The parameter 'roleIdFilter' cannot be null.");
+        else if (roleIdFilter !== undefined)
+            url_ += "RoleIdFilter=" + encodeURIComponent("" + roleIdFilter) + "&";
         if (sorting === null)
             throw new Error("The parameter 'sorting' cannot be null.");
         else if (sorting !== undefined)
@@ -21176,7 +21196,7 @@ export class SessionsServiceProxy {
      * @param body (optional) 
      * @return Success
      */
-    resetSessionCache(body: ResetSessionCacheDto | undefined): Observable<void> {
+    resetSessionCache(body: EntityDto | undefined): Observable<void> {
         let url_ = this.baseUrl + "/api/services/app/Sessions/ResetSessionCache";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -48605,6 +48625,10 @@ export interface IMassNotificationOrganizationUnitLookupTableDto {
 export class MassNotificationUserLookupTableDto implements IMassNotificationUserLookupTableDto {
     id!: number;
     displayName!: string | undefined;
+    email!: string | undefined;
+    identityNumber!: string | undefined;
+    role!: string | undefined;
+    governorate!: string | undefined;
 
     constructor(data?: IMassNotificationUserLookupTableDto) {
         if (data) {
@@ -48619,6 +48643,10 @@ export class MassNotificationUserLookupTableDto implements IMassNotificationUser
         if (_data) {
             this.id = _data["id"];
             this.displayName = _data["displayName"];
+            this.email = _data["email"];
+            this.identityNumber = _data["identityNumber"];
+            this.role = _data["role"];
+            this.governorate = _data["governorate"];
         }
     }
 
@@ -48633,6 +48661,10 @@ export class MassNotificationUserLookupTableDto implements IMassNotificationUser
         data = typeof data === 'object' ? data : {};
         data["id"] = this.id;
         data["displayName"] = this.displayName;
+        data["email"] = this.email;
+        data["identityNumber"] = this.identityNumber;
+        data["role"] = this.role;
+        data["governorate"] = this.governorate;
         return data;
     }
 }
@@ -48640,6 +48672,10 @@ export class MassNotificationUserLookupTableDto implements IMassNotificationUser
 export interface IMassNotificationUserLookupTableDto {
     id: number;
     displayName: string | undefined;
+    email: string | undefined;
+    identityNumber: string | undefined;
+    role: string | undefined;
+    governorate: string | undefined;
 }
 
 export class MemberActivity implements IMemberActivity {
@@ -56213,54 +56249,6 @@ export class ResetPasswordOutput implements IResetPasswordOutput {
 export interface IResetPasswordOutput {
     canLogin: boolean;
     userName: string | undefined;
-}
-
-export class ResetSessionCacheDto implements IResetSessionCacheDto {
-    sessionId!: number;
-    schoolClassId!: number | undefined;
-    schoolId!: number | undefined;
-    studentId!: number | undefined;
-
-    constructor(data?: IResetSessionCacheDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.sessionId = _data["sessionId"];
-            this.schoolClassId = _data["schoolClassId"];
-            this.schoolId = _data["schoolId"];
-            this.studentId = _data["studentId"];
-        }
-    }
-
-    static fromJS(data: any): ResetSessionCacheDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new ResetSessionCacheDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["sessionId"] = this.sessionId;
-        data["schoolClassId"] = this.schoolClassId;
-        data["schoolId"] = this.schoolId;
-        data["studentId"] = this.studentId;
-        return data;
-    }
-}
-
-export interface IResetSessionCacheDto {
-    sessionId: number;
-    schoolClassId: number | undefined;
-    schoolId: number | undefined;
-    studentId: number | undefined;
 }
 
 export class ResolveTenantIdInput implements IResolveTenantIdInput {

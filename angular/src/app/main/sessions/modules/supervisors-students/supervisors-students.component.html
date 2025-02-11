@@ -34,7 +34,7 @@
         </div>
 
         <div class="d-flex gap-3">
-            <div>
+            <!-- <div>
                 <button class="btn btn-primary d-flex gap-2" (click)="extendSessionTime()">
                     <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path
@@ -57,19 +57,8 @@
                         {{ l('ExtendTime') }}
                     </span>
                 </button>
-            </div>
-            <div>
-                <button
-                    *ngIf="activeIndex == 0 && selectedProducts?.length > 0"
-                    class="btn btn-outline-primary2 d-flex gap-2"
-                    style="margin-bottom: 2px"
-                    (click)="MoveStudent()"
-                >
-                    <span class="d-none d-md-inline-block">
-                        {{ l('MoveSelectedStudents') }}
-                    </span>
-                </button>
-            </div>
+            </div> -->
+
             <!-- <div>
                 <button class="btn btn-read d-flex gap-2">
                     <span class="d-none d-md-inline-block">
@@ -144,8 +133,8 @@
     <!-- Filter & Search For Supervisor  -->
     <div class="row switch-serch-bar mt-9 justify-content-end" *ngIf="activeIndex == 0">
         <div
-            class="col-md-7 d-grid gap-3 align-items-end"
-            style="margin-bottom: -69px; grid-template-columns: 1.2fr 0.6fr auto"
+            class="col-md-8 d-grid gap-3 align-items-end"
+            style="margin-bottom: -69px; grid-template-columns: 1.3fr 0.6fr 0.8fr 0.6fr"
         >
             <div>
                 <div class="input-group search-group">
@@ -154,8 +143,8 @@
                         class="form-control m-input"
                         [placeholder]="l('Search')"
                         type="text"
-                        [(ngModel)]="filterSupervis"
-                        (ngModelChange)="getListSupervis()"
+                        [(ngModel)]="filterAttempts"
+                        (ngModelChange)="getListAttempts()"
                     />
                     <button class="btn btn-primary" type="submit">
                         <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -193,7 +182,6 @@
                                     }"
                                 ></app-auto-complete-feild>
                             </div>
-
                         </div>
                         <div class="d-flex justify-content-between mt-4">
                             <button class="btn btn-primary" (click)="getListAttempts(); closeFilters()">
@@ -227,6 +215,18 @@
                     </svg>
                     <span class="d-none d-md-inline-block">
                         {{ l('AddStudentToSession') }}
+                    </span>
+                </button>
+            </div>
+            <div>
+                <button
+                    *ngIf="activeIndex == 0 && selectedProducts?.length > 0"
+                    class="btn btn-outline-primary2 d-flex gap-2"
+                    style="margin-bottom: 2px"
+                    (click)="MoveStudent()"
+                >
+                    <span class="d-none d-md-inline-block">
+                        {{ l('MoveSelectedStudents') }}
                     </span>
                 </button>
             </div>
@@ -349,6 +349,12 @@
                                     [ActionsInfo]="[
                                         {
                                             label: 'MoveStudent'
+                                        },
+                                        {
+                                            label: 'Extend'
+                                        },
+                                        {
+                                            label: 'Stop'
                                         }
                                     ]"
                                     (action)="doActionsForAttempts($event, record)"
@@ -497,7 +503,18 @@
     [schoolId]="schoolId"
     (onSupervisorAdded)="getListSupervis()"
 ></app-add-supervisor>
-<app-add-student [execuldedIdFilter]="execuldedIdFilter" [schoolName]="schoolName"></app-add-student>
-<app-move-student></app-move-student>
-<app-extendTimeSession [sessionId]="SessionId" [schoolClassId]="classId" [schoolId]="schoolId"></app-extendTimeSession>
+<app-add-student
+    [execuldedIdFilter]="execuldedIdFilter"
+    [sessionId]="SessionId"
+    [schoolClassId]="classId"
+    [schoolId]="schoolId"
+    [studentId]="studentId"
+></app-add-student>
+<app-move-student [SessionSelected]="SessionId"></app-move-student>
+<app-extendTimeSession
+    [sessionId]="SessionId"
+    [schoolClassId]="classId"
+    [schoolId]="schoolId"
+    [studentId]="studentId"
+></app-extendTimeSession>
 <!-- [schoolClassId]="classId" [schoolId]="schoolId" -->

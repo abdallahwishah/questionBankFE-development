@@ -12,12 +12,12 @@ import { SessionSupervisorsServiceProxy, StudentsServiceProxy } from '@shared/se
 import { AddSupervisorComponent } from './components/add-supervisor/add-supervisor.component';
 import { DialogSharedModule } from '@app/shared/components/dialog-shared/dialog-shared.module';
 import { AutoCompleteFeildModule } from '@app/shared/components/auto-complete-feild/auto-complete-feild.module';
-import { ExtendTimeSessionComponent } from './components/extendTimeSession/extendTimeSession.component';
 import { AddStudentComponent } from './components/add-student/add-student.component';
 import { MoveStudentComponent } from './components/move-student/move-student.component';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { UserImageComponent } from '@app/shared/components/userImage/userImage.component';
 import { FiltersComponent } from '@app/shared/components/filters/filters.component';
+import { ExtendTimeSessionComponent } from './components/extendTimeSession/extendTimeSession.component';
 
 @NgModule({
     imports: [
@@ -39,14 +39,9 @@ import { FiltersComponent } from '@app/shared/components/filters/filters.compone
         RadioButtonModule,
         UserImageComponent,
         FiltersComponent,
-    ],
-    declarations: [
-        SupervisorsStudentsComponent,
-        AddSupervisorComponent,
         ExtendTimeSessionComponent,
-        AddStudentComponent,
-        MoveStudentComponent,
     ],
+    declarations: [SupervisorsStudentsComponent, AddSupervisorComponent, AddStudentComponent, MoveStudentComponent],
     providers: [SessionSupervisorsServiceProxy, StudentsServiceProxy],
 })
 export class SupervisorsStudentsModule {}

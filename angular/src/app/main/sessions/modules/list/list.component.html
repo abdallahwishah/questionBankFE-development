@@ -277,7 +277,8 @@
                     <tr>
                         <th pSortableColumn="caseCode">
                             {{ '#' }}
-                        </th>    <th pSortableColumn="SessionName">
+                        </th>
+                        <th pSortableColumn="SessionName">
                             {{ l('SessionName') }}
                             <p-sortIcon field="SessionName"></p-sortIcon>
                         </th>
@@ -321,10 +322,10 @@
                             {{ record.session.name || '-' }}
                         </td>
                         <td>
-                             {{ record.studyLevel || '-' }}
+                            {{ record.studyLevel || '-' }}
                         </td>
                         <td>
-                             {{ record.studySubject || '-' }}
+                            {{ record.studySubject || '-' }}
                         </td>
                         <td>
                             <span class="p-column-title">{{ l('NumberOfSchools') }}</span>
@@ -369,6 +370,12 @@
                                     },
                                     {
                                         label: 'Export'
+                                    },
+                                    {
+                                        label: 'Stop'
+                                    },
+                                    {
+                                        label: 'Extend'
                                     }
                                 ]"
                                 (action)="doActions($event, record)"
@@ -396,3 +403,4 @@
 <!-- Modals -->
 <app-add-sessions-modal (OnRefresh)="getList()"></app-add-sessions-modal>
 <app-exportByLevel></app-exportByLevel>
+<app-extendTimeSession [sessionId]="sessionId"></app-extendTimeSession>
