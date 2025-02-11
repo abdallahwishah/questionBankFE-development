@@ -174,15 +174,37 @@
                 </div>
             </div>
             <div>
+                <app-filters>
+                    <ng-container filterBody>
+                        <div class="row">
+                            <div class="col-12 mb-5">
+                                <app-auto-complete-feild
+                                    [label]="l('Governorate')"
+                                    field="governorate.name"
+                                    [(ngModel)]="governorateIdFilter"
+                                    [ConfigCustomSearch]="{
+                                        api: '/api/services/app/Governorates/GetAll',
+                                        keySearch: 'filter',
+                                        customParams: {
+                                            Sorting: '',
+                                            SkipCount: 0,
+                                            MaxResultCount: 10
+                                        }
+                                    }"
+                                ></app-auto-complete-feild>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-between mt-4">
+                            <button class="btn btn-primary" (click)="getListAttempts(); closeFilters()">
+                                {{ 'SearchFilters' | localize }}
+                            </button>
+                            <button class="btn btn-outline" (click)="clearFilter()">
+                                {{ 'ResetFilters' | localize }}
+                            </button>
+                        </div>
+                    </ng-container>
+                </app-filters>
                 <!--  [options]="status" -->
-                <app-dropdown-field
-                    [placeholder]="'Status'"
-                    optionLabel="name"
-                    optionValue="id"
-                    [options]="sessionStatus"
-                    [(ngModel)]="isStatusFilter"
-                    (ngModelChange)="getListAttempts()"
-                ></app-dropdown-field>
             </div>
             <div>
                 <button class="btn btn-outline-primary2 d-flex gap-2" style="margin-bottom: 2px" (click)="addStudent()">
@@ -430,7 +452,7 @@
                             <td>{{ record.telphoneNumber || '-' }}</td>
                             <td>{{ record.cycleNumber + ' ' + record?.year || '-' }}</td>
                             <td>
-                                {{ record.address + ' ' + record.governorate || '-' }}
+                                {{ record.address + ' ' + (record.governorate || '') || '-' }}
                             </td>
                             <td>
                                 {{ record.className || '-' }}
@@ -468,11 +490,13 @@
     </p-tabView>
 </div>
 <app-add-supervisor
+    [sessionId]="SessionId"
+    [schoolClassId]="classId"
     [execuldedIdFilter]="execuldedIdFilter"
     [schoolId]="schoolId"
     (onSupervisorAdded)="getListSupervis()"
 ></app-add-supervisor>
-<app-add-supervisor [execuldedIdFilter]="execuldedIdFilter" [schoolId]="schoolId"></app-add-supervisor>
 <app-add-student [execuldedIdFilter]="execuldedIdFilter" [schoolName]="schoolName"></app-add-student>
-<app-move-student [schoolClassId]="classId" [schoolId]="schoolId"></app-move-student>
+<app-move-student ></app-move-student>
 <app-extendTimeSession [sessionId]="SessionId" [schoolClassId]="classId" [schoolId]="schoolId"></app-extendTimeSession>
+<!-- [schoolClassId]="classId" [schoolId]="schoolId" -->

@@ -17,6 +17,7 @@ import { AddStudentComponent } from './components/add-student/add-student.compon
 import { MoveStudentComponent } from './components/move-student/move-student.component';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { UserImageComponent } from '@app/shared/components/userImage/userImage.component';
+import { FiltersComponent } from '@app/shared/components/filters/filters.component';
 
 @NgModule({
     imports: [
@@ -37,6 +38,7 @@ import { UserImageComponent } from '@app/shared/components/userImage/userImage.c
         InputNumberModule,
         RadioButtonModule,
         UserImageComponent,
+        FiltersComponent,
     ],
     declarations: [
         SupervisorsStudentsComponent,

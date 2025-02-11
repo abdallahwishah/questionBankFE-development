@@ -40,6 +40,7 @@ export class SchoolsComponent extends AppComponentBase implements OnInit {
 
     ngOnInit(): void {
         this.sessionName = this._ActivatedRoute.snapshot.queryParams['session'];
+
     }
 
     ngAfterViewInit() {

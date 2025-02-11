@@ -20,42 +20,39 @@ export class MoveStudentComponent extends AppComponentBase implements OnInit {
     Move_Student_dialog = UniqueNameComponents.Move_Student_dialog;
     SessionSelected: any;
     studentId: any;
-    @Input() schoolClassId: any;
-    @Input() schoolId: any;
-
+    schoolClassId
+    schoolId
     constructor(
         private Injector: Injector,
         private _examAttemptsServiceProxy: ExamAttemptsServiceProxy,
         private _dialogSharedService: DialogSharedService,
         private _sessionsServiceProxy: SessionsServiceProxy,
-        
     ) {
         super(Injector);
     }
 
     ngOnInit() {
         this.subscription = this._dialogSharedService
-        .SelectorFilterByComponent$(this.Move_Student_dialog, 'configShow')
-        .subscribe(configShow => {
-            this.studentId = configShow?.data
-        });
-     }
-    
+            .SelectorFilterByComponent$(this.Move_Student_dialog, 'configShow')
+            .subscribe((configShow) => {
+                this.studentId = configShow?.data;
+            });
+    }
+
     Save() {
-        this._sessionsServiceProxy.getAll;
         this._examAttemptsServiceProxy
             .moveStudent(
                 new MoveStudentDto({
                     sessionId: this.SessionSelected?.session.id,
                     schoolClassId: this.schoolClassId,
                     schoolId: this.schoolId,
-                    studentId: [this.studentId],
+                    studentId: this.studentId?.length ? this.studentId : [this.studentId],
                 }),
             )
             .subscribe((res) => {
                 this.notify.success('Student Added Successfully');
                 this.Close();
-            }); 
+            });
     }
     Close() {
         this._dialogSharedService.hideDialog(this.Move_Student_dialog);
@@ -64,5 +61,5 @@ export class MoveStudentComponent extends AppComponentBase implements OnInit {
     ngOnDestroy(): void {
         // Don’t forget to clean up
         this.subscription?.unsubscribe();
-      }
+    }
 }

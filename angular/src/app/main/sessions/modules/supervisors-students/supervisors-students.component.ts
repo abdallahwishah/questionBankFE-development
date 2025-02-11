@@ -14,6 +14,7 @@ import { Table } from '@node_modules/primeng/table';
 import { LazyLoadEvent } from '@node_modules/primeng/api';
 import { PrimengTableHelper } from '@shared/helpers/PrimengTableHelper';
 import { UniqueNameComponents } from '@app/shared/Models/UniqueNameComponents';
+import { FiltersComponent } from '@app/shared/components/filters/filters.component';
 
 @Component({
     selector: 'app-supervisors-students',
@@ -42,6 +43,7 @@ export class SupervisorsStudentsComponent extends AppComponentBase implements On
     execuldedIdFilter: any;
     SessionSupervisorRoleEnum = SessionSupervisorRoleEnum;
     selectedProducts: any[] = [];
+    governorates: any[] = [];
     constructor(
         private _injector: Injector,
         private _SessionsServiceProxy: SessionsServiceProxy,
@@ -61,9 +63,6 @@ export class SupervisorsStudentsComponent extends AppComponentBase implements On
             this._SessionsServiceProxy.getSessionForView(this.SessionId).subscribe((value) => {
                 this.sessionName = value.session.name;
             });
-
-            /*             this.getListSupervis();
-             */
         });
         this.schoolName = this._ActivatedRoute.snapshot.queryParams['school'];
 
@@ -76,7 +75,7 @@ export class SupervisorsStudentsComponent extends AppComponentBase implements On
             }));
         this.sessionStatus.unshift({ name: 'All', id: undefined });
     }
-
+    governorateIdFilter: any;
     getListAttempts(event?: LazyLoadEvent) {
         if (event) {
             if (this.primengTableHelperForAttempts.shouldResetPaging(event)) {
@@ -102,6 +101,7 @@ export class SupervisorsStudentsComponent extends AppComponentBase implements On
                 undefined,
                 undefined,
                 undefined,
+                this.governorateIdFilter?.governorate?.id,
                 undefined,
                 this.primengTableHelper.getSorting(this.attemptsTable),
                 this.primengTableHelper.getSkipCount(this.paginatorAttempts, event),
@@ -134,6 +134,7 @@ export class SupervisorsStudentsComponent extends AppComponentBase implements On
                 this.filterSupervis,
                 this.SessionId,
                 this.classId,
+                undefined,
                 this.primengTableHelper.getSorting(this.supervisorsTable),
                 this.primengTableHelper.getSkipCount(this.paginatorSupervisors, event),
                 this.primengTableHelper.getMaxResultCount(this.paginatorSupervisors, event),
@@ -181,5 +182,15 @@ export class SupervisorsStudentsComponent extends AppComponentBase implements On
             UniqueNameComponents.Move_Student_dialog,
             this.selectedProducts?.map((value) => value?.value?.id),
         );
+    }
+    @ViewChild(FiltersComponent) FiltersComponent: FiltersComponent;
+
+    closeFilters() {
+        this.FiltersComponent.isPanelOpen = false;
+    }
+    clearFilter() {
+        this.FiltersComponent.isPanelOpen = false;
+        this.governorateIdFilter = undefined;
+        this.isStatusFilter = undefined;
     }
 }
