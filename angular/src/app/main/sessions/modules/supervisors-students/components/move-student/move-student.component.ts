@@ -42,6 +42,7 @@ export class MoveStudentComponent extends AppComponentBase implements OnInit {
                 this.sessionSupervisor = undefined;
                 this.studentId = undefined;
                 if (configShow?.data?.sessionSupervisor) {
+                    debugger
                     this.sessionSupervisor = configShow?.data?.sessionSupervisor;
                 } else {
                     this.studentId = configShow?.data;
@@ -71,26 +72,26 @@ export class MoveStudentComponent extends AppComponentBase implements OnInit {
                     this.Close();
                 });
         } else {
-        }
-        this._examAttemptsServiceProxy
-            .moveStudent(
-                new MoveStudentDto({
-                    sessionId: this.SessionSelected,
-                    schoolClassId: this.schoolClassId,
-                    schoolId: this.schoolId?.school.id,
-                    studentId: this.studentId?.length ? this.studentId : [this.studentId],
-                }),
-            )
-            .subscribe((res) => {
-                this.SessionSelected = undefined;
-                this.schoolClassId = undefined;
-                this.schoolId = undefined;
-                this.studentId = undefined;
-                this.sessionSupervisor = undefined;
+            this._examAttemptsServiceProxy
+                .moveStudent(
+                    new MoveStudentDto({
+                        sessionId: this.SessionSelected,
+                        schoolClassId: this.schoolClassId,
+                        schoolId: this.schoolId?.school.id,
+                        studentId: this.studentId?.length ? this.studentId : [this.studentId],
+                    }),
+                )
+                .subscribe((res) => {
+                    this.SessionSelected = undefined;
+                    this.schoolClassId = undefined;
+                    this.schoolId = undefined;
+                    this.studentId = undefined;
+                    this.sessionSupervisor = undefined;
 
-                this.notify.success('Student Added Successfully');
-                this.Close();
-            });
+                    this.notify.success('Student Added Successfully');
+                    this.Close();
+                });
+        }
     }
     Close() {
         this._dialogSharedService.hideDialog(this.Move_Student_dialog);
