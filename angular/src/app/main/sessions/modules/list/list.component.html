@@ -367,7 +367,10 @@
                                     },
                                     {
                                         label: 'Edit',
-                                        hasCondition: record?.session?.status != sessionStatusEnum.InCreation
+                                        hasCondition:
+                                            record?.session?.status != sessionStatusEnum.InCreation &&
+                                            record?.session?.status != sessionStatusEnum.Active&&
+                                            record?.session?.status != sessionStatusEnum.Finished
                                     },
                                     {
                                         label: 'Delete'

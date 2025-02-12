@@ -5,7 +5,11 @@ import { UniqueNameComponents } from '@app/shared/Models/UniqueNameComponents';
 import { AppComponentBase } from '@shared/common/app-component-base';
 
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ExamTemplatesServiceProxy, SessionsServiceProxy } from '@shared/service-proxies/service-proxies';
+import {
+    ExamTemplatesServiceProxy,
+    SessionsServiceProxy,
+    SessionStatusEnum,
+} from '@shared/service-proxies/service-proxies';
 import { UploaderService } from '@app/shared/services/uploader.service';
 
 @Component({
@@ -24,7 +28,8 @@ export class AddSessionsModalComponent extends AppComponentBase implements OnIni
     dataForEdit: any;
 
     FormAddSession: FormGroup;
-
+    sessionStatusEnum = SessionStatusEnum;
+    status: any;
     ListExamTemplates: any[] = [];
     constructor(
         injector: Injector,
@@ -52,6 +57,7 @@ export class AddSessionsModalComponent extends AppComponentBase implements OnIni
             .subscribe((configShow) => {
                 if (configShow?.data) {
                     this.dataForEdit = configShow?.data;
+                    this.status = configShow?.data?.session?.status;
                     this.FormAddSession.patchValue({
                         ...configShow?.data?.session,
                         startDate: new Date(configShow?.data?.session?.startDate),
@@ -116,6 +122,7 @@ export class AddSessionsModalComponent extends AppComponentBase implements OnIni
         this.fileSuperToken = null;
         this.fileSuper = null;
         this.fileStudent = null;
+        this.status = null;
     }
     ngOnDestroy(): void {
         // Don’t forget to clean up
