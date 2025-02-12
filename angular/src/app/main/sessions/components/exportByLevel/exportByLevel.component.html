@@ -21,7 +21,7 @@
         </div>
     </ng-container>
     <ng-container footerDialog>
-        <button type="button" class="btn btn-primary blue" (click)="Save()">
+        <button type="button" [buttonBusy]="loading" class="btn btn-primary blue" (click)="Save()">
             <span>{{ l('Export') }}</span>
         </button>
         <button class="btn btn-outline" (click)="closeDialog()">{{ l('Cancel') }}</button>

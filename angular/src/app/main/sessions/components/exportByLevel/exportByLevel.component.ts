@@ -33,8 +33,9 @@ export class ExportByLevelComponent extends AppComponentBase {
                 this.sessionId = configShow?.data?.sessionId;
             });
     }
+    loading=false
     Save() {
-        this.sessionId;
+        this.loading=true
         this._examAttemptsServiceProxy
             .getExamAttemptsToExcel(
                 undefined,
@@ -62,6 +63,8 @@ export class ExportByLevelComponent extends AppComponentBase {
             )
             .subscribe((val) => {
                 this._fileDownloadService.downloadTempFile(val);
+                this.loading=false
+
             });
     }
     closeDialog() {
