@@ -361,24 +361,28 @@
                         <td>
                             <app-action-button
                                 [ActionsInfo]="[
-                                    { label: 'ViewSchools' },
                                     {
-                                        label: 'Edit'
+                                        label: 'ViewSchools',
+                                        hasCondition: record?.session?.status != sessionStatusEnum.InCreation
+                                    },
+                                    {
+                                        label: 'Edit',
+                                        hasCondition: record?.session?.status != sessionStatusEnum.InCreation
                                     },
                                     {
                                         label: 'Delete'
                                     },
                                     {
                                         label: 'Export',
-                                        hasCondition:record?.session?.status === sessionStatusEnum.Finished
+                                        hasCondition: record?.session?.status === sessionStatusEnum.Finished
                                     },
                                     {
                                         label: 'Stop',
-                                        hasCondition:record?.session?.status === sessionStatusEnum.Active
+                                        hasCondition: record?.session?.status === sessionStatusEnum.Active
                                     },
                                     {
                                         label: 'Extend',
-                                        hasCondition:record?.session?.status === sessionStatusEnum.Active
+                                        hasCondition: record?.session?.status === sessionStatusEnum.Active
                                     }
                                 ]"
                                 (action)="doActions($event, record)"

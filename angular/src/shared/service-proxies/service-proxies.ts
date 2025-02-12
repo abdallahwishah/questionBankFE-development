@@ -57085,6 +57085,7 @@ export class SessionDto implements ISessionDto {
     backgroundStartJobId!: string | undefined;
     name!: string | undefined;
     examTemplateId!: number;
+    sessionNumber!: number;
     status!: SessionStatusEnum;
 
     constructor(data?: ISessionDto) {
@@ -57106,6 +57107,7 @@ export class SessionDto implements ISessionDto {
             this.backgroundStartJobId = _data["backgroundStartJobId"];
             this.name = _data["name"];
             this.examTemplateId = _data["examTemplateId"];
+            this.sessionNumber = _data["sessionNumber"];
             this.status = _data["status"];
         }
     }
@@ -57127,6 +57129,7 @@ export class SessionDto implements ISessionDto {
         data["backgroundStartJobId"] = this.backgroundStartJobId;
         data["name"] = this.name;
         data["examTemplateId"] = this.examTemplateId;
+        data["sessionNumber"] = this.sessionNumber;
         data["status"] = this.status;
         return data;
     }
@@ -57141,6 +57144,7 @@ export interface ISessionDto {
     backgroundStartJobId: string | undefined;
     name: string | undefined;
     examTemplateId: number;
+    sessionNumber: number;
     status: SessionStatusEnum;
 }
 
