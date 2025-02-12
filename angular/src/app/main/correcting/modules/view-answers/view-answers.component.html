@@ -41,6 +41,7 @@
                         </div>
 
                         <app-dynamic-exam-question
+                            [disabled]="true"
                             [question]="question?.question"
                             [(ngModel)]="question.question"
                             [questionType]="question.question.question.type"
@@ -48,8 +49,8 @@
 
                         <div class="px-5 my-2 w-100 d-flex justify-content-start align-items-center">
                             <p-inputNumber
- [minFractionDigits]="1"
-            [maxFractionDigits]="1"
+                                [minFractionDigits]="1"
+                                [maxFractionDigits]="1"
                                 [(ngModel)]="question.score"
                                 [showButtons]="true"
                                 buttonLayout="horizontal"
@@ -60,6 +61,8 @@
                                 incrementButtonClass="max"
                                 incrementButtonIcon="pi pi-plus"
                                 decrementButtonIcon="pi pi-minus"
+                                [min]="question?.minScore"
+                                [max]="question?.maxScore"
                             ></p-inputNumber>
                         </div>
                     </div>

@@ -23,6 +23,7 @@
         [binary]="true"
         [inputId]="'choice' + i"
         [value]="choice.id"
+        [disabled]="isDisabled"
         [ngModel]="isSelected(choice.id)"
         (ngModelChange)="onCheckboxChange($event, choice.id)"
     ></p-checkbox>

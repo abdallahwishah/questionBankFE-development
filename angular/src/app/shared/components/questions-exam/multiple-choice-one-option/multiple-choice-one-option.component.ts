@@ -50,6 +50,7 @@ export class MultipleChoiceOneOptionComponent implements ControlValueAccessor, V
      * If 0 => no selection yet (or "none" if your logic allows).
      */
     value = 0; // "singleChoiceAnswer"
+    randomNumber= Math.floor(Math.random() * 1000);
 
     // For ControlValueAccessor
     private onChangeFn: (val: number) => void = () => {};

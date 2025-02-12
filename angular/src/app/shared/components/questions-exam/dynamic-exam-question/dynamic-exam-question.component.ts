@@ -92,7 +92,7 @@ import {
     //  ControlValueAccessor Callbacks
     private onChange: (value: any) => void = () => {};
     private onTouched: () => void = () => {};
-    private isDisabled = false;
+      isDisabled = false;
 
     QuestionTypeEnum = QuestionTypeEnum;
     dynamicListInstance: any;

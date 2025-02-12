@@ -4,6 +4,7 @@
             [(ngModel)]="value.saAnswer"
             (ngModelChange)="notifyChange()"
             [config]="question"
+            [disabled]="isDisabled"
         ></app-article-questions>
     }
     @case (QuestionTypeEnum.TrueAndFalse) {
@@ -11,6 +12,7 @@
             [(ngModel)]="value.trueFalseAnswer"
             (ngModelChange)="notifyChange()"
             [config]="question"
+            [disabled]="isDisabled"
         ></app-multiple-choice-one-option>
     }
     @case (QuestionTypeEnum.SinglChoice) {
@@ -19,6 +21,7 @@
             [(ngModel)]="value.singleChoiceAnswer"
             (ngModelChange)="notifyChange()"
             [config]="question"
+            [disabled]="isDisabled"
         ></app-multiple-choice-one-option>
     }
     @case (QuestionTypeEnum.MutliChoice) {
@@ -26,6 +29,7 @@
             [(ngModel)]="value.multipleChoiceAnswer"
             (ngModelChange)="notifyChange()"
             [config]="question"
+            [disabled]="isDisabled"
         ></app-multiple-choice-more-than-option>
     }
     @case (QuestionTypeEnum.Match) {
@@ -33,6 +37,7 @@
             [(ngModel)]="value.matchAnswer"
             (ngModelChange)="notifyChange()"
             [config]="question"
+            [disabled]="isDisabled"
         ></app-connecting-words>
     }
     @case (QuestionTypeEnum.LinkedQuestions) {
@@ -46,6 +51,7 @@
             [(ngModel)]="value.rearrangeAnswer"
             (ngModelChange)="notifyChange()"
             [config]="question"
+            [disabled]="isDisabled"
         ></app-words-order>
     }
     @case (QuestionTypeEnum.Drawing) {
@@ -53,6 +59,7 @@
             [(ngModel)]="value.drawingAnswer"
             (ngModelChange)="notifyChange()"
             [config]="question"
+            [disabled]="isDisabled"
         ></app-cartesian-level>
     }
     @case (QuestionTypeEnum.DargingTable) {
@@ -60,6 +67,7 @@
             [(ngModel)]="value.dragTableAnswer"
             (ngModelChange)="notifyChange()"
             [config]="question"
+            [disabled]="isDisabled"
         ></app-drag-drop-table>
     }
 }

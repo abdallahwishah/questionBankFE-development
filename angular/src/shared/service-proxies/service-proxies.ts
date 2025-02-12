@@ -42451,8 +42451,10 @@ export class GetExamAttemptForViewDto implements IGetExamAttemptForViewDto {
     correctorName!: string | undefined;
     auditorName!: string | undefined;
     currentSectionOrder!: number;
+    lastAnsweredQuestionNo!: number;
     currentQuestionNo!: number;
     currentQuestionNoInGeneral!: number;
+    hasFinished!: boolean;
     studySubjectId!: number;
     studySubjectName!: string | undefined;
     governorate!: string | undefined;
@@ -42487,8 +42489,10 @@ export class GetExamAttemptForViewDto implements IGetExamAttemptForViewDto {
             this.correctorName = _data["correctorName"];
             this.auditorName = _data["auditorName"];
             this.currentSectionOrder = _data["currentSectionOrder"];
+            this.lastAnsweredQuestionNo = _data["lastAnsweredQuestionNo"];
             this.currentQuestionNo = _data["currentQuestionNo"];
             this.currentQuestionNoInGeneral = _data["currentQuestionNoInGeneral"];
+            this.hasFinished = _data["hasFinished"];
             this.studySubjectId = _data["studySubjectId"];
             this.studySubjectName = _data["studySubjectName"];
             this.governorate = _data["governorate"];
@@ -42523,8 +42527,10 @@ export class GetExamAttemptForViewDto implements IGetExamAttemptForViewDto {
         data["correctorName"] = this.correctorName;
         data["auditorName"] = this.auditorName;
         data["currentSectionOrder"] = this.currentSectionOrder;
+        data["lastAnsweredQuestionNo"] = this.lastAnsweredQuestionNo;
         data["currentQuestionNo"] = this.currentQuestionNo;
         data["currentQuestionNoInGeneral"] = this.currentQuestionNoInGeneral;
+        data["hasFinished"] = this.hasFinished;
         data["studySubjectId"] = this.studySubjectId;
         data["studySubjectName"] = this.studySubjectName;
         data["governorate"] = this.governorate;
@@ -42552,8 +42558,10 @@ export interface IGetExamAttemptForViewDto {
     correctorName: string | undefined;
     auditorName: string | undefined;
     currentSectionOrder: number;
+    lastAnsweredQuestionNo: number;
     currentQuestionNo: number;
     currentQuestionNoInGeneral: number;
+    hasFinished: boolean;
     studySubjectId: number;
     studySubjectName: string | undefined;
     governorate: string | undefined;

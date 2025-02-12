@@ -23,8 +23,9 @@
     <input
         class="form-check-input"
         type="radio"
-        [name]="'singleChoiceAnswer' + order"
+        [name]="'singleChoiceAnswer' + randomNumber"
         [value]="choice.id"
+        [disabled]="isDisabled"
         [checked]="value == choice.id"
         (change)="onRadioChange(choice.id)"
     />

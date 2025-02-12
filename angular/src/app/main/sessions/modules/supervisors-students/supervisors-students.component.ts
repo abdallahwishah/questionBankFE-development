@@ -1,12 +1,12 @@
 import { SessionStatusEnum } from './../../../../../shared/service-proxies/service-proxies';
 import { DialogSharedService } from '@app/shared/components/dialog-shared/dialog-shared.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Component, Injector, OnInit, ViewChild } from '@angular/core';
 import { AppComponentBase } from '@shared/common/app-component-base';
 import {
     ExamAttemptsServiceProxy,
     SessionsServiceProxy,
-     SessionSupervisorRoleEnum,
+    SessionSupervisorRoleEnum,
     SessionSupervisorsServiceProxy,
     StopSessionDto,
 } from '@shared/service-proxies/service-proxies';
@@ -46,7 +46,7 @@ export class SupervisorsStudentsComponent extends AppComponentBase implements On
     selectedProducts: any[] = [];
     governorates: any[] = [];
     sessionStatusEnum = SessionStatusEnum;
-    session:any
+    session: any;
     constructor(
         private _injector: Injector,
         private _SessionsServiceProxy: SessionsServiceProxy,
@@ -54,6 +54,7 @@ export class SupervisorsStudentsComponent extends AppComponentBase implements On
         private _examAttemptsServiceProxy: ExamAttemptsServiceProxy,
         private _ActivatedRoute: ActivatedRoute,
         private _dialogSharedService: DialogSharedService,
+        private _router: Router,
     ) {
         super(_injector);
     }
@@ -64,7 +65,7 @@ export class SupervisorsStudentsComponent extends AppComponentBase implements On
             this.classId = Number(params?.get('classId')); //.get('product');
             this._SessionsServiceProxy.getSessionForView(this.SessionId).subscribe((value) => {
                 this.sessionName = value.session.name;
-                this.session=value
+                this.session = value;
             });
         });
         this.schoolName = this._ActivatedRoute.snapshot.queryParams['school'];
@@ -226,5 +227,11 @@ export class SupervisorsStudentsComponent extends AppComponentBase implements On
         this.FiltersComponent.isPanelOpen = false;
         this.governorateIdFilter = undefined;
         this.isStatusFilter = undefined;
+    }
+    goToClasses() {
+        this._router.navigate(['../../../schools', this.SessionId], {
+            queryParamsHandling: 'merge',
+            relativeTo: this._ActivatedRoute,
+        });
     }
 }

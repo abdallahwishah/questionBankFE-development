@@ -23,7 +23,7 @@
                 {{ sessionName }}
             </span>
             <span class="mx-2">/</span>
-            <span>
+            <span  (click)="goToClasses()">
                 {{ schoolName }}
             </span>
             <span class="mx-2">/</span>
@@ -293,7 +293,7 @@
                                 {{ l('BirthDate') }}
                                 <p-sortIcon field="SessionName"></p-sortIcon>
                             </th>
-                            <th style="background-color: #6d31ed !important; color: #fff">
+                            <th style="background-color: #8c61e6 !important; color: #fff">
                                 {{ l('LastAnsweredQuestionNo') }}
                             </th>
                             <th pSortableColumn="SessionName">
@@ -317,7 +317,13 @@
                             <td>
                                 <app-userImage [userId]="record?.userId"></app-userImage>
 
-                                {{ record.studentNumber || '-' }}
+                                <span
+                                    [ngStyle]="{
+                                        color: record?.hasFinished ? 'red' : ''
+                                    }"
+                                >
+                                    {{ record.studentNumber || '-' }}
+                                </span>
                             </td>
                             <td>
                                 {{ record.identityNumber || '-' }}
@@ -339,7 +345,7 @@
                                 {{ record.address + ' ' + record.governorate || '-' }}
                             </td>
                             <td>{{ record?.dateOfBirth | date }}</td>
-                            <td style="background-color: #6d31ed !important; color: #fff">
+                            <td style="background-color: #8c61e6 !important; color: #fff">
                                 {{ record.lastAnsweredQuestionNo || '-' }}
                             </td>
                             <td>
@@ -350,6 +356,7 @@
                             </td>
                             <td>
                                 <app-action-button
+                                    *ngIf="!record?.hasFinished"
                                     [ActionsInfo]="[
                                         {
                                             label: 'MoveStudent',

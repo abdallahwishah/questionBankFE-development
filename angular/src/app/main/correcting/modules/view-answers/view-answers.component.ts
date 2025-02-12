@@ -2,7 +2,7 @@ import { Component, Injector, OnInit } from '@angular/core';
 import { AppSharedModule } from '@app/shared/app-shared.module';
 import { DialogSharedService } from '@app/shared/components/dialog-shared/dialog-shared.service';
 import { UniqueNameComponents } from '@app/shared/Models/UniqueNameComponents';
-import { CommonModule } from '@node_modules/@angular/common';
+import { CommonModule, Location } from '@node_modules/@angular/common';
 import { ActivatedRoute } from '@node_modules/@angular/router';
 import { AppComponentBase } from '@shared/common/app-component-base';
 import {
@@ -39,6 +39,7 @@ export class ViewAnswersComponent extends AppComponentBase implements OnInit {
         private _activatedRoute: ActivatedRoute,
         private _DialogSharedService: DialogSharedService,
         private _examAttemptsServiceProxy: ExamAttemptsServiceProxy,
+        private location: Location,
     ) {
         super(injector);
     }
@@ -155,6 +156,8 @@ export class ViewAnswersComponent extends AppComponentBase implements OnInit {
                     });
                 }),
             )
-            .subscribe((value) => {});
+            .subscribe((value) => {
+                this.location.back();
+            });
     }
 }
