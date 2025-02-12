@@ -64,6 +64,7 @@ export class ExportByLevelComponent extends AppComponentBase {
             .subscribe((val) => {
                 this._fileDownloadService.downloadTempFile(val);
                 this.loading=false
+                this.closeDialog()
 
             });
     }
