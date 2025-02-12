@@ -369,11 +369,12 @@
                                         label: 'Edit',
                                         hasCondition:
                                             record?.session?.status != sessionStatusEnum.InCreation &&
-                                            record?.session?.status != sessionStatusEnum.Active&&
+                                            record?.session?.status != sessionStatusEnum.Active &&
                                             record?.session?.status != sessionStatusEnum.Finished
                                     },
                                     {
-                                        label: 'Delete'
+                                        label: 'Delete',
+                                        hasCondition: record?.session?.status != sessionStatusEnum.Active
                                     },
                                     {
                                         label: 'Export',
@@ -413,4 +414,4 @@
 <!-- Modals -->
 <app-add-sessions-modal (OnRefresh)="getList()"></app-add-sessions-modal>
 <app-exportByLevel></app-exportByLevel>
-<app-extendTimeSession [sessionId]="sessionId"></app-extendTimeSession>
+<app-extendTimeSession [sessionId]="sessionId" (extendTimeSession)="getList()"></app-extendTimeSession>
