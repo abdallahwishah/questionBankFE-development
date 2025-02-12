@@ -121,8 +121,8 @@
                                 <div class="col-12 mb-5">
                                     <app-dropdown-field
                                         class="d-block"
-                                        [options]="questionTypeArray"
-                                        [(ngModel)]="typeFilter"
+                                        [enm]="QuestionTypeEnum"
+                                        [excludeIds]="[512, 256, 128, 64, 32, 8, 1]"
                                         optionLabel="name"
                                         optionValue="id"
                                         [labelField]="l('QuestionType')"

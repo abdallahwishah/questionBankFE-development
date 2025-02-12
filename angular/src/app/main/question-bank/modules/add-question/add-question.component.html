@@ -215,7 +215,7 @@
                             <label class="mb-2">{{ l('MinimumPoints') }}</label>
                             <input
                                 name="text"
-                                [(ngModel)]="_createOrEditQuestionDto.maxPoints"
+                                [(ngModel)]="_createOrEditQuestionDto.minPoints"
                                 class="form-control m-input d-block"
                                 type="text"
                             />
@@ -224,7 +224,7 @@
                             <label class="mb-2">{{ l('MaximumPoints') }}</label>
                             <input
                                 name="text"
-                                [(ngModel)]="_createOrEditQuestionDto.minPoints"
+                                [(ngModel)]="_createOrEditQuestionDto.maxPoints"
                                 class="form-control m-input d-block"
                                 type="text"
                             />
@@ -282,7 +282,6 @@
                                             [labelField]="l('QuestionType')"
                                             [enm]="QuestionTypeEnum"
                                             [(ngModel)]="question.type"
-                                            (ngModelChange)="question.autoCorrection = false"
                                         ></app-dropdown-field>
                                     </div>
                                     <div class="col-md-4 mb-5">
@@ -300,7 +299,7 @@
                                             class="form-control m-input"
                                             [placeholder]="l('MinimumPoints')"
                                             type="text"
-                                            [(ngModel)]="question.maxPoints"
+                                            [(ngModel)]="question.minPoints"
                                         />
                                     </div>
                                     <div class="col-md-2 mb-5 d-flex align-items-end">
@@ -309,7 +308,7 @@
                                             class="form-control m-input"
                                             [placeholder]="l('MaximumPoints')"
                                             type="text"
-                                            [(ngModel)]="question.minPoints"
+                                            [(ngModel)]="question.maxPoints"
                                         />
                                     </div>
                                 </div>
