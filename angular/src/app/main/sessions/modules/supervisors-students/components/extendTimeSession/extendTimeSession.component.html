@@ -7,6 +7,8 @@
                         {{ l('MinimumExtensionTime') }}
                     </label>
                     <p-inputNumber
+ [minFractionDigits]="1"
+            [maxFractionDigits]="1"
                         class="mt-2"
                         [(ngModel)]="_extendSessionTimeDto.afterMinutes"
                         [showButtons]="true"

@@ -38,7 +38,6 @@
                         </span>
                     </button>
                 </div>
-
             </div>
         </div>
 
@@ -84,23 +83,40 @@
                     <ng-container filterBody>
                         <div class="row">
                             @if (!loadingFilter) {
-                                <div class="col-12 mb-5">
-                                    <app-dropdown-field
-                                        [options]="studySubjects"
-                                        [(ngModel)]="subjectId"
-                                        optionLabel="name"
-                                        optionValue="id"
-                                        [labelField]="l('StudySubject')"
-                                    ></app-dropdown-field>
-                                </div>
-                                <div class="col-12 mb-5">
-                                    <app-dropdown-field
-                                        [options]="studyLevels"
+                                <div class="col-md-12 mb-3">
+                                    <app-auto-complete-feild
+                                        [label]="l('StudyLevel')"
+                                        field="studyLevel.name"
                                         [(ngModel)]="levelId"
-                                        optionLabel="name"
-                                        optionValue="id"
-                                        [labelField]="l('StudyLevel')"
-                                    ></app-dropdown-field>
+                                        name="StudyLevelId"
+                                        [ConfigCustomSearch]="{
+                                            api: '/api/services/app/StudyLevels/GetAll',
+                                            keySearch: 'filter',
+                                            customParams: {
+                                                Sorting: '',
+                                                SkipCount: 0,
+                                                MaxResultCount: 10
+                                            }
+                                        }"
+                                    ></app-auto-complete-feild>
+                                </div>
+                                <div class="col-md-12 mb-3">
+                                    <app-auto-complete-feild
+                                        [label]="l('StudySubject')"
+                                        field="studySubject.name"
+                                        [(ngModel)]="subjectId"
+                                        name="studySubjectId"
+                                        [ConfigCustomSearch]="{
+                                            api: '/api/services/app/StudySubjects/GetAll',
+                                            keySearch: 'filter',
+                                            customParams: {
+                                                Sorting: '',
+                                                SkipCount: 0,
+                                                MaxResultCount: 10,
+                                                StudyLeveldsFilter: [levelId?.studyLevel?.id]
+                                            }
+                                        }"
+                                    ></app-auto-complete-feild>
                                 </div>
                                 <div class="col-12 mb-5">
                                     <app-dropdown-field

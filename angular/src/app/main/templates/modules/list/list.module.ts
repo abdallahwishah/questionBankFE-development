@@ -10,6 +10,7 @@ import { WarningModalComponent } from "../../components/warning-modal/warning-mo
 import { CopyTemplateModalComponent } from "../../components/copy-template-modal/copy-template-modal.component";
 import { DropdownFieldComponent } from '@app/shared/components/fields/dropdown-field/dropdown-field.component';
 import { SkeletonComponent } from "../../../../shared/components/skeleton/skeleton.component";
+import { AutoCompleteFeildModule } from '@app/shared/components/auto-complete-feild/auto-complete-feild.module';
 
 @NgModule({
   imports: [
@@ -27,7 +28,8 @@ import { SkeletonComponent } from "../../../../shared/components/skeleton/skelet
     WarningModalComponent,
     CopyTemplateModalComponent,
     DropdownFieldComponent,
-    SkeletonComponent
+    SkeletonComponent,
+    AutoCompleteFeildModule
 ],
   declarations: [ListComponent]
 })

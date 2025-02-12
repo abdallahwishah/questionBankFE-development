@@ -36,8 +36,8 @@ export class ListComponent extends AppComponentBase implements OnInit {
     filter: string;
     QuestionTypeEnum = QuestionTypeEnum;
     isActiveFilter: boolean;
-    subjectId: number;
-    levelId: number;
+    subjectId: any;
+    levelId: any;
     typeFilter: number;
     loadingFilter: boolean = false;
     questionTypeArray: any[] = [];
@@ -64,41 +64,41 @@ export class ListComponent extends AppComponentBase implements OnInit {
             }));
 
         // Use forkJoin to get all references in parallel
-        forkJoin([
-            this._studyLevelsServiceProxy.getAll(
-                undefined, // filter
-                undefined, // sorting
-                undefined, // skipCount
-                undefined, // maxResultCount
-                undefined, // extra param
-            ),
-            this._studySubjectsProxy.getAll(
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-            ),
-        ]).subscribe({
-            next: ([studyLevelsRes, studySubjectsRes]) => {
-                // Map each response to your arrays
-                this.studyLevels = studyLevelsRes.items.map((item) => ({
-                    id: item.studyLevel.id,
-                    name: item.studyLevel.name,
-                }));
+        // forkJoin([
+        //     this._studyLevelsServiceProxy.getAll(
+        //         undefined, // filter
+        //         undefined, // sorting
+        //         undefined, // skipCount
+        //         undefined, // maxResultCount
+        //         undefined, // extra param
+        //     ),
+        //     this._studySubjectsProxy.getAll(
+        //         undefined,
+        //         undefined,
+        //         undefined,
+        //         undefined,
+        //         undefined,
+        //         undefined,
+        //         undefined,
+        //     ),
+        // ]).subscribe({
+        //     next: ([studyLevelsRes, studySubjectsRes]) => {
+        //         // Map each response to your arrays
+        //         this.studyLevels = studyLevelsRes.items.map((item) => ({
+        //             id: item.studyLevel.id,
+        //             name: item.studyLevel.name,
+        //         }));
 
-                this.studySubjects = studySubjectsRes.items.map((item) => ({
-                    id: item.studySubject.id,
-                    name: item.studySubject.name,
-                }));
-            },
-            error: (err) => {
-                // Handle error if needed
-                this.loadingFilter = false;
-            },
-        });
+        //         this.studySubjects = studySubjectsRes.items.map((item) => ({
+        //             id: item.studySubject.id,
+        //             name: item.studySubject.name,
+        //         }));
+        //     },
+        //     error: (err) => {
+        //         // Handle error if needed
+        //         this.loadingFilter = false;
+        //     },
+        // });
     }
 
     getList(event?: LazyLoadEvent) {
@@ -122,8 +122,8 @@ export class ListComponent extends AppComponentBase implements OnInit {
                 undefined,
                 undefined,
                 undefined,
-                this.subjectId || undefined,
-                this.levelId || undefined,
+                this.subjectId?.studySubject?.id|| undefined,
+                this.levelId?.studyLevel?.id || undefined,
                 undefined,
                 undefined,
                 this.primengTableHelper.getSorting(this.dataTable),

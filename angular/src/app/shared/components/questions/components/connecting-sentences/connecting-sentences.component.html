@@ -38,6 +38,8 @@
         <div class="col-md-3">
             <div class="d-flex align-items-center justify-content-end gap-2">
                 <p-inputNumber
+ [minFractionDigits]="1"
+            [maxFractionDigits]="1"
                 [(ngModel)]="item.point"
                 (ngModelChange)="notifyValueChange()"
                 [showButtons]="true"

@@ -125,12 +125,12 @@ export class AddQuestionComponent extends AppComponentBase implements OnInit {
         });
     }
     changeType() {
-        if (this._createOrEditQuestionDto.type == QuestionTypeEnum.LinkedQuestions) {
-            this._createOrEditQuestionDto.payload = new QuestionPayloadDto({
-                ...new QuestionPayloadDto(),
-                subQuestions: [new CreateOrEditQuestionDto()],
-            });
-        }
+        // if (this._createOrEditQuestionDto.type == QuestionTypeEnum.LinkedQuestions) {
+        //     this._createOrEditQuestionDto.payload = new QuestionPayloadDto({
+        //         ...new QuestionPayloadDto(),
+        //         subQuestions: [new CreateOrEditQuestionDto()],
+        //     });
+        // }
     }
     addNewLinledQ() {
         this._createOrEditQuestionDto.payload.subQuestions.push(new CreateOrEditQuestionDto());

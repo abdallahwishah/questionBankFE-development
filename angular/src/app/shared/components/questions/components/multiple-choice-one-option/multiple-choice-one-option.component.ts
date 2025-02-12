@@ -36,7 +36,7 @@ export class MultipleChoiceOneOptionComponent extends AppComponentBase implement
      * exactly one choice can be "correct" (optionType = Pinned).
      */
     value: CreateOrEditChoiceQuestionDto[] = [];
-
+     randomNumber= Math.floor(Math.random() * 1000);
     /** Callbacks from the Angular Forms API */
     private onChange: (value: CreateOrEditChoiceQuestionDto[]) => void = () => {};
     private onTouched: () => void = () => {};

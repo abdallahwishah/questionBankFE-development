@@ -69,6 +69,11 @@ export class TrueFaseQuestionComponent extends AppComponentBase implements OnIni
      * so Angular knows the form value changed.
      */
     notifyValueChange(): void {
+        this.value?.forEach((ch) => {
+            if (ch.optionType != QuestionOptionTypeEnum.Pinned) {
+                ch.point = 0;
+            }
+        });
         this.onChange(this.value);
         this.onTouched();
     }

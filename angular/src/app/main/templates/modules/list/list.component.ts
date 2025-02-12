@@ -32,8 +32,8 @@ export class ListComponent extends AppComponentBase implements OnInit {
     Copy_Template_dialog = UniqueNameComponents.Copy_Template_dialog;
 
     filter: string;
-    subjectId: number;
-    levelId: number;
+    subjectId: any;
+    levelId: any;
     loadingFilter = false;
 
     constructor(
@@ -49,42 +49,40 @@ export class ListComponent extends AppComponentBase implements OnInit {
 
     ngOnInit() {
         // Use forkJoin to get all references in parallel
-        forkJoin([
-            this._studyLevelsServiceProxy.getAll(
-                undefined, // filter
-                undefined, // sorting
-                undefined, // skipCount
-                undefined, // maxResultCount
-                undefined, // extra param
-            ),
-            this._studySubjectsProxy.getAll(
-                undefined,
-                undefined,
-                undefined,
-
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-            ),
-        ]).subscribe({
-            next: ([studyLevelsRes, studySubjectsRes]) => {
-                // Map each response to your arrays
-                this.studyLevels = studyLevelsRes.items.map((item) => ({
-                    id: item.studyLevel.id,
-                    name: item.studyLevel.name,
-                }));
-
-                this.studySubjects = studySubjectsRes.items.map((item) => ({
-                    id: item.studySubject.id,
-                    name: item.studySubject.name,
-                }));
-            },
-            error: (err) => {
-                // Handle error if needed
-                this.loadingFilter = false;
-            },
-        });
+        // forkJoin([
+        //     this._studyLevelsServiceProxy.getAll(
+        //         undefined, // filter
+        //         undefined, // sorting
+        //         undefined, // skipCount
+        //         undefined, // maxResultCount
+        //         undefined, // extra param
+        //     ),
+        //     this._studySubjectsProxy.getAll(
+        //         undefined,
+        //         undefined,
+        //         undefined,
+        //         undefined,
+        //         undefined,
+        //         undefined,
+        //         undefined,
+        //     ),
+        // ]).subscribe({
+        //     next: ([studyLevelsRes, studySubjectsRes]) => {
+        //         // Map each response to your arrays
+        //         this.studyLevels = studyLevelsRes.items.map((item) => ({
+        //             id: item.studyLevel.id,
+        //             name: item.studyLevel.name,
+        //         }));
+        //         this.studySubjects = studySubjectsRes.items.map((item) => ({
+        //             id: item.studySubject.id,
+        //             name: item.studySubject.name,
+        //         }));
+        //     },
+        //     error: (err) => {
+        //         // Handle error if needed
+        //         this.loadingFilter = false;
+        //     },
+        // });
     }
 
     getList(event?: LazyLoadEvent) {
@@ -104,8 +102,9 @@ export class ListComponent extends AppComponentBase implements OnInit {
                 this.filter,
                 undefined,
                 undefined,
-                this.levelId || undefined,
-                this.subjectId || undefined,
+                this.levelId?.studyLevel?.id || undefined,
+
+                this.subjectId?.studySubject?.id || undefined,
                 this.primengTableHelper.getSorting(this.dataTable),
                 this.primengTableHelper.getSkipCount(this.paginator, event),
                 this.primengTableHelper.getMaxResultCount(this.paginator, event),

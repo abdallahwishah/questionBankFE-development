@@ -42,7 +42,7 @@ export class SafeTextPipe implements PipeTransform {
     text = text.replace(/\s+/g, ' ').trim();
 
     // Limit to specified character size and append ellipses if longer
-    return text.length > charSize ? text.substring(0, charSize) + '...' : text;
+    return text?(text.length > charSize ? text.substring(0, charSize) + '...' : text):value;
   }
 }
 

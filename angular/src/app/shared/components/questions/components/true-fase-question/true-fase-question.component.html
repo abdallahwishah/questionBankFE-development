@@ -23,17 +23,19 @@
     <!-- Display the name or a localized string. -->
     <div class="col-md-7 col-9 mb-md-0 mb-3">
         <div class="d-inline-flex">
-
-        <p class="mb-0">{{ choice.name }}</p>
-        <span class="badge bg-success ms-2" *ngIf="choice.optionType === QuestionOptionTypeEnum.Pinned">
-            {{ l('CorrectAnswer') }}
-        </span>
+            <p class="mb-0" [innerHTML]="choice.name"></p>
+            <span class="badge bg-success ms-2" *ngIf="choice.optionType === QuestionOptionTypeEnum.Pinned">
+                {{ l('CorrectAnswer') }}
+            </span>
         </div>
     </div>
 
     <div class="col-md-4 d-flex align-items-center justify-content-end">
         <!-- Points input -->
         <p-inputNumber
+            [minFractionDigits]="1"
+            [maxFractionDigits]="1"
+            *ngIf="choice.optionType === QuestionOptionTypeEnum.Pinned"
             [(ngModel)]="choice.point"
             (ngModelChange)="notifyValueChange()"
             [showButtons]="true"

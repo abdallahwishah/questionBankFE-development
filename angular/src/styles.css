@@ -939,3 +939,6 @@ span.cke_button_icon.cke_button__about_icon  {
     z-index: 999999999 !important;
 
 }
+.p-sidebar-mask{
+    display: none !important;
+}

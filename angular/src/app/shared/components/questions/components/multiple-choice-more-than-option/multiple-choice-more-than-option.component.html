@@ -41,6 +41,8 @@
     <!-- Points + Edit + Delete buttons -->
     <div class="col-md-4 d-flex align-items-center justify-content-end">
         <p-inputNumber
+ [minFractionDigits]="1"
+            [maxFractionDigits]="1"
             [(ngModel)]="choice.point"
             (ngModelChange)="notifyValueChange()"
             [showButtons]="true"

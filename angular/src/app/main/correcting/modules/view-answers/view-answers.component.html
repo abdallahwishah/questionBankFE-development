@@ -48,6 +48,8 @@
 
                         <div class="px-5 my-2 w-100 d-flex justify-content-start align-items-center">
                             <p-inputNumber
+ [minFractionDigits]="1"
+            [maxFractionDigits]="1"
                                 [(ngModel)]="question.score"
                                 [showButtons]="true"
                                 buttonLayout="horizontal"
