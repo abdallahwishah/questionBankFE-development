@@ -240,7 +240,10 @@ export class ExamViewerAndAttemptComponent extends AppComponentBase implements O
     }
 
     private updateQuestion(response: any) {
-        switch (this.examData.questionWithAnswer.status) {
+
+        this.handleQuestionWithAnswer(response);
+
+        switch (response.status) {
             case StudentExamStatus.ReachedExamEnd:
                 this.end();
                 break;
@@ -254,7 +257,6 @@ export class ExamViewerAndAttemptComponent extends AppComponentBase implements O
                 window.location.reload();
                 break;
         }
-        this.handleQuestionWithAnswer(response);
         this.question = response.question;
         this.examData.questionNo = response.questionNo;
         this.examData.sectionNo = response.sectionNo;
