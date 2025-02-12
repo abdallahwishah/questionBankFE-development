@@ -285,15 +285,16 @@
                             </th>
                             <th pSortableColumn="SessionName">
                                 {{ l('Cycle') }}
-                                <p-sortIcon field="SessionName"></p-sortIcon>
                             </th>
                             <th pSortableColumn="SessionName">
                                 {{ l('Address') }}
-                                <p-sortIcon field="SessionName"></p-sortIcon>
                             </th>
                             <th pSortableColumn="SessionName">
                                 {{ l('BirthDate') }}
                                 <p-sortIcon field="SessionName"></p-sortIcon>
+                            </th>
+                            <th style="background-color: #6d31ed !important; color: #fff">
+                                {{ l('LastAnsweredQuestionNo') }}
                             </th>
                             <th pSortableColumn="SessionName">
                                 {{ l('ClassName') }}
@@ -338,6 +339,9 @@
                                 {{ record.address + ' ' + record.governorate || '-' }}
                             </td>
                             <td>{{ record?.dateOfBirth | date }}</td>
+                            <td style="background-color: #6d31ed !important; color: #fff">
+                                {{ record.lastAnsweredQuestionNo || '-' }}
+                            </td>
                             <td>
                                 {{ record.className || '-' }}
                             </td>
@@ -434,6 +438,7 @@
                                 {{ l('Address') }}
                                 <p-sortIcon field="telphoneNumber"></p-sortIcon>
                             </th>
+
                             <th pSortableColumn="SessionName">
                                 {{ l('ClassName') }}
                                 <p-sortIcon field="SessionName"></p-sortIcon>
@@ -466,6 +471,7 @@
                             <td>
                                 {{ record.address + ' ' + (record.governorate || '') || '-' }}
                             </td>
+
                             <td>
                                 {{ record.className || '-' }}
                             </td>
@@ -521,7 +527,7 @@
     [schoolId]="schoolId"
     [studentId]="studentId"
 ></app-add-student>
-<app-move-student [SessionSelected]="SessionId"></app-move-student>
+<app-move-student [SessionSelected]="SessionId" (moveStudent)="getListSupervis(); getListAttempts()"></app-move-student>
 <app-extendTimeSession
     [sessionId]="SessionId"
     [schoolClassId]="classId"

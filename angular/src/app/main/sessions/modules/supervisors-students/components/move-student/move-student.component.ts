@@ -5,7 +5,7 @@ import {
     SessionsServiceProxy,
     SessionSupervisorsServiceProxy,
 } from './../../../../../../../shared/service-proxies/service-proxies';
-import { Component, OnInit, Injector, Input } from '@angular/core';
+import { Component, OnInit, Injector, Input, Output, EventEmitter } from '@angular/core';
 import { DialogSharedService } from '@app/shared/components/dialog-shared/dialog-shared.service';
 import { UniqueNameComponents } from '@app/shared/Models/UniqueNameComponents';
 import { Subscription } from '@node_modules/rxjs/dist/types';
@@ -25,6 +25,7 @@ export class MoveStudentComponent extends AppComponentBase implements OnInit {
     schoolClassId;
     schoolId;
     sessionSupervisor: any;
+    @Output() moveStudent = new EventEmitter();
     constructor(
         private Injector: Injector,
         private _examAttemptsServiceProxy: ExamAttemptsServiceProxy,
@@ -42,7 +43,7 @@ export class MoveStudentComponent extends AppComponentBase implements OnInit {
                 this.sessionSupervisor = undefined;
                 this.studentId = undefined;
                 if (configShow?.data?.sessionSupervisor) {
-                    debugger
+
                     this.sessionSupervisor = configShow?.data?.sessionSupervisor;
                 } else {
                     this.studentId = configShow?.data;
@@ -67,7 +68,7 @@ export class MoveStudentComponent extends AppComponentBase implements OnInit {
                     this.schoolId = undefined;
                     this.studentId = undefined;
                     this.sessionSupervisor = undefined;
-
+                    this.moveStudent.emit()
                     this.notify.success('  Moved Successfully');
                     this.Close();
                 });
@@ -87,6 +88,7 @@ export class MoveStudentComponent extends AppComponentBase implements OnInit {
                     this.schoolId = undefined;
                     this.studentId = undefined;
                     this.sessionSupervisor = undefined;
+                    this.moveStudent.emit()
 
                     this.notify.success('Student Added Successfully');
                     this.Close();

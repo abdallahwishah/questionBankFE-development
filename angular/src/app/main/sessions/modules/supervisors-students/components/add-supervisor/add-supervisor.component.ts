@@ -64,5 +64,6 @@ export class AddSupervisorComponent extends AppComponentBase implements OnInit {
     }
     clear() {
         this.SupervisoSelected = null;
+        this.Role = null;
     }
 }

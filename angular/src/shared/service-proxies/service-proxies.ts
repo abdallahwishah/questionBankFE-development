@@ -32623,6 +32623,7 @@ export class AddSupervisorDto implements IAddSupervisorDto {
     sessionId!: number;
     schoolClassId!: number;
     schoolId!: number;
+    role!: SessionSupervisorRoleEnum;
     supervisorIds!: number[] | undefined;
 
     constructor(data?: IAddSupervisorDto) {
@@ -32639,6 +32640,7 @@ export class AddSupervisorDto implements IAddSupervisorDto {
             this.sessionId = _data["sessionId"];
             this.schoolClassId = _data["schoolClassId"];
             this.schoolId = _data["schoolId"];
+            this.role = _data["role"];
             if (Array.isArray(_data["supervisorIds"])) {
                 this.supervisorIds = [] as any;
                 for (let item of _data["supervisorIds"])
@@ -32659,6 +32661,7 @@ export class AddSupervisorDto implements IAddSupervisorDto {
         data["sessionId"] = this.sessionId;
         data["schoolClassId"] = this.schoolClassId;
         data["schoolId"] = this.schoolId;
+        data["role"] = this.role;
         if (Array.isArray(this.supervisorIds)) {
             data["supervisorIds"] = [];
             for (let item of this.supervisorIds)
@@ -32672,6 +32675,7 @@ export interface IAddSupervisorDto {
     sessionId: number;
     schoolClassId: number;
     schoolId: number;
+    role: SessionSupervisorRoleEnum;
     supervisorIds: number[] | undefined;
 }
 
