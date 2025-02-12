@@ -134,7 +134,7 @@
     <div class="row switch-serch-bar mt-9 justify-content-end" *ngIf="activeIndex == 0">
         <div
             class="col-md-9 d-grid gap-3 align-items-end"
-            style="margin-bottom: -69px; grid-template-columns: 1.3fr 0.6fr 0.8fr  0.8fr"
+            style="margin-bottom: -69px; grid-template-columns: 1.3fr 0.6fr 0.8fr 0.8fr"
         >
             <div>
                 <div class="input-group search-group">
@@ -332,7 +332,7 @@
                                 {{ l('FormNameWithVertion', record.versionNo) || '-' }}
                             </td>
                             <td>
-                                {{ record.year + ' ' + record?.cycleNumber || '-' }}
+                                {{ record?.examAttempt?.year + ' ' + record?.examAttempt?.cycleNumber || '-' }}
                             </td>
                             <td>
                                 {{ record.address + ' ' + record.governorate || '-' }}

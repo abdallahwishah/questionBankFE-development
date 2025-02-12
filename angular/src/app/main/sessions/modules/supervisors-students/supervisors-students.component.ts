@@ -197,7 +197,7 @@ export class SupervisorsStudentsComponent extends AppComponentBase implements On
                 break;
             case 'MoveSupervisor':
                 this._dialogSharedService.showDialog(UniqueNameComponents.Move_Student_dialog, {
-                    sessionSupervisor: record.sessionSupervisor.id,
+                    sessionSupervisor: record.sessionSupervisor.supervisorId,
                 });
                 break;
         }
