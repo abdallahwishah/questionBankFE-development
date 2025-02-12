@@ -369,13 +369,16 @@
                                         label: 'Delete'
                                     },
                                     {
-                                        label: 'Export'
+                                        label: 'Export',
+                                        hasCondition:record?.session?.status === sessionStatusEnum.Finished
                                     },
                                     {
-                                        label: 'Stop'
+                                        label: 'Stop',
+                                        hasCondition:record?.session?.status === sessionStatusEnum.Active
                                     },
                                     {
-                                        label: 'Extend'
+                                        label: 'Extend',
+                                        hasCondition:record?.session?.status === sessionStatusEnum.Active
                                     }
                                 ]"
                                 (action)="doActions($event, record)"

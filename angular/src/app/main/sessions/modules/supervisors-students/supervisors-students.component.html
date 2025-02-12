@@ -348,13 +348,18 @@
                                 <app-action-button
                                     [ActionsInfo]="[
                                         {
-                                            label: 'MoveStudent'
+                                            label: 'MoveStudent',
+                                            hasCondition:
+                                                session?.session?.status === sessionStatusEnum.Active ||
+                                                session?.session?.status === sessionStatusEnum.NotStarted
                                         },
                                         {
-                                            label: 'Extend'
+                                            label: 'Extend',
+                                            hasCondition: session?.session?.status === sessionStatusEnum.Active
                                         },
                                         {
-                                            label: 'Stop'
+                                            label: 'Stop',
+                                            hasCondition: session?.session?.status === sessionStatusEnum.Active
                                         }
                                     ]"
                                     (action)="doActionsForAttempts($event, record)"
@@ -474,7 +479,10 @@
                                             label: 'Delete'
                                         },
                                         {
-                                            label: 'MoveSupervisor'
+                                            label: 'MoveSupervisor',
+                                            hasCondition:
+                                                session?.session?.status === sessionStatusEnum.Active ||
+                                                session?.session?.status === sessionStatusEnum.NotStarted
                                         }
                                     ]"
                                     (action)="doActionsForSupervisor($event, record)"

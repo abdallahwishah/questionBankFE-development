@@ -156,12 +156,15 @@
                     </td>
                     <td class="text-start">
                         <app-action-button
+                            *ngIf="session?.session?.status === sessionStatusEnum.Active"
                             [ActionsInfo]="[
                                 {
-                                    label: 'Stop'
+                                    label: 'Stop',
+                                    hasCondition: session?.session?.status === sessionStatusEnum.Active
                                 },
                                 {
-                                    label: 'Extend'
+                                    label: 'Extend',
+                                    hasCondition: session?.session?.status === sessionStatusEnum.Active
                                 }
                             ]"
                             (action)="doActions($event, record)"
@@ -194,10 +197,14 @@
                                                         label: 'View'
                                                     },
                                                     {
-                                                        label: 'Stop'
+                                                        label: 'Stop',
+                                                        hasCondition:
+                                                            session?.session?.status === sessionStatusEnum.Active
                                                     },
                                                     {
-                                                        label: 'Extend'
+                                                        label: 'Extend',
+                                                        hasCondition:
+                                                            session?.session?.status === sessionStatusEnum.Active
                                                     }
                                                 ]"
                                                 (action)="doActionsClass($event, class, record)"
@@ -225,4 +232,8 @@
         ></p-paginator>
     </div>
 </div>
-<app-extendTimeSession [sessionId]="SessionId" [schoolId]="schoolId" [schoolClassId]="schoolClassId"></app-extendTimeSession>
+<app-extendTimeSession
+    [sessionId]="SessionId"
+    [schoolId]="schoolId"
+    [schoolClassId]="schoolClassId"
+></app-extendTimeSession>

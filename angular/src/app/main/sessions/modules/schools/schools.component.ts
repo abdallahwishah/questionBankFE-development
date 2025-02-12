@@ -1,4 +1,9 @@
-import { StopSessionDto, SupervisorDto } from './../../../../../shared/service-proxies/service-proxies';
+import {
+    GetSessionForViewDto,
+    SessionStatusEnum,
+    StopSessionDto,
+    SupervisorDto,
+} from './../../../../../shared/service-proxies/service-proxies';
 // schools.component.ts
 import { Component, Injector, OnInit, ViewChild } from '@angular/core';
 import { AppComponentBase } from '@shared/common/app-component-base';
@@ -35,6 +40,10 @@ export class SchoolsComponent extends AppComponentBase implements OnInit {
     governorateIdFilter: any;
     schoolId;
     schoolClassId;
+    statusId: any;
+    sessionStatusEnum = SessionStatusEnum;
+    session: GetSessionForViewDto;
+
     constructor(
         private _injector: Injector,
         private _SessionsServiceProxy: SessionsServiceProxy,
@@ -53,6 +62,9 @@ export class SchoolsComponent extends AppComponentBase implements OnInit {
     ngAfterViewInit() {
         this._ActivatedRoute.paramMap?.subscribe((params) => {
             this.SessionId = Number(params?.get('id'));
+            this._sessionsServiceProxy?.getSessionForView(this.SessionId).subscribe((value) => {
+                this.session = value;
+            });
             this.getList();
         });
     }
@@ -113,7 +125,7 @@ export class SchoolsComponent extends AppComponentBase implements OnInit {
     }
     doActions(label: any, record: any) {
         this.schoolId = record?.school?.id;
-         this.schoolClassId = undefined;
+        this.schoolClassId = undefined;
         switch (label) {
             case 'Stop':
                 this.message.confirm('', this.l('AreYouSure'), (isConfirmed) => {
@@ -122,7 +134,7 @@ export class SchoolsComponent extends AppComponentBase implements OnInit {
                             .stopSession(
                                 new StopSessionDto({
                                     schoolClassId: undefined,
-                                    schoolId:this.schoolId,
+                                    schoolId: this.schoolId,
                                     sessionId: this.SessionId,
                                     studentId: undefined,
                                 }),
@@ -151,7 +163,7 @@ export class SchoolsComponent extends AppComponentBase implements OnInit {
                         this._sessionsServiceProxy
                             .stopSession(
                                 new StopSessionDto({
-                                    schoolClassId:this.schoolClassId,
+                                    schoolClassId: this.schoolClassId,
                                     schoolId: school?.school?.id,
                                     sessionId: this.SessionId,
                                     studentId: undefined,

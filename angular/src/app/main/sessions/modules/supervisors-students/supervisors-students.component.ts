@@ -1,3 +1,4 @@
+import { SessionStatusEnum } from './../../../../../shared/service-proxies/service-proxies';
 import { DialogSharedService } from '@app/shared/components/dialog-shared/dialog-shared.service';
 import { ActivatedRoute } from '@angular/router';
 import { Component, Injector, OnInit, ViewChild } from '@angular/core';
@@ -5,8 +6,7 @@ import { AppComponentBase } from '@shared/common/app-component-base';
 import {
     ExamAttemptsServiceProxy,
     SessionsServiceProxy,
-    SessionStatusEnum,
-    SessionSupervisorRoleEnum,
+     SessionSupervisorRoleEnum,
     SessionSupervisorsServiceProxy,
     StopSessionDto,
 } from '@shared/service-proxies/service-proxies';
@@ -45,6 +45,8 @@ export class SupervisorsStudentsComponent extends AppComponentBase implements On
     SessionSupervisorRoleEnum = SessionSupervisorRoleEnum;
     selectedProducts: any[] = [];
     governorates: any[] = [];
+    sessionStatusEnum = SessionStatusEnum;
+    session:any
     constructor(
         private _injector: Injector,
         private _SessionsServiceProxy: SessionsServiceProxy,
@@ -60,12 +62,13 @@ export class SupervisorsStudentsComponent extends AppComponentBase implements On
         this._ActivatedRoute.paramMap?.subscribe((params) => {
             this.SessionId = Number(params?.get('id')); //.get('product');
             this.classId = Number(params?.get('classId')); //.get('product');
-            this.schoolId = Number(params?.get('schoolId')); //.get('product');
             this._SessionsServiceProxy.getSessionForView(this.SessionId).subscribe((value) => {
                 this.sessionName = value.session.name;
+                this.session=value
             });
         });
         this.schoolName = this._ActivatedRoute.snapshot.queryParams['school'];
+        this.schoolId = this._ActivatedRoute.snapshot.queryParams['schoolId'];
 
         /* Covert Enum To array */
         this.sessionStatus = Object.keys(SessionStatusEnum)

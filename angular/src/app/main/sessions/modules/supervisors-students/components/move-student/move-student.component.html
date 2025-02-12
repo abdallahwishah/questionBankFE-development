@@ -37,7 +37,7 @@
         </ng-container>
     </ng-container>
     <ng-container footerDialog>
-        <button type="button" class="btn btn-primary blue" (click)="Save()">
+        <button type="button" class="btn btn-primary blue" (click)="Save()" [disabled]="!schoolId|| !schoolClassId">
             <span>{{ l('Save') }}</span>
         </button>
         <button class="btn btn-outline" (click)="Close()">{{ l('Cancel') }}</button>
