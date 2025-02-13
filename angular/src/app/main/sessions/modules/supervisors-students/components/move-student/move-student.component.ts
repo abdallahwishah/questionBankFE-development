@@ -26,6 +26,7 @@ export class MoveStudentComponent extends AppComponentBase implements OnInit {
     schoolId;
     sessionSupervisor: any;
     @Output() moveStudent = new EventEmitter();
+    governorateId: any;
     constructor(
         private Injector: Injector,
         private _examAttemptsServiceProxy: ExamAttemptsServiceProxy,
@@ -43,7 +44,6 @@ export class MoveStudentComponent extends AppComponentBase implements OnInit {
                 this.sessionSupervisor = undefined;
                 this.studentId = undefined;
                 if (configShow?.data?.sessionSupervisor) {
-
                     this.sessionSupervisor = configShow?.data?.sessionSupervisor;
                 } else {
                     this.studentId = configShow?.data;
@@ -68,7 +68,7 @@ export class MoveStudentComponent extends AppComponentBase implements OnInit {
                     this.schoolId = undefined;
                     this.studentId = undefined;
                     this.sessionSupervisor = undefined;
-                    this.moveStudent.emit()
+                    this.moveStudent.emit();
                     this.notify.success('  Moved Successfully');
                     this.Close();
                 });
@@ -88,7 +88,7 @@ export class MoveStudentComponent extends AppComponentBase implements OnInit {
                     this.schoolId = undefined;
                     this.studentId = undefined;
                     this.sessionSupervisor = undefined;
-                    this.moveStudent.emit()
+                    this.moveStudent.emit();
 
                     this.notify.success('Student Added Successfully');
                     this.Close();

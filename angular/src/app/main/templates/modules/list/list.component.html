@@ -174,8 +174,15 @@
                             {{ record.examTemplate.name || '-' }}
                         </td>
                         <td>
-                            <span class="p-column-title">{{ l('studyLevel') }}</span>
-                            {{ record.studyLevel || '-' }}
+                            <span
+                                [pTooltip]="record.studyLevel"
+                                [tooltipOptions]="{
+                                    tooltipPosition: 'right'
+                                }"
+                                [positionStyle]="{ width: '400px' }"
+                            >
+                                {{ record.studyLevel | safeText: 80 }}
+                            </span>
                         </td>
                         <td>
                             <span class="p-column-title">{{ l('studySubject') }}</span>

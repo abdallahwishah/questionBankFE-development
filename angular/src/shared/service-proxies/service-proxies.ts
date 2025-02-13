@@ -7413,7 +7413,7 @@ export class ExamAttemptsServiceProxy {
      * @param userName2Filter (optional) 
      * @return Success
      */
-    getExamAttemptsToExcel(filter: string | undefined, studySubjectIdFilter: number | undefined, yearFilter: number | undefined, paperIdFilter: number | undefined, studyLevelIdFilter: number | undefined, sessionIdFilter: number | undefined, maxTotalScoreFilter: number | undefined, minTotalScoreFilter: number | undefined, maxAttemptDateFilter: DateTime | undefined, minAttemptDateFilter: DateTime | undefined, maxAuditedDateFilter: DateTime | undefined, minAuditedDateFilter: DateTime | undefined, maxCorrectionDateFilter: DateTime | undefined, minCorrectionDateFilter: DateTime | undefined, isManualCorrectedFilter: number | undefined, isSubQuestionManualCorrectedFilter: number | undefined, noteFilter: string | undefined, examTitleFilter: string | undefined, sessionNameLFilter: string | undefined, studentClassNameFilter: string | undefined, userNameFilter: string | undefined, userName2Filter: string | undefined): Observable<FileDto> {
+    getExamAttemptsToExcel(filter: string | undefined, studySubjectIdFilter: number | undefined, yearFilter: number | undefined, paperIdFilter: number | undefined, studyLevelIdFilter: number[] | undefined, sessionIdFilter: number | undefined, maxTotalScoreFilter: number | undefined, minTotalScoreFilter: number | undefined, maxAttemptDateFilter: DateTime | undefined, minAttemptDateFilter: DateTime | undefined, maxAuditedDateFilter: DateTime | undefined, minAuditedDateFilter: DateTime | undefined, maxCorrectionDateFilter: DateTime | undefined, minCorrectionDateFilter: DateTime | undefined, isManualCorrectedFilter: number | undefined, isSubQuestionManualCorrectedFilter: number | undefined, noteFilter: string | undefined, examTitleFilter: string | undefined, sessionNameLFilter: string | undefined, studentClassNameFilter: string | undefined, userNameFilter: string | undefined, userName2Filter: string | undefined): Observable<FileDto> {
         let url_ = this.baseUrl + "/api/services/app/ExamAttempts/GetExamAttemptsToExcel?";
         if (filter === null)
             throw new Error("The parameter 'filter' cannot be null.");
@@ -7434,7 +7434,7 @@ export class ExamAttemptsServiceProxy {
         if (studyLevelIdFilter === null)
             throw new Error("The parameter 'studyLevelIdFilter' cannot be null.");
         else if (studyLevelIdFilter !== undefined)
-            url_ += "StudyLevelIdFilter=" + encodeURIComponent("" + studyLevelIdFilter) + "&";
+            studyLevelIdFilter && studyLevelIdFilter.forEach(item => { url_ += "StudyLevelIdFilter=" + encodeURIComponent("" + item) + "&"; });
         if (sessionIdFilter === null)
             throw new Error("The parameter 'sessionIdFilter' cannot be null.");
         else if (sessionIdFilter !== undefined)
@@ -32741,6 +32741,7 @@ export class AnswerAttemptDto implements IAnswerAttemptDto {
     questionId!: number;
     question!: GetQuestionForViewDto;
     optionId!: number[] | undefined;
+    corected!: number[] | undefined;
     option!: QuestionOptionDto;
     value!: string[] | undefined;
     score!: number | undefined;
@@ -32751,6 +32752,7 @@ export class AnswerAttemptDto implements IAnswerAttemptDto {
     dargTableQuestionsSubAnswers!: DargTableQuestionsSubAnswers[] | undefined;
     subScores!: { [key: string]: number; } | undefined;
     order!: number | undefined;
+    isAnswerCorect!: boolean;
 
     constructor(data?: IAnswerAttemptDto) {
         if (data) {
@@ -32771,6 +32773,11 @@ export class AnswerAttemptDto implements IAnswerAttemptDto {
                 this.optionId = [] as any;
                 for (let item of _data["optionId"])
                     this.optionId!.push(item);
+            }
+            if (Array.isArray(_data["corected"])) {
+                this.corected = [] as any;
+                for (let item of _data["corected"])
+                    this.corected!.push(item);
             }
             this.option = _data["option"] ? QuestionOptionDto.fromJS(_data["option"]) : <any>undefined;
             if (Array.isArray(_data["value"])) {
@@ -32804,6 +32811,7 @@ export class AnswerAttemptDto implements IAnswerAttemptDto {
                 }
             }
             this.order = _data["order"];
+            this.isAnswerCorect = _data["isAnswerCorect"];
         }
     }
 
@@ -32824,6 +32832,11 @@ export class AnswerAttemptDto implements IAnswerAttemptDto {
             data["optionId"] = [];
             for (let item of this.optionId)
                 data["optionId"].push(item);
+        }
+        if (Array.isArray(this.corected)) {
+            data["corected"] = [];
+            for (let item of this.corected)
+                data["corected"].push(item);
         }
         data["option"] = this.option ? this.option.toJSON() : <any>undefined;
         if (Array.isArray(this.value)) {
@@ -32857,6 +32870,7 @@ export class AnswerAttemptDto implements IAnswerAttemptDto {
             }
         }
         data["order"] = this.order;
+        data["isAnswerCorect"] = this.isAnswerCorect;
         return data;
     }
 }
@@ -32867,6 +32881,7 @@ export interface IAnswerAttemptDto {
     questionId: number;
     question: GetQuestionForViewDto;
     optionId: number[] | undefined;
+    corected: number[] | undefined;
     option: QuestionOptionDto;
     value: string[] | undefined;
     score: number | undefined;
@@ -32877,6 +32892,7 @@ export interface IAnswerAttemptDto {
     dargTableQuestionsSubAnswers: DargTableQuestionsSubAnswers[] | undefined;
     subScores: { [key: string]: number; } | undefined;
     order: number | undefined;
+    isAnswerCorect: boolean;
 }
 
 export class AppSettingsJsonDto implements IAppSettingsJsonDto {
@@ -47619,6 +47635,7 @@ export class LinkedQuestionsSubAnswers implements ILinkedQuestionsSubAnswers {
     optionId!: number[] | undefined;
     value!: string | undefined;
     matchValue!: string[] | undefined;
+    isAnswerCorect!: boolean;
 
     constructor(data?: ILinkedQuestionsSubAnswers) {
         if (data) {
@@ -47643,6 +47660,7 @@ export class LinkedQuestionsSubAnswers implements ILinkedQuestionsSubAnswers {
                 for (let item of _data["matchValue"])
                     this.matchValue!.push(item);
             }
+            this.isAnswerCorect = _data["isAnswerCorect"];
         }
     }
 
@@ -47667,6 +47685,7 @@ export class LinkedQuestionsSubAnswers implements ILinkedQuestionsSubAnswers {
             for (let item of this.matchValue)
                 data["matchValue"].push(item);
         }
+        data["isAnswerCorect"] = this.isAnswerCorect;
         return data;
     }
 }
@@ -47676,6 +47695,7 @@ export interface ILinkedQuestionsSubAnswers {
     optionId: number[] | undefined;
     value: string | undefined;
     matchValue: string[] | undefined;
+    isAnswerCorect: boolean;
 }
 
 export class LinkedUserDto implements ILinkedUserDto {

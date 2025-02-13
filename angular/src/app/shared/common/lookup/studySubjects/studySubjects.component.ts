@@ -27,6 +27,15 @@ import { DateTimeService } from '@app/shared/common/timing/date-time.service';
     templateUrl: './studySubjects.component.html',
     encapsulation: ViewEncapsulation.None,
     animations: [appModuleAnimation()],
+    styles: [
+        `
+            ::ng-deep {
+                .p-tooltip {
+                    max-width: 300px !important;
+                }
+            }
+        `,
+    ],
 })
 export class StudySubjectsComponent extends AppComponentBase {
     @ViewChild('entityTypeHistoryModal', { static: true }) entityTypeHistoryModal: EntityTypeHistoryModalComponent;

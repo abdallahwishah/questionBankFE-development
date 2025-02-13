@@ -108,7 +108,7 @@ export class ViewAnswersComponent extends AppComponentBase implements OnInit {
                 answer.linkedQuestionAnswer = linkedQuestionsSubAnswersOrdered?.map((x: any, i) => {
                     let typex: QuestionTypeEnum = questionWithAnswer?.question?.linkedQuestions[i]?.question?.type;
                     let subAnswer: any = {};
-
+                    subAnswer.isAnswerCorect = x?.isAnswerCorect;
                     switch (typex) {
                         case QuestionTypeEnum.MutliChoice:
                             subAnswer.multipleChoiceAnswer = x.optionId;

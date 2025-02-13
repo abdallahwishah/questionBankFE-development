@@ -6,9 +6,13 @@
                 *ngIf="value[i]"
                 [order]="i + 1"
                 [question]="question"
+                [fullQuestion]="{
+                    isAnswerCorect: value[i]?.isAnswerCorect
+                }"
                 [questionType]="question.question.type"
                 [disabled]="disabled"
                 [(ngModel)]="value[i]"
+                [isCorrecting]="isCorrecting"
                 (ngModelChange)="onQuestionValueChange()"
             ></app-dynamic-exam-question>
         </div>

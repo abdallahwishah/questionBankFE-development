@@ -10,6 +10,7 @@ import { InputSwitchModule } from 'primeng/inputswitch';
 import { AutoCompleteFeildModule } from '@app/shared/components/auto-complete-feild/auto-complete-feild.module';
 import { DialogSharedModule } from '@app/shared/components/dialog-shared/dialog-shared.module';
 import { DropdownFieldComponent } from '@app/shared/components/fields/dropdown-field/dropdown-field.component';
+import { SafeTextPipe } from '@app/shared/pipes/safe-text.pipe';
 
 @NgModule({
     declarations: [StudySubjectsComponent, CreateOrEditStudySubjectModalComponent, ViewStudySubjectModalComponent],
@@ -22,6 +23,7 @@ import { DropdownFieldComponent } from '@app/shared/components/fields/dropdown-f
         AutoCompleteFeildModule,
         DialogSharedModule,
         DropdownFieldComponent,
+        SafeTextPipe
     ],
 })
 export class StudySubjectModule {}

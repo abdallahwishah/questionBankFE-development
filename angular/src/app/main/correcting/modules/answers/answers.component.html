@@ -19,17 +19,15 @@
             </span>
             <span class="mx-2">/</span>
             <span class="text-gray-700">
-                {{sessionName}}
+                {{ sessionName }}
             </span>
             <span class="mx-2">/</span>
 
             <h2 class="fw-bolder mb-0">{{ l('StudentAnswers') }}</h2>
         </div>
 
-
-
-          <!-- Filter & Search  -->
-          <div class="row switch-serch-bar mt-9">
+        <!-- Filter & Search  -->
+        <div class="row switch-serch-bar mt-9">
             <div class="col-md-3">
                 <div class="input-group search-group">
                     <input
@@ -42,95 +40,112 @@
                     />
                     <button class="btn btn-primary" type="submit">
                         <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd" clip-rule="evenodd" d="M18.9584 9.58317C18.9584 4.87484 15.125 1.0415 10.4167 1.0415C5.70837 1.0415 1.87504 4.87484 1.87504 9.58317C1.87504 14.2915 5.70837 18.1248 10.4167 18.1248C15.125 18.1248 18.9584 14.2915 18.9584 9.58317ZM17.7084 9.58317C17.7084 13.5998 14.4417 16.8748 10.4167 16.8748C6.39171 16.8748 3.12504 13.5998 3.12504 9.58317C3.12504 5.5665 6.39171 2.2915 10.4167 2.2915C14.4417 2.2915 17.7084 5.5665 17.7084 9.58317Z" fill="#6D31ED"/>
-                            <path d="M2.10802 18.7752L3.77468 17.1085C4.01635 16.8669 4.01635 16.4669 3.77468 16.2252C3.53302 15.9835 3.13301 15.9835 2.89135 16.2252L1.22468 17.8919C0.983015 18.1335 0.983015 18.5335 1.22468 18.7752C1.34968 18.9002 1.50802 18.9585 1.66635 18.9585C1.82468 18.9585 1.98302 18.9002 2.10802 18.7752Z" fill="#6D31ED"/>
-                            </svg>
+                            <path
+                                fill-rule="evenodd"
+                                clip-rule="evenodd"
+                                d="M18.9584 9.58317C18.9584 4.87484 15.125 1.0415 10.4167 1.0415C5.70837 1.0415 1.87504 4.87484 1.87504 9.58317C1.87504 14.2915 5.70837 18.1248 10.4167 18.1248C15.125 18.1248 18.9584 14.2915 18.9584 9.58317ZM17.7084 9.58317C17.7084 13.5998 14.4417 16.8748 10.4167 16.8748C6.39171 16.8748 3.12504 13.5998 3.12504 9.58317C3.12504 5.5665 6.39171 2.2915 10.4167 2.2915C14.4417 2.2915 17.7084 5.5665 17.7084 9.58317Z"
+                                fill="#6D31ED"
+                            />
+                            <path
+                                d="M2.10802 18.7752L3.77468 17.1085C4.01635 16.8669 4.01635 16.4669 3.77468 16.2252C3.53302 15.9835 3.13301 15.9835 2.89135 16.2252L1.22468 17.8919C0.983015 18.1335 0.983015 18.5335 1.22468 18.7752C1.34968 18.9002 1.50802 18.9585 1.66635 18.9585C1.82468 18.9585 1.98302 18.9002 2.10802 18.7752Z"
+                                fill="#6D31ED"
+                            />
+                        </svg>
                     </button>
                 </div>
             </div>
-
-
         </div>
 
-
-
-
-      <!-- Start Tabel -->
-    <div class="primeng-datatable-container col-12 mt-6">
-        <p-table
-            #dataTable
-            [value]="primengTableHelper.records"
-            (onLazyLoad)="getList($event)"
-            rows="{{ primengTableHelper.defaultRecordsCountPerPage }}"
-            [paginator]="false"
-            [loading]="primengTableHelper.isLoading"
-            [lazy]="true"
-            [scrollable]="true"
-            ScrollWidth="100%"
-            [resizableColumns]="primengTableHelper.resizableColumns"
-        >
-            <ng-template pTemplate="header">
-                <tr>
-                    <th pSortableColumn="caseCode">
-                        {{  '#' }}
-                    </th>
-                    <th pSortableColumn="StudentNumber">
-                        {{ l('StudentNumber') }}
-                        <p-sortIcon field="StudentNumber"></p-sortIcon>
-                    </th>
-                    <th pSortableColumn="StudentName">
-                        {{ l('StudentName') }}
-                        <p-sortIcon field="StudentName"></p-sortIcon>
-                    </th>
-                    <th pSortableColumn="ExamName">
-                        {{ l('ExamName') }}
-                        <p-sortIcon field="ExamName"></p-sortIcon>
-                    </th>
-                    <th pSortableColumn="TotalPoints">
-                        {{ l('TotalPoints') }}
-                        <p-sortIcon field="TotalPoints"></p-sortIcon>
-                    </th>
-                    <th>
-                        {{ l('Actions') }}
-                    </th>
-                </tr>
-            </ng-template>
-            <ng-template pTemplate="body" let-record="$implicit" let-i="rowIndex">
-                <tr>
-                    <td>
-                        {{ i + 1 }}
-                    </td>
-                    <td>
-                        <span class="p-column-title">{{ l('studentId') }}</span>
-                        {{ record.examAttempt.studentId || '-' }}
-                    </td>
-                    <td>
-                        <span class="p-column-title">{{ l('studentname') }}</span>
-                        {{ record.studentName || '-' }}
-                    </td>
-                    <td>
-                        <span class="p-column-title">{{ l('examTitle') }}</span>
-                        {{ record.examTitle || '-' }}
-                    </td>
-                    <td>
-                        <span class="p-column-title">{{ l('totalScore') }}</span>
-                        {{record.examAttempt.totalScore  }}
-                    </td>
-                    <td>
-                        <app-action-button
-                                [ActionsInfo]="[
-                                    { label: 'ViewAnswersStudent' }
-                                ]"
+        <!-- Start Tabel -->
+        <div class="primeng-datatable-container col-12 mt-6">
+            <p-table
+                #dataTable
+                [value]="primengTableHelper.records"
+                (onLazyLoad)="getList($event)"
+                rows="{{ primengTableHelper.defaultRecordsCountPerPage }}"
+                [paginator]="false"
+                [loading]="primengTableHelper.isLoading"
+                [lazy]="true"
+                [scrollable]="true"
+                ScrollWidth="100%"
+                [resizableColumns]="primengTableHelper.resizableColumns"
+            >
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th pSortableColumn="caseCode">
+                            {{ '#' }}
+                        </th>
+                        <th pSortableColumn="StudentId">
+                            {{ l('StudentId') }}
+                            <p-sortIcon field="StudentId"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="StudentNumber">
+                            {{ l('StudentNumber') }}
+                            <p-sortIcon field="StudentNumber"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="StudyLevel">
+                            {{ l('StudyLevel') }}
+                            <p-sortIcon field="StudyLevel"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="StudentName">
+                            {{ l('StudentName') }}
+                            <p-sortIcon field="StudentName"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="ExamName">
+                            {{ l('ExamName') }}
+                            <p-sortIcon field="ExamName"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="TotalPoints">
+                            {{ l('TotalPoints') }}
+                            <p-sortIcon field="TotalPoints"></p-sortIcon>
+                        </th>
+                        <th>
+                            {{ l('Actions') }}
+                        </th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-record="$implicit" let-i="rowIndex">
+                    <tr>
+                        <td>
+                            {{ i + 1 }}
+                        </td>
+                        <td>
+                            <span class="p-column-title">{{ l('studentId') }}</span>
+                            {{ record.examAttempt.studentId || '-' }}
+                        </td>
+                        <td>
+                            <span class="p-column-title">{{ l('studentId') }}</span>
+                            {{ record.studentNumber || '-' }}
+                        </td>
+                        <td>
+                            <span class="p-column-title">{{ l('studyLevel') }}</span>
+                            {{ record.studyLevel || '-' }}
+                        </td>
+                        <td>
+                            <span class="p-column-title">{{ l('studentname') }}</span>
+                            {{ record.studentName || '-' }}
+                        </td>
+                        <td>
+                            <span class="p-column-title">{{ l('examTitle') }}</span>
+                            {{ record.examTitle || '-' }}
+                        </td>
+                        <td>
+                            <span class="p-column-title">{{ l('totalScore') }}</span>
+                            {{ record.examAttempt.totalScore }}
+                        </td>
+                        <td>
+                            <app-action-button
+                                [ActionsInfo]="[{ label: 'ViewAnswersStudent' }]"
                                 (action)="doActions($event, record)"
-                                ></app-action-button>
-                    </td>
-                </tr>
-            </ng-template>
-        </p-table>
-        <div class="primeng-no-data" *ngIf="primengTableHelper.totalRecordsCount == 0">
-            {{ l('NoData') }}
-        </div>
-        <p-paginator
+                            ></app-action-button>
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+            <div class="primeng-no-data" *ngIf="primengTableHelper.totalRecordsCount == 0">
+                {{ l('NoData') }}
+            </div>
+            <p-paginator
                 #paginator
                 [rows]="primengTableHelper.defaultRecordsCountPerPage"
                 (onPageChange)="getList($event)"
@@ -138,9 +153,7 @@
                 [rows]="primengTableHelper.defaultRecordsCountPerPage"
                 [rowsPerPageOptions]="primengTableHelper.predefinedRecordsCountPerPage"
             ></p-paginator>
+        </div>
+        <!-- End Tabel -->
     </div>
-    <!-- End Tabel -->
-
-
-</div>
 </div>

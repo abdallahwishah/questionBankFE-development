@@ -203,6 +203,24 @@ export class ExamViewerAndAttemptComponent extends AppComponentBase implements O
                 this.loading = false;
                 return;
             }
+            if (dto.linkedQuestionAnswer) {
+                // check requird for sub
+                const hasAnswer = dto.linkedQuestionAnswer.every(
+                    (subAnswer: any) =>
+                        subAnswer.multipleChoiceAnswer ||
+                        subAnswer.singleChoiceAnswer ||
+                        subAnswer.trueFalseAnswer ||
+                        subAnswer.saAnswer ||
+                        subAnswer.matchAnswer ||
+                        subAnswer.dragTableAnswer,
+                );
+
+                if (!hasAnswer) {
+                    alert('يرجى تقديم إجابة لكل سؤال فرعي قبل المتابعة.');
+                    this.loading = false;
+                    return;
+                }
+            }
             this.loading = true;
 
             this._examsServiceProxy.nextQuestion(dto).subscribe((response) => {
@@ -241,8 +259,6 @@ export class ExamViewerAndAttemptComponent extends AppComponentBase implements O
 
     private updateQuestion(response: any) {
 
-        this.handleQuestionWithAnswer(response);
-
         switch (response.status) {
             case StudentExamStatus.ReachedExamEnd:
                 this.end();
@@ -257,6 +273,8 @@ export class ExamViewerAndAttemptComponent extends AppComponentBase implements O
                 window.location.reload();
                 break;
         }
+        this.handleQuestionWithAnswer(response);
+
         this.question = response.question;
         this.examData.questionNo = response.questionNo;
         this.examData.sectionNo = response.sectionNo;
@@ -276,7 +294,6 @@ export class ExamViewerAndAttemptComponent extends AppComponentBase implements O
         }
     }
     handleQuestionWithAnswer(questionWithAnswer: any) {
-        console.log('questionWithAnswer', questionWithAnswer);
         let type: QuestionTypeEnum = questionWithAnswer?.question?.question?.question?.type;
         let answer: any = {};
 

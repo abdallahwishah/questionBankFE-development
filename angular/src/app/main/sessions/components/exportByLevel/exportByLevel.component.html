@@ -6,6 +6,7 @@
                     [label]="l('StudyLevel')"
                     field="studyLevel.name"
                     [(ngModel)]="studyLevel"
+                    [multiple]="true"
                     name="StudyLevelId"
                     [ConfigCustomSearch]="{
                         api: '/api/services/app/StudyLevels/GetAll',

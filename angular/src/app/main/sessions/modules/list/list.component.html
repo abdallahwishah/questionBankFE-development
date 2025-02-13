@@ -322,7 +322,15 @@
                             {{ record.session.name || '-' }}
                         </td>
                         <td>
-                            {{ record.studyLevel || '-' }}
+                            <span
+                                [pTooltip]="record.studyLevel"
+                                [tooltipOptions]="{
+                                    tooltipPosition: 'right'
+                                }"
+                                [positionStyle]="{ width: '400px' }"
+                            >
+                                {{ record.studyLevel | safeText: 80 }}
+                            </span>
                         </td>
                         <td>
                             {{ record.studySubject || '-' }}

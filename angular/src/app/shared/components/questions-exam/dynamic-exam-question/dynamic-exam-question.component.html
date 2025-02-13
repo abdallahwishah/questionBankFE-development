@@ -1,76 +1,84 @@
-@switch (questionType) {
-    @case (QuestionTypeEnum.SA) {
-        <app-article-questions
-            [(ngModel)]="value.saAnswer"
-            (ngModelChange)="notifyChange()"
-            [config]="question"
-            [disabled]="isDisabled"
-        ></app-article-questions>
-    }
-    @case (QuestionTypeEnum.TrueAndFalse) {
-        <app-multiple-choice-one-option
-            [(ngModel)]="value.trueFalseAnswer"
-            (ngModelChange)="notifyChange()"
-            [config]="question"
-            [disabled]="isDisabled"
-        ></app-multiple-choice-one-option>
-    }
-    @case (QuestionTypeEnum.SinglChoice) {
-        <app-multiple-choice-one-option
-            [order]="order"
-            [(ngModel)]="value.singleChoiceAnswer"
-            (ngModelChange)="notifyChange()"
-            [config]="question"
-            [disabled]="isDisabled"
-        ></app-multiple-choice-one-option>
-    }
-    @case (QuestionTypeEnum.MutliChoice) {
-        <app-multiple-choice-more-than-option
-            [(ngModel)]="value.multipleChoiceAnswer"
-            (ngModelChange)="notifyChange()"
-            [config]="question"
-            [disabled]="isDisabled"
-        ></app-multiple-choice-more-than-option>
-    }
-    @case (QuestionTypeEnum.Match) {
-        <app-connecting-words
-            [(ngModel)]="value.matchAnswer"
-            (ngModelChange)="notifyChange()"
-            [config]="question"
-            [disabled]="isDisabled"
-        ></app-connecting-words>
-    }
-    @case (QuestionTypeEnum.LinkedQuestions) {
-        <!-- Dynamic loaded content goes here -->
-        <!-- linkedQuestionAnswer!: SubQuestionAnswer[] | undefined; -->
+<div
+    [ngClass]="{
+        'card-error': QuestionTypeEnum.LinkedQuestions != questionType && isCorrecting && !fullQuestion?.isAnswerCorect,
+        'card-success': QuestionTypeEnum.LinkedQuestions != questionType && isCorrecting && fullQuestion?.isAnswerCorect
+    }"
+>
+    @switch (questionType) {
+        @case (QuestionTypeEnum.SA) {
+            <app-article-questions
+                [(ngModel)]="value.saAnswer"
+                (ngModelChange)="notifyChange()"
+                [config]="question"
+                [disabled]="isDisabled"
+            ></app-article-questions>
+        }
+        @case (QuestionTypeEnum.TrueAndFalse) {
+            <app-multiple-choice-one-option
+                [(ngModel)]="value.trueFalseAnswer"
+                (ngModelChange)="notifyChange()"
+                [config]="question"
+                [disabled]="isDisabled"
+            ></app-multiple-choice-one-option>
+        }
+        @case (QuestionTypeEnum.SinglChoice) {
+            <app-multiple-choice-one-option
+                [order]="order"
+                [(ngModel)]="value.singleChoiceAnswer"
+                (ngModelChange)="notifyChange()"
+                [config]="question"
+                [disabled]="isDisabled"
+            ></app-multiple-choice-one-option>
+        }
+        @case (QuestionTypeEnum.MutliChoice) {
+            <app-multiple-choice-more-than-option
+                [(ngModel)]="value.multipleChoiceAnswer"
+                (ngModelChange)="notifyChange()"
+                [config]="question"
+                [disabled]="isDisabled"
+            ></app-multiple-choice-more-than-option>
+        }
+        @case (QuestionTypeEnum.Match) {
+            <app-connecting-words
+                [(ngModel)]="value.matchAnswer"
+                (ngModelChange)="notifyChange()"
+                [config]="question"
+                [disabled]="isDisabled"
+            ></app-connecting-words>
+        }
+        @case (QuestionTypeEnum.LinkedQuestions) {
+            <!-- Dynamic loaded content goes here -->
+            <!-- linkedQuestionAnswer!: SubQuestionAnswer[] | undefined; -->
 
-        <div #RelatedQuestion></div>
+            <div #RelatedQuestion></div>
+        }
+        @case (QuestionTypeEnum.Rearrange) {
+            <app-words-order
+                [(ngModel)]="value.rearrangeAnswer"
+                (ngModelChange)="notifyChange()"
+                [config]="question"
+                [disabled]="isDisabled"
+            ></app-words-order>
+        }
+        @case (QuestionTypeEnum.Drawing) {
+            <app-cartesian-level
+                [(ngModel)]="value.drawingAnswer"
+                (ngModelChange)="notifyChange()"
+                [config]="question"
+                [disabled]="isDisabled"
+            ></app-cartesian-level>
+        }
+        @case (QuestionTypeEnum.DargingTable) {
+            <app-drag-drop-table
+                [(ngModel)]="value.dragTableAnswer"
+                (ngModelChange)="notifyChange()"
+                [config]="question"
+                [disabled]="isDisabled"
+            ></app-drag-drop-table>
+        }
     }
-    @case (QuestionTypeEnum.Rearrange) {
-        <app-words-order
-            [(ngModel)]="value.rearrangeAnswer"
-            (ngModelChange)="notifyChange()"
-            [config]="question"
-            [disabled]="isDisabled"
-        ></app-words-order>
-    }
-    @case (QuestionTypeEnum.Drawing) {
-        <app-cartesian-level
-            [(ngModel)]="value.drawingAnswer"
-            (ngModelChange)="notifyChange()"
-            [config]="question"
-            [disabled]="isDisabled"
-        ></app-cartesian-level>
-    }
-    @case (QuestionTypeEnum.DargingTable) {
-        <app-drag-drop-table
-            [(ngModel)]="value.dragTableAnswer"
-            (ngModelChange)="notifyChange()"
-            [config]="question"
-            [disabled]="isDisabled"
-        ></app-drag-drop-table>
-    }
-}
+</div>
+
 <!-- multipleChoiceAnswer!: number[] | undefined;
 singleChoiceAnswer!: number;
 trueFalseAnswer!: number;

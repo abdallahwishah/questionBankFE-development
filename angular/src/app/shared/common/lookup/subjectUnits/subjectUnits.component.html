@@ -294,19 +294,18 @@
                                         {{ i + 1 }}
                                     </td>
                                     <td class="text-center" style="width: 150px">
-                                        <span class="p-column-title">{{ l('Name') }}</span>
                                         {{ record.subjectUnit.name }}
                                     </td>
                                     <td class="text-center" style="width: 150px">
-                                        <span class="p-column-title">{{ l('Value') }}</span>
                                         {{ record.studyLevelValue }}
                                     </td>
                                     <td class="text-center" style="width: 150px">
-                                        <span class="p-column-title">{{ l('Value') }}</span>
                                         {{ record.studySubjectValue }}
                                     </td>
                                     <td class="text-center" style="width: 150px">
-                                        {{ record.studyLevels }}
+                                        <span [pTooltip]="record.studyLevels" tooltipPosition="right" >
+                                            {{ record.studyLevels | safeText: 80 }}
+                                        </span>
                                     </td>
                                     <td class="text-center" style="width: 150px">
                                         <span class="p-column-title">{{ l('Code') }}</span>

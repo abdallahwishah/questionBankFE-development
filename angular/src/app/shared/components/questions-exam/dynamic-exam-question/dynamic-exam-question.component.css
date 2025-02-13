@@ -1,0 +1,12 @@
+.card-error {
+    background-color: #f8d7da8f;
+    border-color: #f5c6cb;
+    padding: 10px;
+    border-radius: 6px;
+  }
+  .card-success {
+    background-color: #d4edda8f;
+    border-color: #c3e6cb;
+    padding: 10px;
+    border-radius: 6px;
+  }

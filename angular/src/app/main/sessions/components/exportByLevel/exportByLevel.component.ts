@@ -33,16 +33,16 @@ export class ExportByLevelComponent extends AppComponentBase {
                 this.sessionId = configShow?.data?.sessionId;
             });
     }
-    loading=false
+    loading = false;
     Save() {
-        this.loading=true
+        this.loading = true;
         this._examAttemptsServiceProxy
             .getExamAttemptsToExcel(
                 undefined,
                 undefined,
                 undefined,
                 undefined,
-                this.studyLevel?.studyLevel?.id,
+                this.studyLevel?.map((value) => value?.studyLevel?.id),
                 this.sessionId,
                 undefined,
                 undefined,
@@ -63,9 +63,8 @@ export class ExportByLevelComponent extends AppComponentBase {
             )
             .subscribe((val) => {
                 this._fileDownloadService.downloadTempFile(val);
-                this.loading=false
-                this.closeDialog()
-
+                this.loading = false;
+                this.closeDialog();
             });
     }
     closeDialog() {

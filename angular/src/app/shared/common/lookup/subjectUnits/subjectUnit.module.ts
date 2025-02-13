@@ -11,6 +11,7 @@ import { ActionButtonComponent } from '../../../components/action-button/action-
 import { InputSwitchModule } from 'primeng/inputswitch';
 import { AutoCompleteFeildModule } from '@app/shared/components/auto-complete-feild/auto-complete-feild.module';
 import { DialogSharedModule } from '@app/shared/components/dialog-shared/dialog-shared.module';
+import { SafeTextPipe } from '@app/shared/pipes/safe-text.pipe';
 
 @NgModule({
     declarations: [
@@ -29,6 +30,7 @@ import { DialogSharedModule } from '@app/shared/components/dialog-shared/dialog-
         InputSwitchModule,
         AutoCompleteFeildModule,
         DialogSharedModule,
+        SafeTextPipe
     ],
 })
 export class SubjectUnitModule {}

@@ -250,7 +250,15 @@
                                         {{ l(questionLanguageEnum[record.studySubject.language]) }}
                                     </td>
                                     <td class="text-center" style="width: 150px">
-                                        {{ record?.studyLevels }}
+                                        <span
+                                            [pTooltip]="record.studyLevels"
+                                            [tooltipOptions]="{
+                                                tooltipPosition: 'right'
+                                            }"
+                                            [positionStyle]="{ width: '400px' }"
+                                        >
+                                            {{ record.studyLevels | safeText: 80 }}
+                                        </span>
                                     </td>
                                     <td class="text-center" style="width: 150px">
                                         <p-inputSwitch

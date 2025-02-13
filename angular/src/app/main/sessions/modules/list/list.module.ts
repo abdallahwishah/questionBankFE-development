@@ -1,3 +1,4 @@
+import { SafeTextPipe } from './../../../../shared/pipes/safe-text.pipe';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ListComponent } from './list.component';
@@ -17,6 +18,7 @@ import { SkeletonComponent } from '../../../../shared/components/skeleton/skelet
 import { AutoCompleteFeildModule } from '@app/shared/components/auto-complete-feild/auto-complete-feild.module';
 import { ExportByLevelComponent } from '../../components/exportByLevel/exportByLevel.component';
 import { ExtendTimeSessionComponent } from '../supervisors-students/components/extendTimeSession/extendTimeSession.component';
+import { TooltipModule } from 'primeng/tooltip';
 
 @NgModule({
     imports: [
@@ -24,6 +26,8 @@ import { ExtendTimeSessionComponent } from '../supervisors-students/components/e
         AppSharedModule,
         FormsModule,
         ReactiveFormsModule,
+        TooltipModule,
+        SafeTextPipe,
         RouterModule.forChild([
             {
                 path: '',

@@ -50,7 +50,7 @@ export class AnswersComponent extends AppComponentBase implements OnInit {
 
         this._examAttemptsServiceProxy
             .getAllForCorrectionOrAudited(
-                undefined,
+                this.filter,
                 undefined,
                 this.SessionId,
                 undefined,

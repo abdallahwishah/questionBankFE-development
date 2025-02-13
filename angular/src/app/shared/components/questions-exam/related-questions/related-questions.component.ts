@@ -20,7 +20,9 @@ import { SubQuestionAnswer } from '@shared/service-proxies/service-proxies';
 })
 export class RelatedQuestionsComponent implements ControlValueAccessor {
     @Input() config: any;
-    value: SubQuestionAnswer[] = [];
+        @Input() isCorrecting: any;
+
+    value: SubQuestionAnswer[]|any = [];
 
     private onChange: (value: SubQuestionAnswer[]) => void = () => {};
     private onTouched: () => void = () => {};
