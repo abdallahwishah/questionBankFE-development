@@ -21,7 +21,11 @@ import { SidebarModule } from 'primeng/sidebar';
 import { AccordionModule } from 'primeng/accordion';
 import { WarningModalComponent } from '@app/main/templates/components/warning-modal/warning-modal.component';
 import { SafeTextPipe } from '@app/shared/pipes/safe-text.pipe';
-
+interface LocalQuestion extends QuestionWithAnswerDto {
+    isSynced?: boolean;
+    sendFailed?: boolean;
+    localDirty?: boolean;
+}
 @Component({
     standalone: true,
     imports: [
@@ -40,21 +44,29 @@ import { SafeTextPipe } from '@app/shared/pipes/safe-text.pipe';
 export class ExamViewerAndAttemptBulkComponent extends AppComponentBase implements OnInit, OnDestroy {
     // Basic exam data
     examData: ApplyExamDto;
-    questionlist: QuestionWithAnswerDto[] = [];
+    studentAttemptId: string;
+
+    // Our question array with local flags
+    questionlist: LocalQuestion[] | any = [];
+
+    // current question index
     currentIndex = 0;
 
-    // UI / state
+    // UI state
     showInstructions = true;
     sidebarVisible = false;
     loading = false;
 
     // Timer
     private timer: any = null;
-    private remainingSeconds = 0; // We'll store the "seconds left" internally
+    private remainingSeconds = 0;
     remainingTime: string = '00:00:00';
 
-    // LocalStorage key
+    // localStorage key
     private LOCAL_STORAGE_KEY = 'MY_EXAM_DATA_V2';
+
+    // Warning dialog key
+    Warning_dialog = UniqueNameComponents.Warning_dialog;
 
     constructor(
         injector: Injector,
@@ -65,41 +77,40 @@ export class ExamViewerAndAttemptBulkComponent extends AppComponentBase implemen
     ) {
         super(injector);
     }
-    studentAttemptId;
+
     ngOnInit() {
+        // Attempt to load from localStorage first
         const savedDataJson = localStorage.getItem(this.LOCAL_STORAGE_KEY);
         if (savedDataJson) {
             try {
                 const saved = JSON.parse(savedDataJson);
-                // re-hydrate
+
                 this.examData = saved.examData;
+                this.studentAttemptId = saved.studentAttemptId;
                 this.questionlist = saved.questionlist || [];
                 this.currentIndex = saved.currentIndex || 0;
                 this.showInstructions = saved.showInstructions ?? true;
                 this.remainingTime = saved.remainingTime || '00:00:00';
-                this.studentAttemptId = saved.studentAttemptId;
-                // If we saved "remainingSeconds" explicitly, restore it:
-                if (typeof saved.remainingSeconds === 'number') {
-                    this.remainingSeconds = saved.remainingSeconds;
-                    // If we still have time, let's re-start the timer:
-                    if (this.remainingSeconds > 0) {
-                        this.startTimer(this.remainingSeconds);
-                    } else {
-                        // If the user had 0 or less, we do final end or forced submission:
-                        this.handleTimeExpired();
-                    }
+                this.remainingSeconds = saved.remainingSeconds || 0;
+
+                // If we have remainingSeconds > 0, restart the timer
+                if (this.remainingSeconds > 0) {
+                    this.startTimer(this.remainingSeconds);
+                } else if (this.remainingSeconds <= 0 && this.examData) {
+                    // time up => final submission
+                    this.handleTimeExpired();
                 }
 
-                // If no examData in local storage, fetch from server
+                // If no examData in localStorage => fetch from server
                 if (!this.examData) {
                     this.loadExamData();
                 }
             } catch (err) {
-                // if parse fails, load fresh
+                // parse error => load fresh from server
                 this.loadExamData();
             }
         } else {
-            // no saved data => fetch from server
+            // If no data in local => fetch
             this.loadExamData();
         }
     }
@@ -110,40 +121,85 @@ export class ExamViewerAndAttemptBulkComponent extends AppComponentBase implemen
         }
     }
 
-    // ----------------------------------------------------------
-    // Loading from server if needed
-    // ----------------------------------------------------------
+    // --------------------------
+    // LOAD EXAM from server if needed
+    // --------------------------
     loadExamData() {
         this._examsServiceProxy.getExpectedeExam().subscribe((response) => {
-            this.examData = response.applyExamDto;
-            this.questionlist = response.examQuestions || [];
-            this.studentAttemptId = response.studentAttemptId;
-            if (!this.examData) {
+            if (!response.applyExamDto) {
                 this.router.navigate(['/student/main']);
                 return;
             }
+            this.examData = response.applyExamDto;
+            this.studentAttemptId = response.studentAttemptId;
 
-            // If we have a "remainingSeconds" from server, store it
+            // Convert raw question array into our LocalQuestion array
+            this.questionlist = (response.examQuestions || []).map((q) => {
+                return {
+                    ...q,
+                    isSynced: false,
+                    sendFailed: false,
+                    localDirty: false,
+                };
+            });
+
+            // show instructions if exist
+            this.showInstructions = !!this.examData.examInstructions;
+
+            // We might have some "remainingSeconds" from the server
+            // if so, store it in this.remainingSeconds and start timer
+            // or handle is 0 => time up
+            // (assuming the server's "remainingSeconds" is in applyExamDto)
             if (this.examData.remainingSeconds) {
                 this.remainingSeconds = Math.floor(this.examData.remainingSeconds);
                 if (this.remainingSeconds > 0) {
                     this.startTimer(this.remainingSeconds);
                 } else {
-                    // zero or negative => time is up?
                     this.handleTimeExpired();
                 }
             }
 
-            this.showInstructions = !!this.examData.examInstructions;
             this.saveToLocalStorage();
         });
     }
 
-    // ----------------------------------------------------------
+    // Re-calc time if the server returns new "remainingSeconds" after partial sync
+    reCalTime() {
+        if (this.examData.remainingSeconds) {
+            this.remainingSeconds = Math.floor(this.examData.remainingSeconds);
+            if (this.remainingSeconds > 0) {
+                this.startTimer(this.remainingSeconds);
+            } else {
+                this.handleTimeExpired();
+            }
+        }
+    }
+
+    // --------------------------
+    // localStorage
+    // --------------------------
+    private saveToLocalStorage() {
+        const dataToStore = {
+            examData: this.examData,
+            studentAttemptId: this.studentAttemptId,
+            questionlist: this.questionlist,
+            currentIndex: this.currentIndex,
+            showInstructions: this.showInstructions,
+            remainingTime: this.remainingTime,
+            remainingSeconds: this.remainingSeconds,
+        };
+        localStorage.setItem(this.LOCAL_STORAGE_KEY, JSON.stringify(dataToStore));
+    }
+
+    private clearStorageAndRedirect() {
+        localStorage.removeItem(this.LOCAL_STORAGE_KEY);
+        this.router.navigate(['/student/main']);
+    }
+
+    // --------------------------
     // Timer
-    // ----------------------------------------------------------
+    // --------------------------
     startTimer(seconds: number) {
-        // store internally
         this.remainingSeconds = seconds;
         this.updateTimeDisplay(this.remainingSeconds);
 
@@ -158,10 +214,8 @@ export class ExamViewerAndAttemptBulkComponent extends AppComponentBase implemen
                 clearInterval(this.timer);
                 this.remainingSeconds = 0;
                 this.updateTimeDisplay(0);
-                // Time is up => auto end exam
                 this.handleTimeExpired();
             }
-            // Save to local each tick
             this.saveToLocalStorage();
         }, 1000);
     }
@@ -170,47 +224,22 @@ export class ExamViewerAndAttemptBulkComponent extends AppComponentBase implemen
         const hh = Math.floor(secs / 3600);
         const mm = Math.floor((secs % 3600) / 60);
         const ss = secs % 60;
-        this.remainingTime = `${String(hh).padStart(2, '0')} : ${String(mm).padStart(
-            2,
-            '0',
-        )} : ${String(ss).padStart(2, '0')}`;
+        this.remainingTime = `${String(hh).padStart(2, '0')} : ${String(mm).padStart(2, '0')} : ${String(ss).padStart(2, '0')}`;
     }
 
     private handleTimeExpired() {
-        // If time is up, we want to do final submission
-        this.saveAllAnswersToServer(true);
+        this.end();
     }
 
-    // ----------------------------------------------------------
-    // localStorage
-    // ----------------------------------------------------------
-    private saveToLocalStorage() {
-        const dataToStore = {
-            examData: this.examData,
-            questionlist: this.questionlist,
-            currentIndex: this.currentIndex,
-            showInstructions: this.showInstructions,
-            remainingTime: this.remainingTime,
-            remainingSeconds: this.remainingSeconds,
-            studentAttemptId: this.studentAttemptId,
-        };
-        localStorage.setItem(this.LOCAL_STORAGE_KEY, JSON.stringify(dataToStore));
-    }
-
-    private clearStorageAndRedirect() {
-        localStorage.removeItem(this.LOCAL_STORAGE_KEY);
-        this.router.navigate(['/student/main']);
-    }
-
-    // ----------------------------------------------------------
-    // UI logic
-    // ----------------------------------------------------------
+    // --------------------------
+    // UI / Navigation
+    // --------------------------
     startExam() {
         this.showInstructions = false;
         this.saveToLocalStorage();
     }
 
-    get currentQuestion(): QuestionWithAnswerDto | undefined {
+    get currentQuestion(): LocalQuestion | undefined {
         return this.questionlist[this.currentIndex];
     }
 
@@ -222,143 +251,229 @@ export class ExamViewerAndAttemptBulkComponent extends AppComponentBase implemen
     }
 
     prev() {
+        this.onUserChangedAnswer(this.currentIndex);
         this.loadContent();
-
         if (this.isFirstQuestion) return;
-        // Immediately move in UI
         this.currentIndex--;
         this.saveToLocalStorage();
 
-        // Try to sync in background
-        this.saveAllAnswersToServer(false);
+        // partial sync => current + failed
+        this.saveSomeAnswersToServer(false);
     }
 
-    Warning_dialog = UniqueNameComponents.Warning_dialog;
     nextCon() {
-        // show confirm if user tries to end exam
+        // show confirm if user tries to end
         this._DialogSharedService.showDialog(this.Warning_dialog, {
             confirm: () => {
                 this.next(true);
             },
         });
     }
+
     loadContent() {
         this.loading = true;
         setTimeout(() => {
             this.loading = false;
         }, 500);
     }
+
     next(isLast = false) {
+        this.onUserChangedAnswer(this.currentIndex);
         this.loadContent();
-        // Move in UI immediately (if not last or forcing last)
         if (!this.isLastQuestion || !isLast) {
             this.currentIndex++;
         }
         this.saveToLocalStorage();
-
-        // sync in background
-        this.saveAllAnswersToServer(isLast);
+        // partial sync => current + failed
+        this.saveSomeAnswersToServer(isLast);
     }
 
     end() {
-        // final end: remove local storage, go away
         this.clearStorageAndRedirect();
     }
 
-    // ----------------------------------------------------------
-    // Building + sending answers
-    // ----------------------------------------------------------
-    private saveAllAnswersToServer(isLast: boolean) {
-        // If no examData or no questionlist loaded, skip
+    // from sidebar
+    GetSelectedQuestion(index: number) {
+        this.currentIndex = index;
+        this.loadContent();
+
+        this.saveToLocalStorage();
+        // partial sync => current + failed
+        this.saveSomeAnswersToServer(false);
+        this.sidebarVisible = false;
+    }
+
+    // Called whenever user changes an answer => mark it localDirty
+    onUserChangedAnswer(index: number) {
+        const q = this.questionlist[index];
+        q.localDirty = true;
+        q.isSynced = false;
+        this.saveToLocalStorage();
+    }
+
+    // --------------------------
+    // PARTIAL SYNC: send only current + previously failed
+    // --------------------------
+    private saveSomeAnswersToServer(isLast: boolean) {
         if (!this.examData || !this.questionlist.length) return;
 
-        const answersArray: ExamQuestionWithAnswerDto[] = this.buildAnswersArray();
+        // Build array for:
+        // 1) Current question if (localDirty == true OR sendFailed == true)
+        // 2) Any question that had sendFailed == true
+        const toSend = this.questionlist
+            .filter((q, idx) => q.sendFailed || q.localDirty)
+            .map((q) => this.buildOneAnswer(q));
 
         this._examsServiceProxy
             .answerExamQuestions(
                 new SubmitAnswerExamQuestionsDto({
-                    questionListWithAnswer: answersArray,
-                    studentAttemptId: this.studentAttemptId || '', // or pass real ID
+                    questionListWithAnswer: toSend,
+                    studentAttemptId: this.studentAttemptId || '',
                     submitExam: isLast,
                 }),
             )
             .subscribe({
                 next: (res) => {
-                    // if success, check exam status
                     switch (res.studentExamStatus) {
                         case StudentExamStatus.ReachedExamEnd:
                         case StudentExamStatus.StudentAlreadyFinished:
                         case StudentExamStatus.ExamAlreadyEnd:
-                            // forcibly end the exam UI
                             this.end();
                             return;
                         case StudentExamStatus.SomethingWrong:
                             window.location.reload();
                             return;
                     }
-                    // if isLast => end
+                    // success => mark them as synced
+                    toSend.forEach((dto) => {
+                        const idx = this.questionlist.findIndex((x) => x.question.questionId === dto.questionId);
+                        if (idx >= 0) {
+                            this.questionlist[idx].isSynced = true;
+                            this.questionlist[idx].localDirty = false;
+                            this.questionlist[idx].sendFailed = false;
+                        }
+                    });
+
+                    // update time
+                    this.examData.remainingSeconds = res.remainingTimeInSecond;
+                    this.reCalTime();
+
                     if (isLast) {
                         this.end();
+                    } else {
+                        this.saveToLocalStorage();
                     }
                 },
                 error: (err) => {
-                    console.warn('Sync failed', err);
-                    // user keeps working, we'll retry next time they navigate
+                    console.warn('Sync partial failed', err);
+                    // mark them as failed
+                    toSend.forEach((dto) => {
+                        const idx = this.questionlist.findIndex((x) => x.question.questionId === dto.questionId);
+                        if (idx >= 0) {
+                            this.questionlist[idx].sendFailed = true;
+                        }
+                    });
+                    this.saveToLocalStorage();
                 },
             });
     }
 
-    private buildAnswersArray(): ExamQuestionWithAnswerDto[] {
-        const examId = this.examData?.examId;
-        return this.questionlist.map((q: any) => {
-            const dto = new ExamQuestionWithAnswerDto();
-            dto.examId = examId;
-            dto.questionId = q.question.questionId;
-            dto.questionNo = q.questionNo;
-            dto.sectionId = q.sectionId;
-            dto.sectionNo = q.sectionNo;
-            dto.type = q.question?.question?.question?.type;
+    // --------------------------
+    // FULL SYNC: used if time up or final submission
+    // --------------------------
+    private saveAllAnswersToServer(isLast: boolean) {
+        if (!this.examData || !this.questionlist.length) return;
 
-            switch (dto.type) {
-                case QuestionTypeEnum.MutliChoice:
-                    dto.multipleChoiceAnswer = q.question?.question?.question?.multipleChoiceAnswer;
-                    break;
-                case QuestionTypeEnum.SinglChoice:
-                    dto.singleChoiceAnswer = q.question?.question?.question?.singleChoiceAnswer;
-                    break;
-                case QuestionTypeEnum.TrueAndFalse:
-                    dto.trueFalseAnswer = q.question?.question?.question?.trueFalseAnswer;
-                    break;
-                case QuestionTypeEnum.SA:
-                    dto.saAnswer = q.question?.question?.question?.saAnswer;
-                    break;
-                case QuestionTypeEnum.Match:
-                    dto.matchAnswer = q.question?.question?.question?.matchAnswer;
-                    break;
-                case QuestionTypeEnum.LinkedQuestions:
-                    const subs = q.question?.question?.linkedQuestionAnswer || [];
-                    dto.linkedQuestionAnswer = subs.map((sub) => {
-                        return new SubQuestionAnswer({
-                            questionId: sub.questionId,
-                            multipleChoiceAnswer: sub.multipleChoiceAnswer,
-                            singleChoiceAnswer: sub.singleChoiceAnswer,
-                            trueFalseAnswer: sub.trueFalseAnswer,
-                            saAnswer: sub.saAnswer,
-                            matchAnswer: sub.matchAnswer,
-                        });
+        const allAnswers = this.questionlist.map((q) => this.buildOneAnswer(q));
+        this._examsServiceProxy
+            .answerExamQuestions(
+                new SubmitAnswerExamQuestionsDto({
+                    questionListWithAnswer: allAnswers,
+                    studentAttemptId: this.studentAttemptId || '',
+                    submitExam: isLast,
+                }),
+            )
+            .subscribe({
+                next: (res) => {
+                    switch (res.studentExamStatus) {
+                        case StudentExamStatus.ReachedExamEnd:
+                        case StudentExamStatus.StudentAlreadyFinished:
+                        case StudentExamStatus.ExamAlreadyEnd:
+                            this.end();
+                            return;
+                        case StudentExamStatus.SomethingWrong:
+                            window.location.reload();
+                            return;
+                    }
+                    // success => mark all as synced
+                    this.questionlist.forEach((x) => {
+                        x.isSynced = true;
+                        x.localDirty = false;
+                        x.sendFailed = false;
                     });
-                    break;
-                // etc for other question types
-            }
-            return dto;
-        });
+
+                    this.examData.remainingSeconds = res.remainingTimeInSecond;
+                    this.reCalTime();
+
+                    if (isLast) {
+                        this.end();
+                    } else {
+                        this.saveToLocalStorage();
+                    }
+                },
+                error: (err) => {
+                    console.warn('Sync all failed', err);
+                    // mark all as failed
+                    this.questionlist.forEach((x) => {
+                        x.sendFailed = true;
+                    });
+                    this.saveToLocalStorage();
+                },
+            });
     }
 
-    // from sidebar
-    GetSelectedQuestion(index: number) {
-        this.currentIndex = index;
-        this.saveToLocalStorage();
-        this.saveAllAnswersToServer(false);
-        this.sidebarVisible = false;
+    // Build a single question's answer
+    private buildOneAnswer(q: any): ExamQuestionWithAnswerDto {
+        const dto = new ExamQuestionWithAnswerDto();
+        dto.examId = this.examData?.examId;
+        dto.questionId = q.question.questionId;
+        dto.questionNo = q.questionNo;
+        dto.sectionId = q.sectionId;
+        dto.sectionNo = q.sectionNo;
+        dto.type = q.question?.question?.question?.type;
+
+        // fill relevant answer property
+        switch (dto.type) {
+            case QuestionTypeEnum.MutliChoice:
+                dto.multipleChoiceAnswer = q.question?.question?.multipleChoiceAnswer;
+                break;
+            case QuestionTypeEnum.SinglChoice:
+                dto.singleChoiceAnswer = q.question?.question?.singleChoiceAnswer;
+                break;
+            case QuestionTypeEnum.TrueAndFalse:
+                dto.trueFalseAnswer = q.question?.question?.trueFalseAnswer;
+                break;
+            case QuestionTypeEnum.SA:
+                dto.saAnswer = q.question?.question?.saAnswer;
+                break;
+            case QuestionTypeEnum.Match:
+                dto.matchAnswer = q.question?.question?.matchAnswer;
+                break;
+            case QuestionTypeEnum.LinkedQuestions:
+                const subs = q.question?.question?.linkedQuestionAnswer || [];
+                dto.linkedQuestionAnswer = subs.map((sub) => {
+                    return new SubQuestionAnswer({
+                        questionId: sub.questionId,
+                        multipleChoiceAnswer: sub.multipleChoiceAnswer,
+                        singleChoiceAnswer: sub.singleChoiceAnswer,
+                        trueFalseAnswer: sub.trueFalseAnswer,
+                        saAnswer: sub.saAnswer,
+                        matchAnswer: sub.matchAnswer,
+                    });
+                });
+                break;
+            // etc
+        }
+        return dto;
     }
 }

@@ -206,14 +206,24 @@
                         </td>
                         <td>
                             <span class="p-column-title">{{ l('body') }}</span>
-                            <div [innerHTML]="record.question.body | safeText: 40"></div>
+                            <div class="editor">
+                                <div [innerHTML]="record.question.body | safeText: 40"></div>
+                            </div>
                         </td>
                         <td>
                             {{ QuestionTypeEnum[record.question.type] }}
                         </td>
                         <td>
                             <span class="p-column-title">{{ l('studyLevelName') }}</span>
-                            {{ record.studyLevelName || '-' }}
+                            <span
+                                [pTooltip]="record.studyLevelName"
+                                [tooltipOptions]="{
+                                    tooltipPosition: 'right'
+                                }"
+                                [positionStyle]="{ width: '400px' }"
+                            >
+                                {{ record.studyLevelName | safeText: 80 }}
+                            </span>
                         </td>
                         <td>
                             <span class="p-column-title">{{ l('studySubjectName') }}</span>

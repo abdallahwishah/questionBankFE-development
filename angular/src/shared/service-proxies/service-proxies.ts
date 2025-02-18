@@ -33012,6 +33012,7 @@ export interface IAnswerAttemptDto {
 export class AnswerExamQuestionsDto implements IAnswerExamQuestionsDto {
     isSynced!: boolean;
     remainingTime!: TimeSpan;
+    remainingTimeInSecond!: number;
     studentExamStatus!: StudentExamStatus;
 
     constructor(data?: IAnswerExamQuestionsDto) {
@@ -33027,6 +33028,7 @@ export class AnswerExamQuestionsDto implements IAnswerExamQuestionsDto {
         if (_data) {
             this.isSynced = _data["isSynced"];
             this.remainingTime = _data["remainingTime"] ? TimeSpan.fromJS(_data["remainingTime"]) : <any>undefined;
+            this.remainingTimeInSecond = _data["remainingTimeInSecond"];
             this.studentExamStatus = _data["studentExamStatus"];
         }
     }
@@ -33042,6 +33044,7 @@ export class AnswerExamQuestionsDto implements IAnswerExamQuestionsDto {
         data = typeof data === 'object' ? data : {};
         data["isSynced"] = this.isSynced;
         data["remainingTime"] = this.remainingTime ? this.remainingTime.toJSON() : <any>undefined;
+        data["remainingTimeInSecond"] = this.remainingTimeInSecond;
         data["studentExamStatus"] = this.studentExamStatus;
         return data;
     }
@@ -33050,6 +33053,7 @@ export class AnswerExamQuestionsDto implements IAnswerExamQuestionsDto {
 export interface IAnswerExamQuestionsDto {
     isSynced: boolean;
     remainingTime: TimeSpan;
+    remainingTimeInSecond: number;
     studentExamStatus: StudentExamStatus;
 }
 

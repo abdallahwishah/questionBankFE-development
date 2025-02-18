@@ -944,3 +944,8 @@ span.cke_button_icon.cke_button__about_icon {
 .p-sidebar-mask {
     display: none !important;
 }
+.editor img{
+    width: 80px !important;
+    height: 50px !important;
+
+}

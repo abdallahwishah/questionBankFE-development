@@ -12,6 +12,7 @@ import { InputSwitchModule } from 'primeng/inputswitch';
 import { SafeTextPipe } from "../../../../shared/pipes/safe-text.pipe";
 import { SkeletonComponent } from "../../../../shared/components/skeleton/skeleton.component";
 import { AutoCompleteFeildModule } from '@app/shared/components/auto-complete-feild/auto-complete-feild.module';
+import { TooltipModule } from 'primeng/tooltip';
 
 @NgModule({
   imports: [
@@ -31,7 +32,9 @@ import { AutoCompleteFeildModule } from '@app/shared/components/auto-complete-fe
     AddFileModalComponent,
     SafeTextPipe,
     SkeletonComponent,
-    AutoCompleteFeildModule
+    AutoCompleteFeildModule,
+    TooltipModule,
+    SafeTextPipe
 ],
   declarations: [ListComponent]
 })
