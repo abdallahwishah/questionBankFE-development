@@ -33,11 +33,11 @@ import { SafeTextPipe } from '@app/shared/pipes/safe-text.pipe';
         WarningModalComponent,
         SafeTextPipe,
     ],
-    selector: 'app-exam-viewer-and-attempt',
-    templateUrl: './exam-viewer-and-attempt.component.html',
-    styleUrls: ['./exam-viewer-and-attempt.component.css'],
+    selector: 'app-exam-viewer-and-attempt-bulk',
+    templateUrl: './exam-viewer-and-attempt-bulk.component.html',
+    styleUrls: ['./exam-viewer-and-attempt-bulk.component.css'],
 })
-export class ExamViewerAndAttemptComponent extends AppComponentBase implements OnInit {
+export class ExamViewerAndAttemptBulkComponent extends AppComponentBase implements OnInit {
     isViewer: boolean;
     id: number;
     examData: any;
@@ -260,7 +260,6 @@ export class ExamViewerAndAttemptComponent extends AppComponentBase implements O
     }
 
     private updateQuestion(response: any) {
-
         switch (response.status) {
             case StudentExamStatus.ReachedExamEnd:
                 this.end();
