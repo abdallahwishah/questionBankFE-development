@@ -9196,7 +9196,7 @@ export class ExamsServiceProxy {
      * @param body (optional) 
      * @return Success
      */
-    answerExamQuestions(body: ExamQuestionWithAnswerDto[] | undefined): Observable<boolean> {
+    answerExamQuestions(body: SubmitAnswerExamQuestionsDto | undefined): Observable<AnswerExamQuestionsDto> {
         let url_ = this.baseUrl + "/api/services/app/Exams/AnswerExamQuestions";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -9219,14 +9219,14 @@ export class ExamsServiceProxy {
                 try {
                     return this.processAnswerExamQuestions(response_ as any);
                 } catch (e) {
-                    return _observableThrow(e) as any as Observable<boolean>;
+                    return _observableThrow(e) as any as Observable<AnswerExamQuestionsDto>;
                 }
             } else
-                return _observableThrow(response_) as any as Observable<boolean>;
+                return _observableThrow(response_) as any as Observable<AnswerExamQuestionsDto>;
         }));
     }
 
-    protected processAnswerExamQuestions(response: HttpResponseBase): Observable<boolean> {
+    protected processAnswerExamQuestions(response: HttpResponseBase): Observable<AnswerExamQuestionsDto> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -9237,8 +9237,7 @@ export class ExamsServiceProxy {
             return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-                result200 = resultData200 !== undefined ? resultData200 : <any>null;
-    
+            result200 = AnswerExamQuestionsDto.fromJS(resultData200);
             return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
@@ -33010,6 +33009,50 @@ export interface IAnswerAttemptDto {
     isAnswerCorect: boolean;
 }
 
+export class AnswerExamQuestionsDto implements IAnswerExamQuestionsDto {
+    isSynced!: boolean;
+    remainingTime!: TimeSpan;
+    studentExamStatus!: StudentExamStatus;
+
+    constructor(data?: IAnswerExamQuestionsDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.isSynced = _data["isSynced"];
+            this.remainingTime = _data["remainingTime"] ? TimeSpan.fromJS(_data["remainingTime"]) : <any>undefined;
+            this.studentExamStatus = _data["studentExamStatus"];
+        }
+    }
+
+    static fromJS(data: any): AnswerExamQuestionsDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new AnswerExamQuestionsDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["isSynced"] = this.isSynced;
+        data["remainingTime"] = this.remainingTime ? this.remainingTime.toJSON() : <any>undefined;
+        data["studentExamStatus"] = this.studentExamStatus;
+        return data;
+    }
+}
+
+export interface IAnswerExamQuestionsDto {
+    isSynced: boolean;
+    remainingTime: TimeSpan;
+    studentExamStatus: StudentExamStatus;
+}
+
 export class AppSettingsJsonDto implements IAppSettingsJsonDto {
     webSiteUrl!: string | undefined;
     serverSiteUrl!: string | undefined;
@@ -39982,6 +40025,7 @@ export class ExpectedeExamDto implements IExpectedeExamDto {
     applyExamDto!: ApplyExamDto;
     examQuestions!: QuestionWithAnswerDto[] | undefined;
     remainingTime!: TimeSpan;
+    studentAttemptId!: string;
     sessionName!: string | undefined;
     sessionId!: number | undefined;
     remainingTimeInSecond!: number | undefined;
@@ -40004,6 +40048,7 @@ export class ExpectedeExamDto implements IExpectedeExamDto {
                     this.examQuestions!.push(QuestionWithAnswerDto.fromJS(item));
             }
             this.remainingTime = _data["remainingTime"] ? TimeSpan.fromJS(_data["remainingTime"]) : <any>undefined;
+            this.studentAttemptId = _data["studentAttemptId"];
             this.sessionName = _data["sessionName"];
             this.sessionId = _data["sessionId"];
             this.remainingTimeInSecond = _data["remainingTimeInSecond"];
@@ -40026,6 +40071,7 @@ export class ExpectedeExamDto implements IExpectedeExamDto {
                 data["examQuestions"].push(item.toJSON());
         }
         data["remainingTime"] = this.remainingTime ? this.remainingTime.toJSON() : <any>undefined;
+        data["studentAttemptId"] = this.studentAttemptId;
         data["sessionName"] = this.sessionName;
         data["sessionId"] = this.sessionId;
         data["remainingTimeInSecond"] = this.remainingTimeInSecond;
@@ -40037,6 +40083,7 @@ export interface IExpectedeExamDto {
     applyExamDto: ApplyExamDto;
     examQuestions: QuestionWithAnswerDto[] | undefined;
     remainingTime: TimeSpan;
+    studentAttemptId: string;
     sessionName: string | undefined;
     sessionId: number | undefined;
     remainingTimeInSecond: number | undefined;
@@ -41386,6 +41433,7 @@ export enum GenericParameterAttributes {
     NotNullableValueTypeConstraint = 8,
     DefaultConstructorConstraint = 16,
     SpecialConstraintMask = 28,
+    AllowByRefLike = 32,
 }
 
 export class GetAllAvailableWebhooksOutput implements IGetAllAvailableWebhooksOutput {
@@ -58634,6 +58682,58 @@ export interface ISubjectUnitStudySubjectLookupTableDto {
     displayName: string | undefined;
 }
 
+export class SubmitAnswerExamQuestionsDto implements ISubmitAnswerExamQuestionsDto {
+    studentAttemptId!: string;
+    submitExam!: boolean | undefined;
+    questionListWithAnswer!: ExamQuestionWithAnswerDto[] | undefined;
+
+    constructor(data?: ISubmitAnswerExamQuestionsDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.studentAttemptId = _data["studentAttemptId"];
+            this.submitExam = _data["submitExam"];
+            if (Array.isArray(_data["questionListWithAnswer"])) {
+                this.questionListWithAnswer = [] as any;
+                for (let item of _data["questionListWithAnswer"])
+                    this.questionListWithAnswer!.push(ExamQuestionWithAnswerDto.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): SubmitAnswerExamQuestionsDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new SubmitAnswerExamQuestionsDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["studentAttemptId"] = this.studentAttemptId;
+        data["submitExam"] = this.submitExam;
+        if (Array.isArray(this.questionListWithAnswer)) {
+            data["questionListWithAnswer"] = [];
+            for (let item of this.questionListWithAnswer)
+                data["questionListWithAnswer"].push(item.toJSON());
+        }
+        return data;
+    }
+}
+
+export interface ISubmitAnswerExamQuestionsDto {
+    studentAttemptId: string;
+    submitExam: boolean | undefined;
+    questionListWithAnswer: ExamQuestionWithAnswerDto[] | undefined;
+}
+
 export class SubscribableEditionComboboxItemDto implements ISubscribableEditionComboboxItemDto {
     value!: string | undefined;
     displayText!: string | undefined;
@@ -60788,13 +60888,13 @@ export class Type implements IType {
     readonly customAttributes!: CustomAttributeData[] | undefined;
     readonly isCollectible!: boolean;
     readonly metadataToken!: number;
-    readonly isInterface!: boolean;
     memberType!: MemberTypes;
     readonly namespace!: string | undefined;
     readonly assemblyQualifiedName!: string | undefined;
     readonly fullName!: string | undefined;
     assembly!: Assembly;
     module!: Module;
+    readonly isInterface!: boolean;
     readonly isNested!: boolean;
     declaringType!: Type;
     declaringMethod!: MethodBase;
@@ -60877,13 +60977,13 @@ export class Type implements IType {
             }
             (<any>this).isCollectible = _data["isCollectible"];
             (<any>this).metadataToken = _data["metadataToken"];
-            (<any>this).isInterface = _data["isInterface"];
             this.memberType = _data["memberType"];
             (<any>this).namespace = _data["namespace"];
             (<any>this).assemblyQualifiedName = _data["assemblyQualifiedName"];
             (<any>this).fullName = _data["fullName"];
             this.assembly = _data["assembly"] ? Assembly.fromJS(_data["assembly"]) : <any>undefined;
             this.module = _data["module"] ? Module.fromJS(_data["module"]) : <any>undefined;
+            (<any>this).isInterface = _data["isInterface"];
             (<any>this).isNested = _data["isNested"];
             this.declaringType = _data["declaringType"] ? Type.fromJS(_data["declaringType"]) : <any>undefined;
             this.declaringMethod = _data["declaringMethod"] ? MethodBase.fromJS(_data["declaringMethod"]) : <any>undefined;
@@ -60970,13 +61070,13 @@ export class Type implements IType {
         }
         data["isCollectible"] = this.isCollectible;
         data["metadataToken"] = this.metadataToken;
-        data["isInterface"] = this.isInterface;
         data["memberType"] = this.memberType;
         data["namespace"] = this.namespace;
         data["assemblyQualifiedName"] = this.assemblyQualifiedName;
         data["fullName"] = this.fullName;
         data["assembly"] = this.assembly ? this.assembly.toJSON() : <any>undefined;
         data["module"] = this.module ? this.module.toJSON() : <any>undefined;
+        data["isInterface"] = this.isInterface;
         data["isNested"] = this.isNested;
         data["declaringType"] = this.declaringType ? this.declaringType.toJSON() : <any>undefined;
         data["declaringMethod"] = this.declaringMethod ? this.declaringMethod.toJSON() : <any>undefined;
@@ -61052,13 +61152,13 @@ export interface IType {
     customAttributes: CustomAttributeData[] | undefined;
     isCollectible: boolean;
     metadataToken: number;
-    isInterface: boolean;
     memberType: MemberTypes;
     namespace: string | undefined;
     assemblyQualifiedName: string | undefined;
     fullName: string | undefined;
     assembly: Assembly;
     module: Module;
+    isInterface: boolean;
     isNested: boolean;
     declaringType: Type;
     declaringMethod: MethodBase;
@@ -61157,13 +61257,13 @@ export class TypeInfo implements ITypeInfo {
     readonly customAttributes!: CustomAttributeData[] | undefined;
     readonly isCollectible!: boolean;
     readonly metadataToken!: number;
-    readonly isInterface!: boolean;
     memberType!: MemberTypes;
     readonly namespace!: string | undefined;
     readonly assemblyQualifiedName!: string | undefined;
     readonly fullName!: string | undefined;
     assembly!: Assembly;
     module!: Module;
+    readonly isInterface!: boolean;
     readonly isNested!: boolean;
     declaringType!: Type;
     declaringMethod!: MethodBase;
@@ -61255,13 +61355,13 @@ export class TypeInfo implements ITypeInfo {
             }
             (<any>this).isCollectible = _data["isCollectible"];
             (<any>this).metadataToken = _data["metadataToken"];
-            (<any>this).isInterface = _data["isInterface"];
             this.memberType = _data["memberType"];
             (<any>this).namespace = _data["namespace"];
             (<any>this).assemblyQualifiedName = _data["assemblyQualifiedName"];
             (<any>this).fullName = _data["fullName"];
             this.assembly = _data["assembly"] ? Assembly.fromJS(_data["assembly"]) : <any>undefined;
             this.module = _data["module"] ? Module.fromJS(_data["module"]) : <any>undefined;
+            (<any>this).isInterface = _data["isInterface"];
             (<any>this).isNested = _data["isNested"];
             this.declaringType = _data["declaringType"] ? Type.fromJS(_data["declaringType"]) : <any>undefined;
             this.declaringMethod = _data["declaringMethod"] ? MethodBase.fromJS(_data["declaringMethod"]) : <any>undefined;
@@ -61393,13 +61493,13 @@ export class TypeInfo implements ITypeInfo {
         }
         data["isCollectible"] = this.isCollectible;
         data["metadataToken"] = this.metadataToken;
-        data["isInterface"] = this.isInterface;
         data["memberType"] = this.memberType;
         data["namespace"] = this.namespace;
         data["assemblyQualifiedName"] = this.assemblyQualifiedName;
         data["fullName"] = this.fullName;
         data["assembly"] = this.assembly ? this.assembly.toJSON() : <any>undefined;
         data["module"] = this.module ? this.module.toJSON() : <any>undefined;
+        data["isInterface"] = this.isInterface;
         data["isNested"] = this.isNested;
         data["declaringType"] = this.declaringType ? this.declaringType.toJSON() : <any>undefined;
         data["declaringMethod"] = this.declaringMethod ? this.declaringMethod.toJSON() : <any>undefined;
@@ -61520,13 +61620,13 @@ export interface ITypeInfo {
     customAttributes: CustomAttributeData[] | undefined;
     isCollectible: boolean;
     metadataToken: number;
-    isInterface: boolean;
     memberType: MemberTypes;
     namespace: string | undefined;
     assemblyQualifiedName: string | undefined;
     fullName: string | undefined;
     assembly: Assembly;
     module: Module;
+    isInterface: boolean;
     isNested: boolean;
     declaringType: Type;
     declaringMethod: MethodBase;

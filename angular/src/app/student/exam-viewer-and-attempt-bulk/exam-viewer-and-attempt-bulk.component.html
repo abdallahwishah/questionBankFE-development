@@ -1,23 +1,30 @@
 <div class="container" style="padding-top: 15vh">
     <div class="card">
         <section class="m-7" *ngIf="examData">
+            <!-- HEADER -->
             <div class="header-page row">
                 <div class="col-md-3 col-6">
                     <div class="header-right">
                         <div>
                             <span class="header-title-label">{{ l('Name') }}</span>
                             <span class="px-1">:</span>
-                            <span class="header-title-label-input">{{ examData.studentName || '-' }}</span>
+                            <span class="header-title-label-input">
+                                {{ examData.studentName || '-' }}
+                            </span>
                         </div>
                         <div>
                             <span class="header-title-label">{{ l('SubjectName') }}</span>
                             <span class="px-1">:</span>
-                            <span class="header-title-label-input">{{ examData.subjectName }}</span>
+                            <span class="header-title-label-input">
+                                {{ examData.subjectName }}
+                            </span>
                         </div>
                         <div>
                             <span class="header-title-label">{{ l('Class') }}</span>
                             <span class="px-1">:</span>
-                            <span class="header-title-label-input">{{ examData.levelName }}</span>
+                            <span class="header-title-label-input">
+                                {{ examData.levelName }}
+                            </span>
                         </div>
                     </div>
                 </div>
@@ -41,15 +48,10 @@
                         <div>
                             <span class="header-title-label">{{ l('SectionNumber') }}</span>
                             <span class="px-1">:</span>
-                            <span class="header-title-label-input">{{ examData.sectionNo }}</span>
-                        </div>
-                        <!-- <div>
-                            <span class="header-title-label">{{ l('ExamDuration') }}</span>
-                            <span class="px-1">:</span>
                             <span class="header-title-label-input">
-                                {{ examData.sectionDuration + ' ' + l('Minute') }}
+                                {{ currentQuestion?.sectionNo }}
                             </span>
-                        </div> -->
+                        </div>
                         <div>
                             <span class="header-title-label">{{ l('RemainingTime') }}</span>
                             <span class="px-1">:</span>
@@ -61,75 +63,63 @@
                 </div>
             </div>
 
+            <!-- CONTENT -->
             <div class="content-page">
                 <ng-container *ngIf="examData">
+                    <!-- If instructions are showing -->
                     <div *ngIf="showInstructions" class="instructions">
                         <div [innerHTML]="examData.examInstructions" class="py-15 px-8"></div>
                         <div class="btn-footer text-end">
-                            <!-- showInstructions -->
                             <button class="btn btn-primary mt-6 mb-4" (click)="startExam()">
                                 {{ l('StartExam') }}
                             </button>
                         </div>
                     </div>
-                    <!--  -->
-                    <ng-container *ngIf="!loading; else loader">
-                        {{ question.question?.dragTableAnswer | json }}
-                        <app-dynamic-exam-question
-                            *ngIf="!showInstructions && question"
-                            [question]="question.question"
-                            [(ngModel)]="question.question"
-                            [questionType]="question.question?.question.type"
-                            style="display: block; margin-top: 1rem"
-                        ></app-dynamic-exam-question>
+
+                    <!-- If we are not showing instructions, show the question -->
+                    <ng-container *ngIf="!showInstructions">
+                        <ng-container *ngIf="!loading">
+                            <app-dynamic-exam-question
+                                *ngIf="currentQuestion"
+                                [question]="currentQuestion.question.question"
+                                [(ngModel)]="currentQuestion.question.question"
+                                [questionType]="currentQuestion.question?.question.question.type"
+                                style="display: block; margin-top: 1rem"
+                            ></app-dynamic-exam-question>
+                        </ng-container>
                     </ng-container>
                 </ng-container>
             </div>
-            <div *ngIf="!showInstructions && question">
+
+            <!-- FOOTER: Nav Buttons -->
+            <div *ngIf="!showInstructions && currentQuestion">
                 <br />
                 <br />
                 <br />
                 <br />
             </div>
-
-            <div class="footer-page row" *ngIf="!showInstructions && question">
+            <div *ngIf="!showInstructions && currentQuestion" class="footer-page row">
                 <div class="col-12">
                     <div class="d-flex flex-row justify-content-between">
                         <div>
-                            <button
-                                class="btn btn-primary-prev"
-                                *ngIf="!(examData.questionNo == 1 && examData.sectionNo == 1)"
-                                (click)="prev()"
-                            >
+                            <!-- PREV button -->
+                            <button class="btn btn-primary-prev" *ngIf="!isFirstQuestion" (click)="prev()">
                                 {{ l('Previous') }}
                             </button>
                         </div>
                         <div>
+                            <!-- sidebar toggle -->
                             <button class="btn btn-primary-showlist" (click)="sidebarVisible = !sidebarVisible">
                                 <i class="pi pi-align-justify"></i>
                             </button>
                         </div>
                         <div>
-                            <button
-                                class="btn btn-primary-next"
-                                (click)="nextCon()"
-                                *ngIf="
-                                    examData.isLastQuestionInSection &&
-                                    examData?.sectionCountInExam == examData?.sectionNo
-                                "
-                            >
+                            <!-- if last question, show EndExam -->
+                            <button class="btn btn-primary-next" (click)="nextCon()" *ngIf="isLastQuestion">
                                 {{ l('EndExam') }}
                             </button>
-                            <button
-                                class="btn btn-primary-next"
-                                (click)="next()"
-                                *ngIf="
-                                    !(
-                                        examData.isLastQuestionInSection &&
-                                        examData?.sectionCountInExam == examData?.sectionNo
-                                    )
-                                "
-                            >
+                            <!-- else show Next -->
+                            <button class="btn btn-primary-next" (click)="next()" *ngIf="!isLastQuestion">
                                 {{ l('Next') }}
                             </button>
                         </div>
@@ -139,38 +129,27 @@
         </section>
     </div>
 </div>
+
 <app-warning-modal [title]="'ConfirmEndExamDescription'"></app-warning-modal>
+
+<!-- SIDEBAR for question list -->
 <p-sidebar [(visible)]="sidebarVisible" styleClass="w-40rem" position="right">
     <ng-template pTemplate="header">
         <span class="font-semibold text-dark fs-3">قائمة الاسئلة</span>
     </ng-template>
-
-    @for (section of questionlist; track $index) {
-        <div class="flex align-items-center gap-2 w-full py-3 px-2 m-2 p-accordion-header">
-            <div class="d-flex align-items-center gap-2">
-                <div class="num-box">{{ section?.order }}</div>
-
-                <div>
-                    <span class="fw-bold white-space-nowrap text-dark">{{ section?.name }}</span>
-                </div>
-            </div>
-        </div>
-        @for (question of section?.examQuestions; track $index) {
-            <div
-                class="d-flex align-items-center gap-2 mx-5 my-5 px-4 w-full"
-                style="cursor: pointer"
-                [class.hasNoAnswer]="!question?.hasAnswer"
-                (click)="question?.hasAnswer ? GetSelectedQuestion(section, question) : ''"
-            >
-                <div class="num-box-q">{{ $index + 1 }}</div>
-
-                <span class="fw-bold white-space-nowrap" [class.text-dark]="question?.hasAnswer">
-                    {{ question.question.question.body | safeText: 40 }}
-                </span>
-            </div>
-        }
-        <hr />
-    }
+    <div
+        *ngFor="let q of questionlist; let i = index"
+        class="d-flex align-items-center gap-2 mx-5 my-5 px-4 w-full"
+        style="cursor: pointer"
+        [class.hasNoAnswer]="!q?.hasAnswer"
+        (click)="GetSelectedQuestion(i)"
+    >
+        <div class="num-box-q">{{ i + 1 }}</div>
+        <span class="fw-bold white-space-nowrap" [class.text-dark]="q?.hasAnswer">
+            {{ q.question.question.body | safeText: 40 }}
+        </span>
+    </div>
+    <hr />
 </p-sidebar>
 
 <ng-template #loader>loading....</ng-template>

@@ -1,25 +1,25 @@
+import { Component, Injector, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { DynamicExamQuestionComponent } from '@app/shared/components/questions-exam/dynamic-exam-question/dynamic-exam-question.component';
 import {
     ApplyExamDto,
     ExamQuestionWithAnswerDto,
-    ExamSectionDto,
     ExamsServiceProxy,
+    QuestionWithAnswerDto,
     StudentExamStatus,
     SubQuestionAnswer,
-    ViewExamQuestionDto,
+    QuestionTypeEnum,
+    SubmitAnswerExamQuestionsDto,
 } from './../../../shared/service-proxies/service-proxies';
-import { Component, Injector, OnInit } from '@angular/core';
+
+import { AppComponentBase } from '@shared/common/app-component-base';
+import { DialogSharedService } from '@app/shared/components/dialog-shared/dialog-shared.service';
+import { UniqueNameComponents } from '@app/shared/Models/UniqueNameComponents';
+import { DynamicExamQuestionComponent } from '@app/shared/components/questions-exam/dynamic-exam-question/dynamic-exam-question.component';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { SidebarModule } from 'primeng/sidebar';
 import { AccordionModule } from 'primeng/accordion';
-import { QuestionTypeEnum } from './../../../shared/service-proxies/service-proxies';
-import { AppComponentBase } from '@shared/common/app-component-base';
-import { DialogSharedService } from '@app/shared/components/dialog-shared/dialog-shared.service';
-import { UniqueNameComponents } from '@app/shared/Models/UniqueNameComponents';
 import { WarningModalComponent } from '@app/main/templates/components/warning-modal/warning-modal.component';
-import { GetExamForViewDto } from './../../../shared/service-proxies/service-proxies';
 import { SafeTextPipe } from '@app/shared/pipes/safe-text.pipe';
 
 @Component({
@@ -37,17 +37,25 @@ import { SafeTextPipe } from '@app/shared/pipes/safe-text.pipe';
     templateUrl: './exam-viewer-and-attempt-bulk.component.html',
     styleUrls: ['./exam-viewer-and-attempt-bulk.component.css'],
 })
-export class ExamViewerAndAttemptBulkComponent extends AppComponentBase implements OnInit {
-    isViewer: boolean;
-    id: number;
-    examData: any;
-    question: any;
+export class ExamViewerAndAttemptBulkComponent extends AppComponentBase implements OnInit, OnDestroy {
+    // Basic exam data
+    examData: ApplyExamDto;
+    questionlist: QuestionWithAnswerDto[] = [];
+    currentIndex = 0;
+
+    // UI / state
     showInstructions = true;
     sidebarVisible = false;
     loading = false;
 
-    private timer: any;
-    remainingTime: string = '00 : 00 : 00';
+    // Timer
+    private timer: any = null;
+    private remainingSeconds = 0; // We'll store the "seconds left" internally
+    remainingTime: string = '00:00:00';
+
+    // LocalStorage key
+    private LOCAL_STORAGE_KEY = 'MY_EXAM_DATA_V2';
+
     constructor(
         injector: Injector,
         private _examsServiceProxy: ExamsServiceProxy,
@@ -56,237 +64,44 @@ export class ExamViewerAndAttemptBulkComponent extends AppComponentBase implemen
         private _DialogSharedService: DialogSharedService,
     ) {
         super(injector);
-        this.isViewer = window?.location.href.includes('viewer');
-        this.id = this._activatedRoute.snapshot.params.id;
     }
-
+    studentAttemptId;
     ngOnInit() {
-        this.loadExamData();
-    }
+        const savedDataJson = localStorage.getItem(this.LOCAL_STORAGE_KEY);
+        if (savedDataJson) {
+            try {
+                const saved = JSON.parse(savedDataJson);
+                // re-hydrate
+                this.examData = saved.examData;
+                this.questionlist = saved.questionlist || [];
+                this.currentIndex = saved.currentIndex || 0;
+                this.showInstructions = saved.showInstructions ?? true;
+                this.remainingTime = saved.remainingTime || '00:00:00';
+                this.studentAttemptId = saved.studentAttemptId;
+                // If we saved "remainingSeconds" explicitly, restore it:
+                if (typeof saved.remainingSeconds === 'number') {
+                    this.remainingSeconds = saved.remainingSeconds;
+                    // If we still have time, let's re-start the timer:
+                    if (this.remainingSeconds > 0) {
+                        this.startTimer(this.remainingSeconds);
+                    } else {
+                        // If the user had 0 or less, we do final end or forced submission:
+                        this.handleTimeExpired();
+                    }
+                }
 
-    loadExamData() {
-        if (this.isViewer) {
-            this._examsServiceProxy.getApplyModel(this.id).subscribe((response) => {
-                this.examData = response;
-                this.question = response.questionWithAnswer.question;
-                this.showInstructions = !!response.examInstructions;
-            });
-        } else {
-            // this._examsServiceProxy.e
-            // this._examsServiceProxy.answerExamQuestions
-            this._examsServiceProxy.getExpectedeExam().subscribe((response) => {
-                this.examData = response.applyExamDto;
+                // If no examData in local storage, fetch from server
                 if (!this.examData) {
-                    this.router.navigate(['/student/main']);
+                    this.loadExamData();
                 }
-                this.loadQuestionList();
-                this.examData.isLastQuestionInSection = this.examData.isLastQuestionInSection;
-                this.examData.sectionCountInExam = this.examData?.questionWithAnswer.sectionCountInExam;
-                this.id = response.applyExamDto.examId;
-                this.handleQuestionWithAnswer(response.applyExamDto.questionWithAnswer);
-                console.log('response.applyExamDto.questionWithAnswer', response.applyExamDto.questionWithAnswer);
-                this.question = response.applyExamDto.questionWithAnswer.question;
-                this.showInstructions = !!response.applyExamDto.examInstructions;
-                this.startTimer(this.examData.remainingSeconds);
-            });
-        }
-    }
-
-    startExam() {
-        this.showInstructions = false;
-    }
-
-    prev() {
-        if (this.isViewer) {
-            const viewDto = new ViewExamQuestionDto();
-            viewDto.examId = this.id;
-            viewDto.questionId = this.question.questionId;
-            viewDto.questionNo = this.examData.questionNo - 1 || 1;
-            viewDto.sectionId = this.question.sectionId;
-            viewDto.sectionNo = this.examData.sectionNo;
-            this.loading = true;
-
-            this._examsServiceProxy.viewPreviosQuestion(viewDto).subscribe((response) => {
-                this.updateQuestion(response);
-            });
+            } catch (err) {
+                // if parse fails, load fresh
+                this.loadExamData();
+            }
         } else {
-            const dto = new ExamQuestionWithAnswerDto();
-            dto.examId = this.id;
-            dto.questionId = this.question.questionId;
-            dto.questionNo = this.examData.questionNo - 1 || 1;
-            dto.sectionId = this.question.sectionId;
-            dto.sectionNo = this.examData.sectionNo;
-            dto.type = this.question.question.type;
-            dto.rearrangeAnswer = this.question.question?.rearrangeAnswer; //working
-            dto.trueFalseAnswer = this.question.question?.trueFalseAnswer; //working
-            dto.dragTableAnswer = this.question.question?.dragTableAnswer; //working
-            dto.multipleChoiceAnswer = this.question.question?.multipleChoiceAnswer; //testing
-            dto.drawingAnswer = this.question.question?.drawingAnswer; //working
-            dto.singleChoiceAnswer = this.question.question?.singleChoiceAnswer; //working
-            dto.matchAnswer = this.question.question?.matchAnswer; //working
-            dto.saAnswer = this.question.question?.saAnswer; //working
-            dto.dragFormAnswer = this.question.question?.dragFormAnswer;
-            dto.linkedQuestionAnswer = this.question.question?.linkedQuestionAnswer; //working
-            this.loading = true;
-
-            if (
-                !dto.rearrangeAnswer &&
-                !dto.trueFalseAnswer &&
-                !dto.dragTableAnswer &&
-                !dto.multipleChoiceAnswer &&
-                !dto.drawingAnswer &&
-                !dto.singleChoiceAnswer &&
-                !dto.matchAnswer &&
-                !dto.saAnswer &&
-                !dto.dragFormAnswer &&
-                !dto.linkedQuestionAnswer
-            ) {
-                alert('يرجى تقديم إجابة قبل المتابعة.');
-                this.loading = false;
-                return;
-            }
-            this._examsServiceProxy.backQuestion(dto).subscribe((response) => {
-                this.updateQuestion(response);
-            });
+            // no saved data => fetch from server
+            this.loadExamData();
         }
-    }
-    Warning_dialog = UniqueNameComponents.Warning_dialog;
-    nextCon() {
-        this._DialogSharedService.showDialog(this.Warning_dialog, {
-            confirm: () => {
-                this.next(true);
-            },
-        });
-    }
-    next(isLast = false) {
-        if (this.isViewer) {
-            const viewDto = new ViewExamQuestionDto();
-            viewDto.examId = this.id;
-            viewDto.questionId = this.question.questionId;
-            viewDto.questionNo = this.examData.questionNo + 1;
-            viewDto.sectionId = this.question.sectionId;
-            viewDto.sectionNo = this.examData.sectionNo;
-            this.loading = true;
-            this._examsServiceProxy.viewNextQuestion(viewDto).subscribe((response) => {
-                this.updateQuestion(response);
-            });
-        } else {
-            const dto = new ExamQuestionWithAnswerDto();
-            dto.examId = this.id;
-            dto.questionId = this.question.questionId;
-            dto.questionNo = this.examData.questionNo + 1;
-            dto.sectionId = this.question.sectionId;
-            dto.sectionNo = this.examData.sectionNo;
-            dto.type = this.question.question.type;
-            dto.rearrangeAnswer = this.question.question?.rearrangeAnswer;
-            dto.trueFalseAnswer = this.question.question?.trueFalseAnswer;
-            dto.dragTableAnswer = this.question.question?.dragTableAnswer;
-            dto.multipleChoiceAnswer = this.question.question?.multipleChoiceAnswer;
-            dto.drawingAnswer = this.question.question?.drawingAnswer;
-            dto.singleChoiceAnswer = this.question.question?.singleChoiceAnswer;
-            dto.matchAnswer = this.question.question?.matchAnswer;
-            dto.saAnswer = this.question.question?.saAnswer;
-            dto.dragFormAnswer = this.question.question?.dragFormAnswer;
-            dto.linkedQuestionAnswer = this.question.question?.linkedQuestionAnswer;
-
-            if (
-                !dto.rearrangeAnswer &&
-                !dto.trueFalseAnswer &&
-                !dto.dragTableAnswer &&
-                !dto.multipleChoiceAnswer &&
-                !dto.drawingAnswer &&
-                !dto.singleChoiceAnswer &&
-                !dto.matchAnswer &&
-                !dto.saAnswer &&
-                !dto.dragFormAnswer &&
-                !dto.linkedQuestionAnswer
-            ) {
-                alert('يرجى تقديم إجابة قبل المتابعة.');
-                this.loading = false;
-                return;
-            }
-            if (dto.linkedQuestionAnswer) {
-                // check requird for sub
-                const hasAnswer = dto.linkedQuestionAnswer.every(
-                    (subAnswer: any) =>
-                        subAnswer.multipleChoiceAnswer ||
-                        subAnswer.singleChoiceAnswer ||
-                        subAnswer.trueFalseAnswer ||
-                        subAnswer.saAnswer ||
-                        subAnswer.matchAnswer ||
-                        subAnswer.dragTableAnswer,
-                );
-
-                if (!hasAnswer) {
-                    alert('يرجى تقديم إجابة لكل سؤال فرعي قبل المتابعة.');
-                    this.loading = false;
-                    return;
-                }
-            }
-            this.loading = true;
-
-            this._examsServiceProxy.nextQuestion(dto).subscribe((response) => {
-                if (isLast) {
-                    this.end();
-                } else {
-                    this.updateQuestion(response);
-                    this.loadQuestionList();
-                }
-            });
-        }
-    }
-    end() {
-        this.router.navigate(['/student/main']);
-    }
-    startTimer(seconds: number) {
-        let time = Math.floor(seconds);
-        this.updateDisplay(time);
-
-        this.timer = setInterval(() => {
-            time--;
-            if (time >= 0) {
-                this.updateDisplay(time);
-            } else {
-                clearInterval(this.timer);
-            }
-        }, 1000);
-    }
-
-    updateDisplay(seconds: number) {
-        const hours = Math.floor(seconds / 3600);
-        const minutes = Math.floor((seconds % 3600) / 60);
-        const secs = seconds % 60;
-        this.remainingTime = `${String(hours).padStart(2, '0')} : ${String(minutes).padStart(2, '0')} : ${String(secs).padStart(2, '0')}`;
-    }
-
-    private updateQuestion(response: any) {
-        switch (response.status) {
-            case StudentExamStatus.ReachedExamEnd:
-                this.end();
-                break;
-            case StudentExamStatus.StudentAlreadyFinished:
-                this.end();
-                break;
-            case StudentExamStatus.ExamAlreadyEnd:
-                this.end();
-                break;
-            case StudentExamStatus.SomethingWrong:
-                window.location.reload();
-                break;
-        }
-        this.handleQuestionWithAnswer(response);
-
-        this.question = response.question;
-        this.examData.questionNo = response.questionNo;
-        this.examData.sectionNo = response.sectionNo;
-        this.examData.isLastQuestionInSection = response.isLastQuestionInSection;
-        this.examData.sectionNo = response.sectionNo;
-        (this.examData as any).sectionCountInExam = response.sectionCountInExam;
-
-        if (response.isNextSection) {
-            this.examData.sectionInstructions = response.sectionInstructions;
-        }
-        this.loading = false;
     }
 
     ngOnDestroy() {
@@ -294,125 +109,256 @@ export class ExamViewerAndAttemptBulkComponent extends AppComponentBase implemen
             clearInterval(this.timer);
         }
     }
-    handleQuestionWithAnswer(questionWithAnswer: any) {
-        let type: QuestionTypeEnum = questionWithAnswer?.question?.question?.question?.type;
-        let answer: any = {};
 
-        switch (type) {
-            case QuestionTypeEnum.MutliChoice:
-                answer.multipleChoiceAnswer = questionWithAnswer?.optionId;
-                break;
-            case QuestionTypeEnum.SinglChoice:
-                answer.singleChoiceAnswer = questionWithAnswer?.optionId?.[0];
-                break;
-            case QuestionTypeEnum.TrueAndFalse:
-                answer.trueFalseAnswer = questionWithAnswer?.optionId?.[0];
-                break;
-            case QuestionTypeEnum.SA:
-                answer.saAnswer = questionWithAnswer?.value?.[0];
-                break;
-            case QuestionTypeEnum.LinkedQuestions:
-                // reorder questionWithAnswer?.linkedQuestionsSubAnswers as per linkedQuestions
-                let linkedQuestionsSubAnswersOrdered = questionWithAnswer?.linkedQuestionsSubAnswers?.sort(
-                    (a: any, b: any) => {
-                        return (
-                            questionWithAnswer?.question?.question?.linkedQuestions.findIndex(
-                                (x: any) => x.question.id === a.subQuestionId,
-                            ) -
-                            questionWithAnswer?.question?.question?.linkedQuestions.findIndex(
-                                (x: any) => x.question.id === b.subQuestionId,
-                            )
-                        );
-                    },
-                );
-                answer.linkedQuestionAnswer = linkedQuestionsSubAnswersOrdered?.map((x: any, i) => {
-                    let typex: QuestionTypeEnum =
-                        questionWithAnswer?.question?.question?.linkedQuestions[i]?.question?.type;
-                    let subAnswer: any = {};
+    // ----------------------------------------------------------
+    // Loading from server if needed
+    // ----------------------------------------------------------
+    loadExamData() {
+        this._examsServiceProxy.getExpectedeExam().subscribe((response) => {
+            this.examData = response.applyExamDto;
+            this.questionlist = response.examQuestions || [];
+            this.studentAttemptId = response.studentAttemptId;
+            if (!this.examData) {
+                this.router.navigate(['/student/main']);
+                return;
+            }
 
-                    switch (typex) {
-                        case QuestionTypeEnum.MutliChoice:
-                            subAnswer.multipleChoiceAnswer = x.optionId;
-                            break;
-                        case QuestionTypeEnum.SinglChoice:
-                            subAnswer.singleChoiceAnswer = x.optionId?.[0];
-                            break;
-                        case QuestionTypeEnum.TrueAndFalse:
-                            subAnswer.trueFalseAnswer = x.optionId?.[0];
-                            break;
-                        case QuestionTypeEnum.SA:
-                            subAnswer.saAnswer = x.value;
-                            break;
-                        case QuestionTypeEnum.Match:
-                            subAnswer.matchAnswer = x.matchValue;
-                            break;
-                        case QuestionTypeEnum.DargingTable:
-                            subAnswer.dragTableAnswer = x.dargTableQuestionsSubAnswersWithoutPinned;
-                            break;
-                    }
+            // If we have a "remainingSeconds" from server, store it
+            if (this.examData.remainingSeconds) {
+                this.remainingSeconds = Math.floor(this.examData.remainingSeconds);
+                if (this.remainingSeconds > 0) {
+                    this.startTimer(this.remainingSeconds);
+                } else {
+                    // zero or negative => time is up?
+                    this.handleTimeExpired();
+                }
+            }
 
-                    return new SubQuestionAnswer({
-                        questionId: x.subQuestionId,
-                        ...subAnswer,
-                    });
-                });
-                break;
-        }
-
-        questionWithAnswer.question.question = {
-            ...questionWithAnswer?.question?.question,
-            ...answer,
-        };
-    }
-    questionlist: ExamSectionDto[];
-    loadQuestionList() {
-        this._examsServiceProxy.viewCurrentEXamQuestion().subscribe((response) => {
-            this.questionlist = response.exam.examSections;
+            this.showInstructions = !!this.examData.examInstructions;
+            this.saveToLocalStorage();
         });
     }
-    get arrayOfIndexes() {
-        // questionlist
-        return Array.from({ length: this.questionlist.length }, (_, i) => i)?.join(',');
+
+    // ----------------------------------------------------------
+    // Timer
+    // ----------------------------------------------------------
+    startTimer(seconds: number) {
+        // store internally
+        this.remainingSeconds = seconds;
+        this.updateTimeDisplay(this.remainingSeconds);
+
+        if (this.timer) {
+            clearInterval(this.timer);
+        }
+        this.timer = setInterval(() => {
+            this.remainingSeconds--;
+            if (this.remainingSeconds > 0) {
+                this.updateTimeDisplay(this.remainingSeconds);
+            } else {
+                clearInterval(this.timer);
+                this.remainingSeconds = 0;
+                this.updateTimeDisplay(0);
+                // Time is up => auto end exam
+                this.handleTimeExpired();
+            }
+            // Save to local each tick
+            this.saveToLocalStorage();
+        }, 1000);
     }
-    activeIndex;
-    GetSelectedQuestion(section, question) {
+
+    updateTimeDisplay(secs: number) {
+        const hh = Math.floor(secs / 3600);
+        const mm = Math.floor((secs % 3600) / 60);
+        const ss = secs % 60;
+        this.remainingTime = `${String(hh).padStart(2, '0')} : ${String(mm).padStart(
+            2,
+            '0',
+        )} : ${String(ss).padStart(2, '0')}`;
+    }
+
+    private handleTimeExpired() {
+        // If time is up, we want to do final submission
+        this.saveAllAnswersToServer(true);
+    }
+
+    // ----------------------------------------------------------
+    // localStorage
+    // ----------------------------------------------------------
+    private saveToLocalStorage() {
+        const dataToStore = {
+            examData: this.examData,
+            questionlist: this.questionlist,
+            currentIndex: this.currentIndex,
+            showInstructions: this.showInstructions,
+            remainingTime: this.remainingTime,
+            remainingSeconds: this.remainingSeconds,
+            studentAttemptId: this.studentAttemptId,
+        };
+        localStorage.setItem(this.LOCAL_STORAGE_KEY, JSON.stringify(dataToStore));
+    }
+
+    private clearStorageAndRedirect() {
+        localStorage.removeItem(this.LOCAL_STORAGE_KEY);
+        this.router.navigate(['/student/main']);
+    }
+
+    // ----------------------------------------------------------
+    // UI logic
+    // ----------------------------------------------------------
+    startExam() {
+        this.showInstructions = false;
+        this.saveToLocalStorage();
+    }
+
+    get currentQuestion(): QuestionWithAnswerDto | undefined {
+        return this.questionlist[this.currentIndex];
+    }
+
+    get isFirstQuestion(): boolean {
+        return this.currentIndex === 0;
+    }
+    get isLastQuestion(): boolean {
+        return this.currentIndex === this.questionlist.length - 1;
+    }
+
+    prev() {
+        this.loadContent();
+
+        if (this.isFirstQuestion) return;
+        // Immediately move in UI
+        this.currentIndex--;
+        this.saveToLocalStorage();
+
+        // Try to sync in background
+        this.saveAllAnswersToServer(false);
+    }
+
+    Warning_dialog = UniqueNameComponents.Warning_dialog;
+    nextCon() {
+        // show confirm if user tries to end exam
+        this._DialogSharedService.showDialog(this.Warning_dialog, {
+            confirm: () => {
+                this.next(true);
+            },
+        });
+    }
+    loadContent() {
         this.loading = true;
-        let examId = this.examData?.id;
-        let questionId = question?.id;
-        let questionNo = question.questionNo;
-        let questionNoInGeneral = question?.questionNoInGeneral;
-        let sectionId = question?.sectionId;
-        let sectionNo = question?.sectionNo;
+        setTimeout(() => {
+            this.loading = false;
+        }, 500);
+    }
+    next(isLast = false) {
+        this.loadContent();
+        // Move in UI immediately (if not last or forcing last)
+        if (!this.isLastQuestion || !isLast) {
+            this.currentIndex++;
+        }
+        this.saveToLocalStorage();
+
+        // sync in background
+        this.saveAllAnswersToServer(isLast);
+    }
+
+    end() {
+        // final end: remove local storage, go away
+        this.clearStorageAndRedirect();
+    }
+
+    // ----------------------------------------------------------
+    // Building + sending answers
+    // ----------------------------------------------------------
+    private saveAllAnswersToServer(isLast: boolean) {
+        // If no examData or no questionlist loaded, skip
+        if (!this.examData || !this.questionlist.length) return;
+
+        const answersArray: ExamQuestionWithAnswerDto[] = this.buildAnswersArray();
+
         this._examsServiceProxy
-            .getSelectedQuestion(
-                questionNoInGeneral,
-                questionNo,
-                sectionId,
-                questionId,
-                examId,
-                sectionNo,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
+            .answerExamQuestions(
+                new SubmitAnswerExamQuestionsDto({
+                    questionListWithAnswer: answersArray,
+                    studentAttemptId: this.studentAttemptId || '', // or pass real ID
+                    submitExam: isLast,
+                }),
             )
-            .subscribe(
-                (response) => {
-                    this.updateQuestion(response);
-                    this.sidebarVisible = false;
-                    this.loading = false;
+            .subscribe({
+                next: (res) => {
+                    // if success, check exam status
+                    switch (res.studentExamStatus) {
+                        case StudentExamStatus.ReachedExamEnd:
+                        case StudentExamStatus.StudentAlreadyFinished:
+                        case StudentExamStatus.ExamAlreadyEnd:
+                            // forcibly end the exam UI
+                            this.end();
+                            return;
+                        case StudentExamStatus.SomethingWrong:
+                            window.location.reload();
+                            return;
+                    }
+                    // if isLast => end
+                    if (isLast) {
+                        this.end();
+                    }
                 },
-                (err) => {
-                    this.loading = false;
+                error: (err) => {
+                    console.warn('Sync failed', err);
+                    // user keeps working, we'll retry next time they navigate
                 },
-            );
+            });
+    }
+
+    private buildAnswersArray(): ExamQuestionWithAnswerDto[] {
+        const examId = this.examData?.examId;
+        return this.questionlist.map((q: any) => {
+            const dto = new ExamQuestionWithAnswerDto();
+            dto.examId = examId;
+            dto.questionId = q.question.questionId;
+            dto.questionNo = q.questionNo;
+            dto.sectionId = q.sectionId;
+            dto.sectionNo = q.sectionNo;
+            dto.type = q.question?.question?.question?.type;
+
+            switch (dto.type) {
+                case QuestionTypeEnum.MutliChoice:
+                    dto.multipleChoiceAnswer = q.question?.question?.question?.multipleChoiceAnswer;
+                    break;
+                case QuestionTypeEnum.SinglChoice:
+                    dto.singleChoiceAnswer = q.question?.question?.question?.singleChoiceAnswer;
+                    break;
+                case QuestionTypeEnum.TrueAndFalse:
+                    dto.trueFalseAnswer = q.question?.question?.question?.trueFalseAnswer;
+                    break;
+                case QuestionTypeEnum.SA:
+                    dto.saAnswer = q.question?.question?.question?.saAnswer;
+                    break;
+                case QuestionTypeEnum.Match:
+                    dto.matchAnswer = q.question?.question?.question?.matchAnswer;
+                    break;
+                case QuestionTypeEnum.LinkedQuestions:
+                    const subs = q.question?.question?.linkedQuestionAnswer || [];
+                    dto.linkedQuestionAnswer = subs.map((sub) => {
+                        return new SubQuestionAnswer({
+                            questionId: sub.questionId,
+                            multipleChoiceAnswer: sub.multipleChoiceAnswer,
+                            singleChoiceAnswer: sub.singleChoiceAnswer,
+                            trueFalseAnswer: sub.trueFalseAnswer,
+                            saAnswer: sub.saAnswer,
+                            matchAnswer: sub.matchAnswer,
+                        });
+                    });
+                    break;
+                // etc for other question types
+            }
+            return dto;
+        });
+    }
+
+    // from sidebar
+    GetSelectedQuestion(index: number) {
+        this.currentIndex = index;
+        this.saveToLocalStorage();
+        this.saveAllAnswersToServer(false);
+        this.sidebarVisible = false;
     }
 }

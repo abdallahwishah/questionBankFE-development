@@ -31,7 +31,7 @@ import { StudentHeaderComponent } from "./student-header/student-header.componen
                 },
                 {
                     path: 'exam-attempt',
-                    loadComponent: () => import('./exam-viewer-and-attempt/exam-viewer-and-attempt.component').then((m) => m.ExamViewerAndAttemptComponent),
+                    loadComponent: () => import('./exam-viewer-and-attempt-bulk/exam-viewer-and-attempt-bulk.component').then((m) => m.ExamViewerAndAttemptBulkComponent),
                 },
             ],
         },
