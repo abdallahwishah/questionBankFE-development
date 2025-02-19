@@ -1,8 +1,7 @@
-<!-- drag-drop-table.component.html -->
 <div class="drag-drop-table-container" *ngIf="tableView as tv">
     <div class="mb-3" *ngIf="config?.question?.body" [innerHTML]="config.question.body"></div>
 
-    <!-- Draggable items container -->
+    <!-- Draggable "source" items -->
     <div
       class="draggable-items-container"
       cdkDropList
@@ -22,11 +21,9 @@
         (cdkDragEnded)="onDragEnded()"
       >
         {{ item.title }}
-        <!-- Preview when dragging -->
-        <div *cdkDragPreview class="drag-preview">
-          {{ item.title }}
-        </div>
-        <!-- Placeholder -->
+        <!-- Drag Preview -->
+        <div *cdkDragPreview class="drag-preview">{{ item.title }}</div>
+        <!-- Drag Placeholder -->
         <div *cdkDragPlaceholder class="drag-placeholder"></div>
       </div>
     </div>
@@ -35,7 +32,7 @@
     <table class="table table-bordered" [class.disabled]="isDisabled">
       <thead>
         <tr>
-          <th *ngFor="let header of tableView.headers" class="text-center">
+          <th *ngFor="let header of tv.headers" class="text-center">
             {{ header }}
           </th>
         </tr>
@@ -59,12 +56,9 @@
             (cdkDropListEntered)="cell.isDropTarget = true"
             (cdkDropListExited)="cell.isDropTarget = false"
           >
-            <div
-              class="cell-content"
-              [class.dragging]="dragInProgress"
-              [attr.data-cell-id]="cell.id"
-            >
+            <div class="cell-content" [class.dragging]="dragInProgress">
               <span>{{ cell.value }}</span>
+              <!-- Remove (unpin) button if not pinned -->
               <span
                 *ngIf="cell.value && !cell.pinned"
                 class="remove-button"
@@ -75,7 +69,8 @@
                 <i class="pi pi-times remove-icon"></i>
               </span>
             </div>
-            <!-- Drop placeholder -->
+
+            <!-- cdk placeholder -->
             <div
               *cdkDragPlaceholder
               class="cell-placeholder"

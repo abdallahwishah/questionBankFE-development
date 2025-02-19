@@ -136,6 +136,9 @@ export class WordsOrderComponent extends AppComponentBase implements ControlValu
         this.items = newItems;
       }
     }
+    setTimeout(() => {
+        this.emitChange()
+    }, 5);
   }
 
   registerOnChange(fn: (value: string[]) => void): void {

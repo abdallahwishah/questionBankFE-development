@@ -15,53 +15,19 @@ import {
   import { CommonModule } from '@angular/common';
   import {
     CdkDropList,
-    CdkDrag,
     CdkDragDrop,
-    DragDropModule,
-    moveItemInArray,
-    transferArrayItem
+    DragDropModule
   } from '@angular/cdk/drag-drop';
-  import { DragTableAnswer } from '@shared/service-proxies/service-proxies';
 
-  /** Data model for draggable items */
+  /** Draggable item model */
   interface DragDropItem {
     title: string;
     isPinned: boolean;
-    order: number; // Interpreted as column index when pinned
+    order: number;
     id: string;
   }
 
-  /** Data model for how each cell is configured in tableView.cells */
-  interface DragDropCell {
-    dragDropTableHeaders: string | null;
-    dragDropTableColmunIndex: number;
-    dargDropTableItems: DragDropItem[];
-  }
-
-  /**
-   * The structure of your overall table data object.
-   * - rows, columns => the table dimensions
-   * - headers => array of column headers
-   * - allColumns => the "un-pinned" items storage
-   * - cells => an array, each representing pinned items for row i
-   */
-  export interface DragDropTableView {
-    rows: number;
-    columns: number;
-    headers: string[];
-    allColumns: {
-      dragDropTableHeaders: string;
-      dragDropTableColmunIndex: number;
-      dargDropTableItems: DragDropItem[];
-    };
-    cells: DragDropCell[];
-  }
-
-  export interface TableValue {
-    title: string;
-    words: string[];
-  }
-
+  /** One cell in the table */
   export interface TableCell {
     value: string | null;
     pinned: boolean;
@@ -69,6 +35,25 @@ import {
     order?: number;
     id?: string;
     isDropTarget?: boolean;
+  }
+
+  /** The config shape from questionPayload.dragDropTableView */
+  export interface DragDropTableView {
+    rows: number;
+    columns: number;
+    headers: string[]; // e.g. ["إن واخواتها", "كان واخواتها"]
+    // If you have subQuestionIds, you can store them here
+    // subQuestionIds?: number[];
+    allColumns: {
+      dragDropTableHeaders: string;
+      dragDropTableColmunIndex: number;
+      dargDropTableItems: DragDropItem[];
+    };
+    cells: Array<{
+      dragDropTableHeaders: string | null;
+      dragDropTableColmunIndex: number;
+      dargDropTableItems: DragDropItem[];
+    }>;
   }
 
   @Component({
@@ -81,36 +66,47 @@ import {
       {
         provide: NG_VALUE_ACCESSOR,
         useExisting: forwardRef(() => DragDropTableComponent),
-        multi: true,
-      },
+        multi: true
+      }
     ],
-    encapsulation: ViewEncapsulation.None,
+    encapsulation: ViewEncapsulation.None
   })
   export class DragDropTableComponent
     implements OnInit, AfterViewInit, OnDestroy, ControlValueAccessor
   {
     @Input() config: any | null = null;
+
     @ViewChild('sourceList') sourceList!: CdkDropList;
     @ViewChildren('dropList') dropLists!: QueryList<CdkDropList>;
 
-    value: TableValue[] = [];
-    internalValue: Array<Array<TableCell>> = []; // 2D array [row][col]
+    /**
+     * Final value shape that we emit to the parent form:
+     * [
+     *   { subQuestionId: 601, value: ["أنَّ", "ليت", "بات", "كأن"] },
+     *   { subQuestionId: 602, value: ["اصبح", "لعل", "صار", "ظلّ"] }
+     * ]
+     */
+    value: Array<{ subQuestionId: number; value: string[] }> = [];
+
+    /** 2D table array: [rowIndex][colIndex] => TableCell */
+    internalValue: TableCell[][] = [];
+
+    /** Source list of unpinned items (not in any cell) */
     draggableItems: DragDropItem[] = [];
+
     isDisabled = false;
     dragInProgress = false;
-
     private connectedLists: CdkDropList[] = [];
-    private isDragging = false;
 
-    /** For ControlValueAccessor: callbacks */
-    private onChangeFn: (val: TableValue[]) => void = () => {};
+    // ControlValueAccessor callbacks
+    private onChangeFn: (val: any) => void = () => {};
     private onTouchedFn: () => void = () => {};
 
-    // --------------------------------------------
+    // ----------------------------------------------------
     // Quick accessors
-    // --------------------------------------------
+    // ----------------------------------------------------
     get tableView(): DragDropTableView | undefined {
-      return this.config?.questionPayload?.dragDropTableView || undefined;
+      return this.config?.questionPayload?.dragDropTableView;
     }
 
     get actualRows(): number {
@@ -121,29 +117,31 @@ import {
       return this.tableView?.columns || 1;
     }
 
-    // --------------------------------------------
-    // Lifecycle
-    // --------------------------------------------
     constructor(private cdr: ChangeDetectorRef) {}
 
+    // ----------------------------------------------------
+    // Lifecycle
+    // ----------------------------------------------------
     ngOnInit(): void {
+      // OPTIONAL: If you want to show pinned items from config
+      // before the form calls writeValue, do:
       this.buildTableFromConfig();
-      this.initializeDraggableItems(); // un-pinned items
+
+      // Also initialize the unpinned items in the source
+      this.initializeDraggableItems();
     }
 
     ngAfterViewInit(): void {
-      setTimeout(() => {
-        this.setupDropLists();
-      });
+      setTimeout(() => this.setupDropLists());
     }
 
     ngOnDestroy(): void {
       this.connectedLists = [];
     }
 
-    // --------------------------------------------
-    // Build the internal table from config
-    // --------------------------------------------
+    // ----------------------------------------------------
+    // Build from config (pinned items)
+    // ----------------------------------------------------
     private buildTableFromConfig(): void {
       const tv = this.tableView;
       if (!tv) {
@@ -151,33 +149,31 @@ import {
         return;
       }
 
-      // 1) Initialize empty 2D array: [rows x columns]
-      this.internalValue = Array(this.actualRows).fill(null).map(() =>
-        Array(tv.columns).fill(null).map(() => ({
-          value: null,
-          pinned: false,
-          checked: false,
-          order: 0,
-          id: undefined,
-          isDropTarget: false,
-        }))
-      );
+      // Create an empty table
+      this.internalValue = Array(this.actualRows)
+        .fill(null)
+        .map(() =>
+          Array(tv.columns)
+            .fill(null)
+            .map(() => ({
+              value: null,
+              pinned: false,
+              checked: false,
+              order: 0,
+              id: undefined,
+              isDropTarget: false
+            }))
+        );
 
-      // 2) For each row i, check its pinned items in tv.cells[i]
-      //    Each pinned item => goes to row i, column = item.order
-      const totalRows = Math.min(tv.cells.length, this.actualRows);
-
-      for (let rowIndex = 0; rowIndex < totalRows; rowIndex++) {
+      // Place pinned items
+      const rowCount = Math.min(tv.cells.length, this.actualRows);
+      for (let rowIndex = 0; rowIndex < rowCount; rowIndex++) {
         const cellConfig = tv.cells[rowIndex];
-        if (!cellConfig?.dargDropTableItems?.length) {
-          continue;
-        }
+        if (!cellConfig?.dargDropTableItems?.length) continue;
 
-        // Place pinned items
         cellConfig.dargDropTableItems.forEach((item) => {
-          if (!item.isPinned) return; // skip unpinned
-          const colIndex = item.order; // treat 'order' as column index
-          // Ensure valid col index
+          if (!item.isPinned) return;
+          const colIndex = item.order; // "order" used as column index
           if (colIndex >= 0 && colIndex < this.actualColumns) {
             this.internalValue[rowIndex][colIndex] = {
               value: item.title,
@@ -185,19 +181,14 @@ import {
               checked: true,
               order: colIndex,
               id: this.generateUniqueId(),
-              isDropTarget: false,
+              isDropTarget: false
             };
           }
         });
       }
-
-      // 3) Done; table is set. Let the form know
-      this.updateFormValue();
     }
 
-    /**
-     * Fill up the list of UNPINNED items from `tableView.allColumns.dargDropTableItems`
-     */
+    /** Populate `draggableItems` with unpinned items from config. */
     private initializeDraggableItems(): void {
       const tv = this.tableView;
       if (!tv?.allColumns?.dargDropTableItems) {
@@ -205,77 +196,57 @@ import {
         return;
       }
 
-      // Keep only items that are NOT pinned => they belong in the source
       this.draggableItems = tv.allColumns.dargDropTableItems
         .filter((item) => !item.isPinned)
         .map((item) => ({
           title: item.title,
-          isPinned: item.isPinned,
+          isPinned: false,
           order: item.order,
-          id: this.generateUniqueId(),
+          id: this.generateUniqueId()
         }));
-
-      // If you'd like a particular sort, do so here:
-      // this.draggableItems.sort((a, b) => a.order - b.order);
     }
 
-    /**
-     * Create cdkDropList connections: the source list + any unfilled table cells.
-     */
+    // ----------------------------------------------------
+    // Setup cdkDropList connections
+    // ----------------------------------------------------
     private setupDropLists(): void {
       if (!this.sourceList || !this.dropLists) return;
 
-      // Reset connections
       this.connectedLists = [];
-
       const dropListsArray = this.dropLists.toArray();
 
-      // We'll allow dropping from the source to each empty cell
+      // Only allow dropping into unpinned + empty cells
       const availableDropLists = dropListsArray.filter((_, index) => {
-        const [rowIndex, colIndex] = this.getIndicesFromDropList(index);
-        // Only connect if cell is NOT pinned and doesn't have a value
+        const rowIndex = Math.floor(index / this.actualColumns);
+        const colIndex = index % this.actualColumns;
         const cell = this.internalValue[rowIndex][colIndex];
         return !cell.pinned && cell.value === null;
       });
 
-      // Connect them all to the source
-      this.connectedLists = [this.sourceList, ...availableDropLists];
-
-      // Source list can drop to each empty cell
+      // Source => can drop into these empty cells
       this.sourceList.connectedTo = availableDropLists;
+      availableDropLists.forEach((dl) => (dl.connectedTo = [this.sourceList]));
 
-      // Each empty cell can only receive from the source
-      availableDropLists.forEach((dropList) => {
-        dropList.connectedTo = [this.sourceList];
-      });
-
+      this.connectedLists = [this.sourceList, ...availableDropLists];
       this.cdr.detectChanges();
     }
 
-    private getIndicesFromDropList(index: number): [number, number] {
-      const rowIndex = Math.floor(index / this.actualColumns);
-      const colIndex = index % this.actualColumns;
-      return [rowIndex, colIndex];
-    }
-
-    // --------------------------------------------
-    // Drag & drop event handlers
-    // --------------------------------------------
+    // ----------------------------------------------------
+    // Drag & Drop Handlers
+    // ----------------------------------------------------
     onDragStarted(): void {
-      this.isDragging = true;
       this.dragInProgress = true;
       this.cdr.detectChanges();
     }
 
     onDragEnded(): void {
-      this.isDragging = false;
       this.dragInProgress = false;
       // Clear dropTarget flags
-      this.internalValue.forEach((row) => {
+      this.internalValue.forEach((row) =>
         row.forEach((cell) => {
           cell.isDropTarget = false;
-        });
-      });
+        })
+      );
       this.cdr.detectChanges();
     }
 
@@ -288,18 +259,17 @@ import {
         const containerData = event.container.data;
         const previousContainerData = event.previousContainer.data;
 
-        // (A) Dropping onto a cell
-        if (containerData && typeof containerData === 'object' && 'rowIndex' in containerData) {
+        if (this.isCellData(containerData)) {
           const { rowIndex, colIndex } = containerData;
           if (!this.validateCellIndices(rowIndex, colIndex)) return;
           if (!this.isCellAvailable(rowIndex, colIndex)) return;
 
-          // (A1) If source => cell
+          // Source => cell
           if (Array.isArray(previousContainerData)) {
             this.handleDropFromSource(draggedItem, rowIndex, colIndex);
           }
-          // (A2) If cell => different cell (not pinned?)
-          else if (this.isValidCellData(previousContainerData)) {
+          // If you allow cell => cell moves, handle that here
+          else if (this.isCellData(previousContainerData)) {
             this.handleDropBetweenCells(previousContainerData, rowIndex, colIndex, draggedItem);
           }
 
@@ -308,8 +278,8 @@ import {
           setTimeout(() => this.setupDropLists());
           this.cdr.detectChanges();
         }
-        // (B) Dropping back to source
-        else if (Array.isArray(containerData) && this.isValidCellData(previousContainerData)) {
+        // Dropping back to source
+        else if (Array.isArray(containerData) && this.isCellData(previousContainerData)) {
           this.handleDropToSource(previousContainerData, draggedItem);
           setTimeout(() => this.setupDropLists());
           this.updateFormValue();
@@ -321,10 +291,12 @@ import {
       }
     }
 
+    private isCellData(data: any): data is { rowIndex: number; colIndex: number } {
+      return data && typeof data === 'object' && 'rowIndex' in data && 'colIndex' in data;
+    }
+
     private validateCellIndices(rowIndex: number, colIndex: number): boolean {
       return (
-        typeof rowIndex === 'number' &&
-        typeof colIndex === 'number' &&
         rowIndex >= 0 &&
         colIndex >= 0 &&
         rowIndex < this.internalValue.length &&
@@ -337,44 +309,37 @@ import {
       return !cell.pinned && cell.value === null;
     }
 
-    private isValidCellData(data: any): boolean {
-      return data && typeof data === 'object' && 'rowIndex' in data && 'colIndex' in data;
-    }
-
-    private handleDropFromSource(
-      draggedItem: DragDropItem,
-      rowIndex: number,
-      colIndex: number
-    ): void {
-      const itemIndex = this.draggableItems.findIndex((item) => item.id === draggedItem.id);
-      if (itemIndex !== -1) {
-        // Remove from source
-        this.draggableItems.splice(itemIndex, 1);
-        // Put into cell
-        this.updateCell(rowIndex, colIndex, draggedItem);
+    private handleDropFromSource(item: DragDropItem, rowIndex: number, colIndex: number): void {
+      const idx = this.draggableItems.findIndex((x) => x.id === item.id);
+      if (idx !== -1) {
+        this.draggableItems.splice(idx, 1);
+        this.updateCell(rowIndex, colIndex, item);
       }
     }
 
     private handleDropBetweenCells(
-      previousData: any,
-      newRowIndex: number,
-      newColIndex: number,
-      draggedItem: DragDropItem
+      prevData: { rowIndex: number; colIndex: number },
+      newRow: number,
+      newCol: number,
+      item: DragDropItem
     ): void {
-      const { rowIndex: prevRow, colIndex: prevCol } = previousData;
-      if (this.validateCellIndices(prevRow, prevCol)) {
-        this.clearCell(prevRow, prevCol);
-        this.updateCell(newRowIndex, newColIndex, draggedItem);
+      const { rowIndex: oldRow, colIndex: oldCol } = prevData;
+      if (this.validateCellIndices(oldRow, oldCol)) {
+        this.clearCell(oldRow, oldCol);
+        this.updateCell(newRow, newCol, item);
       }
     }
 
-    private handleDropToSource(previousData: any, draggedItem: DragDropItem): void {
-      const { rowIndex, colIndex } = previousData;
+    private handleDropToSource(
+      prevData: { rowIndex: number; colIndex: number },
+      item: DragDropItem
+    ): void {
+      const { rowIndex, colIndex } = prevData;
       if (this.validateCellIndices(rowIndex, colIndex)) {
         const cell = this.internalValue[rowIndex][colIndex];
         if (cell && !cell.pinned) {
           this.clearCell(rowIndex, colIndex);
-          this.addToSource(draggedItem);
+          this.addToSource(item);
         }
       }
     }
@@ -386,7 +351,7 @@ import {
         checked: false,
         order: item.order,
         id: item.id,
-        isDropTarget: false,
+        isDropTarget: false
       };
     }
 
@@ -397,38 +362,35 @@ import {
         checked: false,
         order: 0,
         id: undefined,
-        isDropTarget: false,
+        isDropTarget: false
       };
     }
 
     private addToSource(item: DragDropItem): void {
-      const newId = this.generateUniqueId();
       this.draggableItems.push({
         ...item,
         isPinned: false,
-        id: newId,
+        id: this.generateUniqueId()
       });
     }
 
-    /** Removes an item from the cell, placing it back into the source list. */
+    /** Remove button inside each cell => unpin back to source. */
     removeItem(rowIndex: number, colIndex: number, event?: MouseEvent): void {
       if (this.isDisabled) return;
       if (event) {
         event.stopPropagation();
         event.preventDefault();
       }
-
       if (!this.validateCellIndices(rowIndex, colIndex)) return;
 
       const cell = this.internalValue[rowIndex][colIndex];
       if (!cell || cell.pinned || !cell.value) return;
 
-      const newId = this.generateUniqueId();
       const removedItem: DragDropItem = {
         title: cell.value,
         isPinned: false,
         order: cell.order || 0,
-        id: newId,
+        id: this.generateUniqueId()
       };
 
       this.addToSource(removedItem);
@@ -440,21 +402,27 @@ import {
       this.cdr.detectChanges();
     }
 
-    // --------------------------------------------
+    // ----------------------------------------------------
     // ControlValueAccessor
-    // --------------------------------------------
-    writeValue(obj: TableValue[]): void {
+    // ----------------------------------------------------
+    writeValue(obj: any): void {
+      /**
+       * The form calls writeValue with e.g.:
+       * [
+       *   { subQuestionId: 601, value: ["أنَّ","ليت","بات","كأن"] },
+       *   { subQuestionId: 602, value: ["اصبح","لعل","صار","ظلّ"] }
+       * ]
+       */
       if (Array.isArray(obj)) {
-        this.value = [...obj];
-        this.updateInternalValue();
+        this.buildTableFromWriteValue(obj);
       } else {
-        // fallback: rebuild from config
-        this.buildTableFromConfig();
+        // fallback if something else is passed
+        // or do nothing
       }
       this.cdr.markForCheck();
     }
 
-    registerOnChange(fn: (val: TableValue[]) => void): void {
+    registerOnChange(fn: (val: any) => void): void {
       this.onChangeFn = fn;
     }
 
@@ -466,36 +434,117 @@ import {
       this.isDisabled = isDisabled;
     }
 
-    private updateInternalValue(): void {
-      // (Optional) If your form expects to rebuild pinned items from "value",
-      // implement logic here or just fallback to build from config.
-      this.buildTableFromConfig();
+    /**
+     * Instead of building from config (pinned items), we create
+     * a fresh blank table, then place each subQuestionId's words
+     * in top-to-bottom order. This ensures the final arrangement
+     * matches exactly the data from `obj`.
+     */
+    private buildTableFromWriteValue(
+      newValue: Array<{ subQuestionId: number; value: string[] }>
+    ): void {
+      // 1) Create an EMPTY table with the correct # of rows & columns
+      this.internalValue = Array(this.actualRows)
+        .fill(null)
+        .map(() =>
+          Array(this.actualColumns)
+            .fill(null)
+            .map(() => ({
+              value: null,
+              pinned: false,
+              checked: false,
+              order: 0,
+              id: undefined,
+              isDropTarget: false
+            }))
+        );
+
+      // 2) For each block => figure out which column to place them in
+      //    We assume subQuestionId=601 => column=0, 602 => column=1, etc.
+      //    If your config has a different approach, adapt it here.
+
+      // We'll do something simple: if tableView.headers is ["إن واخواتها","كان واخواتها"]
+      // we might guess subQuestionId=601 => col0, 602 => col1, etc.
+      // But you can also just do "first block => col0, second => col1" if that suits you.
+
+      newValue.forEach((block, blockIndex) => {
+        // We'll assume "blockIndex" = columnIndex.
+        // i.e. the first object in newValue => column0, second => column1, etc.
+        // If you have a different rule, do it here:
+        const columnIndex = blockIndex;
+
+        // Now place each word in the next empty row
+        block.value.forEach((word) => {
+          for (let rowIndex = 0; rowIndex < this.actualRows; rowIndex++) {
+            if (!this.internalValue[rowIndex][columnIndex].value) {
+              this.internalValue[rowIndex][columnIndex] = {
+                value: word,
+                pinned: false,
+                checked: true,
+                order: 0,
+                id: this.generateUniqueId(),
+                isDropTarget: false
+              };
+              break; // next word
+            }
+          }
+        });
+      });
+
+      // 3) Remove these placed words from the source list
+      this.removeUsedItemsFromSource(newValue);
+
+      // 4) Re-setup droplists
+      this.setupDropLists();
+
+      // 5) Update final value & notify form
+      this.updateFormValue();
+      this.cdr.detectChanges();
     }
 
-    /** Recompute this.value from internalValue and notify onChange. */
-    private updateFormValue(): void {
-      const tv = this.tableView;
-      if (!tv) return;
-
-      // Build array of DragTableAnswer (like your original code) for each column
-      this.value = tv.headers.map(
-        (header, columnIndex) =>
-          new DragTableAnswer({
-            title: header,
-            words: this.internalValue
-              .map((row) => row[columnIndex].value)
-              .filter((word): word is string => word !== null),
-          })
+    /** Remove any newly placed words from `draggableItems`. */
+    private removeUsedItemsFromSource(
+      newValue: Array<{ subQuestionId: number; value: string[] }>
+    ): void {
+      const allWords = newValue.flatMap((b) => b.value);
+      this.draggableItems = this.draggableItems.filter(
+        (item) => !allWords.includes(item.title)
       );
+    }
 
+    /** Recompute the final array and emit via onChangeFn. */
+    private updateFormValue(): void {
+      // We'll build the same shape: [ { subQuestionId, value: string[] }, ... ]
+
+      // In this example, we'll just do one object per column in the final result.
+      // subQuestionId is not specified, so let's guess the first column => subQuestionId=601,
+      // second => subQuestionId=602, etc.  Or we can just store blockIndex.
+
+      // For your actual code, adapt as needed.
+      const result: Array<{ subQuestionId: number; value: string[] }> = [];
+
+      for (let colIndex = 0; colIndex < this.actualColumns; colIndex++) {
+        // subQuestionId = 601 + colIndex, or read from somewhere else
+        const subQuestionId = 601 + colIndex;
+        const words: string[] = [];
+        for (let rowIndex = 0; rowIndex < this.actualRows; rowIndex++) {
+          const cellVal = this.internalValue[rowIndex][colIndex].value;
+          if (cellVal) {
+            words.push(cellVal);
+          }
+        }
+        result.push({ subQuestionId, value: words });
+      }
+
+      this.value = result;
       this.onChangeFn(this.value);
     }
 
-    // --------------------------------------------
+    // ----------------------------------------------------
     // Utils
-    // --------------------------------------------
+    // ----------------------------------------------------
     private generateUniqueId(): string {
-      return `item-${Math.random().toString(36).substr(2, 9)}`;
+      return 'item-' + Math.random().toString(36).substr(2, 9);
     }
 
     trackById(index: number, item: DragDropItem): string {
