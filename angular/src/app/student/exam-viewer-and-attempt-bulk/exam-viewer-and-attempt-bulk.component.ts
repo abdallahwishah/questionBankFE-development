@@ -212,6 +212,10 @@ export class ExamViewerAndAttemptBulkComponent extends AppComponentBase implemen
 
     private clearStorageAndRedirect() {
         // check FalidQuestions and send them with activating loading befor redirct and clear
+        if (this.FaildQuestions.length) {
+            this.loading = true;
+            this.saveSomeAnswersToServer(true);
+        }
 
         localStorage.removeItem(this.LOCAL_STORAGE_KEY);
         this.router.navigate(['/student/main']);
@@ -392,18 +396,25 @@ export class ExamViewerAndAttemptBulkComponent extends AppComponentBase implemen
     // --------------------------
     private saveSomeAnswersToServer(isLast: boolean) {
         if (!this.examData || !this.questionlist.length) return;
-
+        let toSend;
         // Build array for:
         // 1) Current question if (localDirty == true OR sendFailed == true)
         // 2) Any question that had sendFailed == true
-        const toSend = this.questionlist
-            .filter(
-                (q, idx) =>
-                    q.sendFailed ||
-                    q.localDirty ||
-                    this.FaildQuestions?.findIndex((x: any) => x.question.questionId === q.question.questionId) >= 0,
-            )
-            .map((q) => this.buildOneAnswer(q));
+        if (this.questionlist?.length) {
+            toSend = this.questionlist
+                .filter(
+                    (q, idx) =>
+                        q.sendFailed ||
+                        q.localDirty ||
+                        this.FaildQuestions?.findIndex((x: any) => x.question.questionId === q.question.questionId) >=
+                            0,
+                )
+                .map((q) => this.buildOneAnswer(q));
+        } else if (this.FaildQuestions?.length) {
+            toSend = this.FaildQuestions.map((q) => this.buildOneAnswer(q));
+        } else {
+            return;
+        }
 
         this._examsServiceProxy
             .answerExamQuestions(
@@ -425,15 +436,25 @@ export class ExamViewerAndAttemptBulkComponent extends AppComponentBase implemen
                             window.location.reload();
                             return;
                     }
+                    if (res?.isSynced) {
+                        toSend.forEach((dto) => {
+                            const idx = this.questionlist.findIndex((x) => x.question.questionId === dto.questionId);
+                            if (idx >= 0) {
+                                this.questionlist[idx].isSynced = true;
+                                this.questionlist[idx].localDirty = false;
+                                this.questionlist[idx].sendFailed = false;
+                            }
+                        });
+                    } else {
+                        toSend.forEach((dto) => {
+                            const idx = this.questionlist.findIndex((x) => x.question.questionId === dto.questionId);
+                            if (idx >= 0) {
+                                this.questionlist[idx].sendFailed = true;
+                            }
+                        });
+                        this.FaildQuestions = this.questionlist.filter((x) => x.sendFailed);
+                    }
                     // success => mark them as synced
-                    toSend.forEach((dto) => {
-                        const idx = this.questionlist.findIndex((x) => x.question.questionId === dto.questionId);
-                        if (idx >= 0) {
-                            this.questionlist[idx].isSynced = true;
-                            this.questionlist[idx].localDirty = false;
-                            this.questionlist[idx].sendFailed = false;
-                        }
-                    });
 
                     // update time from server and recalc examEndTime
                     this.examData.remainingSeconds = res.remainingTimeInSecond;
