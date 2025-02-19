@@ -58,7 +58,7 @@
           >
             <div class="cell-content" [class.dragging]="dragInProgress">
               <span>{{ cell.value }}</span>
-              <!-- Remove (unpin) button if not pinned -->
+              <!-- Remove button if NOT pinned -->
               <span
                 *ngIf="cell.value && !cell.pinned"
                 class="remove-button"

@@ -42,8 +42,7 @@ import {
     rows: number;
     columns: number;
     headers: string[]; // e.g. ["إن واخواتها", "كان واخواتها"]
-    // If you have subQuestionIds, you can store them here
-    // subQuestionIds?: number[];
+    // Possibly subQuestionIds if you need them
     allColumns: {
       dragDropTableHeaders: string;
       dragDropTableColmunIndex: number;
@@ -123,11 +122,9 @@ import {
     // Lifecycle
     // ----------------------------------------------------
     ngOnInit(): void {
-      // OPTIONAL: If you want to show pinned items from config
-      // before the form calls writeValue, do:
+      // If you want to show pinned items from config initially:
       this.buildTableFromConfig();
-
-      // Also initialize the unpinned items in the source
+      // Initialize unpinned items
       this.initializeDraggableItems();
     }
 
@@ -177,7 +174,7 @@ import {
           if (colIndex >= 0 && colIndex < this.actualColumns) {
             this.internalValue[rowIndex][colIndex] = {
               value: item.title,
-              pinned: true,
+              pinned: true, // pinned = true => not draggable or removable
               checked: true,
               order: colIndex,
               id: this.generateUniqueId(),
@@ -347,7 +344,7 @@ import {
     private updateCell(rowIndex: number, colIndex: number, item: DragDropItem): void {
       this.internalValue[rowIndex][colIndex] = {
         value: item.title,
-        pinned: false,
+        pinned: false, // unpinned by default
         checked: false,
         order: item.order,
         id: item.id,
@@ -384,7 +381,7 @@ import {
       if (!this.validateCellIndices(rowIndex, colIndex)) return;
 
       const cell = this.internalValue[rowIndex][colIndex];
-      if (!cell || cell.pinned || !cell.value) return;
+      if (!cell || cell.pinned || !cell.value) return; // pinned => cannot remove
 
       const removedItem: DragDropItem = {
         title: cell.value,
@@ -415,9 +412,6 @@ import {
        */
       if (Array.isArray(obj)) {
         this.buildTableFromWriteValue(obj);
-      } else {
-        // fallback if something else is passed
-        // or do nothing
       }
       this.cdr.markForCheck();
     }
@@ -435,15 +429,15 @@ import {
     }
 
     /**
-     * Instead of building from config (pinned items), we create
-     * a fresh blank table, then place each subQuestionId's words
-     * in top-to-bottom order. This ensures the final arrangement
-     * matches exactly the data from `obj`.
+     * 1) Create an EMPTY table
+     * 2) Place pinned items from config IF they appear in newValue
+     * 3) Place remaining items from newValue as unpinned
+     * 4) Remove them from the source
      */
     private buildTableFromWriteValue(
       newValue: Array<{ subQuestionId: number; value: string[] }>
     ): void {
-      // 1) Create an EMPTY table with the correct # of rows & columns
+      // 1) Create an empty table
       this.internalValue = Array(this.actualRows)
         .fill(null)
         .map(() =>
@@ -459,25 +453,19 @@ import {
             }))
         );
 
-      // 2) For each block => figure out which column to place them in
-      //    We assume subQuestionId=601 => column=0, 602 => column=1, etc.
-      //    If your config has a different approach, adapt it here.
+      // 2) Place pinned items from config IF they appear in newValue
+      this.placePinnedItemsFromConfig(newValue);
 
-      // We'll do something simple: if tableView.headers is ["إن واخواتها","كان واخواتها"]
-      // we might guess subQuestionId=601 => col0, 602 => col1, etc.
-      // But you can also just do "first block => col0, second => col1" if that suits you.
-
+      // 3) Place the remaining unpinned items from newValue
+      //    We'll do "blockIndex => columnIndex" logic or any approach you prefer
       newValue.forEach((block, blockIndex) => {
-        // We'll assume "blockIndex" = columnIndex.
-        // i.e. the first object in newValue => column0, second => column1, etc.
-        // If you have a different rule, do it here:
-        const columnIndex = blockIndex;
-
-        // Now place each word in the next empty row
+        // Suppose we say blockIndex => columnIndex
+        const colIndex = blockIndex;
         block.value.forEach((word) => {
+          // Place it top-to-bottom in colIndex
           for (let rowIndex = 0; rowIndex < this.actualRows; rowIndex++) {
-            if (!this.internalValue[rowIndex][columnIndex].value) {
-              this.internalValue[rowIndex][columnIndex] = {
+            if (!this.internalValue[rowIndex][colIndex].value) {
+              this.internalValue[rowIndex][colIndex] = {
                 value: word,
                 pinned: false,
                 checked: true,
@@ -485,46 +473,105 @@ import {
                 id: this.generateUniqueId(),
                 isDropTarget: false
               };
-              break; // next word
+              break;
             }
           }
         });
       });
 
-      // 3) Remove these placed words from the source list
+      // 4) Remove these newly placed words from the draggable source
       this.removeUsedItemsFromSource(newValue);
 
-      // 4) Re-setup droplists
+      // Re-setup droplists
       this.setupDropLists();
 
-      // 5) Update final value & notify form
+      // Update final value & notify form
       this.updateFormValue();
       this.cdr.detectChanges();
     }
 
-    /** Remove any newly placed words from `draggableItems`. */
+    /**
+     * For each pinned item in config, check if it's in the newValue array.
+     * If so, place it pinned in the same row/col from config, remove that word from newValue
+     * so we don't place it again as unpinned.
+     */
+    private placePinnedItemsFromConfig(
+      newValue: Array<{ subQuestionId: number; value: string[] }>
+    ): void {
+      const tv = this.tableView;
+      if (!tv?.cells?.length) return;
+
+      for (let rowIndex = 0; rowIndex < tv.cells.length; rowIndex++) {
+        const cellConfig = tv.cells[rowIndex];
+        if (!cellConfig?.dargDropTableItems?.length) continue;
+
+        cellConfig.dargDropTableItems.forEach((item) => {
+          if (!item.isPinned) return; // skip unpinned
+
+          const colIndex = item.order; // from config
+          if (rowIndex < this.actualRows && colIndex < this.actualColumns) {
+            // Check if item.title is in newValue
+            const found = this.findAndRemoveWordFromNewValue(newValue, item.title);
+            if (found) {
+              // Place pinned in rowIndex, colIndex
+              this.internalValue[rowIndex][colIndex] = {
+                value: item.title,
+                pinned: true,
+                checked: true,
+                order: colIndex,
+                id: this.generateUniqueId(),
+                isDropTarget: false
+              };
+            }
+          }
+        });
+      }
+    }
+
+    /**
+     * Look for 'title' in newValue blocks. If found, remove it from that block's array and return true.
+     * If not found, return false.
+     */
+    private findAndRemoveWordFromNewValue(
+      newValue: Array<{ subQuestionId: number; value: string[] }>,
+      title: string
+    ): boolean {
+      for (const block of newValue) {
+        const idx = block.value.indexOf(title);
+        if (idx !== -1) {
+          block.value.splice(idx, 1); // remove it
+          return true;
+        }
+      }
+      return false;
+    }
+
+    /** Remove newly placed words from `draggableItems`. */
     private removeUsedItemsFromSource(
       newValue: Array<{ subQuestionId: number; value: string[] }>
     ): void {
       const allWords = newValue.flatMap((b) => b.value);
-      this.draggableItems = this.draggableItems.filter(
-        (item) => !allWords.includes(item.title)
-      );
+      // But note: pinned items are already removed from newValue above
+      // so we also want to remove pinned items from the source
+      // => We'll remove any item from the source whose title isn't in newValue
+      //    or was pinned.
+      // Easiest approach: remove items whose title is not in newValue
+      const stillInNewValue = new Set(allWords);
+      this.draggableItems = this.draggableItems.filter((item) => {
+        return stillInNewValue.has(item.title);
+      });
     }
 
     /** Recompute the final array and emit via onChangeFn. */
     private updateFormValue(): void {
       // We'll build the same shape: [ { subQuestionId, value: string[] }, ... ]
+      // For simplicity, we do "blockIndex => columnIndex => subQuestionId"
+      // or any logic you prefer.
 
-      // In this example, we'll just do one object per column in the final result.
-      // subQuestionId is not specified, so let's guess the first column => subQuestionId=601,
-      // second => subQuestionId=602, etc.  Or we can just store blockIndex.
-
-      // For your actual code, adapt as needed.
       const result: Array<{ subQuestionId: number; value: string[] }> = [];
 
       for (let colIndex = 0; colIndex < this.actualColumns; colIndex++) {
-        // subQuestionId = 601 + colIndex, or read from somewhere else
+        // We'll do subQuestionId = 601 + colIndex, or adapt if you have an array
         const subQuestionId = 601 + colIndex;
         const words: string[] = [];
         for (let rowIndex = 0; rowIndex < this.actualRows; rowIndex++) {
