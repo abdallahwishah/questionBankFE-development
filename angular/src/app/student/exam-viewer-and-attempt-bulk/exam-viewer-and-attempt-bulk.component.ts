@@ -253,6 +253,8 @@ export class ExamViewerAndAttemptBulkComponent extends AppComponentBase implemen
     prev() {
         this.onUserChangedAnswer(this.currentIndex);
         this.loadContent();
+        this.checkAnswered();
+
         if (this.isFirstQuestion) return;
         this.currentIndex--;
         this.saveToLocalStorage();
@@ -280,6 +282,7 @@ export class ExamViewerAndAttemptBulkComponent extends AppComponentBase implemen
     next(isLast = false) {
         this.onUserChangedAnswer(this.currentIndex);
         this.loadContent();
+        this.checkAnswered();
         if (!this.isLastQuestion || !isLast) {
             this.currentIndex++;
         }
@@ -287,7 +290,43 @@ export class ExamViewerAndAttemptBulkComponent extends AppComponentBase implemen
         // partial sync => current + failed
         this.saveSomeAnswersToServer(isLast);
     }
+    checkAnswered() {
+        let dto = this.buildOneAnswer(this.currentQuestion);
+        if (
+            !dto.rearrangeAnswer &&
+            !dto.trueFalseAnswer &&
+            !dto.dragTableAnswer &&
+            !dto.multipleChoiceAnswer &&
+            !dto.drawingAnswer &&
+            !dto.singleChoiceAnswer &&
+            !dto.matchAnswer &&
+            !dto.saAnswer &&
+            !dto.dragFormAnswer &&
+            !dto.linkedQuestionAnswer
+        ) {
+            alert('يرجى تقديم إجابة قبل المتابعة.');
+            this.loading = false;
+            return;
+        }
+        if (dto.linkedQuestionAnswer) {
+            // check requird for sub
+            const hasAnswer = dto.linkedQuestionAnswer.every(
+                (subAnswer: any) =>
+                    subAnswer.multipleChoiceAnswer ||
+                    subAnswer.singleChoiceAnswer ||
+                    subAnswer.trueFalseAnswer ||
+                    subAnswer.saAnswer ||
+                    subAnswer.matchAnswer ||
+                    subAnswer.dragTableAnswer,
+            );
 
+            if (!hasAnswer) {
+                alert('يرجى تقديم إجابة لكل سؤال فرعي قبل المتابعة.');
+                this.loading = false;
+                return;
+            }
+        }
+    }
     end() {
         this.clearStorageAndRedirect();
     }
