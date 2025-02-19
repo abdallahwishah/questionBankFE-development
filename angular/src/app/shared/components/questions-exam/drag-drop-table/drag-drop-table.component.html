@@ -21,9 +21,7 @@
         (cdkDragEnded)="onDragEnded()"
       >
         {{ item.title }}
-        <!-- Drag Preview -->
         <div *cdkDragPreview class="drag-preview">{{ item.title }}</div>
-        <!-- Drag Placeholder -->
         <div *cdkDragPlaceholder class="drag-placeholder"></div>
       </div>
     </div>

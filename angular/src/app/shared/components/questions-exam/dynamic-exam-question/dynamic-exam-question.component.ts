@@ -128,7 +128,7 @@ export class DynamicExamQuestionComponent implements OnInit, ControlValueAccesso
         if (this.dynamicListInstance) {
             // Pass question config to dynamically loaded component
             this.dynamicListInstance.config = this.question;
-            this.dynamicListInstance.isCorrecting=this.isCorrecting
+            this.dynamicListInstance.isCorrecting = this.isCorrecting;
             // The child is presumably a ControlValueAccessor: pass the existing answer
             if (this.dynamicListInstance.writeValue) {
                 this.dynamicListInstance.writeValue(this.value.linkedQuestionAnswer);
@@ -162,7 +162,6 @@ export class DynamicExamQuestionComponent implements OnInit, ControlValueAccesso
     writeValue(obj: any): void {
         // Expecting 'obj' to be the entire answer object.
         // If it's null or undefined, initialize it to avoid undefined references.
-        console.log('objobjobjobjobj', obj);
         this.value = obj || {
             saAnswer: null,
             trueFalseAnswer: null,

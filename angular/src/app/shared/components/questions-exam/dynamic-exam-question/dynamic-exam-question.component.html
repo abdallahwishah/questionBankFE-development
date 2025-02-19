@@ -69,7 +69,6 @@
             ></app-cartesian-level>
         }
         @case (QuestionTypeEnum.DargingTable) {
-        {{value.dragTableAnswer |json}}
             <app-drag-drop-table
                 [(ngModel)]="value.dragTableAnswer"
                 (ngModelChange)="notifyChange()"

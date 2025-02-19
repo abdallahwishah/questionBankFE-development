@@ -10,6 +10,7 @@ import {
     QuestionTypeEnum,
     SubmitAnswerExamQuestionsDto,
     DargFormQuestionsSubAnswers,
+    DragTableAnswer,
 } from './../../../shared/service-proxies/service-proxies';
 
 import { AppComponentBase } from '@shared/common/app-component-base';
@@ -72,7 +73,7 @@ export class ExamViewerAndAttemptBulkComponent extends AppComponentBase implemen
 
     // Warning dialog key
     Warning_dialog = UniqueNameComponents.Warning_dialog;
-
+    FaildQuestions: any = [];
     constructor(
         injector: Injector,
         private _examsServiceProxy: ExamsServiceProxy,
@@ -85,42 +86,34 @@ export class ExamViewerAndAttemptBulkComponent extends AppComponentBase implemen
 
     ngOnInit() {
         // // Attempt to load from localStorage first
-        // const savedDataJson = localStorage.getItem(this.LOCAL_STORAGE_KEY);
-        // if (savedDataJson) {
-        //     try {
-        //         const saved = JSON.parse(savedDataJson);
-        //         this.examData = saved.examData;
-        //         this.studentAttemptId = saved.studentAttemptId;
-        //         this.questionlist = saved.questionlist || [];
-        //         this.currentIndex = saved.currentIndex || 0;
-        //         this.showInstructions = saved.showInstructions ?? true;
-        //         this.remainingTime = saved.remainingTime || '00:00:00';
-        //         // NEW: restore examEndTime from storage
-        //         this.examEndTime = saved.examEndTime || 0;
+        const savedDataJson = localStorage.getItem(this.LOCAL_STORAGE_KEY);
+        if (savedDataJson) {
+            try {
+                const saved = JSON.parse(savedDataJson);
+                this.FaildQuestions = saved.FaildQuestions;
+                // this.examData = saved.examData;
+                // this.studentAttemptId = saved.studentAttemptId;
+                // this.questionlist = saved.questionlist || [];
+                // this.currentIndex = saved.currentIndex || 0;
+                // this.showInstructions = saved.showInstructions ?? true;
+                // this.remainingTime = saved.remainingTime || '00:00:00';
+                // // NEW: restore examEndTime from storage
+                // this.examEndTime = saved.examEndTime || 0;
 
-        //         // Recalculate remainingSeconds based on examEndTime and current time
-        //         const now = new Date().getTime();
-        //         this.remainingSeconds = Math.floor((this.examEndTime - now) / 1000);
+                // // Recalculate remainingSeconds based on examEndTime and current time
+                // const now = new Date().getTime();
+                // this.remainingSeconds = Math.floor((this.examEndTime - now) / 1000);
 
-        //         if (this.remainingSeconds > 0) {
-        //             this.startTimer(this.remainingSeconds);
-        //         } else if (this.remainingSeconds <= 0 && this.examData) {
-        //             // Time expired → final submission / clean-up
-        //             this.handleTimeExpired();
-        //         }
-
-        //         // If no examData in localStorage => fetch from server
-        //         if (!this.examData) {
-        //             this.loadExamData();
-        //         }
-        //     } catch (err) {
-        //         // parse error → load fresh from server
-        //         this.loadExamData();
-        //     }
-        // } else {
-        //     // If no data in localStorage, fetch from server
-        //     this.loadExamData();
-        // }
+                // if (this.remainingSeconds > 0) {
+                //     this.startTimer(this.remainingSeconds);
+                // } else if (this.remainingSeconds <= 0 && this.examData) {
+                //     // Time expired → final submission / clean-up
+                //     this.handleTimeExpired();
+                // }
+            } catch (err) {
+                // parse error → load fresh from server
+            }
+        }
         this.loadExamData();
     }
 
@@ -203,6 +196,7 @@ export class ExamViewerAndAttemptBulkComponent extends AppComponentBase implemen
         const dataToStore = {
             currentIndex: this.currentIndex,
             showInstructions: this.showInstructions,
+            FaildQuestions: this.FaildQuestions,
 
             // examData: this.examData,
             // studentAttemptId: this.studentAttemptId,
@@ -213,11 +207,12 @@ export class ExamViewerAndAttemptBulkComponent extends AppComponentBase implemen
             // // NEW: save the examEndTime
             // examEndTime: this.examEndTime,
         };
-        console.log('dataToStore', dataToStore);
         localStorage.setItem(this.LOCAL_STORAGE_KEY, JSON.stringify(dataToStore));
     }
 
     private clearStorageAndRedirect() {
+        // check FalidQuestions and send them with activating loading befor redirct and clear
+
         localStorage.removeItem(this.LOCAL_STORAGE_KEY);
         this.router.navigate(['/student/main']);
     }
@@ -321,7 +316,6 @@ export class ExamViewerAndAttemptBulkComponent extends AppComponentBase implemen
         this.onUserChangedAnswer(this.currentIndex);
         this.loadContent();
         let checked = this.checkAnswered();
-        debugger;
         if (!checked) {
             return;
         }
@@ -403,7 +397,12 @@ export class ExamViewerAndAttemptBulkComponent extends AppComponentBase implemen
         // 1) Current question if (localDirty == true OR sendFailed == true)
         // 2) Any question that had sendFailed == true
         const toSend = this.questionlist
-            .filter((q, idx) => q.sendFailed || q.localDirty)
+            .filter(
+                (q, idx) =>
+                    q.sendFailed ||
+                    q.localDirty ||
+                    this.FaildQuestions?.findIndex((x: any) => x.question.questionId === q.question.questionId) >= 0,
+            )
             .map((q) => this.buildOneAnswer(q));
 
         this._examsServiceProxy
@@ -447,7 +446,6 @@ export class ExamViewerAndAttemptBulkComponent extends AppComponentBase implemen
                     }
                 },
                 error: (err) => {
-                    console.warn('Sync partial failed', err);
                     // mark them as failed
                     toSend.forEach((dto) => {
                         const idx = this.questionlist.findIndex((x) => x.question.questionId === dto.questionId);
@@ -455,6 +453,8 @@ export class ExamViewerAndAttemptBulkComponent extends AppComponentBase implemen
                             this.questionlist[idx].sendFailed = true;
                         }
                     });
+                    //  fill FaildQuestions
+                    this.FaildQuestions = this.questionlist.filter((x) => x.sendFailed);
                     this.saveToLocalStorage();
                 },
             });
@@ -551,7 +551,13 @@ export class ExamViewerAndAttemptBulkComponent extends AppComponentBase implemen
                 dto.dragFormAnswer = q.question?.question?.dragFormAnswer;
                 break;
             case QuestionTypeEnum.DargingTable:
-                dto.dragTableAnswer = q.question?.question?.dragTableAnswer;
+                dto.dragTableAnswer = q.question?.question?.dragTableAnswer?.map(
+                    (value, index) =>
+                        new DragTableAnswer({
+                            title: q.question?.question?.questionPayload?.dragDropTableView?.headers?.[index],
+                            words: value?.value,
+                        }),
+                );
                 break;
             case QuestionTypeEnum.LinkedQuestions:
                 const subs = q.question?.question?.linkedQuestionAnswer || [];
