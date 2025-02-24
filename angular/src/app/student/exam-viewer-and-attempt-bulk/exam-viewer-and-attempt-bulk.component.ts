@@ -23,6 +23,7 @@ import { SidebarModule } from 'primeng/sidebar';
 import { AccordionModule } from 'primeng/accordion';
 import { WarningModalComponent } from '@app/main/templates/components/warning-modal/warning-modal.component';
 import { SafeTextPipe } from '@app/shared/pipes/safe-text.pipe';
+import { Subscription } from '@node_modules/rxjs/dist/types';
 
 interface LocalQuestion extends QuestionWithAnswerDto {
     isSynced?: boolean;
@@ -74,6 +75,9 @@ export class ExamViewerAndAttemptBulkComponent extends AppComponentBase implemen
     // Warning dialog key
     Warning_dialog = UniqueNameComponents.Warning_dialog;
     FaildQuestions: any = [];
+
+    public isOnline = navigator.onLine;
+
     constructor(
         injector: Injector,
         private _examsServiceProxy: ExamsServiceProxy,
@@ -84,13 +88,15 @@ export class ExamViewerAndAttemptBulkComponent extends AppComponentBase implemen
         super(injector);
     }
     handleOnline = () => {
+        this.isOnline = true;
         console.log('Internet connection restored');
         this.resendFailedQuestions();
     };
 
     handleOffline = () => {
+        this.isOnline = false;
+
         console.log('Internet connection lost');
-        this.loading = true; // You can show a loading spinner or an offline indicator
     };
 
     ngOnInit() {
@@ -191,7 +197,7 @@ export class ExamViewerAndAttemptBulkComponent extends AppComponentBase implemen
                     this.handleTimeExpired();
                 }
             }
-
+            this.resendFailedQuestions();
             this.saveToLocalStorage();
         });
     }
@@ -427,8 +433,7 @@ export class ExamViewerAndAttemptBulkComponent extends AppComponentBase implemen
                     (q, idx) =>
                         q.sendFailed ||
                         q.localDirty ||
-                        this.FaildQuestions?.findIndex((x: any) => x.question.questionId === q.question.questionId) >=
-                            0,
+                        this.FaildQuestions?.findIndex((x: any) => x == q.question.id) >= 0,
                 )
                 .map((q) => this.buildOneAnswer(q));
         } else if (this.FaildQuestions?.length) {
@@ -466,14 +471,18 @@ export class ExamViewerAndAttemptBulkComponent extends AppComponentBase implemen
                                 this.questionlist[idx].sendFailed = false;
                             }
                         });
+                        this.FaildQuestions = [];
                     } else {
+                        console.log('toSend', toSend);
                         toSend.forEach((dto) => {
-                            const idx = this.questionlist.findIndex((x) => x.question.questionId === dto.questionId);
+                            const idx = this.questionlist.findIndex((x) => x.question.id == dto.questionId);
                             if (idx >= 0) {
                                 this.questionlist[idx].sendFailed = true;
                             }
                         });
-                        this.FaildQuestions = this.questionlist.filter((x) => x.sendFailed);
+                        this.FaildQuestions = this.questionlist
+                            .filter((x) => x.sendFailed)
+                            ?.map((value) => value?.question.id);
                     }
                     // success => mark them as synced
 
@@ -490,13 +499,16 @@ export class ExamViewerAndAttemptBulkComponent extends AppComponentBase implemen
                 error: (err) => {
                     // mark them as failed
                     toSend.forEach((dto) => {
-                        const idx = this.questionlist.findIndex((x) => x.question.questionId === dto.questionId);
+                        const idx = this.questionlist.findIndex((x) => x.question.id === dto.questionId);
                         if (idx >= 0) {
                             this.questionlist[idx].sendFailed = true;
                         }
                     });
                     //  fill FaildQuestions
-                    this.FaildQuestions = this.questionlist.filter((x) => x.sendFailed);
+                    this.FaildQuestions = this.questionlist
+                        .filter((x) => x.sendFailed)
+                        ?.map((value) => value?.question.id);
+                    console.warn('Sync some failed', this.FaildQuestions);
                     this.saveToLocalStorage();
                 },
             });
