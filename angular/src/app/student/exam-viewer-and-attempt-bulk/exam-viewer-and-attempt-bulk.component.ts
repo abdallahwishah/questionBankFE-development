@@ -83,8 +83,20 @@ export class ExamViewerAndAttemptBulkComponent extends AppComponentBase implemen
     ) {
         super(injector);
     }
+    handleOnline = () => {
+        console.log('Internet connection restored');
+        this.resendFailedQuestions();
+    };
+
+    handleOffline = () => {
+        console.log('Internet connection lost');
+        this.loading = true; // You can show a loading spinner or an offline indicator
+    };
 
     ngOnInit() {
+        // Listen for online and offline events
+        window.addEventListener('online', this.handleOnline);
+        window.addEventListener('offline', this.handleOffline);
         // // Attempt to load from localStorage first
         const savedDataJson = localStorage.getItem(this.LOCAL_STORAGE_KEY);
         if (savedDataJson) {
@@ -116,11 +128,20 @@ export class ExamViewerAndAttemptBulkComponent extends AppComponentBase implemen
         }
         this.loadExamData();
     }
+    resendFailedQuestions() {
+        if (this.FaildQuestions.length) {
+            // Attempt to resend failed questions
+            this.saveSomeAnswersToServer(false); // This will resend the failed questions
+        }
+    }
 
     ngOnDestroy() {
         if (this.timer) {
             clearInterval(this.timer);
         }
+        // Clean up event listeners when the component is destroyed
+        window.removeEventListener('online', this.handleOnline);
+        window.removeEventListener('offline', this.handleOffline);
     }
 
     // --------------------------

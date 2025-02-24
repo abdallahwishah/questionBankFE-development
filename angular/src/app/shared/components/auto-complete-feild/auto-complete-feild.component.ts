@@ -68,6 +68,9 @@ export class AutoCompleteFeildComponent implements OnInit, OnDestroy, ControlVal
     Filter$: Observable<any> = of([]);
     valueChangesSubscription!: Subscription;
 
+    // Add this property to track selected items
+    selectedItems: any[] = [];
+
     constructor(private _autoCompleteFeildService: AutoCompleteFeildService) {}
 
     onChange: any = () => {};
@@ -82,8 +85,16 @@ export class AutoCompleteFeildComponent implements OnInit, OnDestroy, ControlVal
 
     writeValue(value: any) {
         this.autoCompleteControl.setValue(value);
-        if (!value && value != 0) {
+
+        if (!value && value !== 0) {
             this.autoCompleteControl.reset();
+            this.selectedItems = [];
+        } else if (Array.isArray(value)) {
+            // For multiple selection
+            this.selectedItems = [...value];
+        } else {
+            // For single selection
+            this.selectedItems = [value];
         }
     }
 
@@ -132,7 +143,9 @@ export class AutoCompleteFeildComponent implements OnInit, OnDestroy, ControlVal
             startWith(this.searchByThisValueWhenStart),
             filter((search) => typeof search == 'string'),
             tap((_) => {
-                this.value = null;
+                if (!this.multiple) {
+                    this.value = null;
+                }
             }),
             map((search) => search.trim()),
             debounceTime(200),
@@ -148,7 +161,16 @@ export class AutoCompleteFeildComponent implements OnInit, OnDestroy, ControlVal
                     )
                     .pipe(
                         map((value) => {
-                            return EnterInPathObj(value, this?.ConfigCustomSearch?.PathObj || ['result', 'items']);
+                            const items = EnterInPathObj(
+                                value,
+                                this?.ConfigCustomSearch?.PathObj || ['result', 'items'],
+                            );
+
+                            // Mark items as checked if they are already selected
+                            return items.map((item: any) => ({
+                                ...item,
+                                checked: this.isItemSelected(item),
+                            }));
                         }),
                         catchError((error) => {
                             console.error('Search error:', error);
@@ -162,15 +184,30 @@ export class AutoCompleteFeildComponent implements OnInit, OnDestroy, ControlVal
         );
     }
 
+    // Modify your existing onSelect method to work with checkboxes
     onSelect(value: any) {
+        // When selecting an item from the dropdown directly (not via checkbox)
+        // we want to mark it as checked
+        if (value && !value.checked) {
+            value.checked = true;
+        }
+
         this.value = value;
+
         if (this.multiple) {
+            // For multiple selection, update the selectedItems array
+            if (!this.isItemSelected(value)) {
+                this.selectedItems.push(value);
+            }
             this.onSelectionChange.emit(this.autoCompleteControl.value);
         } else {
+            this.selectedItems = [value];
             this.onSelectionChange.emit(value);
         }
+
         if (this.deleteAfterSelect) {
             this.autoCompleteControl.reset();
+            this.selectedItems = [];
         }
     }
 
@@ -193,6 +230,7 @@ export class AutoCompleteFeildComponent implements OnInit, OnDestroy, ControlVal
             this.autoCompleteControlChangeSub.next($event.query || 'empty');
         }
     }
+
     handleKeyUp(event: KeyboardEvent, autoComplete: any) {
         if (this.type === 'sendEmail' && event.key === 'Enter') {
             const email = autoComplete.inputEL.nativeElement.value?.trim();
@@ -211,5 +249,75 @@ export class AutoCompleteFeildComponent implements OnInit, OnDestroy, ControlVal
 
     formatEmailForDisplay(email: string): string {
         return email.split('@')[0].replace(/[._-]/g, ' ');
+    }
+    getNestedPropertyValue(object: any, path: string): any {
+        if (!object || !path) {
+            return '';
+        }
+
+        const pathParts = path.split('.');
+        let value = object;
+
+        for (const part of pathParts) {
+            if (value === null || value === undefined || typeof value !== 'object') {
+                return '';
+            }
+            value = value[part];
+        }
+
+        return value;
+    }
+
+    // Update isItemSelected method to handle nested properties
+    isItemSelected(item: any): boolean {
+        return this.selectedItems.some((selectedItem) => {
+            const itemValue = this.getNestedPropertyValue(item, this.field);
+            const selectedValue = this.getNestedPropertyValue(selectedItem, this.field);
+            return itemValue === selectedValue;
+        });
+    }
+
+    // Update toggleItemSelection method to handle nested fields in filter conditions
+    toggleItemSelection(item: any) {
+        // Toggle checked state
+        item.checked = !item.checked;
+
+        if (item.checked) {
+            // If not already in selectedItems, add it
+            if (!this.isItemSelected(item)) {
+                if (this.multiple) {
+                    const currentValue = this.autoCompleteControl.value || [];
+                    const newValue = [...currentValue, item];
+                    this.autoCompleteControl.setValue(newValue);
+                    this.selectedItems.push(item);
+                    this.onSelectionChange.emit(newValue);
+                } else {
+                    this.autoCompleteControl.setValue(item);
+                    this.selectedItems = [item];
+                    this.onSelectionChange.emit(item);
+                }
+            }
+        } else {
+            // Remove from selected items
+            if (this.multiple) {
+                const currentValue = this.autoCompleteControl.value || [];
+                const newValue = currentValue.filter((val: any) => {
+                    const itemValue = this.getNestedPropertyValue(item, this.field);
+                    const valValue = this.getNestedPropertyValue(val, this.field);
+                    return valValue !== itemValue;
+                });
+                this.autoCompleteControl.setValue(newValue);
+                this.selectedItems = this.selectedItems.filter((val) => {
+                    const itemValue = this.getNestedPropertyValue(item, this.field);
+                    const valValue = this.getNestedPropertyValue(val, this.field);
+                    return valValue !== itemValue;
+                });
+                this.onSelectionChange.emit(newValue);
+            } else {
+                this.autoCompleteControl.setValue(null);
+                this.selectedItems = [];
+                this.onSelectionChange.emit(null);
+            }
+        }
     }
 }

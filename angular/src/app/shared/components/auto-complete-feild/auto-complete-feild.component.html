@@ -1,3 +1,4 @@
+<!-- auto-complete-feild.component.html -->
 <label class="form-label" [class]="required ? 'label-required' : ''" *ngIf="isLabel">{{ label }}</label>
 <div class="autoComplete-shared">
     <p-autoComplete
@@ -12,7 +13,6 @@
         [field]="field"
         appendTo="body"
         [dropdown]="true"
-
         [formControl]="autoCompleteControl"
         (completeMethod)="completeMethod($event)"
         (onSelect)="onSelect($event)"
@@ -21,5 +21,25 @@
         (onKeyUp)="handleKeyUp($event, autoComplete)"
         emptyMessage=""
         (keydown.enter)="$event.preventDefault()"
-    ></p-autoComplete>
+        [virtualScroll]="true"
+        [virtualScrollItemSize]="34"
+    >
+        <ng-container *ngIf="multiple">
+            <ng-template let-item pTemplate="item">
+                <div class="item-wrapper" (click)="$event.stopPropagation(); toggleItemSelection(item)">
+                    <p-checkbox
+                        [binary]="true"
+                        [(ngModel)]="item.checked"
+                        (onChange)="toggleItemSelection(item)"
+                        [ngStyle]="{ 'margin-right': '8px' }"
+                    ></p-checkbox>
+                    <span class="item-label">
+                        {{ getNestedPropertyValue(item, field) }}
+                    </span>
+                </div>
+            </ng-template>
+        </ng-container>
+
+        <!-- Use item template as a content inside the component -->
+    </p-autoComplete>
 </div>
