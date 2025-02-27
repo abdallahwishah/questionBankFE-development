@@ -31,6 +31,7 @@ export class AppNavigationService {
                 '',
                 [],
                 [
+                    new AppMenuItem('Governorates', '', 'fa fa-circle', '/app/main/governorates'),
                     new AppMenuItem('Categories', '', 'fa fa-circle', '/app/main/categories'),
                     new AppMenuItem('Complexities', '', 'fa fa-circle', '/app/main/complexities'),
                     new AppMenuItem('StudyLevels', '', 'fa fa-circle', '/app/main/studyLevels'),

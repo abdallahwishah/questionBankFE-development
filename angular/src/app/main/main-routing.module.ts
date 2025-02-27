@@ -104,6 +104,13 @@ import { RouterModule } from '@angular/router';
                             ),
                     },
                     {
+                        path: 'governorates',
+                        loadChildren: () =>
+                            import('../shared/common/lookup/governorates/governorate.module').then(
+                                (m) => m.GovernorateModule,
+                            ),
+                    },
+                    {
                         path: 'report/reportItems',
                         loadChildren: () => import('./reportItems/reportItem.module').then((m) => m.ReportItemModule),
                         data: { permission: 'Pages.ReportItems' },
