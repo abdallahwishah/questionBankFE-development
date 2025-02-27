@@ -1,0 +1,16 @@
+.view-card{
+    background: #f6f6f6;
+    padding: 10px 15px;
+    border-radius: 6px;
+    border: 1px dashed #e6e3e3 ;
+    text-align: center;
+}
+
+.view-card p {
+    margin-bottom: 0;
+}
+
+.view-card strong{
+    display: block;
+    margin-bottom: 3px;
+}

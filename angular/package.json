@@ -72,7 +72,16 @@
     "summernote": "^0.9.1",
     "sweetalert2": "^11.10.5",
     "tslib": "^2.6.2",
-    "zone.js": "~0.14.2"
+    "zone.js": "~0.14.2",
+
+    "@devexpress/analytics-core": "23.1.6",
+    "devexpress-dashboard": "23.1.6",
+    "devexpress-dashboard-angular": "23.1.6",
+    "devexpress-reporting-angular": "23.1.6",
+    "devexpress-richedit": "23.1.6",
+    "devextreme": "23.1.6",
+    "devextreme-angular": "23.1.6",
+    "ng2-pdf-viewer": "^8.0.0"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^17.1.2",

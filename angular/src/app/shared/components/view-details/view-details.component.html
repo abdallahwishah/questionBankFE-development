@@ -1,0 +1,136 @@
+<div class="container px-0">
+    <div class="row" *ngIf="items" >
+        <div class="col-md-4 mb-4">
+            <div class="view-card">
+                 <strong>Display Name</strong>
+                 <p>{{items.reportItem.displayName}}</p>
+            </div>
+        </div>
+         <div class="col-md-4 mb-4">
+            <div class="view-card">
+                 <strong>Name</strong>
+                 <p>{{items.reportItem.name}}</p>
+            </div>
+        </div>
+         <div class="col-md-4 mb-4">
+            <div class="view-card">
+                 <strong>Publish</strong>
+                 <p>{{items.reportItem.isPublish}}</p>
+            </div>
+        </div>
+         <div class="col-md-4 mb-4">
+            <div class="view-card">
+                 <strong>Roles</strong>
+                 <p>{{items.roleNames}}</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- --------------------------------------- -->
+
+    <div class="row" *ngIf="itemsDashboard" >
+        <div class="col-md-4 mb-4">
+            <div class="view-card">
+                 <strong>Caption</strong>
+                 <p>{{itemsDashboard.dashboard.caption}}</p>
+            </div>
+        </div>
+         <div class="col-md-4 mb-4">
+            <div class="view-card">
+                 <strong>Friendly Name</strong>
+                 <p>{{itemsDashboard.dashboard.friendlyName}}</p>
+            </div>
+        </div>
+         <div class="col-md-4 mb-4">
+            <div class="view-card">
+                 <strong>Active</strong>
+                 <p>{{itemsDashboard.dashboard.isActive}}</p>
+            </div>
+        </div>
+         <div class="col-md-4 mb-4">
+            <div class="view-card">
+                 <strong>Dashboard Type</strong>
+                 <p>{{itemsDashboard.dashboard.dashboardType}}</p>
+            </div>
+        </div>
+         <div class="col-md-4 mb-4">
+            <div class="view-card">
+                 <strong>Roles</strong>
+                 <p>{{itemsDashboard.roleNames}}</p>
+            </div>
+        </div>
+    </div>
+    <!-- --------------------- -->
+    <div class="row" *ngIf="itemsCategories" >
+        <div class="col-md-4 mb-4">
+            <div class="view-card">
+                 <strong>Name AR</strong>
+                 <p>{{itemsCategories.nodeNameL}}</p>
+            </div>
+        </div>
+         <div class="col-md-4 mb-4">
+            <div class="view-card">
+                 <strong>Name EN</strong>
+                 <p>{{itemsCategories.nodeNameL2}}</p>
+            </div>
+        </div>
+
+    </div>
+    <div class="row" *ngIf="itemsNotes" >
+        <div class="col-md-4 mb-4">
+            <div class="view-card">
+                 <strong>Note</strong>
+                 <p>{{itemsNotes.nodeNote.note}}</p>
+            </div>
+        </div>
+         <div class="col-md-4 mb-4">
+            <div class="view-card">
+                 <strong>(Node) Name</strong>
+                 <p>{{itemsNotes.nodeNameL}}</p>
+            </div>
+        </div>
+    </div>
+    <div class="row" *ngIf="itemsKeywords" >
+        <div class="col-md-4 mb-4">
+            <div class="view-card">
+                 <strong>Keyword</strong>
+                 <p>{{itemsKeywords.nodeKeyword.keyword}}</p>
+            </div>
+        </div>
+         <div class="col-md-4 mb-4">
+            <div class="view-card">
+                 <strong>(Node) Name</strong>
+                 <p>{{itemsKeywords.nodeName}}</p>
+            </div>
+        </div>
+    </div>
+    <div class="row" *ngIf="itemsComments" >
+        <div class="col-md-4 mb-4">
+            <div class="view-card">
+                 <strong>Comment</strong>
+                 <p>{{itemsComments.nodeComment.comment}}</p>
+            </div>
+        </div>
+         <div class="col-md-4 mb-4">
+            <div class="view-card">
+                 <strong>(Node) Name</strong>
+                 <p>{{itemsComments.nodeName}}</p>
+            </div>
+        </div>
+    </div>
+    <div class="row" *ngIf="itemsDlib" >
+        <div class="col-md-4 mb-4">
+            <div class="view-card">
+                 <strong>(Document template) Name :
+                </strong>
+                 <p>{{itemsDlib?.name}}</p>
+            </div>
+        </div>
+        <!--  <div class="col-md-4 mb-4">
+            <div class="view-card">
+                 <strong>(E form) Name :</strong>
+                 {{itemsDlib?.documentLibrary?.eFormId}}
+            </div>
+        </div> -->
+    </div>
+</div>

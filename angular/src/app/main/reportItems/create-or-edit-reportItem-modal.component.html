@@ -1,0 +1,154 @@
+﻿<div
+    bsModal
+    #createOrEditModal="bs-modal"
+    class="modal fade"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="createOrEditModal"
+    aria-hidden="true"
+    [config]="{ backdrop: 'static' }"
+>
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form *ngIf="active" #reportItemForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="reportItem.id">{{ l('EditReportItem') }}</span>
+                        <span *ngIf="!reportItem.id">{{ l('CreateNewReportItem') }}</span>
+                    </h4>
+
+                    <button
+                        type="button"
+                        class="btn-close"
+                        (click)="close()"
+                        aria-label="Close"
+                        [disabled]="saving"
+                    ></button>
+                </div>
+                <div class="modal-body row">
+                    <div class="mb-5 form-md-line-input form-md-floating-label no-hint col-6">
+                        <label class="form-label" for="ReportItem_NameL">{{ l('NameAr') }} *</label>
+                        <input
+                            type="text"
+                            #ReportItem_NameL="ngModel"
+                            id="ReportItem_NameL"
+                            class="form-control"
+                            [(ngModel)]="reportItem.nameL"
+                            name="NameL"
+                            required
+                        />
+                        <validation-messages [formCtrl]="ReportItem_NameL"></validation-messages>
+                    </div>
+                    <div class="mb-5 form-md-line-input form-md-floating-label no-hint col-6">
+                        <div>
+                            <label class="form-label" for="ReportItem_NameF">{{ l('NameEn') }} *</label>
+                            <input
+                                type="text"
+                                #ReportItem_NameF="ngModel"
+                                id="ReportItem_NameF"
+                                class="form-control"
+                                [(ngModel)]="reportItem.nameF"
+                                name="NameF"
+                                required
+                            />
+                            <validation-messages [formCtrl]="ReportItem_NameF"></validation-messages>
+                        </div>
+                    </div>
+
+                    <div class="form-md-line-input form-md-floating-label no-hint col-6 d-flex">
+                        <label class="form-check form-check-custom form-check-solid mx-3">
+                            <input
+                                id="ReportItem_IsPublish"
+                                #ReportItem_IsPublish="ngModel"
+                                name="IsPublish"
+                                [(ngModel)]="reportItem.isPublish"
+                                type="checkbox"
+                                class="form-check-input"
+                            />
+                            <span class="form-check-label">
+                                {{ l('IsPublish') }}
+                            </span>
+                        </label>
+                        <validation-messages [formCtrl]="ReportItem_IsPublish"></validation-messages>
+                    </div>
+                    <div class="my-2 form-md-line-input form-md-floating-label no-hint col-6 d-flex">
+                        <label class="form-check form-check-custom form-check-solid mx-3">
+                            <input
+                                id="ReportItem_isScheduled"
+                                #ReportItem_isScheduled="ngModel"
+                                name="isScheduled"
+                                [(ngModel)]="reportItem.isScheduled"
+                                type="checkbox"
+                                class="form-check-input"
+                            />
+                            <span class="form-check-label">
+                                {{ l('IsScheduled') }}
+                            </span>
+                        </label>
+                        <validation-messages [formCtrl]="ReportItem_isScheduled"></validation-messages>
+                    </div>
+
+                    <ng-container *ngIf="reportItem.isScheduled">
+                        <div class="col-6">
+                            <label class="form-label" for="frequencyEnum">{{ l('FrequencyEnum') }}*</label>
+                            <select
+                                #frequencyEnum="ngModel"
+                                class="form-select"
+                                name="frequencyEnum"
+                                id="frequencyEnum"
+                                [(ngModel)]="reportItem.frequencyEnum"
+                            >
+                                <option *ngFor="let item of frequencyEnumOptions" [value]="item?.Code">
+                                    {{ item?.Name }}
+                                </option>
+                            </select>
+                            <validation-messages [formCtrl]="frequencyEnum"></validation-messages>
+                        </div>
+                        <div class="col-6 mt-2">
+                            <label class="form-label" for="ReportItem_NameL">{{ l('StartDateParameterName') }}</label>
+                            <input
+                                type="text"
+                                #startDateParameterName="ngModel"
+                                id="startDateParameterName"
+                                class="form-control"
+                                [(ngModel)]="reportItem.startDateParameterName"
+                                name="startDateParameterName"
+                                required
+                            />
+                        </div>
+                        <div class="col-6 mt-2">
+                            <label class="form-label" for="ReportItem_NameL">{{ l('EndDateParameterName') }}</label>
+                            <input
+                                type="text"
+                                #endDateParameterName="ngModel"
+                                id="endDateParameterName"
+                                class="form-control"
+                                [(ngModel)]="reportItem.endDateParameterName"
+                                name="endDateParameterName"
+                                required
+                            />
+                        </div>
+                    </ng-container>
+
+                    <h3 class="mt-3">Roles</h3>
+                    <app-shared-roles [roleIds]="roleIds"></app-shared-roles>
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">
+                        {{ l('Cancel') }}
+                    </button>
+                    <button
+                        type="submit"
+                        class="btn btn-primary blue"
+                        [disabled]="!reportItemForm.form.valid"
+                        [buttonBusy]="saving"
+                        [busyText]="l('SavingWithThreeDot')"
+                    >
+                        <i class="fa fa-save"></i>
+                        <span>{{ l('Save') }}</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

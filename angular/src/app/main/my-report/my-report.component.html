@@ -1,0 +1,84 @@
+
+<div [@routerTransition]>
+    <div class="content d-flex flex-column flex-column-fluid">
+        <sub-header [title]="'MyReports' | localize" [description]="'MyReports' | localize">
+        </sub-header>
+        <div [class]="containerClass">
+            <div class="card card-custom gutter-b">
+                <div class="card-body">
+                    <form class="form" autocomplete="off">
+                        <div>
+                            <div class="row align-items-center">
+                                <div class="col-xl-12">
+                                    <div class="my-3">
+                                        <div class="input-group mb-3">
+                                            <input
+                                                [(ngModel)]="filterText"
+                                                (ngModelChange)="getReport()"
+                                                name="filterText"
+                                                autoFocus
+                                                type="text"
+                                                class="form-control"
+                                                [placeholder]="l('SearchWithThreeDot')"
+                                            />
+                                            <button class="btn btn-primary" type="submit" (click)="getReport()">
+                                                <i class="flaticon-search-1"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <div class="row align-items-center">
+
+                       
+                            <div class="col-4 mt-6" *ngFor="let item of reports" (click)="viewReport(item)">
+                                <div
+                                    class="info-card d-flex flex-column justify-content-center align-items-center"
+                                    style="cursor: pointer"
+                                >
+                                    <div class="icon mb-3 d-flex justify-content-center align-items-center">
+                                        <i class="fas fa-file-waveform" style="font-size: 20px;"></i>
+                                    </div>
+                                    <div class="info-details text-center">
+                                        <b class="mb-0">{{ item?.reportItem?.displayName }}</b>
+                                    </div>
+                                </div>
+                            </div>
+                       
+                    </div>
+                </div>
+            </div>
+            
+         
+        </div>
+    </div>
+    
+
+ 
+            <style>
+                .info-card {
+                    background-color: #f5f5f5;
+                    border-radius: 10px;
+                    padding: 20px;
+                    height: 150px;
+                    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+                    transition: all 0.3s ease-in-out;
+                }
+
+                .info-card:hover {
+                    transform: translateY(-5px);
+                    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+                }
+
+                .icon {
+                    background-color: #fff;
+                    width: 60px;
+                    height: 60px;
+                    border-radius: 50%;
+                    font-size: 30px;
+                    color: #6c757d;
+                }
+            </style>
+ 

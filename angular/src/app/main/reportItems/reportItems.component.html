@@ -1,0 +1,218 @@
+﻿<div [@routerTransition]>
+    <div class="content d-flex flex-column flex-column-fluid">
+        <sub-header [title]="'ReportItems' | localize" [description]="'ReportItemsHeaderInfo' | localize">
+            <div role="actions">
+
+
+                <button
+                    *ngIf="isGranted('Pages.ReportItems.Create')"
+                    (click)="createReportItem()"
+                    class="btn btn-primary blue"
+                >
+                    <i class="fa fa-plus"></i>
+                    {{ l('CreateNewReportItem') }}
+                </button>
+            </div>
+        </sub-header>
+
+        <div class="container-fluid">
+
+            <div class="card card-custom gutter-b">
+                <div class="card-body">
+                    <form class="form" autocomplete="off">
+                        <div>
+                            <div class="row align-items-center">
+                                <div class="col-xl-12">
+                                    <div class="my-3">
+                                        <div class="input-group mb-3">
+                                            <input
+                                                [(ngModel)]="filterText"
+                                                (ngModelChange)="getReportItems()"
+                                                name="filterText"
+                                                autoFocus
+                                                type="text"
+                                                class="form-control"
+                                                [placeholder]="l('SearchWithThreeDot')"
+                                            />
+                                            <button class="btn btn-primary" type="submit" (click)="getReportItems()">
+                                                <i class="flaticon-search-1"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="">
+                                <div class="mb-2 style-accordionTab-Filter">
+                                    <p-accordion>
+                                        <p-accordionTab [header]="'ShowAdvancedFilters' | localize" [selected]="false">
+                                            <div class="row">
+                                                <div class="col-md-3">
+                                                    <div class="my-3">
+                                                        <label class="form-label" for="IsPublishFilterSelect">
+                                                            {{ l('IsPublish') }}
+                                                        </label>
+                                                        <select
+                                                            class="form-select"
+                                                            name="IsPublishFilter"
+                                                            id="IsPublishFilterSelect"
+                                                            [(ngModel)]="isPublishFilter"
+                                                            (ngModelChange)="getReportItems()"
+                                                        >
+                                                            <option value="-1">{{ l('All') }}</option>
+                                                            <option value="0">{{ l('False') }}</option>
+                                                            <option value="1">{{ l('True') }}</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row mb-4" *ngIf="advancedFiltersAreShown">
+                                                <div class="col-sm-12 text-end">
+                                                    <button class="btn btn-primary float-end" (click)="getReportItems()">
+                                                        <i class="fa fa-sync btn-md-icon"></i>
+                                                        <span class="d-none d-md-inline-block">
+                                                            {{ 'Refresh' | localize }}
+                                                        </span>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </p-accordionTab>
+                                    </p-accordion>
+                                </div>
+                            </div>
+
+                        </div>
+                    </form>
+
+                    <div class="row align-items-center">
+                        <!--<Primeng-Datatable-Start>-->
+                        <div class="primeng-datatable-container col-12" [busyIf]="primengTableHelper.isLoading">
+                            <p-table
+                                #dataTable
+                                (onLazyLoad)="getReportItems($event)"
+                                [value]="primengTableHelper.records"
+                                rows="{{ primengTableHelper.defaultRecordsCountPerPage }}"
+                                [paginator]="false"
+                                [lazy]="true"
+                                [scrollable]="true"
+                                ScrollWidth="100%"
+
+                                [resizableColumns]="primengTableHelper.resizableColumns"
+                            >
+                                <ng-template pTemplate="header">
+                                    <tr>
+                                        <th
+                                            style="width: 130px"
+                                            [hidden]="
+                                                !isGrantedAny('Pages.ReportItems.Edit', 'Pages.ReportItems.Delete')
+                                            "
+                                        >
+                                            {{ l('Actions') }}
+                                        </th>
+                                        <th style="width: 150px" pSortableColumn="displayName">
+                                            {{ l('DisplayName') }}
+                                            <p-sortIcon field="reportItem.displayName"></p-sortIcon>
+                                        </th>
+
+                                        <th style="width: 150px" pSortableColumn="isPublish">
+                                            {{ l('IsPublish') }}
+                                            <p-sortIcon field="reportItem.isPublish"></p-sortIcon>
+                                        </th>
+                                        <th style="width: 150px" pSortableColumn="Role">
+                                            {{ l('Role') }}
+                                            <p-sortIcon field="reportItem.role"></p-sortIcon>
+                                        </th>
+                                        <th style="width: 150px" pSortableColumn="creationTime">
+                                            {{ l('CreationTime') }}
+                                            <p-sortIcon field="reportItem.creationTime"></p-sortIcon>
+                                        </th>
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="body" let-record="$implicit" let-i="rowIndex">
+                                    <tr>
+                                        <td
+                                            style="width: 130px"
+                                            [hidden]="
+                                                !isGrantedAny('Pages.ReportItems.Edit', 'Pages.ReportItems.Delete')
+                                            "
+                                        >
+                                        <app-action-button
+                                        [ActionsInfo]="[
+                                        {
+                                            label:'View',
+                                            hasPermission: true
+                                        },
+                                        {
+                                            label:'Edit',
+                                            hasPermission: permission.isGranted('Pages.ReportItems.Edit')
+                                        },
+                                        {
+                                            label: 'Delete',
+                                            hasPermission: permission.isGranted('Pages.ReportItems.Delete')
+                                        },
+                                        {
+                                            label: 'Design',
+                                            hasPermission: true
+                                        },
+                                        {
+                                            label: 'Viewer',
+                                            hasPermission: true
+                                        },
+
+                                        ]"
+                                        (action)="doActions($event, record)"
+                                        ></app-action-button>
+
+                                        </td>
+                                        <td style="width: 150px">
+                                            <span class="p-column-title">{{ l('DisplayName') }}</span>
+                                            {{ record.reportItem.displayName }}
+                                        </td>
+
+                                        <td style="width: 150px">
+                                            <span class="p-column-title">{{ l('IsPublish') }}</span>
+                                            <div *ngIf="record.reportItem.isPublish" class="text-center">
+                                                <i class="fa fa-check-circle text-success" title="True"></i>
+                                            </div>
+                                            <div *ngIf="!record.reportItem.isPublish" class="text-center">
+                                                <i class="fa fa-times-circle" title="False"></i>
+                                            </div>
+                                        </td>
+                                        <td style="width: 150px">
+                                            <span>{{ record.roleNames }}</span>
+                                        </td>
+                                        <td style="width: 150px">
+                                            <span class="p-column-title">{{ l('creationTime') }}</span>
+                                            {{ record.reportItem.creationTime | date: 'short' }}
+                                        </td>
+                                    </tr>
+                                </ng-template>
+                            </p-table>
+                            <div class="primeng-no-data" *ngIf="primengTableHelper.totalRecordsCount == 0">
+                                {{ l('NoData') }}
+                            </div>
+                            <div class="primeng-paging-container">
+                                <p-paginator
+                                    [rows]="primengTableHelper.defaultRecordsCountPerPage"
+                                    #paginator
+                                    (onPageChange)="getReportItems($event)"
+                                    [totalRecords]="primengTableHelper.totalRecordsCount"
+                                    [rowsPerPageOptions]="primengTableHelper.predefinedRecordsCountPerPage"
+                                    [showCurrentPageReport]="true"
+                                    [currentPageReportTemplate]="
+                                        'TotalRecordsCount' | localize: primengTableHelper.totalRecordsCount
+                                    "
+                                ></p-paginator>
+                            </div>
+                        </div>
+                        <!--<Primeng-Datatable-End>-->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <createOrEditReportItemModal
+            #createOrEditReportItemModal
+            (modalSave)="getReportItems()"
+        ></createOrEditReportItemModal>
+        <viewReportItemModal #viewReportItemModal></viewReportItemModal>
+    </div>
+</div>

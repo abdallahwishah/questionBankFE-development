@@ -1,0 +1,57 @@
+﻿<div bsModal #createOrEditModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="createOrEditModal" aria-hidden="true" [config]="{backdrop: 'static'}">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form *ngIf="active" #dataConnectionForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="dataConnection.id">{{l("EditDataConnection")}}</span>
+                        <span *ngIf="!dataConnection.id">{{l("CreateNewDataConnection")}}</span>
+                    </h4>                    
+                    
+                    
+                 <button type="button" class="btn-close" (click)="close()" aria-label="Close" [disabled]="saving"></button>
+             
+                </div>
+                <div class="modal-body">
+                 
+
+
+
+
+								<div class="my-3">
+									<label class="form-label" for="DataConnection_Name">{{l("Name")}} *</label>
+									<input type="text" #DataConnection_Name="ngModel" id="DataConnection_Name" class="form-control" [(ngModel)]="dataConnection.name" name="Name"     required/>
+								    <validation-messages [formCtrl]="DataConnection_Name"></validation-messages>
+								</div>
+					
+								<div class="my-3">
+									<label class="form-label" for="DataConnection_DataConnectionType">{{l("DataConnectionType")}}</label>
+									<select class="form-select" #DataConnection_DataConnectionType="ngModel" name="DataConnectionType" id="DataConnection_DataConnectionType" [(ngModel)]="dataConnection.dataConnectionType" >
+									<option value="1">{{l('Oracel')}}</option>
+
+									<option value="2">{{l('SqlServer')}}</option>
+
+									<option value="3">{{l('JSON')}}</option>
+
+
+									</select>
+									<validation-messages [formCtrl]="DataConnection_DataConnectionType"></validation-messages>
+								</div>
+					
+								<div class="my-3">
+									<label class="form-label" for="DataConnection_ConnectionString">{{l("ConnectionString")}} *</label>
+									<input type="text" #DataConnection_ConnectionString="ngModel" id="DataConnection_ConnectionString" class="form-control" [(ngModel)]="dataConnection.connectionString" name="ConnectionString"     required/>
+								    <validation-messages [formCtrl]="DataConnection_ConnectionString"></validation-messages>
+								</div>
+					
+
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">{{l("Cancel")}}</button>
+                    <button type="submit" class="btn btn-primary blue" [disabled]="!dataConnectionForm.form.valid" [buttonBusy]="saving" [busyText]="l('SavingWithThreeDot')"><i class="fa fa-save"></i> <span>{{l("Save")}}</span></button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>

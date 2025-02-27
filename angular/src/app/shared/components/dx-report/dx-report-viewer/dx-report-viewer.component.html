@@ -1,0 +1,9 @@
+<div style="direction: ltr !important">
+
+
+<dx-report-viewer [reportUrl]="reportUrl" height="800px" >
+    <dxrv-request-options [invokeAction]="invokeAction" [host]="hostUrl"></dxrv-request-options>
+    <dxrv-callbacks  (ParametersInitialized)="ParametersInitialized($event)"  (ParametersSubmitted)="ParametersSubmitted($event)" (CustomizeMenuActions)="CustomizeMenuActions($event)" (CustomizeExportOptions)="OnCustomizeExportOptions($event)"></dxrv-callbacks>
+
+</dx-report-viewer>
+</div>

@@ -22,6 +22,7 @@ import { ProgressBarModule } from 'primeng/progressbar';
 import { TableModule } from 'primeng/table';
 import { AppCommonModule } from './common/app-common.module';
 import { ThemesLayoutBaseComponent } from './layout/themes/themes-layout-base.component';
+import { ActionButtonComponent } from './components/action-button/action-button.component';
 
 const imports = [
     CommonModule,
@@ -41,7 +42,7 @@ const imports = [
     TableModule,
     PaginatorModule,
     ProgressBarModule,
-    PerfectScrollbarModule ,
+    PerfectScrollbarModule,
     IMaskModule,
     ImageCropperModule,
     AutoCompleteModule,
@@ -50,8 +51,8 @@ const imports = [
 ];
 
 @NgModule({
-    imports: [...imports],
-    exports: [...imports],
+    imports: [...imports, ActionButtonComponent],
+    exports: [...imports, ActionButtonComponent],
     declarations: [ThemesLayoutBaseComponent],
 })
 export class AppSharedModule {}

@@ -21,7 +21,7 @@ import { PaginatorModule } from 'primeng/paginator';
 import { AutoCompleteModule } from 'primeng/autocomplete';
 import { EditorModule } from 'primeng/editor';
 import { InputMaskModule } from 'primeng/inputmask';
- import { Angular2CountoModule } from '@awaismirza/angular2-counto';
+import { Angular2CountoModule } from '@awaismirza/angular2-counto';
 import { IMaskModule } from 'angular-imask';
 import { ImageCropperModule } from 'ngx-image-cropper';
 import { DropdownModule } from 'primeng/dropdown';
@@ -29,6 +29,7 @@ import { AppBsModalModule } from '@shared/common/appBsModal/app-bs-modal.module'
 import { FileUploadModule } from 'ng2-file-upload';
 import { FileUploadModule as PrimeNgFileUploadModule } from 'primeng/fileupload';
 import { SubheaderModule } from '@app/shared/common/sub-header/subheader.module';
+import { AccordionModule } from 'primeng/accordion';
 
 @NgModule({
     declarations: [
@@ -66,6 +67,7 @@ import { SubheaderModule } from '@app/shared/common/sub-header/subheader.module'
         FileUploadModule,
         PrimeNgFileUploadModule,
         SubheaderModule,
+        AccordionModule,
     ],
     exports: [
         RoleComboComponent,
@@ -100,6 +102,7 @@ import { SubheaderModule } from '@app/shared/common/sub-header/subheader.module'
         FileUploadModule,
         PrimeNgFileUploadModule,
         SubheaderModule,
+        AccordionModule,
     ],
 })
 export class AdminSharedModule {}

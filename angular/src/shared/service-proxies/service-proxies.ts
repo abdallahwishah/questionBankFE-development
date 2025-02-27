@@ -3390,6 +3390,1339 @@ export class DashboardCustomizationServiceProxy {
 }
 
 @Injectable()
+export class DashboardRolesServiceProxy {
+    private http: HttpClient;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        this.http = http;
+        this.baseUrl = baseUrl ?? "";
+    }
+
+    /**
+     * @param filter (optional) 
+     * @param roleNameFilter (optional) 
+     * @param dashboardFriendlyNameFilter (optional) 
+     * @param sorting (optional) 
+     * @param skipCount (optional) 
+     * @param maxResultCount (optional) 
+     * @return Success
+     */
+    getAll(filter: string | undefined, roleNameFilter: string | undefined, dashboardFriendlyNameFilter: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfGetDashboardRoleForViewDto> {
+        let url_ = this.baseUrl + "/api/services/app/DashboardRoles/GetAll?";
+        if (filter === null)
+            throw new Error("The parameter 'filter' cannot be null.");
+        else if (filter !== undefined)
+            url_ += "Filter=" + encodeURIComponent("" + filter) + "&";
+        if (roleNameFilter === null)
+            throw new Error("The parameter 'roleNameFilter' cannot be null.");
+        else if (roleNameFilter !== undefined)
+            url_ += "RoleNameFilter=" + encodeURIComponent("" + roleNameFilter) + "&";
+        if (dashboardFriendlyNameFilter === null)
+            throw new Error("The parameter 'dashboardFriendlyNameFilter' cannot be null.");
+        else if (dashboardFriendlyNameFilter !== undefined)
+            url_ += "DashboardFriendlyNameFilter=" + encodeURIComponent("" + dashboardFriendlyNameFilter) + "&";
+        if (sorting === null)
+            throw new Error("The parameter 'sorting' cannot be null.");
+        else if (sorting !== undefined)
+            url_ += "Sorting=" + encodeURIComponent("" + sorting) + "&";
+        if (skipCount === null)
+            throw new Error("The parameter 'skipCount' cannot be null.");
+        else if (skipCount !== undefined)
+            url_ += "SkipCount=" + encodeURIComponent("" + skipCount) + "&";
+        if (maxResultCount === null)
+            throw new Error("The parameter 'maxResultCount' cannot be null.");
+        else if (maxResultCount !== undefined)
+            url_ += "MaxResultCount=" + encodeURIComponent("" + maxResultCount) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetAll(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetAll(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<PagedResultDtoOfGetDashboardRoleForViewDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<PagedResultDtoOfGetDashboardRoleForViewDto>;
+        }));
+    }
+
+    protected processGetAll(response: HttpResponseBase): Observable<PagedResultDtoOfGetDashboardRoleForViewDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = PagedResultDtoOfGetDashboardRoleForViewDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param id (optional) 
+     * @return Success
+     */
+    getDashboardRoleForView(id: number | undefined): Observable<GetDashboardRoleForViewDto> {
+        let url_ = this.baseUrl + "/api/services/app/DashboardRoles/GetDashboardRoleForView?";
+        if (id === null)
+            throw new Error("The parameter 'id' cannot be null.");
+        else if (id !== undefined)
+            url_ += "id=" + encodeURIComponent("" + id) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetDashboardRoleForView(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetDashboardRoleForView(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<GetDashboardRoleForViewDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<GetDashboardRoleForViewDto>;
+        }));
+    }
+
+    protected processGetDashboardRoleForView(response: HttpResponseBase): Observable<GetDashboardRoleForViewDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = GetDashboardRoleForViewDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param id (optional) 
+     * @return Success
+     */
+    getDashboardRoleForEdit(id: number | undefined): Observable<GetDashboardRoleForEditOutput> {
+        let url_ = this.baseUrl + "/api/services/app/DashboardRoles/GetDashboardRoleForEdit?";
+        if (id === null)
+            throw new Error("The parameter 'id' cannot be null.");
+        else if (id !== undefined)
+            url_ += "Id=" + encodeURIComponent("" + id) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetDashboardRoleForEdit(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetDashboardRoleForEdit(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<GetDashboardRoleForEditOutput>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<GetDashboardRoleForEditOutput>;
+        }));
+    }
+
+    protected processGetDashboardRoleForEdit(response: HttpResponseBase): Observable<GetDashboardRoleForEditOutput> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = GetDashboardRoleForEditOutput.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param body (optional) 
+     * @return Success
+     */
+    createOrEdit(body: CreateOrEditDashboardRoleDto | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/DashboardRoles/CreateOrEdit";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json",
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processCreateOrEdit(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processCreateOrEdit(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<void>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<void>;
+        }));
+    }
+
+    protected processCreateOrEdit(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return _observableOf(null as any);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param id (optional) 
+     * @return Success
+     */
+    delete(id: number | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/DashboardRoles/Delete?";
+        if (id === null)
+            throw new Error("The parameter 'id' cannot be null.");
+        else if (id !== undefined)
+            url_ += "Id=" + encodeURIComponent("" + id) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+            })
+        };
+
+        return this.http.request("delete", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processDelete(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processDelete(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<void>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<void>;
+        }));
+    }
+
+    protected processDelete(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return _observableOf(null as any);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param filter (optional) 
+     * @param roleNameFilter (optional) 
+     * @param dashboardFriendlyNameFilter (optional) 
+     * @return Success
+     */
+    getDashboardRolesToExcel(filter: string | undefined, roleNameFilter: string | undefined, dashboardFriendlyNameFilter: string | undefined): Observable<FileDto> {
+        let url_ = this.baseUrl + "/api/services/app/DashboardRoles/GetDashboardRolesToExcel?";
+        if (filter === null)
+            throw new Error("The parameter 'filter' cannot be null.");
+        else if (filter !== undefined)
+            url_ += "Filter=" + encodeURIComponent("" + filter) + "&";
+        if (roleNameFilter === null)
+            throw new Error("The parameter 'roleNameFilter' cannot be null.");
+        else if (roleNameFilter !== undefined)
+            url_ += "RoleNameFilter=" + encodeURIComponent("" + roleNameFilter) + "&";
+        if (dashboardFriendlyNameFilter === null)
+            throw new Error("The parameter 'dashboardFriendlyNameFilter' cannot be null.");
+        else if (dashboardFriendlyNameFilter !== undefined)
+            url_ += "DashboardFriendlyNameFilter=" + encodeURIComponent("" + dashboardFriendlyNameFilter) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetDashboardRolesToExcel(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetDashboardRolesToExcel(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<FileDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<FileDto>;
+        }));
+    }
+
+    protected processGetDashboardRolesToExcel(response: HttpResponseBase): Observable<FileDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = FileDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @return Success
+     */
+    getAllRoleForTableDropdown(): Observable<DashboardRoleRoleLookupTableDto[]> {
+        let url_ = this.baseUrl + "/api/services/app/DashboardRoles/GetAllRoleForTableDropdown";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetAllRoleForTableDropdown(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetAllRoleForTableDropdown(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<DashboardRoleRoleLookupTableDto[]>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<DashboardRoleRoleLookupTableDto[]>;
+        }));
+    }
+
+    protected processGetAllRoleForTableDropdown(response: HttpResponseBase): Observable<DashboardRoleRoleLookupTableDto[]> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(DashboardRoleRoleLookupTableDto.fromJS(item));
+            }
+            else {
+                result200 = <any>null;
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @return Success
+     */
+    getAllDashboardForTableDropdown(): Observable<DashboardRoleDashboardLookupTableDto[]> {
+        let url_ = this.baseUrl + "/api/services/app/DashboardRoles/GetAllDashboardForTableDropdown";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetAllDashboardForTableDropdown(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetAllDashboardForTableDropdown(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<DashboardRoleDashboardLookupTableDto[]>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<DashboardRoleDashboardLookupTableDto[]>;
+        }));
+    }
+
+    protected processGetAllDashboardForTableDropdown(response: HttpResponseBase): Observable<DashboardRoleDashboardLookupTableDto[]> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(DashboardRoleDashboardLookupTableDto.fromJS(item));
+            }
+            else {
+                result200 = <any>null;
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+}
+
+@Injectable()
+export class DashboardsServiceProxy {
+    private http: HttpClient;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        this.http = http;
+        this.baseUrl = baseUrl ?? "";
+    }
+
+    /**
+     * @param filter (optional) 
+     * @param captionFilter (optional) 
+     * @param friendlyNameFilter (optional) 
+     * @param isActiveFilter (optional) 
+     * @param dashboardTypeFilter (optional) 
+     * @param sorting (optional) 
+     * @param skipCount (optional) 
+     * @param maxResultCount (optional) 
+     * @return Success
+     */
+    getAll(filter: string | undefined, captionFilter: string | undefined, friendlyNameFilter: string | undefined, isActiveFilter: number | undefined, dashboardTypeFilter: number | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfGetDashboardForViewDto> {
+        let url_ = this.baseUrl + "/api/services/app/Dashboards/GetAll?";
+        if (filter === null)
+            throw new Error("The parameter 'filter' cannot be null.");
+        else if (filter !== undefined)
+            url_ += "Filter=" + encodeURIComponent("" + filter) + "&";
+        if (captionFilter === null)
+            throw new Error("The parameter 'captionFilter' cannot be null.");
+        else if (captionFilter !== undefined)
+            url_ += "CaptionFilter=" + encodeURIComponent("" + captionFilter) + "&";
+        if (friendlyNameFilter === null)
+            throw new Error("The parameter 'friendlyNameFilter' cannot be null.");
+        else if (friendlyNameFilter !== undefined)
+            url_ += "FriendlyNameFilter=" + encodeURIComponent("" + friendlyNameFilter) + "&";
+        if (isActiveFilter === null)
+            throw new Error("The parameter 'isActiveFilter' cannot be null.");
+        else if (isActiveFilter !== undefined)
+            url_ += "IsActiveFilter=" + encodeURIComponent("" + isActiveFilter) + "&";
+        if (dashboardTypeFilter === null)
+            throw new Error("The parameter 'dashboardTypeFilter' cannot be null.");
+        else if (dashboardTypeFilter !== undefined)
+            url_ += "DashboardTypeFilter=" + encodeURIComponent("" + dashboardTypeFilter) + "&";
+        if (sorting === null)
+            throw new Error("The parameter 'sorting' cannot be null.");
+        else if (sorting !== undefined)
+            url_ += "Sorting=" + encodeURIComponent("" + sorting) + "&";
+        if (skipCount === null)
+            throw new Error("The parameter 'skipCount' cannot be null.");
+        else if (skipCount !== undefined)
+            url_ += "SkipCount=" + encodeURIComponent("" + skipCount) + "&";
+        if (maxResultCount === null)
+            throw new Error("The parameter 'maxResultCount' cannot be null.");
+        else if (maxResultCount !== undefined)
+            url_ += "MaxResultCount=" + encodeURIComponent("" + maxResultCount) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetAll(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetAll(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<PagedResultDtoOfGetDashboardForViewDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<PagedResultDtoOfGetDashboardForViewDto>;
+        }));
+    }
+
+    protected processGetAll(response: HttpResponseBase): Observable<PagedResultDtoOfGetDashboardForViewDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = PagedResultDtoOfGetDashboardForViewDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param id (optional) 
+     * @return Success
+     */
+    getDashboardForView(id: number | undefined): Observable<GetDashboardForViewDto> {
+        let url_ = this.baseUrl + "/api/services/app/Dashboards/GetDashboardForView?";
+        if (id === null)
+            throw new Error("The parameter 'id' cannot be null.");
+        else if (id !== undefined)
+            url_ += "id=" + encodeURIComponent("" + id) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetDashboardForView(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetDashboardForView(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<GetDashboardForViewDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<GetDashboardForViewDto>;
+        }));
+    }
+
+    protected processGetDashboardForView(response: HttpResponseBase): Observable<GetDashboardForViewDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = GetDashboardForViewDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param id (optional) 
+     * @return Success
+     */
+    getDashboardForEdit(id: number | undefined): Observable<GetDashboardForEditOutput> {
+        let url_ = this.baseUrl + "/api/services/app/Dashboards/GetDashboardForEdit?";
+        if (id === null)
+            throw new Error("The parameter 'id' cannot be null.");
+        else if (id !== undefined)
+            url_ += "Id=" + encodeURIComponent("" + id) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetDashboardForEdit(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetDashboardForEdit(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<GetDashboardForEditOutput>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<GetDashboardForEditOutput>;
+        }));
+    }
+
+    protected processGetDashboardForEdit(response: HttpResponseBase): Observable<GetDashboardForEditOutput> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = GetDashboardForEditOutput.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param body (optional) 
+     * @return Success
+     */
+    cloneDashboard(body: EntityDto | undefined): Observable<number> {
+        let url_ = this.baseUrl + "/api/services/app/Dashboards/CloneDashboard";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json",
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processCloneDashboard(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processCloneDashboard(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<number>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<number>;
+        }));
+    }
+
+    protected processCloneDashboard(response: HttpResponseBase): Observable<number> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+                result200 = resultData200 !== undefined ? resultData200 : <any>null;
+    
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param body (optional) 
+     * @return Success
+     */
+    createOrEdit(body: CreateOrEditDashboardDto | undefined): Observable<number> {
+        let url_ = this.baseUrl + "/api/services/app/Dashboards/CreateOrEdit";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json",
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processCreateOrEdit(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processCreateOrEdit(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<number>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<number>;
+        }));
+    }
+
+    protected processCreateOrEdit(response: HttpResponseBase): Observable<number> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+                result200 = resultData200 !== undefined ? resultData200 : <any>null;
+    
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param id (optional) 
+     * @return Success
+     */
+    delete(id: number | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/Dashboards/Delete?";
+        if (id === null)
+            throw new Error("The parameter 'id' cannot be null.");
+        else if (id !== undefined)
+            url_ += "Id=" + encodeURIComponent("" + id) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+            })
+        };
+
+        return this.http.request("delete", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processDelete(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processDelete(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<void>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<void>;
+        }));
+    }
+
+    protected processDelete(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return _observableOf(null as any);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param filter (optional) 
+     * @param captionFilter (optional) 
+     * @param friendlyNameFilter (optional) 
+     * @param isActiveFilter (optional) 
+     * @param dashboardTypeFilter (optional) 
+     * @return Success
+     */
+    getDashboardsToExcel(filter: string | undefined, captionFilter: string | undefined, friendlyNameFilter: string | undefined, isActiveFilter: number | undefined, dashboardTypeFilter: number | undefined): Observable<FileDto> {
+        let url_ = this.baseUrl + "/api/services/app/Dashboards/GetDashboardsToExcel?";
+        if (filter === null)
+            throw new Error("The parameter 'filter' cannot be null.");
+        else if (filter !== undefined)
+            url_ += "Filter=" + encodeURIComponent("" + filter) + "&";
+        if (captionFilter === null)
+            throw new Error("The parameter 'captionFilter' cannot be null.");
+        else if (captionFilter !== undefined)
+            url_ += "CaptionFilter=" + encodeURIComponent("" + captionFilter) + "&";
+        if (friendlyNameFilter === null)
+            throw new Error("The parameter 'friendlyNameFilter' cannot be null.");
+        else if (friendlyNameFilter !== undefined)
+            url_ += "FriendlyNameFilter=" + encodeURIComponent("" + friendlyNameFilter) + "&";
+        if (isActiveFilter === null)
+            throw new Error("The parameter 'isActiveFilter' cannot be null.");
+        else if (isActiveFilter !== undefined)
+            url_ += "IsActiveFilter=" + encodeURIComponent("" + isActiveFilter) + "&";
+        if (dashboardTypeFilter === null)
+            throw new Error("The parameter 'dashboardTypeFilter' cannot be null.");
+        else if (dashboardTypeFilter !== undefined)
+            url_ += "DashboardTypeFilter=" + encodeURIComponent("" + dashboardTypeFilter) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetDashboardsToExcel(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetDashboardsToExcel(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<FileDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<FileDto>;
+        }));
+    }
+
+    protected processGetDashboardsToExcel(response: HttpResponseBase): Observable<FileDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = FileDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+}
+
+@Injectable()
+export class DataConnectionsServiceProxy {
+    private http: HttpClient;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        this.http = http;
+        this.baseUrl = baseUrl ?? "";
+    }
+
+    /**
+     * @param filter (optional) 
+     * @param nameFilter (optional) 
+     * @param dataConnectionTypeFilter (optional) 
+     * @param connectionStringFilter (optional) 
+     * @param sorting (optional) 
+     * @param skipCount (optional) 
+     * @param maxResultCount (optional) 
+     * @return Success
+     */
+    getAll(filter: string | undefined, nameFilter: string | undefined, dataConnectionTypeFilter: number | undefined, connectionStringFilter: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfGetDataConnectionForViewDto> {
+        let url_ = this.baseUrl + "/api/services/app/DataConnections/GetAll?";
+        if (filter === null)
+            throw new Error("The parameter 'filter' cannot be null.");
+        else if (filter !== undefined)
+            url_ += "Filter=" + encodeURIComponent("" + filter) + "&";
+        if (nameFilter === null)
+            throw new Error("The parameter 'nameFilter' cannot be null.");
+        else if (nameFilter !== undefined)
+            url_ += "NameFilter=" + encodeURIComponent("" + nameFilter) + "&";
+        if (dataConnectionTypeFilter === null)
+            throw new Error("The parameter 'dataConnectionTypeFilter' cannot be null.");
+        else if (dataConnectionTypeFilter !== undefined)
+            url_ += "DataConnectionTypeFilter=" + encodeURIComponent("" + dataConnectionTypeFilter) + "&";
+        if (connectionStringFilter === null)
+            throw new Error("The parameter 'connectionStringFilter' cannot be null.");
+        else if (connectionStringFilter !== undefined)
+            url_ += "ConnectionStringFilter=" + encodeURIComponent("" + connectionStringFilter) + "&";
+        if (sorting === null)
+            throw new Error("The parameter 'sorting' cannot be null.");
+        else if (sorting !== undefined)
+            url_ += "Sorting=" + encodeURIComponent("" + sorting) + "&";
+        if (skipCount === null)
+            throw new Error("The parameter 'skipCount' cannot be null.");
+        else if (skipCount !== undefined)
+            url_ += "SkipCount=" + encodeURIComponent("" + skipCount) + "&";
+        if (maxResultCount === null)
+            throw new Error("The parameter 'maxResultCount' cannot be null.");
+        else if (maxResultCount !== undefined)
+            url_ += "MaxResultCount=" + encodeURIComponent("" + maxResultCount) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetAll(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetAll(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<PagedResultDtoOfGetDataConnectionForViewDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<PagedResultDtoOfGetDataConnectionForViewDto>;
+        }));
+    }
+
+    protected processGetAll(response: HttpResponseBase): Observable<PagedResultDtoOfGetDataConnectionForViewDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = PagedResultDtoOfGetDataConnectionForViewDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param id (optional) 
+     * @return Success
+     */
+    getDataConnectionForView(id: number | undefined): Observable<GetDataConnectionForViewDto> {
+        let url_ = this.baseUrl + "/api/services/app/DataConnections/GetDataConnectionForView?";
+        if (id === null)
+            throw new Error("The parameter 'id' cannot be null.");
+        else if (id !== undefined)
+            url_ += "id=" + encodeURIComponent("" + id) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetDataConnectionForView(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetDataConnectionForView(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<GetDataConnectionForViewDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<GetDataConnectionForViewDto>;
+        }));
+    }
+
+    protected processGetDataConnectionForView(response: HttpResponseBase): Observable<GetDataConnectionForViewDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = GetDataConnectionForViewDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param id (optional) 
+     * @return Success
+     */
+    getDataConnectionForEdit(id: number | undefined): Observable<GetDataConnectionForEditOutput> {
+        let url_ = this.baseUrl + "/api/services/app/DataConnections/GetDataConnectionForEdit?";
+        if (id === null)
+            throw new Error("The parameter 'id' cannot be null.");
+        else if (id !== undefined)
+            url_ += "Id=" + encodeURIComponent("" + id) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetDataConnectionForEdit(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetDataConnectionForEdit(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<GetDataConnectionForEditOutput>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<GetDataConnectionForEditOutput>;
+        }));
+    }
+
+    protected processGetDataConnectionForEdit(response: HttpResponseBase): Observable<GetDataConnectionForEditOutput> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = GetDataConnectionForEditOutput.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param body (optional) 
+     * @return Success
+     */
+    createOrEdit(body: CreateOrEditDataConnectionDto | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/DataConnections/CreateOrEdit";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json",
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processCreateOrEdit(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processCreateOrEdit(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<void>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<void>;
+        }));
+    }
+
+    protected processCreateOrEdit(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return _observableOf(null as any);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param id (optional) 
+     * @return Success
+     */
+    delete(id: number | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/DataConnections/Delete?";
+        if (id === null)
+            throw new Error("The parameter 'id' cannot be null.");
+        else if (id !== undefined)
+            url_ += "Id=" + encodeURIComponent("" + id) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+            })
+        };
+
+        return this.http.request("delete", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processDelete(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processDelete(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<void>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<void>;
+        }));
+    }
+
+    protected processDelete(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return _observableOf(null as any);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param filter (optional) 
+     * @param nameFilter (optional) 
+     * @param dataConnectionTypeFilter (optional) 
+     * @param connectionStringFilter (optional) 
+     * @return Success
+     */
+    getDataConnectionsToExcel(filter: string | undefined, nameFilter: string | undefined, dataConnectionTypeFilter: number | undefined, connectionStringFilter: string | undefined): Observable<FileDto> {
+        let url_ = this.baseUrl + "/api/services/app/DataConnections/GetDataConnectionsToExcel?";
+        if (filter === null)
+            throw new Error("The parameter 'filter' cannot be null.");
+        else if (filter !== undefined)
+            url_ += "Filter=" + encodeURIComponent("" + filter) + "&";
+        if (nameFilter === null)
+            throw new Error("The parameter 'nameFilter' cannot be null.");
+        else if (nameFilter !== undefined)
+            url_ += "NameFilter=" + encodeURIComponent("" + nameFilter) + "&";
+        if (dataConnectionTypeFilter === null)
+            throw new Error("The parameter 'dataConnectionTypeFilter' cannot be null.");
+        else if (dataConnectionTypeFilter !== undefined)
+            url_ += "DataConnectionTypeFilter=" + encodeURIComponent("" + dataConnectionTypeFilter) + "&";
+        if (connectionStringFilter === null)
+            throw new Error("The parameter 'connectionStringFilter' cannot be null.");
+        else if (connectionStringFilter !== undefined)
+            url_ += "ConnectionStringFilter=" + encodeURIComponent("" + connectionStringFilter) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetDataConnectionsToExcel(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetDataConnectionsToExcel(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<FileDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<FileDto>;
+        }));
+    }
+
+    protected processGetDataConnectionsToExcel(response: HttpResponseBase): Observable<FileDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = FileDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+}
+
+@Injectable()
 export class DemoUiComponentsServiceProxy {
     private http: HttpClient;
     private baseUrl: string;
@@ -19756,6 +21089,968 @@ export class QuestionSubjectUnitsServiceProxy {
 }
 
 @Injectable()
+export class ReportItemsServiceProxy {
+    private http: HttpClient;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        this.http = http;
+        this.baseUrl = baseUrl ?? "";
+    }
+
+    /**
+     * @param filter (optional) 
+     * @param displayNameFilter (optional) 
+     * @param nameFilter (optional) 
+     * @param isPublishFilter (optional) 
+     * @param sorting (optional) 
+     * @param skipCount (optional) 
+     * @param maxResultCount (optional) 
+     * @return Success
+     */
+    getAll(filter: string | undefined, displayNameFilter: string | undefined, nameFilter: string | undefined, isPublishFilter: number | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfGetReportItemForViewDto> {
+        let url_ = this.baseUrl + "/api/services/app/ReportItems/GetAll?";
+        if (filter === null)
+            throw new Error("The parameter 'filter' cannot be null.");
+        else if (filter !== undefined)
+            url_ += "Filter=" + encodeURIComponent("" + filter) + "&";
+        if (displayNameFilter === null)
+            throw new Error("The parameter 'displayNameFilter' cannot be null.");
+        else if (displayNameFilter !== undefined)
+            url_ += "DisplayNameFilter=" + encodeURIComponent("" + displayNameFilter) + "&";
+        if (nameFilter === null)
+            throw new Error("The parameter 'nameFilter' cannot be null.");
+        else if (nameFilter !== undefined)
+            url_ += "NameFilter=" + encodeURIComponent("" + nameFilter) + "&";
+        if (isPublishFilter === null)
+            throw new Error("The parameter 'isPublishFilter' cannot be null.");
+        else if (isPublishFilter !== undefined)
+            url_ += "IsPublishFilter=" + encodeURIComponent("" + isPublishFilter) + "&";
+        if (sorting === null)
+            throw new Error("The parameter 'sorting' cannot be null.");
+        else if (sorting !== undefined)
+            url_ += "Sorting=" + encodeURIComponent("" + sorting) + "&";
+        if (skipCount === null)
+            throw new Error("The parameter 'skipCount' cannot be null.");
+        else if (skipCount !== undefined)
+            url_ += "SkipCount=" + encodeURIComponent("" + skipCount) + "&";
+        if (maxResultCount === null)
+            throw new Error("The parameter 'maxResultCount' cannot be null.");
+        else if (maxResultCount !== undefined)
+            url_ += "MaxResultCount=" + encodeURIComponent("" + maxResultCount) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetAll(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetAll(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<PagedResultDtoOfGetReportItemForViewDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<PagedResultDtoOfGetReportItemForViewDto>;
+        }));
+    }
+
+    protected processGetAll(response: HttpResponseBase): Observable<PagedResultDtoOfGetReportItemForViewDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = PagedResultDtoOfGetReportItemForViewDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param id (optional) 
+     * @return Success
+     */
+    getReportItemForView(id: number | undefined): Observable<GetReportItemForViewDto> {
+        let url_ = this.baseUrl + "/api/services/app/ReportItems/GetReportItemForView?";
+        if (id === null)
+            throw new Error("The parameter 'id' cannot be null.");
+        else if (id !== undefined)
+            url_ += "id=" + encodeURIComponent("" + id) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetReportItemForView(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetReportItemForView(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<GetReportItemForViewDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<GetReportItemForViewDto>;
+        }));
+    }
+
+    protected processGetReportItemForView(response: HttpResponseBase): Observable<GetReportItemForViewDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = GetReportItemForViewDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param id (optional) 
+     * @return Success
+     */
+    getReportItemForEdit(id: number | undefined): Observable<GetReportItemForEditOutput> {
+        let url_ = this.baseUrl + "/api/services/app/ReportItems/GetReportItemForEdit?";
+        if (id === null)
+            throw new Error("The parameter 'id' cannot be null.");
+        else if (id !== undefined)
+            url_ += "Id=" + encodeURIComponent("" + id) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetReportItemForEdit(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetReportItemForEdit(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<GetReportItemForEditOutput>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<GetReportItemForEditOutput>;
+        }));
+    }
+
+    protected processGetReportItemForEdit(response: HttpResponseBase): Observable<GetReportItemForEditOutput> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = GetReportItemForEditOutput.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param body (optional) 
+     * @return Success
+     */
+    createOrEdit(body: CreateOrEditReportItemDto | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/ReportItems/CreateOrEdit";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json",
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processCreateOrEdit(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processCreateOrEdit(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<void>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<void>;
+        }));
+    }
+
+    protected processCreateOrEdit(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return _observableOf(null as any);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param id (optional) 
+     * @return Success
+     */
+    delete(id: number | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/ReportItems/Delete?";
+        if (id === null)
+            throw new Error("The parameter 'id' cannot be null.");
+        else if (id !== undefined)
+            url_ += "Id=" + encodeURIComponent("" + id) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+            })
+        };
+
+        return this.http.request("delete", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processDelete(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processDelete(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<void>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<void>;
+        }));
+    }
+
+    protected processDelete(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return _observableOf(null as any);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param filter (optional) 
+     * @param displayNameFilter (optional) 
+     * @param nameFilter (optional) 
+     * @param isPublishFilter (optional) 
+     * @return Success
+     */
+    getReportItemsToExcel(filter: string | undefined, displayNameFilter: string | undefined, nameFilter: string | undefined, isPublishFilter: number | undefined): Observable<FileDto> {
+        let url_ = this.baseUrl + "/api/services/app/ReportItems/GetReportItemsToExcel?";
+        if (filter === null)
+            throw new Error("The parameter 'filter' cannot be null.");
+        else if (filter !== undefined)
+            url_ += "Filter=" + encodeURIComponent("" + filter) + "&";
+        if (displayNameFilter === null)
+            throw new Error("The parameter 'displayNameFilter' cannot be null.");
+        else if (displayNameFilter !== undefined)
+            url_ += "DisplayNameFilter=" + encodeURIComponent("" + displayNameFilter) + "&";
+        if (nameFilter === null)
+            throw new Error("The parameter 'nameFilter' cannot be null.");
+        else if (nameFilter !== undefined)
+            url_ += "NameFilter=" + encodeURIComponent("" + nameFilter) + "&";
+        if (isPublishFilter === null)
+            throw new Error("The parameter 'isPublishFilter' cannot be null.");
+        else if (isPublishFilter !== undefined)
+            url_ += "IsPublishFilter=" + encodeURIComponent("" + isPublishFilter) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetReportItemsToExcel(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetReportItemsToExcel(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<FileDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<FileDto>;
+        }));
+    }
+
+    protected processGetReportItemsToExcel(response: HttpResponseBase): Observable<FileDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = FileDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param filter (optional) 
+     * @param displayNameFilter (optional) 
+     * @param nameFilter (optional) 
+     * @param isPublishFilter (optional) 
+     * @param sorting (optional) 
+     * @param skipCount (optional) 
+     * @param maxResultCount (optional) 
+     * @return Success
+     */
+    getMyReport(filter: string | undefined, displayNameFilter: string | undefined, nameFilter: string | undefined, isPublishFilter: number | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfGetReportItemForViewDto> {
+        let url_ = this.baseUrl + "/api/services/app/ReportItems/GetMyReport?";
+        if (filter === null)
+            throw new Error("The parameter 'filter' cannot be null.");
+        else if (filter !== undefined)
+            url_ += "Filter=" + encodeURIComponent("" + filter) + "&";
+        if (displayNameFilter === null)
+            throw new Error("The parameter 'displayNameFilter' cannot be null.");
+        else if (displayNameFilter !== undefined)
+            url_ += "DisplayNameFilter=" + encodeURIComponent("" + displayNameFilter) + "&";
+        if (nameFilter === null)
+            throw new Error("The parameter 'nameFilter' cannot be null.");
+        else if (nameFilter !== undefined)
+            url_ += "NameFilter=" + encodeURIComponent("" + nameFilter) + "&";
+        if (isPublishFilter === null)
+            throw new Error("The parameter 'isPublishFilter' cannot be null.");
+        else if (isPublishFilter !== undefined)
+            url_ += "IsPublishFilter=" + encodeURIComponent("" + isPublishFilter) + "&";
+        if (sorting === null)
+            throw new Error("The parameter 'sorting' cannot be null.");
+        else if (sorting !== undefined)
+            url_ += "Sorting=" + encodeURIComponent("" + sorting) + "&";
+        if (skipCount === null)
+            throw new Error("The parameter 'skipCount' cannot be null.");
+        else if (skipCount !== undefined)
+            url_ += "SkipCount=" + encodeURIComponent("" + skipCount) + "&";
+        if (maxResultCount === null)
+            throw new Error("The parameter 'maxResultCount' cannot be null.");
+        else if (maxResultCount !== undefined)
+            url_ += "MaxResultCount=" + encodeURIComponent("" + maxResultCount) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetMyReport(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetMyReport(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<PagedResultDtoOfGetReportItemForViewDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<PagedResultDtoOfGetReportItemForViewDto>;
+        }));
+    }
+
+    protected processGetMyReport(response: HttpResponseBase): Observable<PagedResultDtoOfGetReportItemForViewDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = PagedResultDtoOfGetReportItemForViewDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+}
+
+@Injectable()
+export class ReportRolesServiceProxy {
+    private http: HttpClient;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        this.http = http;
+        this.baseUrl = baseUrl ?? "";
+    }
+
+    /**
+     * @param filter (optional) 
+     * @param roleNameFilter (optional) 
+     * @param reportItemDisplayNameFilter (optional) 
+     * @param sorting (optional) 
+     * @param skipCount (optional) 
+     * @param maxResultCount (optional) 
+     * @return Success
+     */
+    getAll(filter: string | undefined, roleNameFilter: string | undefined, reportItemDisplayNameFilter: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfGetReportRoleForViewDto> {
+        let url_ = this.baseUrl + "/api/services/app/ReportRoles/GetAll?";
+        if (filter === null)
+            throw new Error("The parameter 'filter' cannot be null.");
+        else if (filter !== undefined)
+            url_ += "Filter=" + encodeURIComponent("" + filter) + "&";
+        if (roleNameFilter === null)
+            throw new Error("The parameter 'roleNameFilter' cannot be null.");
+        else if (roleNameFilter !== undefined)
+            url_ += "RoleNameFilter=" + encodeURIComponent("" + roleNameFilter) + "&";
+        if (reportItemDisplayNameFilter === null)
+            throw new Error("The parameter 'reportItemDisplayNameFilter' cannot be null.");
+        else if (reportItemDisplayNameFilter !== undefined)
+            url_ += "ReportItemDisplayNameFilter=" + encodeURIComponent("" + reportItemDisplayNameFilter) + "&";
+        if (sorting === null)
+            throw new Error("The parameter 'sorting' cannot be null.");
+        else if (sorting !== undefined)
+            url_ += "Sorting=" + encodeURIComponent("" + sorting) + "&";
+        if (skipCount === null)
+            throw new Error("The parameter 'skipCount' cannot be null.");
+        else if (skipCount !== undefined)
+            url_ += "SkipCount=" + encodeURIComponent("" + skipCount) + "&";
+        if (maxResultCount === null)
+            throw new Error("The parameter 'maxResultCount' cannot be null.");
+        else if (maxResultCount !== undefined)
+            url_ += "MaxResultCount=" + encodeURIComponent("" + maxResultCount) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetAll(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetAll(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<PagedResultDtoOfGetReportRoleForViewDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<PagedResultDtoOfGetReportRoleForViewDto>;
+        }));
+    }
+
+    protected processGetAll(response: HttpResponseBase): Observable<PagedResultDtoOfGetReportRoleForViewDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = PagedResultDtoOfGetReportRoleForViewDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param id (optional) 
+     * @return Success
+     */
+    getReportRoleForView(id: number | undefined): Observable<GetReportRoleForViewDto> {
+        let url_ = this.baseUrl + "/api/services/app/ReportRoles/GetReportRoleForView?";
+        if (id === null)
+            throw new Error("The parameter 'id' cannot be null.");
+        else if (id !== undefined)
+            url_ += "id=" + encodeURIComponent("" + id) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetReportRoleForView(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetReportRoleForView(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<GetReportRoleForViewDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<GetReportRoleForViewDto>;
+        }));
+    }
+
+    protected processGetReportRoleForView(response: HttpResponseBase): Observable<GetReportRoleForViewDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = GetReportRoleForViewDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param id (optional) 
+     * @return Success
+     */
+    getReportRoleForEdit(id: number | undefined): Observable<GetReportRoleForEditOutput> {
+        let url_ = this.baseUrl + "/api/services/app/ReportRoles/GetReportRoleForEdit?";
+        if (id === null)
+            throw new Error("The parameter 'id' cannot be null.");
+        else if (id !== undefined)
+            url_ += "Id=" + encodeURIComponent("" + id) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetReportRoleForEdit(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetReportRoleForEdit(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<GetReportRoleForEditOutput>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<GetReportRoleForEditOutput>;
+        }));
+    }
+
+    protected processGetReportRoleForEdit(response: HttpResponseBase): Observable<GetReportRoleForEditOutput> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = GetReportRoleForEditOutput.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param body (optional) 
+     * @return Success
+     */
+    createOrEdit(body: CreateOrEditReportRoleDto | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/ReportRoles/CreateOrEdit";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json",
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processCreateOrEdit(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processCreateOrEdit(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<void>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<void>;
+        }));
+    }
+
+    protected processCreateOrEdit(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return _observableOf(null as any);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param id (optional) 
+     * @return Success
+     */
+    delete(id: number | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/ReportRoles/Delete?";
+        if (id === null)
+            throw new Error("The parameter 'id' cannot be null.");
+        else if (id !== undefined)
+            url_ += "Id=" + encodeURIComponent("" + id) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+            })
+        };
+
+        return this.http.request("delete", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processDelete(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processDelete(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<void>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<void>;
+        }));
+    }
+
+    protected processDelete(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return _observableOf(null as any);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param filter (optional) 
+     * @param roleNameFilter (optional) 
+     * @param reportItemDisplayNameFilter (optional) 
+     * @return Success
+     */
+    getReportRolesToExcel(filter: string | undefined, roleNameFilter: string | undefined, reportItemDisplayNameFilter: string | undefined): Observable<FileDto> {
+        let url_ = this.baseUrl + "/api/services/app/ReportRoles/GetReportRolesToExcel?";
+        if (filter === null)
+            throw new Error("The parameter 'filter' cannot be null.");
+        else if (filter !== undefined)
+            url_ += "Filter=" + encodeURIComponent("" + filter) + "&";
+        if (roleNameFilter === null)
+            throw new Error("The parameter 'roleNameFilter' cannot be null.");
+        else if (roleNameFilter !== undefined)
+            url_ += "RoleNameFilter=" + encodeURIComponent("" + roleNameFilter) + "&";
+        if (reportItemDisplayNameFilter === null)
+            throw new Error("The parameter 'reportItemDisplayNameFilter' cannot be null.");
+        else if (reportItemDisplayNameFilter !== undefined)
+            url_ += "ReportItemDisplayNameFilter=" + encodeURIComponent("" + reportItemDisplayNameFilter) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetReportRolesToExcel(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetReportRolesToExcel(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<FileDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<FileDto>;
+        }));
+    }
+
+    protected processGetReportRolesToExcel(response: HttpResponseBase): Observable<FileDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = FileDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @return Success
+     */
+    getAllRoleForTableDropdown(): Observable<ReportRoleRoleLookupTableDto[]> {
+        let url_ = this.baseUrl + "/api/services/app/ReportRoles/GetAllRoleForTableDropdown";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetAllRoleForTableDropdown(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetAllRoleForTableDropdown(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<ReportRoleRoleLookupTableDto[]>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<ReportRoleRoleLookupTableDto[]>;
+        }));
+    }
+
+    protected processGetAllRoleForTableDropdown(response: HttpResponseBase): Observable<ReportRoleRoleLookupTableDto[]> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(ReportRoleRoleLookupTableDto.fromJS(item));
+            }
+            else {
+                result200 = <any>null;
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @return Success
+     */
+    getAllReportItemForTableDropdown(): Observable<ReportRoleReportItemLookupTableDto[]> {
+        let url_ = this.baseUrl + "/api/services/app/ReportRoles/GetAllReportItemForTableDropdown";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetAllReportItemForTableDropdown(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetAllReportItemForTableDropdown(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<ReportRoleReportItemLookupTableDto[]>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<ReportRoleReportItemLookupTableDto[]>;
+        }));
+    }
+
+    protected processGetAllReportItemForTableDropdown(response: HttpResponseBase): Observable<ReportRoleReportItemLookupTableDto[]> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(ReportRoleReportItemLookupTableDto.fromJS(item));
+            }
+            else {
+                result200 = <any>null;
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+}
+
+@Injectable()
 export class RoleServiceProxy {
     private http: HttpClient;
     private baseUrl: string;
@@ -35045,6 +37340,178 @@ export interface ICreateOrEditComplexityDto {
     nameL: string;
 }
 
+export class CreateOrEditDashboardDto implements ICreateOrEditDashboardDto {
+    id!: number | undefined;
+    dashboardData!: string | undefined;
+    caption!: string | undefined;
+    description!: string | undefined;
+    isActive!: boolean;
+    dashboardType!: DashboardTypeEnum;
+    nameL!: string;
+    nameF!: string;
+    widgetId!: string | undefined;
+    roleIds!: number[] | undefined;
+
+    constructor(data?: ICreateOrEditDashboardDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.dashboardData = _data["dashboardData"];
+            this.caption = _data["caption"];
+            this.description = _data["description"];
+            this.isActive = _data["isActive"];
+            this.dashboardType = _data["dashboardType"];
+            this.nameL = _data["nameL"];
+            this.nameF = _data["nameF"];
+            this.widgetId = _data["widgetId"];
+            if (Array.isArray(_data["roleIds"])) {
+                this.roleIds = [] as any;
+                for (let item of _data["roleIds"])
+                    this.roleIds!.push(item);
+            }
+        }
+    }
+
+    static fromJS(data: any): CreateOrEditDashboardDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new CreateOrEditDashboardDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["dashboardData"] = this.dashboardData;
+        data["caption"] = this.caption;
+        data["description"] = this.description;
+        data["isActive"] = this.isActive;
+        data["dashboardType"] = this.dashboardType;
+        data["nameL"] = this.nameL;
+        data["nameF"] = this.nameF;
+        data["widgetId"] = this.widgetId;
+        if (Array.isArray(this.roleIds)) {
+            data["roleIds"] = [];
+            for (let item of this.roleIds)
+                data["roleIds"].push(item);
+        }
+        return data;
+    }
+}
+
+export interface ICreateOrEditDashboardDto {
+    id: number | undefined;
+    dashboardData: string | undefined;
+    caption: string | undefined;
+    description: string | undefined;
+    isActive: boolean;
+    dashboardType: DashboardTypeEnum;
+    nameL: string;
+    nameF: string;
+    widgetId: string | undefined;
+    roleIds: number[] | undefined;
+}
+
+export class CreateOrEditDashboardRoleDto implements ICreateOrEditDashboardRoleDto {
+    id!: number | undefined;
+    roleId!: number;
+    dashboardId!: number;
+
+    constructor(data?: ICreateOrEditDashboardRoleDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.roleId = _data["roleId"];
+            this.dashboardId = _data["dashboardId"];
+        }
+    }
+
+    static fromJS(data: any): CreateOrEditDashboardRoleDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new CreateOrEditDashboardRoleDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["roleId"] = this.roleId;
+        data["dashboardId"] = this.dashboardId;
+        return data;
+    }
+}
+
+export interface ICreateOrEditDashboardRoleDto {
+    id: number | undefined;
+    roleId: number;
+    dashboardId: number;
+}
+
+export class CreateOrEditDataConnectionDto implements ICreateOrEditDataConnectionDto {
+    id!: number | undefined;
+    name!: string;
+    dataConnectionType!: DataConnectionTypeEnum;
+    connectionString!: string;
+
+    constructor(data?: ICreateOrEditDataConnectionDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.name = _data["name"];
+            this.dataConnectionType = _data["dataConnectionType"];
+            this.connectionString = _data["connectionString"];
+        }
+    }
+
+    static fromJS(data: any): CreateOrEditDataConnectionDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new CreateOrEditDataConnectionDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["name"] = this.name;
+        data["dataConnectionType"] = this.dataConnectionType;
+        data["connectionString"] = this.connectionString;
+        return data;
+    }
+}
+
+export interface ICreateOrEditDataConnectionDto {
+    id: number | undefined;
+    name: string;
+    dataConnectionType: DataConnectionTypeEnum;
+    connectionString: string;
+}
+
 export class CreateOrEditDragFormQuestionDto implements ICreateOrEditDragFormQuestionDto {
     id!: number;
     type!: number;
@@ -36049,6 +38516,130 @@ export interface ICreateOrEditRearrangeQuestionDto {
     order: number;
     point: number;
     word: string | undefined;
+}
+
+export class CreateOrEditReportItemDto implements ICreateOrEditReportItemDto {
+    id!: number | undefined;
+    nameL!: string;
+    nameF!: string;
+    isPublish!: boolean;
+    layoutData!: string | undefined;
+    roleIds!: number[] | undefined;
+    isScheduled!: boolean;
+    frequencyEnum!: FrequencyEnum;
+    startDateParameterName!: string | undefined;
+    endDateParameterName!: string | undefined;
+
+    constructor(data?: ICreateOrEditReportItemDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.nameL = _data["nameL"];
+            this.nameF = _data["nameF"];
+            this.isPublish = _data["isPublish"];
+            this.layoutData = _data["layoutData"];
+            if (Array.isArray(_data["roleIds"])) {
+                this.roleIds = [] as any;
+                for (let item of _data["roleIds"])
+                    this.roleIds!.push(item);
+            }
+            this.isScheduled = _data["isScheduled"];
+            this.frequencyEnum = _data["frequencyEnum"];
+            this.startDateParameterName = _data["startDateParameterName"];
+            this.endDateParameterName = _data["endDateParameterName"];
+        }
+    }
+
+    static fromJS(data: any): CreateOrEditReportItemDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new CreateOrEditReportItemDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["nameL"] = this.nameL;
+        data["nameF"] = this.nameF;
+        data["isPublish"] = this.isPublish;
+        data["layoutData"] = this.layoutData;
+        if (Array.isArray(this.roleIds)) {
+            data["roleIds"] = [];
+            for (let item of this.roleIds)
+                data["roleIds"].push(item);
+        }
+        data["isScheduled"] = this.isScheduled;
+        data["frequencyEnum"] = this.frequencyEnum;
+        data["startDateParameterName"] = this.startDateParameterName;
+        data["endDateParameterName"] = this.endDateParameterName;
+        return data;
+    }
+}
+
+export interface ICreateOrEditReportItemDto {
+    id: number | undefined;
+    nameL: string;
+    nameF: string;
+    isPublish: boolean;
+    layoutData: string | undefined;
+    roleIds: number[] | undefined;
+    isScheduled: boolean;
+    frequencyEnum: FrequencyEnum;
+    startDateParameterName: string | undefined;
+    endDateParameterName: string | undefined;
+}
+
+export class CreateOrEditReportRoleDto implements ICreateOrEditReportRoleDto {
+    id!: number | undefined;
+    roleId!: number;
+    reportItemId!: number;
+
+    constructor(data?: ICreateOrEditReportRoleDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.roleId = _data["roleId"];
+            this.reportItemId = _data["reportItemId"];
+        }
+    }
+
+    static fromJS(data: any): CreateOrEditReportRoleDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new CreateOrEditReportRoleDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["roleId"] = this.roleId;
+        data["reportItemId"] = this.reportItemId;
+        return data;
+    }
+}
+
+export interface ICreateOrEditReportRoleDto {
+    id: number | undefined;
+    roleId: number;
+    reportItemId: number;
 }
 
 export class CreateOrEditSchoolClassDto implements ICreateOrEditSchoolClassDto {
@@ -37873,6 +40464,66 @@ export interface IDashboard {
     pages: Page[] | undefined;
 }
 
+export class DashboardDto implements IDashboardDto {
+    id!: number;
+    caption!: string | undefined;
+    widgetId!: string | undefined;
+    friendlyName!: string | undefined;
+    isActive!: boolean;
+    dashboardType!: DashboardTypeEnum;
+    dashboardData!: string | undefined;
+
+    constructor(data?: IDashboardDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.caption = _data["caption"];
+            this.widgetId = _data["widgetId"];
+            this.friendlyName = _data["friendlyName"];
+            this.isActive = _data["isActive"];
+            this.dashboardType = _data["dashboardType"];
+            this.dashboardData = _data["dashboardData"];
+        }
+    }
+
+    static fromJS(data: any): DashboardDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new DashboardDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["caption"] = this.caption;
+        data["widgetId"] = this.widgetId;
+        data["friendlyName"] = this.friendlyName;
+        data["isActive"] = this.isActive;
+        data["dashboardType"] = this.dashboardType;
+        data["dashboardData"] = this.dashboardData;
+        return data;
+    }
+}
+
+export interface IDashboardDto {
+    id: number;
+    caption: string | undefined;
+    widgetId: string | undefined;
+    friendlyName: string | undefined;
+    isActive: boolean;
+    dashboardType: DashboardTypeEnum;
+    dashboardData: string | undefined;
+}
+
 export class DashboardOutput implements IDashboardOutput {
     name!: string | undefined;
     widgets!: WidgetOutput[] | undefined;
@@ -37919,6 +40570,189 @@ export class DashboardOutput implements IDashboardOutput {
 export interface IDashboardOutput {
     name: string | undefined;
     widgets: WidgetOutput[] | undefined;
+}
+
+export class DashboardRoleDashboardLookupTableDto implements IDashboardRoleDashboardLookupTableDto {
+    id!: number;
+    displayName!: string | undefined;
+
+    constructor(data?: IDashboardRoleDashboardLookupTableDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.displayName = _data["displayName"];
+        }
+    }
+
+    static fromJS(data: any): DashboardRoleDashboardLookupTableDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new DashboardRoleDashboardLookupTableDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["displayName"] = this.displayName;
+        return data;
+    }
+}
+
+export interface IDashboardRoleDashboardLookupTableDto {
+    id: number;
+    displayName: string | undefined;
+}
+
+export class DashboardRoleDto implements IDashboardRoleDto {
+    id!: number;
+    roleId!: number;
+    dashboardId!: number;
+
+    constructor(data?: IDashboardRoleDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.roleId = _data["roleId"];
+            this.dashboardId = _data["dashboardId"];
+        }
+    }
+
+    static fromJS(data: any): DashboardRoleDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new DashboardRoleDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["roleId"] = this.roleId;
+        data["dashboardId"] = this.dashboardId;
+        return data;
+    }
+}
+
+export interface IDashboardRoleDto {
+    id: number;
+    roleId: number;
+    dashboardId: number;
+}
+
+export class DashboardRoleRoleLookupTableDto implements IDashboardRoleRoleLookupTableDto {
+    id!: number;
+    displayName!: string | undefined;
+
+    constructor(data?: IDashboardRoleRoleLookupTableDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.displayName = _data["displayName"];
+        }
+    }
+
+    static fromJS(data: any): DashboardRoleRoleLookupTableDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new DashboardRoleRoleLookupTableDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["displayName"] = this.displayName;
+        return data;
+    }
+}
+
+export interface IDashboardRoleRoleLookupTableDto {
+    id: number;
+    displayName: string | undefined;
+}
+
+export enum DashboardTypeEnum {
+    DevExpress = 1,
+    Custom = 2,
+}
+
+export class DataConnectionDto implements IDataConnectionDto {
+    id!: number;
+    name!: string | undefined;
+    dataConnectionType!: DataConnectionTypeEnum;
+    connectionString!: string | undefined;
+
+    constructor(data?: IDataConnectionDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.name = _data["name"];
+            this.dataConnectionType = _data["dataConnectionType"];
+            this.connectionString = _data["connectionString"];
+        }
+    }
+
+    static fromJS(data: any): DataConnectionDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new DataConnectionDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["name"] = this.name;
+        data["dataConnectionType"] = this.dataConnectionType;
+        data["connectionString"] = this.connectionString;
+        return data;
+    }
+}
+
+export interface IDataConnectionDto {
+    id: number;
+    name: string | undefined;
+    dataConnectionType: DataConnectionTypeEnum;
+    connectionString: string | undefined;
+}
+
+export enum DataConnectionTypeEnum {
+    Oracel = 1,
+    SqlServer = 2,
+    JSON = 3,
 }
 
 export class DateFieldOutput implements IDateFieldOutput {
@@ -41279,6 +44113,14 @@ export interface IFlatPermissionWithLevelDto {
     level: number;
 }
 
+export enum FrequencyEnum {
+    Week = 1,
+    Month = 2,
+    Year = 3,
+    Day = 4,
+    Minute = 5,
+}
+
 export class FriendDto implements IFriendDto {
     friendUserId!: number;
     friendTenantId!: number | undefined;
@@ -42202,6 +45044,250 @@ export interface IGetDashboardDataOutput {
     bouncePercent: number;
     dailySales: number[] | undefined;
     profitShares: number[] | undefined;
+}
+
+export class GetDashboardForEditOutput implements IGetDashboardForEditOutput {
+    dashboard!: CreateOrEditDashboardDto;
+
+    constructor(data?: IGetDashboardForEditOutput) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.dashboard = _data["dashboard"] ? CreateOrEditDashboardDto.fromJS(_data["dashboard"]) : <any>undefined;
+        }
+    }
+
+    static fromJS(data: any): GetDashboardForEditOutput {
+        data = typeof data === 'object' ? data : {};
+        let result = new GetDashboardForEditOutput();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["dashboard"] = this.dashboard ? this.dashboard.toJSON() : <any>undefined;
+        return data;
+    }
+}
+
+export interface IGetDashboardForEditOutput {
+    dashboard: CreateOrEditDashboardDto;
+}
+
+export class GetDashboardForViewDto implements IGetDashboardForViewDto {
+    dashboard!: DashboardDto;
+    roleNames!: string[] | undefined;
+
+    constructor(data?: IGetDashboardForViewDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.dashboard = _data["dashboard"] ? DashboardDto.fromJS(_data["dashboard"]) : <any>undefined;
+            if (Array.isArray(_data["roleNames"])) {
+                this.roleNames = [] as any;
+                for (let item of _data["roleNames"])
+                    this.roleNames!.push(item);
+            }
+        }
+    }
+
+    static fromJS(data: any): GetDashboardForViewDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new GetDashboardForViewDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["dashboard"] = this.dashboard ? this.dashboard.toJSON() : <any>undefined;
+        if (Array.isArray(this.roleNames)) {
+            data["roleNames"] = [];
+            for (let item of this.roleNames)
+                data["roleNames"].push(item);
+        }
+        return data;
+    }
+}
+
+export interface IGetDashboardForViewDto {
+    dashboard: DashboardDto;
+    roleNames: string[] | undefined;
+}
+
+export class GetDashboardRoleForEditOutput implements IGetDashboardRoleForEditOutput {
+    dashboardRole!: CreateOrEditDashboardRoleDto;
+    roleName!: string | undefined;
+    dashboardFriendlyName!: string | undefined;
+
+    constructor(data?: IGetDashboardRoleForEditOutput) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.dashboardRole = _data["dashboardRole"] ? CreateOrEditDashboardRoleDto.fromJS(_data["dashboardRole"]) : <any>undefined;
+            this.roleName = _data["roleName"];
+            this.dashboardFriendlyName = _data["dashboardFriendlyName"];
+        }
+    }
+
+    static fromJS(data: any): GetDashboardRoleForEditOutput {
+        data = typeof data === 'object' ? data : {};
+        let result = new GetDashboardRoleForEditOutput();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["dashboardRole"] = this.dashboardRole ? this.dashboardRole.toJSON() : <any>undefined;
+        data["roleName"] = this.roleName;
+        data["dashboardFriendlyName"] = this.dashboardFriendlyName;
+        return data;
+    }
+}
+
+export interface IGetDashboardRoleForEditOutput {
+    dashboardRole: CreateOrEditDashboardRoleDto;
+    roleName: string | undefined;
+    dashboardFriendlyName: string | undefined;
+}
+
+export class GetDashboardRoleForViewDto implements IGetDashboardRoleForViewDto {
+    dashboardRole!: DashboardRoleDto;
+    roleName!: string | undefined;
+    dashboardFriendlyName!: string | undefined;
+
+    constructor(data?: IGetDashboardRoleForViewDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.dashboardRole = _data["dashboardRole"] ? DashboardRoleDto.fromJS(_data["dashboardRole"]) : <any>undefined;
+            this.roleName = _data["roleName"];
+            this.dashboardFriendlyName = _data["dashboardFriendlyName"];
+        }
+    }
+
+    static fromJS(data: any): GetDashboardRoleForViewDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new GetDashboardRoleForViewDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["dashboardRole"] = this.dashboardRole ? this.dashboardRole.toJSON() : <any>undefined;
+        data["roleName"] = this.roleName;
+        data["dashboardFriendlyName"] = this.dashboardFriendlyName;
+        return data;
+    }
+}
+
+export interface IGetDashboardRoleForViewDto {
+    dashboardRole: DashboardRoleDto;
+    roleName: string | undefined;
+    dashboardFriendlyName: string | undefined;
+}
+
+export class GetDataConnectionForEditOutput implements IGetDataConnectionForEditOutput {
+    dataConnection!: CreateOrEditDataConnectionDto;
+
+    constructor(data?: IGetDataConnectionForEditOutput) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.dataConnection = _data["dataConnection"] ? CreateOrEditDataConnectionDto.fromJS(_data["dataConnection"]) : <any>undefined;
+        }
+    }
+
+    static fromJS(data: any): GetDataConnectionForEditOutput {
+        data = typeof data === 'object' ? data : {};
+        let result = new GetDataConnectionForEditOutput();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["dataConnection"] = this.dataConnection ? this.dataConnection.toJSON() : <any>undefined;
+        return data;
+    }
+}
+
+export interface IGetDataConnectionForEditOutput {
+    dataConnection: CreateOrEditDataConnectionDto;
+}
+
+export class GetDataConnectionForViewDto implements IGetDataConnectionForViewDto {
+    dataConnection!: DataConnectionDto;
+
+    constructor(data?: IGetDataConnectionForViewDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.dataConnection = _data["dataConnection"] ? DataConnectionDto.fromJS(_data["dataConnection"]) : <any>undefined;
+        }
+    }
+
+    static fromJS(data: any): GetDataConnectionForViewDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new GetDataConnectionForViewDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["dataConnection"] = this.dataConnection ? this.dataConnection.toJSON() : <any>undefined;
+        return data;
+    }
+}
+
+export interface IGetDataConnectionForViewDto {
+    dataConnection: DataConnectionDto;
 }
 
 export class GetDefaultEditionNameOutput implements IGetDefaultEditionNameOutput {
@@ -44826,6 +47912,178 @@ export class GetRegionalStatsOutput implements IGetRegionalStatsOutput {
 
 export interface IGetRegionalStatsOutput {
     stats: RegionalStatCountry[] | undefined;
+}
+
+export class GetReportItemForEditOutput implements IGetReportItemForEditOutput {
+    reportItem!: CreateOrEditReportItemDto;
+
+    constructor(data?: IGetReportItemForEditOutput) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.reportItem = _data["reportItem"] ? CreateOrEditReportItemDto.fromJS(_data["reportItem"]) : <any>undefined;
+        }
+    }
+
+    static fromJS(data: any): GetReportItemForEditOutput {
+        data = typeof data === 'object' ? data : {};
+        let result = new GetReportItemForEditOutput();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["reportItem"] = this.reportItem ? this.reportItem.toJSON() : <any>undefined;
+        return data;
+    }
+}
+
+export interface IGetReportItemForEditOutput {
+    reportItem: CreateOrEditReportItemDto;
+}
+
+export class GetReportItemForViewDto implements IGetReportItemForViewDto {
+    reportItem!: ReportItemDto;
+    roleNames!: string[] | undefined;
+
+    constructor(data?: IGetReportItemForViewDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.reportItem = _data["reportItem"] ? ReportItemDto.fromJS(_data["reportItem"]) : <any>undefined;
+            if (Array.isArray(_data["roleNames"])) {
+                this.roleNames = [] as any;
+                for (let item of _data["roleNames"])
+                    this.roleNames!.push(item);
+            }
+        }
+    }
+
+    static fromJS(data: any): GetReportItemForViewDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new GetReportItemForViewDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["reportItem"] = this.reportItem ? this.reportItem.toJSON() : <any>undefined;
+        if (Array.isArray(this.roleNames)) {
+            data["roleNames"] = [];
+            for (let item of this.roleNames)
+                data["roleNames"].push(item);
+        }
+        return data;
+    }
+}
+
+export interface IGetReportItemForViewDto {
+    reportItem: ReportItemDto;
+    roleNames: string[] | undefined;
+}
+
+export class GetReportRoleForEditOutput implements IGetReportRoleForEditOutput {
+    reportRole!: CreateOrEditReportRoleDto;
+    roleName!: string | undefined;
+    reportItemDisplayName!: string | undefined;
+
+    constructor(data?: IGetReportRoleForEditOutput) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.reportRole = _data["reportRole"] ? CreateOrEditReportRoleDto.fromJS(_data["reportRole"]) : <any>undefined;
+            this.roleName = _data["roleName"];
+            this.reportItemDisplayName = _data["reportItemDisplayName"];
+        }
+    }
+
+    static fromJS(data: any): GetReportRoleForEditOutput {
+        data = typeof data === 'object' ? data : {};
+        let result = new GetReportRoleForEditOutput();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["reportRole"] = this.reportRole ? this.reportRole.toJSON() : <any>undefined;
+        data["roleName"] = this.roleName;
+        data["reportItemDisplayName"] = this.reportItemDisplayName;
+        return data;
+    }
+}
+
+export interface IGetReportRoleForEditOutput {
+    reportRole: CreateOrEditReportRoleDto;
+    roleName: string | undefined;
+    reportItemDisplayName: string | undefined;
+}
+
+export class GetReportRoleForViewDto implements IGetReportRoleForViewDto {
+    reportRole!: ReportRoleDto;
+    roleName!: string | undefined;
+    reportItemDisplayName!: string | undefined;
+
+    constructor(data?: IGetReportRoleForViewDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.reportRole = _data["reportRole"] ? ReportRoleDto.fromJS(_data["reportRole"]) : <any>undefined;
+            this.roleName = _data["roleName"];
+            this.reportItemDisplayName = _data["reportItemDisplayName"];
+        }
+    }
+
+    static fromJS(data: any): GetReportRoleForViewDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new GetReportRoleForViewDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["reportRole"] = this.reportRole ? this.reportRole.toJSON() : <any>undefined;
+        data["roleName"] = this.roleName;
+        data["reportItemDisplayName"] = this.reportItemDisplayName;
+        return data;
+    }
+}
+
+export interface IGetReportRoleForViewDto {
+    reportRole: ReportRoleDto;
+    roleName: string | undefined;
+    reportItemDisplayName: string | undefined;
 }
 
 export class GetRoleForEditOutput implements IGetRoleForEditOutput {
@@ -50940,6 +54198,150 @@ export interface IPagedResultDtoOfGetComplexityForViewDto {
     totalCount: number;
 }
 
+export class PagedResultDtoOfGetDashboardForViewDto implements IPagedResultDtoOfGetDashboardForViewDto {
+    items!: GetDashboardForViewDto[] | undefined;
+    totalCount!: number;
+
+    constructor(data?: IPagedResultDtoOfGetDashboardForViewDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            if (Array.isArray(_data["items"])) {
+                this.items = [] as any;
+                for (let item of _data["items"])
+                    this.items!.push(GetDashboardForViewDto.fromJS(item));
+            }
+            this.totalCount = _data["totalCount"];
+        }
+    }
+
+    static fromJS(data: any): PagedResultDtoOfGetDashboardForViewDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new PagedResultDtoOfGetDashboardForViewDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        if (Array.isArray(this.items)) {
+            data["items"] = [];
+            for (let item of this.items)
+                data["items"].push(item.toJSON());
+        }
+        data["totalCount"] = this.totalCount;
+        return data;
+    }
+}
+
+export interface IPagedResultDtoOfGetDashboardForViewDto {
+    items: GetDashboardForViewDto[] | undefined;
+    totalCount: number;
+}
+
+export class PagedResultDtoOfGetDashboardRoleForViewDto implements IPagedResultDtoOfGetDashboardRoleForViewDto {
+    items!: GetDashboardRoleForViewDto[] | undefined;
+    totalCount!: number;
+
+    constructor(data?: IPagedResultDtoOfGetDashboardRoleForViewDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            if (Array.isArray(_data["items"])) {
+                this.items = [] as any;
+                for (let item of _data["items"])
+                    this.items!.push(GetDashboardRoleForViewDto.fromJS(item));
+            }
+            this.totalCount = _data["totalCount"];
+        }
+    }
+
+    static fromJS(data: any): PagedResultDtoOfGetDashboardRoleForViewDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new PagedResultDtoOfGetDashboardRoleForViewDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        if (Array.isArray(this.items)) {
+            data["items"] = [];
+            for (let item of this.items)
+                data["items"].push(item.toJSON());
+        }
+        data["totalCount"] = this.totalCount;
+        return data;
+    }
+}
+
+export interface IPagedResultDtoOfGetDashboardRoleForViewDto {
+    items: GetDashboardRoleForViewDto[] | undefined;
+    totalCount: number;
+}
+
+export class PagedResultDtoOfGetDataConnectionForViewDto implements IPagedResultDtoOfGetDataConnectionForViewDto {
+    items!: GetDataConnectionForViewDto[] | undefined;
+    totalCount!: number;
+
+    constructor(data?: IPagedResultDtoOfGetDataConnectionForViewDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            if (Array.isArray(_data["items"])) {
+                this.items = [] as any;
+                for (let item of _data["items"])
+                    this.items!.push(GetDataConnectionForViewDto.fromJS(item));
+            }
+            this.totalCount = _data["totalCount"];
+        }
+    }
+
+    static fromJS(data: any): PagedResultDtoOfGetDataConnectionForViewDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new PagedResultDtoOfGetDataConnectionForViewDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        if (Array.isArray(this.items)) {
+            data["items"] = [];
+            for (let item of this.items)
+                data["items"].push(item.toJSON());
+        }
+        data["totalCount"] = this.totalCount;
+        return data;
+    }
+}
+
+export interface IPagedResultDtoOfGetDataConnectionForViewDto {
+    items: GetDataConnectionForViewDto[] | undefined;
+    totalCount: number;
+}
+
 export class PagedResultDtoOfGetExamAnswerForViewDto implements IPagedResultDtoOfGetExamAnswerForViewDto {
     items!: GetExamAnswerForViewDto[] | undefined;
     totalCount!: number;
@@ -51561,6 +54963,102 @@ export class PagedResultDtoOfGetQuestionSubjectUnitForViewDto implements IPagedR
 
 export interface IPagedResultDtoOfGetQuestionSubjectUnitForViewDto {
     items: GetQuestionSubjectUnitForViewDto[] | undefined;
+    totalCount: number;
+}
+
+export class PagedResultDtoOfGetReportItemForViewDto implements IPagedResultDtoOfGetReportItemForViewDto {
+    items!: GetReportItemForViewDto[] | undefined;
+    totalCount!: number;
+
+    constructor(data?: IPagedResultDtoOfGetReportItemForViewDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            if (Array.isArray(_data["items"])) {
+                this.items = [] as any;
+                for (let item of _data["items"])
+                    this.items!.push(GetReportItemForViewDto.fromJS(item));
+            }
+            this.totalCount = _data["totalCount"];
+        }
+    }
+
+    static fromJS(data: any): PagedResultDtoOfGetReportItemForViewDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new PagedResultDtoOfGetReportItemForViewDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        if (Array.isArray(this.items)) {
+            data["items"] = [];
+            for (let item of this.items)
+                data["items"].push(item.toJSON());
+        }
+        data["totalCount"] = this.totalCount;
+        return data;
+    }
+}
+
+export interface IPagedResultDtoOfGetReportItemForViewDto {
+    items: GetReportItemForViewDto[] | undefined;
+    totalCount: number;
+}
+
+export class PagedResultDtoOfGetReportRoleForViewDto implements IPagedResultDtoOfGetReportRoleForViewDto {
+    items!: GetReportRoleForViewDto[] | undefined;
+    totalCount!: number;
+
+    constructor(data?: IPagedResultDtoOfGetReportRoleForViewDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            if (Array.isArray(_data["items"])) {
+                this.items = [] as any;
+                for (let item of _data["items"])
+                    this.items!.push(GetReportRoleForViewDto.fromJS(item));
+            }
+            this.totalCount = _data["totalCount"];
+        }
+    }
+
+    static fromJS(data: any): PagedResultDtoOfGetReportRoleForViewDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new PagedResultDtoOfGetReportRoleForViewDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        if (Array.isArray(this.items)) {
+            data["items"] = [];
+            for (let item of this.items)
+                data["items"].push(item.toJSON());
+        }
+        data["totalCount"] = this.totalCount;
+        return data;
+    }
+}
+
+export interface IPagedResultDtoOfGetReportRoleForViewDto {
+    items: GetReportRoleForViewDto[] | undefined;
     totalCount: number;
 }
 
@@ -56364,6 +59862,202 @@ export interface IRenamePageInput {
     id: string | undefined;
     name: string | undefined;
     application: string | undefined;
+}
+
+export class ReportItemDto implements IReportItemDto {
+    id!: number;
+    displayName!: string | undefined;
+    name!: string | undefined;
+    nameL!: string | undefined;
+    creationTime!: DateTime;
+    isPublish!: boolean;
+    isScheduled!: boolean;
+    frequencyEnum!: FrequencyEnum;
+    startDateParameterName!: string | undefined;
+    endDateParameterName!: string | undefined;
+
+    constructor(data?: IReportItemDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.displayName = _data["displayName"];
+            this.name = _data["name"];
+            this.nameL = _data["nameL"];
+            this.creationTime = _data["creationTime"] ? DateTime.fromISO(_data["creationTime"].toString()) : <any>undefined;
+            this.isPublish = _data["isPublish"];
+            this.isScheduled = _data["isScheduled"];
+            this.frequencyEnum = _data["frequencyEnum"];
+            this.startDateParameterName = _data["startDateParameterName"];
+            this.endDateParameterName = _data["endDateParameterName"];
+        }
+    }
+
+    static fromJS(data: any): ReportItemDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new ReportItemDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["displayName"] = this.displayName;
+        data["name"] = this.name;
+        data["nameL"] = this.nameL;
+        data["creationTime"] = this.creationTime ? this.creationTime.toString() : <any>undefined;
+        data["isPublish"] = this.isPublish;
+        data["isScheduled"] = this.isScheduled;
+        data["frequencyEnum"] = this.frequencyEnum;
+        data["startDateParameterName"] = this.startDateParameterName;
+        data["endDateParameterName"] = this.endDateParameterName;
+        return data;
+    }
+}
+
+export interface IReportItemDto {
+    id: number;
+    displayName: string | undefined;
+    name: string | undefined;
+    nameL: string | undefined;
+    creationTime: DateTime;
+    isPublish: boolean;
+    isScheduled: boolean;
+    frequencyEnum: FrequencyEnum;
+    startDateParameterName: string | undefined;
+    endDateParameterName: string | undefined;
+}
+
+export class ReportRoleDto implements IReportRoleDto {
+    id!: number;
+    roleId!: number;
+    reportItemId!: number;
+
+    constructor(data?: IReportRoleDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.roleId = _data["roleId"];
+            this.reportItemId = _data["reportItemId"];
+        }
+    }
+
+    static fromJS(data: any): ReportRoleDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new ReportRoleDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["roleId"] = this.roleId;
+        data["reportItemId"] = this.reportItemId;
+        return data;
+    }
+}
+
+export interface IReportRoleDto {
+    id: number;
+    roleId: number;
+    reportItemId: number;
+}
+
+export class ReportRoleReportItemLookupTableDto implements IReportRoleReportItemLookupTableDto {
+    id!: number;
+    displayName!: string | undefined;
+
+    constructor(data?: IReportRoleReportItemLookupTableDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.displayName = _data["displayName"];
+        }
+    }
+
+    static fromJS(data: any): ReportRoleReportItemLookupTableDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new ReportRoleReportItemLookupTableDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["displayName"] = this.displayName;
+        return data;
+    }
+}
+
+export interface IReportRoleReportItemLookupTableDto {
+    id: number;
+    displayName: string | undefined;
+}
+
+export class ReportRoleRoleLookupTableDto implements IReportRoleRoleLookupTableDto {
+    id!: number;
+    displayName!: string | undefined;
+
+    constructor(data?: IReportRoleRoleLookupTableDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.displayName = _data["displayName"];
+        }
+    }
+
+    static fromJS(data: any): ReportRoleRoleLookupTableDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new ReportRoleRoleLookupTableDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["displayName"] = this.displayName;
+        return data;
+    }
+}
+
+export interface IReportRoleRoleLookupTableDto {
+    id: number;
+    displayName: string | undefined;
 }
 
 export class ResetPasswordInput implements IResetPasswordInput {
