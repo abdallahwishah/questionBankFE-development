@@ -8340,12 +8340,16 @@ export class ExamAttemptsServiceProxy {
      * @param isCorrectedFilter (optional) 
      * @param governorateIdFilter (optional) 
      * @param isAuditedFilter (optional) 
+     * @param formNumberListFilter (optional) 
+     * @param studyLevelIdFilter (optional) 
+     * @param schoolIdFilter (optional) 
+     * @param studentAddressFilter (optional) 
      * @param sorting (optional) 
      * @param skipCount (optional) 
      * @param maxResultCount (optional) 
      * @return Success
      */
-    getAllForCorrectionOrAudited(filter: string | undefined, examIdFilter: number | undefined, sessionIdFilter: number | undefined, studentClassIdFilter: number | undefined, sessionStatusIdFilter: SessionStatusEnum | undefined, sessionStatusListFilter: SessionStatusEnum[] | undefined, studentIdFilter: number | undefined, isCorrectedFilter: number | undefined, governorateIdFilter: number | undefined, isAuditedFilter: number | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfGetExamAttemptForViewDto> {
+    getAllForCorrectionOrAudited(filter: string | undefined, examIdFilter: number | undefined, sessionIdFilter: number | undefined, studentClassIdFilter: number | undefined, sessionStatusIdFilter: SessionStatusEnum | undefined, sessionStatusListFilter: SessionStatusEnum[] | undefined, studentIdFilter: number | undefined, isCorrectedFilter: number | undefined, governorateIdFilter: number | undefined, isAuditedFilter: number | undefined, formNumberListFilter: number[] | undefined, studyLevelIdFilter: number | undefined, schoolIdFilter: number | undefined, studentAddressFilter: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfGetExamAttemptForViewDto> {
         let url_ = this.baseUrl + "/api/services/app/ExamAttempts/GetAllForCorrectionOrAudited?";
         if (filter === null)
             throw new Error("The parameter 'filter' cannot be null.");
@@ -8387,6 +8391,22 @@ export class ExamAttemptsServiceProxy {
             throw new Error("The parameter 'isAuditedFilter' cannot be null.");
         else if (isAuditedFilter !== undefined)
             url_ += "IsAuditedFilter=" + encodeURIComponent("" + isAuditedFilter) + "&";
+        if (formNumberListFilter === null)
+            throw new Error("The parameter 'formNumberListFilter' cannot be null.");
+        else if (formNumberListFilter !== undefined)
+            formNumberListFilter && formNumberListFilter.forEach(item => { url_ += "FormNumberListFilter=" + encodeURIComponent("" + item) + "&"; });
+        if (studyLevelIdFilter === null)
+            throw new Error("The parameter 'studyLevelIdFilter' cannot be null.");
+        else if (studyLevelIdFilter !== undefined)
+            url_ += "StudyLevelIdFilter=" + encodeURIComponent("" + studyLevelIdFilter) + "&";
+        if (schoolIdFilter === null)
+            throw new Error("The parameter 'schoolIdFilter' cannot be null.");
+        else if (schoolIdFilter !== undefined)
+            url_ += "SchoolIdFilter=" + encodeURIComponent("" + schoolIdFilter) + "&";
+        if (studentAddressFilter === null)
+            throw new Error("The parameter 'studentAddressFilter' cannot be null.");
+        else if (studentAddressFilter !== undefined)
+            url_ += "StudentAddressFilter=" + encodeURIComponent("" + studentAddressFilter) + "&";
         if (sorting === null)
             throw new Error("The parameter 'sorting' cannot be null.");
         else if (sorting !== undefined)
@@ -8456,12 +8476,16 @@ export class ExamAttemptsServiceProxy {
      * @param isCorrectedFilter (optional) 
      * @param governorateIdFilter (optional) 
      * @param isAuditedFilter (optional) 
+     * @param formNumberListFilter (optional) 
+     * @param studyLevelIdFilter (optional) 
+     * @param schoolIdFilter (optional) 
+     * @param studentAddressFilter (optional) 
      * @param sorting (optional) 
      * @param skipCount (optional) 
      * @param maxResultCount (optional) 
      * @return Success
      */
-    getAll(filter: string | undefined, examIdFilter: number | undefined, sessionIdFilter: number | undefined, studentClassIdFilter: number | undefined, sessionStatusIdFilter: SessionStatusEnum | undefined, sessionStatusListFilter: SessionStatusEnum[] | undefined, studentIdFilter: number | undefined, isCorrectedFilter: number | undefined, governorateIdFilter: number | undefined, isAuditedFilter: number | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfGetExamAttemptForViewDto> {
+    getAll(filter: string | undefined, examIdFilter: number | undefined, sessionIdFilter: number | undefined, studentClassIdFilter: number | undefined, sessionStatusIdFilter: SessionStatusEnum | undefined, sessionStatusListFilter: SessionStatusEnum[] | undefined, studentIdFilter: number | undefined, isCorrectedFilter: number | undefined, governorateIdFilter: number | undefined, isAuditedFilter: number | undefined, formNumberListFilter: number[] | undefined, studyLevelIdFilter: number | undefined, schoolIdFilter: number | undefined, studentAddressFilter: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfGetExamAttemptForViewDto> {
         let url_ = this.baseUrl + "/api/services/app/ExamAttempts/GetAll?";
         if (filter === null)
             throw new Error("The parameter 'filter' cannot be null.");
@@ -8503,6 +8527,22 @@ export class ExamAttemptsServiceProxy {
             throw new Error("The parameter 'isAuditedFilter' cannot be null.");
         else if (isAuditedFilter !== undefined)
             url_ += "IsAuditedFilter=" + encodeURIComponent("" + isAuditedFilter) + "&";
+        if (formNumberListFilter === null)
+            throw new Error("The parameter 'formNumberListFilter' cannot be null.");
+        else if (formNumberListFilter !== undefined)
+            formNumberListFilter && formNumberListFilter.forEach(item => { url_ += "FormNumberListFilter=" + encodeURIComponent("" + item) + "&"; });
+        if (studyLevelIdFilter === null)
+            throw new Error("The parameter 'studyLevelIdFilter' cannot be null.");
+        else if (studyLevelIdFilter !== undefined)
+            url_ += "StudyLevelIdFilter=" + encodeURIComponent("" + studyLevelIdFilter) + "&";
+        if (schoolIdFilter === null)
+            throw new Error("The parameter 'schoolIdFilter' cannot be null.");
+        else if (schoolIdFilter !== undefined)
+            url_ += "SchoolIdFilter=" + encodeURIComponent("" + schoolIdFilter) + "&";
+        if (studentAddressFilter === null)
+            throw new Error("The parameter 'studentAddressFilter' cannot be null.");
+        else if (studentAddressFilter !== undefined)
+            url_ += "StudentAddressFilter=" + encodeURIComponent("" + studentAddressFilter) + "&";
         if (sorting === null)
             throw new Error("The parameter 'sorting' cannot be null.");
         else if (sorting !== undefined)
@@ -10684,6 +10724,58 @@ export class ExamsServiceProxy {
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
             result200 = QuestionWithAnswerDto.fromJS(resultData200);
             return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param id (optional) 
+     * @return Success
+     */
+    delete(id: number | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/Exams/Delete?";
+        if (id === null)
+            throw new Error("The parameter 'id' cannot be null.");
+        else if (id !== undefined)
+            url_ += "Id=" + encodeURIComponent("" + id) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+            })
+        };
+
+        return this.http.request("delete", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processDelete(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processDelete(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<void>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<void>;
+        }));
+    }
+
+    protected processDelete(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return _observableOf(null as any);
             }));
         } else if (status !== 200 && status !== 204) {
             return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
@@ -48494,6 +48586,7 @@ export class GetSessionForViewDto implements IGetSessionForViewDto {
     studySubject!: string | undefined;
     studyLevel!: string | undefined;
     numberOfSchools!: number;
+    versionCount!: number;
     remainingTime!: TimeSpan;
     schools!: GetSchoolForViewDto[] | undefined;
 
@@ -48513,6 +48606,7 @@ export class GetSessionForViewDto implements IGetSessionForViewDto {
             this.studySubject = _data["studySubject"];
             this.studyLevel = _data["studyLevel"];
             this.numberOfSchools = _data["numberOfSchools"];
+            this.versionCount = _data["versionCount"];
             this.remainingTime = _data["remainingTime"] ? TimeSpan.fromJS(_data["remainingTime"]) : <any>undefined;
             if (Array.isArray(_data["schools"])) {
                 this.schools = [] as any;
@@ -48536,6 +48630,7 @@ export class GetSessionForViewDto implements IGetSessionForViewDto {
         data["studySubject"] = this.studySubject;
         data["studyLevel"] = this.studyLevel;
         data["numberOfSchools"] = this.numberOfSchools;
+        data["versionCount"] = this.versionCount;
         data["remainingTime"] = this.remainingTime ? this.remainingTime.toJSON() : <any>undefined;
         if (Array.isArray(this.schools)) {
             data["schools"] = [];
@@ -48552,6 +48647,7 @@ export interface IGetSessionForViewDto {
     studySubject: string | undefined;
     studyLevel: string | undefined;
     numberOfSchools: number;
+    versionCount: number;
     remainingTime: TimeSpan;
     schools: GetSchoolForViewDto[] | undefined;
 }

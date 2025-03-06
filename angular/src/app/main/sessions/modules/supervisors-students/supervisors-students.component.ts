@@ -47,6 +47,13 @@ export class SupervisorsStudentsComponent extends AppComponentBase implements On
     governorates: any[] = [];
     sessionStatusEnum = SessionStatusEnum;
     session: any;
+    FormNumberListArray: any[] = [];
+
+    SchoolIdFilter: any;
+    StudentClassIdFilter: any;
+    StudyLevelIdFilter: any;
+    FormNumberListFilter: any;
+    StudentAddressFilter: any;
     constructor(
         private _injector: Injector,
         private _SessionsServiceProxy: SessionsServiceProxy,
@@ -66,6 +73,10 @@ export class SupervisorsStudentsComponent extends AppComponentBase implements On
             this._SessionsServiceProxy.getSessionForView(this.SessionId).subscribe((value) => {
                 this.sessionName = value.session.name;
                 this.session = value;
+                this.FormNumberListArray = Array.from({ length: value?.versionCount }, (_, i) => ({
+                    id: i + 1,
+                    name: i + 1,
+                }));
             });
         });
         this.schoolName = this._ActivatedRoute.snapshot.queryParams['school'];
@@ -108,6 +119,11 @@ export class SupervisorsStudentsComponent extends AppComponentBase implements On
                 undefined,
                 this.governorateIdFilter?.governorate?.id,
                 undefined,
+                this.FormNumberListFilter ? [this.FormNumberListFilter] : undefined,
+                this.StudyLevelIdFilter?.studyLevel?.id,
+                undefined,
+
+                this.StudentAddressFilter,
                 this.primengTableHelper.getSorting(this.attemptsTable),
                 this.primengTableHelper.getSkipCount(this.paginatorAttempts, event),
                 this.primengTableHelper.getMaxResultCount(this.paginatorAttempts, event),
@@ -227,11 +243,24 @@ export class SupervisorsStudentsComponent extends AppComponentBase implements On
         this.FiltersComponent.isPanelOpen = false;
         this.governorateIdFilter = undefined;
         this.isStatusFilter = undefined;
+        this.FormNumberListFilter = undefined;
+        this.StudyLevelIdFilter = undefined;
+        this.StudentAddressFilter = undefined;
+        this.getListAttempts();
     }
     goToClasses() {
         this._router.navigate(['../../../schools', this.SessionId], {
             queryParamsHandling: 'merge',
             relativeTo: this._ActivatedRoute,
+        });
+    }
+    getSchoolClassForViewDtos: any;
+    get() {
+        this.getSchoolClassForViewDtos = this.schoolId?.getSchoolClassForViewDtos?.map((value) => {
+            return {
+                id: value?.schoolClass?.id,
+                name: value?.schoolClass?.name,
+            };
         });
     }
 }

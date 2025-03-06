@@ -6,20 +6,20 @@ import { AppConsts } from '@shared/AppConsts';
   selector: 'app-report-items-desgin',
   templateUrl: './report-items-desgin.component.html',
 
- 
+
 
   styleUrls: [
-      "./../../../../../../node_modules/devextreme/dist/css/dx.material.blue.light.css",
-      "./../../../../../../node_modules/@devexpress/analytics-core/dist/css/dx-analytics.common.css",
-      "./../../../../../../node_modules/@devexpress/analytics-core/dist/css/dx-analytics.material.blue.light.css",
-      "./../../../../../../node_modules/@devexpress/analytics-core/dist/css/dx-querybuilder.css",
-      "./../../../../../../node_modules/devexpress-reporting/dist/css/dx-webdocumentviewer.css",
-      "./../../../../../../node_modules/devexpress-reporting/dist/css/dx-reportdesigner.css",
-      "./../../../../../../node_modules/ace-builds/css/ace.css",
+      "./../../../../../node_modules/devextreme/dist/css/dx.material.blue.light.css",
+      "./../../../../../node_modules/@devexpress/analytics-core/dist/css/dx-analytics.common.css",
+      "./../../../../../node_modules/@devexpress/analytics-core/dist/css/dx-analytics.material.blue.light.css",
+      "./../../../../../node_modules/@devexpress/analytics-core/dist/css/dx-querybuilder.css",
+      "./../../../../../node_modules/devexpress-reporting/dist/css/dx-webdocumentviewer.css",
+      "./../../../../../node_modules/devexpress-reporting/dist/css/dx-reportdesigner.css",
+      "./../../../../../node_modules/ace-builds/css/ace.css",
       // light theme
-      "./../../../../../../node_modules/ace-builds/css/theme/dreamweaver.css",
+      "./../../../../../node_modules/ace-builds/css/theme/dreamweaver.css",
       // dark theme
-      "./../../../../../../node_modules/ace-builds/css/theme/ambiance.css",
+      "./../../../../../node_modules/ace-builds/css/theme/ambiance.css",
     ]
 })
 export class ReportItemsDesginComponent implements OnInit {

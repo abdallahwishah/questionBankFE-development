@@ -130,14 +130,14 @@ export class ListComponent extends AppComponentBase implements OnInit {
                 this._router.navigate(['app/main/exams/view/' + record.exam.id]);
                 break;
             case 'Delete':
-                this._examsServiceProxy.deleteExamQuestion(record.question.id).subscribe((val) => {
+                this._examsServiceProxy.delete(record.exam.id).subscribe((val) => {
                     this.getList();
                 });
                 break;
             case 'Print':
                 this._router.navigate(['/printer-exam/' + record.exam.id]);
 
-                 break;
+                break;
         }
     }
 

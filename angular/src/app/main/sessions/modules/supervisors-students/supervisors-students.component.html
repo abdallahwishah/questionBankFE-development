@@ -23,7 +23,7 @@
                 {{ sessionName }}
             </span>
             <span class="mx-2">/</span>
-            <span  (click)="goToClasses()">
+            <span (click)="goToClasses()">
                 {{ schoolName }}
             </span>
             <span class="mx-2">/</span>
@@ -181,6 +181,72 @@
                                         }
                                     }"
                                 ></app-auto-complete-feild>
+                                <!-- <div class="col-md-12 mb-5">
+                                    <app-auto-complete-feild
+                                        [label]="l('School')"
+                                        field="school.name"
+                                        [(ngModel)]="SchoolIdFilter"
+                                        (ngModelChange)="get()"
+                                        [ConfigCustomSearch]="{
+                                            api: '/api/services/app/Sessions/GetAllSessionSchool',
+                                            keySearch: 'filter',
+                                            customParams: {
+                                                sessionIdFilter: SessionId,
+                                                Sorting: '',
+                                                SkipCount: 0,
+                                                MaxResultCount: 10,
+                                                governorateIdFilter: governorateIdFilter?.governorate?.id
+                                            }
+                                        }"
+                                    ></app-auto-complete-feild>
+                                </div>
+
+                                <div class="col-md-12 mb-5">
+                                    <app-dropdown-field
+                                        [labelField]="l('Class')"
+                                        optionLabel="name"
+                                        optionValue="id"
+                                        [options]="getSchoolClassForViewDtos"
+                                        [(ngModel)]="StudentClassIdFilter"
+                                    ></app-dropdown-field>
+                                </div> -->
+                                <div class="col-md-12 mb-5">
+                                    <app-auto-complete-feild
+                                        [label]="l('StudyLevel')"
+                                        field="studyLevel.name"
+                                        [(ngModel)]="StudyLevelIdFilter"
+                                        name="StudyLevelId"
+                                        [ConfigCustomSearch]="{
+                                            api: '/api/services/app/StudyLevels/GetAll',
+                                            keySearch: 'filter',
+                                            customParams: {
+                                                Sorting: '',
+                                                SkipCount: 0,
+                                                MaxResultCount: 10
+                                            }
+                                        }"
+                                    ></app-auto-complete-feild>
+                                </div>
+                                <div class="col-md-12 mb-5">
+                                    <app-dropdown-field
+                                        [labelField]="l('FormNumberList')"
+                                        optionLabel="name"
+                                        optionValue="id"
+                                        [options]="FormNumberListArray"
+                                        [(ngModel)]="FormNumberListFilter"
+                                    ></app-dropdown-field>
+                                </div>
+                                <div class="col-md-12 mb-5">
+                                    <label class="form-label" for="StudentAddressFilter">
+                                        {{ l('StudentAddress') }}
+                                    </label>
+                                    <input
+                                        type="text"
+                                        id="StudentAddressFilter"
+                                        class="form-control"
+                                        [(ngModel)]="StudentAddressFilter"
+                                    />
+                                </div>
                             </div>
                         </div>
                         <div class="d-flex justify-content-between mt-4">
@@ -320,7 +386,7 @@
                                 <span
                                     [ngStyle]="{
                                         color: record?.hasFinished ? 'red' : '',
-                                        display:'block'
+                                        display: 'block'
                                     }"
                                 >
                                     {{ record.studentNumber || '-' }}

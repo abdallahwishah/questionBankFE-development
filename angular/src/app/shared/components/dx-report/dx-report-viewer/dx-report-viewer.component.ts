@@ -100,7 +100,7 @@ export class AppDxReportViewerComponent {
                 console.log(month); // Output the formatted date string
                 console.log(year); // Output the formatted date string
 
-               
+
 
 
                 // Ensure leading zero for single-digit day and month
