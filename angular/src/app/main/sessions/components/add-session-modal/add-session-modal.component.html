@@ -38,7 +38,8 @@
                         <label class="col-form-label required">{{ l('StartDate') }}</label>
                         <div class="input-normal-form-calendar">
                             <p-calendar
-                                 formControlName="startDate"
+                                [dateFormat]="'dd/mm/yy'"
+                                formControlName="startDate"
                                 appendTo="body"
                                 [showTime]="true"
                                 class="w-100"
@@ -110,7 +111,7 @@
                     <!-- <div class="col-md-6 mb-5">
                         <label class="col-form-label required">{{ l('EndDate') }}</label>
                         <div class="input-normal-form-calendar">
-                            <p-calendar
+                            <p-calendar [dateFormat]="'dd/mm/yy'"
                                 formControlName="endDate"
                                 appendTo="body"
                                 [showTime]="true"

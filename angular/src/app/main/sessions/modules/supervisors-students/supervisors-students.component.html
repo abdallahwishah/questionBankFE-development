@@ -418,8 +418,8 @@
                                         display: 'block'
                                     }"
                                 >
-                                    {{ record.expectedEndDate | date }}
-                                </span>
+                                <td>{{ record?.examAttempt?.expectedEndDate | date: 'short' }}</td>
+                            </span>
                             </td>
                             <td>
                                 {{ record.identityNumber || '-' }}

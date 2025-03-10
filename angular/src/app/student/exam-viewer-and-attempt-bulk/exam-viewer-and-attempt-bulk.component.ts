@@ -58,7 +58,7 @@ export class ExamViewerAndAttemptBulkComponent extends AppComponentBase implemen
     currentIndex = 0;
 
     // UI state
-    showInstructions = true;
+    showInstructions = false;
     sidebarVisible = false;
     loading = false;
 
@@ -179,6 +179,7 @@ export class ExamViewerAndAttemptBulkComponent extends AppComponentBase implemen
             this.questionlist.forEach((q) => {
                 this.handleQuestionWithAnswer(q);
             });
+            this.showInstructions = !!this.examData.examInstructions;
 
             const savedDataJsonAsExam = localStorage.getItem(this.LOCAL_STORAGE_KEY_AsExam);
             if (savedDataJsonAsExam) {
@@ -188,7 +189,6 @@ export class ExamViewerAndAttemptBulkComponent extends AppComponentBase implemen
                     this.showInstructions = savedAsExam.showInstructions;
                 } catch (err) {
                     this.currentIndex = 0;
-                    this.showInstructions = !!this.examData.examInstructions;
                 }
             }
 

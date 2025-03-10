@@ -192,7 +192,7 @@
                                         <td>{{ class.schoolClass.name }}</td>
                                         <td>{{ class.numberOfSupervisor }}</td>
                                         <td>{{ class.numberOfAttempt }}</td>
-                                        <td>{{ class.expectedEndDate | date }}</td>
+                                        <td>{{ class.expectedEndDate | date: 'short' }}</td>
 
                                         <td>
                                             <app-action-button
