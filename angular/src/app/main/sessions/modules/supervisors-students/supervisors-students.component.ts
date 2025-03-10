@@ -55,8 +55,8 @@ export class SupervisorsStudentsComponent extends AppComponentBase implements On
         Supervisor: 'مشرف',
         EducationalGuide: 'مرشد تعليمي',
         Janitor: 'عامل نظافة',
-      };
-      
+    };
+
     SchoolIdFilter: any;
     StudentClassIdFilter: any;
     StudyLevelIdFilter: any;
@@ -100,6 +100,8 @@ export class SupervisorsStudentsComponent extends AppComponentBase implements On
         this.sessionStatus.unshift({ name: 'All', id: undefined });
     }
     governorateIdFilter: any;
+    YearFilter: any;
+cycleFilter: any;
     getListAttempts(event?: LazyLoadEvent) {
         if (event) {
             if (this.primengTableHelperForAttempts.shouldResetPaging(event)) {
@@ -132,6 +134,9 @@ export class SupervisorsStudentsComponent extends AppComponentBase implements On
                 undefined,
 
                 this.StudentAddressFilter,
+                this.YearFilter,
+                this.cycleFilter,
+
                 this.primengTableHelper.getSorting(this.attemptsTable),
                 this.primengTableHelper.getSkipCount(this.paginatorAttempts, event),
                 this.primengTableHelper.getMaxResultCount(this.paginatorAttempts, event),
@@ -254,6 +259,8 @@ export class SupervisorsStudentsComponent extends AppComponentBase implements On
         this.FormNumberListFilter = undefined;
         this.StudyLevelIdFilter = undefined;
         this.StudentAddressFilter = undefined;
+        this.YearFilter = undefined;
+        this.cycleFilter = undefined;
         this.getListAttempts();
     }
     goToClasses() {

@@ -134,13 +134,11 @@
     <div class="row switch-serch-bar mt-9 justify-content-end" *ngIf="activeIndex == 0">
         <div
             class="col-md-7 d-grid gap-3 align-items-end"
-            style=" grid-template-columns: 2.2fr auto auto"
-
+            style="grid-template-columns: 2.2fr auto auto"
             [ngStyle]="{
-                'margin-bottom': session?.session.status != sessionStatusEnum.Finished ? '-10vh' : '-10vh',
-              }"
+                'margin-bottom': session?.session.status != sessionStatusEnum.Finished ? '-10vh' : '-10vh'
+            }"
         >
-
             <div>
                 <div class="input-group search-group">
                     <input
@@ -252,6 +250,24 @@
                                         [(ngModel)]="StudentAddressFilter"
                                     />
                                 </div>
+
+                                <div class="col-md-12 mb-5">
+                                    <label class="form-label" for="YearFilter">
+                                        {{ l('Year') }}
+                                    </label>
+                                    <input type="text" id="YearFilter" class="form-control" [(ngModel)]="YearFilter" />
+                                </div>
+                                <div class="col-md-12 mb-5">
+                                    <label class="form-label" for="cycleFilter">
+                                        {{ l('Cycle') }}
+                                    </label>
+                                    <input
+                                        type="text"
+                                        id="cycleFilter"
+                                        class="form-control"
+                                        [(ngModel)]="cycleFilter"
+                                    />
+                                </div>
                             </div>
                         </div>
                         <div class="d-flex justify-content-between mt-4">
@@ -266,7 +282,7 @@
                 </app-filters>
                 <!--  [options]="status" -->
             </div>
-            <div  *ngIf="session?.session.status != sessionStatusEnum.Finished ">
+            <div *ngIf="session?.session.status != sessionStatusEnum.Finished">
                 <button class="btn btn-outline-primary2 d-flex gap-2" style="margin-bottom: 2px" (click)="addStudent()">
                     <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path
@@ -395,6 +411,14 @@
                                     }"
                                 >
                                     {{ record.studentNumber || '-' }}
+                                </span>
+                                <span
+                                    [ngStyle]="{
+                                        color: record?.hasFinished ? 'red' : '',
+                                        display: 'block'
+                                    }"
+                                >
+                                    {{ record.expectedEndDate | date }}
                                 </span>
                             </td>
                             <td>
@@ -544,9 +568,13 @@
                             <td>
                                 {{ record.identityNumber || '-' }}
                             </td>
-                            <td *ngIf="dir == 'ltr'">{{ SessionSupervisorRoleEnum[record.sessionSupervisor?.role] || '-' }}</td>
-                            <td *ngIf="dir == 'rtl'">{{ roleArabicMap[SessionSupervisorRoleEnum[record.sessionSupervisor?.role]] || '-' }}</td>
-                            
+                            <td *ngIf="dir == 'ltr'">
+                                {{ SessionSupervisorRoleEnum[record.sessionSupervisor?.role] || '-' }}
+                            </td>
+                            <td *ngIf="dir == 'rtl'">
+                                {{ roleArabicMap[SessionSupervisorRoleEnum[record.sessionSupervisor?.role]] || '-' }}
+                            </td>
+
                             <td>{{ record.telphoneNumber || '-' }}</td>
                             <td>{{ record.cycleNumber + ' ' + record?.year || '-' }}</td>
                             <td>

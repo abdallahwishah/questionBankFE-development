@@ -182,6 +182,8 @@
                                         <th>{{ l('School') }}</th>
                                         <th>{{ l('NumberOfSupervisors') }}</th>
                                         <th>{{ l('NumberOfStudents') }}</th>
+                                        <th>{{ l('ExpectedEndDate') }}</th>
+
                                         <th>{{ l('Actions') }}</th>
                                     </tr>
                                 </ng-template>
@@ -190,6 +192,8 @@
                                         <td>{{ class.schoolClass.name }}</td>
                                         <td>{{ class.numberOfSupervisor }}</td>
                                         <td>{{ class.numberOfAttempt }}</td>
+                                        <td>{{ class.expectedEndDate | date }}</td>
+
                                         <td>
                                             <app-action-button
                                                 [ActionsInfo]="[

@@ -8344,12 +8344,14 @@ export class ExamAttemptsServiceProxy {
      * @param studyLevelIdFilter (optional) 
      * @param schoolIdFilter (optional) 
      * @param studentAddressFilter (optional) 
+     * @param yearFilter (optional) 
+     * @param cycleFilter (optional) 
      * @param sorting (optional) 
      * @param skipCount (optional) 
      * @param maxResultCount (optional) 
      * @return Success
      */
-    getAllForCorrectionOrAudited(filter: string | undefined, examIdFilter: number | undefined, sessionIdFilter: number | undefined, studentClassIdFilter: number | undefined, sessionStatusIdFilter: SessionStatusEnum | undefined, sessionStatusListFilter: SessionStatusEnum[] | undefined, studentIdFilter: number | undefined, isCorrectedFilter: number | undefined, governorateIdFilter: number | undefined, isAuditedFilter: number | undefined, formNumberListFilter: number[] | undefined, studyLevelIdFilter: number | undefined, schoolIdFilter: number | undefined, studentAddressFilter: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfGetExamAttemptForViewDto> {
+    getAllForCorrectionOrAudited(filter: string | undefined, examIdFilter: number | undefined, sessionIdFilter: number | undefined, studentClassIdFilter: number | undefined, sessionStatusIdFilter: SessionStatusEnum | undefined, sessionStatusListFilter: SessionStatusEnum[] | undefined, studentIdFilter: number | undefined, isCorrectedFilter: number | undefined, governorateIdFilter: number | undefined, isAuditedFilter: number | undefined, formNumberListFilter: number[] | undefined, studyLevelIdFilter: number | undefined, schoolIdFilter: number | undefined, studentAddressFilter: string | undefined, yearFilter: number | undefined, cycleFilter: number | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfGetExamAttemptForViewDto> {
         let url_ = this.baseUrl + "/api/services/app/ExamAttempts/GetAllForCorrectionOrAudited?";
         if (filter === null)
             throw new Error("The parameter 'filter' cannot be null.");
@@ -8407,6 +8409,14 @@ export class ExamAttemptsServiceProxy {
             throw new Error("The parameter 'studentAddressFilter' cannot be null.");
         else if (studentAddressFilter !== undefined)
             url_ += "StudentAddressFilter=" + encodeURIComponent("" + studentAddressFilter) + "&";
+        if (yearFilter === null)
+            throw new Error("The parameter 'yearFilter' cannot be null.");
+        else if (yearFilter !== undefined)
+            url_ += "YearFilter=" + encodeURIComponent("" + yearFilter) + "&";
+        if (cycleFilter === null)
+            throw new Error("The parameter 'cycleFilter' cannot be null.");
+        else if (cycleFilter !== undefined)
+            url_ += "CycleFilter=" + encodeURIComponent("" + cycleFilter) + "&";
         if (sorting === null)
             throw new Error("The parameter 'sorting' cannot be null.");
         else if (sorting !== undefined)
@@ -8480,12 +8490,14 @@ export class ExamAttemptsServiceProxy {
      * @param studyLevelIdFilter (optional) 
      * @param schoolIdFilter (optional) 
      * @param studentAddressFilter (optional) 
+     * @param yearFilter (optional) 
+     * @param cycleFilter (optional) 
      * @param sorting (optional) 
      * @param skipCount (optional) 
      * @param maxResultCount (optional) 
      * @return Success
      */
-    getAll(filter: string | undefined, examIdFilter: number | undefined, sessionIdFilter: number | undefined, studentClassIdFilter: number | undefined, sessionStatusIdFilter: SessionStatusEnum | undefined, sessionStatusListFilter: SessionStatusEnum[] | undefined, studentIdFilter: number | undefined, isCorrectedFilter: number | undefined, governorateIdFilter: number | undefined, isAuditedFilter: number | undefined, formNumberListFilter: number[] | undefined, studyLevelIdFilter: number | undefined, schoolIdFilter: number | undefined, studentAddressFilter: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfGetExamAttemptForViewDto> {
+    getAll(filter: string | undefined, examIdFilter: number | undefined, sessionIdFilter: number | undefined, studentClassIdFilter: number | undefined, sessionStatusIdFilter: SessionStatusEnum | undefined, sessionStatusListFilter: SessionStatusEnum[] | undefined, studentIdFilter: number | undefined, isCorrectedFilter: number | undefined, governorateIdFilter: number | undefined, isAuditedFilter: number | undefined, formNumberListFilter: number[] | undefined, studyLevelIdFilter: number | undefined, schoolIdFilter: number | undefined, studentAddressFilter: string | undefined, yearFilter: number | undefined, cycleFilter: number | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfGetExamAttemptForViewDto> {
         let url_ = this.baseUrl + "/api/services/app/ExamAttempts/GetAll?";
         if (filter === null)
             throw new Error("The parameter 'filter' cannot be null.");
@@ -8543,6 +8555,14 @@ export class ExamAttemptsServiceProxy {
             throw new Error("The parameter 'studentAddressFilter' cannot be null.");
         else if (studentAddressFilter !== undefined)
             url_ += "StudentAddressFilter=" + encodeURIComponent("" + studentAddressFilter) + "&";
+        if (yearFilter === null)
+            throw new Error("The parameter 'yearFilter' cannot be null.");
+        else if (yearFilter !== undefined)
+            url_ += "YearFilter=" + encodeURIComponent("" + yearFilter) + "&";
+        if (cycleFilter === null)
+            throw new Error("The parameter 'cycleFilter' cannot be null.");
+        else if (cycleFilter !== undefined)
+            url_ += "CycleFilter=" + encodeURIComponent("" + cycleFilter) + "&";
         if (sorting === null)
             throw new Error("The parameter 'sorting' cannot be null.");
         else if (sorting !== undefined)
@@ -42405,6 +42425,7 @@ export class ExamAttemptDto implements IExamAttemptDto {
     attemptDate!: DateTime | undefined;
     auditedDate!: DateTime | undefined;
     correctionDate!: DateTime | undefined;
+    expectedEndDate!: DateTime | undefined;
     isManualCorrected!: boolean;
     isSubQuestionManualCorrected!: boolean;
     note!: string | undefined;
@@ -42432,6 +42453,7 @@ export class ExamAttemptDto implements IExamAttemptDto {
             this.attemptDate = _data["attemptDate"] ? DateTime.fromISO(_data["attemptDate"].toString()) : <any>undefined;
             this.auditedDate = _data["auditedDate"] ? DateTime.fromISO(_data["auditedDate"].toString()) : <any>undefined;
             this.correctionDate = _data["correctionDate"] ? DateTime.fromISO(_data["correctionDate"].toString()) : <any>undefined;
+            this.expectedEndDate = _data["expectedEndDate"] ? DateTime.fromISO(_data["expectedEndDate"].toString()) : <any>undefined;
             this.isManualCorrected = _data["isManualCorrected"];
             this.isSubQuestionManualCorrected = _data["isSubQuestionManualCorrected"];
             this.note = _data["note"];
@@ -42459,6 +42481,7 @@ export class ExamAttemptDto implements IExamAttemptDto {
         data["attemptDate"] = this.attemptDate ? this.attemptDate.toString() : <any>undefined;
         data["auditedDate"] = this.auditedDate ? this.auditedDate.toString() : <any>undefined;
         data["correctionDate"] = this.correctionDate ? this.correctionDate.toString() : <any>undefined;
+        data["expectedEndDate"] = this.expectedEndDate ? this.expectedEndDate.toString() : <any>undefined;
         data["isManualCorrected"] = this.isManualCorrected;
         data["isSubQuestionManualCorrected"] = this.isSubQuestionManualCorrected;
         data["note"] = this.note;
@@ -42479,6 +42502,7 @@ export interface IExamAttemptDto {
     attemptDate: DateTime | undefined;
     auditedDate: DateTime | undefined;
     correctionDate: DateTime | undefined;
+    expectedEndDate: DateTime | undefined;
     isManualCorrected: boolean;
     isSubQuestionManualCorrected: boolean;
     note: string | undefined;
@@ -48450,6 +48474,7 @@ export class GetSchoolClassForViewDto implements IGetSchoolClassForViewDto {
     sessionId!: number;
     numberOfAttempt!: number;
     numberOfSupervisor!: number;
+    expectedEndDate!: DateTime | undefined;
 
     constructor(data?: IGetSchoolClassForViewDto) {
         if (data) {
@@ -48467,6 +48492,7 @@ export class GetSchoolClassForViewDto implements IGetSchoolClassForViewDto {
             this.sessionId = _data["sessionId"];
             this.numberOfAttempt = _data["numberOfAttempt"];
             this.numberOfSupervisor = _data["numberOfSupervisor"];
+            this.expectedEndDate = _data["expectedEndDate"] ? DateTime.fromISO(_data["expectedEndDate"].toString()) : <any>undefined;
         }
     }
 
@@ -48484,6 +48510,7 @@ export class GetSchoolClassForViewDto implements IGetSchoolClassForViewDto {
         data["sessionId"] = this.sessionId;
         data["numberOfAttempt"] = this.numberOfAttempt;
         data["numberOfSupervisor"] = this.numberOfSupervisor;
+        data["expectedEndDate"] = this.expectedEndDate ? this.expectedEndDate.toString() : <any>undefined;
         return data;
     }
 }
@@ -48494,6 +48521,7 @@ export interface IGetSchoolClassForViewDto {
     sessionId: number;
     numberOfAttempt: number;
     numberOfSupervisor: number;
+    expectedEndDate: DateTime | undefined;
 }
 
 export class GetSchoolForEditOutput implements IGetSchoolForEditOutput {
