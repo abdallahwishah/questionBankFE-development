@@ -72,6 +72,9 @@ export class ExamViewerAndAttemptBulkComponent extends AppComponentBase implemen
     // localStorage key
     private LOCAL_STORAGE_KEY = 'MY_EXAM_DATA_V2';
 
+    // localStorge  as exam
+    private LOCAL_STORAGE_KEY_AsExam = 'Exam_{{id}}';
+
     // Warning dialog key
     Warning_dialog = UniqueNameComponents.Warning_dialog;
     FaildQuestions: any = [];
@@ -98,7 +101,7 @@ export class ExamViewerAndAttemptBulkComponent extends AppComponentBase implemen
 
         console.log('Internet connection lost');
     };
-
+    studentAttemptIdForFaildQuestions: string = '';
     ngOnInit() {
         // Listen for online and offline events
         window.addEventListener('online', this.handleOnline);
@@ -109,6 +112,7 @@ export class ExamViewerAndAttemptBulkComponent extends AppComponentBase implemen
             try {
                 const saved = JSON.parse(savedDataJson);
                 this.FaildQuestions = saved.FaildQuestions;
+                this.studentAttemptIdForFaildQuestions = saved.studentAttemptId;
                 // this.examData = saved.examData;
                 // this.studentAttemptId = saved.studentAttemptId;
                 // this.questionlist = saved.questionlist || [];
@@ -134,10 +138,10 @@ export class ExamViewerAndAttemptBulkComponent extends AppComponentBase implemen
         }
         this.loadExamData();
     }
-    resendFailedQuestions() {
+    resendFailedQuestions(studentAttemptIdForFaildQuestions?: string) {
         if (this.FaildQuestions.length) {
             // Attempt to resend failed questions
-            this.saveSomeAnswersToServer(false); // This will resend the failed questions
+            this.saveSomeAnswersToServer(false, studentAttemptIdForFaildQuestions); // This will resend the failed questions
         }
     }
 
@@ -161,6 +165,7 @@ export class ExamViewerAndAttemptBulkComponent extends AppComponentBase implemen
             }
             this.examData = response.applyExamDto;
             this.studentAttemptId = response.studentAttemptId;
+            this.LOCAL_STORAGE_KEY_AsExam = 'Exam_' + response.studentAttemptId;
 
             // Convert raw question array into our LocalQuestion array
             this.questionlist = (response.examQuestions || []).map((q) => {
@@ -174,16 +179,17 @@ export class ExamViewerAndAttemptBulkComponent extends AppComponentBase implemen
             this.questionlist.forEach((q) => {
                 this.handleQuestionWithAnswer(q);
             });
-            const savedDataJson = localStorage.getItem(this.LOCAL_STORAGE_KEY);
-            // Show instructions if they exist
-            this.showInstructions = !!this.examData.examInstructions;
 
-            try {
-                const saved = JSON.parse(savedDataJson);
-                this.currentIndex = saved.currentIndex || 0;
-                this.showInstructions = saved.showInstructions;
-            } catch {
-                this.currentIndex = 0;
+            const savedDataJsonAsExam = localStorage.getItem(this.LOCAL_STORAGE_KEY_AsExam);
+            if (savedDataJsonAsExam) {
+                try {
+                    const savedAsExam = JSON.parse(savedDataJsonAsExam);
+                    this.currentIndex = savedAsExam.currentIndex || 0;
+                    this.showInstructions = savedAsExam.showInstructions;
+                } catch (err) {
+                    this.currentIndex = 0;
+                    this.showInstructions = !!this.examData.examInstructions;
+                }
             }
 
             // NEW: If the server provides remainingSeconds,
@@ -197,7 +203,7 @@ export class ExamViewerAndAttemptBulkComponent extends AppComponentBase implemen
                     this.handleTimeExpired();
                 }
             }
-            this.resendFailedQuestions();
+            this.resendFailedQuestions(this.studentAttemptIdForFaildQuestions);
             this.saveToLocalStorage();
         });
     }
@@ -221,20 +227,16 @@ export class ExamViewerAndAttemptBulkComponent extends AppComponentBase implemen
     // --------------------------
     private saveToLocalStorage() {
         const dataToStore = {
-            currentIndex: this.currentIndex,
-            showInstructions: this.showInstructions,
             FaildQuestions: this.FaildQuestions,
-
-            // examData: this.examData,
-            // studentAttemptId: this.studentAttemptId,
-            // questionlist: this.questionlist,
-            // showInstructions: this.showInstructions,
-            // remainingTime: this.remainingTime,
-            // remainingSeconds: this.remainingSeconds,
-            // // NEW: save the examEndTime
-            // examEndTime: this.examEndTime,
+            studentAttemptId: this.studentAttemptId,
         };
         localStorage.setItem(this.LOCAL_STORAGE_KEY, JSON.stringify(dataToStore));
+
+        const dataToStoreAsExam = {
+            currentIndex: this.currentIndex,
+            showInstructions: this.showInstructions,
+        };
+        localStorage.setItem(this.LOCAL_STORAGE_KEY_AsExam, JSON.stringify(dataToStoreAsExam));
     }
 
     private clearStorageAndRedirect() {
@@ -421,7 +423,7 @@ export class ExamViewerAndAttemptBulkComponent extends AppComponentBase implemen
     // --------------------------
     // PARTIAL SYNC: send only current + previously failed
     // --------------------------
-    private saveSomeAnswersToServer(isLast: boolean) {
+    private saveSomeAnswersToServer(isLast: boolean, studentAttemptIdForFaildQuestions?: string) {
         if (!this.examData || !this.questionlist.length) return;
         let toSend;
         // Build array for:
@@ -446,7 +448,7 @@ export class ExamViewerAndAttemptBulkComponent extends AppComponentBase implemen
             .answerExamQuestions(
                 new SubmitAnswerExamQuestionsDto({
                     questionListWithAnswer: toSend,
-                    studentAttemptId: this.studentAttemptId || '',
+                    studentAttemptId: studentAttemptIdForFaildQuestions || this.studentAttemptId || '',
                     submitExam: isLast,
                 }),
             )
