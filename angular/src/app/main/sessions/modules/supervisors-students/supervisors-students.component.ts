@@ -34,6 +34,7 @@ export class SupervisorsStudentsComponent extends AppComponentBase implements On
     studyLevel;
     primengTableHelperForAttempts = new PrimengTableHelper();
     primengTableHelperForSupervisors = new PrimengTableHelper();
+    dir = document.documentElement.getAttribute('dir');
 
     filterAttempts: string;
     filterSupervis: string;
@@ -48,7 +49,14 @@ export class SupervisorsStudentsComponent extends AppComponentBase implements On
     sessionStatusEnum = SessionStatusEnum;
     session: any;
     FormNumberListArray: any[] = [];
-
+    public roleArabicMap = {
+        HallChief: 'رئيس القاعة',
+        AssistantHallChief: 'مساعد رئيس القاعة',
+        Supervisor: 'مشرف',
+        EducationalGuide: 'مرشد تعليمي',
+        Janitor: 'عامل نظافة',
+      };
+      
     SchoolIdFilter: any;
     StudentClassIdFilter: any;
     StudyLevelIdFilter: any;

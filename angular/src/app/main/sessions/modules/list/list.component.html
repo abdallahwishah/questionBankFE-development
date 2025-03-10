@@ -31,7 +31,7 @@
                     </span>
                 </button>
 
-                <button class="btn btn-outline d-flex gap-2">
+              <!--   <button class="btn btn-outline d-flex gap-2">
                     <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path
                             d="M7.2838 18.5412C3.19214 18.5412 1.44214 16.7912 1.44214 12.6996V12.5912C1.44214 8.89124 2.90047 7.10791 6.16714 6.79957C6.50047 6.77457 6.81714 7.02457 6.85047 7.36624C6.88381 7.70791 6.63381 8.01624 6.28381 8.04957C3.66714 8.29124 2.69214 9.52457 2.69214 12.5996V12.7079C2.69214 16.0996 3.89214 17.2996 7.2838 17.2996H12.7171C16.1088 17.2996 17.3088 16.0996 17.3088 12.7079V12.5996C17.3088 9.50791 16.3171 8.27457 13.6505 8.04957C13.3088 8.01624 13.0505 7.71624 13.0838 7.37457C13.1171 7.03291 13.4088 6.77457 13.7588 6.80791C17.0755 7.09124 18.5588 8.88291 18.5588 12.6079V12.7162C18.5588 16.7912 16.8088 18.5412 12.7171 18.5412H7.2838Z"
@@ -48,7 +48,7 @@
                     </svg>
 
                     {{ l('ExportSessions') }}
-                </button>
+                </button> -->
             </div>
         </div>
 
@@ -129,7 +129,7 @@
                                     }"
                                 ></app-auto-complete-feild>
                             </div>
-                            <div class="col-md-12 mb-5">
+                            <div class="col-md-12">
                                 <label class="col-form-label required">{{ l('FromDate') }}</label>
                                 <div class="input-normal-form-calendar">
                                     <p-calendar appendTo="body" class="w-100" [(ngModel)]="fromDate"></p-calendar>
@@ -187,7 +187,7 @@
                                     </svg>
                                 </div>
                             </div>
-                            <div class="col-md-12 mb-5">
+                            <div class="col-md-12 mb-3">
                                 <label class="col-form-label required">{{ l('ToDate') }}</label>
                                 <div class="input-normal-form-calendar">
                                     <p-calendar appendTo="body" class="w-100" [(ngModel)]="toDate"></p-calendar>
@@ -382,7 +382,8 @@
                                     },
                                     {
                                         label: 'Delete',
-                                        hasCondition: record?.session?.status != sessionStatusEnum.Active
+                                        hasCondition: record?.session?.status != sessionStatusEnum.Active &&
+                                        record?.session?.status != this.sessionStatusEnum.Finished
                                     },
                                     {
                                         label: 'Export',

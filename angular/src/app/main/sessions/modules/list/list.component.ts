@@ -13,6 +13,7 @@ import { Paginator } from 'primeng/paginator';
 import { Table } from 'primeng/table';
 import { AppComponentBase } from '@shared/common/app-component-base';
 import { FiltersComponent } from '@app/shared/components/filters/filters.component';
+import { DateTime } from '@node_modules/@types/luxon';
 
 @Component({
     selector: 'app-list',
@@ -31,6 +32,7 @@ export class ListComponent extends AppComponentBase implements OnInit {
     studySubject;
     fromDate: any;
     toDate: any;
+
 
     constructor(
         private _injector: Injector,
@@ -53,7 +55,17 @@ export class ListComponent extends AppComponentBase implements OnInit {
             }));
         this.sessionStatus.unshift({ name: 'All', id: undefined });
     }
+
+    formatDate(date){
+        const dateObj = new Date(date);
+        const  day = String(dateObj.getDate()).padStart(2, '0');       // 26
+        const month = String(dateObj.getMonth() + 1).padStart(2, '0'); // 03
+        const  year = String(dateObj.getFullYear()).slice(-2);          // 25
+        return `${day}/${month}/${year}` ; // 26/03/25
+    }
+
     getList(event?: LazyLoadEvent) {
+       
         if (event) {
             if (this.primengTableHelper.shouldResetPaging(event)) {
                 this.paginator.changePage(0);
@@ -64,6 +76,7 @@ export class ListComponent extends AppComponentBase implements OnInit {
         }
         this.skipCount = this.primengTableHelper.getSkipCount(this.paginator, event);
         this.primengTableHelper.showLoadingIndicator();
+        const luxonDateTime = this.formatDate(this.toDate);
 
         this._sessionsServiceProxy
             .getAll(
@@ -113,6 +126,8 @@ export class ListComponent extends AppComponentBase implements OnInit {
                 break;
 
             case 'Delete':
+                this.sessionStatusEnum.Finished
+                 console.log("record" , record.session.status)
                 this.message.confirm('', this.l('AreYouSure'), (isConfirmed) => {
                     if (isConfirmed) {
                         this._sessionsServiceProxy.delete(record?.session?.id).subscribe((res) => {

@@ -170,6 +170,10 @@
                             {{ l('StudySubject') }}
                             <p-sortIcon field="StudySubject"></p-sortIcon>
                         </th>
+                        <th pSortableColumn="StudySubject">
+                            {{ l('CreationTime') }}
+                            <p-sortIcon field="StudySubject"></p-sortIcon>
+                        </th>
                         <th pSortableColumn="CreatedBy">
                             {{ l('CreatedBy') }}
                             <p-sortIcon field="CreatedBy"></p-sortIcon>
@@ -203,6 +207,11 @@
                         <td>
                             <span class="p-column-title">{{ l('studySubject') }}</span>
                             {{ record.studySubject || '-' }}
+                        </td>
+                        <td>
+                            <span class="p-column-title">{{ l('creationTime') }}</span>
+                            {{ (record.creationTime | luxonFormat: 'dd/MM/yyyy hh:mm a') || '-' }}
+
                         </td>
                         <td>
                             <span class="p-column-title">{{ l('CreatedBy') }}</span>

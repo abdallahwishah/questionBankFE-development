@@ -82,8 +82,8 @@
                         class="form-control m-input"
                         [placeholder]="l('Search')"
                         type="text"
-                        [(ngModel)]="filterAttempts"
-                        (ngModelChange)="getListAttempts()"
+                        [(ngModel)]="filterSupervis"
+                        (ngModelChange)="getListSupervis()"
                     />
                     <button class="btn btn-primary" type="submit">
                         <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -133,9 +133,14 @@
     <!-- Filter & Search For Supervisor  -->
     <div class="row switch-serch-bar mt-9 justify-content-end" *ngIf="activeIndex == 0">
         <div
-            class="col-md-9 d-grid gap-3 align-items-end"
-            style="margin-bottom: -69px; grid-template-columns: 1.3fr 0.6fr 0.8fr 0.8fr"
+            class="col-md-7 d-grid gap-3 align-items-end"
+            style=" grid-template-columns: 2.2fr auto auto"
+
+            [ngStyle]="{
+                'margin-bottom': session?.session.status != sessionStatusEnum.Finished ? '-10vh' : '-10vh',
+              }"
         >
+
             <div>
                 <div class="input-group search-group">
                     <input
@@ -261,7 +266,7 @@
                 </app-filters>
                 <!--  [options]="status" -->
             </div>
-            <div>
+            <div  *ngIf="session?.session.status != sessionStatusEnum.Finished ">
                 <button class="btn btn-outline-primary2 d-flex gap-2" style="margin-bottom: 2px" (click)="addStudent()">
                     <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path
@@ -539,7 +544,9 @@
                             <td>
                                 {{ record.identityNumber || '-' }}
                             </td>
-                            <td>{{ SessionSupervisorRoleEnum[record.sessionSupervisor?.role] || '-' }}</td>
+                            <td *ngIf="dir == 'ltr'">{{ SessionSupervisorRoleEnum[record.sessionSupervisor?.role] || '-' }}</td>
+                            <td *ngIf="dir == 'rtl'">{{ roleArabicMap[SessionSupervisorRoleEnum[record.sessionSupervisor?.role]] || '-' }}</td>
+                            
                             <td>{{ record.telphoneNumber || '-' }}</td>
                             <td>{{ record.cycleNumber + ' ' + record?.year || '-' }}</td>
                             <td>
