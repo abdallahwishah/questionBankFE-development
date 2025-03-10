@@ -475,7 +475,6 @@ export class ExamViewerAndAttemptBulkComponent extends AppComponentBase implemen
                         });
                         this.FaildQuestions = [];
                     } else {
-                        console.log('toSend', toSend);
                         toSend.forEach((dto) => {
                             const idx = this.questionlist.findIndex((x) => x.question.id == dto.questionId);
                             if (idx >= 0) {
@@ -576,6 +575,7 @@ export class ExamViewerAndAttemptBulkComponent extends AppComponentBase implemen
         dto.examId = this.examData?.examId;
         dto.questionId = q.question?.id;
         dto.questionNo = q.questionNo;
+        dto.questionNoInGeneral = q.questionNoInGeneral;
         dto.sectionId = q.sectionId;
         dto.sectionNo = q.sectionNo;
         dto.type = q.question?.question?.question?.type;
