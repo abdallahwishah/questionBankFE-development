@@ -1,5 +1,5 @@
 {
-  "remoteServiceBaseUrl": "https://gazaexam.azurewebsites.net",
+  "remoteServiceBaseUrl": "http://192.168.10.167:6060",
   "appBaseUrl": "http://localhost:4200",
   "localeMappings": {
     "angular": [

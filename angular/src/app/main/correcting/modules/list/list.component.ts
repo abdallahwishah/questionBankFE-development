@@ -8,6 +8,7 @@ import { Paginator } from '@node_modules/primeng/paginator';
 import { Table } from '@node_modules/primeng/table';
 import { AppComponentBase } from '@shared/common/app-component-base';
 import {
+    EntityDto,
     SessionsServiceProxy,
     SessionStatusEnum,
     StudyLevelsServiceProxy,
@@ -128,6 +129,13 @@ export class ListComponent extends AppComponentBase implements OnInit {
                         session: record?.session.name,
                     },
                 });
+                break;
+            case 'ReCorrectSession':
+                this._sessionsServiceProxy
+                    .correctSession(new EntityDto({ id: record?.session?.id }))
+                    .subscribe((value) => {
+                        this.message.success(this.l('ReCorrectSessionSuccess'));
+                    });
                 break;
         }
     }
