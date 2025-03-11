@@ -144,7 +144,7 @@
         [class.hasNoAnswer]="!q?.isSynced"
         (click)="q?.isSynced?GetSelectedQuestion(i):''"
     >
-        <div class="num-box-q">{{ i + 1 }}</div>
+         <div class="num-box-q">{{ i + 1 }}</div>
         <span class="fw-bold white-space-nowrap editor" [class.text-dark]="q?.isSynced">
             <div [innerHTML]="q.question.question.question.body | safeText: 40"></div>
         </span>

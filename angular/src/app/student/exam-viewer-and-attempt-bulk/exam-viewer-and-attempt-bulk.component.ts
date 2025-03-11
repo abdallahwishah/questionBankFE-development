@@ -186,6 +186,7 @@ export class ExamViewerAndAttemptBulkComponent extends AppComponentBase implemen
                 try {
                     const savedAsExam = JSON.parse(savedDataJsonAsExam);
                     this.currentIndex = savedAsExam.currentIndex || 0;
+
                     this.showInstructions = savedAsExam.showInstructions;
                 } catch (err) {
                     this.currentIndex = 0;
@@ -466,13 +467,15 @@ export class ExamViewerAndAttemptBulkComponent extends AppComponentBase implemen
                     }
                     if (res?.isSynced) {
                         toSend.forEach((dto) => {
-                            const idx = this.questionlist.findIndex((x) => x.question.questionId === dto.questionId);
+                            const idx = this.questionlist.findIndex((x) => x.question.id === dto.questionId);
+
                             if (idx >= 0) {
                                 this.questionlist[idx].isSynced = true;
                                 this.questionlist[idx].localDirty = false;
                                 this.questionlist[idx].sendFailed = false;
                             }
                         });
+                        console.log('questionlist', this.questionlist);
                         this.FaildQuestions = [];
                     } else {
                         toSend.forEach((dto) => {
@@ -575,7 +578,7 @@ export class ExamViewerAndAttemptBulkComponent extends AppComponentBase implemen
         dto.examId = this.examData?.examId;
         dto.questionId = q.question?.id;
         dto.questionNo = q.questionNo;
-        dto.questionNoInGeneral = q.questionNoInGeneral;
+        dto.questionNoInGeneral = q?.question.questionNoInGeneral;
         dto.sectionId = q.sectionId;
         dto.sectionNo = q.sectionNo;
         dto.type = q.question?.question?.question?.type;
@@ -719,5 +722,19 @@ export class ExamViewerAndAttemptBulkComponent extends AppComponentBase implemen
             ...questionWithAnswer?.question?.question,
             ...answer,
         };
+    //  if hasAsnwer => mark it as answered
+        if (
+            answer.multipleChoiceAnswer ||
+            answer.singleChoiceAnswer ||
+            answer.trueFalseAnswer ||
+            answer.saAnswer ||
+            answer.matchAnswer ||
+            answer.dragTableAnswer ||
+            answer.drawingAnswer ||
+            answer.dragFormAnswer ||
+            answer.linkedQuestionAnswer
+        ) {
+            questionWithAnswer.isSynced = true;
+        }
     }
 }

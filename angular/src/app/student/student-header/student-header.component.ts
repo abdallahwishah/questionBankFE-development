@@ -1,7 +1,7 @@
 import { Component, Injector, OnInit } from '@angular/core';
-import { NavigationEnd, Router, RouterModule } from '@angular/router';
+import { NavigationEnd, Router, RouterModule, ActivatedRoute } from '@angular/router';
 import { AppAuthService } from '@app/shared/common/auth/app-auth.service';
-import { CommonModule } from '@node_modules/@angular/common';
+import { CommonModule, Location } from '@angular/common';
 import { AppConsts } from '@shared/AppConsts';
 import { AppComponentBase } from '@shared/common/app-component-base';
 import { ProfileServiceProxy, SessionServiceProxy } from '@shared/service-proxies/service-proxies';
@@ -24,6 +24,8 @@ export class StudentHeaderComponent extends AppComponentBase implements OnInit {
         private _router: Router,
         private _sessionServiceProxy: SessionServiceProxy,
         private _appAuthService: AppAuthService,
+        private _activatedRoute: ActivatedRoute,
+        private location:Location
     ) {
         super(_injector);
     }
@@ -49,5 +51,16 @@ export class StudentHeaderComponent extends AppComponentBase implements OnInit {
     }
     logout() {
         this._appAuthService.logout();
+    }
+    navigateToHome() {
+        if(this._router.url.includes('exam-viewer')){
+
+            this.location.back()
+        }else{
+            this._router.navigate(['./'], {
+                relativeTo: this._activatedRoute,
+            });
+        }
+
     }
 }

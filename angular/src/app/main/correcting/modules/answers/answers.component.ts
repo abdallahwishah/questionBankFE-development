@@ -83,6 +83,8 @@ export class AnswersComponent extends AppComponentBase implements OnInit {
                 this._router.navigate(['/app/main/correcting/view/', record.examAttempt.id], {
                     queryParams: {
                         examTitle: record.examTitle,
+                        studentNumber: record?.studentNumber,
+                        studentName: record?.studentName,
                     },
                 });
                 break;

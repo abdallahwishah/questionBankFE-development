@@ -33,19 +33,24 @@ export class ViewAnswersComponent extends AppComponentBase implements OnInit {
     // Track which sections are open (for accordion)
     openSections: boolean[] = [];
     loading = false;
+
+    studentNumber;
+    studentName;
     constructor(
         injector: Injector,
-        private _examsServiceProxy: ExamsServiceProxy,
         private _activatedRoute: ActivatedRoute,
-        private _DialogSharedService: DialogSharedService,
         private _examAttemptsServiceProxy: ExamAttemptsServiceProxy,
         private location: Location,
+        private route: ActivatedRoute,
     ) {
         super(injector);
     }
     id: any;
     ngOnInit() {
         this.id = this._activatedRoute.snapshot.params.id;
+
+        this.studentNumber = this._activatedRoute.snapshot.queryParams['studentNumber'];
+        this.studentName = this._activatedRoute.snapshot.queryParams['studentName'];
 
         // Example of building questionType array if needed
         this.questionsType = Object.entries(QuestionTypeEnum)
