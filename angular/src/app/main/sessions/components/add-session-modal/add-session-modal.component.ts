@@ -22,8 +22,8 @@ export class AddSessionsModalComponent extends AppComponentBase implements OnIni
     saving = false;
 
     @Output() OnRefresh: EventEmitter<boolean> = new EventEmitter<boolean>();
-@ViewChild('uploadFileSuper') uploadFileSuper;
-@ViewChild('uploadFileStudent') uploadFileStudent;
+    @ViewChild('uploadFileSuper') uploadFileSuper;
+    @ViewChild('uploadFileStudent') uploadFileStudent;
     subscription: Subscription;
 
     dataForEdit: any;
@@ -124,8 +124,9 @@ export class AddSessionsModalComponent extends AppComponentBase implements OnIni
         this.fileSuper = null;
         this.fileStudent = null;
         this.status = null;
-        this.uploadFileSuper?.clear();
-        this.uploadFileStudent?.clear();
+        console.log('clear', this.uploadFileSuper);
+        this.uploadFileSuper.nativeElement.value = '';
+        this.uploadFileStudent.nativeElement.value = '';
     }
     ngOnDestroy(): void {
         // Don’t forget to clean up
