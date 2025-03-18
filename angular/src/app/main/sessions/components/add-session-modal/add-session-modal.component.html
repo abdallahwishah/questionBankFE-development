@@ -227,8 +227,8 @@
                 </div>
             </form>
         </ng-container>
-        <input #uploadFileSuper (change)="uploadSuper($event)" type="file" class="d-none" />
-        <input #uploadFileStudent (change)="uploadStudent($event)" type="file" class="d-none" />
+        <input #uploadFileSuper (change)="uploadSuper($event)" accept=".xlsx, .xls" type="file" class="d-none" />
+        <input #uploadFileStudent (change)="uploadStudent($event)" accept=".xlsx, .xls" type="file" class="d-none" />
     </ng-container>
     <ng-container footerDialog>
         <button type="button" class="btn btn-primary blue" (click)="Save()">

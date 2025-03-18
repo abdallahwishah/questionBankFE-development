@@ -53,6 +53,8 @@ export class CreateMassNotificationModalComponent extends AppComponentBase {
     }
 
     save(): void {
+        this.createMassNotificationInput.severity = 0;
+        this.createMassNotificationInput.targetNotifiers= ['Abp.AspNetCore.SignalR.Notifications.SignalRRealTimeNotifier']
         if (!this.createMassNotificationInput.message || this.createMassNotificationInput.message === '') {
             abp.message.error(this.l('MassNotificationMessageFieldIsRequiredMessage'));
             return;
@@ -76,8 +78,7 @@ export class CreateMassNotificationModalComponent extends AppComponentBase {
         }
 
         this.saving = true;
-        this.createMassNotificationInput.severity = 0;
-        this.createMassNotificationInput.targetNotifiers= ['Abp.AspNetCore.SignalR.Notifications.SignalRRealTimeNotifier']
+
         this._notificationServiceProxy
             .createMassNotification(this.createMassNotificationInput)
             .pipe(

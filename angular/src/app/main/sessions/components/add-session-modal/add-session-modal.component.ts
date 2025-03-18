@@ -1,5 +1,5 @@
 import { map, Subscription } from 'rxjs';
-import { Component, EventEmitter, Injector, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Injector, OnInit, Output, ViewChild } from '@angular/core';
 import { DialogSharedService } from '@app/shared/components/dialog-shared/dialog-shared.service';
 import { UniqueNameComponents } from '@app/shared/Models/UniqueNameComponents';
 import { AppComponentBase } from '@shared/common/app-component-base';
@@ -22,7 +22,8 @@ export class AddSessionsModalComponent extends AppComponentBase implements OnIni
     saving = false;
 
     @Output() OnRefresh: EventEmitter<boolean> = new EventEmitter<boolean>();
-
+@ViewChild('uploadFileSuper') uploadFileSuper;
+@ViewChild('uploadFileStudent') uploadFileStudent;
     subscription: Subscription;
 
     dataForEdit: any;
@@ -123,6 +124,8 @@ export class AddSessionsModalComponent extends AppComponentBase implements OnIni
         this.fileSuper = null;
         this.fileStudent = null;
         this.status = null;
+        this.uploadFileSuper?.clear();
+        this.uploadFileStudent?.clear();
     }
     ngOnDestroy(): void {
         // Don’t forget to clean up
