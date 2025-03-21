@@ -38,7 +38,7 @@ export class AddStudentComponent extends AppComponentBase implements OnInit {
                     schoolClassId: this.schoolClassId,
                     schoolId: this.schoolId,
                     sessionId: this.sessionId,
-                    studentId: this.studentId,
+                    studentId: [this.StudentSelected?.student?.id],
                 }),
             )
             .subscribe((res) => {

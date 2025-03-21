@@ -224,15 +224,7 @@ export class AddTemplateComponent extends AppComponentBase implements OnInit {
     getUnits() {
         this.deleteFilled();
         this._subjectUnitsServiceProxy
-            .getAll(
-                undefined,
-                undefined,
-                undefined,
-                this.studySubject?.studySubject?.id,
-                undefined,
-                undefined,
-                1000,
-            )
+            .getAll(undefined, undefined, undefined, this.studySubject?.studySubject?.id, undefined, undefined, 1000)
             .subscribe((unitsRes) => {
                 // subject units
                 this.subjectUnits = unitsRes.items.map((item) => ({
@@ -243,6 +235,22 @@ export class AddTemplateComponent extends AppComponentBase implements OnInit {
     }
     // Submit form
     createOrEditTemplate(): void {
+        let isValid = true;
+        // validation on criteria.questionType&&criteria.subjectUnitId required
+        this._createOrEditExamTemplateDto.templateSections.forEach((section) => {
+            section.difficultyCriteria.forEach((criteria) => {
+                if (!criteria.questionType || !criteria.subjectUnitId) {
+                    this.notify.error(
+                        this.l('PleaseFillAllRequiredFieldsForQuestionTypeAndSubjectUnitInEachDifficultyCriteria'),
+                    );
+                    isValid = false;
+                }
+            });
+        });
+        if (!isValid) {
+            return;
+        }
+
         this._createOrEditExamTemplateDto.studyLevelIds = this.studyLevelsValue.map((x) => x?.studyLevel?.id);
         this._createOrEditExamTemplateDto.studySubjectId = this.studySubject?.studySubject?.id;
         this._examTemplatesServiceProxy.createOrEdit(this._createOrEditExamTemplateDto).subscribe(() => {
@@ -258,5 +266,8 @@ export class AddTemplateComponent extends AppComponentBase implements OnInit {
         this._createOrEditExamTemplateDto = new CreateOrEditExamTemplateDto();
         this._createOrEditExamTemplateDto.templateSections = [];
         this.checked = true;
+        this.studyLevelsValue = [];
+        this.studySubject = null;
+        this.studySubjectId = null;
     }
 }

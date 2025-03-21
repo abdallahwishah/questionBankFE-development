@@ -13,6 +13,14 @@ export class AutoCompleteFeildService {
     constructor(private http: HttpClient) {}
 
     searchCustom(api: string, key: string, keySearch?: string, customParams?: any, withoutBaseUrl?: boolean) {
+        // delete nulls keys
+        if (customParams) {
+            Object.keys(customParams).forEach((key) => {
+                if (customParams[key] == null|| customParams[key] == undefined) {
+                    delete customParams[key];
+                }
+            });
+        }
         if (api?.includes('/app/User/GetUsers') || api?.includes('GetRoles')) {
             return this.http.post<any[]>((withoutBaseUrl ? '' : this.baseUrl) + api, {
                 ...customParams,

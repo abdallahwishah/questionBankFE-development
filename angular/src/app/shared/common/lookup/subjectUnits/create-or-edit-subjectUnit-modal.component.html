@@ -26,6 +26,7 @@
                 </div>
                 <div class="col-md-6 mb-3">
                     <app-auto-complete-feild
+                        [disabled]="!studyLevelIds?.length"
                         [label]="l('StudySubject')"
                         field="studySubject.name"
                         [(ngModel)]="studySubject"

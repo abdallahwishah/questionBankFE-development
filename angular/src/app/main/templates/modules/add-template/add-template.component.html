@@ -256,6 +256,8 @@
                                                         <td>
                                                             <app-dropdown-field
                                                                 [enm]="QuestionTypeEnum"
+                                                                [excludeIds]="[512, 256, 128, 64, 32, 8, 1]"
+
                                                                 [(ngModel)]="criteria.questionType"
                                                             ></app-dropdown-field>
                                                         </td>

@@ -89,7 +89,7 @@
                             @if (!loadingFilter) {
                                 <div class="col-12 mb-5">
                                     <label for="" class="mb-2">{{ l('NumberOfModels') }}</label>
-                                    <input name="text" class="form-control m-input" type="text" />
+                                    <input name="text" class="form-control m-input" [(ngModel)]="NumberOfModels" type="text" />
                                 </div>
                                 <div class="col-12 mb-5">
                                     <app-dropdown-field

@@ -27,7 +27,7 @@ export class CreateOrEditStudySubjectModalComponent extends AppComponentBase imp
         injector: Injector,
         private _studySubjectsServiceProxy: StudySubjectsServiceProxy,
         private _dateTimeService: DateTimeService,
-        private dialogSharedService: DialogSharedService
+        private dialogSharedService: DialogSharedService,
     ) {
         super(injector);
     }
@@ -36,9 +36,10 @@ export class CreateOrEditStudySubjectModalComponent extends AppComponentBase imp
         if (!studySubjectId) {
             this.studySubject = new CreateOrEditStudySubjectDto();
             this.studySubject.id = studySubjectId;
+            this.studyLevelsValue = [];
 
             this.active = true;
-            this.dialogSharedService.showDialog(this.Add_Study_Subject_dialog,{});
+            this.dialogSharedService.showDialog(this.Add_Study_Subject_dialog, {});
         } else {
             this._studySubjectsServiceProxy.getStudySubjectForEdit(studySubjectId).subscribe((result) => {
                 this.studySubject = result.studySubject;
@@ -51,7 +52,7 @@ export class CreateOrEditStudySubjectModalComponent extends AppComponentBase imp
                     };
                 });
                 this.active = true;
-                this.dialogSharedService.showDialog(this.Add_Study_Subject_dialog,{});
+                this.dialogSharedService.showDialog(this.Add_Study_Subject_dialog, {});
             });
         }
     }
@@ -77,7 +78,7 @@ export class CreateOrEditStudySubjectModalComponent extends AppComponentBase imp
 
     close(): void {
         this.active = false;
-        this.dialogSharedService.hideDialog(this.Add_Study_Subject_dialog,{});
+        this.dialogSharedService.hideDialog(this.Add_Study_Subject_dialog, {});
     }
 
     ngOnInit(): void {}

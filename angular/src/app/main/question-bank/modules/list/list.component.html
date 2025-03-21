@@ -113,7 +113,9 @@
                                                 Sorting: '',
                                                 SkipCount: 0,
                                                 MaxResultCount: 10,
-                                                StudyLeveldsFilter: [levelId?.studyLevel?.id]
+                                                StudyLeveldsFilter: levelId?.studyLevel?.id
+                                                    ? [levelId?.studyLevel?.id]
+                                                    : undefined
                                             }
                                         }"
                                     ></app-auto-complete-feild>
@@ -122,6 +124,7 @@
                                     <app-dropdown-field
                                         class="d-block"
                                         [enm]="QuestionTypeEnum"
+                                        [(ngModel)]="typeFilter"
                                         [excludeIds]="[512, 256, 128, 64, 32, 8, 1]"
                                         optionLabel="name"
                                         optionValue="id"

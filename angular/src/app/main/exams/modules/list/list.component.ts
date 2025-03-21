@@ -88,7 +88,7 @@ export class ListComponent extends AppComponentBase implements OnInit {
     addFile() {
         this._DialogSharedService.showDialog(this.Add_File_dialog, {});
     }
-
+    NumberOfModels=undefined
     getList(event?: LazyLoadEvent) {
         if (event) {
             if (this.primengTableHelper.shouldResetPaging(event)) {
@@ -106,9 +106,9 @@ export class ListComponent extends AppComponentBase implements OnInit {
                 this.filter,
                 undefined,
                 undefined,
-                undefined,
-                this.levelId,
-                this.subjectId,
+                this.NumberOfModels||undefined,
+                this.levelId||undefined,
+                this.subjectId||undefined,
                 this.primengTableHelper.getSorting(this.dataTable),
                 this.primengTableHelper.getSkipCount(this.paginator, event),
                 this.primengTableHelper.getMaxResultCount(this.paginator, event),

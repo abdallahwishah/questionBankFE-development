@@ -7,11 +7,12 @@ import { AppComponentBase } from '@shared/common/app-component-base';
 import { ExamTemplatesServiceProxy } from '@shared/service-proxies/service-proxies';
 import { SkeletonComponent } from '../../../../shared/components/skeleton/skeleton.component';
 import { FormsModule } from '@node_modules/@angular/forms';
+import { AutoCompleteFeildModule } from '@app/shared/components/auto-complete-feild/auto-complete-feild.module';
 
 @Component({
     selector: 'app-add-exam-modal',
     standalone: true,
-    imports: [DropdownFieldComponent, DialogSharedModule, SkeletonComponent, FormsModule],
+    imports: [AutoCompleteFeildModule, DialogSharedModule, SkeletonComponent, FormsModule],
     templateUrl: './add-exam-modal.component.html',
     styleUrl: './add-exam-modal.component.css',
 })
@@ -39,7 +40,7 @@ export class AddExamModalComponent extends AppComponentBase implements OnInit {
     }
 
     Save() {
-        this._examTemplatesServiceProxy.generateExamByTemplate(this.templateId).subscribe(() => {
+        this._examTemplatesServiceProxy.generateExamByTemplate(this.templateId?.examTemplate?.id).subscribe(() => {
             this.notify.info(this.l('SavedSuccessfully'));
             this.closeDialog();
         });

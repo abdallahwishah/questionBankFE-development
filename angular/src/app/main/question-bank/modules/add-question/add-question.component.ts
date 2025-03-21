@@ -10,9 +10,6 @@ import {
     CategoriesServiceProxy,
     ComplexitiesServiceProxy,
     QuestionTypeEnum,
-    StudyLevelsServiceProxy,
-    StudySubjectsServiceProxy,
-    SubjectUnitsServiceProxy,
     CreateOrEditQuestionDto,
     QuestionsServiceProxy,
     QuestionPayloadDto,
@@ -33,7 +30,13 @@ export class AddQuestionComponent extends AppComponentBase implements OnInit {
     categories: any[] = [];
     checkedExplanatoryNote: boolean = true;
     QuestionTypeEnum = QuestionTypeEnum;
-    _createOrEditQuestionDto = new CreateOrEditQuestionDto();
+    _createOrEditQuestionDto = new CreateOrEditQuestionDto({
+        ...new CreateOrEditQuestionDto(),
+        payload: new QuestionPayloadDto({
+            ...new QuestionPayloadDto(),
+            subQuestions: [],
+        }),
+    });
     loading = false;
     studyLevelsValue: any[] = [];
     studySubject: any;
@@ -42,9 +45,7 @@ export class AddQuestionComponent extends AppComponentBase implements OnInit {
     constructor(
         private _injector: Injector,
         private _questionsServiceProxy: QuestionsServiceProxy,
-        private _studyLevelsServiceProxy: StudyLevelsServiceProxy,
-        private _studySubjectsProxy: StudySubjectsServiceProxy,
-        private _subjectUnitsServiceProxy: SubjectUnitsServiceProxy,
+
         private _complexitiesServiceProxy: ComplexitiesServiceProxy,
         private _categoriesServiceProxy: CategoriesServiceProxy,
         private _activatedRoute: ActivatedRoute,
@@ -52,12 +53,12 @@ export class AddQuestionComponent extends AppComponentBase implements OnInit {
     ) {
         super(_injector);
     }
-
+    id;
     ngOnInit(): void {
         this.loading = true;
 
         // Load route params once here
-        const id = this._activatedRoute.snapshot.params.id;
+        this.id = this._activatedRoute.snapshot.params.id;
 
         // Use forkJoin to get all references in parallel
         forkJoin([
@@ -78,8 +79,8 @@ export class AddQuestionComponent extends AppComponentBase implements OnInit {
                 }));
 
                 // If we have an ID, load the question for edit
-                if (id) {
-                    this.getForEdit(id);
+                if (this.id) {
+                    this.getForEdit(this.id);
                 } else {
                     // If there's no ID, just stop loading
                     this.loading = false;
@@ -156,5 +157,18 @@ export class AddQuestionComponent extends AppComponentBase implements OnInit {
     }
     get studyLevelIds() {
         return this.studyLevelsValue?.map((x) => x?.studyLevel?.id);
+    }
+    reset() {
+        this._createOrEditQuestionDto = new CreateOrEditQuestionDto({
+            ...new CreateOrEditQuestionDto(),
+            payload: new QuestionPayloadDto({
+                ...new QuestionPayloadDto(),
+                subQuestions: [],
+            }),
+        });
+        this.studyLevelsValue = [];
+        this.studySubject = null;
+        this.studyUnit = null;
+
     }
 }

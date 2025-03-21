@@ -7,8 +7,7 @@
                         [label]="l('StudentName')"
                         field="fullName"
                         [(ngModel)]="StudentSelected"
-                        name="student.Id"
-                        [ConfigCustomSearch]="{
+                         [ConfigCustomSearch]="{
                             api: '/api/services/app/students/GetAll',
                             keySearch: 'filter',
                             customParams: {

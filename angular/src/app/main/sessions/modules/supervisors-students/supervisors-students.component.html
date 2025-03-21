@@ -103,6 +103,7 @@
             </div>
             <div *ngIf="activeIndex == 1">
                 <button
+                    *ngIf="session?.session.status != sessionStatusEnum.Finished"
                     class="btn btn-outline-primary2 d-flex gap-2"
                     style="margin-bottom: 2px"
                     (click)="addSupervisoir()"
@@ -418,8 +419,8 @@
                                         display: 'block'
                                     }"
                                 >
-                                <td>{{ record?.examAttempt?.expectedEndDate | date: 'short' }}</td>
-                            </span>
+                                    <td>{{ record?.examAttempt?.expectedEndDate | date: 'short' }}</td>
+                                </span>
                             </td>
                             <td>
                                 {{ record.identityNumber || '-' }}

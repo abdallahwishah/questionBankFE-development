@@ -24,7 +24,7 @@ export class ListComponent extends AppComponentBase implements OnInit {
     @ViewChild('dataTable', { static: true }) dataTable: Table;
     @ViewChild('paginator', { static: true }) paginator: Paginator;
     @ViewChild(FiltersComponent) FiltersComponent: FiltersComponent;
-
+    QuestionType:any
     studyLevels: any[] = [];
     studySubjects: any[] = [];
     status = [

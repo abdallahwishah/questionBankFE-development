@@ -273,7 +273,7 @@ export class AutoCompleteFeildComponent implements OnInit, OnDestroy, ControlVal
         return this.selectedItems.some((selectedItem) => {
             const itemValue = this.getNestedPropertyValue(item, this.field);
             const selectedValue = this.getNestedPropertyValue(selectedItem, this.field);
-            return itemValue === selectedValue;
+            return itemValue?.trim() == selectedValue?.trim();
         });
     }
 
