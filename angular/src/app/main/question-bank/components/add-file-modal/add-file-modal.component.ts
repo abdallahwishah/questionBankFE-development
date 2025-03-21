@@ -52,6 +52,10 @@ export class AddFileModalComponent extends AppComponentBase implements OnInit {
                 }),
             )
             .subscribe((value) => {
+                // clear
+                this.uploadedFile = undefined;
+                this.fileStudentToken = undefined;
+
                 this.closeDialog();
             });
     }
