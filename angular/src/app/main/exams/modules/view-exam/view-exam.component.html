@@ -1,3 +1,4 @@
+<!-- Updated Accordion Component HTML -->
 <div>
     <div class="container-fluid px-5 mt-md-0 mt-7">
         <div class="d-flex align-items-center">
@@ -41,7 +42,7 @@
                         >
                             <!-- Accordion Header -->
                             <div
-                                class="accordion-header d-flex align-items-center justify-content-between p-3 border-bottom"
+                                class="accordion-header d-flex align-items-center justify-content-between p-3"
                                 (click)="toggleAccordion(i)"
                                 style="cursor: pointer"
                             >
@@ -56,8 +57,6 @@
                                     </div>
                                     <small>
                                         {{ (section.examQuestions?.length || 0) + ' ' + l('Questions') }} |
-                                        <!-- {{ l('Time') }}:
-                                        {{ section.durationTime + ' ' + l('Minute') }} -->
                                     </small>
                                 </div>
 
@@ -135,14 +134,9 @@
                                     </button>
                                 </div>
                             </div>
-                            <!-- Accordion Content -->
-                            <div
-                                class="accordion-content overflow-hidden"
-                                [style]="{
-                                    'max-height': openSections[i] ? '9999px' : '0px'
-                                }"
-                                style="transition: max-height 0.3s ease-in-out"
-                            >
+
+                            <!-- Accordion Content - Using *ngIf instead of max-height transition -->
+                            <div class="accordion-content" *ngIf="openSections[i]">
                                 <div class="px-5 py-2">
                                     <!-- Loop over questions in this section -->
                                     <div

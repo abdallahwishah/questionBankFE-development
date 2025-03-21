@@ -4,12 +4,11 @@
 
     .accordion-header {
       border-bottom: 1px solid #DEE1E6;
-
     }
 
+    /* No longer need these transition styles */
     .accordion-content {
-      max-height: 0;
-      transition: max-height 0.3s ease-in-out;
+      /* No max-height or transition needed */
     }
 
     .time-info {
@@ -25,29 +24,31 @@
     }
 
     .text-muted {
-        .sec-name  , small{
+        .sec-name, small {
             color: #352F36;
         }
     }
-    .time{
+
+    .time {
         color: #352F36;
         background: #6D31ED0F;
         font-size: 12px;
-    border-radius: 25px;
+        border-radius: 25px;
     }
-    .chevron-icons{
+
+    .chevron-icons {
         width: 40px;
         height: 40px;
         border-radius: 0.475rem !important;
-
     }
-    .chevron-icons-chlid{
+
+    .chevron-icons-chlid {
         width: 30px;
         height: 30px;
         border-radius: 50% !important;
     }
 
-    .chevron-icons , .chevron-icons-chlid{
+    .chevron-icons, .chevron-icons-chlid {
         text-align: center;
         display: flex;
         align-items: center;
@@ -57,8 +58,34 @@
     }
 
     .question-name {
-        span{
+        span {
             color: #BDC1CA;
         }
     }
-  }
+}
+
+/* Optional animation for accordion content */
+.accordion-content {
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/* Optional: Add a subtle line between sections */
+.line {
+    height: 1px;
+    background-color: #DEE1E6;
+    margin: 1rem 0;
+}
+
+/* Optional: Style for dashed outline button */
+.outline-dashed {
+    border-style: dashed !important;
+}
