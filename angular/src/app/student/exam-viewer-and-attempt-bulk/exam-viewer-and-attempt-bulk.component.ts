@@ -423,7 +423,6 @@ export class ExamViewerAndAttemptBulkComponent extends AppComponentBase implemen
     onUserChangedAnswer(index: number) {
         const q = this.questionlist[index];
         q.localDirty = true;
-        q.isSynced = false;
         this.saveToLocalStorage();
     }
 

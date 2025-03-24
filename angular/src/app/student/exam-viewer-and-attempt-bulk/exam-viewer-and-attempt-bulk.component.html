@@ -53,6 +53,13 @@
                             </span>
                         </div>
                         <div>
+                            <span class="header-title-label">{{ l('QuestionNumber') }}</span>
+                            <span class="px-1">:</span>
+                            <span class="header-title-label-input">
+                                {{ currentQuestion?.questionNo }}
+                            </span>
+                        </div>
+                        <div>
                             <span class="header-title-label">{{ l('RemainingTime') }}</span>
                             <span class="px-1">:</span>
                             <span class="header-title-label-input" style="direction: ltr">
@@ -142,9 +149,9 @@
         class="d-flex align-items-center gap-2 mx-5 my-10 px-4 w-full"
         style="cursor: pointer"
         [class.hasNoAnswer]="!q?.isSynced"
-        (click)="q?.isSynced?GetSelectedQuestion(i):''"
+        (click)="q?.isSynced ? GetSelectedQuestion(i) : ''"
     >
-         <div class="num-box-q">{{ i + 1 }}</div>
+        <div class="num-box-q">{{ i + 1 }}</div>
         <span class="fw-bold white-space-nowrap editor" [class.text-dark]="q?.isSynced">
             <div [innerHTML]="q.question.question.question.body | safeText: 40"></div>
         </span>
