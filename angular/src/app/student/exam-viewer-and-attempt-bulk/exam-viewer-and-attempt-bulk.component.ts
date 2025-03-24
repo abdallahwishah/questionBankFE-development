@@ -1,3 +1,4 @@
+import { filter } from 'rxjs/operators';
 import { Component, Injector, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import {
@@ -11,6 +12,7 @@ import {
     SubmitAnswerExamQuestionsDto,
     DargFormQuestionsSubAnswers,
     DragTableAnswer,
+    DragFormAnswer,
 } from './../../../shared/service-proxies/service-proxies';
 
 import { AppComponentBase } from '@shared/common/app-component-base';
@@ -23,13 +25,6 @@ import { SidebarModule } from 'primeng/sidebar';
 import { AccordionModule } from 'primeng/accordion';
 import { WarningModalComponent } from '@app/main/templates/components/warning-modal/warning-modal.component';
 import { SafeTextPipe } from '@app/shared/pipes/safe-text.pipe';
-import { Subscription } from '@node_modules/rxjs/dist/types';
-
-interface LocalQuestion extends QuestionWithAnswerDto {
-    isSynced?: boolean;
-    sendFailed?: boolean;
-    localDirty?: boolean;
-}
 
 @Component({
     standalone: true,
@@ -52,7 +47,7 @@ export class ExamViewerAndAttemptBulkComponent extends AppComponentBase implemen
     studentAttemptId: string;
 
     // Our question array with local flags
-    questionlist: LocalQuestion[] | any = [];
+    questionlist: any = [];
 
     // current question index
     currentIndex = 0;
@@ -227,8 +222,14 @@ export class ExamViewerAndAttemptBulkComponent extends AppComponentBase implemen
     // localStorage
     // --------------------------
     private saveToLocalStorage() {
+        let FaildQuestionsString = this.FaildQuestions?.map((value) => {
+            return {
+                id: value?.question?.id,
+                value: value?.answer,
+            };
+        });
         const dataToStore = {
-            FaildQuestions: this.FaildQuestions,
+            FaildQuestions: FaildQuestionsString,
             studentAttemptId: this.studentAttemptId,
         };
         localStorage.setItem(this.LOCAL_STORAGE_KEY, JSON.stringify(dataToStore));
@@ -275,7 +276,7 @@ export class ExamViewerAndAttemptBulkComponent extends AppComponentBase implemen
             } else {
                 this.updateTimeDisplay(this.remainingSeconds);
             }
-            this.saveToLocalStorage();
+            // this.saveToLocalStorage();
         }, 1000);
     }
 
@@ -304,7 +305,7 @@ export class ExamViewerAndAttemptBulkComponent extends AppComponentBase implemen
         this.saveToLocalStorage();
     }
 
-    get currentQuestion(): LocalQuestion | undefined {
+    get currentQuestion(): any {
         return this.questionlist[this.currentIndex];
     }
 
@@ -426,27 +427,31 @@ export class ExamViewerAndAttemptBulkComponent extends AppComponentBase implemen
         this.saveToLocalStorage();
     }
 
-    // --------------------------
-    // PARTIAL SYNC: send only current + previously failed
-    // --------------------------
     private saveSomeAnswersToServer(isLast: boolean, studentAttemptIdForFaildQuestions?: string) {
         if (!this.examData || !this.questionlist.length) return;
-        let toSend;
-        // Build array for:
-        // 1) Current question if (localDirty == true OR sendFailed == true)
-        // 2) Any question that had sendFailed == true
-        if (this.questionlist?.length) {
-            toSend = this.questionlist
-                .filter(
-                    (q, idx) =>
-                        q.sendFailed ||
-                        q.localDirty ||
-                        this.FaildQuestions?.findIndex((x: any) => x == q.question.id) >= 0,
-                )
+        let toSend = [];
+
+        if (this.FaildQuestions?.length) {
+            let FaildReqs = this.questionlist
+                ?.map((value) => {
+                    let found = this.FaildQuestions.find((x) => x.id === value.question.id);
+                    return {
+                        ...value,
+                        answer: found ? found.value : null,
+                        faild: !!found,
+                    };
+                })
+                ?.filter((q) => q?.faild)
                 .map((q) => this.buildOneAnswer(q));
-        } else if (this.FaildQuestions?.length) {
-            toSend = this.FaildQuestions.map((q) => this.buildOneAnswer(q));
-        } else {
+            toSend = [...toSend, ...FaildReqs];
+        }
+
+        if (this.questionlist?.length) {
+            let newReqs = this.questionlist.filter((q) => q?.localDirty).map((q) => this.buildOneAnswer(q));
+            toSend = [...toSend, ...newReqs];
+        }
+
+        if (!toSend?.length) {
             return;
         }
 
@@ -480,7 +485,6 @@ export class ExamViewerAndAttemptBulkComponent extends AppComponentBase implemen
                                 this.questionlist[idx].sendFailed = false;
                             }
                         });
-                        console.log('questionlist', this.questionlist);
                         this.FaildQuestions = [];
                     } else {
                         toSend.forEach((dto) => {
@@ -489,13 +493,9 @@ export class ExamViewerAndAttemptBulkComponent extends AppComponentBase implemen
                                 this.questionlist[idx].sendFailed = true;
                             }
                         });
-                        this.FaildQuestions = this.questionlist
-                            .filter((x) => x.sendFailed)
-                            ?.map((value) => value?.question.id);
+                        this.FaildQuestions = this.questionlist.filter((x) => x.sendFailed);
                     }
-                    // success => mark them as synced
 
-                    // update time from server and recalc examEndTime
                     this.examData.remainingSeconds = res.remainingTimeInSecond;
                     this.reCalTime();
 
@@ -513,65 +513,7 @@ export class ExamViewerAndAttemptBulkComponent extends AppComponentBase implemen
                             this.questionlist[idx].sendFailed = true;
                         }
                     });
-                    //  fill FaildQuestions
-                    this.FaildQuestions = this.questionlist
-                        .filter((x) => x.sendFailed)
-                        ?.map((value) => value?.question.id);
-                    console.warn('Sync some failed', this.FaildQuestions);
-                    this.saveToLocalStorage();
-                },
-            });
-    }
-
-    // --------------------------
-    // FULL SYNC: used if time up or final submission
-    // --------------------------
-    private saveAllAnswersToServer(isLast: boolean) {
-        if (!this.examData || !this.questionlist.length) return;
-
-        const allAnswers = this.questionlist.map((q) => this.buildOneAnswer(q));
-        this._examsServiceProxy
-            .answerExamQuestions(
-                new SubmitAnswerExamQuestionsDto({
-                    questionListWithAnswer: allAnswers,
-                    studentAttemptId: this.studentAttemptId || '',
-                    submitExam: isLast,
-                }),
-            )
-            .subscribe({
-                next: (res) => {
-                    switch (res.studentExamStatus) {
-                        case StudentExamStatus.ReachedExamEnd:
-                        case StudentExamStatus.StudentAlreadyFinished:
-                        case StudentExamStatus.ExamAlreadyEnd:
-                            this.end();
-                            return;
-                        case StudentExamStatus.SomethingWrong:
-                            window.location.reload();
-                            return;
-                    }
-                    // success => mark all as synced
-                    this.questionlist.forEach((x) => {
-                        x.isSynced = true;
-                        x.localDirty = false;
-                        x.sendFailed = false;
-                    });
-
-                    this.examData.remainingSeconds = res.remainingTimeInSecond;
-                    this.reCalTime();
-
-                    if (isLast) {
-                        this.end();
-                    } else {
-                        this.saveToLocalStorage();
-                    }
-                },
-                error: (err) => {
-                    console.warn('Sync all failed', err);
-                    // mark all as failed
-                    this.questionlist.forEach((x) => {
-                        x.sendFailed = true;
-                    });
+                    this.FaildQuestions = this.questionlist.filter((x) => x.sendFailed);
                     this.saveToLocalStorage();
                 },
             });
@@ -592,27 +534,35 @@ export class ExamViewerAndAttemptBulkComponent extends AppComponentBase implemen
         switch (dto.type) {
             case QuestionTypeEnum.MutliChoice:
                 dto.multipleChoiceAnswer = q.question?.question?.multipleChoiceAnswer;
+                q.answer = dto.multipleChoiceAnswer;
                 break;
             case QuestionTypeEnum.SinglChoice:
                 dto.singleChoiceAnswer = q.question?.question?.singleChoiceAnswer;
+                q.answer = dto.singleChoiceAnswer;
                 break;
             case QuestionTypeEnum.TrueAndFalse:
                 dto.trueFalseAnswer = q.question?.question?.trueFalseAnswer;
+                q.answer = dto.trueFalseAnswer;
                 break;
             case QuestionTypeEnum.SA:
                 dto.saAnswer = q.question?.question?.saAnswer;
+                q.answer = dto.saAnswer;
                 break;
             case QuestionTypeEnum.Match:
                 dto.matchAnswer = q.question?.question?.matchAnswer;
+                q.answer = dto.matchAnswer;
                 break;
             case QuestionTypeEnum.Rearrange:
                 dto.rearrangeAnswer = q.question?.question?.rearrangeAnswer;
+                q.answer = dto.rearrangeAnswer;
                 break;
             case QuestionTypeEnum.Drawing:
                 dto.drawingAnswer = q.question?.question?.drawingAnswer;
+                q.answer = dto.drawingAnswer;
                 break;
             case QuestionTypeEnum.DargingForm:
                 dto.dragFormAnswer = q.question?.question?.dragFormAnswer;
+                q.answer = dto.dragFormAnswer;
                 break;
             case QuestionTypeEnum.DargingTable:
                 dto.dragTableAnswer = q.question?.question?.dragTableAnswer?.map(
@@ -622,6 +572,7 @@ export class ExamViewerAndAttemptBulkComponent extends AppComponentBase implemen
                             words: value?.value,
                         }),
                 );
+                q.answer = dto.dragTableAnswer;
                 break;
             case QuestionTypeEnum.LinkedQuestions:
                 const subs = q.question?.question?.linkedQuestionAnswer || [];
@@ -635,6 +586,7 @@ export class ExamViewerAndAttemptBulkComponent extends AppComponentBase implemen
                         matchAnswer: sub.matchAnswer,
                     });
                 });
+                q.answer = dto.linkedQuestionAnswer;
                 break;
             // etc...
         }
@@ -644,27 +596,32 @@ export class ExamViewerAndAttemptBulkComponent extends AppComponentBase implemen
         let type: QuestionTypeEnum = questionWithAnswer?.question?.question?.question?.type;
         let answer: any = {};
 
+        // check if in failed questions
+        let found = this.FaildQuestions.find((x) => x.id === questionWithAnswer?.question?.id);
+        let valueInFaild = found?.value;
+
         switch (type) {
             case QuestionTypeEnum.MutliChoice:
-                answer.multipleChoiceAnswer = questionWithAnswer?.optionId;
+                answer.multipleChoiceAnswer = valueInFaild || questionWithAnswer?.optionId;
+
                 break;
             case QuestionTypeEnum.SinglChoice:
-                answer.singleChoiceAnswer = questionWithAnswer?.optionId?.[0];
+                answer.singleChoiceAnswer = valueInFaild || questionWithAnswer?.optionId?.[0];
                 break;
             case QuestionTypeEnum.TrueAndFalse:
-                answer.trueFalseAnswer = questionWithAnswer?.optionId?.[0];
+                answer.trueFalseAnswer = valueInFaild || questionWithAnswer?.optionId?.[0];
                 break;
             case QuestionTypeEnum.SA:
-                answer.saAnswer = questionWithAnswer?.value?.[0];
+                answer.saAnswer = valueInFaild || questionWithAnswer?.value?.[0];
                 break;
             case QuestionTypeEnum.DargingTable:
-                answer.dragTableAnswer = questionWithAnswer?.dargTableQuestionsSubAnswersWithoutPinned;
+                answer.dragTableAnswer = valueInFaild || questionWithAnswer?.dargTableQuestionsSubAnswersWithoutPinned;
                 break;
             case QuestionTypeEnum.Drawing:
                 let valueDraw;
 
                 try {
-                    valueDraw = JSON.parse(questionWithAnswer?.value?.[0])?.DrawingAnswer;
+                    valueDraw = JSON.parse(valueInFaild || questionWithAnswer?.value?.[0])?.DrawingAnswer;
                 } catch {
                     valueDraw = '';
                 }
@@ -672,23 +629,25 @@ export class ExamViewerAndAttemptBulkComponent extends AppComponentBase implemen
                 break;
             case QuestionTypeEnum.DargingForm:
                 answer.dragFormAnswer = [
-                    new DargFormQuestionsSubAnswers(questionWithAnswer?.dargFormQuestionsSubAnswers),
+                    new DargFormQuestionsSubAnswers(valueInFaild || questionWithAnswer?.dargFormQuestionsSubAnswers),
                 ];
                 break;
             case QuestionTypeEnum.LinkedQuestions:
+                console.log('valueInFaild', valueInFaild || questionWithAnswer?.linkedQuestionsSubAnswers);
+
                 // reorder questionWithAnswer?.linkedQuestionsSubAnswers as per linkedQuestions
-                let linkedQuestionsSubAnswersOrdered = questionWithAnswer?.linkedQuestionsSubAnswers?.sort(
-                    (a: any, b: any) => {
-                        return (
-                            questionWithAnswer?.question?.question?.linkedQuestions.findIndex(
-                                (x: any) => x.question.id === a.subQuestionId,
-                            ) -
-                            questionWithAnswer?.question?.question?.linkedQuestions.findIndex(
-                                (x: any) => x.question.id === b.subQuestionId,
-                            )
-                        );
-                    },
-                );
+                let linkedQuestionsSubAnswersOrdered = (
+                    valueInFaild || questionWithAnswer?.linkedQuestionsSubAnswers
+                )?.sort((a: any, b: any) => {
+                    return (
+                        questionWithAnswer?.question?.question?.linkedQuestions.findIndex(
+                            (x: any) => x.question.id === (a.subQuestionId || a?.questionId),
+                        ) -
+                        questionWithAnswer?.question?.question?.linkedQuestions.findIndex(
+                            (x: any) => x.question.id === (b.subQuestionId || b?.questionId),
+                        )
+                    );
+                });
                 answer.linkedQuestionAnswer = linkedQuestionsSubAnswersOrdered?.map((x: any, i) => {
                     let typex: QuestionTypeEnum =
                         questionWithAnswer?.question?.question?.linkedQuestions[i]?.question?.type;
@@ -696,27 +655,29 @@ export class ExamViewerAndAttemptBulkComponent extends AppComponentBase implemen
 
                     switch (typex) {
                         case QuestionTypeEnum.MutliChoice:
-                            subAnswer.multipleChoiceAnswer = x.optionId;
+                            subAnswer.multipleChoiceAnswer = x?.multipleChoiceAnswer || x.optionId;
                             break;
                         case QuestionTypeEnum.SinglChoice:
-                            subAnswer.singleChoiceAnswer = x.optionId?.[0];
+                            subAnswer.singleChoiceAnswer = x?.singleChoiceAnswer || x.optionId?.[0];
                             break;
                         case QuestionTypeEnum.TrueAndFalse:
-                            subAnswer.trueFalseAnswer = x.optionId?.[0];
+                            subAnswer.trueFalseAnswer = x?.trueFalseAnswer || x.optionId?.[0];
                             break;
                         case QuestionTypeEnum.SA:
-                            subAnswer.saAnswer = x.value;
+                            subAnswer.saAnswer = x?.value || x.value;
                             break;
                         case QuestionTypeEnum.Match:
-                            subAnswer.matchAnswer = x.matchValue;
+                            subAnswer.matchAnswer = x?.matchValue || x.matchValue;
                             break;
                         case QuestionTypeEnum.DargingTable:
-                            subAnswer.dragTableAnswer = x.dargTableQuestionsSubAnswersWithoutPinned;
+                            subAnswer.dragTableAnswer =
+                                x?.dargTableQuestionsSubAnswersWithoutPinned ||
+                                x.dargTableQuestionsSubAnswersWithoutPinned;
                             break;
                     }
 
                     return new SubQuestionAnswer({
-                        questionId: x.subQuestionId,
+                        questionId: x.subQuestionId || x?.questionId,
                         ...subAnswer,
                     });
                 });
