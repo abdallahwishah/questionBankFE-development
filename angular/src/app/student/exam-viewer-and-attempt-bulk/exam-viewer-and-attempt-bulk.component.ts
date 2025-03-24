@@ -358,7 +358,10 @@ export class ExamViewerAndAttemptBulkComponent extends AppComponentBase implemen
         let checked = this.checkAnswered();
         if (!checked) {
             return;
+        }else{
+            this.currentQuestion.isSynced = true;
         }
+
         if (!this.isLastQuestion || !isLast) {
             this.currentIndex++;
         }
