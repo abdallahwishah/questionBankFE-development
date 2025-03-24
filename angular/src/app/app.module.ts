@@ -114,7 +114,6 @@ import { SidebarModule } from 'primeng/sidebar';
         Theme11LayoutComponent,
         Theme12LayoutComponent,
         Theme13LayoutComponent,
-        HeaderNotificationsComponent,
         SideBarMenuComponent,
         TopBarMenuComponent,
         FooterComponent,
@@ -179,6 +178,8 @@ import { SidebarModule } from 'primeng/sidebar';
         CommonModule,
         FormsModule,
         HttpClientModule,
+        HeaderNotificationsComponent,
+
         HttpClientJsonpModule,
         ModalModule.forRoot(),
         TooltipModule.forRoot(),

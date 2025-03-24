@@ -64,6 +64,8 @@ export class AddSessionsModalComponent extends AppComponentBase implements OnIni
                         startDate: new Date(configShow?.data?.session?.startDate),
                     });
                 } else {
+                    this.status = null;
+                    this.dataForEdit = null;
                     this.FormAddSession.reset();
                 }
             });

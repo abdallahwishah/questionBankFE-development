@@ -1,29 +1,35 @@
-﻿import { Component, Injector, OnInit, ViewEncapsulation, NgZone, Input } from '@angular/core';
+﻿import { SidebarModule } from 'primeng/sidebar';
+import { Component, Injector, OnInit, ViewEncapsulation, NgZone, Input } from '@angular/core';
 import { AppComponentBase } from '@shared/common/app-component-base';
 import { NotificationServiceProxy, UserNotification } from '@shared/service-proxies/service-proxies';
 import { IFormattedUserNotification, UserNotificationHelper } from './UserNotificationHelper';
 import { forEach as _forEach } from 'lodash-es';
 import { UrlHelper } from '@shared/helpers/UrlHelper';
+import { CommonModule } from '@angular/common';
+import { AppSharedModule } from '@app/shared/app-shared.module';
 
 @Component({
     templateUrl: './header-notifications.component.html',
     selector: 'header-notifications',
     styleUrls: ['./header-notifications.component.less'],
     encapsulation: ViewEncapsulation.None,
+    standalone: true,
+    imports: [CommonModule, SidebarModule,AppSharedModule],
 })
 export class HeaderNotificationsComponent extends AppComponentBase implements OnInit {
-    @Input() customStyle = 'btn btn-active-color-primary btn-active-light btn-custom btn-icon btn-icon-muted h-35px h-md-40px position-relative w-35px w-md-40px';
+    @Input() customStyle =
+        'btn btn-active-color-primary btn-active-light btn-custom btn-icon btn-icon-muted h-35px h-md-40px position-relative w-35px w-md-40px';
     @Input() iconStyle = 'flaticon-alert-2 unread-notification fs-4';
     @Input() isRight = true;
 
     notifications: IFormattedUserNotification[] = [];
     unreadNotificationCount = 0;
-    sidebarVisible:boolean = false;
+    sidebarVisible: boolean = false;
     constructor(
         injector: Injector,
         private _notificationService: NotificationServiceProxy,
         private _userNotificationHelper: UserNotificationHelper,
-        public _zone: NgZone
+        public _zone: NgZone,
     ) {
         super(injector);
     }
@@ -81,7 +87,7 @@ export class HeaderNotificationsComponent extends AppComponentBase implements On
                 }
             }
 
-            if (success){
+            if (success) {
                 self.unreadNotificationCount -= 1;
             }
         }
@@ -93,7 +99,7 @@ export class HeaderNotificationsComponent extends AppComponentBase implements On
         });
     }
 
-    shouldUserUpdateApp(): void{
+    shouldUserUpdateApp(): void {
         this._userNotificationHelper.shouldUserUpdateApp();
     }
 

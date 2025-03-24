@@ -331,12 +331,17 @@ export class ExamViewerAndAttemptBulkComponent extends AppComponentBase implemen
     }
 
     nextCon() {
-        // Show confirm if user tries to end
-        this._DialogSharedService.showDialog(this.Warning_dialog, {
-            confirm: () => {
-                this.next(true);
-            },
-        });
+        if (!this.isOnline) {
+            // Show alaret
+            alert('يرجى التحقق من اتصالك بالإنترنت قبل الإنهاء.');
+        } else {
+            // Show confirm if user tries to end
+            this._DialogSharedService.showDialog(this.Warning_dialog, {
+                confirm: () => {
+                    this.next(true);
+                },
+            });
+        }
     }
 
     loadContent() {
@@ -722,7 +727,7 @@ export class ExamViewerAndAttemptBulkComponent extends AppComponentBase implemen
             ...questionWithAnswer?.question?.question,
             ...answer,
         };
-    //  if hasAsnwer => mark it as answered
+        //  if hasAsnwer => mark it as answered
         if (
             answer.multipleChoiceAnswer ||
             answer.singleChoiceAnswer ||
