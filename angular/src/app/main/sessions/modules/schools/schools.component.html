@@ -27,7 +27,7 @@
             <!-- Student Statistics Card -->
             <div class="col-md-6 mb-2">
                 <div class="card-dash p-3">
-                    <h6 class="title">{{ 'StudentStatistic' }}</h6>
+                    <h6 class="title">{{ 'StudentStatistic'|localize }}</h6>
                     <div class="boxes">
                         <div class="box">
                             <span>{{ 'NumberOfAttemptedStudents' | localize }}</span>
@@ -44,7 +44,7 @@
             <!-- Session Statistics Card -->
             <div class="col-md-6 mb-2">
                 <div class="card-dash p-3">
-                    <h6 class="title">{{ 'SessionStatistic' }}</h6>
+                    <h6 class="title">{{ 'SessionStatistic'|localize }}</h6>
                     <div class="boxes">
                         <div class="box">
                             <span>{{ 'NumberOfSchools' | localize }}</span>
@@ -65,7 +65,7 @@
                         class="d-flex justify-content-between align-items-center mb-2 collapsible-header"
                         (click)="toggleStudentLevelCard()"
                     >
-                        <h6 class="title m-0">{{ 'StudentCountBasedOnLevel' }}</h6>
+                        <h6 class="title m-0">{{ 'StudentCountBasedOnLevel'|localize }}</h6>
                         <i
                             class="fas"
                             [ngClass]="isStudentLevelCardCollapsed ? 'fa-chevron-down' : 'fa-chevron-up'"
