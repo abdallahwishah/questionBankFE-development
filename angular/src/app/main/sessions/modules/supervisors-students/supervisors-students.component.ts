@@ -101,7 +101,11 @@ export class SupervisorsStudentsComponent extends AppComponentBase implements On
     }
     governorateIdFilter: any;
     YearFilter: any;
-cycleFilter: any;
+    cycleFilter: any;
+    hasFinishedFilter;
+    doesNotAnswerFilter;
+    hasAttemptedFilter;
+
     getListAttempts(event?: LazyLoadEvent) {
         if (event) {
             if (this.primengTableHelperForAttempts.shouldResetPaging(event)) {
@@ -136,6 +140,9 @@ cycleFilter: any;
                 this.StudentAddressFilter,
                 this.YearFilter,
                 this.cycleFilter,
+                undefined,
+                undefined,
+                undefined,
 
                 this.primengTableHelper.getSorting(this.attemptsTable),
                 this.primengTableHelper.getSkipCount(this.paginatorAttempts, event),

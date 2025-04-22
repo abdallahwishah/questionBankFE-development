@@ -22,7 +22,56 @@
         <span class="mx-2">/</span>
         <h2 class="fw-bolder mb-0">{{ l('Schools') }}</h2>
     </div>
+    <div class=" py-2">
+        <div class="row my-2">
+            <!-- Student Statistics Card -->
+            <div class="col-md-6 mb-2">
+                <div class="card-dash p-3">
+                    <h6 class="title">{{ 'StudentStatistic' }}</h6>
+                    <div class="boxes">
+                        <div class="box">
+                            <span>{{ 'NumberOfAttemptedStudents' | localize }}</span>
+                            <p>{{ session?.numberOfAttemptedStudents }}</p>
+                        </div>
+                        <div class="box">
+                            <span>{{ 'NumberOfNonAttemptedStudents' | localize }}</span>
+                            <p>{{ session?.numberOfNonAttemptedStudents }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
+            <!-- Session Statistics Card -->
+            <div class="col-md-6 mb-2">
+                <div class="card-dash p-3">
+                    <h6 class="title">{{ 'SessionStatistic' }}</h6>
+                    <div class="boxes">
+                        <div class="box">
+                            <span>{{ 'NumberOfSchools' | localize }}</span>
+                            <p>{{ session?.numberOfSchools }}</p>
+                        </div>
+                        <div class="box">
+                            <span>{{ 'NumberOfSupervisors' | localize }}</span>
+                            <p>{{ session?.numberOfSupervisors }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Student Count Based On Level -->
+            <div class="col-md-12 mb-2">
+                <div class="card-dash p-3 student-level-section">
+                    <h6 class="title">{{ 'StudentCountBasedOnLevel' }}</h6>
+                    <div class="boxes">
+                        <div class="box" *ngFor="let item of session?.asBranch">
+                            <span>{{ item?.key }}</span>
+                            <p>{{ item?.value }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="row justify-content-between switch-serch-bar mt-9">
         <div class="col-md-4">
             <div class="input-group search-group">
@@ -235,9 +284,9 @@
             [rowsPerPageOptions]="primengTableHelper.predefinedRecordsCountPerPage"
         ></p-paginator>
     </div>
+    <app-extendTimeSession
+        [sessionId]="SessionId"
+        [schoolId]="schoolId"
+        [schoolClassId]="schoolClassId"
+    ></app-extendTimeSession>
 </div>
-<app-extendTimeSession
-    [sessionId]="SessionId"
-    [schoolId]="schoolId"
-    [schoolClassId]="schoolClassId"
-></app-extendTimeSession>

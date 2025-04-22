@@ -18,6 +18,8 @@ import { RadioButtonModule } from 'primeng/radiobutton';
 import { UserImageComponent } from '@app/shared/components/userImage/userImage.component';
 import { FiltersComponent } from '@app/shared/components/filters/filters.component';
 import { ExtendTimeSessionComponent } from './components/extendTimeSession/extendTimeSession.component';
+import { CheckboxModule } from 'primeng/checkbox';
+import { TriStateCheckboxModule } from 'primeng/tristatecheckbox';
 
 @NgModule({
     imports: [
@@ -40,6 +42,8 @@ import { ExtendTimeSessionComponent } from './components/extendTimeSession/exten
         UserImageComponent,
         FiltersComponent,
         ExtendTimeSessionComponent,
+        TriStateCheckboxModule,
+        CheckboxModule
     ],
     declarations: [SupervisorsStudentsComponent, AddSupervisorComponent, AddStudentComponent, MoveStudentComponent],
     providers: [SessionSupervisorsServiceProxy, StudentsServiceProxy],

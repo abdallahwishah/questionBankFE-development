@@ -42,7 +42,7 @@ export class SchoolsComponent extends AppComponentBase implements OnInit {
     schoolClassId;
     statusId: any;
     sessionStatusEnum = SessionStatusEnum;
-    session: GetSessionForViewDto;
+    session: GetSessionForViewDto | any;
 
     constructor(
         private _injector: Injector,
@@ -63,7 +63,10 @@ export class SchoolsComponent extends AppComponentBase implements OnInit {
         this._ActivatedRoute.paramMap?.subscribe((params) => {
             this.SessionId = Number(params?.get('id'));
             this._sessionsServiceProxy?.getSessionForView(this.SessionId).subscribe((value) => {
-                this.session = value;
+                this.session = {
+                    ...value,
+                    asBranch: Object.entries(value?.studentCountBasedOnLevel).map(([key, value]) => ({ key, value })),
+                };
             });
             this.getList();
         });
