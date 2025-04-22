@@ -62,7 +62,7 @@ export class SchoolsComponent extends AppComponentBase implements OnInit {
     public isStudentLevelCardCollapsed = true; // Start collapsed by default
     toggleStudentLevelCard(): void {
         this.isStudentLevelCardCollapsed = !this.isStudentLevelCardCollapsed;
-      }
+    }
     ngAfterViewInit() {
         this._ActivatedRoute.paramMap?.subscribe((params) => {
             this.SessionId = Number(params?.get('id'));
@@ -70,35 +70,6 @@ export class SchoolsComponent extends AppComponentBase implements OnInit {
                 this.session = {
                     ...value,
                     asBranch: [
-                        ...Object.entries(value?.studentCountBasedOnLevel).map(([key, value]) => ({ key, value })),
-                        ...Object.entries(value?.studentCountBasedOnLevel).map(([key, value]) => ({ key, value })),
-                        ...Object.entries(value?.studentCountBasedOnLevel).map(([key, value]) => ({ key, value })),
-                        ...Object.entries(value?.studentCountBasedOnLevel).map(([key, value]) => ({ key, value })),
-                        ...Object.entries(value?.studentCountBasedOnLevel).map(([key, value]) => ({ key, value })),
-                        ...Object.entries(value?.studentCountBasedOnLevel).map(([key, value]) => ({ key, value })),
-                        ...Object.entries(value?.studentCountBasedOnLevel).map(([key, value]) => ({ key, value })),
-                        ...Object.entries(value?.studentCountBasedOnLevel).map(([key, value]) => ({ key, value })),
-                        ...Object.entries(value?.studentCountBasedOnLevel).map(([key, value]) => ({ key, value })),
-                        ...Object.entries(value?.studentCountBasedOnLevel).map(([key, value]) => ({ key, value })),
-                        ...Object.entries(value?.studentCountBasedOnLevel).map(([key, value]) => ({ key, value })),
-                        ...Object.entries(value?.studentCountBasedOnLevel).map(([key, value]) => ({ key, value })),
-                        ...Object.entries(value?.studentCountBasedOnLevel).map(([key, value]) => ({ key, value })),
-                        ...Object.entries(value?.studentCountBasedOnLevel).map(([key, value]) => ({ key, value })),
-                        ...Object.entries(value?.studentCountBasedOnLevel).map(([key, value]) => ({ key, value })),
-                        ...Object.entries(value?.studentCountBasedOnLevel).map(([key, value]) => ({ key, value })),
-                        ...Object.entries(value?.studentCountBasedOnLevel).map(([key, value]) => ({ key, value })),
-                        ...Object.entries(value?.studentCountBasedOnLevel).map(([key, value]) => ({ key, value })),
-                        ...Object.entries(value?.studentCountBasedOnLevel).map(([key, value]) => ({ key, value })),
-                        ...Object.entries(value?.studentCountBasedOnLevel).map(([key, value]) => ({ key, value })),
-                        ...Object.entries(value?.studentCountBasedOnLevel).map(([key, value]) => ({ key, value })),
-                        ...Object.entries(value?.studentCountBasedOnLevel).map(([key, value]) => ({ key, value })),
-                        ...Object.entries(value?.studentCountBasedOnLevel).map(([key, value]) => ({ key, value })),
-                        ...Object.entries(value?.studentCountBasedOnLevel).map(([key, value]) => ({ key, value })),
-                        ...Object.entries(value?.studentCountBasedOnLevel).map(([key, value]) => ({ key, value })),
-                        ...Object.entries(value?.studentCountBasedOnLevel).map(([key, value]) => ({ key, value })),
-                        ...Object.entries(value?.studentCountBasedOnLevel).map(([key, value]) => ({ key, value })),
-                        ...Object.entries(value?.studentCountBasedOnLevel).map(([key, value]) => ({ key, value })),
-                        ...Object.entries(value?.studentCountBasedOnLevel).map(([key, value]) => ({ key, value })),
                         ...Object.entries(value?.studentCountBasedOnLevel).map(([key, value]) => ({ key, value })),
                     ],
                 };

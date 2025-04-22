@@ -1,0 +1,7 @@
+.custom-link {
+    color: rgb(104, 104, 218);
+    text-decoration: underline;
+    cursor: pointer;
+    margin-left: 5px;
+    margin-right: 5px;
+}

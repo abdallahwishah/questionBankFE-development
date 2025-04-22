@@ -23,7 +23,7 @@
                 {{ sessionName }}
             </span>
             <span class="mx-2">/</span>
-            <span (click)="goToClasses()">
+            <span class="cursor-pointer custom-link " (click)="goToClasses()">
                 {{ schoolName }}
             </span>
             <span class="mx-2">/</span>
@@ -276,7 +276,7 @@
                                     </label>
                                 </div>
                                 <div class="col-md-12 mb-3 d-flex align-items-end">
-                                    <p-checkbox [(ngModel)]="doesNotAnswerFilter"[binary]="true"></p-checkbox>
+                                    <p-checkbox [(ngModel)]="doesNotAnswerFilter" [binary]="true"></p-checkbox>
                                     <label class="mx-2">
                                         {{ l('DoesNotAnswer') }}
                                     </label>
