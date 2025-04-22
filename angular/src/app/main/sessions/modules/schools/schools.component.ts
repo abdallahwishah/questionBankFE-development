@@ -5,7 +5,7 @@ import {
     SupervisorDto,
 } from './../../../../../shared/service-proxies/service-proxies';
 // schools.component.ts
-import { Component, Injector, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, Injector, OnInit, ViewChild } from '@angular/core';
 import { AppComponentBase } from '@shared/common/app-component-base';
 import { SessionsServiceProxy } from '@shared/service-proxies/service-proxies';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -51,6 +51,7 @@ export class SchoolsComponent extends AppComponentBase implements OnInit {
         private _router: Router,
         private _DialogSharedService: DialogSharedService,
         private _sessionsServiceProxy: SessionsServiceProxy,
+        private cdr: ChangeDetectorRef,
     ) {
         super(_injector);
     }
@@ -58,16 +59,51 @@ export class SchoolsComponent extends AppComponentBase implements OnInit {
     ngOnInit(): void {
         this.sessionName = this._ActivatedRoute.snapshot.queryParams['session'];
     }
-
+    public isStudentLevelCardCollapsed = true; // Start collapsed by default
+    toggleStudentLevelCard(): void {
+        this.isStudentLevelCardCollapsed = !this.isStudentLevelCardCollapsed;
+      }
     ngAfterViewInit() {
         this._ActivatedRoute.paramMap?.subscribe((params) => {
             this.SessionId = Number(params?.get('id'));
             this._sessionsServiceProxy?.getSessionForView(this.SessionId).subscribe((value) => {
                 this.session = {
                     ...value,
-                    asBranch: Object.entries(value?.studentCountBasedOnLevel).map(([key, value]) => ({ key, value })),
+                    asBranch: [
+                        ...Object.entries(value?.studentCountBasedOnLevel).map(([key, value]) => ({ key, value })),
+                        ...Object.entries(value?.studentCountBasedOnLevel).map(([key, value]) => ({ key, value })),
+                        ...Object.entries(value?.studentCountBasedOnLevel).map(([key, value]) => ({ key, value })),
+                        ...Object.entries(value?.studentCountBasedOnLevel).map(([key, value]) => ({ key, value })),
+                        ...Object.entries(value?.studentCountBasedOnLevel).map(([key, value]) => ({ key, value })),
+                        ...Object.entries(value?.studentCountBasedOnLevel).map(([key, value]) => ({ key, value })),
+                        ...Object.entries(value?.studentCountBasedOnLevel).map(([key, value]) => ({ key, value })),
+                        ...Object.entries(value?.studentCountBasedOnLevel).map(([key, value]) => ({ key, value })),
+                        ...Object.entries(value?.studentCountBasedOnLevel).map(([key, value]) => ({ key, value })),
+                        ...Object.entries(value?.studentCountBasedOnLevel).map(([key, value]) => ({ key, value })),
+                        ...Object.entries(value?.studentCountBasedOnLevel).map(([key, value]) => ({ key, value })),
+                        ...Object.entries(value?.studentCountBasedOnLevel).map(([key, value]) => ({ key, value })),
+                        ...Object.entries(value?.studentCountBasedOnLevel).map(([key, value]) => ({ key, value })),
+                        ...Object.entries(value?.studentCountBasedOnLevel).map(([key, value]) => ({ key, value })),
+                        ...Object.entries(value?.studentCountBasedOnLevel).map(([key, value]) => ({ key, value })),
+                        ...Object.entries(value?.studentCountBasedOnLevel).map(([key, value]) => ({ key, value })),
+                        ...Object.entries(value?.studentCountBasedOnLevel).map(([key, value]) => ({ key, value })),
+                        ...Object.entries(value?.studentCountBasedOnLevel).map(([key, value]) => ({ key, value })),
+                        ...Object.entries(value?.studentCountBasedOnLevel).map(([key, value]) => ({ key, value })),
+                        ...Object.entries(value?.studentCountBasedOnLevel).map(([key, value]) => ({ key, value })),
+                        ...Object.entries(value?.studentCountBasedOnLevel).map(([key, value]) => ({ key, value })),
+                        ...Object.entries(value?.studentCountBasedOnLevel).map(([key, value]) => ({ key, value })),
+                        ...Object.entries(value?.studentCountBasedOnLevel).map(([key, value]) => ({ key, value })),
+                        ...Object.entries(value?.studentCountBasedOnLevel).map(([key, value]) => ({ key, value })),
+                        ...Object.entries(value?.studentCountBasedOnLevel).map(([key, value]) => ({ key, value })),
+                        ...Object.entries(value?.studentCountBasedOnLevel).map(([key, value]) => ({ key, value })),
+                        ...Object.entries(value?.studentCountBasedOnLevel).map(([key, value]) => ({ key, value })),
+                        ...Object.entries(value?.studentCountBasedOnLevel).map(([key, value]) => ({ key, value })),
+                        ...Object.entries(value?.studentCountBasedOnLevel).map(([key, value]) => ({ key, value })),
+                        ...Object.entries(value?.studentCountBasedOnLevel).map(([key, value]) => ({ key, value })),
+                    ],
                 };
             });
+            this.cdr.detectChanges();
             this.getList();
         });
     }

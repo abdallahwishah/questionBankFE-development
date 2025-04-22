@@ -22,8 +22,8 @@
         <span class="mx-2">/</span>
         <h2 class="fw-bolder mb-0">{{ l('Schools') }}</h2>
     </div>
-    <div class=" py-2">
-        <div class="row my-2">
+    <div class="py-2 my-2">
+        <div class="row">
             <!-- Student Statistics Card -->
             <div class="col-md-6 mb-2">
                 <div class="card-dash p-3">
@@ -58,11 +58,21 @@
                 </div>
             </div>
 
-            <!-- Student Count Based On Level -->
+            <!-- Student Count Based On Level - Collapsible Card -->
             <div class="col-md-12 mb-2">
                 <div class="card-dash p-3 student-level-section">
-                    <h6 class="title">{{ 'StudentCountBasedOnLevel' }}</h6>
-                    <div class="boxes">
+                    <div
+                        class="d-flex justify-content-between align-items-center mb-2 collapsible-header"
+                        (click)="toggleStudentLevelCard()"
+                    >
+                        <h6 class="title m-0">{{ 'StudentCountBasedOnLevel' }}</h6>
+                        <i
+                            class="fas"
+                            [ngClass]="isStudentLevelCardCollapsed ? 'fa-chevron-down' : 'fa-chevron-up'"
+                        ></i>
+                    </div>
+
+                    <div class="boxes" [ngClass]="{ 'd-none': isStudentLevelCardCollapsed }">
                         <div class="box" *ngFor="let item of session?.asBranch">
                             <span>{{ item?.key }}</span>
                             <p>{{ item?.value }}</p>

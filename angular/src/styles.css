@@ -1054,3 +1054,22 @@ span.cke_button_icon.cke_button__about_icon {
   .student-level-section .box:hover::before {
     transform: scaleX(1);
   }
+
+  /* Collapsible card styling */
+  .collapsible-header {
+    cursor: pointer;
+  }
+
+  .collapsible-header:hover {
+    opacity: 0.9;
+  }
+
+  .collapsible-header i {
+    transition: transform 0.3s ease;
+    color: #4a2b8c;
+    font-size: 0.8rem;
+  }
+
+  .collapsible-header:hover i {
+    transform: scale(1.2);
+  }

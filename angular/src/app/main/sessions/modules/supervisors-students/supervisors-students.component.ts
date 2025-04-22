@@ -140,9 +140,10 @@ export class SupervisorsStudentsComponent extends AppComponentBase implements On
                 this.StudentAddressFilter,
                 this.YearFilter,
                 this.cycleFilter,
-                undefined,
-                undefined,
-                undefined,
+                this.hasFinishedFilter || this.hasFinishedFilter == false ? this.hasFinishedFilter : undefined,
+                this.doesNotAnswerFilter || undefined,
+                this.hasAttemptedFilter || this.hasAttemptedFilter == false ? this.hasAttemptedFilter : undefined,
+
 
                 this.primengTableHelper.getSorting(this.attemptsTable),
                 this.primengTableHelper.getSkipCount(this.paginatorAttempts, event),
