@@ -90,6 +90,7 @@ export class AnswersComponent extends AppComponentBase implements OnInit {
                         studentNumber: record?.studentNumber,
                         studentName: record?.studentName,
                     },
+                    queryParamsHandling: 'merge',
                 });
                 break;
         }

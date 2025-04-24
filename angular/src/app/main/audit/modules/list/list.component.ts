@@ -98,7 +98,7 @@ export class ListComponent extends AppComponentBase implements OnInit {
         this.primengTableHelper.showLoadingIndicator();
 
         this._sessionsServiceProxy
-            .getAllForCorrectionOrAudited(
+            .getAllForAudited(
                 this.filter,
                 undefined,
                 undefined,
@@ -125,6 +125,7 @@ export class ListComponent extends AppComponentBase implements OnInit {
                 this._router.navigate(['/app/main/audit/answers/', record?.session?.id], {
                     queryParams: {
                         session: record?.session.name,
+                        isAdut: true,
                     },
                 });
                 break;

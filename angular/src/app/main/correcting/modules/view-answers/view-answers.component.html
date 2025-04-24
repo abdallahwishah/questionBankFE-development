@@ -65,6 +65,7 @@
 
                         <div class="px-5 my-2 w-100 d-flex justify-content-start align-items-center">
                             <p-inputNumber
+                                [disabled]="isAdut"
                                 [minFractionDigits]="1"
                                 [maxFractionDigits]="1"
                                 [(ngModel)]="question.score"
@@ -82,7 +83,7 @@
                             ></p-inputNumber>
                         </div>
                     </div>
-                    <div class="d-flex justify-content-end">
+                    <div class="d-flex justify-content-end" *ngIf="!isAdut">
                         <div>
                             <div>
                                 <button class="btn btn-primary" (click)="Save()">

@@ -100,7 +100,7 @@ export class ListComponent extends AppComponentBase implements OnInit {
         this.primengTableHelper.showLoadingIndicator();
 
         this._sessionsServiceProxy
-            .getAllForCorrectionOrAudited(
+            .getAllForCorrection(
                 this.filter,
                 undefined,
                 undefined,
@@ -127,6 +127,7 @@ export class ListComponent extends AppComponentBase implements OnInit {
                 this._router.navigate(['/app/main/correcting/answers/', record?.session?.id], {
                     queryParams: {
                         session: record?.session.name,
+                        isAudit: 'true',
                     },
                 });
                 break;

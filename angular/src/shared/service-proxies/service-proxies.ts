@@ -23605,8 +23605,8 @@ export class SessionsServiceProxy {
      * @param maxResultCount (optional) 
      * @return Success
      */
-    getAllForCorrectionOrAudited(filter: string | undefined, maxStartDateFilter: DateTime | undefined, minStartDateFilter: DateTime | undefined, examTemplateIdFilter: number | undefined, studyLevelIdFilter: number | undefined, studySubjectIdFilter: number | undefined, sessionStatusIdFilter: SessionStatusEnum | undefined, sessionStatusListFilter: SessionStatusEnum[] | undefined, studentIdFilter: number | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfGetSessionForViewDto> {
-        let url_ = this.baseUrl + "/api/services/app/Sessions/GetAllForCorrectionOrAudited?";
+    getAllForCorrection(filter: string | undefined, maxStartDateFilter: DateTime | undefined, minStartDateFilter: DateTime | undefined, examTemplateIdFilter: number | undefined, studyLevelIdFilter: number | undefined, studySubjectIdFilter: number | undefined, sessionStatusIdFilter: SessionStatusEnum | undefined, sessionStatusListFilter: SessionStatusEnum[] | undefined, studentIdFilter: number | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfGetSessionForViewDto> {
+        let url_ = this.baseUrl + "/api/services/app/Sessions/GetAllForCorrection?";
         if (filter === null)
             throw new Error("The parameter 'filter' cannot be null.");
         else if (filter !== undefined)
@@ -23666,11 +23666,11 @@ export class SessionsServiceProxy {
         };
 
         return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGetAllForCorrectionOrAudited(response_);
+            return this.processGetAllForCorrection(response_);
         })).pipe(_observableCatch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
-                    return this.processGetAllForCorrectionOrAudited(response_ as any);
+                    return this.processGetAllForCorrection(response_ as any);
                 } catch (e) {
                     return _observableThrow(e) as any as Observable<PagedResultDtoOfGetSessionForViewDto>;
                 }
@@ -23679,7 +23679,118 @@ export class SessionsServiceProxy {
         }));
     }
 
-    protected processGetAllForCorrectionOrAudited(response: HttpResponseBase): Observable<PagedResultDtoOfGetSessionForViewDto> {
+    protected processGetAllForCorrection(response: HttpResponseBase): Observable<PagedResultDtoOfGetSessionForViewDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = PagedResultDtoOfGetSessionForViewDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param filter (optional) 
+     * @param maxStartDateFilter (optional) 
+     * @param minStartDateFilter (optional) 
+     * @param examTemplateIdFilter (optional) 
+     * @param studyLevelIdFilter (optional) 
+     * @param studySubjectIdFilter (optional) 
+     * @param sessionStatusIdFilter (optional) 
+     * @param sessionStatusListFilter (optional) 
+     * @param studentIdFilter (optional) 
+     * @param sorting (optional) 
+     * @param skipCount (optional) 
+     * @param maxResultCount (optional) 
+     * @return Success
+     */
+    getAllForAudited(filter: string | undefined, maxStartDateFilter: DateTime | undefined, minStartDateFilter: DateTime | undefined, examTemplateIdFilter: number | undefined, studyLevelIdFilter: number | undefined, studySubjectIdFilter: number | undefined, sessionStatusIdFilter: SessionStatusEnum | undefined, sessionStatusListFilter: SessionStatusEnum[] | undefined, studentIdFilter: number | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfGetSessionForViewDto> {
+        let url_ = this.baseUrl + "/api/services/app/Sessions/GetAllForAudited?";
+        if (filter === null)
+            throw new Error("The parameter 'filter' cannot be null.");
+        else if (filter !== undefined)
+            url_ += "Filter=" + encodeURIComponent("" + filter) + "&";
+        if (maxStartDateFilter === null)
+            throw new Error("The parameter 'maxStartDateFilter' cannot be null.");
+        else if (maxStartDateFilter !== undefined)
+            url_ += "MaxStartDateFilter=" + encodeURIComponent(maxStartDateFilter ? "" + maxStartDateFilter.toString() : "") + "&";
+        if (minStartDateFilter === null)
+            throw new Error("The parameter 'minStartDateFilter' cannot be null.");
+        else if (minStartDateFilter !== undefined)
+            url_ += "MinStartDateFilter=" + encodeURIComponent(minStartDateFilter ? "" + minStartDateFilter.toString() : "") + "&";
+        if (examTemplateIdFilter === null)
+            throw new Error("The parameter 'examTemplateIdFilter' cannot be null.");
+        else if (examTemplateIdFilter !== undefined)
+            url_ += "ExamTemplateIdFilter=" + encodeURIComponent("" + examTemplateIdFilter) + "&";
+        if (studyLevelIdFilter === null)
+            throw new Error("The parameter 'studyLevelIdFilter' cannot be null.");
+        else if (studyLevelIdFilter !== undefined)
+            url_ += "StudyLevelIdFilter=" + encodeURIComponent("" + studyLevelIdFilter) + "&";
+        if (studySubjectIdFilter === null)
+            throw new Error("The parameter 'studySubjectIdFilter' cannot be null.");
+        else if (studySubjectIdFilter !== undefined)
+            url_ += "StudySubjectIdFilter=" + encodeURIComponent("" + studySubjectIdFilter) + "&";
+        if (sessionStatusIdFilter === null)
+            throw new Error("The parameter 'sessionStatusIdFilter' cannot be null.");
+        else if (sessionStatusIdFilter !== undefined)
+            url_ += "SessionStatusIdFilter=" + encodeURIComponent("" + sessionStatusIdFilter) + "&";
+        if (sessionStatusListFilter === null)
+            throw new Error("The parameter 'sessionStatusListFilter' cannot be null.");
+        else if (sessionStatusListFilter !== undefined)
+            sessionStatusListFilter && sessionStatusListFilter.forEach(item => { url_ += "SessionStatusListFilter=" + encodeURIComponent("" + item) + "&"; });
+        if (studentIdFilter === null)
+            throw new Error("The parameter 'studentIdFilter' cannot be null.");
+        else if (studentIdFilter !== undefined)
+            url_ += "StudentIdFilter=" + encodeURIComponent("" + studentIdFilter) + "&";
+        if (sorting === null)
+            throw new Error("The parameter 'sorting' cannot be null.");
+        else if (sorting !== undefined)
+            url_ += "Sorting=" + encodeURIComponent("" + sorting) + "&";
+        if (skipCount === null)
+            throw new Error("The parameter 'skipCount' cannot be null.");
+        else if (skipCount !== undefined)
+            url_ += "SkipCount=" + encodeURIComponent("" + skipCount) + "&";
+        if (maxResultCount === null)
+            throw new Error("The parameter 'maxResultCount' cannot be null.");
+        else if (maxResultCount !== undefined)
+            url_ += "MaxResultCount=" + encodeURIComponent("" + maxResultCount) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetAllForAudited(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetAllForAudited(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<PagedResultDtoOfGetSessionForViewDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<PagedResultDtoOfGetSessionForViewDto>;
+        }));
+    }
+
+    protected processGetAllForAudited(response: HttpResponseBase): Observable<PagedResultDtoOfGetSessionForViewDto> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -66768,6 +66879,7 @@ export class UserLoginInfoDto implements IUserLoginInfoDto {
     id!: number;
     name!: string | undefined;
     surname!: string | undefined;
+    fullName!: string | undefined;
     userName!: string | undefined;
     emailAddress!: string | undefined;
     profilePictureId!: string | undefined;
@@ -66786,6 +66898,7 @@ export class UserLoginInfoDto implements IUserLoginInfoDto {
             this.id = _data["id"];
             this.name = _data["name"];
             this.surname = _data["surname"];
+            this.fullName = _data["fullName"];
             this.userName = _data["userName"];
             this.emailAddress = _data["emailAddress"];
             this.profilePictureId = _data["profilePictureId"];
@@ -66804,6 +66917,7 @@ export class UserLoginInfoDto implements IUserLoginInfoDto {
         data["id"] = this.id;
         data["name"] = this.name;
         data["surname"] = this.surname;
+        data["fullName"] = this.fullName;
         data["userName"] = this.userName;
         data["emailAddress"] = this.emailAddress;
         data["profilePictureId"] = this.profilePictureId;
@@ -66815,6 +66929,7 @@ export interface IUserLoginInfoDto {
     id: number;
     name: string | undefined;
     surname: string | undefined;
+    fullName: string | undefined;
     userName: string | undefined;
     emailAddress: string | undefined;
     profilePictureId: string | undefined;

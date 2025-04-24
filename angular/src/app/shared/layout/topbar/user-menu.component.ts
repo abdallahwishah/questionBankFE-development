@@ -47,7 +47,7 @@ export class UserMenuComponent extends ThemesLayoutBaseComponent implements OnIn
         private _authService: AppAuthService,
         private _impersonationService: ImpersonationService,
         private _abpSessionService: AbpSessionService,
-        _dateTimeService: DateTimeService
+        _dateTimeService: DateTimeService,
     ) {
         super(injector, _dateTimeService);
     }
@@ -65,7 +65,8 @@ export class UserMenuComponent extends ThemesLayoutBaseComponent implements OnIn
     setCurrentLoginInformations(): void {
         this.shownLoginName = this.appSession.getShownLoginName();
         this.tenancyName = this.appSession.tenancyName;
-        this.userName = this.appSession.user.userName;
+        console.log('this.appSession.user', this.appSession.user);
+        this.userName = (this.appSession.user as any).fullName;
         this.emailAddress = this.appSession.user.emailAddress;
     }
 

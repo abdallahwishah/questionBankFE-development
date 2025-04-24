@@ -46,11 +46,13 @@ export class ViewAnswersComponent extends AppComponentBase implements OnInit {
         super(injector);
     }
     id: any;
+    isAdut = false;
     ngOnInit() {
         this.id = this._activatedRoute.snapshot.params.id;
 
         this.studentNumber = this._activatedRoute.snapshot.queryParams['studentNumber'];
         this.studentName = this._activatedRoute.snapshot.queryParams['studentName'];
+        this.isAdut = this._activatedRoute.snapshot.queryParams['isAdut'];
 
         // Example of building questionType array if needed
         this.questionsType = Object.entries(QuestionTypeEnum)

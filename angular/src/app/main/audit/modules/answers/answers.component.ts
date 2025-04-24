@@ -89,6 +89,7 @@ export class AnswersComponent extends AppComponentBase implements OnInit {
                     queryParams: {
                         examTitle: record.examTitle,
                     },
+                    queryParamsHandling: 'merge',
                 });
                 break;
         }
