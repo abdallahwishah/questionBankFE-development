@@ -1,3 +1,11 @@
+<div class="video-call-section mt-3" *ngIf="showVideoCall">
+    <app-standalone-webrtc
+        [employeeId]="selectedEmployeeId"
+        [autoConnect]="true"
+        (callEnded)="handleCallEnded($event)"
+    ></app-standalone-webrtc>
+</div>
+
 <div class="container-fluid px-5 mt-md-5 mt-7">
     <div class="d-flex align-items-center justify-content-between">
         <div class="d-flex align-items-center">
@@ -23,7 +31,7 @@
                 {{ sessionName }}
             </span>
             <span class="mx-2">/</span>
-            <span class="cursor-pointer custom-link " (click)="goToClasses()">
+            <span class="cursor-pointer custom-link" (click)="goToClasses()">
                 {{ schoolName }}
             </span>
             <span class="mx-2">/</span>
@@ -485,6 +493,10 @@
                                         },
                                         {
                                             label: 'Stop',
+                                            hasCondition: session?.session?.status === sessionStatusEnum.Active
+                                        },
+                                        {
+                                            label: 'RequestCamera',
                                             hasCondition: session?.session?.status === sessionStatusEnum.Active
                                         }
                                     ]"

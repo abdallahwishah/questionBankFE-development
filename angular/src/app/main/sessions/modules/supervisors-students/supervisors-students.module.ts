@@ -20,6 +20,7 @@ import { FiltersComponent } from '@app/shared/components/filters/filters.compone
 import { ExtendTimeSessionComponent } from './components/extendTimeSession/extendTimeSession.component';
 import { CheckboxModule } from 'primeng/checkbox';
 import { TriStateCheckboxModule } from 'primeng/tristatecheckbox';
+import { StandaloneWebRTCComponent } from '@app/RTC/standalone-webrtc/standalone-webrtc.component';
 
 @NgModule({
     imports: [
@@ -43,7 +44,8 @@ import { TriStateCheckboxModule } from 'primeng/tristatecheckbox';
         FiltersComponent,
         ExtendTimeSessionComponent,
         TriStateCheckboxModule,
-        CheckboxModule
+        CheckboxModule,
+        StandaloneWebRTCComponent
     ],
     declarations: [SupervisorsStudentsComponent, AddSupervisorComponent, AddStudentComponent, MoveStudentComponent],
     providers: [SessionSupervisorsServiceProxy, StudentsServiceProxy],

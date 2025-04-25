@@ -1,0 +1,179 @@
+/* src/app/shared/components/employee-webrtc/employee-webrtc.component.scss */
+.employee-webrtc-container {
+    /* Toast colors */
+    .bg-success {
+      background-color: #198754 !important;
+    }
+
+    .bg-danger {
+      background-color: #dc3545 !important;
+    }
+
+    .bg-warning {
+      background-color: #ffc107 !important;
+    }
+
+    .bg-info {
+      background-color: #0dcaf0 !important;
+    }
+
+    /* Incoming Call Modal */
+    .caller-info {
+      .caller-name {
+        font-weight: 600;
+        font-size: 1.25rem;
+        margin-bottom: 5px;
+      }
+    }
+
+    /* Status Indicator */
+    .status-indicator {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+
+      &.status-idle {
+        background-color: #6c757d; /* Gray */
+      }
+
+      &.status-incoming {
+        background-color: #fd7e14; /* Orange */
+        animation: pulse 1.5s infinite;
+      }
+
+      &.status-connected {
+        background-color: #198754; /* Green */
+      }
+
+      &.status-error {
+        background-color: #dc3545; /* Red */
+      }
+    }
+
+    .status-icon {
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+
+      i {
+        font-size: 1.5rem;
+      }
+
+      &.idle {
+        background-color: #e9ecef;
+        color: #0d6efd;
+      }
+
+      &.error {
+        background-color: #f8d7da;
+        color: #dc3545;
+      }
+
+      &.ended {
+        background-color: #e9ecef;
+        color: #6c757d;
+      }
+    }
+
+    /* Video Container Styles */
+    .video-frame {
+      background-color: #000;
+      border-radius: 0.25rem;
+      overflow: hidden;
+
+      video {
+        width: 100%;
+        display: block;
+      }
+    }
+
+    .remote-video-wrapper {
+      .video-frame {
+        min-height: 350px;
+
+        @media (max-width: 992px) {
+          min-height: 300px;
+        }
+
+        @media (max-width: 768px) {
+          min-height: 250px;
+        }
+
+        @media (max-width: 576px) {
+          min-height: 200px;
+        }
+      }
+    }
+
+    .local-video-wrapper {
+      .video-frame {
+        min-height: 200px;
+
+        @media (max-width: 992px) {
+          min-height: 180px;
+        }
+
+        @media (max-width: 768px) {
+          min-height: 160px;
+        }
+
+        @media (max-width: 576px) {
+          min-height: 150px;
+        }
+      }
+    }
+
+    /* Animation for blinking status */
+    @keyframes pulse {
+      0% {
+        opacity: 1;
+        transform: scale(1);
+      }
+      50% {
+        opacity: 0.6;
+        transform: scale(1.2);
+      }
+      100% {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+  }
+
+  /* RTL Support */
+  [dir="rtl"] {
+    .employee-webrtc-container {
+      .ms-2 {
+        margin-left: 0 !important;
+        margin-right: 0.5rem !important;
+      }
+
+      .me-auto {
+        margin-right: 0 !important;
+        margin-left: auto !important;
+      }
+
+      .me-1, .me-2, .me-3 {
+        margin-right: 0 !important;
+      }
+
+      .me-1 {
+        margin-left: 0.25rem !important;
+      }
+
+      .me-2 {
+        margin-left: 0.5rem !important;
+      }
+
+      .me-3 {
+        margin-left: 1rem !important;
+      }
+
+      .modal-header .btn-close {
+        margin: -0.5rem auto -0.5rem -0.5rem;
+      }
+    }
+  }

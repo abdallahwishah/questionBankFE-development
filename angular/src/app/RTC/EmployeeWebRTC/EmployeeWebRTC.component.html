@@ -1,0 +1,141 @@
+<!-- src/app/shared/components/employee-webrtc/employee-webrtc.component.html -->
+<div class="employee-webrtc-container">
+    <!-- Toast notifications -->
+    <div class="toast-container position-fixed top-0 end-0 p-3" style="z-index: 1200;">
+      <div *ngIf="toastVisible" class="toast show" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header bg-{{toastMessage?.type}}">
+          <strong class="me-auto text-white">Video Call</strong>
+          <button type="button" class="btn-close btn-close-white" (click)="hideToast()"></button>
+        </div>
+        <div class="toast-body">
+          {{toastMessage?.message}}
+        </div>
+      </div>
+    </div>
+
+    <!-- Incoming Call Modal -->
+    <div class="modal fade" [class.show]="isIncomingCall" [style.display]="isIncomingCall ? 'block' : 'none'" tabindex="-1" role="dialog">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">
+              <i class="bi bi-camera-video me-2"></i>
+              Incoming Video Call
+            </h5>
+          </div>
+          <div class="modal-body text-center">
+            <div class="caller-info mb-4">
+              <h5 class="caller-name">{{ incomingCallData?.callerName }}</h5>
+              <p class="text-muted">is requesting camera access</p>
+            </div>
+
+            <div class="countdown-container mb-3">
+              <div class="progress mb-2">
+                <div class="progress-bar bg-danger" role="progressbar"
+                  [style.width]="(countdownValue / 30) * 100 + '%'"
+                  aria-valuenow="countdownValue" aria-valuemin="0" aria-valuemax="30">
+                </div>
+              </div>
+              <p class="countdown-text small text-muted">
+                Auto-rejecting in <span class="fw-bold text-danger">{{ countdownValue }}</span> seconds
+              </p>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger" (click)="rejectCall()">
+              <i class="bi bi-x-circle me-1"></i> Reject
+            </button>
+            <button type="button" class="btn btn-success" (click)="acceptCall()">
+              <i class="bi bi-check-circle me-1"></i> Accept
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="isIncomingCall" class="modal-backdrop fade show"></div>
+
+    <!-- Active Call Display -->
+    <div class="active-call" *ngIf="isCallActive">
+      <!-- Call Status Header -->
+      <div class="card mb-3">
+        <div class="card-body py-2">
+          <div class="d-flex justify-content-between align-items-center">
+            <div class="call-status d-flex align-items-center">
+              <span class="status-indicator status-connected"></span>
+              <span class="status-text ms-2">
+                Connected ({{ formatDuration(callDuration) }})
+              </span>
+            </div>
+
+            <button type="button" class="btn btn-sm btn-danger" (click)="endCall()">
+              <i class="bi bi-telephone-x me-1"></i> End Call
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Video Display -->
+      <div class="row">
+        <!-- Remote Video (Admin) -->
+        <div class="col-12 col-md-7 mb-3">
+          <div class="card">
+            <div class="card-header py-2">
+              <h6 class="mb-0">Admin Video</h6>
+            </div>
+            <div class="card-body p-0">
+              <div class="remote-video-wrapper">
+                <div class="video-frame">
+                  <video #remoteVideo [srcObject]="remoteStream" autoplay class="remote-video"></video>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Local Video (Employee) -->
+        <div class="col-12 col-md-5 mb-3">
+          <div class="card">
+            <div class="card-header py-2">
+              <h6 class="mb-0">Your Video</h6>
+            </div>
+            <div class="card-body p-0">
+              <div class="local-video-wrapper">
+                <div class="video-frame">
+                  <video #localVideo [srcObject]="localStream" autoplay muted class="local-video"></video>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Status Indicator (when not in a call) -->
+    <div class="status-display" *ngIf="!isCallActive && !isIncomingCall">
+      <div class="camera-status-card card mb-3">
+        <div class="card-body">
+          <div class="d-flex align-items-center">
+            <!-- Display different icons based on connection status -->
+            <div class="status-icon me-3" [ngClass]="connectionStatus">
+              <i *ngIf="connectionStatus === 'idle'" class="bi bi-camera-video"></i>
+              <i *ngIf="connectionStatus === 'error'" class="bi bi-exclamation-triangle"></i>
+              <i *ngIf="connectionStatus === 'ended'" class="bi bi-telephone-x"></i>
+            </div>
+
+            <div class="status-message">
+              <ng-container [ngSwitch]="connectionStatus">
+                <h5 *ngSwitchCase="'idle'" class="mb-0">Ready for Video Calls</h5>
+                <p *ngSwitchCase="'idle'" class="text-muted mb-0 small">You will be notified when someone requests a video call</p>
+
+                <h5 *ngSwitchCase="'error'" class="mb-0 text-danger">Connection Error</h5>
+                <p *ngSwitchCase="'error'" class="text-muted mb-0 small">There was a problem connecting to the video call service</p>
+
+                <h5 *ngSwitchCase="'ended'" class="mb-0">Call Ended</h5>
+                <p *ngSwitchCase="'ended'" class="text-muted mb-0 small">The previous video call has ended</p>
+              </ng-container>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

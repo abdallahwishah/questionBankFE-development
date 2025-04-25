@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { StudentComponent } from './student.component';
 import { RouterModule } from '@node_modules/@angular/router';
 import { StudentHeaderComponent } from "./student-header/student-header.component";
+import { EmployeeWebRTCComponent } from '@app/RTC/EmployeeWebRTC/EmployeeWebRTC.component';
 
 @NgModule({
     imports: [
@@ -36,7 +37,8 @@ import { StudentHeaderComponent } from "./student-header/student-header.componen
             ],
         },
     ]),
-    StudentHeaderComponent
+    StudentHeaderComponent,
+    EmployeeWebRTCComponent
 ],
     declarations: [StudentComponent],
 })

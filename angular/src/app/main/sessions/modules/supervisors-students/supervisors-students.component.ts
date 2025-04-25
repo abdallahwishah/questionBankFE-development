@@ -106,6 +106,9 @@ export class SupervisorsStudentsComponent extends AppComponentBase implements On
     doesNotAnswerFilter;
     hasAttemptedFilter;
 
+    // Add this in your component class
+    selectedEmployeeId: string | null = null;
+    showVideoCall: boolean = false;
     getListAttempts(event?: LazyLoadEvent) {
         if (event) {
             if (this.primengTableHelperForAttempts.shouldResetPaging(event)) {
@@ -143,7 +146,6 @@ export class SupervisorsStudentsComponent extends AppComponentBase implements On
                 this.hasFinishedFilter || this.hasFinishedFilter == false ? this.hasFinishedFilter : undefined,
                 this.doesNotAnswerFilter || undefined,
                 this.hasAttemptedFilter || this.hasAttemptedFilter == false ? this.hasAttemptedFilter : undefined,
-
 
                 this.primengTableHelper.getSorting(this.attemptsTable),
                 this.primengTableHelper.getSkipCount(this.paginatorAttempts, event),
@@ -223,6 +225,10 @@ export class SupervisorsStudentsComponent extends AppComponentBase implements On
                     }
                 });
                 break;
+            case 'RequestCamera':
+                this.selectedEmployeeId = record.userId;
+                this.showVideoCall = true;
+                break;
         }
     }
     doActionsForSupervisor(label: any, record: any) {
@@ -285,5 +291,11 @@ export class SupervisorsStudentsComponent extends AppComponentBase implements On
                 name: value?.schoolClass?.name,
             };
         });
+    }
+    // Handle call events if needed
+    handleCallEnded(reason: string): void {
+        console.log('Call ended:', reason);
+        this.showVideoCall = false;
+        // Optional: Add any cleanup or notification logic here
     }
 }
