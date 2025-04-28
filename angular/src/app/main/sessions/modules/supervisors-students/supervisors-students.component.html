@@ -494,15 +494,15 @@
                                         {
                                             label: 'Stop',
                                             hasCondition: session?.session?.status === sessionStatusEnum.Active
-                                        },
-                                        {
-                                            label: 'RequestCamera',
-                                            hasCondition: session?.session?.status === sessionStatusEnum.Active
                                         }
                                     ]"
                                     (action)="doActionsForAttempts($event, record)"
                                 ></app-action-button>
                             </td>
+                            <!-- {
+                                label: 'RequestCamera',
+                                hasCondition: session?.session?.status === sessionStatusEnum.Active
+                            } -->
                         </tr>
                     </ng-template>
                 </p-table>
