@@ -58,7 +58,6 @@ export class EmployeeWebRTCComponent implements OnInit, OnDestroy {
                 this.initializeSignalR();
             }
         }, 1000);
-
     }
 
     ngOnDestroy(): void {
@@ -72,6 +71,11 @@ export class EmployeeWebRTCComponent implements OnInit, OnDestroy {
 
     // Initialize the SignalR connection and event handlers
     public async initializeSignalR(): Promise<void> {
+        // Handle call accepted event
+        this.signalRService.receiveVideoOffer.subscribe(() => {
+            debugger
+            this.acceptCall();
+        });
         try {
             // Start SignalR connection
             await this.signalRService.startConnection();
@@ -88,32 +92,11 @@ export class EmployeeWebRTCComponent implements OnInit, OnDestroy {
 
     // Accept an incoming call
     public acceptCall(): void {
-        if (!this.isIncomingCall || !this.incomingCallData) {
-            return;
-        }
+        this.signalRService.acceptVideoCall().catch((error) => {
+            console.error('Error accepting call:', error);
+            this.showToast('danger', 'Error accepting the call');
 
-        this.stopCountdown();
-        this.isIncomingCall = false;
-        this.connectionStatus = 'connecting';
-
-        // Set up peer connection and accept the call
-        this.webRTCService
-            .setupPeerConnection()
-            .then(() => {
-                this.signalRService.acceptVideoCall(this.incomingCallData!.callerId).catch((error) => {
-                    console.error('Error accepting call:', error);
-                    this.showToast('danger', 'Error accepting the call');
-                    this.cleanupCall();
-                });
-            })
-            .catch((error) => {
-                console.error('Error setting up camera:', error);
-                this.showToast('danger', 'Failed to access your camera');
-                this.connectionStatus = 'error';
-
-                // Reject the call if we can't set up the camera
-                this.rejectCall();
-            });
+        });
     }
 
     // Reject an incoming call
@@ -154,7 +137,6 @@ export class EmployeeWebRTCComponent implements OnInit, OnDestroy {
         // Handle incoming call request
         this.subscriptions.push(
             this.signalRService.incomingVideoCall.subscribe((data) => {
-                console.log('Incoming call from:', data.callerName);
                 this.handleIncomingCall(data);
             }),
 
@@ -169,6 +151,7 @@ export class EmployeeWebRTCComponent implements OnInit, OnDestroy {
             // Handle remote stream (caller's video)
             this.webRTCService.remoteStream$.subscribe((stream) => {
                 this.remoteStream = stream;
+                // this.acceptCall();
 
                 if (stream) {
                     this.isCallActive = true;
@@ -196,7 +179,6 @@ export class EmployeeWebRTCComponent implements OnInit, OnDestroy {
 
     // Handle incoming call
     private handleIncomingCall(data: { callerId: string; callerName: string }): void {
-        debugger
         // If already in a call, automatically reject
         if (this.isCallActive) {
             this.signalRService.rejectVideoCall(data.callerId, 'User is busy in another call').catch((error) => {

@@ -64,6 +64,7 @@ export class StandaloneWebRTCComponent implements  OnDestroy, OnChanges {
         this.subscriptions.push(
             // Handle local stream (camera)
             this.webRTCService.localStream$.subscribe((stream) => {
+                console.log('localStream',stream)
                 this.localStream = stream;
                 if (stream) {
                     console.log('Local stream established');
@@ -73,6 +74,7 @@ export class StandaloneWebRTCComponent implements  OnDestroy, OnChanges {
             // Handle remote stream (employee camera)
             this.webRTCService.remoteStream$.subscribe((stream) => {
                 this.remoteStream = stream;
+                console.log('remoteStream',this.remoteStream)
 
                 if (stream) {
                     this.isCallActive = true;
@@ -91,11 +93,12 @@ export class StandaloneWebRTCComponent implements  OnDestroy, OnChanges {
                 }
             }),
 
-            // Handle call accepted event
-            this.signalRService.videoCallAccepted.subscribe(() => {
-                this.connectionStatus = 'accepted';
-                console.log('Call accepted by employee');
-            }),
+                // Handle call accepted event
+                this.signalRService.videoCallAccepted.subscribe(() => {
+                    this.connectionStatus = 'accepted';
+                    console.log('Call accepted by employee');
+                }),
+
 
             // Handle call rejected event
             this.signalRService.videoCallRejected.subscribe((reason) => {

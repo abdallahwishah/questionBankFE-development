@@ -11,6 +11,7 @@ export class SignalRRTCService extends AppComponentBase {
     cameraHub: HubConnection;
     isRTCConnected = false;
 
+    callerId;
     // Event emitters for handling incoming calls and WebRTC signaling
     public incomingVideoCall = new EventEmitter<CallRequest>();
     public videoCallAccepted = new EventEmitter<string>();
@@ -83,11 +84,9 @@ export class SignalRRTCService extends AppComponentBase {
     }
 
     registerRTCEvents(connection): void {
-        debugger
+        debugger;
         // For Employee: Handle incoming video call
         connection.on('IncomingVideoCall', (data: CallRequest) => {
-            debugger;
-            console.log('Received video call request from:', data.callerName);
             this.incomingVideoCall.emit(data);
         });
 
@@ -106,6 +105,9 @@ export class SignalRRTCService extends AppComponentBase {
         // Handle receiving video offer
         connection.on('ReceiveVideoOffer', (senderId: string, offer: string) => {
             console.log('Received video offer from:', senderId);
+            this.callerId = senderId;
+
+
             this.receiveVideoOffer.emit({ senderId, description: offer });
         });
 
@@ -162,14 +164,14 @@ export class SignalRRTCService extends AppComponentBase {
     }
 
     // Employee: Accept video call
-    public async acceptVideoCall(adminId: string): Promise<void> {
+    public async acceptVideoCall(): Promise<void> {
         if (!this.isRTCConnected) {
             abp.notify.warn(this.l('VideoCallIsNotConnectedWarning'));
             throw new Error('Video call service is not connected');
         }
 
         try {
-            await this.cameraHub.invoke('AcceptVideoCall', adminId);
+            await this.cameraHub.invoke('AcceptVideoCall', this.callerId);
         } catch (error) {
             console.error('Error accepting video call:', error);
             throw error;
@@ -214,6 +216,8 @@ export class SignalRRTCService extends AppComponentBase {
         }
 
         try {
+            console.log('Sending video answer:', recipientId, answer); // Add this line for debugging
+            debugger
             await this.cameraHub.invoke('SendVideoAnswer', recipientId + '', answer);
         } catch (error) {
             console.error('Error sending video answer:', error);

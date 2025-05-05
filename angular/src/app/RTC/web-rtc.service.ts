@@ -39,6 +39,7 @@ export class WebRTCService {
 
   // Setup SignalR event handlers
   private setupSignalRHandlers(): void {
+    console.log('Setting up SignalR handlers...');
     this.signalRService.videoCallAccepted.subscribe((peerId: string) => {
       this.currentPeerId = peerId;
       this.setupPeerConnection().then(() => {
@@ -47,10 +48,12 @@ export class WebRTCService {
     });
 
     this.signalRService.receiveVideoOffer.subscribe(async ({ senderId, description }) => {
+
       this.currentPeerId = senderId;
       if (!this.peerConnection) {
         await this.setupPeerConnection();
       }
+      debugger
       await this.handleVideoOffer(senderId, description);
     });
 
@@ -153,6 +156,7 @@ export class WebRTCService {
         throw new Error('PeerConnection not initialized');
       }
 
+
       const answer = await this.peerConnection.createAnswer();
       await this.peerConnection.setLocalDescription(answer);
 
@@ -168,6 +172,7 @@ export class WebRTCService {
 
   // Handle incoming WebRTC offer
   private async handleVideoOffer(senderId: string, offer: string): Promise<void> {
+    console.log('handleVideoOffer...')
     try {
       if (!this.peerConnection) {
         throw new Error('PeerConnection not initialized');
