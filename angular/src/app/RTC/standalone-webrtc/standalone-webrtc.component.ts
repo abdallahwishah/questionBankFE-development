@@ -12,7 +12,7 @@ import { SignalRRTCService } from '../signal-r-rtc.service';
     standalone: true,
     imports: [CommonModule],
 })
-export class StandaloneWebRTCComponent implements OnInit, OnDestroy, OnChanges {
+export class StandaloneWebRTCComponent implements  OnDestroy, OnChanges {
     // Employee ID input - the only input required from parent component
     @Input() employeeId: string | null = null;
 
@@ -56,7 +56,7 @@ export class StandaloneWebRTCComponent implements OnInit, OnDestroy, OnChanges {
         private signalRService: SignalRRTCService,
     ) {}
 
-    ngOnInit(): void {
+    ngAfterViewInit(): void {
         // Initialize SignalR connection
         this.initializeSignalR();
 

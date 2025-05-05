@@ -25,7 +25,10 @@ export class SignalRRTCService extends AppComponentBase {
         public _zone: NgZone,
     ) {
         super(injector);
-        this.startConnection();
+        // setTimeout(() => {
+        //     this.startConnection();
+
+        // }, 1000);
     }
 
     configureConnection(connection): void {
@@ -73,14 +76,17 @@ export class SignalRRTCService extends AppComponentBase {
                 this.isRTCConnected = true;
             });
         });
-
-        // Register to get notifications
-        this.registerRTCEvents(connection);
+        setTimeout(() => {
+            // Register to get notifications
+            this.registerRTCEvents(connection);
+        }, 1000);
     }
 
     registerRTCEvents(connection): void {
+        debugger
         // For Employee: Handle incoming video call
         connection.on('IncomingVideoCall', (data: CallRequest) => {
+            debugger;
             console.log('Received video call request from:', data.callerName);
             this.incomingVideoCall.emit(data);
         });
@@ -141,14 +147,14 @@ export class SignalRRTCService extends AppComponentBase {
     }
 
     // Admin: Request camera access from employee
-    public async requestCameraAccess(employeeId: string, offer: string): Promise<void> {
+    public async requestCameraAccess(studentId: string, offer: string): Promise<void> {
         if (!this.isRTCConnected) {
             abp.notify.warn(this.l('VideoCallIsNotConnectedWarning'));
             throw new Error('Video call service is not connected');
         }
 
         try {
-            await this.cameraHub.invoke('RequestCameraAccess', employeeId, offer);
+            await this.cameraHub.invoke('SendVideoOffer', studentId + '', offer);
         } catch (error) {
             console.error('Error requesting camera access:', error);
             throw error;
@@ -193,7 +199,7 @@ export class SignalRRTCService extends AppComponentBase {
         }
 
         try {
-            await this.cameraHub.invoke('SendVideoOffer', recipientId, offer);
+            await this.cameraHub.invoke('SendVideoOffer', recipientId + '', offer);
         } catch (error) {
             console.error('Error sending video offer:', error);
             throw error;
@@ -208,7 +214,7 @@ export class SignalRRTCService extends AppComponentBase {
         }
 
         try {
-            await this.cameraHub.invoke('SendVideoAnswer', recipientId, answer);
+            await this.cameraHub.invoke('SendVideoAnswer', recipientId + '', answer);
         } catch (error) {
             console.error('Error sending video answer:', error);
             throw error;
@@ -221,9 +227,8 @@ export class SignalRRTCService extends AppComponentBase {
             abp.notify.warn(this.l('VideoCallIsNotConnectedWarning'));
             throw new Error('Video call service is not connected');
         }
-
         try {
-            await this.cameraHub.invoke('SendICECandidate', recipientId, candidate);
+            await this.cameraHub.invoke('SendICECandidate', recipientId + '', candidate);
         } catch (error) {
             console.error('Error sending ICE candidate:', error);
             throw error;
@@ -254,7 +259,6 @@ export class SignalRRTCService extends AppComponentBase {
                         this.configureConnection(connection);
                     })
                     .then(() => {
-                        debugger
                         abp.event.trigger('app.rtc.connected');
                         this.isRTCConnected = true;
                         resolve();

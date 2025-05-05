@@ -53,9 +53,12 @@ export class EmployeeWebRTCComponent implements OnInit, OnDestroy {
     ) {}
 
     ngOnInit(): void {
-        if (this.autoInitialize) {
-            this.initializeSignalR();
-        }
+        setTimeout(() => {
+            if (this.autoInitialize) {
+                this.initializeSignalR();
+            }
+        }, 1000);
+
     }
 
     ngOnDestroy(): void {
@@ -193,6 +196,7 @@ export class EmployeeWebRTCComponent implements OnInit, OnDestroy {
 
     // Handle incoming call
     private handleIncomingCall(data: { callerId: string; callerName: string }): void {
+        debugger
         // If already in a call, automatically reject
         if (this.isCallActive) {
             this.signalRService.rejectVideoCall(data.callerId, 'User is busy in another call').catch((error) => {
