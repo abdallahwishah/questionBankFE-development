@@ -74,7 +74,7 @@ export class EmployeeWebRTCComponent implements OnInit, OnDestroy {
     public async initializeSignalR(): Promise<void> {
         // Handle call accepted event
         this.signalRService.receiveVideoOffer.subscribe(() => {
-            debugger;
+            ;
             this.acceptCall();
         });
         try {
