@@ -92,43 +92,43 @@ export class WebRTCService {
         });
       }
 
-      // Add tracks to peer connection
+      // Explicitly log track information before adding
       this.localStream.getTracks().forEach(track => {
+        console.log(`Adding ${track.kind} track to peer connection, enabled: ${track.enabled}`);
         if (this.peerConnection && this.localStream) {
           this.peerConnection.addTrack(track, this.localStream);
-          console.log('Added track to peer connection:', track.kind);
         }
       });
 
-      // Handle remote tracks
+      // Handle remote tracks - making this more robust
       this.peerConnection.ontrack = (event) => {
-        console.log('Received remote track',event);
-        this.ngZone.run(() => {
-          this.remoteStreamSubject.next(event.streams[0]);
-        });
-      };
+        console.log('Received remote track', event);
 
-      // Handle ICE candidates
-      this.peerConnection.onicecandidate = async (event) => {
-        if (event.candidate && this.currentPeerId) {
-          console.log('Sending ICE candidate');
-          await this.signalRService.sendIceCandidate(
-            this.currentPeerId,
-            JSON.stringify(event.candidate)
-          );
+        // Ensure we have a valid stream with tracks
+        if (event.streams && event.streams.length > 0) {
+          const stream = event.streams[0];
+
+          // Log track information
+          console.log(`Remote stream has ${stream.getTracks().length} tracks`);
+          stream.getTracks().forEach(track => {
+            console.log(`Remote ${track.kind} track, enabled: ${track.enabled}, readyState: ${track.readyState}`);
+          });
+
+          // Update the stream in the NgZone
+          this.ngZone.run(() => {
+            this.remoteStreamSubject.next(stream);
+          });
+        } else {
+          console.error('Received track event with no streams');
         }
       };
 
-      this.peerConnection.oniceconnectionstatechange = () => {
-        console.log('ICE connection state:', this.peerConnection?.iceConnectionState);
-      };
-
+      // Keep the rest of your existing code...
     } catch (error) {
       console.error('Error setting up peer connection:', error);
       throw error;
     }
   }
-
   // Create and send WebRTC offer
   public async createAndSendOffer(recipientId: string): Promise<void> {
     try {
@@ -136,7 +136,23 @@ export class WebRTCService {
         throw new Error('PeerConnection not initialized');
       }
 
-      const offer = await this.peerConnection.createOffer();
+      // Ensure all tracks are added before creating the offer
+      if (this.localStream) {
+        const senders = this.peerConnection.getSenders();
+        if (senders.length === 0) {
+          console.log('No senders found, adding tracks again');
+          this.localStream.getTracks().forEach(track => {
+            this.peerConnection.addTrack(track, this.localStream);
+          });
+        }
+      }
+
+      // Explicitly request both audio and video in the offer
+      const offer = await this.peerConnection.createOffer({
+        offerToReceiveAudio: true,
+        offerToReceiveVideo: true
+      });
+
       await this.peerConnection.setLocalDescription(offer);
 
       await this.signalRService.sendVideoOffer(
@@ -148,7 +164,6 @@ export class WebRTCService {
       throw error;
     }
   }
-
   // Create and send WebRTC answer
   private async createAndSendAnswer(recipientId: string): Promise<void> {
     try {

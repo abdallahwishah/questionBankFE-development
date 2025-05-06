@@ -9,6 +9,8 @@ import {
     Output,
     EventEmitter,
     ChangeDetectorRef,
+    ViewChild,
+    ElementRef,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Subscription } from 'rxjs';
@@ -23,6 +25,8 @@ import { SignalRRTCService } from '../signal-r-rtc.service';
     imports: [CommonModule],
 })
 export class StandaloneWebRTCComponent implements OnDestroy, OnChanges {
+    @ViewChild('remoteVideo') remoteVideoElement: ElementRef;
+
     // Employee ID input - the only input required from parent component
     @Input() employeeId: string | null = null;
 
@@ -66,7 +70,6 @@ export class StandaloneWebRTCComponent implements OnDestroy, OnChanges {
         private signalRService: SignalRRTCService,
         private cdr: ChangeDetectorRef,
     ) {}
-    loading = false;
     ngAfterViewInit(): void {
         // Initialize SignalR connection
         this.initializeSignalR();
@@ -88,7 +91,7 @@ export class StandaloneWebRTCComponent implements OnDestroy, OnChanges {
                 if (!stream) {
                     return;
                 }
-                this.loading = true;
+
                 setTimeout(() => {
                     this.isCallActive = true;
                     this.connectionStatus = 'connected';
@@ -97,14 +100,14 @@ export class StandaloneWebRTCComponent implements OnDestroy, OnChanges {
                     this.callStartTime = new Date();
                     this.startCallTimer();
                     this.remoteStream = stream;
-                    this.loading = false;
-
                     setTimeout(() => {
-                        console.log('remoteStreamremoteStreamremoteStream', this.remoteStream);
-                    }, 2000);
+                        if (this.remoteVideoElement && this.remoteVideoElement.nativeElement) {
+                          console.log('Setting remote stream on video element directly');
+                          this.remoteVideoElement.nativeElement.srcObject = stream;
+                        }
+                      }, 500);
                 });
                 // this.remoteStream = stream;
-                console.log('remoteStream', this.remoteStream);
 
                 // if (stream) {
                 //     this.remoteStream = null;

@@ -119,11 +119,12 @@
 
     <!-- Video Display -->
     <div class="video-container" *ngIf="isCallActive">
+
         <div class="card">
             <div class="card-body">
                 <div class="row">
                     <!-- Remote Video (Employee) -->
-                    <div class="col-12 col-md-8 col-lg-9">
+                    <!-- [<div class="col-12 col-md-8 col-lg-9">
                         <div class="remote-video-wrapper">
                             <div class="video-label mb-2 fw-bold">Employee Video</div>
                             <div class="video-frame" *ngIf="!loading">
@@ -131,14 +132,23 @@
 
                             </div>
                         </div>
-                    </div>
+                    </div>] -->
 
                     <!-- Local Video (Admin) -->
                     <div class="col-12 col-md-4 col-lg-3 mt-3 mt-md-0">
                         <div class="local-video-wrapper">
                             <div class="video-label mb-2 fw-bold">Your Video</div>
+                            <div class="video-frame" *ngIf="remoteStream">
+                                <video
+                                    #localVideo
+                                    [srcObject]="localStream"
+                                    autoplay
+                                    muted
+                                    class="local-video"
+                                ></video>
+                            </div>
                             <div class="video-frame">
-                                <video #localVideo [srcObject]="localStream" autoplay muted class="local-video"></video>
+                                <video #remoteVideo [srcObject]="remoteStream" class="remote-video" autoplay></video>
                             </div>
                         </div>
                     </div>
