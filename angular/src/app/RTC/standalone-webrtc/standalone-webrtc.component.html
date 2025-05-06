@@ -126,7 +126,7 @@
                     <div class="col-12 col-md-8 col-lg-9">
                         <div class="remote-video-wrapper">
                             <div class="video-label mb-2 fw-bold">Employee Video</div>
-                            <div class="video-frame">
+                            <div class="video-frame" *ngIf="!loading">
                                 <video #remoteVideo [srcObject]="remoteStream" autoplay class="remote-video"></video>
 
                             </div>

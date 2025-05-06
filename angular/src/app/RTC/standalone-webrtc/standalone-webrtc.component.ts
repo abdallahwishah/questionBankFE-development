@@ -66,7 +66,7 @@ export class StandaloneWebRTCComponent implements OnDestroy, OnChanges {
         private signalRService: SignalRRTCService,
         private cdr: ChangeDetectorRef,
     ) {}
-
+    loading = false;
     ngAfterViewInit(): void {
         // Initialize SignalR connection
         this.initializeSignalR();
@@ -85,7 +85,10 @@ export class StandaloneWebRTCComponent implements OnDestroy, OnChanges {
 
             // Handle remote stream (employee camera)
             this.webRTCService.remoteStream$.subscribe((stream) => {
-                this.remoteStream = null;
+                if (!stream) {
+                    return;
+                }
+                this.loading = true;
                 setTimeout(() => {
                     this.isCallActive = true;
                     this.connectionStatus = 'connected';
@@ -94,9 +97,11 @@ export class StandaloneWebRTCComponent implements OnDestroy, OnChanges {
                     this.callStartTime = new Date();
                     this.startCallTimer();
                     this.remoteStream = stream;
+                    this.loading = false;
+
                     setTimeout(() => {
                         console.log('remoteStreamremoteStreamremoteStream', this.remoteStream);
-                    }, 1000);
+                    }, 2000);
                 });
                 // this.remoteStream = stream;
                 console.log('remoteStream', this.remoteStream);
