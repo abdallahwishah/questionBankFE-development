@@ -50,6 +50,7 @@ export class EmployeeWebRTCComponent implements OnInit, OnDestroy {
     constructor(
         private webRTCService: WebRTCService,
         private signalRService: SignalRRTCService,
+
     ) {}
 
     ngOnInit(): void {
@@ -73,7 +74,7 @@ export class EmployeeWebRTCComponent implements OnInit, OnDestroy {
     public async initializeSignalR(): Promise<void> {
         // Handle call accepted event
         this.signalRService.receiveVideoOffer.subscribe(() => {
-            debugger
+            debugger;
             this.acceptCall();
         });
         try {
@@ -90,13 +91,18 @@ export class EmployeeWebRTCComponent implements OnInit, OnDestroy {
         }
     }
 
-    // Accept an incoming call
     public acceptCall(): void {
-        this.signalRService.acceptVideoCall().catch((error) => {
-            console.error('Error accepting call:', error);
-            this.showToast('danger', 'Error accepting the call');
-
-        });
+        // First ensure we have media access
+        navigator.mediaDevices
+            .getUserMedia({ video: true, audio: true })
+            .then((stream) => {
+                // Once we have media, accept the call
+                return this.signalRService.acceptVideoCall();
+            })
+            .catch((error) => {
+                console.error('Error accepting call:', error);
+                this.showToast('danger', 'Error accepting the call');
+            });
     }
 
     // Reject an incoming call
@@ -150,10 +156,20 @@ export class EmployeeWebRTCComponent implements OnInit, OnDestroy {
 
             // Handle remote stream (caller's video)
             this.webRTCService.remoteStream$.subscribe((stream) => {
-                this.remoteStream = stream;
-                // this.acceptCall();
-
                 if (stream) {
+                    this.remoteStream = null;
+
+                    // Set after a small delay
+                    setTimeout(() => {
+                        this.remoteStream = stream;
+                    }, 100);
+                    console.log('Remote stream video tracks:', stream.getVideoTracks().length);
+                    setTimeout(() => {
+                        const videoElement = document.querySelector('.remote-video') as HTMLVideoElement;
+                        if (videoElement) {
+                            videoElement.play().catch((err) => console.error('Error playing video:', err));
+                        }
+                    }, 500);
                     this.isCallActive = true;
                     this.connectionStatus = 'connected';
 

@@ -84,7 +84,7 @@ export class SignalRRTCService extends AppComponentBase {
     }
 
     registerRTCEvents(connection): void {
-        debugger;
+        ;
         // For Employee: Handle incoming video call
         connection.on('IncomingVideoCall', (data: CallRequest) => {
             this.incomingVideoCall.emit(data);
@@ -217,7 +217,7 @@ export class SignalRRTCService extends AppComponentBase {
 
         try {
             console.log('Sending video answer:', recipientId, answer); // Add this line for debugging
-            debugger
+
             await this.cameraHub.invoke('SendVideoAnswer', recipientId + '', answer);
         } catch (error) {
             console.error('Error sending video answer:', error);

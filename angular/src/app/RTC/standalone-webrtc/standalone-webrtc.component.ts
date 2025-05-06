@@ -1,5 +1,15 @@
 // src/app/shared/components/standalone-webrtc/standalone-webrtc.component.ts
-import { Component, Input, OnInit, OnDestroy, OnChanges, SimpleChanges, Output, EventEmitter } from '@angular/core';
+import {
+    Component,
+    Input,
+    OnInit,
+    OnDestroy,
+    OnChanges,
+    SimpleChanges,
+    Output,
+    EventEmitter,
+    ChangeDetectorRef,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Subscription } from 'rxjs';
 import { WebRTCService } from '../web-rtc.service';
@@ -12,7 +22,7 @@ import { SignalRRTCService } from '../signal-r-rtc.service';
     standalone: true,
     imports: [CommonModule],
 })
-export class StandaloneWebRTCComponent implements  OnDestroy, OnChanges {
+export class StandaloneWebRTCComponent implements OnDestroy, OnChanges {
     // Employee ID input - the only input required from parent component
     @Input() employeeId: string | null = null;
 
@@ -54,6 +64,7 @@ export class StandaloneWebRTCComponent implements  OnDestroy, OnChanges {
     constructor(
         private webRTCService: WebRTCService,
         private signalRService: SignalRRTCService,
+        private cdr: ChangeDetectorRef,
     ) {}
 
     ngAfterViewInit(): void {
@@ -64,8 +75,9 @@ export class StandaloneWebRTCComponent implements  OnDestroy, OnChanges {
         this.subscriptions.push(
             // Handle local stream (camera)
             this.webRTCService.localStream$.subscribe((stream) => {
-                console.log('localStream',stream)
+                console.log('localStream', stream);
                 this.localStream = stream;
+
                 if (stream) {
                     console.log('Local stream established');
                 }
@@ -73,32 +85,73 @@ export class StandaloneWebRTCComponent implements  OnDestroy, OnChanges {
 
             // Handle remote stream (employee camera)
             this.webRTCService.remoteStream$.subscribe((stream) => {
-                this.remoteStream = stream;
-                console.log('remoteStream',this.remoteStream)
-
-                if (stream) {
+                this.remoteStream = null;
+                setTimeout(() => {
                     this.isCallActive = true;
                     this.connectionStatus = 'connected';
                     this.isConnecting = false;
-
                     // Start call timer
                     this.callStartTime = new Date();
                     this.startCallTimer();
+                    this.remoteStream = stream;
+                    setTimeout(() => {
+                        console.log('remoteStreamremoteStreamremoteStream', this.remoteStream);
+                    }, 1000);
+                });
+                // this.remoteStream = stream;
+                console.log('remoteStream', this.remoteStream);
 
-                    // Notify parent
-                    this.callStarted.emit();
+                // if (stream) {
+                //     this.remoteStream = null;
 
-                    // Show success notification
-                    this.showToast('success', 'Video call has been established');
-                }
+                //     // Set after a small delay
+                //     setTimeout(() => {
+                //         this.remoteStream = stream;
+                //         this.cdr.detectChanges();
+                //     }, 100);
+                //     setTimeout(() => {
+                //         const videoElement = document.querySelector('.remote-video') as HTMLVideoElement;
+
+                //         if (videoElement) {
+                //             videoElement.play().catch((err) => console.error('Error playing video:', err));
+                //         }
+                //         this.cdr.detectChanges();
+                //     }, 500);
+
+                //     this.isCallActive = true;
+                //     this.connectionStatus = 'connected';
+                //     this.isConnecting = false;
+
+                //     // Start call timer
+                //     this.callStartTime = new Date();
+                //     this.startCallTimer();
+
+                //     // Notify parent
+                //     this.callStarted.emit();
+
+                //     // Show success notification
+                //     this.showToast('success', 'Video call has been established');
+                // }
+                console.log('Remote stream received:', stream);
+                // this.remoteStream = stream;
+
+                // if (stream) {
+                //     const videoTracks = stream.getVideoTracks();
+                //     console.log('Remote stream video tracks:', videoTracks.length);
+
+                //     if (videoTracks.length > 0) {
+                //         console.log('First video track enabled:', videoTracks[0].enabled);
+                //         console.log('First video track settings:', videoTracks[0].getSettings());
+                //         console.log('First video track constraints:', videoTracks[0].getConstraints());
+                //     }
+                // }
             }),
 
-                // Handle call accepted event
-                this.signalRService.videoCallAccepted.subscribe(() => {
-                    this.connectionStatus = 'accepted';
-                    console.log('Call accepted by employee');
-                }),
-
+            // Handle call accepted event
+            this.signalRService.videoCallAccepted.subscribe(() => {
+                this.connectionStatus = 'accepted';
+                console.log('Call accepted by employee');
+            }),
 
             // Handle call rejected event
             this.signalRService.videoCallRejected.subscribe((reason) => {

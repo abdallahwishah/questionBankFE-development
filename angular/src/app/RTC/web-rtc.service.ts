@@ -53,7 +53,7 @@ export class WebRTCService {
       if (!this.peerConnection) {
         await this.setupPeerConnection();
       }
-      debugger
+
       await this.handleVideoOffer(senderId, description);
     });
 
@@ -102,7 +102,7 @@ export class WebRTCService {
 
       // Handle remote tracks
       this.peerConnection.ontrack = (event) => {
-        console.log('Received remote track');
+        console.log('Received remote track',event);
         this.ngZone.run(() => {
           this.remoteStreamSubject.next(event.streams[0]);
         });
@@ -188,7 +188,6 @@ export class WebRTCService {
       throw error;
     }
   }
-
   // Handle incoming WebRTC answer
   private async handleVideoAnswer(answer: string): Promise<void> {
     try {
@@ -230,7 +229,7 @@ export class WebRTCService {
 
       const offer = await this.peerConnection!.createOffer({
         offerToReceiveVideo: true,
-        offerToReceiveAudio: false
+        offerToReceiveAudio: true  // Make sure audio is also enabled
       });
 
       await this.peerConnection!.setLocalDescription(offer);
