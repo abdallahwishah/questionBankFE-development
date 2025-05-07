@@ -50,7 +50,6 @@ export class EmployeeWebRTCComponent implements OnInit, OnDestroy {
     constructor(
         private webRTCService: WebRTCService,
         private signalRService: SignalRRTCService,
-
     ) {}
 
     ngOnInit(): void {
@@ -74,7 +73,6 @@ export class EmployeeWebRTCComponent implements OnInit, OnDestroy {
     public async initializeSignalR(): Promise<void> {
         // Handle call accepted event
         this.signalRService.receiveVideoOffer.subscribe(() => {
-            ;
             this.acceptCall();
         });
         try {
@@ -93,16 +91,12 @@ export class EmployeeWebRTCComponent implements OnInit, OnDestroy {
 
     public acceptCall(): void {
         // First ensure we have media access
-        navigator.mediaDevices
-            .getUserMedia({ video: true, audio: true })
-            .then((stream) => {
-                // Once we have media, accept the call
-                return this.signalRService.acceptVideoCall();
-            })
-            .catch((error) => {
-                console.error('Error accepting call:', error);
-                this.showToast('danger', 'Error accepting the call');
-            });
+        this.webRTCService.setupPeerConnection().then(() => {
+            // Once we have media, accept the call
+        this.signalRService.acceptVideoCall();
+        });
+
+
     }
 
     // Reject an incoming call
