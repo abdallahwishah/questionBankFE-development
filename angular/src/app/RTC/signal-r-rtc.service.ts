@@ -119,7 +119,7 @@ export class SignalRRTCService extends AppComponentBase {
 
         // Handle receiving ICE candidates
         connection.on('ReceiveICECandidate', (senderId: string, candidate: string) => {
-            console.log('Received ICE candidate from:', senderId);
+            console.log('Received ICE candidate from:', senderId,candidate);
             this.receiveIceCandidate.emit({ senderId, candidate });
         });
 

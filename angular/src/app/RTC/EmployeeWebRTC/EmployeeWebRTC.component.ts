@@ -153,17 +153,31 @@ export class EmployeeWebRTCComponent implements OnInit, OnDestroy, AfterViewInit
   public acceptCall(): void {
     console.log('Accepting call...');
 
-    // First ensure we have media access
+    // Don't create a new peer connection if one already exists with streams
+    if (this.remoteStream && this.localStream) {
+      console.log('Connection already exists, just sending accept signal');
+      // Just send the accept signal
+      this.signalRService.acceptVideoCall()
+        .then(() => {
+          console.log('Call accepted successfully');
+          this.stopCountdown();
+          this.hideAccessRequestModal();
+        })
+        .catch((error) => {
+          console.error('Error accepting call:', error);
+          this.showToast('danger', 'Error accepting the call');
+        });
+      return;
+    }
+
+    // If no connection exists, set it up first
     this.webRTCService.setupPeerConnection()
       .then(() => {
         console.log('Peer connection set up successfully');
-        // Once we have media, accept the call
         return this.signalRService.acceptVideoCall();
       })
       .then(() => {
         console.log('Call accepted successfully');
-
-        // Update UI state
         this.stopCountdown();
         this.hideAccessRequestModal();
       })
@@ -172,7 +186,6 @@ export class EmployeeWebRTCComponent implements OnInit, OnDestroy, AfterViewInit
         this.showToast('danger', 'Error accepting the call - could not access camera');
       });
   }
-
   // Reject an incoming call
   public rejectCall(): void {
     if (!this.isIncomingCall || !this.incomingCallData) {
