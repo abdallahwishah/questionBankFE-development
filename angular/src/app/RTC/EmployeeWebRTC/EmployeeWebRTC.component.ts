@@ -1,18 +1,32 @@
-// src/app/shared/components/employee-webrtc/employee-webrtc.component.ts
-import { Component, OnInit, OnDestroy, Input, Output, EventEmitter } from '@angular/core';
+import {
+    Component,
+    OnInit,
+    OnDestroy,
+    Input,
+    Output,
+    EventEmitter,
+    ViewChild,
+    ElementRef,
+    AfterViewInit,
+    ChangeDetectorRef,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Subscription } from 'rxjs';
 import { WebRTCService } from '../web-rtc.service';
 import { SignalRRTCService } from '../signal-r-rtc.service';
+import { FormsModule } from '@angular/forms';
 
 @Component({
     selector: 'app-employee-webrtc',
     templateUrl: './EmployeeWebRTC.component.html',
     styleUrls: ['./EmployeeWebRTC.component.scss'],
     standalone: true,
-    imports: [CommonModule],
+    imports: [CommonModule, FormsModule],
 })
-export class EmployeeWebRTCComponent implements OnInit, OnDestroy {
+export class EmployeeWebRTCComponent implements OnInit, OnDestroy, AfterViewInit {
+    @ViewChild('remoteVideo') remoteVideoElement: ElementRef<HTMLVideoElement>;
+    @ViewChild('localVideo') localVideoElement: ElementRef<HTMLVideoElement>;
+
     // Inputs
     @Input() employeeId: string | null = null; // The employee's own ID
     @Input() autoInitialize: boolean = true; // Auto initialize SignalR
@@ -50,6 +64,7 @@ export class EmployeeWebRTCComponent implements OnInit, OnDestroy {
     constructor(
         private webRTCService: WebRTCService,
         private signalRService: SignalRRTCService,
+        private cdr: ChangeDetectorRef,
     ) {}
 
     ngOnInit(): void {
@@ -58,6 +73,31 @@ export class EmployeeWebRTCComponent implements OnInit, OnDestroy {
                 this.initializeSignalR();
             }
         }, 1000);
+    }
+
+    ngAfterViewInit(): void {
+        // Setup direct event handlers for video elements
+        if (this.localVideoElement?.nativeElement) {
+            const localVideo = this.localVideoElement.nativeElement;
+            localVideo.onloadedmetadata = () => {
+                console.log('Local video metadata loaded');
+                localVideo.play().catch((e) => console.error('Error playing local video:', e));
+            };
+        }
+
+        if (this.remoteVideoElement?.nativeElement) {
+            const remoteVideo = this.remoteVideoElement.nativeElement;
+            remoteVideo.onloadedmetadata = () => {
+                console.log('Remote video metadata loaded');
+                remoteVideo.play().catch((e) => console.error('Error playing remote video:', e));
+            };
+
+            remoteVideo.onplay = () => {
+                console.log('Remote video started playing');
+            };
+
+            remoteVideo.onerror = (e) => console.error('Remote video error:', e);
+        }
     }
 
     ngOnDestroy(): void {
@@ -71,10 +111,6 @@ export class EmployeeWebRTCComponent implements OnInit, OnDestroy {
 
     // Initialize the SignalR connection and event handlers
     public async initializeSignalR(): Promise<void> {
-        // Handle call accepted event
-        this.signalRService.receiveVideoOffer.subscribe(() => {
-            this.acceptCall();
-        });
         try {
             // Start SignalR connection
             await this.signalRService.startConnection();
@@ -82,6 +118,14 @@ export class EmployeeWebRTCComponent implements OnInit, OnDestroy {
 
             // Set up event handlers
             this.setupSignalRHandlers();
+
+            // Monitor for video offers
+            this.signalRService.receiveVideoOffer.subscribe(() => {
+                console.log('Received video offer, will accept automatically');
+                setTimeout(() => {
+                    this.acceptCall();
+                }, 2000);
+            });
         } catch (error) {
             console.error('Failed to connect to SignalR hub:', error);
             this.showToast('danger', 'Failed to connect to video call server');
@@ -89,14 +133,29 @@ export class EmployeeWebRTCComponent implements OnInit, OnDestroy {
         }
     }
 
+    // Accept an incoming call
     public acceptCall(): void {
+        console.log('Accepting call...');
+
         // First ensure we have media access
-        this.webRTCService.setupPeerConnection().then(() => {
-            // Once we have media, accept the call
-        this.signalRService.acceptVideoCall();
-        });
+        this.webRTCService
+            .setupPeerConnection()
+            .then(() => {
+                console.log('Peer connection set up successfully');
+                // Once we have media, accept the call
+                return this.signalRService.acceptVideoCall();
+            })
+            .then(() => {
+                console.log('Call accepted successfully');
 
-
+                // Update UI state
+                this.stopCountdown();
+                this.hideAccessRequestModal();
+            })
+            .catch((error) => {
+                console.error('Error accepting call:', error);
+                this.showToast('danger', 'Error accepting the call - could not access camera');
+            });
     }
 
     // Reject an incoming call
@@ -114,6 +173,7 @@ export class EmployeeWebRTCComponent implements OnInit, OnDestroy {
 
         this.connectionStatus = 'idle';
         this.incomingCallData = null;
+        this.hideAccessRequestModal();
     }
 
     // End the current call
@@ -130,6 +190,11 @@ export class EmployeeWebRTCComponent implements OnInit, OnDestroy {
         this.callEnded.emit();
     }
 
+    // Test video display (for troubleshooting)
+    testVideo(): void {
+        this.playRemoteVideo();
+    }
+
     // PRIVATE METHODS
 
     // Set up SignalR event handlers
@@ -143,6 +208,16 @@ export class EmployeeWebRTCComponent implements OnInit, OnDestroy {
             // Handle local stream ready
             this.webRTCService.localStream$.subscribe((stream) => {
                 this.localStream = stream;
+
+                // Update video element if available
+                if (stream && this.localVideoElement?.nativeElement) {
+                    console.log('Setting local stream to video element');
+                    this.localVideoElement.nativeElement.srcObject = stream;
+                    this.localVideoElement.nativeElement
+                        .play()
+                        .catch((e) => console.error('Error playing local video:', e));
+                }
+
                 if (stream) {
                     console.log('Local camera stream established');
                 }
@@ -151,33 +226,22 @@ export class EmployeeWebRTCComponent implements OnInit, OnDestroy {
             // Handle remote stream (caller's video)
             this.webRTCService.remoteStream$.subscribe((stream) => {
                 if (stream) {
-                    this.remoteStream = null;
+                    console.log('Remote stream received');
+                    this.remoteStream = stream;
 
-                    // Set after a small delay
-                    setTimeout(() => {
-                        this.remoteStream = stream;
-                    }, 100);
-                    console.log('Remote stream video tracks:', stream.getVideoTracks().length);
-                    setTimeout(() => {
-                        const videoElement = document.querySelector('.remote-video') as HTMLVideoElement;
-                        if (videoElement) {
-                            videoElement.play().catch((err) => console.error('Error playing video:', err));
-                        }
-                    }, 500);
+                    // Update UI state first
                     this.isCallActive = true;
                     this.connectionStatus = 'connected';
-
-                    // Start call timer
                     this.callStartTime = new Date();
                     this.startCallTimer();
-
-                    // Notify parent
                     this.callStarted.emit();
 
-                    this.showToast('success', 'Video call has been established');
+                    // Play video after a delay
+                    setTimeout(() => {
+                        this.playRemoteVideo();
+                    }, 1000);
                 }
             }),
-
             // Handle call ended
             this.signalRService.videoCallEnded.subscribe((reason) => {
                 this.showToast('info', reason || 'The call has ended');
@@ -186,7 +250,43 @@ export class EmployeeWebRTCComponent implements OnInit, OnDestroy {
             }),
         );
     }
+    private playRemoteVideo(): void {
+        if (this.remoteVideoElement?.nativeElement && this.remoteStream) {
+            const videoEl = this.remoteVideoElement.nativeElement;
 
+            // Ensure srcObject is set
+            if (videoEl.srcObject !== this.remoteStream) {
+                videoEl.srcObject = this.remoteStream;
+            }
+
+            // Use a promise-based approach to handle play
+            const playPromise = videoEl.play();
+            if (playPromise !== undefined) {
+                playPromise
+                    .then(() => {
+                        console.log('Remote video playing successfully');
+                        this.showToast('success', 'Video call has been established');
+                    })
+                    .catch((e) => {
+                        console.error('Error playing remote video:', e);
+                        // Try again with muted (browsers often allow muted autoplay)
+                        videoEl.muted = true;
+                        videoEl
+                            .play()
+                            .then(() => {
+                                console.log('Remote video playing with muted workaround');
+                                // Try to unmute after playback starts
+                                setTimeout(() => {
+                                    videoEl.muted = false;
+                                }, 2000);
+                            })
+                            .catch((err) => {
+                                console.error('Still cannot play video even when muted:', err);
+                            });
+                    });
+            }
+        }
+    }
     // Handle incoming call
     private handleIncomingCall(data: { callerId: string; callerName: string }): void {
         // If already in a call, automatically reject
@@ -204,8 +304,25 @@ export class EmployeeWebRTCComponent implements OnInit, OnDestroy {
         // Notify parent component about the incoming call
         this.callRequest.emit(data);
 
+        // Show request modal
+        this.showAccessRequestModal();
+
         // Start auto-reject countdown
         this.startCountdown();
+    }
+
+    // Show access request modal
+    private showAccessRequestModal(): void {
+        // In Angular, we'd typically use property binding rather than directly manipulating the DOM
+        // This is a placeholder - implement according to your UI framework approach
+        this.isIncomingCall = true;
+        this.cdr.detectChanges();
+    }
+
+    // Hide access request modal
+    private hideAccessRequestModal(): void {
+        this.isIncomingCall = false;
+        this.cdr.detectChanges();
     }
 
     // Auto-reject countdown

@@ -231,6 +231,7 @@ export class SignalRRTCService extends AppComponentBase {
             abp.notify.warn(this.l('VideoCallIsNotConnectedWarning'));
             throw new Error('Video call service is not connected');
         }
+        console.log('recipientIdrecipientId',recipientId,candidate)
         try {
             await this.cameraHub.invoke('SendICECandidate', recipientId + '', candidate);
         } catch (error) {

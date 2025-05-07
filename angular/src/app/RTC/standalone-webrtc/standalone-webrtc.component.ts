@@ -1,40 +1,39 @@
-// src/app/shared/components/standalone-webrtc/standalone-webrtc.component.ts
 import {
     Component,
     Input,
-    OnInit,
     OnDestroy,
     OnChanges,
     SimpleChanges,
     Output,
     EventEmitter,
-    ChangeDetectorRef,
     ViewChild,
     ElementRef,
-} from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { Subscription } from 'rxjs';
-import { WebRTCService } from '../web-rtc.service';
-import { SignalRRTCService } from '../signal-r-rtc.service';
+    AfterViewInit,
+    ChangeDetectorRef
+  } from '@angular/core';
+  import { CommonModule } from '@angular/common';
+  import { FormsModule } from '@angular/forms';
+  import { Subscription } from 'rxjs';
+  import { WebRTCService } from '../web-rtc.service';
+  import { SignalRRTCService } from '../signal-r-rtc.service';
 
-@Component({
+  @Component({
     selector: 'app-standalone-webrtc',
     templateUrl: './standalone-webrtc.component.html',
     styleUrls: ['./standalone-webrtc.component.scss'],
     standalone: true,
-    imports: [CommonModule],
-})
-export class StandaloneWebRTCComponent implements OnDestroy, OnChanges {
-    @ViewChild('remoteVideo') remoteVideoElement: ElementRef;
-    loading;
-    // Employee ID input - the only input required from parent component
+    imports: [CommonModule, FormsModule],
+  })
+  export class StandaloneWebRTCComponent implements OnDestroy, OnChanges, AfterViewInit {
+    @ViewChild('remoteVideo') remoteVideoElement: ElementRef<HTMLVideoElement>;
+    @ViewChild('localVideo') localVideoElement: ElementRef<HTMLVideoElement>;
+
+    // Input properties
     @Input() employeeId: string | null = null;
+    @Input() autoConnect: boolean = true;
+    @Input() showControls: boolean = true;
 
-    // Optional inputs with defaults
-    @Input() autoConnect: boolean = true; // Auto-initialize call when employee ID changes
-    @Input() showControls: boolean = true; // Show/hide control buttons
-
-    // Events for parent component
+    // Output events
     @Output() callStarted = new EventEmitter<void>();
     @Output() callEnded = new EventEmitter<string>();
     @Output() callError = new EventEmitter<string>();
@@ -42,387 +41,445 @@ export class StandaloneWebRTCComponent implements OnDestroy, OnChanges {
     // Connection state
     isConnecting: boolean = false;
     isCallActive: boolean = false;
-    connectionStatus: string = 'idle'; // idle, connecting, connected, rejected, error, ended
+    connectionStatus: string = 'idle';
 
     // Video streams
     localStream: MediaStream | null = null;
     remoteStream: MediaStream | null = null;
 
-    // Tracking info for UI
-    employeeName: string = ''; // Optional: could be populated from a service if needed
+    // Video devices
+    videoDevices: MediaDeviceInfo[] = [];
+    selectedCameraId: string = '';
+    cameraSelected: boolean = false;
+
+    // Call info
     callDuration: number = 0;
     callStartTime: Date | null = null;
     durationTimer: any = null;
 
-    // Toast messages
+    // UI state
     toastMessage: { type: string; message: string } | null = null;
     toastVisible: boolean = false;
-
-    // Confirmation dialog
     showConfirmDialog: boolean = false;
     confirmDialogMessage: string = '';
     confirmAction: (() => void) | null = null;
 
     private subscriptions: Subscription[] = [];
-    private ensureRemoteVideoWorks(): void {
-        // Check every second if we have a remote stream that's not displaying
-        const checkInterval = setInterval(() => {
-          if (this.remoteStream && this.isCallActive) {
-            console.log('Checking remote video display...');
-
-            // If the video element exists
-            if (this.remoteVideoElement?.nativeElement) {
-              const videoEl = this.remoteVideoElement.nativeElement as HTMLVideoElement;
-
-              // Check if it's actually playing
-              if (videoEl.paused || videoEl.ended || videoEl.readyState < 3) {
-                console.log('Remote video not playing properly, fixing...');
-
-                // Try direct assignment again
-                videoEl.srcObject = this.remoteStream;
-                videoEl.play().catch(e => console.error('Error playing video:', e));
-              }else{
-
-              }
-            }
-          } else if (!this.isCallActive) {
-            // Stop checking if call is no longer active
-            clearInterval(checkInterval);
-          }
-        }, 1000);
-      }
 
     constructor(
-        private webRTCService: WebRTCService,
-        private signalRService: SignalRRTCService,
-        private cdr: ChangeDetectorRef,
+      private webRTCService: WebRTCService,
+      private signalRService: SignalRRTCService,
+      private cdr: ChangeDetectorRef
     ) {}
+
     ngAfterViewInit(): void {
-        // Initialize SignalR connection
-        this.initializeSignalR();
+      // Initialize SignalR connection
+      this.initializeSignalR();
 
-        // Subscribe to WebRTC events
-        this.subscriptions.push(
-            // Handle local stream (camera)
-            this.webRTCService.localStream$.subscribe((stream) => {
-                console.log('localStream', stream);
-                this.localStream = stream;
+      // Load camera options
+      this.loadCameraOptions();
 
-                if (stream) {
-                    console.log('Local stream established');
-                }
-            }),
+      // Subscribe to WebRTC events
+      this.setupSubscriptions();
 
-            // Handle remote stream (employee camera)
-            this.webRTCService.remoteStream$.subscribe((stream) => {
-                if (!stream) {
-                    return;
-                }
-                this.loading = true;
-                setTimeout(() => {
-                    this.isCallActive = true;
-                    this.connectionStatus = 'connected';
-                    this.isConnecting = false;
-                    // Start call timer
-                    this.callStartTime = new Date();
-                    this.startCallTimer();
-                    this.remoteStream = stream;
-                    setTimeout(() => {
-                        this.ensureRemoteVideoWorks()
-                         this.cdr.detectChanges();
-
-                    }, 500);
-                });
-                // this.remoteStream = stream;
-
-                // if (stream) {
-                //     this.remoteStream = null;
-
-                //     // Set after a small delay
-                //     setTimeout(() => {
-                //         this.remoteStream = stream;
-                //         this.cdr.detectChanges();
-                //     }, 100);
-                //     setTimeout(() => {
-                //         const videoElement = document.querySelector('.remote-video') as HTMLVideoElement;
-
-                //         if (videoElement) {
-                //             videoElement.play().catch((err) => console.error('Error playing video:', err));
-                //         }
-                //         this.cdr.detectChanges();
-                //     }, 500);
-
-                //     this.isCallActive = true;
-                //     this.connectionStatus = 'connected';
-                //     this.isConnecting = false;
-
-                //     // Start call timer
-                //     this.callStartTime = new Date();
-                //     this.startCallTimer();
-
-                //     // Notify parent
-                //     this.callStarted.emit();
-
-                //     // Show success notification
-                //     this.showToast('success', 'Video call has been established');
-                // }
-                console.log('Remote stream received:', stream);
-                // this.remoteStream = stream;
-
-                // if (stream) {
-                //     const videoTracks = stream.getVideoTracks();
-                //     console.log('Remote stream video tracks:', videoTracks.length);
-
-                //     if (videoTracks.length > 0) {
-                //         console.log('First video track enabled:', videoTracks[0].enabled);
-                //         console.log('First video track settings:', videoTracks[0].getSettings());
-                //         console.log('First video track constraints:', videoTracks[0].getConstraints());
-                //     }
-                // }
-            }),
-
-            // Handle call accepted event
-            this.signalRService.videoCallAccepted.subscribe(() => {
-                this.connectionStatus = 'accepted';
-                console.log('Call accepted by employee');
-            }),
-
-            // Handle call rejected event
-            this.signalRService.videoCallRejected.subscribe((reason) => {
-                this.connectionStatus = 'rejected';
-                this.isConnecting = false;
-
-                // Show rejection message
-                this.showToast('warning', reason || 'The employee declined your call');
-
-                // Clean up resources
-                this.cleanupCall();
-
-                // Notify parent
-                this.callEnded.emit('rejected');
-            }),
-
-            // Handle call ended event
-            this.signalRService.videoCallEnded.subscribe((reason) => {
-                this.connectionStatus = 'ended';
-                this.isConnecting = false;
-
-                // Show message
-                this.showToast('info', reason || 'The call has ended');
-
-                // Clean up resources
-                this.cleanupCall();
-
-                // Notify parent
-                this.callEnded.emit('ended');
-            }),
-        );
-
-        // If employee ID is already set and autoConnect is enabled, start call
-        if (this.employeeId && this.autoConnect) {
-            this.startCall();
-        }
+      // We won't auto-start here anymore - require camera selection first
     }
 
     ngOnChanges(changes: SimpleChanges): void {
-        // If employee ID changes, handle connection based on autoConnect setting
-        if (changes['employeeId'] && changes['employeeId'].currentValue) {
-            // Disconnect previous call if needed
-            if (
-                changes['employeeId'].previousValue &&
-                changes['employeeId'].previousValue !== changes['employeeId'].currentValue &&
-                (this.isCallActive || this.isConnecting)
-            ) {
-                this.endCall();
-            }
-
-            // Start new call if autoConnect is enabled
-            if (this.autoConnect && !this.isCallActive && !this.isConnecting) {
-                this.startCall();
-            }
+      // If employee ID changes, handle connection based on autoConnect setting
+      if (changes['employeeId'] && changes['employeeId'].currentValue) {
+        // Disconnect previous call if needed
+        if (
+          changes['employeeId'].previousValue &&
+          changes['employeeId'].previousValue !== changes['employeeId'].currentValue &&
+          (this.isCallActive || this.isConnecting)
+        ) {
+          this.endCall();
         }
+
+        // We no longer auto-connect - require camera selection first
+      }
     }
 
     ngOnDestroy(): void {
-        // Clean up all resources
-        this.endCall();
-        this.stopCallTimer();
-        this.subscriptions.forEach((sub) => sub.unsubscribe());
+      // Clean up all resources
+      this.endCall();
+      this.stopCallTimer();
+      this.subscriptions.forEach((sub) => sub.unsubscribe());
     }
 
     // Initialize SignalR connection
     private async initializeSignalR(): Promise<void> {
-        try {
-            await this.signalRService.startConnection();
-            console.log('SignalR connection established');
-        } catch (error) {
-            console.error('Failed to connect to SignalR hub:', error);
-            this.showToast('danger', 'Failed to connect to video call server');
-            this.callError.emit('signalr_connection_failed');
+      try {
+        await this.signalRService.startConnection();
+        console.log('SignalR connection established');
+      } catch (error) {
+        console.error('Failed to connect to SignalR hub:', error);
+        this.showToast('danger', 'Failed to connect to video call server');
+        this.callError.emit('signalr_connection_failed');
+      }
+    }
+
+    // Load available cameras
+    private async loadCameraOptions(): Promise<void> {
+      this.subscriptions.push(
+        this.webRTCService.videoDevices$.subscribe(devices => {
+          this.videoDevices = devices;
+
+          // Don't auto-select camera anymore
+          this.cdr.detectChanges();
+        })
+      );
+
+      // Trigger camera detection
+      await this.webRTCService.updateVideoDevices();
+    }
+
+    // Initialize local camera stream for preview
+    private async initializeCameraPreview(deviceId: string): Promise<void> {
+      try {
+        if (this.localStream) {
+          // Stop current tracks
+          this.localStream.getTracks().forEach(track => track.stop());
         }
+
+        // Get new stream for preview
+        const stream = await navigator.mediaDevices.getUserMedia({
+          video: {
+            deviceId: deviceId ? { exact: deviceId } : undefined,
+            width: { ideal: 640 },
+            height: { ideal: 480 }
+          },
+          audio: false // No audio needed for preview
+        });
+
+        this.localStream = stream;
+
+        // Update video element if available
+        if (this.localVideoElement?.nativeElement) {
+          this.localVideoElement.nativeElement.srcObject = stream;
+          this.localVideoElement.nativeElement.play().catch(e =>
+            console.error('Error playing local preview video:', e)
+          );
+        }
+
+        this.cdr.detectChanges();
+      } catch (error) {
+        console.error('Error initializing camera preview:', error);
+        this.showToast('danger', 'Could not access selected camera');
+      }
+    }
+
+    // Set up event subscriptions
+    private setupSubscriptions(): void {
+      this.subscriptions.push(
+        // Handle local stream
+        this.webRTCService.localStream$.subscribe(stream => {
+          console.log('Local stream updated:', stream ? 'available' : 'null');
+          this.localStream = stream;
+
+          // Update video element if available
+          if (stream && this.localVideoElement?.nativeElement) {
+            this.localVideoElement.nativeElement.srcObject = stream;
+            this.localVideoElement.nativeElement.play().catch(e =>
+              console.error('Error playing local video:', e)
+            );
+          }
+        }),
+
+        // Handle remote stream
+        this.webRTCService.remoteStream$.subscribe(stream => {
+          console.log('Remote stream updated:', stream ? 'available' : 'null');
+
+          if (stream) {
+            // Set the stream first without trying to play immediately
+            this.remoteStream = stream;
+            this.isCallActive = true;
+            this.connectionStatus = 'connected';
+            this.isConnecting = false;
+
+            // Start call timer
+            this.callStartTime = new Date();
+            this.startCallTimer();
+
+            // Notify parent
+            this.callStarted.emit();
+
+            // Success notification
+            this.showToast('success', 'Video call has been established');
+
+            // Play the video after a delay to ensure it's fully loaded
+            setTimeout(() => {
+              this.playRemoteVideo();
+            }, 1000);
+          }
+        }),
+
+        // Handle call accepted event
+        this.signalRService.videoCallAccepted.subscribe(() => {
+          this.connectionStatus = 'accepted';
+          console.log('Call accepted by employee');
+        }),
+
+        // Handle call rejected event
+        this.signalRService.videoCallRejected.subscribe((reason) => {
+          this.connectionStatus = 'rejected';
+          this.isConnecting = false;
+
+          // Show rejection message
+          this.showToast('warning', reason || 'The employee declined your call');
+
+          // Clean up resources
+          this.cleanupCall();
+
+          // Notify parent
+          this.callEnded.emit('rejected');
+        }),
+
+        // Handle call ended event
+        this.signalRService.videoCallEnded.subscribe((reason) => {
+          this.connectionStatus = 'ended';
+          this.isConnecting = false;
+
+          // Show message
+          this.showToast('info', reason || 'The call has ended');
+
+          // Clean up resources
+          this.cleanupCall();
+
+          // Notify parent
+          this.callEnded.emit('ended');
+        })
+      );
+    }
+
+    // Play remote video with error handling
+    private playRemoteVideo(): void {
+      if (this.remoteVideoElement?.nativeElement && this.remoteStream) {
+        const videoEl = this.remoteVideoElement.nativeElement;
+
+        // Ensure srcObject is set
+        if (videoEl.srcObject !== this.remoteStream) {
+          videoEl.srcObject = this.remoteStream;
+        }
+
+        // Use a promise-based approach to handle play
+        const playPromise = videoEl.play();
+        if (playPromise !== undefined) {
+          playPromise.then(() => {
+            console.log('Remote video playing successfully');
+          }).catch(e => {
+            console.error('Error playing remote video:', e);
+            // Try again with muted (browsers often allow muted autoplay)
+            videoEl.muted = true;
+            videoEl.play().then(() => {
+              console.log('Remote video playing with muted workaround');
+              // Try to unmute after playback starts
+              setTimeout(() => {
+                videoEl.muted = false;
+              }, 2000);
+            }).catch(err => {
+              console.error('Still cannot play video even when muted:', err);
+            });
+          });
+        }
+      }
     }
 
     // Show toast message
     private showToast(type: string, message: string): void {
-        this.toastMessage = { type, message };
-        this.toastVisible = true;
+      this.toastMessage = { type, message };
+      this.toastVisible = true;
 
-        // Auto-hide toast after 5 seconds
-        setTimeout(() => {
-            this.toastVisible = false;
-        }, 5000);
+      // Auto-hide toast after 5 seconds
+      setTimeout(() => {
+        this.toastVisible = false;
+      }, 5000);
     }
 
     // Hide toast message
     hideToast(): void {
-        this.toastVisible = false;
+      this.toastVisible = false;
     }
 
     // Show confirmation dialog
     private showConfirm(message: string, action: () => void): void {
-        this.confirmDialogMessage = message;
-        this.confirmAction = action;
-        this.showConfirmDialog = true;
+      this.confirmDialogMessage = message;
+      this.confirmAction = action;
+      this.showConfirmDialog = true;
     }
 
     // Handle confirmation dialog result
     handleConfirmation(confirmed: boolean): void {
-        this.showConfirmDialog = false;
+      this.showConfirmDialog = false;
 
-        if (confirmed && this.confirmAction) {
-            this.confirmAction();
-        }
+      if (confirmed && this.confirmAction) {
+        this.confirmAction();
+      }
 
-        this.confirmAction = null;
+      this.confirmAction = null;
     }
 
-    // PUBLIC METHODS: Can be called from parent component or UI
+    // Handle camera selection change
+    onCameraChange(deviceId: string): void {
+        debugger
+      if (!deviceId || deviceId === this.selectedCameraId) return;
+
+      console.log('Selected camera:', deviceId);
+      this.selectedCameraId = deviceId;
+      this.cameraSelected = true;
+
+      // Initialize preview with selected camera
+      this.initializeCameraPreview(deviceId);
+
+      // If in a call, update the camera
+      if (this.isCallActive) {
+        this.webRTCService.switchCamera(deviceId)
+          .then(() => {
+            this.showToast('success', 'Camera changed successfully');
+          })
+          .catch(error => {
+            console.error('Error switching camera:', error);
+            this.showToast('danger', 'Failed to switch camera');
+          });
+      }
+    }
 
     // Start a call to the employee
     startCall(): void {
-        if (!this.employeeId) {
-            console.error('Cannot start call: No employee ID provided');
-            this.showToast('danger', 'No employee ID provided');
-            this.callError.emit('no_employee_id');
-            return;
-        }
+      if (!this.employeeId) {
+        console.error('Cannot start call: No employee ID provided');
+        this.showToast('danger', 'No employee ID provided');
+        this.callError.emit('no_employee_id');
+        return;
+      }
 
-        if (this.isCallActive || this.isConnecting) {
-            console.warn('Call already in progress');
-            return;
-        }
+      if (!this.cameraSelected || !this.selectedCameraId) {
+        console.error('Cannot start call: No camera selected');
+        this.showToast('warning', 'Please select a camera first');
+        return;
+      }
 
-        // Update state
-        this.isConnecting = true;
-        this.connectionStatus = 'connecting';
+      if (this.isCallActive || this.isConnecting) {
+        console.warn('Call already in progress');
+        return;
+      }
 
-        // Request camera access from employee
-        this.webRTCService
-            .requestCameraAccess(this.employeeId)
-            .then(() => {
-                console.log('Camera access request sent to employee:', this.employeeId);
-            })
-            .catch((error) => {
-                console.error('Error requesting camera access:', error);
-                this.isConnecting = false;
-                this.connectionStatus = 'error';
+      // Update state
+      this.isConnecting = true;
+      this.connectionStatus = 'connecting';
 
-                this.showToast('danger', 'Failed to request camera access from employee');
+      // Request camera access from employee
+      this.webRTCService
+        .requestCameraAccess(this.employeeId, this.selectedCameraId)
+        .then(() => {
+          console.log('Camera access request sent to employee:', this.employeeId);
+        })
+        .catch((error) => {
+          console.error('Error requesting camera access:', error);
+          this.isConnecting = false;
+          this.connectionStatus = 'error';
 
-                this.callError.emit('camera_request_failed');
-            });
+          this.showToast('danger', 'Failed to request camera access from employee');
+
+          this.callError.emit('camera_request_failed');
+        });
     }
 
     // End the current call
     endCall(): void {
-        if (!this.isCallActive && !this.isConnecting) {
-            return;
-        }
+      if (!this.isCallActive && !this.isConnecting) {
+        return;
+      }
 
-        // Show confirmation if the call is active
-        if (this.isCallActive) {
-            this.showConfirm('Are you sure you want to end this call?', () => {
-                this.executeCallEnd();
-            });
-        } else {
-            // If still connecting, just end it without confirmation
-            this.executeCallEnd();
-        }
+      // Show confirmation if the call is active
+      if (this.isCallActive) {
+        this.showConfirm('Are you sure you want to end this call?', () => {
+          this.executeCallEnd();
+        });
+      } else {
+        // If still connecting, just end it without confirmation
+        this.executeCallEnd();
+      }
     }
 
     // Take a snapshot from the remote video
     takeSnapshot(): void {
-        if (!this.remoteStream) {
-            this.showToast('warning', 'No video stream available');
-            return;
-        }
+      if (!this.remoteStream) {
+        this.showToast('warning', 'No video stream available');
+        return;
+      }
 
-        try {
-            const dataUrl = this.webRTCService.takeSnapshot();
+      try {
+        const dataUrl = this.webRTCService.takeSnapshot();
 
-            // Create download link for the image
-            const link = document.createElement('a');
-            link.download = `snapshot_${new Date().toISOString()}.png`;
-            link.href = dataUrl;
-            link.click();
+        // Create download link for the image
+        const link = document.createElement('a');
+        link.download = `snapshot_${new Date().toISOString()}.png`;
+        link.href = dataUrl;
+        link.click();
 
-            this.showToast('success', 'Image saved to your downloads');
-        } catch (error) {
-            console.error('Error taking snapshot:', error);
-            this.showToast('danger', 'Failed to capture image from video');
-        }
+        this.showToast('success', 'Image saved to your downloads');
+      } catch (error) {
+        console.error('Error taking snapshot:', error);
+        this.showToast('danger', 'Failed to capture image from video');
+      }
     }
 
-    // PRIVATE HELPER METHODS
+    // Test video playback (can be called from UI during troubleshooting)
+    testVideo(): void {
+        this.playRemoteVideo();
+
+    }
 
     // Execute call end without confirmation
     private executeCallEnd(): void {
-        // Stop WebRTC streams
-        this.webRTCService.stopStreaming().catch((error) => {
-            console.error('Error stopping stream:', error);
-        });
+      // Stop WebRTC streams
+      this.webRTCService.stopStreaming().catch((error) => {
+        console.error('Error stopping stream:', error);
+      });
 
-        // Clean up resources
-        this.cleanupCall();
+      // Clean up resources
+      this.cleanupCall();
 
-        // Notify parent
-        this.callEnded.emit('user_ended');
+      // Notify parent
+      this.callEnded.emit('user_ended');
     }
 
     // Clean up call resources
     private cleanupCall(): void {
-        this.isCallActive = false;
-        this.isConnecting = false;
-        this.stopCallTimer();
-        this.callStartTime = null;
-        this.callDuration = 0;
-        this.webRTCService.cleanupCall();
+      this.isCallActive = false;
+      this.isConnecting = false;
+      this.stopCallTimer();
+      this.callStartTime = null;
+      this.callDuration = 0;
+      this.webRTCService.cleanupCall();
     }
 
     // Start call duration timer
     private startCallTimer(): void {
-        this.stopCallTimer(); // Ensure no duplicate timers
+      this.stopCallTimer(); // Ensure no duplicate timers
 
-        this.durationTimer = setInterval(() => {
-            if (this.callStartTime) {
-                const now = new Date();
-                this.callDuration = Math.floor((now.getTime() - this.callStartTime.getTime()) / 1000);
-            }
-        }, 1000);
+      this.durationTimer = setInterval(() => {
+        if (this.callStartTime) {
+          const now = new Date();
+          this.callDuration = Math.floor((now.getTime() - this.callStartTime.getTime()) / 1000);
+        }
+      }, 1000);
     }
 
     // Stop call duration timer
     private stopCallTimer(): void {
-        if (this.durationTimer) {
-            clearInterval(this.durationTimer);
-            this.durationTimer = null;
-        }
+      if (this.durationTimer) {
+        clearInterval(this.durationTimer);
+        this.durationTimer = null;
+      }
     }
 
     // Format seconds to MM:SS display
     formatDuration(seconds: number): string {
-        const mins = Math.floor(seconds / 60);
-        const secs = seconds % 60;
-        return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+      const mins = Math.floor(seconds / 60);
+      const secs = seconds % 60;
+      return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
     }
-}
+  }

@@ -1,20 +1,25 @@
-<!-- src/app/shared/components/employee-webrtc/employee-webrtc.component.html -->
 <div class="employee-webrtc-container">
     <!-- Toast notifications -->
-    <div class="toast-container position-fixed top-0 end-0 p-3" style="z-index: 1200;">
+    <div class="toast-container position-fixed top-0 end-0 p-3" style="z-index: 1200">
       <div *ngIf="toastVisible" class="toast show" role="alert" aria-live="assertive" aria-atomic="true">
-        <div class="toast-header bg-{{toastMessage?.type}}">
+        <div class="toast-header bg-{{ toastMessage?.type }}">
           <strong class="me-auto text-white">Video Call</strong>
           <button type="button" class="btn-close btn-close-white" (click)="hideToast()"></button>
         </div>
         <div class="toast-body">
-          {{toastMessage?.message}}
+          {{ toastMessage?.message }}
         </div>
       </div>
     </div>
 
     <!-- Incoming Call Modal -->
-    <div class="modal fade" [class.show]="isIncomingCall" [style.display]="isIncomingCall ? 'block' : 'none'" tabindex="-1" role="dialog">
+    <div
+      class="modal fade"
+      [class.show]="isIncomingCall"
+      [style.display]="isIncomingCall ? 'block' : 'none'"
+      tabindex="-1"
+      role="dialog"
+    >
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
           <div class="modal-header">
@@ -31,22 +36,30 @@
 
             <div class="countdown-container mb-3">
               <div class="progress mb-2">
-                <div class="progress-bar bg-danger" role="progressbar"
+                <div
+                  class="progress-bar bg-danger"
+                  role="progressbar"
                   [style.width]="(countdownValue / 30) * 100 + '%'"
-                  aria-valuenow="countdownValue" aria-valuemin="0" aria-valuemax="30">
-                </div>
+                  [attr.aria-valuenow]="countdownValue"
+                  aria-valuemin="0"
+                  aria-valuemax="30"
+                ></div>
               </div>
               <p class="countdown-text small text-muted">
-                Auto-rejecting in <span class="fw-bold text-danger">{{ countdownValue }}</span> seconds
+                Auto-rejecting in
+                <span class="fw-bold text-danger">{{ countdownValue }}</span>
+                seconds
               </p>
             </div>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-danger" (click)="rejectCall()">
-              <i class="bi bi-x-circle me-1"></i> Reject
+              <i class="bi bi-x-circle me-1"></i>
+              Reject
             </button>
             <button type="button" class="btn btn-success" (click)="acceptCall()">
-              <i class="bi bi-check-circle me-1"></i> Accept
+              <i class="bi bi-check-circle me-1"></i>
+              Accept
             </button>
           </div>
         </div>
@@ -62,14 +75,26 @@
           <div class="d-flex justify-content-between align-items-center">
             <div class="call-status d-flex align-items-center">
               <span class="status-indicator status-connected"></span>
-              <span class="status-text ms-2">
-                Connected ({{ formatDuration(callDuration) }})
-              </span>
+              <span class="status-text ms-2">Connected ({{ formatDuration(callDuration) }})</span>
             </div>
 
-            <button type="button" class="btn btn-sm btn-danger" (click)="endCall()">
-              <i class="bi bi-telephone-x me-1"></i> End Call
-            </button>
+            <div class="btn-group">
+              <button type="button" class="btn btn-sm btn-danger" (click)="endCall()">
+                <i class="bi bi-telephone-x me-1"></i>
+                End Call
+              </button>
+
+              <!-- Refresh Video Button - only show when having issues -->
+              <button
+                *ngIf="remoteStream && remoteVideoElement"
+                type="button"
+                class="btn btn-sm btn-warning ms-2"
+                (click)="testVideo()"
+              >
+                <i class="bi bi-arrow-repeat"></i>
+                Refresh Video
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -85,7 +110,13 @@
             <div class="card-body p-0">
               <div class="remote-video-wrapper">
                 <div class="video-frame">
-                    <video #remoteVideo [srcObject]="remoteStream" autoplay class="remote-video"></video>
+                  <video
+                    #remoteVideo
+                    [srcObject]="remoteStream"
+                    autoplay
+                    playsinline
+                    class="remote-video w-100 h-auto"
+                  ></video>
                 </div>
               </div>
             </div>
@@ -101,7 +132,7 @@
             <div class="card-body p-0">
               <div class="local-video-wrapper">
                 <div class="video-frame">
-                  <video #localVideo [srcObject]="localStream" autoplay muted class="local-video"></video>
+                  <video #localVideo [srcObject]="localStream" autoplay muted playsinline class="local-video w-100 h-auto"></video>
                 </div>
               </div>
             </div>
@@ -125,13 +156,19 @@
             <div class="status-message">
               <ng-container [ngSwitch]="connectionStatus">
                 <h5 *ngSwitchCase="'idle'" class="mb-0">Ready for Video Calls</h5>
-                <p *ngSwitchCase="'idle'" class="text-muted mb-0 small">You will be notified when someone requests a video call</p>
+                <p *ngSwitchCase="'idle'" class="text-muted mb-0 small">
+                  You will be notified when someone requests a video call
+                </p>
 
                 <h5 *ngSwitchCase="'error'" class="mb-0 text-danger">Connection Error</h5>
-                <p *ngSwitchCase="'error'" class="text-muted mb-0 small">There was a problem connecting to the video call service</p>
+                <p *ngSwitchCase="'error'" class="text-muted mb-0 small">
+                  There was a problem connecting to the video call service
+                </p>
 
                 <h5 *ngSwitchCase="'ended'" class="mb-0">Call Ended</h5>
-                <p *ngSwitchCase="'ended'" class="text-muted mb-0 small">The previous video call has ended</p>
+                <p *ngSwitchCase="'ended'" class="text-muted mb-0 small">
+                  The previous video call has ended
+                </p>
               </ng-container>
             </div>
           </div>
