@@ -13,6 +13,7 @@ export class WebRTCService {
   private currentPeerId: string | null = null;
   private videoDevicesSubject: BehaviorSubject<MediaDeviceInfo[]> = new BehaviorSubject<MediaDeviceInfo[]>([]);
   private pendingIceCandidates: RTCIceCandidate[] = [];
+  private streamMonitorInterval: any = null;
 
   // RTCPeerConnection configuration
   private configuration: RTCConfiguration = {
@@ -176,7 +177,25 @@ export class WebRTCService {
           console.log(`Remote stream has ${stream.getTracks().length} tracks`);
           stream.getTracks().forEach(track => {
             console.log(`Remote ${track.kind} track, enabled: ${track.enabled}, readyState: ${track.readyState}`);
+
+            // Add listener for track ending
+            track.onended = () => {
+              console.log(`Remote ${track.kind} track ended`);
+            };
+
+            // Add listener for track muting
+            track.onmute = () => {
+              console.log(`Remote ${track.kind} track muted`);
+            };
+
+            // Add listener for track unmuting
+            track.onunmute = () => {
+              console.log(`Remote ${track.kind} track unmuted`);
+            };
           });
+
+          // Monitor this stream for changes
+          this.monitorRemoteStream(stream);
 
           // Update the stream in the NgZone
           this.ngZone.run(() => {
@@ -209,6 +228,39 @@ export class WebRTCService {
       console.error('Error setting up peer connection:', error);
       throw error;
     }
+  }
+
+  // Monitor remote stream for stability
+  private monitorRemoteStream(stream: MediaStream): void {
+    // Check stream and tracks every second
+    const intervalId = setInterval(() => {
+      if (!this.peerConnection || this.peerConnection.connectionState !== 'connected') {
+        clearInterval(intervalId);
+        return;
+      }
+
+      // Log stream active state
+      console.log('Remote stream active:', stream.active);
+
+      // Check all tracks
+      const videoTracks = stream.getVideoTracks();
+      if (videoTracks.length === 0) {
+        console.warn('Remote stream has no video tracks!');
+      } else {
+        videoTracks.forEach(track => {
+          console.log(`Video track: enabled=${track.enabled}, readyState=${track.readyState}`);
+
+          // Re-enable track if it was disabled
+          if (!track.enabled) {
+            console.log('Re-enabling disabled video track');
+            track.enabled = true;
+          }
+        });
+      }
+    }, 1000);
+
+    // Store the interval ID so we can clear it later
+    this.streamMonitorInterval = intervalId;
   }
 
   // Set up monitoring for connection state changes
@@ -533,6 +585,12 @@ export class WebRTCService {
   // Clean up WebRTC resources
   public cleanupCall(): void {
     console.log('Cleaning up call...');
+
+    // Clear stream monitor interval
+    if (this.streamMonitorInterval) {
+      clearInterval(this.streamMonitorInterval);
+      this.streamMonitorInterval = null;
+    }
 
     // Clear pending ICE candidates
     this.pendingIceCandidates = [];
