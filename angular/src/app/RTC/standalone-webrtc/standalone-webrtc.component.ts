@@ -26,7 +26,7 @@ import { SignalRRTCService } from '../signal-r-rtc.service';
 })
 export class StandaloneWebRTCComponent implements OnDestroy, OnChanges {
     @ViewChild('remoteVideo') remoteVideoElement: ElementRef;
-
+    loading;
     // Employee ID input - the only input required from parent component
     @Input() employeeId: string | null = null;
 
@@ -64,6 +64,33 @@ export class StandaloneWebRTCComponent implements OnDestroy, OnChanges {
     confirmAction: (() => void) | null = null;
 
     private subscriptions: Subscription[] = [];
+    private ensureRemoteVideoWorks(): void {
+        // Check every second if we have a remote stream that's not displaying
+        const checkInterval = setInterval(() => {
+          if (this.remoteStream && this.isCallActive) {
+            console.log('Checking remote video display...');
+
+            // If the video element exists
+            if (this.remoteVideoElement?.nativeElement) {
+              const videoEl = this.remoteVideoElement.nativeElement as HTMLVideoElement;
+
+              // Check if it's actually playing
+              if (videoEl.paused || videoEl.ended || videoEl.readyState < 3) {
+                console.log('Remote video not playing properly, fixing...');
+
+                // Try direct assignment again
+                videoEl.srcObject = this.remoteStream;
+                videoEl.play().catch(e => console.error('Error playing video:', e));
+              }else{
+
+              }
+            }
+          } else if (!this.isCallActive) {
+            // Stop checking if call is no longer active
+            clearInterval(checkInterval);
+          }
+        }, 1000);
+      }
 
     constructor(
         private webRTCService: WebRTCService,
@@ -91,7 +118,7 @@ export class StandaloneWebRTCComponent implements OnDestroy, OnChanges {
                 if (!stream) {
                     return;
                 }
-
+                this.loading = true;
                 setTimeout(() => {
                     this.isCallActive = true;
                     this.connectionStatus = 'connected';
@@ -101,11 +128,10 @@ export class StandaloneWebRTCComponent implements OnDestroy, OnChanges {
                     this.startCallTimer();
                     this.remoteStream = stream;
                     setTimeout(() => {
-                        if (this.remoteVideoElement && this.remoteVideoElement.nativeElement) {
-                          console.log('Setting remote stream on video element directly');
-                          this.remoteVideoElement.nativeElement.srcObject = stream;
-                        }
-                      }, 500);
+                        this.ensureRemoteVideoWorks()
+                         this.cdr.detectChanges();
+
+                    }, 500);
                 });
                 // this.remoteStream = stream;
 

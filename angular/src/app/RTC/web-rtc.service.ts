@@ -96,6 +96,7 @@ export class WebRTCService {
       this.localStream.getTracks().forEach(track => {
         console.log(`Adding ${track.kind} track to peer connection, enabled: ${track.enabled}`);
         if (this.peerConnection && this.localStream) {
+            debugger
           this.peerConnection.addTrack(track, this.localStream);
         }
       });

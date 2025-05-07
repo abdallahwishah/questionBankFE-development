@@ -479,8 +479,7 @@
                             </td>
                             <td>
                                 <app-action-button
-                                    *ngIf="!record?.hasFinished"
-                                    [ActionsInfo]="[
+                                     [ActionsInfo]="[
                                         {
                                             label: 'MoveStudent',
                                             hasCondition:
@@ -496,9 +495,7 @@
                                             hasCondition: session?.session?.status === sessionStatusEnum.Active
                                         },
                                         {
-                                            label: 'RequestCamera',
-                                            hasCondition: session?.session?.status === sessionStatusEnum.Active
-                                        }
+                                            label: 'RequestCamera'                                        }
                                     ]"
                                     (action)="doActionsForAttempts($event, record)"
                                 ></app-action-button>
