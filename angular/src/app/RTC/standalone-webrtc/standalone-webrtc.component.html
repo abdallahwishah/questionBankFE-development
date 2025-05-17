@@ -1,220 +1,238 @@
 <div class="standalone-webrtc-container">
     <!-- Toast notifications -->
     <div class="toast-container position-fixed top-0 end-0 p-3" style="z-index: 1200">
-      <div *ngIf="toastVisible" class="toast show" role="alert" aria-live="assertive" aria-atomic="true">
-        <div class="toast-header bg-{{ toastMessage?.type }}">
-          <strong class="me-auto text-white">Video Call</strong>
-          <button type="button" class="btn-close btn-close-white" (click)="hideToast()"></button>
+        <div *ngIf="toastVisible" class="toast show" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header bg-{{ toastMessage?.type }}">
+                <strong class="me-auto text-white">{{ 'VideoCall' | localize }}</strong>
+                <button type="button" class="btn-close btn-close-white" (click)="hideToast()"></button>
+            </div>
+            <div class="toast-body">
+                {{ toastMessage?.message }}
+            </div>
         </div>
-        <div class="toast-body">
-          {{ toastMessage?.message }}
-        </div>
-      </div>
     </div>
 
     <!-- Confirmation Modal -->
     <div
-      class="modal fade"
-      [class.show]="showConfirmDialog"
-      [style.display]="showConfirmDialog ? 'block' : 'none'"
-      tabindex="-1"
-      role="dialog"
+        class="modal fade"
+        [class.show]="showConfirmDialog"
+        [style.display]="showConfirmDialog ? 'block' : 'none'"
+        tabindex="-1"
+        role="dialog"
     >
-      <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">Confirm Action</h5>
-            <button type="button" class="btn-close" (click)="handleConfirmation(false)"></button>
-          </div>
-          <div class="modal-body">
-            <p>{{ confirmDialogMessage }}</p>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" (click)="handleConfirmation(false)">Cancel</button>
-            <button type="button" class="btn btn-primary" (click)="handleConfirmation(true)">Confirm</button>
-          </div>
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">{{ 'ConfirmAction' | localize }}</h5>
+                    <button type="button" class="btn-close" (click)="handleConfirmation(false)"></button>
+                </div>
+                <div class="modal-body">
+                    <p>{{ confirmDialogMessage }}</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" (click)="handleConfirmation(false)">
+                        {{ 'Cancel' | localize }}
+                    </button>
+                    <button type="button" class="btn btn-primary" (click)="handleConfirmation(true)">
+                        {{ 'Confirm' | localize }}
+                    </button>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
     <div *ngIf="showConfirmDialog" class="modal-backdrop fade show"></div>
 
     <!-- Camera Selection Card - Show when not in a call -->
     <div class="card mb-3" *ngIf="!isCallActive && !isConnecting && showControls">
-      <div class="card-header">
-        <h5 class="mb-0">Camera Settings</h5>
-      </div>
-      <div class="card-body">
-        <div class="camera-select mb-3">
-          <label for="cameraSelect" class="form-label">Select Camera:</label>
-          <select id="cameraSelect" class="form-select"  (change)="onCameraChange($event.target.value)">
-            <option value="" disabled selected>Choose camera...</option>
-            <option *ngFor="let device of videoDevices; let i = index" [value]="device.deviceId">
-              {{ device.label || 'Camera ' + (i + 1) }}
-            </option>
-          </select>
+        <div class="card-header">
+            <h5 class="mb-0">{{ 'CameraSettings' | localize }}</h5>
         </div>
+        <div class="card-body">
+            <div class="camera-select mb-3">
+                <label for="cameraSelect" class="form-label">{{ 'SelectCamera' | localize }}:</label>
+                <select id="cameraSelect" class="form-select" (change)="onCameraChange($event.target.value)">
+                    <option value="" disabled selected>{{ 'ChooseCamera' | localize }}</option>
+                    <option *ngFor="let device of videoDevices; let i = index" [value]="device.deviceId">
+                        {{ device.label || 'Camera ' + (i + 1) }}
+                    </option>
+                </select>
+            </div>
 
-        <!-- Preview selected camera -->
-        <div class="camera-preview mb-3" *ngIf="localStream">
-          <label class="form-label">Camera Preview:</label>
-          <div class="video-preview-container">
-            <video #localVideo [srcObject]="localStream" autoplay muted playsinline
-                   class="w-100 preview-video" style="max-height: 240px; border-radius: 8px;"></video>
-          </div>
-        </div>
+            <!-- Preview selected camera -->
+            <div class="camera-preview mb-3" *ngIf="localStream">
+                <label class="form-label">{{ 'CameraPreview' | localize }}:</label>
+                <div class="video-preview-container">
+                    <video
+                        #localVideo
+                        [srcObject]="localStream"
+                        autoplay
+                        muted
+                        playsinline
+                        class="w-100 preview-video"
+                        style="max-height: 240px; border-radius: 8px"
+                    ></video>
+                </div>
+            </div>
 
-        <!-- Call Button -->
-        <button
-          type="button"
-          class="btn btn-success btn-lg w-100"
-          [disabled]="!cameraSelected || !selectedCameraId"
-          (click)="startCall()">
-          <i class="bi bi-camera-video"></i>
-          Start Call with Employee
-        </button>
-        <div *ngIf="!cameraSelected" class="text-danger small mt-2">
-          Please select a camera before starting the call
+            <!-- Call Button -->
+            <button
+                type="button"
+                class="btn btn-success btn-lg w-100"
+                [disabled]="!cameraSelected || !selectedCameraId"
+                (click)="startCall()"
+            >
+                <i class="bi bi-camera-video"></i>
+                {{ 'StartCallWithEmployee' | localize }}
+            </button>
+            <div *ngIf="!cameraSelected" class="text-danger small mt-2">
+                {{ 'PleaseSelectCamera' | localize }}
+            </div>
         </div>
-      </div>
     </div>
 
     <!-- Connection Status & Controls -->
-    <div class="webrtc-header" *ngIf="(showControls && (isConnecting || isCallActive))">
-      <div class="card mb-3">
-        <div class="card-body">
-          <div class="d-flex justify-content-between align-items-center">
-            <!-- Status Display -->
-            <div class="status-info">
-              <div class="d-flex align-items-center">
-                <div class="status-indicator status-{{ connectionStatus }}"></div>
-                <span class="status-text ms-2">
-                  <ng-container [ngSwitch]="connectionStatus">
-                    <ng-container *ngSwitchCase="'idle'">Ready</ng-container>
-                    <ng-container *ngSwitchCase="'connecting'">Connecting...</ng-container>
-                    <ng-container *ngSwitchCase="'accepted'">Call Accepted</ng-container>
-                    <ng-container *ngSwitchCase="'connected'">
-                      Connected ({{ formatDuration(callDuration) }})
-                    </ng-container>
-                    <ng-container *ngSwitchCase="'rejected'">Call Rejected</ng-container>
-                    <ng-container *ngSwitchCase="'error'">Connection Error</ng-container>
-                    <ng-container *ngSwitchCase="'ended'">Call Ended</ng-container>
-                  </ng-container>
-                </span>
-              </div>
+    <div class="webrtc-header" *ngIf="showControls && (isConnecting || isCallActive)">
+        <div class="card mb-3">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center">
+                    <!-- Status Display -->
+                    <div class="status-info">
+                        <div class="d-flex align-items-center">
+                            <div class="status-indicator status-{{ connectionStatus }}"></div>
+                            <span class="status-text ms-2">
+                                <ng-container [ngSwitch]="connectionStatus">
+                                    <ng-container *ngSwitchCase="'idle'">{{ 'Ready' | localize }}</ng-container>
+                                    <ng-container *ngSwitchCase="'connecting'">{{ 'Connecting' | localize }}...</ng-container>
+                                    <ng-container *ngSwitchCase="'accepted'">{{ 'CallAccepted' | localize }}</ng-container>
+                                    <ng-container *ngSwitchCase="'connected'">
+                                        {{ 'Connected' | localize }} ({{ formatDuration(callDuration) }})
+                                    </ng-container>
+                                    <ng-container *ngSwitchCase="'rejected'">{{ 'CallRejected' | localize }}</ng-container>
+                                    <ng-container *ngSwitchCase="'error'">{{ 'ConnectionError' | localize }}</ng-container>
+                                    <ng-container *ngSwitchCase="'ended'">{{ 'CallEnded' | localize }}</ng-container>
+                                </ng-container>
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Controls -->
+                    <div class="btn-group">
+                        <!-- End Call Button - only show when connected or connecting -->
+                        <button
+                            *ngIf="(isCallActive || isConnecting) && showControls"
+                            type="button"
+                            class="btn btn-danger"
+                            (click)="endCall()"
+                        >
+                            <i class="bi bi-telephone-x"></i>
+                            {{ 'EndCall' | localize }}
+                        </button>
+
+                        <!-- Snapshot Button - only show when connected -->
+                        <button
+                            *ngIf="isCallActive && showControls"
+                            type="button"
+                            class="btn btn-info ms-2 text-white"
+                            (click)="takeSnapshot()"
+                        >
+                            <i class="bi bi-camera"></i>
+                            {{ 'Snapshot' | localize }}
+                        </button>
+
+                        <!-- Refresh Video Button - only show when connected -->
+                        <button
+                            *ngIf="isCallActive && remoteStream && showControls"
+                            type="button"
+                            class="btn btn-warning ms-2"
+                            (click)="testVideo()"
+                        >
+                            <i class="bi bi-arrow-repeat"></i>
+                            {{ 'RefreshVideo' | localize }}
+                        </button>
+                    </div>
+                </div>
             </div>
-
-            <!-- Controls -->
-            <div class="btn-group">
-              <!-- End Call Button - only show when connected or connecting -->
-              <button
-                *ngIf="(isCallActive || isConnecting) && showControls"
-                type="button"
-                class="btn btn-danger"
-                (click)="endCall()"
-              >
-                <i class="bi bi-telephone-x"></i>
-                End Call
-              </button>
-
-              <!-- Snapshot Button - only show when connected -->
-              <button
-                *ngIf="isCallActive && showControls"
-                type="button"
-                class="btn btn-info ms-2 text-white"
-                (click)="takeSnapshot()"
-              >
-                <i class="bi bi-camera"></i>
-                Snapshot
-              </button>
-
-              <!-- Refresh Video Button - only show when connected -->
-              <button
-                *ngIf="isCallActive && remoteStream && showControls"
-                type="button"
-                class="btn btn-warning ms-2"
-                (click)="testVideo()"
-              >
-                <i class="bi bi-arrow-repeat"></i>
-                Refresh Video
-              </button>
-            </div>
-          </div>
         </div>
-      </div>
     </div>
-
     <!-- Connection Loading Indicator -->
     <div class="connecting-indicator" *ngIf="isConnecting && !isCallActive">
-      <div class="card">
-        <div class="card-body text-center py-4">
-          <div class="spinner-border text-primary" role="status">
-            <span class="visually-hidden">Loading...</span>
-          </div>
-          <div class="mt-3 fw-bold">Connecting to Employee...</div>
-          <div class="text-muted mt-2 small">Please wait while we establish a connection</div>
+        <div class="card">
+            <div class="card-body text-center py-4">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">{{ 'Loading' | localize }}</span>
+                </div>
+                <div class="mt-3 fw-bold">{{ 'ConnectingToEmployee' | localize }}</div>
+                <div class="text-muted mt-2 small">{{ 'PleaseWaitConnection' | localize }}</div>
+            </div>
         </div>
-      </div>
     </div>
 
     <!-- Video Display -->
     <div class="video-container" *ngIf="isCallActive">
-      <div class="card">
-        <div class="card-body">
-          <div class="row">
-            <!-- Remote Video (Employee) -->
-            <div class="col-12 col-md-8 col-lg-9">
-              <div class="remote-video-wrapper">
-                <div class="video-label mb-2 fw-bold">Employee Video</div>
-                <div class="video-frame">
-                  <video
-                    #remoteVideo
-                    [srcObject]="remoteStream"
-                    autoplay
-                    playsinline
-                    class="remote-video w-100 h-auto"
-                  ></video>
-                </div>
-              </div>
-            </div>
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <!-- Remote Video (Employee) -->
+                    <div class="col-12 col-md-8 col-lg-9">
+                        <div class="remote-video-wrapper">
+                            <div class="video-label mb-2 fw-bold">{{ 'EmployeeVideo' | localize }}</div>
+                            <div class="video-frame">
+                                <video
+                                    #remoteVideo
+                                    [srcObject]="remoteStream"
+                                    autoplay
+                                    playsinline
+                                    class="remote-video w-100 h-auto"
+                                ></video>
+                            </div>
+                        </div>
+                    </div>
 
-            <!-- Local Video (Admin) -->
-            <div class="col-12 col-md-4 col-lg-3 mt-3 mt-md-0">
-              <div class="local-video-wrapper">
-                <div class="video-label mb-2 fw-bold">Your Video</div>
-                <div class="video-frame">
-                  <video #localVideo [srcObject]="localStream" autoplay muted playsinline class="local-video w-100 h-auto"></video>
+                    <!-- Local Video (Admin) -->
+                    <div class="col-12 col-md-4 col-lg-3 mt-3 mt-md-0">
+                        <div class="local-video-wrapper">
+                            <div class="video-label mb-2 fw-bold">{{ 'YourVideo' | localize }}</div>
+                            <div class="video-frame">
+                                <video
+                                    #localVideo
+                                    [srcObject]="localStream"
+                                    autoplay
+                                    muted
+                                    playsinline
+                                    class="local-video w-100 h-auto"
+                                ></video>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-              </div>
             </div>
-          </div>
         </div>
-      </div>
     </div>
 
     <!-- No Connection State -->
     <div class="no-connection" *ngIf="!isCallActive && !isConnecting && connectionStatus === 'idle' && !showControls">
-      <div class="card">
-        <div class="card-body text-center py-4">
-          <i class="bi bi-camera-video fs-1 text-primary"></i>
-          <div class="mt-3 fw-bold">Video Call Ready</div>
-          <div class="text-muted mt-2 small">Waiting for an employee ID to start the call</div>
+        <div class="card">
+            <div class="card-body text-center py-4">
+                <i class="bi bi-camera-video fs-1 text-primary"></i>
+                <div class="mt-3 fw-bold">{{ 'VideoCallReady' | localize }}</div>
+                <div class="text-muted mt-2 small">{{ 'WaitingForEmployeeID' | localize }}</div>
+            </div>
         </div>
-      </div>
     </div>
 
     <!-- Error State -->
     <div class="error-state" *ngIf="connectionStatus === 'error' && !isCallActive && !isConnecting">
-      <div class="card">
-        <div class="card-body text-center py-4">
-          <i class="bi bi-exclamation-triangle fs-1 text-danger"></i>
-          <div class="mt-3 fw-bold">Connection Error</div>
-          <div class="text-muted mt-2 small">Failed to establish video connection. Please try again.</div>
+        <div class="card">
+            <div class="card-body text-center py-4">
+                <i class="bi bi-exclamation-triangle fs-1 text-danger"></i>
+                <div class="mt-3 fw-bold">{{ 'ConnectionError' | localize }}</div>
+                <div class="text-muted mt-2 small">{{ 'FailedVideoConnection' | localize }}</div>
 
-          <button *ngIf="showControls" type="button" class="btn btn-outline-primary mt-3" (click)="startCall()">
-            <i class="bi bi-arrow-repeat"></i>
-            Try Again
-          </button>
+                <button *ngIf="showControls" type="button" class="btn btn-outline-primary mt-3" (click)="startCall()">
+                    <i class="bi bi-arrow-repeat"></i>
+                    {{ 'TryAgain' | localize }}
+                </button>
+            </div>
         </div>
-      </div>
     </div>
-  </div>
+</div>

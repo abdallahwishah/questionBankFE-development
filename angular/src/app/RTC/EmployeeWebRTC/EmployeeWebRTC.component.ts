@@ -3,13 +3,14 @@ import { CommonModule } from '@angular/common';
 import { Subscription } from 'rxjs';
 import { WebRTCService } from '../web-rtc.service';
 import { SignalRRTCService } from '../signal-r-rtc.service';
+import { AppSharedModule } from '@app/shared/app-shared.module';
 
 @Component({
   selector: 'app-employee-webrtc',
   templateUrl: './EmployeeWebRTC.component.html',
   styleUrls: ['./EmployeeWebRTC.component.scss'],
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule,AppSharedModule],
 })
 export class EmployeeWebRTCComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild('remoteVideo') remoteVideoElement: ElementRef<HTMLVideoElement>;

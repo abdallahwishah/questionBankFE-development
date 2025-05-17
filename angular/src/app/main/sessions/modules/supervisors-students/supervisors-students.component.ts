@@ -228,6 +228,8 @@ export class SupervisorsStudentsComponent extends AppComponentBase implements On
             case 'RequestCamera':
                 this.selectedEmployeeId = record.userId;
                 this.showVideoCall = true;
+                // scroll to top window
+                window.scrollTo(0, 0);
                 break;
         }
     }

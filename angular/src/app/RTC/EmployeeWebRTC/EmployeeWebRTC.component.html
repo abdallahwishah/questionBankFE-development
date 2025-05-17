@@ -3,7 +3,7 @@
     <div class="toast-container position-fixed top-0 end-0 p-3" style="z-index: 1200">
       <div *ngIf="toastVisible" class="toast show" role="alert" aria-live="assertive" aria-atomic="true">
         <div class="toast-header bg-{{ toastMessage?.type }}">
-          <strong class="me-auto text-white">Video Call</strong>
+          <strong class="me-auto text-white">{{ 'VideoCall'|localize }}</strong>
           <button type="button" class="btn-close btn-close-white" (click)="hideToast()"></button>
         </div>
         <div class="toast-body">
@@ -25,13 +25,13 @@
           <div class="modal-header">
             <h5 class="modal-title">
               <i class="bi bi-camera-video me-2"></i>
-              Incoming Video Call
+              {{ 'IncomingVideoCall'|localize }}
             </h5>
           </div>
           <div class="modal-body text-center">
             <div class="caller-info mb-4">
               <h5 class="caller-name">{{ incomingCallData?.callerName }}</h5>
-              <p class="text-muted">is requesting camera access</p>
+              <p class="text-muted">{{ 'isRequestingCameraAccess'|localize }}</p>
             </div>
 
             <div class="countdown-container mb-3">
@@ -46,20 +46,20 @@
                 ></div>
               </div>
               <p class="countdown-text small text-muted">
-                Auto-rejecting in
+                {{ 'AutoRejectingIn'|localize }}
                 <span class="fw-bold text-danger">{{ countdownValue }}</span>
-                seconds
+                {{ 'seconds'|localize }}
               </p>
             </div>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-danger" (click)="rejectCall()">
               <i class="bi bi-x-circle me-1"></i>
-              Reject
+              {{ 'Reject'|localize }}
             </button>
             <button type="button" class="btn btn-success" (click)="acceptCall()">
               <i class="bi bi-check-circle me-1"></i>
-              Accept
+              {{ 'Accept'|localize }}
             </button>
           </div>
         </div>
@@ -75,13 +75,13 @@
           <div class="d-flex justify-content-between align-items-center">
             <div class="call-status d-flex align-items-center">
               <span class="status-indicator status-connected"></span>
-              <span class="status-text ms-2">Connected ({{ formatDuration(callDuration) }})</span>
+              <span class="status-text ms-2">{{ 'Connected'|localize }} ({{ formatDuration(callDuration) }})</span>
             </div>
 
             <div class="btn-group">
               <button type="button" class="btn btn-sm btn-danger" (click)="endCall()">
                 <i class="bi bi-telephone-x me-1"></i>
-                End Call
+                {{ 'EndCall'|localize }}
               </button>
 
               <!-- Refresh Video Button - only show when having issues -->
@@ -92,7 +92,7 @@
                 (click)="testVideo()"
               >
                 <i class="bi bi-arrow-repeat"></i>
-                Refresh Video
+                {{ 'RefreshVideo'|localize }}
               </button>
             </div>
           </div>
@@ -105,7 +105,7 @@
         <div class="col-12 col-md-7 mb-3">
           <div class="card">
             <div class="card-header py-2">
-              <h6 class="mb-0">Admin Video</h6>
+              <h6 class="mb-0">{{ 'AdminVideo'|localize }}</h6>
             </div>
             <div class="card-body p-0">
               <div class="remote-video-wrapper">
@@ -127,7 +127,7 @@
         <div class="col-12 col-md-5 mb-3">
           <div class="card">
             <div class="card-header py-2">
-              <h6 class="mb-0">Your Video</h6>
+              <h6 class="mb-0">{{ 'YourVideo'|localize }}</h6>
             </div>
             <div class="card-body p-0">
               <div class="local-video-wrapper">

@@ -16,17 +16,16 @@ export class WebRTCService {
     private streamMonitorInterval: any = null;
 
     // RTCPeerConnection configuration
-    private configuration: RTCConfiguration = {
+    configuration = {
         iceServers: [
             { urls: 'stun:stun.l.google.com:19302' },
-            { urls: 'stun:stun1.l.google.com:19302' },
-            { urls: 'stun:stun2.l.google.com:19302' },
-            { urls: 'stun:stun3.l.google.com:19302' },
-            { urls: 'stun:stun4.l.google.com:19302' },
+            {
+                urls: ['turn:turn.agora.io:3478'],
+                username: 'abd7364208634677bc977f6aab5eb085',
+                credential: 'eb0f9075230b4c81b6a49506505bf6c4',
+            },
         ],
         iceCandidatePoolSize: 10,
-        // Add this to make connections more reliable
-        iceTransportPolicy: 'all',
     };
     constructor(
         private signalRService: SignalRRTCService,
@@ -97,14 +96,14 @@ export class WebRTCService {
 
             // Don't create a new peer connection if one already exists
             if (this.peerConnection && this.peerConnection.connectionState === 'connected') {
-              console.log('Peer connection already exists and is connected, skipping setup');
-              return;
+                console.log('Peer connection already exists and is connected, skipping setup');
+                return;
             }
 
             this.setupPeerConnection().then(() => {
-              this.createAndSendOffer(peerId);
+                this.createAndSendOffer(peerId);
             });
-          });
+        });
         this.signalRService.receiveVideoOffer.subscribe(async ({ senderId, description }) => {
             this.currentPeerId = senderId;
             if (!this.peerConnection) {
