@@ -16,16 +16,36 @@ export class WebRTCService {
     private streamMonitorInterval: any = null;
 
     // RTCPeerConnection configuration
-    configuration = {
+    private configuration: RTCConfiguration = {
         iceServers: [
-            { urls: 'stun:stun.l.google.com:19302' },
-            {
-                urls: ['turn:turn.agora.io:3478'],
-                username: 'abd7364208634677bc977f6aab5eb085',
-                credential: 'eb0f9075230b4c81b6a49506505bf6c4',
-            },
+              {
+            urls: "stun:stun.relay.metered.ca:80"
+        },
+        {
+            urls: "turn:global.relay.metered.ca:80",
+            username: "c8545610f30f62db8eb2ea5b",
+            credential: "uHKRtr3VctMDu0VY"
+        },
+        {
+            urls: "turn:global.relay.metered.ca:80?transport=tcp",
+            username: "c8545610f30f62db8eb2ea5b",
+            credential: "uHKRtr3VctMDu0VY"
+        },
+        {
+            urls: "turn:global.relay.metered.ca:443",
+            username: "c8545610f30f62db8eb2ea5b",
+            credential: "uHKRtr3VctMDu0VY"
+        },
+        {
+            urls: "turns:global.relay.metered.ca:443?transport=tcp",
+            username: "c8545610f30f62db8eb2ea5b",
+            credential: "uHKRtr3VctMDu0VY"
+        }
+
         ],
         iceCandidatePoolSize: 10,
+        // Add this to make connections more reliable
+        iceTransportPolicy: 'all',
     };
     constructor(
         private signalRService: SignalRRTCService,
@@ -34,6 +54,8 @@ export class WebRTCService {
         this.setupSignalRHandlers();
         // Initialize available cameras
         this.updateVideoDevices();
+        // Test TURN servers on initialization
+        this.testTURNServer().catch(err => console.error("Error during TURN server test:", err));
     }
 
     // Get remote stream as observable
@@ -96,14 +118,14 @@ export class WebRTCService {
 
             // Don't create a new peer connection if one already exists
             if (this.peerConnection && this.peerConnection.connectionState === 'connected') {
-                console.log('Peer connection already exists and is connected, skipping setup');
-                return;
+              console.log('Peer connection already exists and is connected, skipping setup');
+              return;
             }
 
             this.setupPeerConnection().then(() => {
-                this.createAndSendOffer(peerId);
+              this.createAndSendOffer(peerId);
             });
-        });
+          });
         this.signalRService.receiveVideoOffer.subscribe(async ({ senderId, description }) => {
             this.currentPeerId = senderId;
             if (!this.peerConnection) {
@@ -277,7 +299,8 @@ export class WebRTCService {
         if (!this.peerConnection) return;
 
         this.peerConnection.oniceconnectionstatechange = () => {
-            console.log('ICE connection state:', this.peerConnection?.iceConnectionState);
+            // Changed the log message below to match your example
+            console.log('ICE state: ', this.peerConnection?.iceConnectionState);
 
             if (this.peerConnection?.iceConnectionState === 'connected') {
                 console.log('ICE connection established successfully');
@@ -628,5 +651,82 @@ export class WebRTCService {
 
         this.currentPeerId = null;
         console.log('Call cleanup complete');
+    }
+
+    // Function to check TURN server status
+    private async checkTURNServer(turnConfig: RTCIceServer): Promise<void> {
+        console.log('Starting TURN server check with config:', turnConfig);
+
+        const pc = new RTCPeerConnection({
+            iceServers: [turnConfig],
+            iceTransportPolicy: 'relay'  // Force using TURN
+        });
+
+        pc.addEventListener('icegatheringstatechange', () => {
+            console.log(`ICE gathering state for ${turnConfig.urls}:`, pc.iceGatheringState);
+        });
+
+        pc.addEventListener('iceconnectionstatechange', () => {
+            console.log(`ICE connection state for ${turnConfig.urls}:`, pc.iceConnectionState);
+        });
+
+        let candidateFound = false;
+
+        try {
+            pc.addEventListener('icecandidate', (event) => {
+                if (event.candidate) {
+                    console.log('ICE candidate:', event.candidate.type, event.candidate.protocol, event.candidate);
+                    if (event.candidate.type === 'relay') {
+                        console.log('✅ TURN server is working! Found relay candidate:', event.candidate);
+                        candidateFound = true;
+                    }
+                } else {
+                    console.log(`Finished gathering ICE candidates for ${turnConfig.urls}`);
+                    if (!candidateFound) {
+                        console.warn(`❌ No relay candidates found for ${turnConfig.urls}. TURN server might not be working properly.`);
+                    }
+                }
+            });
+
+            // Create data channel to trigger ICE gathering
+            pc.createDataChannel('test');
+
+            // Create an offer to generate ICE candidates
+            const offer = await pc.createOffer();
+            await pc.setLocalDescription(offer);
+
+            // Wait longer for ICE gathering
+            await new Promise(resolve => setTimeout(resolve, 5000));
+
+        } catch (e) {
+            console.error(`Error checking TURN server ${turnConfig.urls}:`, e);
+        } finally {
+            pc.close();
+        }
+    }
+
+    // Test TURN server before starting connection
+    private async testTURNServer(): Promise<void> {
+        const turnConfigs = this.configuration.iceServers;
+
+        if (!turnConfigs || turnConfigs.length === 0) {
+            console.warn('No ICE servers configured to test.');
+            return;
+        }
+
+        console.log('🔄 Testing Metered TURN servers configuration...');
+
+        for (const config of turnConfigs) {
+            const urls = Array.isArray(config.urls) ? config.urls : [config.urls];
+            for (const url of urls) {
+                if (url.startsWith('turn:') || url.startsWith('turns:')) {
+                    console.log(`Testing TURN server: ${url}`);
+                    // Create a new config object for the single URL to test
+                    const singleUrlConfig: RTCIceServer = { ...config, urls: url };
+                    await this.checkTURNServer(singleUrlConfig);
+                }
+            }
+        }
+        console.log('Finished testing all TURN server configurations.');
     }
 }
