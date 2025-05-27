@@ -27,6 +27,19 @@
                 </div>
                 <div class="modal-body">
                     <div class="row">
+                        <div class="col-md-12 my-3">
+                            <label class="form-label" for="Category_Id">{{ l('Code') }} *</label>
+                            <input
+                                type="number"
+                                #Category_Id="ngModel"
+                                id="Category_Id"
+                                class="form-control"
+                                [(ngModel)]="category.id"
+                                name="id"
+                                required
+                            />
+                            <validation-messages [formCtrl]="Category_Id"></validation-messages>
+                        </div>
                         <div class="col-md-6 my-3">
                             <label class="form-label" for="Category_NameF">{{ l('NameF') }} *</label>
                             <input
@@ -41,7 +54,6 @@
                             <validation-messages [formCtrl]="Category_NameF"></validation-messages>
                         </div>
                         <div class="col-md-6 my-3">
-
                             <label class="form-label" for="Category_NameL">{{ l('NameL') }} *</label>
                             <input
                                 type="text"
@@ -53,12 +65,8 @@
                                 required
                             />
                             <validation-messages [formCtrl]="Category_NameL"></validation-messages>
-
                         </div>
-
                     </div>
-
-
 
                     <br />
                     <label class="form-check form-check-custom form-check-solid">

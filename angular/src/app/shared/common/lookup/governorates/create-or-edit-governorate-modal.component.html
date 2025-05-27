@@ -1,59 +1,104 @@
-﻿<div bsModal #createOrEditModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="createOrEditModal" aria-hidden="true" [config]="{backdrop: 'static'}">
+﻿<div
+    bsModal
+    #createOrEditModal="bs-modal"
+    class="modal fade"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="createOrEditModal"
+    aria-hidden="true"
+    [config]="{ backdrop: 'static' }"
+>
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <form *ngIf="active" #governorateForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
                 <div class="modal-header">
                     <h4 class="modal-title">
-                        <span *ngIf="governorate.id">{{l("EditGovernorate")}}</span>
-                        <span *ngIf="!governorate.id">{{l("CreateNewGovernorate")}}</span>
-                    </h4>                    
-                    
-                    
-                 <button type="button" class="btn-close" (click)="close()" aria-label="Close" [disabled]="saving"></button>
-             
+                        <span *ngIf="governorate.id">{{ l('EditGovernorate') }}</span>
+                        <span *ngIf="!governorate.id">{{ l('CreateNewGovernorate') }}</span>
+                    </h4>
+
+                    <button
+                        type="button"
+                        class="btn-close"
+                        (click)="close()"
+                        aria-label="Close"
+                        [disabled]="saving"
+                    ></button>
                 </div>
                 <div class="modal-body">
-                 
+                    <div class="my-3">
+                        <label class="form-label" for="Governorate_Id">{{ l('Code') }} *</label>
+                        <input
+                            type="number"
+                            #Governorate_Id="ngModel"
+                            id="Governorate_Id"
+                            class="form-control"
+                            [(ngModel)]="governorate.id"
+                            name="id"
+                            required
+                        />
+                        <validation-messages [formCtrl]="Governorate_Id"></validation-messages>
+                    </div>
+                    <div class="my-3">
+                        <label class="form-label" for="Governorate_NameF">{{ l('NameF') }} *</label>
+                        <input
+                            type="text"
+                            #Governorate_NameF="ngModel"
+                            id="Governorate_NameF"
+                            class="form-control"
+                            [(ngModel)]="governorate.nameF"
+                            name="NameF"
+                            required
+                        />
+                        <validation-messages [formCtrl]="Governorate_NameF"></validation-messages>
+                    </div>
 
+                    <div class="my-3">
+                        <label class="form-label" for="Governorate_NameL">{{ l('NameL') }} *</label>
+                        <input
+                            type="text"
+                            #Governorate_NameL="ngModel"
+                            id="Governorate_NameL"
+                            class="form-control"
+                            [(ngModel)]="governorate.nameL"
+                            name="NameL"
+                            required
+                        />
+                        <validation-messages [formCtrl]="Governorate_NameL"></validation-messages>
+                    </div>
 
-
-
-								<div class="my-3">
-									<label class="form-label" for="Governorate_NameF">{{l("NameF")}} *</label>
-									<input type="text" #Governorate_NameF="ngModel" id="Governorate_NameF" class="form-control" [(ngModel)]="governorate.nameF" name="NameF"     required/>
-								    <validation-messages [formCtrl]="Governorate_NameF"></validation-messages>
-								</div>
-					
-								<div class="my-3">
-									<label class="form-label" for="Governorate_NameL">{{l("NameL")}} *</label>
-									<input type="text" #Governorate_NameL="ngModel" id="Governorate_NameL" class="form-control" [(ngModel)]="governorate.nameL" name="NameL"     required/>
-								    <validation-messages [formCtrl]="Governorate_NameL"></validation-messages>
-								</div>
-					
-								<br/>
-								<label class="form-check form-check-custom form-check-solid">
-                                    <input
-                                        id="Governorate_IsActive" 
-                                        #Governorate_IsActive="ngModel"
-                                        name="IsActive" 
-                                        [(ngModel)]="governorate.isActive"
-                                        type="checkbox"
-                                        class="form-check-input"
-                                    />
-                                    <span class="form-check-label">
-                                        {{l("IsActive")}}
-                                    </span>
-                                </label>
-                                <validation-messages [formCtrl]="Governorate_IsActive"></validation-messages>
-					
-
+                    <br />
+                    <label class="form-check form-check-custom form-check-solid">
+                        <input
+                            id="Governorate_IsActive"
+                            #Governorate_IsActive="ngModel"
+                            name="IsActive"
+                            [(ngModel)]="governorate.isActive"
+                            type="checkbox"
+                            class="form-check-input"
+                        />
+                        <span class="form-check-label">
+                            {{ l('IsActive') }}
+                        </span>
+                    </label>
+                    <validation-messages [formCtrl]="Governorate_IsActive"></validation-messages>
                 </div>
                 <div class="modal-footer">
-                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">{{l("Cancel")}}</button>
-                    <button type="submit" class="btn btn-primary blue" [disabled]="!governorateForm.form.valid" [buttonBusy]="saving" [busyText]="l('SavingWithThreeDot')"><i class="fa fa-save"></i> <span>{{l("Save")}}</span></button>
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">
+                        {{ l('Cancel') }}
+                    </button>
+                    <button
+                        type="submit"
+                        class="btn btn-primary blue"
+                        [disabled]="!governorateForm.form.valid"
+                        [buttonBusy]="saving"
+                        [busyText]="l('SavingWithThreeDot')"
+                    >
+                        <i class="fa fa-save"></i>
+                        <span>{{ l('Save') }}</span>
+                    </button>
                 </div>
             </form>
         </div>
     </div>
-
 </div>
