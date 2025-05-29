@@ -15,6 +15,7 @@
                         id="StudySubject_Id"
                         class="form-control"
                         [(ngModel)]="studySubject.id"
+                        [disabled]="!isCreate"
                         name="id"
                         required
                     />

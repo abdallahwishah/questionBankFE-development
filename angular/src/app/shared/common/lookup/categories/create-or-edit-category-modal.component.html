@@ -35,6 +35,7 @@
                                 id="Category_Id"
                                 class="form-control"
                                 [(ngModel)]="category.id"
+                                [disabled]="!isCreate"
                                 name="id"
                                 required
                             />

@@ -35,6 +35,7 @@
                                 id="StudyLevel_Id"
                                 class="form-control"
                                 [(ngModel)]="studyLevel.id"
+                                [disabled]="!isCreate"
                                 name="id"
                                 required
                             />

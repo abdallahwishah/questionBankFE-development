@@ -34,6 +34,7 @@
                             id="Governorate_Id"
                             class="form-control"
                             [(ngModel)]="governorate.id"
+                            [disabled]="!isCreate"
                             name="id"
                             required
                         />
