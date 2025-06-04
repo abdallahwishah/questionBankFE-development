@@ -9,6 +9,7 @@ import { ActionButtonComponent } from '@app/shared/components/action-button/acti
 import { AutoCompleteFeildModule } from '@app/shared/components/auto-complete-feild/auto-complete-feild.module';
 import { FiltersComponent } from '@app/shared/components/filters/filters.component';
 import { ExtendTimeSessionComponent } from '../supervisors-students/components/extendTimeSession/extendTimeSession.component';
+import { BarChartModule, NgxChartsModule } from '@swimlane/ngx-charts';
 
 @NgModule({
     imports: [
@@ -24,7 +25,9 @@ import { ExtendTimeSessionComponent } from '../supervisors-students/components/e
         ActionButtonComponent,
         PaginatorComponent,
         AutoCompleteFeildModule,
-        FiltersComponent,ExtendTimeSessionComponent
+        FiltersComponent,
+        ExtendTimeSessionComponent,
+        BarChartModule,
     ],
     declarations: [SchoolsComponent],
 })

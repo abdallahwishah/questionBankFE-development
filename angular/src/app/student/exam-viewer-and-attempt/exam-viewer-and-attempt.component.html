@@ -74,13 +74,17 @@
                     </div>
                     <!--  -->
                     <ng-container *ngIf="!loading; else loader">
-                         <app-dynamic-exam-question
+                        <div
                             *ngIf="!showInstructions && question"
-                            [question]="question.question"
-                            [(ngModel)]="question.question"
-                            [questionType]="question.question?.question.type"
-                            style="display: block; margin-top: 1rem"
-                        ></app-dynamic-exam-question>
+                            style="display: flex; align-items: flex-start; gap: 0.5rem; margin-top: 1rem"
+                        >
+                            <app-dynamic-exam-question
+                                [question]="question.question"
+                                [(ngModel)]="question.question"
+                                [questionType]="question.question?.question.type"
+                                style="flex-grow: 1"
+                            ></app-dynamic-exam-question>
+                        </div>
                     </ng-container>
                 </ng-container>
             </div>

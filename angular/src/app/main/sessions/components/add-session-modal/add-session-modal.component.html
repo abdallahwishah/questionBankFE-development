@@ -175,6 +175,20 @@
                     <!-- <div class="col-12 mb-5">
                         <app-auto-complete [label]="l('Supervisor')" [placeholder]="l('ChooseTheSessionSupervisor')"></app-auto-complete>
                     </div> -->
+                    <div class="col-md-12 mb-5">
+                        <label class="mb-2">{{ l('PasswordMultiplier') }}</label>
+                        <input
+                            name="password"
+                            formControlName="passwordMultiplier"
+                            class="form-control"
+                            id="password"
+                            style="text-align: end"
+                            type="number"
+                        />
+                        <validation-messages
+                            [formCtrl]="FormAddSession.get('passwordMultiplier')"
+                        ></validation-messages>
+                    </div>
                     <div class="col-md-6 mb-5" *ngIf="status != sessionStatusEnum.NotStarted">
                         <label class="col-form-label">{{ l('SupervisorsFile') }}</label>
 

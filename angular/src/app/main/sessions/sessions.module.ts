@@ -32,6 +32,7 @@ import { SessionsServiceProxy } from '@shared/service-proxies/service-proxies';
       ]),
     ],
   declarations: [SessionsComponent],
-  providers:[SessionsServiceProxy]
+  providers:[SessionsServiceProxy],
+  exports:[SessionsComponent]
 })
 export class SessionsModule { }

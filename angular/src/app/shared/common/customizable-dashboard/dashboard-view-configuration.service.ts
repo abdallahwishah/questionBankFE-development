@@ -14,6 +14,9 @@ import { WidgetSubscriptionExpiringTenantsComponent } from './widgets/widget-sub
 import { WidgetHostTopStatsComponent } from './widgets/widget-host-top-stats/widget-host-top-stats.component';
 import { FilterDateRangePickerComponent } from './filters/filter-date-range-picker/filter-date-range-picker.component';
 import { WidgetTopStatsComponent } from './widgets/widget-top-stats/widget-top-stats.component';
+import { WidgetSessionStats } from './widgets/widget-session-stats/widget-session-stats.component';
+import { WidgetExamTemplateStats } from './widgets/widget-exam-template-stats/widget-exam-template-stats.component';
+import { WidgetSessionsComponent } from './widgets/widget-sessions/widget-sessions.component';
 
 @Injectable({
     providedIn: 'root',
@@ -29,7 +32,7 @@ export class DashboardViewConfigurationService {
     private initializeConfiguration() {
         let filterDateRangePicker = new WidgetFilterViewDefinition(
             DashboardCustomizationConst.filters.filterDateRangePicker,
-            FilterDateRangePickerComponent
+            FilterDateRangePickerComponent,
         );
         //add your filters here
         this.widgetFilterDefinitions.push(filterDateRangePicker);
@@ -38,64 +41,80 @@ export class DashboardViewConfigurationService {
             DashboardCustomizationConst.widgets.tenant.generalStats,
             WidgetGeneralStatsComponent,
             6,
-            4
+            4,
         );
 
         let dailySales = new WidgetViewDefinition(
             DashboardCustomizationConst.widgets.tenant.dailySales,
-            WidgetDailySalesComponent
+            WidgetDailySalesComponent,
         );
 
         let profitShare = new WidgetViewDefinition(
             DashboardCustomizationConst.widgets.tenant.profitShare,
-            WidgetProfitShareComponent
+            WidgetProfitShareComponent,
         );
 
         let memberActivity = new WidgetViewDefinition(
             DashboardCustomizationConst.widgets.tenant.memberActivity,
-            WidgetMemberActivityComponent
+            WidgetMemberActivityComponent,
         );
 
         let regionalStats = new WidgetViewDefinition(
             DashboardCustomizationConst.widgets.tenant.regionalStats,
-            WidgetRegionalStatsComponent
+            WidgetRegionalStatsComponent,
         );
 
         let salesSummary = new WidgetViewDefinition(
             DashboardCustomizationConst.widgets.tenant.salesSummary,
-            WidgetSalesSummaryComponent
+            WidgetSalesSummaryComponent,
         );
 
         let topStats = new WidgetViewDefinition(
             DashboardCustomizationConst.widgets.tenant.topStats,
-            WidgetTopStatsComponent
+            WidgetTopStatsComponent,
+        );
+
+        let sessionStats = new WidgetViewDefinition(
+            DashboardCustomizationConst.widgets.tenant.sessionStats,
+            WidgetSessionStats,
+        );
+
+        let examTamplateStats = new WidgetViewDefinition(
+            DashboardCustomizationConst.widgets.tenant.examTemplateStats,
+            WidgetExamTemplateStats,
+        );
+
+        let sessionsComponent = new WidgetViewDefinition(
+            DashboardCustomizationConst.widgets.tenant.sessions,
+            WidgetSessionsComponent,
         );
         //add your tenant side widgets here
 
         let incomeStatistics = new WidgetViewDefinition(
             DashboardCustomizationConst.widgets.host.incomeStatistics,
-            WidgetIncomeStatisticsComponent
+            WidgetIncomeStatisticsComponent,
         );
 
         let editionStatistics = new WidgetViewDefinition(
             DashboardCustomizationConst.widgets.host.editionStatistics,
-            WidgetEditionStatisticsComponent
+            WidgetEditionStatisticsComponent,
         );
 
         let recentTenants = new WidgetViewDefinition(
             DashboardCustomizationConst.widgets.host.recentTenants,
-            WidgetRecentTenantsComponent
+            WidgetRecentTenantsComponent,
         );
 
         let subscriptionExpiringTenants = new WidgetViewDefinition(
             DashboardCustomizationConst.widgets.host.subscriptionExpiringTenants,
-            WidgetSubscriptionExpiringTenantsComponent
+            WidgetSubscriptionExpiringTenantsComponent,
         );
 
         let hostTopStats = new WidgetViewDefinition(
             DashboardCustomizationConst.widgets.host.topStats,
-            WidgetHostTopStatsComponent
+            WidgetHostTopStatsComponent,
         );
+
         //add your host side widgets here
 
         this.WidgetViewDefinitions.push(generalStats);
@@ -110,5 +129,8 @@ export class DashboardViewConfigurationService {
         this.WidgetViewDefinitions.push(recentTenants);
         this.WidgetViewDefinitions.push(subscriptionExpiringTenants);
         this.WidgetViewDefinitions.push(hostTopStats);
+        this.WidgetViewDefinitions.push(sessionStats);
+        this.WidgetViewDefinitions.push(examTamplateStats);
+        this.WidgetViewDefinitions.push(sessionsComponent);
     }
 }

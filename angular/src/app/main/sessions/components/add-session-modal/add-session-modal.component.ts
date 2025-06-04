@@ -50,6 +50,7 @@ export class AddSessionsModalComponent extends AppComponentBase implements OnIni
             supervisorFileToken: [null],
             studentFileToken: [null],
             sessionNumber: [1],
+            passwordMultiplier: [2],
         });
     }
     ngOnInit(): void {
@@ -67,6 +68,7 @@ export class AddSessionsModalComponent extends AppComponentBase implements OnIni
                     this.status = null;
                     this.dataForEdit = null;
                     this.FormAddSession.reset();
+                    this.FormAddSession.get('passwordMultiplier').patchValue(2);
                 }
             });
 

@@ -1,4 +1,5 @@
-﻿import { CommonModule } from '@angular/common';
+﻿import { WidgetSessionStats } from './widgets/widget-session-stats/widget-session-stats.component';
+import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { CustomizableDashboardComponent } from '@app/shared/common/customizable-dashboard/customizable-dashboard.component';
 import { WidgetGeneralStatsComponent } from '@app/shared/common/customizable-dashboard/widgets/widget-general-stats/widget-general-stats.component';
@@ -30,6 +31,13 @@ import { Angular2CountoModule } from '@awaismirza/angular2-counto';
 import { TableModule } from 'primeng/table';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { SubheaderModule } from '../sub-header/subheader.module';
+import { WidgetExamTemplateStats } from './widgets/widget-exam-template-stats/widget-exam-template-stats.component';
+import { CalendarModule } from 'primeng/calendar';
+import { WidgetSessionsComponent } from './widgets/widget-sessions/widget-sessions.component';
+import { SessionsModule } from '@app/main/sessions/sessions.module';
+import { DropdownFieldComponent } from '@app/shared/components/fields/dropdown-field/dropdown-field.component';
+import { PaginatorModule } from 'primeng/paginator';
+import { ActionButtonComponent } from '@app/shared/components/action-button/action-button.component';
 
 @NgModule({
     imports: [
@@ -50,6 +58,11 @@ import { SubheaderModule } from '../sub-header/subheader.module';
         TableModule,
         BsDatepickerModule,
         SubheaderModule,
+        CalendarModule,
+        SessionsModule,
+        DropdownFieldComponent,
+        PaginatorModule,
+        ActionButtonComponent
     ],
 
     declarations: [
@@ -69,6 +82,9 @@ import { SubheaderModule } from '../sub-header/subheader.module';
         FilterDateRangePickerComponent,
         AddWidgetModalComponent,
         WidgetComponentBaseComponent,
+        WidgetExamTemplateStats,
+        WidgetSessionStats,
+        WidgetSessionsComponent,
     ],
 
     providers: [DashboardViewConfigurationService],
@@ -89,6 +105,9 @@ import { SubheaderModule } from '../sub-header/subheader.module';
         WidgetTopStatsComponent,
         FilterDateRangePickerComponent,
         AddWidgetModalComponent,
+        WidgetExamTemplateStats,
+        WidgetSessionStats,
+        WidgetSessionsComponent,
     ],
 })
 export class CustomizableDashboardModule {}

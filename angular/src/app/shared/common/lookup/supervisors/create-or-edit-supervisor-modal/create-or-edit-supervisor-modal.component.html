@@ -1,0 +1,468 @@
+<div
+    bsModal
+    #createOrEditModal="bs-modal"
+    class="modal fade"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="createOrEditModal"
+    aria-hidden="true"
+    [config]="{ backdrop: 'static' }"
+>
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form *ngIf="active">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="supervisor.supervisor.id">{{ l('EditSupervisor') }}</span>
+                        <span *ngIf="!supervisor.supervisor.id">{{ l('CreateNewSupervisor') }}</span>
+                    </h4>
+
+                    <button
+                        type="button"
+                        class="btn-close"
+                        (click)="close()"
+                        aria-label="Close"
+                        [disabled]="saving"
+                    ></button>
+                </div>
+                <div class="modal-body">
+                    <form *ngIf="active" #userForm="ngForm" novalidate>
+                        <div class="row">
+                            <div class="col-sm-3 text-center mb-5 mt-5">
+                                <img
+                                    src="{{ profilePicture }}"
+                                    width="128"
+                                    height="128"
+                                    class="img-thumbnail img-rounded"
+                                />
+                                <button
+                                    type="button"
+                                    class="btn btn-light btn-sm mb-5 mt-5"
+                                    (click)="changeProfilePictureModal.show(supervisor.user.id)"
+                                    *ngIf="canChangeProfilePicture"
+                                >
+                                    {{ 'ChangeProfilePicture' | localize }}
+                                </button>
+                            </div>
+                            <div class="col-sm-9">
+                                <div class="mb-5">
+                                    <label class="form-label required" for="Name">{{ 'FirstName' | localize }}</label>
+                                    <input
+                                        id="Name"
+                                        #nameInput="ngModel"
+                                        class="form-control"
+                                        type="text"
+                                        name="Name"
+                                        [(ngModel)]="supervisor.user.name"
+                                        required
+                                        maxlength="64"
+                                    />
+                                    <validation-messages [formCtrl]="nameInput"></validation-messages>
+                                </div>
+
+                                <div class="mb-5">
+                                    <label class="form-label required" for="Surname">{{ 'Surname' | localize }}</label>
+                                    <input
+                                        id="Surname"
+                                        #surnameInput="ngModel"
+                                        type="text"
+                                        name="Surname"
+                                        class="form-control"
+                                        [(ngModel)]="supervisor.user.surname"
+                                        required
+                                        maxlength="64"
+                                    />
+                                    <validation-messages [formCtrl]="surnameInput"></validation-messages>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-5">
+                            <label class="form-label required" for="EmailAddress">
+                                {{ 'EmailAddress' | localize }}
+                            </label>
+                            <input
+                                id="EmailAddress"
+                                #emailAddressInput="ngModel"
+                                type="email"
+                                name="EmailAddress"
+                                class="form-control"
+                                [(ngModel)]="supervisor.user.emailAddress"
+                                [disabled]="supervisor.supervisor.id"
+                                required
+                                maxlength="256"
+                                email
+                            />
+                            <validation-messages [formCtrl]="emailAddressInput"></validation-messages>
+                        </div>
+
+                        <div class="mb-5">
+                            <label class="form-label" for="PhoneNumber">{{ 'PhoneNumber' | localize }}</label>
+                            <input
+                                id="PhoneNumber"
+                                type="text"
+                                name="PhoneNumber"
+                                class="form-control"
+                                [(ngModel)]="supervisor.user.phoneNumber"
+                                maxlength="32"
+                            />
+                        </div>
+
+                        <div class="mb-5">
+                            <label class="form-label required" for="UserName">{{ 'UserName' | localize }}</label>
+                            <div class="input-group">
+                                <input
+                                    id="UserName"
+                                    #userNameInput="ngModel"
+                                    type="text"
+                                    [disabled]="!canChangeUserName"
+                                    name="UserName"
+                                    class="form-control"
+                                    [(ngModel)]="supervisor.user.userName"
+                                    (ngModelChange)="supervisor.user.identityNumber = $event"
+                                    [disabled]="supervisor.supervisor.id"
+                                    required
+                                    maxlength="256"
+                                />
+                                <span
+                                    class="input-group-text"
+                                    tooltip="{{
+                                        'AllowedUserNameCharactersInfoText' | localize: allowedUserNameCharacters
+                                    }}"
+                                >
+                                    <i class="fas fa-info-circle"></i>
+                                </span>
+                            </div>
+                            <span class="form-text text-muted" *ngIf="!canChangeUserName">
+                                {{ 'CanNotChangeAdminUserName' | localize }}
+                            </span>
+                            <validation-messages [formCtrl]="userNameInput"></validation-messages>
+                        </div>
+                        <div class="mb-5 gap-3 d-flex">
+                            <div class="w-50">
+                                <label class="form-label" for="identityNumber">{{ 'IdentityNumber' | localize }}</label>
+                                <input
+                                    id="identityNumber"
+                                    type="text"
+                                    name="identityNumber"
+                                    class="form-control"
+                                    required
+                                    #identityNumber="ngModel"
+                                    [(ngModel)]="supervisor.user.identityNumber"
+                                    [disabled]="supervisor.supervisor.id"
+                                    (ngModelChange)="supervisor.user.userName = $event"
+                                />
+                                <validation-messages [formCtrl]="identityNumber"></validation-messages>
+                            </div>
+                            <div class="w-50">
+                                <label class="form-label" for="Governorate">{{ 'Governorate' | localize }}</label>
+                                <p-dropdown
+                                    id="Governorate"
+                                    type="text"
+                                    name="Governorate"
+                                    class="d-flex flex-column"
+                                    #governorate="ngModel"
+                                    [(ngModel)]="supervisor.user.governorateId"
+                                    [options]="allGovernorates"
+                                    optionLabel="name"
+                                    optionValue="value"
+                                ></p-dropdown>
+                                <validation-messages [formCtrl]="governorate"></validation-messages>
+                            </div>
+                        </div>
+                        <div class="my-5 gap-3 d-flex">
+                            <div class="w-50">
+                                <label class="form-label" for="Year">{{ 'Year' | localize }}</label>
+                                <input
+                                    id="Year"
+                                    type="number"
+                                    name="Year"
+                                    class="form-control"
+                                    maxlength="32"
+                                    required
+                                    #year="ngModel"
+                                    [(ngModel)]="supervisor.supervisor.year"
+                                />
+                                <validation-messages [formCtrl]="year"></validation-messages>
+                            </div>
+                            <div class="w-50">
+                                <label class="form-label" for="cycleNumber">{{ 'CycleNumber' | localize }}</label>
+                                <input
+                                    id="cycleNumber"
+                                    type="number"
+                                    name="cycleNumber"
+                                    class="form-control"
+                                    maxlength="32"
+                                    required
+                                    #cycleNumber="ngModel"
+                                    [(ngModel)]="supervisor.supervisor.cycleNumber"
+                                />
+                                <validation-messages [formCtrl]="cycleNumber"></validation-messages>
+                            </div>
+                        </div>
+
+                        <div class="w-100 mb-5">
+                            <label class="form-label" for="City">{{ 'Address' | localize }}</label>
+                            <textarea
+                                id="City"
+                                type="text"
+                                name="City"
+                                class="form-control"
+                                #city="ngModel"
+                                [(ngModel)]="supervisor.supervisor.city"
+                            ></textarea>
+                            <validation-messages [formCtrl]="city"></validation-messages>
+                        </div>
+                        <label class="form-check form-check-custom form-check-solid py-1">
+                            <input
+                                id="EditUser_SetRandomPassword"
+                                type="checkbox"
+                                name="SetRandomPassword"
+                                [(ngModel)]="setRandomPassword"
+                                (ngModelChange)="setRandomPasswordChange($event)"
+                                class="form-check-input"
+                            />
+                            <span class="form-check-label">
+                                {{ 'SetRandomPassword' | localize }}
+                            </span>
+                        </label>
+                        <div class="mb-5" *ngIf="!setRandomPassword" data-kt-password-meter="true">
+                            <div class="right">
+                                <label class="form-label" for="Password">{{ 'Password' | localize }}</label>
+                                <div class="position-relative mb-3">
+                                    <input
+                                        id="Password"
+                                        type="password"
+                                        name="Password"
+                                        #Password="ngModel"
+                                        id="Password"
+                                        class="form-control password-meter"
+                                        [(ngModel)]="supervisor.user.password"
+                                        [required]="!supervisor.user.id && !setRandomPassword"
+                                        maxlength="32"
+                                        [requireDigit]="passwordComplexitySetting.requireDigit"
+                                        [requireLowercase]="passwordComplexitySetting.requireLowercase"
+                                        [requireUppercase]="passwordComplexitySetting.requireUppercase"
+                                        [requireNonAlphanumeric]="passwordComplexitySetting.requireNonAlphanumeric"
+                                        [requiredLength]="passwordComplexitySetting.requiredLength"
+                                        validateEqual="PasswordRepeat"
+                                        reverse="true"
+                                        autocomplete="new-password"
+                                    />
+                                    <!--begin::Visibility toggle-->
+                                    <span
+                                        class="btn btn-sm btn-icon position-absolute translate-middle top-50 end-0 me-n2"
+                                        data-kt-password-meter-control="visibility"
+                                    >
+                                        <i class="fas fa-eye-slash fs-4">
+                                            <span class="path1"></span>
+                                            <span class="path2"></span>
+                                            <span class="path3"></span>
+                                            <span class="path4"></span>
+                                        </i>
+                                        <i class="fas fa-eye d-none fs-4">
+                                            <span class="path1"></span>
+                                            <span class="path2"></span>
+                                            <span class="path3"></span>
+                                        </i>
+                                    </span>
+                                    <!--end::Visibility toggle-->
+                                </div>
+                            </div>
+                        </div>
+                        <div [hidden]="setRandomPassword || userForm.form.valid || userForm.form.pristine">
+                            <ul
+                                class="help-block text-danger"
+                                *ngIf="userForm.controls['Password'] && userForm.controls['Password'].errors"
+                            >
+                                <li [hidden]="!userForm.controls['Password'].errors.requireDigit">
+                                    {{ 'PasswordComplexity_RequireDigit_Hint' | localize }}
+                                </li>
+                                <li [hidden]="!userForm.controls['Password'].errors.requireLowercase">
+                                    {{ 'PasswordComplexity_RequireLowercase_Hint' | localize }}
+                                </li>
+                                <li [hidden]="!userForm.controls['Password'].errors.requireUppercase">
+                                    {{ 'PasswordComplexity_RequireUppercase_Hint' | localize }}
+                                </li>
+                                <li [hidden]="!userForm.controls['Password'].errors.requireNonAlphanumeric">
+                                    {{ 'PasswordComplexity_RequireNonAlphanumeric_Hint' | localize }}
+                                </li>
+                                <li [hidden]="!userForm.controls['Password'].errors.requiredLength">
+                                    {{
+                                        'PasswordComplexity_RequiredLength_Hint'
+                                            | localize: passwordComplexitySetting.requiredLength
+                                    }}
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="mb-5" *ngIf="!setRandomPassword" data-kt-password-meter="true">
+                            <div class="right">
+                                <label class="form-label" for="PasswordRepeat">
+                                    {{ 'PasswordRepeat' | localize }}
+                                </label>
+                                <div class="position-relative mb-3">
+                                    <input
+                                        id="PasswordRepeat"
+                                        type="password"
+                                        name="PasswordRepeat"
+                                        #PasswordRepeat="ngModel"
+                                        class="form-control"
+                                        [(ngModel)]="userPasswordRepeat"
+                                        [required]="!supervisor.user.id && !setRandomPassword"
+                                        maxlength="32"
+                                        [requireDigit]="passwordComplexitySetting.requireDigit"
+                                        [requireLowercase]="passwordComplexitySetting.requireLowercase"
+                                        [requireUppercase]="passwordComplexitySetting.requireUppercase"
+                                        [requireNonAlphanumeric]="passwordComplexitySetting.requireNonAlphanumeric"
+                                        [requiredLength]="passwordComplexitySetting.requiredLength"
+                                        validateEqual="Password"
+                                        reverse="false"
+                                        autocomplete="new-password"
+                                    />
+                                    <span
+                                        class="btn btn-sm btn-icon position-absolute translate-middle top-50 end-0 me-n2"
+                                        data-kt-password-meter-control="visibility"
+                                    >
+                                        <i class="fas fa-eye-slash fs-4">
+                                            <span class="path1"></span>
+                                            <span class="path2"></span>
+                                            <span class="path3"></span>
+                                            <span class="path4"></span>
+                                        </i>
+                                        <i class="fas fa-eye d-none fs-4">
+                                            <span class="path1"></span>
+                                            <span class="path2"></span>
+                                            <span class="path3"></span>
+                                        </i>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div [hidden]="setRandomPassword || userForm.form.valid || userForm.form.pristine">
+                            <ul
+                                class="help-block text-danger"
+                                *ngIf="
+                                    userForm.controls['PasswordRepeat'] && userForm.controls['PasswordRepeat'].errors
+                                "
+                            >
+                                <li [hidden]="!userForm.controls['PasswordRepeat'].errors.requireDigit">
+                                    {{ 'PasswordComplexity_RequireDigit_Hint' | localize }}
+                                </li>
+                                <li [hidden]="!userForm.controls['PasswordRepeat'].errors.requireLowercase">
+                                    {{ 'PasswordComplexity_RequireLowercase_Hint' | localize }}
+                                </li>
+                                <li [hidden]="!userForm.controls['PasswordRepeat'].errors.requireUppercase">
+                                    {{ 'PasswordComplexity_RequireUppercase_Hint' | localize }}
+                                </li>
+                                <li [hidden]="!userForm.controls['PasswordRepeat'].errors.requireNonAlphanumeric">
+                                    {{ 'PasswordComplexity_RequireNonAlphanumeric_Hint' | localize }}
+                                </li>
+                                <li [hidden]="!userForm.controls['PasswordRepeat'].errors.requiredLength">
+                                    {{
+                                        'PasswordComplexity_RequiredLength_Hint'
+                                            | localize: passwordComplexitySetting.requiredLength
+                                    }}
+                                </li>
+                                <li [hidden]="userForm.controls['PasswordRepeat'].valid">
+                                    {{ 'PasswordsDontMatch' | localize }}
+                                </li>
+                            </ul>
+                        </div>
+
+                        <label class="form-check form-check-custom form-check-solid py-1">
+                            <input
+                                id="EditUser_ShouldChangePasswordOnNextLogin"
+                                type="checkbox"
+                                name="ShouldChangePasswordOnNextLogin"
+                                [(ngModel)]="supervisor.user.shouldChangePasswordOnNextLogin"
+                                class="form-check-input"
+                            />
+                            <span class="form-check-label">
+                                {{ 'ShouldChangePasswordOnNextLogin' | localize }}
+                            </span>
+                        </label>
+
+                        <span class="form-text text-muted" *ngIf="!isSMTPSettingsProvided">
+                            {{ 'SMTPSettingsNotProvidedWarningText' | localize }}
+                        </span>
+
+                        <label
+                            class="form-check form-check-custom form-check-solid py-1"
+                            [class.checkbox-disabled]="!isSMTPSettingsProvided"
+                        >
+                            <input
+                                id="EditUser_SendActivationEmail"
+                                type="checkbox"
+                                name="SendActivationEmail"
+                                [(ngModel)]="sendActivationEmail"
+                                class="form-check-input"
+                                [disabled]="!isSMTPSettingsProvided"
+                            />
+                            <span class="form-check-label">
+                                {{ 'SendActivationEmail' | localize }}
+                            </span>
+                        </label>
+
+                        <label class="form-check form-check-custom form-check-solid py-1">
+                            <input
+                                id="EditUser_IsActive"
+                                type="checkbox"
+                                name="IsActive"
+                                [(ngModel)]="supervisor.user.isActive"
+                                class="form-check-input"
+                            />
+                            <span class="form-check-label">
+                                {{ 'Active' | localize }}
+                            </span>
+                        </label>
+
+                        <label class="form-check form-check-custom form-check-solid py-1" *ngIf="isTwoFactorEnabled">
+                            <input
+                                id="EditUser_IsTwoFactorEnabled"
+                                type="checkbox"
+                                name="IsTwoFactorEnabled"
+                                [(ngModel)]="supervisor.user.isTwoFactorEnabled"
+                                class="form-check-input"
+                            />
+                            <span class="form-check-label">
+                                {{ 'IsTwoFactorEnabled' | localize }}
+                            </span>
+                        </label>
+
+                        <label class="form-check form-check-custom form-check-solid py-1" *ngIf="isLockoutEnabled">
+                            <!-- [(ngModel)]="user.isLockoutEnabled" -->
+                            <input
+                                id="EditUser_IsLockoutEnabled"
+                                type="checkbox"
+                                name="IsLockoutEnabled"
+                                class="form-check-input"
+                            />
+                            <span class="form-check-label">
+                                {{ 'IsLockoutEnabled' | localize }}
+                            </span>
+                            <i class="fas fa-info-circle ms-2" tooltip="{{ 'IsLockoutEnabled_Hint' | localize }}"></i>
+                        </label>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">
+                        {{ l('Cancel') }}
+                    </button>
+                    <button
+                        type="submit"
+                        class="btn btn-primary blue"
+                        [buttonBusy]="saving"
+                        [busyText]="l('SavingWithThreeDot')"
+                        (click)="save()"
+                    >
+                        <i class="fa fa-save"></i>
+                        <span>{{ l('Save') }}</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <changeProfilePictureModal
+        #changeProfilePictureModal
+        (modalSave)="getProfilePicture($event)"
+    ></changeProfilePictureModal>
+</div>

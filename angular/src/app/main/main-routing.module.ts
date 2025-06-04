@@ -111,6 +111,20 @@ import { RouterModule } from '@angular/router';
                             ),
                     },
                     {
+                        path: 'students',
+                        loadChildren: () =>
+                            import('../shared/common/lookup/students/students.module').then(
+                                (m) => m.StudentsModule,
+                            ),
+                    },
+                    {
+                        path: 'supervisors',
+                        loadChildren: () =>
+                            import('../shared/common/lookup/supervisors/supervisors.module').then(
+                                (m) => m.SupervisorsModule,
+                            ),
+                    },
+                    {
                         path: 'report/reportItems',
                         loadChildren: () => import('./reportItems/reportItem.module').then((m) => m.ReportItemModule),
                         data: { permission: 'Pages.ReportItems' },

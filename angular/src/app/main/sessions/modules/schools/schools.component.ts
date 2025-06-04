@@ -1,3 +1,4 @@
+import { map } from 'rxjs/operators';
 import {
     GetSessionForViewDto,
     SessionStatusEnum,
@@ -5,7 +6,7 @@ import {
     SupervisorDto,
 } from './../../../../../shared/service-proxies/service-proxies';
 // schools.component.ts
-import { ChangeDetectorRef, Component, Injector, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, Injector, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { AppComponentBase } from '@shared/common/app-component-base';
 import { SessionsServiceProxy } from '@shared/service-proxies/service-proxies';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -33,6 +34,7 @@ interface SchoolClass {
 export class SchoolsComponent extends AppComponentBase implements OnInit {
     @ViewChild('dataTable', { static: true }) dataTable: Table;
     @ViewChild('paginator', { static: true }) paginator: Paginator;
+    @ViewChild('customTooltip', { static: true }) customTooltip: TemplateRef<any>;
     filter: string;
     SessionId: any;
     expandedRows: any = {};
@@ -43,7 +45,39 @@ export class SchoolsComponent extends AppComponentBase implements OnInit {
     statusId: any;
     sessionStatusEnum = SessionStatusEnum;
     session: GetSessionForViewDto | any;
+    studentCount: number;
+    showChart: boolean = true;
+    noData: boolean = false;
+    answerPercentagesByQuestion: { name: string; value: number }[] = [];
 
+    single = [
+        { name: '', value: 0 },
+        {
+            name: 'Germany',
+            value: 8940000,
+        },
+        {
+            name: 'USA',
+            value: 5000000,
+        },
+        {
+            name: 'France',
+            value: 7200000,
+        },
+    ];
+
+    // options
+    showXAxis = false;
+    showYAxis = true;
+    gradient = false;
+    showXAxisLabel = false;
+    xAxisLabel = 'Question';
+    showYAxisLabel = true;
+    yAxisLabel = 'Percentage';
+
+    colorScheme = {
+        domain: ['#5AA454'],
+    };
     constructor(
         private _injector: Injector,
         private _SessionsServiceProxy: SessionsServiceProxy,
@@ -63,7 +97,14 @@ export class SchoolsComponent extends AppComponentBase implements OnInit {
     toggleStudentLevelCard(): void {
         this.isStudentLevelCardCollapsed = !this.isStudentLevelCardCollapsed;
     }
+    public isQuestionCardCollapsed = true; // Start collapsed by default
+    toggleQuestionCard(): void {
+        this.isQuestionCardCollapsed = !this.isQuestionCardCollapsed;
+    }
+
     ngAfterViewInit() {
+        this.showChart = false;
+        this.studentCount = 0;
         this._ActivatedRoute.paramMap?.subscribe((params) => {
             this.SessionId = Number(params?.get('id'));
             this._sessionsServiceProxy?.getSessionForView(this.SessionId).subscribe((value) => {
@@ -73,6 +114,18 @@ export class SchoolsComponent extends AppComponentBase implements OnInit {
                         ...Object.entries(value?.studentCountBasedOnLevel).map(([key, value]) => ({ key, value })),
                     ],
                 };
+                Object.entries(value?.studentCountBasedOnLevel).map(([key, value]) => {
+                    this.studentCount += value;
+                });
+
+                Object.entries(value?.answerPercentagesByQuestion).map(([key, value]) => {
+                    this.answerPercentagesByQuestion.push({
+                        name: key.replace(/<[^>]*>/g, ''),
+                        value: value ? value * 100 : 0.000001,
+                    });
+                });
+                this.showChart = true;
+                this.noData = Object.entries(value?.answerPercentagesByQuestion).length == 0;
             });
             this.cdr.detectChanges();
             this.getList();

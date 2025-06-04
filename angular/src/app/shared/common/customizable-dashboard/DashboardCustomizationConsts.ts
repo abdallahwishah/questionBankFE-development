@@ -8,6 +8,9 @@
             topStats: 'Widgets_Tenant_TopStats',
             generalStats: 'Widgets_Tenant_GeneralStats',
             dailySales: 'Widgets_Tenant_DailySales',
+            sessionStats: 'Widgets_Tenant_SessionStats',
+            examTemplateStats: 'Widgets_Tenant_ExamTemplateStats',
+            sessions: 'Widgets_Tenant_Sessions',
         },
         host: {
             topStats: 'Widgets_Host_TopStats',

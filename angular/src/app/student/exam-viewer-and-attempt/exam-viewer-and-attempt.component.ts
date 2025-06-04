@@ -260,7 +260,6 @@ export class ExamViewerAndAttemptComponent extends AppComponentBase implements O
     }
 
     private updateQuestion(response: any) {
-
         switch (response.status) {
             case StudentExamStatus.ReachedExamEnd:
                 this.end();
@@ -392,6 +391,7 @@ export class ExamViewerAndAttemptComponent extends AppComponentBase implements O
                 questionId,
                 examId,
                 sectionNo,
+                undefined,
                 undefined,
                 undefined,
                 undefined,

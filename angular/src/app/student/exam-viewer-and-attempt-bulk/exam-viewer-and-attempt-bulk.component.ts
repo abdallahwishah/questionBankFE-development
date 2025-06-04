@@ -358,7 +358,7 @@ export class ExamViewerAndAttemptBulkComponent extends AppComponentBase implemen
         let checked = this.checkAnswered();
         if (!checked) {
             return;
-        }else{
+        } else {
             this.currentQuestion.isSynced = true;
         }
 
@@ -433,6 +433,7 @@ export class ExamViewerAndAttemptBulkComponent extends AppComponentBase implemen
         if (!this.examData || !this.questionlist.length) return;
         let toSend = [];
 
+        console.log(this.questionlist);
         if (this.FaildQuestions?.length) {
             let FaildReqs = this.questionlist
                 ?.map((value) => {
@@ -531,7 +532,7 @@ export class ExamViewerAndAttemptBulkComponent extends AppComponentBase implemen
         dto.sectionId = q.sectionId;
         dto.sectionNo = q.sectionNo;
         dto.type = q.question?.question?.question?.type;
-
+        dto.isFlaggedForReview = q.isFlaggedForReview;
         // fill relevant answer property
         switch (dto.type) {
             case QuestionTypeEnum.MutliChoice:

@@ -10034,9 +10034,10 @@ export class ExamsServiceProxy {
      * @param linkedQuestionAnswer (optional) 
      * @param drawingAnswer (optional) 
      * @param drawingPoints (optional) 
+     * @param isFlaggedForReview (optional) 
      * @return Success
      */
-    getSelectedQuestion(questionNoInGeneral: number | undefined, questionNo: number | undefined, sectionId: number | undefined, questionId: number | undefined, examId: number | undefined, sectionNo: number | undefined, type: number | undefined, multipleChoiceAnswer: number[] | undefined, singleChoiceAnswer: number | undefined, trueFalseAnswer: number | undefined, matchAnswer: string[] | undefined, rearrangeAnswer: string[] | undefined, saAnswer: string | undefined, dragTableAnswer: DragTableAnswer[] | undefined, dragFormAnswer: DragFormAnswer[] | undefined, linkedQuestionAnswer: SubQuestionAnswer[] | undefined, drawingAnswer: string | undefined, drawingPoints: any | undefined): Observable<QuestionWithAnswerDto> {
+    getSelectedQuestion(questionNoInGeneral: number | undefined, questionNo: number | undefined, sectionId: number | undefined, questionId: number | undefined, examId: number | undefined, sectionNo: number | undefined, type: number | undefined, multipleChoiceAnswer: number[] | undefined, singleChoiceAnswer: number | undefined, trueFalseAnswer: number | undefined, matchAnswer: string[] | undefined, rearrangeAnswer: string[] | undefined, saAnswer: string | undefined, dragTableAnswer: DragTableAnswer[] | undefined, dragFormAnswer: DragFormAnswer[] | undefined, linkedQuestionAnswer: SubQuestionAnswer[] | undefined, drawingAnswer: string | undefined, drawingPoints: any | undefined, isFlaggedForReview: boolean | undefined): Observable<QuestionWithAnswerDto> {
         let url_ = this.baseUrl + "/api/services/app/Exams/GetSelectedQuestion?";
         if (questionNoInGeneral === null)
             throw new Error("The parameter 'questionNoInGeneral' cannot be null.");
@@ -10125,6 +10126,10 @@ export class ExamsServiceProxy {
             throw new Error("The parameter 'drawingPoints' cannot be null.");
         else if (drawingPoints !== undefined)
             url_ += "DrawingPoints=" + encodeURIComponent("" + drawingPoints) + "&";
+        if (isFlaggedForReview === null)
+            throw new Error("The parameter 'isFlaggedForReview' cannot be null.");
+        else if (isFlaggedForReview !== undefined)
+            url_ += "IsFlaggedForReview=" + encodeURIComponent("" + isFlaggedForReview) + "&";
         url_ = url_.replace(/[?&]$/, "");
 
         let options_ : any = {
@@ -12287,6 +12292,64 @@ export class GovernoratesServiceProxy {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
             result200 = FileDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @return Success
+     */
+    getGovernoratesForDropdown(): Observable<NameValueDtoOfInt32[]> {
+        let url_ = this.baseUrl + "/api/services/app/Governorates/GetGovernoratesForDropdown";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetGovernoratesForDropdown(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetGovernoratesForDropdown(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<NameValueDtoOfInt32[]>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<NameValueDtoOfInt32[]>;
+        }));
+    }
+
+    protected processGetGovernoratesForDropdown(response: HttpResponseBase): Observable<NameValueDtoOfInt32[]> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(NameValueDtoOfInt32.fromJS(item));
+            }
+            else {
+                result200 = <any>null;
+            }
             return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
@@ -26587,6 +26650,64 @@ export class StudyLevelsServiceProxy {
         }
         return _observableOf(null as any);
     }
+
+    /**
+     * @return Success
+     */
+    getStudyLevelsForDropdown(): Observable<NameValueDtoOfInt32[]> {
+        let url_ = this.baseUrl + "/api/services/app/StudyLevels/GetStudyLevelsForDropdown";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetStudyLevelsForDropdown(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetStudyLevelsForDropdown(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<NameValueDtoOfInt32[]>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<NameValueDtoOfInt32[]>;
+        }));
+    }
+
+    protected processGetStudyLevelsForDropdown(response: HttpResponseBase): Observable<NameValueDtoOfInt32[]> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(NameValueDtoOfInt32.fromJS(item));
+            }
+            else {
+                result200 = <any>null;
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
 }
 
 @Injectable()
@@ -31396,6 +31517,113 @@ export class TenantDashboardServiceProxy {
         }
         return _observableOf(null as any);
     }
+
+    /**
+     * @return Success
+     */
+    getSessionStats(): Observable<GetSessionStatsOutput> {
+        let url_ = this.baseUrl + "/api/services/app/TenantDashboard/GetSessionStats";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetSessionStats(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetSessionStats(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<GetSessionStatsOutput>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<GetSessionStatsOutput>;
+        }));
+    }
+
+    protected processGetSessionStats(response: HttpResponseBase): Observable<GetSessionStatsOutput> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = GetSessionStatsOutput.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param year (optional) 
+     * @return Success
+     */
+    getExamTemplateStats(year: number | undefined): Observable<GetExamTemplateStatsOutput> {
+        let url_ = this.baseUrl + "/api/services/app/TenantDashboard/GetExamTemplateStats?";
+        if (year === null)
+            throw new Error("The parameter 'year' cannot be null.");
+        else if (year !== undefined)
+            url_ += "year=" + encodeURIComponent("" + year) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetExamTemplateStats(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetExamTemplateStats(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<GetExamTemplateStatsOutput>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<GetExamTemplateStatsOutput>;
+        }));
+    }
+
+    protected processGetExamTemplateStats(response: HttpResponseBase): Observable<GetExamTemplateStatsOutput> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = GetExamTemplateStatsOutput.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
 }
 
 @Injectable()
@@ -33807,7 +34035,7 @@ export class UserServiceProxy {
      * @param body (optional) 
      * @return Success
      */
-    createOrUpdateUser(body: CreateOrUpdateUserInput | undefined): Observable<void> {
+    createOrUpdateUser(body: CreateOrUpdateUserInput | undefined): Observable<number> {
         let url_ = this.baseUrl + "/api/services/app/User/CreateOrUpdateUser";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -33819,6 +34047,7 @@ export class UserServiceProxy {
             responseType: "blob",
             headers: new HttpHeaders({
                 "Content-Type": "application/json",
+                "Accept": "text/plain"
             })
         };
 
@@ -33829,14 +34058,14 @@ export class UserServiceProxy {
                 try {
                     return this.processCreateOrUpdateUser(response_ as any);
                 } catch (e) {
-                    return _observableThrow(e) as any as Observable<void>;
+                    return _observableThrow(e) as any as Observable<number>;
                 }
             } else
-                return _observableThrow(response_) as any as Observable<void>;
+                return _observableThrow(response_) as any as Observable<number>;
         }));
     }
 
-    protected processCreateOrUpdateUser(response: HttpResponseBase): Observable<void> {
+    protected processCreateOrUpdateUser(response: HttpResponseBase): Observable<number> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -33845,7 +34074,11 @@ export class UserServiceProxy {
         let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
         if (status === 200) {
             return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            return _observableOf(null as any);
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+                result200 = resultData200 !== undefined ? resultData200 : <any>null;
+    
+            return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
             return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
@@ -38178,6 +38411,7 @@ export class CreateOrEditExamAnswerDto implements ICreateOrEditExamAnswerDto {
     optionId!: number | undefined;
     subQuestionId!: number | undefined;
     attemptId!: string;
+    isFlaggedForReview!: boolean;
 
     constructor(data?: ICreateOrEditExamAnswerDto) {
         if (data) {
@@ -38199,6 +38433,7 @@ export class CreateOrEditExamAnswerDto implements ICreateOrEditExamAnswerDto {
             this.optionId = _data["optionId"];
             this.subQuestionId = _data["subQuestionId"];
             this.attemptId = _data["attemptId"];
+            this.isFlaggedForReview = _data["isFlaggedForReview"];
         }
     }
 
@@ -38220,6 +38455,7 @@ export class CreateOrEditExamAnswerDto implements ICreateOrEditExamAnswerDto {
         data["optionId"] = this.optionId;
         data["subQuestionId"] = this.subQuestionId;
         data["attemptId"] = this.attemptId;
+        data["isFlaggedForReview"] = this.isFlaggedForReview;
         return data;
     }
 }
@@ -38234,6 +38470,7 @@ export interface ICreateOrEditExamAnswerDto {
     optionId: number | undefined;
     subQuestionId: number | undefined;
     attemptId: string;
+    isFlaggedForReview: boolean;
 }
 
 export class CreateOrEditExamAttemptDto implements ICreateOrEditExamAttemptDto {
@@ -39330,6 +39567,7 @@ export class CreateOrEditSessionDto implements ICreateOrEditSessionDto {
     examTemplateId!: number;
     supervisorFileToken!: string | undefined;
     studentFileToken!: string | undefined;
+    passwordMultiplier!: number;
 
     constructor(data?: ICreateOrEditSessionDto) {
         if (data) {
@@ -39349,6 +39587,7 @@ export class CreateOrEditSessionDto implements ICreateOrEditSessionDto {
             this.examTemplateId = _data["examTemplateId"];
             this.supervisorFileToken = _data["supervisorFileToken"];
             this.studentFileToken = _data["studentFileToken"];
+            this.passwordMultiplier = _data["passwordMultiplier"];
         }
     }
 
@@ -39368,6 +39607,7 @@ export class CreateOrEditSessionDto implements ICreateOrEditSessionDto {
         data["examTemplateId"] = this.examTemplateId;
         data["supervisorFileToken"] = this.supervisorFileToken;
         data["studentFileToken"] = this.studentFileToken;
+        data["passwordMultiplier"] = this.passwordMultiplier;
         return data;
     }
 }
@@ -39380,6 +39620,7 @@ export interface ICreateOrEditSessionDto {
     examTemplateId: number;
     supervisorFileToken: string | undefined;
     studentFileToken: string | undefined;
+    passwordMultiplier: number;
 }
 
 export class CreateOrEditSessionSupervisorDto implements ICreateOrEditSessionSupervisorDto {
@@ -39481,11 +39722,12 @@ export interface ICreateOrEditSiteTrackerDto {
 export class CreateOrEditStudentDto implements ICreateOrEditStudentDto {
     id!: number | undefined;
     city!: string | undefined;
-    userId!: number;
+    createOrUpdateUserInput!: CreateOrUpdateUserInput;
     year!: number;
     cycleNumber!: number;
     studentNumber!: string | undefined;
     studyLevelId!: number | undefined;
+    governorateId!: number;
 
     constructor(data?: ICreateOrEditStudentDto) {
         if (data) {
@@ -39500,11 +39742,12 @@ export class CreateOrEditStudentDto implements ICreateOrEditStudentDto {
         if (_data) {
             this.id = _data["id"];
             this.city = _data["city"];
-            this.userId = _data["userId"];
+            this.createOrUpdateUserInput = _data["createOrUpdateUserInput"] ? CreateOrUpdateUserInput.fromJS(_data["createOrUpdateUserInput"]) : <any>undefined;
             this.year = _data["year"];
             this.cycleNumber = _data["cycleNumber"];
             this.studentNumber = _data["studentNumber"];
             this.studyLevelId = _data["studyLevelId"];
+            this.governorateId = _data["governorateId"];
         }
     }
 
@@ -39519,11 +39762,12 @@ export class CreateOrEditStudentDto implements ICreateOrEditStudentDto {
         data = typeof data === 'object' ? data : {};
         data["id"] = this.id;
         data["city"] = this.city;
-        data["userId"] = this.userId;
+        data["createOrUpdateUserInput"] = this.createOrUpdateUserInput ? this.createOrUpdateUserInput.toJSON() : <any>undefined;
         data["year"] = this.year;
         data["cycleNumber"] = this.cycleNumber;
         data["studentNumber"] = this.studentNumber;
         data["studyLevelId"] = this.studyLevelId;
+        data["governorateId"] = this.governorateId;
         return data;
     }
 }
@@ -39531,11 +39775,12 @@ export class CreateOrEditStudentDto implements ICreateOrEditStudentDto {
 export interface ICreateOrEditStudentDto {
     id: number | undefined;
     city: string | undefined;
-    userId: number;
+    createOrUpdateUserInput: CreateOrUpdateUserInput;
     year: number;
     cycleNumber: number;
     studentNumber: string | undefined;
     studyLevelId: number | undefined;
+    governorateId: number;
 }
 
 export class CreateOrEditStudyLevelDto implements ICreateOrEditStudyLevelDto {
@@ -39818,10 +40063,15 @@ export interface ICreateOrEditSubjectUnitDto {
 }
 
 export class CreateOrEditSupervisorDto implements ICreateOrEditSupervisorDto {
+    user!: UserEditDto;
+    sendActivationEmail!: boolean;
+    setRandomPassword!: boolean;
+    organizationUnits!: number[] | undefined;
     id!: number | undefined;
-    note!: string | undefined;
-    schoolId!: number;
-    userId!: number;
+    city!: string | undefined;
+    year!: number;
+    cycleNumber!: number;
+    readonly assignedRoleNames!: string[] | undefined;
 
     constructor(data?: ICreateOrEditSupervisorDto) {
         if (data) {
@@ -39830,14 +40080,30 @@ export class CreateOrEditSupervisorDto implements ICreateOrEditSupervisorDto {
                     (<any>this)[property] = (<any>data)[property];
             }
         }
+        if (!data) {
+            this.user = new UserEditDto();
+        }
     }
 
     init(_data?: any) {
         if (_data) {
+            this.user = _data["user"] ? UserEditDto.fromJS(_data["user"]) : new UserEditDto();
+            this.sendActivationEmail = _data["sendActivationEmail"];
+            this.setRandomPassword = _data["setRandomPassword"];
+            if (Array.isArray(_data["organizationUnits"])) {
+                this.organizationUnits = [] as any;
+                for (let item of _data["organizationUnits"])
+                    this.organizationUnits!.push(item);
+            }
             this.id = _data["id"];
-            this.note = _data["note"];
-            this.schoolId = _data["schoolId"];
-            this.userId = _data["userId"];
+            this.city = _data["city"];
+            this.year = _data["year"];
+            this.cycleNumber = _data["cycleNumber"];
+            if (Array.isArray(_data["assignedRoleNames"])) {
+                (<any>this).assignedRoleNames = [] as any;
+                for (let item of _data["assignedRoleNames"])
+                    (<any>this).assignedRoleNames!.push(item);
+            }
         }
     }
 
@@ -39850,19 +40116,37 @@ export class CreateOrEditSupervisorDto implements ICreateOrEditSupervisorDto {
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
+        data["user"] = this.user ? this.user.toJSON() : <any>undefined;
+        data["sendActivationEmail"] = this.sendActivationEmail;
+        data["setRandomPassword"] = this.setRandomPassword;
+        if (Array.isArray(this.organizationUnits)) {
+            data["organizationUnits"] = [];
+            for (let item of this.organizationUnits)
+                data["organizationUnits"].push(item);
+        }
         data["id"] = this.id;
-        data["note"] = this.note;
-        data["schoolId"] = this.schoolId;
-        data["userId"] = this.userId;
+        data["city"] = this.city;
+        data["year"] = this.year;
+        data["cycleNumber"] = this.cycleNumber;
+        if (Array.isArray(this.assignedRoleNames)) {
+            data["assignedRoleNames"] = [];
+            for (let item of this.assignedRoleNames)
+                data["assignedRoleNames"].push(item);
+        }
         return data;
     }
 }
 
 export interface ICreateOrEditSupervisorDto {
+    user: UserEditDto;
+    sendActivationEmail: boolean;
+    setRandomPassword: boolean;
+    organizationUnits: number[] | undefined;
     id: number | undefined;
-    note: string | undefined;
-    schoolId: number;
-    userId: number;
+    city: string | undefined;
+    year: number;
+    cycleNumber: number;
+    assignedRoleNames: string[] | undefined;
 }
 
 export class CreateOrEditSupportGroupDto implements ICreateOrEditSupportGroupDto {
@@ -42689,6 +42973,7 @@ export class ExamAnswerDto implements IExamAnswerDto {
     optionId!: number | undefined;
     subQuestionId!: number | undefined;
     attemptId!: string;
+    isFlaggedForReview!: boolean;
 
     constructor(data?: IExamAnswerDto) {
         if (data) {
@@ -42710,6 +42995,7 @@ export class ExamAnswerDto implements IExamAnswerDto {
             this.optionId = _data["optionId"];
             this.subQuestionId = _data["subQuestionId"];
             this.attemptId = _data["attemptId"];
+            this.isFlaggedForReview = _data["isFlaggedForReview"];
         }
     }
 
@@ -42731,6 +43017,7 @@ export class ExamAnswerDto implements IExamAnswerDto {
         data["optionId"] = this.optionId;
         data["subQuestionId"] = this.subQuestionId;
         data["attemptId"] = this.attemptId;
+        data["isFlaggedForReview"] = this.isFlaggedForReview;
         return data;
     }
 }
@@ -42745,6 +43032,7 @@ export interface IExamAnswerDto {
     optionId: number | undefined;
     subQuestionId: number | undefined;
     attemptId: string;
+    isFlaggedForReview: boolean;
 }
 
 export class ExamAnswerQuestionLookupTableDto implements IExamAnswerQuestionLookupTableDto {
@@ -43170,6 +43458,7 @@ export class ExamQuestionWithAnswerDto implements IExamQuestionWithAnswerDto {
     linkedQuestionAnswer!: SubQuestionAnswer[] | undefined;
     drawingAnswer!: string | undefined;
     drawingPoints!: any | undefined;
+    isFlaggedForReview!: boolean;
 
     constructor(data?: IExamQuestionWithAnswerDto) {
         if (data) {
@@ -43224,6 +43513,7 @@ export class ExamQuestionWithAnswerDto implements IExamQuestionWithAnswerDto {
             }
             this.drawingAnswer = _data["drawingAnswer"];
             this.drawingPoints = _data["drawingPoints"];
+            this.isFlaggedForReview = _data["isFlaggedForReview"];
         }
     }
 
@@ -43278,6 +43568,7 @@ export class ExamQuestionWithAnswerDto implements IExamQuestionWithAnswerDto {
         }
         data["drawingAnswer"] = this.drawingAnswer;
         data["drawingPoints"] = this.drawingPoints;
+        data["isFlaggedForReview"] = this.isFlaggedForReview;
         return data;
     }
 }
@@ -43301,6 +43592,7 @@ export interface IExamQuestionWithAnswerDto {
     linkedQuestionAnswer: SubQuestionAnswer[] | undefined;
     drawingAnswer: string | undefined;
     drawingPoints: any | undefined;
+    isFlaggedForReview: boolean;
 }
 
 export class ExamSectionDto implements IExamSectionDto {
@@ -46746,6 +47038,42 @@ export interface IGetExamTemplateForViewDto {
     hasExam: boolean;
 }
 
+export class GetExamTemplateStatsOutput implements IGetExamTemplateStatsOutput {
+    totalSessionsCount!: number;
+
+    constructor(data?: IGetExamTemplateStatsOutput) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.totalSessionsCount = _data["totalSessionsCount"];
+        }
+    }
+
+    static fromJS(data: any): GetExamTemplateStatsOutput {
+        data = typeof data === 'object' ? data : {};
+        let result = new GetExamTemplateStatsOutput();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["totalSessionsCount"] = this.totalSessionsCount;
+        return data;
+    }
+}
+
+export interface IGetExamTemplateStatsOutput {
+    totalSessionsCount: number;
+}
+
 export class GetExpiringTenantsOutput implements IGetExpiringTenantsOutput {
     expiringTenants!: ExpiringTenant[] | undefined;
     subscriptionEndAlertDayCount!: number;
@@ -49028,6 +49356,7 @@ export class GetSessionForViewDto implements IGetSessionForViewDto {
     numberOfAttemptedStudents!: number;
     numberOfNonAttemptedStudents!: number;
     studentCountBasedOnLevel!: { [key: string]: number; } | undefined;
+    answerPercentagesByQuestion!: { [key: string]: number; } | undefined;
     versionCount!: number;
     remainingTime!: TimeSpan;
     schools!: GetSchoolForViewDto[] | undefined;
@@ -49056,6 +49385,13 @@ export class GetSessionForViewDto implements IGetSessionForViewDto {
                 for (let key in _data["studentCountBasedOnLevel"]) {
                     if (_data["studentCountBasedOnLevel"].hasOwnProperty(key))
                         (<any>this.studentCountBasedOnLevel)![key] = _data["studentCountBasedOnLevel"][key];
+                }
+            }
+            if (_data["answerPercentagesByQuestion"]) {
+                this.answerPercentagesByQuestion = {} as any;
+                for (let key in _data["answerPercentagesByQuestion"]) {
+                    if (_data["answerPercentagesByQuestion"].hasOwnProperty(key))
+                        (<any>this.answerPercentagesByQuestion)![key] = _data["answerPercentagesByQuestion"][key];
                 }
             }
             this.versionCount = _data["versionCount"];
@@ -49092,6 +49428,13 @@ export class GetSessionForViewDto implements IGetSessionForViewDto {
                     (<any>data["studentCountBasedOnLevel"])[key] = (<any>this.studentCountBasedOnLevel)[key];
             }
         }
+        if (this.answerPercentagesByQuestion) {
+            data["answerPercentagesByQuestion"] = {};
+            for (let key in this.answerPercentagesByQuestion) {
+                if (this.answerPercentagesByQuestion.hasOwnProperty(key))
+                    (<any>data["answerPercentagesByQuestion"])[key] = (<any>this.answerPercentagesByQuestion)[key];
+            }
+        }
         data["versionCount"] = this.versionCount;
         data["remainingTime"] = this.remainingTime ? this.remainingTime.toJSON() : <any>undefined;
         if (Array.isArray(this.schools)) {
@@ -49113,9 +49456,58 @@ export interface IGetSessionForViewDto {
     numberOfAttemptedStudents: number;
     numberOfNonAttemptedStudents: number;
     studentCountBasedOnLevel: { [key: string]: number; } | undefined;
+    answerPercentagesByQuestion: { [key: string]: number; } | undefined;
     versionCount: number;
     remainingTime: TimeSpan;
     schools: GetSchoolForViewDto[] | undefined;
+}
+
+export class GetSessionStatsOutput implements IGetSessionStatsOutput {
+    sessionStats!: { [key: string]: number; } | undefined;
+
+    constructor(data?: IGetSessionStatsOutput) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            if (_data["sessionStats"]) {
+                this.sessionStats = {} as any;
+                for (let key in _data["sessionStats"]) {
+                    if (_data["sessionStats"].hasOwnProperty(key))
+                        (<any>this.sessionStats)![key] = _data["sessionStats"][key];
+                }
+            }
+        }
+    }
+
+    static fromJS(data: any): GetSessionStatsOutput {
+        data = typeof data === 'object' ? data : {};
+        let result = new GetSessionStatsOutput();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        if (this.sessionStats) {
+            data["sessionStats"] = {};
+            for (let key in this.sessionStats) {
+                if (this.sessionStats.hasOwnProperty(key))
+                    (<any>data["sessionStats"])[key] = (<any>this.sessionStats)[key];
+            }
+        }
+        return data;
+    }
+}
+
+export interface IGetSessionStatsOutput {
+    sessionStats: { [key: string]: number; } | undefined;
 }
 
 export class GetSessionSupervisorForEditOutput implements IGetSessionSupervisorForEditOutput {
@@ -49316,6 +49708,7 @@ export interface IGetSiteTrackerForViewDto {
 
 export class GetStudentForEditOutput implements IGetStudentForEditOutput {
     student!: CreateOrEditStudentDto;
+    getUserForEditOutput!: GetUserForEditOutput;
     userName!: string | undefined;
     fullName!: string | undefined;
     identityNumber!: string | undefined;
@@ -49333,6 +49726,7 @@ export class GetStudentForEditOutput implements IGetStudentForEditOutput {
     init(_data?: any) {
         if (_data) {
             this.student = _data["student"] ? CreateOrEditStudentDto.fromJS(_data["student"]) : <any>undefined;
+            this.getUserForEditOutput = _data["getUserForEditOutput"] ? GetUserForEditOutput.fromJS(_data["getUserForEditOutput"]) : <any>undefined;
             this.userName = _data["userName"];
             this.fullName = _data["fullName"];
             this.identityNumber = _data["identityNumber"];
@@ -49350,6 +49744,7 @@ export class GetStudentForEditOutput implements IGetStudentForEditOutput {
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["student"] = this.student ? this.student.toJSON() : <any>undefined;
+        data["getUserForEditOutput"] = this.getUserForEditOutput ? this.getUserForEditOutput.toJSON() : <any>undefined;
         data["userName"] = this.userName;
         data["fullName"] = this.fullName;
         data["identityNumber"] = this.identityNumber;
@@ -49360,6 +49755,7 @@ export class GetStudentForEditOutput implements IGetStudentForEditOutput {
 
 export interface IGetStudentForEditOutput {
     student: CreateOrEditStudentDto;
+    getUserForEditOutput: GetUserForEditOutput;
     userName: string | undefined;
     fullName: string | undefined;
     identityNumber: string | undefined;
@@ -49835,6 +50231,13 @@ export interface IGetSubjectUnitForViewDto {
 }
 
 export class GetSupervisorForEditOutput implements IGetSupervisorForEditOutput {
+    profilePictureId!: string | undefined;
+    user!: UserEditDto;
+    roles!: UserRoleDto[] | undefined;
+    allOrganizationUnits!: OrganizationUnitDto[] | undefined;
+    memberedOrganizationUnits!: string[] | undefined;
+    allowedUserNameCharacters!: string | undefined;
+    isSMTPSettingsProvided!: boolean;
     supervisor!: CreateOrEditSupervisorDto;
     schoolNameL!: string | undefined;
     userName!: string | undefined;
@@ -49850,6 +50253,25 @@ export class GetSupervisorForEditOutput implements IGetSupervisorForEditOutput {
 
     init(_data?: any) {
         if (_data) {
+            this.profilePictureId = _data["profilePictureId"];
+            this.user = _data["user"] ? UserEditDto.fromJS(_data["user"]) : <any>undefined;
+            if (Array.isArray(_data["roles"])) {
+                this.roles = [] as any;
+                for (let item of _data["roles"])
+                    this.roles!.push(UserRoleDto.fromJS(item));
+            }
+            if (Array.isArray(_data["allOrganizationUnits"])) {
+                this.allOrganizationUnits = [] as any;
+                for (let item of _data["allOrganizationUnits"])
+                    this.allOrganizationUnits!.push(OrganizationUnitDto.fromJS(item));
+            }
+            if (Array.isArray(_data["memberedOrganizationUnits"])) {
+                this.memberedOrganizationUnits = [] as any;
+                for (let item of _data["memberedOrganizationUnits"])
+                    this.memberedOrganizationUnits!.push(item);
+            }
+            this.allowedUserNameCharacters = _data["allowedUserNameCharacters"];
+            this.isSMTPSettingsProvided = _data["isSMTPSettingsProvided"];
             this.supervisor = _data["supervisor"] ? CreateOrEditSupervisorDto.fromJS(_data["supervisor"]) : <any>undefined;
             this.schoolNameL = _data["schoolNameL"];
             this.userName = _data["userName"];
@@ -49865,6 +50287,25 @@ export class GetSupervisorForEditOutput implements IGetSupervisorForEditOutput {
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
+        data["profilePictureId"] = this.profilePictureId;
+        data["user"] = this.user ? this.user.toJSON() : <any>undefined;
+        if (Array.isArray(this.roles)) {
+            data["roles"] = [];
+            for (let item of this.roles)
+                data["roles"].push(item.toJSON());
+        }
+        if (Array.isArray(this.allOrganizationUnits)) {
+            data["allOrganizationUnits"] = [];
+            for (let item of this.allOrganizationUnits)
+                data["allOrganizationUnits"].push(item.toJSON());
+        }
+        if (Array.isArray(this.memberedOrganizationUnits)) {
+            data["memberedOrganizationUnits"] = [];
+            for (let item of this.memberedOrganizationUnits)
+                data["memberedOrganizationUnits"].push(item);
+        }
+        data["allowedUserNameCharacters"] = this.allowedUserNameCharacters;
+        data["isSMTPSettingsProvided"] = this.isSMTPSettingsProvided;
         data["supervisor"] = this.supervisor ? this.supervisor.toJSON() : <any>undefined;
         data["schoolNameL"] = this.schoolNameL;
         data["userName"] = this.userName;
@@ -49873,6 +50314,13 @@ export class GetSupervisorForEditOutput implements IGetSupervisorForEditOutput {
 }
 
 export interface IGetSupervisorForEditOutput {
+    profilePictureId: string | undefined;
+    user: UserEditDto;
+    roles: UserRoleDto[] | undefined;
+    allOrganizationUnits: OrganizationUnitDto[] | undefined;
+    memberedOrganizationUnits: string[] | undefined;
+    allowedUserNameCharacters: string | undefined;
+    isSMTPSettingsProvided: boolean;
     supervisor: CreateOrEditSupervisorDto;
     schoolNameL: string | undefined;
     userName: string | undefined;
@@ -49882,6 +50330,8 @@ export class GetSupervisorForViewDto implements IGetSupervisorForViewDto {
     supervisor!: SupervisorDto;
     schoolNameL!: string | undefined;
     userName!: string | undefined;
+    fullName!: string | undefined;
+    governorateName!: string | undefined;
 
     constructor(data?: IGetSupervisorForViewDto) {
         if (data) {
@@ -49897,6 +50347,8 @@ export class GetSupervisorForViewDto implements IGetSupervisorForViewDto {
             this.supervisor = _data["supervisor"] ? SupervisorDto.fromJS(_data["supervisor"]) : <any>undefined;
             this.schoolNameL = _data["schoolNameL"];
             this.userName = _data["userName"];
+            this.fullName = _data["fullName"];
+            this.governorateName = _data["governorateName"];
         }
     }
 
@@ -49912,6 +50364,8 @@ export class GetSupervisorForViewDto implements IGetSupervisorForViewDto {
         data["supervisor"] = this.supervisor ? this.supervisor.toJSON() : <any>undefined;
         data["schoolNameL"] = this.schoolNameL;
         data["userName"] = this.userName;
+        data["fullName"] = this.fullName;
+        data["governorateName"] = this.governorateName;
         return data;
     }
 }
@@ -49920,6 +50374,8 @@ export interface IGetSupervisorForViewDto {
     supervisor: SupervisorDto;
     schoolNameL: string | undefined;
     userName: string | undefined;
+    fullName: string | undefined;
+    governorateName: string | undefined;
 }
 
 export class GetSupportGroupForEditOutput implements IGetSupportGroupForEditOutput {
@@ -53727,6 +54183,46 @@ export class NameValueDto implements INameValueDto {
 export interface INameValueDto {
     name: string | undefined;
     value: string | undefined;
+}
+
+export class NameValueDtoOfInt32 implements INameValueDtoOfInt32 {
+    name!: string | undefined;
+    value!: number;
+
+    constructor(data?: INameValueDtoOfInt32) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.name = _data["name"];
+            this.value = _data["value"];
+        }
+    }
+
+    static fromJS(data: any): NameValueDtoOfInt32 {
+        data = typeof data === 'object' ? data : {};
+        let result = new NameValueDtoOfInt32();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["name"] = this.name;
+        data["value"] = this.value;
+        return data;
+    }
+}
+
+export interface INameValueDtoOfInt32 {
+    name: string | undefined;
+    value: number;
 }
 
 export class NameValueOfString implements INameValueOfString {
@@ -59843,6 +60339,7 @@ export class QuestionWithAnswerDto implements IQuestionWithAnswerDto {
     hasAnswer!: boolean;
     status!: StudentExamStatus;
     isLastQuestionInSection!: boolean;
+    isFlaggedForReview!: boolean;
     type!: SectionTypeEnum;
     currentQuestionIndex!: number;
     sectionCountInExam!: number;
@@ -59905,6 +60402,7 @@ export class QuestionWithAnswerDto implements IQuestionWithAnswerDto {
             this.hasAnswer = _data["hasAnswer"];
             this.status = _data["status"];
             this.isLastQuestionInSection = _data["isLastQuestionInSection"];
+            this.isFlaggedForReview = _data["isFlaggedForReview"];
             this.type = _data["type"];
             this.currentQuestionIndex = _data["currentQuestionIndex"];
             this.sectionCountInExam = _data["sectionCountInExam"];
@@ -59967,6 +60465,7 @@ export class QuestionWithAnswerDto implements IQuestionWithAnswerDto {
         data["hasAnswer"] = this.hasAnswer;
         data["status"] = this.status;
         data["isLastQuestionInSection"] = this.isLastQuestionInSection;
+        data["isFlaggedForReview"] = this.isFlaggedForReview;
         data["type"] = this.type;
         data["currentQuestionIndex"] = this.currentQuestionIndex;
         data["sectionCountInExam"] = this.sectionCountInExam;
@@ -59998,6 +60497,7 @@ export interface IQuestionWithAnswerDto {
     hasAnswer: boolean;
     status: StudentExamStatus;
     isLastQuestionInSection: boolean;
+    isFlaggedForReview: boolean;
     type: SectionTypeEnum;
     currentQuestionIndex: number;
     sectionCountInExam: number;
@@ -66783,12 +67283,16 @@ export interface IUserDelegationDto {
 export class UserEditDto implements IUserEditDto {
     id!: number | undefined;
     name!: string;
+    secondName!: string | undefined;
+    thirdName!: string | undefined;
     surname!: string;
     userName!: string;
     emailAddress!: string;
     phoneNumber!: string | undefined;
     password!: string | undefined;
+    identityNumber!: string;
     isActive!: boolean;
+    governorateId!: number | undefined;
     shouldChangePasswordOnNextLogin!: boolean;
     isTwoFactorEnabled!: boolean;
     isLockoutEnabled!: boolean;
@@ -66806,12 +67310,16 @@ export class UserEditDto implements IUserEditDto {
         if (_data) {
             this.id = _data["id"];
             this.name = _data["name"];
+            this.secondName = _data["secondName"];
+            this.thirdName = _data["thirdName"];
             this.surname = _data["surname"];
             this.userName = _data["userName"];
             this.emailAddress = _data["emailAddress"];
             this.phoneNumber = _data["phoneNumber"];
             this.password = _data["password"];
+            this.identityNumber = _data["identityNumber"];
             this.isActive = _data["isActive"];
+            this.governorateId = _data["governorateId"];
             this.shouldChangePasswordOnNextLogin = _data["shouldChangePasswordOnNextLogin"];
             this.isTwoFactorEnabled = _data["isTwoFactorEnabled"];
             this.isLockoutEnabled = _data["isLockoutEnabled"];
@@ -66829,12 +67337,16 @@ export class UserEditDto implements IUserEditDto {
         data = typeof data === 'object' ? data : {};
         data["id"] = this.id;
         data["name"] = this.name;
+        data["secondName"] = this.secondName;
+        data["thirdName"] = this.thirdName;
         data["surname"] = this.surname;
         data["userName"] = this.userName;
         data["emailAddress"] = this.emailAddress;
         data["phoneNumber"] = this.phoneNumber;
         data["password"] = this.password;
+        data["identityNumber"] = this.identityNumber;
         data["isActive"] = this.isActive;
+        data["governorateId"] = this.governorateId;
         data["shouldChangePasswordOnNextLogin"] = this.shouldChangePasswordOnNextLogin;
         data["isTwoFactorEnabled"] = this.isTwoFactorEnabled;
         data["isLockoutEnabled"] = this.isLockoutEnabled;
@@ -66845,12 +67357,16 @@ export class UserEditDto implements IUserEditDto {
 export interface IUserEditDto {
     id: number | undefined;
     name: string;
+    secondName: string | undefined;
+    thirdName: string | undefined;
     surname: string;
     userName: string;
     emailAddress: string;
     phoneNumber: string | undefined;
     password: string | undefined;
+    identityNumber: string;
     isActive: boolean;
+    governorateId: number | undefined;
     shouldChangePasswordOnNextLogin: boolean;
     isTwoFactorEnabled: boolean;
     isLockoutEnabled: boolean;

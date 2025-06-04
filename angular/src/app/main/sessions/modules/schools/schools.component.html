@@ -27,15 +27,52 @@
             <!-- Student Statistics Card -->
             <div class="col-md-6 mb-2">
                 <div class="card-dash p-3">
-                    <h6 class="title">{{ 'StudentStatistic'|localize }}</h6>
+                    <h6 class="title">{{ 'StudentStatistic' | localize }}</h6>
                     <div class="boxes">
                         <div class="box">
-                            <span>{{ 'NumberOfAttemptedStudents' | localize }}</span>
-                            <p>{{ session?.numberOfAttemptedStudents }}</p>
+                            <!-- //NumberOfAttemptedStudents -->
+                            <span>{{ 'AttemptedStudents' | localize }}</span>
+                            <div class="gap-3 d-flex mt-3 w-100">
+                                <div class="w-50 card py-3">
+                                    <span>{{ 'Count' | localize }}</span>
+                                    <p>{{ session?.numberOfAttemptedStudents }}</p>
+                                </div>
+                                <div class="w-50 card py-3">
+                                    <span>{{ 'Percentage' | localize }}</span>
+                                    <p>
+                                        {{
+                                            (
+                                                (session?.numberOfAttemptedStudents /
+                                                    (session?.numberOfAttemptedStudents +
+                                                        session?.numberOfNonAttemptedStudents)) *
+                                                100
+                                            ).toFixed()
+                                        }}%
+                                    </p>
+                                </div>
+                            </div>
                         </div>
                         <div class="box">
-                            <span>{{ 'NumberOfNonAttemptedStudents' | localize }}</span>
-                            <p>{{ session?.numberOfNonAttemptedStudents }}</p>
+                            <span>{{ 'NonAttemptedStudents' | localize }}</span>
+                            <div class="gap-3 d-flex mt-3 w-100">
+                                <div class="w-50 card py-3">
+                                    <span>{{ 'Count' | localize }}</span>
+                                    <p>{{ session?.numberOfNonAttemptedStudents }}</p>
+                                </div>
+                                <div class="w-50 card py-3">
+                                    <span>{{ 'Percentage' | localize }}</span>
+                                    <p>
+                                        {{
+                                            (
+                                                (session?.numberOfNonAttemptedStudents /
+                                                    (session?.numberOfAttemptedStudents +
+                                                        session?.numberOfNonAttemptedStudents)) *
+                                                100
+                                            ).toFixed()
+                                        }}%
+                                    </p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -43,14 +80,14 @@
 
             <!-- Session Statistics Card -->
             <div class="col-md-6 mb-2">
-                <div class="card-dash p-3">
-                    <h6 class="title">{{ 'SessionStatistic'|localize }}</h6>
-                    <div class="boxes">
-                        <div class="box">
+                <div class="card-dash p-3" style="height: 94%">
+                    <h6 class="title">{{ 'SessionStatistic' | localize }}</h6>
+                    <div class="boxes" style="height: 85%">
+                        <div class="box gap-8">
                             <span>{{ 'NumberOfSchools' | localize }}</span>
                             <p>{{ session?.numberOfSchools }}</p>
                         </div>
-                        <div class="box">
+                        <div class="box gap-8">
                             <span>{{ 'NumberOfSupervisors' | localize }}</span>
                             <p>{{ session?.numberOfSupervisors }}</p>
                         </div>
@@ -65,7 +102,7 @@
                         class="d-flex justify-content-between align-items-center mb-2 collapsible-header"
                         (click)="toggleStudentLevelCard()"
                     >
-                        <h6 class="title m-0">{{ 'StudentCountBasedOnLevel'|localize }}</h6>
+                        <h6 class="title m-0">{{ 'StudentCountBasedOnLevel' | localize }}</h6>
                         <i
                             class="fas"
                             [ngClass]="isStudentLevelCardCollapsed ? 'fa-chevron-down' : 'fa-chevron-up'"
@@ -75,9 +112,49 @@
                     <div class="boxes" [ngClass]="{ 'd-none': isStudentLevelCardCollapsed }">
                         <div class="box" *ngFor="let item of session?.asBranch">
                             <span>{{ item?.key }}</span>
-                            <p>{{ item?.value }}</p>
+                            <div class="gap-3 d-flex mt-3 w-100">
+                                <div class="w-50 card py-3">
+                                    <span>{{ 'Count' | localize }}</span>
+                                    <p>{{ item?.value }}</p>
+                                </div>
+                                <div class="w-50 card py-3">
+                                    <span>{{ 'Percentage' | localize }}</span>
+                                    <p>{{ ((item?.value / studentCount) * 100).toFixed() }}%</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
+                </div>
+            </div>
+            <div class="col-md-12 mb-2">
+                <div class="card-dash p-3">
+                    <div
+                        class="d-flex justify-content-between align-items-center mb-2 collapsible-header"
+                        (click)="toggleQuestionCard()"
+                    >
+                        <h6 class="title m-0">{{ 'AnswerPercentagesByQuestion' | localize }}</h6>
+                        <i class="fas" [ngClass]="isQuestionCardCollapsed ? 'fa-chevron-down' : 'fa-chevron-up'"></i>
+                    </div>
+                    <div
+                        *ngIf="showChart && !noData"
+                        [ngClass]="{ 'd-none': isQuestionCardCollapsed }"
+                        class="m-3 bg-white card p-3"
+                    >
+                        <div class="col">
+                            <ngx-charts-bar-vertical
+                                [scheme]="colorScheme"
+                                [results]="answerPercentagesByQuestion"
+                                [gradient]="gradient"
+                                [xAxis]="showXAxis"
+                                [yAxis]="showYAxis"
+                                [showXAxisLabel]="showXAxisLabel"
+                                [showYAxisLabel]="showYAxisLabel"
+                                [xAxisLabel]="xAxisLabel"
+                                [yAxisLabel]="yAxisLabel"
+                            ></ngx-charts-bar-vertical>
+                        </div>
+                    </div>
+                    <div *ngIf="!showChart && noData">{{ l('NoData') }}</div>
                 </div>
             </div>
         </div>

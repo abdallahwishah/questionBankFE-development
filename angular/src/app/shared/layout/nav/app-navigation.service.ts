@@ -37,6 +37,8 @@ export class AppNavigationService {
                     new AppMenuItem('StudyLevels', '', 'fa fa-circle', '/app/main/studyLevels'),
                     new AppMenuItem('StudySubjects', '', 'fa fa-circle', '/app/main/studySubjects'),
                     new AppMenuItem('SubjectUnits', '', 'fa fa-circle', '/app/main/subjectUnits'),
+                    new AppMenuItem('Students', '', 'fa fa-circle', '/app/main/students'),
+                    new AppMenuItem('Supervisors', '', 'fa fa-circle', '/app/main/supervisors'),
                     // new AppMenuItem('SubjectGroups', '', 'fa fa-circle', '/app/main/subjectGroups'),
                     // new AppMenuItem('SupportGroupItems', '', 'fa fa-circle', '/app/main/supportGroupItems'),
                     // new AppMenuItem('SupportGroups', '', 'fa fa-circle', '/app/main/supportGroups'),

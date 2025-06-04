@@ -86,13 +86,26 @@
                     <!-- If we are not showing instructions, show the question -->
                     <ng-container *ngIf="!showInstructions">
                         <ng-container *ngIf="!loading">
-                            <app-dynamic-exam-question
+                            <div
                                 *ngIf="currentQuestion"
-                                [question]="currentQuestion.question.question"
-                                [(ngModel)]="currentQuestion.question.question"
-                                [questionType]="currentQuestion.question?.question.question.type"
-                                style="display: block; margin-top: 1rem"
-                            ></app-dynamic-exam-question>
+                                style="display: flex; align-items: flex-start; gap: 0.5rem; margin-top: 1rem"
+                                class="justify-content-between"
+                            >
+                                <app-dynamic-exam-question
+                                    [question]="currentQuestion.question.question"
+                                    [(ngModel)]="currentQuestion.question.question"
+                                    [questionType]="currentQuestion.question?.question.question.type"
+                                    style="display: block; margin-top: 1rem"
+                                ></app-dynamic-exam-question>
+
+                                <i
+                                    class="fa-solid fa-flag fa-2xl align-self-start {{
+                                        currentQuestion.isFlaggedForReview ? 'text-danger' : ''
+                                    }}"
+                                    (click)="currentQuestion.isFlaggedForReview = !currentQuestion.isFlaggedForReview"
+                                    style="font-size: large"
+                                ></i>
+                            </div>
                         </ng-container>
                     </ng-container>
                 </ng-container>
@@ -146,7 +159,7 @@
     </ng-template>
     <div
         *ngFor="let q of questionlist; let i = index"
-        class="d-flex align-items-center gap-2 mx-5 my-10 px-4 w-full"
+        class="d-flex align-items-center gap-2 mx-5 my-10 px-4 w-full justify-content-between"
         style="cursor: pointer"
         [class.hasNoAnswer]="!q?.isSynced"
         (click)="q?.isSynced ? GetSelectedQuestion(i) : ''"
@@ -155,6 +168,8 @@
         <span class="fw-bold white-space-nowrap editor" [class.text-dark]="q?.isSynced">
             <div [innerHTML]="q.question.question.question.body | safeText: 40"></div>
         </span>
+
+        <i class="fa-solid fa-flag {{ q.isFlaggedForReview ? 'text-danger' : '' }}"></i>
     </div>
 </p-sidebar>
 

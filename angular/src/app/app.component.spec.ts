@@ -8,7 +8,7 @@ import { AppComponent } from './app.component';
 import { LOCALE_ID } from '@angular/core';
 
 export function getRemoteServiceBaseUrl(): string {
-    return 'http://192.168.10.167:6060';
+    return 'http://192.168.10.167:6066';
 }
 
 describe('App: MIS', () => {
