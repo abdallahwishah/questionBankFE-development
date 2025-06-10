@@ -74,13 +74,13 @@
     "tslib": "^2.6.2",
     "zone.js": "~0.14.2",
 
-    "@devexpress/analytics-core": "23.1.6",
-    "devexpress-dashboard": "23.1.6",
-    "devexpress-dashboard-angular": "23.1.6",
-    "devexpress-reporting-angular": "23.1.6",
-    "devexpress-richedit": "23.1.6",
-    "devextreme": "23.1.6",
-    "devextreme-angular": "23.1.6",
+    "@devexpress/analytics-core": "24.2.5",
+    "devexpress-dashboard": "24.2.5",
+    "devexpress-dashboard-angular": "24.2.5",
+    "devexpress-reporting-angular": "24.2.5",
+    "devexpress-richedit": "24.2.5",
+    "devextreme": "24.2.5",
+    "devextreme-angular": "24.2.5",
     "ng2-pdf-viewer": "^8.0.0"
   },
   "devDependencies": {
