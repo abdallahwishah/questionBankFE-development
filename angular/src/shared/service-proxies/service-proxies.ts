@@ -39728,6 +39728,7 @@ export class CreateOrEditStudentDto implements ICreateOrEditStudentDto {
     studentNumber!: string | undefined;
     studyLevelId!: number | undefined;
     governorateId!: number;
+    gender!: GenderEnum;
 
     constructor(data?: ICreateOrEditStudentDto) {
         if (data) {
@@ -39748,6 +39749,7 @@ export class CreateOrEditStudentDto implements ICreateOrEditStudentDto {
             this.studentNumber = _data["studentNumber"];
             this.studyLevelId = _data["studyLevelId"];
             this.governorateId = _data["governorateId"];
+            this.gender = _data["gender"];
         }
     }
 
@@ -39768,6 +39770,7 @@ export class CreateOrEditStudentDto implements ICreateOrEditStudentDto {
         data["studentNumber"] = this.studentNumber;
         data["studyLevelId"] = this.studyLevelId;
         data["governorateId"] = this.governorateId;
+        data["gender"] = this.gender;
         return data;
     }
 }
@@ -39781,6 +39784,7 @@ export interface ICreateOrEditStudentDto {
     studentNumber: string | undefined;
     studyLevelId: number | undefined;
     governorateId: number;
+    gender: GenderEnum;
 }
 
 export class CreateOrEditStudyLevelDto implements ICreateOrEditStudyLevelDto {
@@ -45068,6 +45072,11 @@ export interface IFriendDto {
 export enum FriendshipState {
     Accepted = 1,
     Blocked = 2,
+}
+
+export enum GenderEnum {
+    Male = 0,
+    Female = 1,
 }
 
 export class GeneralSettingsEditDto implements IGeneralSettingsEditDto {
@@ -62853,6 +62862,7 @@ export class StudentDto implements IStudentDto {
     cycleNumber!: number;
     studentNumber!: string | undefined;
     studyLevelId!: number | undefined;
+    gender!: GenderEnum;
 
     constructor(data?: IStudentDto) {
         if (data) {
@@ -62872,6 +62882,7 @@ export class StudentDto implements IStudentDto {
             this.cycleNumber = _data["cycleNumber"];
             this.studentNumber = _data["studentNumber"];
             this.studyLevelId = _data["studyLevelId"];
+            this.gender = _data["gender"];
         }
     }
 
@@ -62891,6 +62902,7 @@ export class StudentDto implements IStudentDto {
         data["cycleNumber"] = this.cycleNumber;
         data["studentNumber"] = this.studentNumber;
         data["studyLevelId"] = this.studyLevelId;
+        data["gender"] = this.gender;
         return data;
     }
 }
@@ -62903,6 +62915,7 @@ export interface IStudentDto {
     cycleNumber: number;
     studentNumber: string | undefined;
     studyLevelId: number | undefined;
+    gender: GenderEnum;
 }
 
 export enum StudentExamStatus {

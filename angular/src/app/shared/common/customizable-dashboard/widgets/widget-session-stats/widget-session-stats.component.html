@@ -1,7 +1,7 @@
 <div class="card p-4">
     <label>{{ l('SessionsStatus') }}</label>
-    <div class="d-flex">
-        <div class="col-lg-8 col-md-8" style="align-content: center">
+    <div #divElement class="d-flex">
+        <div class="col-lg-7 col-md-7" style="align-content: center">
             <ngx-charts-pie-chart
                 *ngIf="!noDataStatus && showChart"
                 [results]="chartData"
@@ -11,7 +11,7 @@
                 [scheme]="colorScheme"
                 [animations]="false"
                 [tooltipDisabled]="false"
-                [view]="[300, 300]"
+                [view]="calWidth()"
             ></ngx-charts-pie-chart>
             <div *ngIf="noDataStatus && showChart" class="d-flex justify-content-center align-items-center">
                 {{ l('NoData') }}

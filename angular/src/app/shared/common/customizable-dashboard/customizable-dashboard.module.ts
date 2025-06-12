@@ -38,6 +38,7 @@ import { SessionsModule } from '@app/main/sessions/sessions.module';
 import { DropdownFieldComponent } from '@app/shared/components/fields/dropdown-field/dropdown-field.component';
 import { PaginatorModule } from 'primeng/paginator';
 import { ActionButtonComponent } from '@app/shared/components/action-button/action-button.component';
+import { BrowserAnimationsModule } from '@node_modules/@angular/platform-browser/animations';
 
 @NgModule({
     imports: [
@@ -62,7 +63,7 @@ import { ActionButtonComponent } from '@app/shared/components/action-button/acti
         SessionsModule,
         DropdownFieldComponent,
         PaginatorModule,
-        ActionButtonComponent
+        ActionButtonComponent,
     ],
 
     declarations: [

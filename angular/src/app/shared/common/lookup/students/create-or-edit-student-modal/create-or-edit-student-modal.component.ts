@@ -1,5 +1,6 @@
 import {
     CreateOrUpdateUserInput,
+    GenderEnum,
     GetStudentForEditOutput,
     GetUserForEditOutput,
     GovernoratesServiceProxy,
@@ -20,6 +21,7 @@ import {
 } from '@shared/service-proxies/service-proxies';
 import { PasswordMeterComponent } from '@metronic/app/kt/components';
 import { NgForm } from '@node_modules/@angular/forms';
+import { all } from '@node_modules/@devexpress/analytics-core/analytics-elements-metadata';
 
 @Component({
     selector: 'app-create-or-edit-student-modal',
@@ -49,6 +51,7 @@ export class CreateOrEditStudentModalComponent extends AppComponentBase implemen
     studentStudyLevel: any;
     allStudyLevel: NameValueDtoOfInt32[];
     allGovernorates: NameValueDtoOfInt32[];
+    allGender: any[];
 
     constructor(
         injector: Injector,
@@ -60,7 +63,14 @@ export class CreateOrEditStudentModalComponent extends AppComponentBase implemen
         super(injector);
     }
 
-    ngOnInit() {}
+    ngOnInit() {
+        this.allGender = Object.keys(GenderEnum)
+            .filter((key) => isNaN(Number(key)))
+            .map((key) => ({
+                name: key,
+                id: GenderEnum[key as keyof typeof GenderEnum],
+            }));
+    }
 
     show(studentId?: number): void {
         this._studyLevelService.getStudyLevelsForDropdown().subscribe((result) => {
@@ -185,6 +195,7 @@ export class CreateOrEditStudentModalComponent extends AppComponentBase implemen
         createOrEditStudent.createOrUpdateUserInput.sendActivationEmail = this.sendActivationEmail;
         createOrEditStudent.createOrUpdateUserInput.setRandomPassword = this.setRandomPassword;
         createOrEditStudent.createOrUpdateUserInput.assignedRoleNames = ['Student'];
+        createOrEditStudent.gender = this.student.student.gender;
 
         this.userForm.form.markAllAsTouched();
         if (this.userForm.form.valid) {
@@ -205,6 +216,7 @@ export class CreateOrEditStudentModalComponent extends AppComponentBase implemen
 
     close() {
         this.saving = false;
+        this.userForm.form.reset();
         this.modal.hide();
     }
 }

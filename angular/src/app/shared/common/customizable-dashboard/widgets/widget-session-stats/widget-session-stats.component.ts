@@ -2,7 +2,7 @@ import {
     GetSessionStatsOutput,
     TenantDashboardServiceProxy,
 } from './../../../../../../shared/service-proxies/service-proxies';
-import { Component, Injector, OnInit } from '@angular/core';
+import { Component, ElementRef, Injector, OnInit, ViewChild } from '@angular/core';
 import { AppComponentBase } from '@shared/common/app-component-base';
 
 @Component({
@@ -11,6 +11,7 @@ import { AppComponentBase } from '@shared/common/app-component-base';
     styleUrls: ['./widget-session-stats.component.css'],
 })
 export class WidgetSessionStats extends AppComponentBase implements OnInit {
+    @ViewChild('divElement', { static: true }) divRef!: ElementRef;
     noDataStatus: boolean;
     chartData = [];
     showChart: boolean = true;
@@ -43,5 +44,10 @@ export class WidgetSessionStats extends AppComponentBase implements OnInit {
             this.noDataStatus = Object.entries(result.sessionStats).length == 0;
             this.showChart = true;
         });
+    }
+
+    calWidth() {
+        let width = 0.5;
+        return [this.divRef.nativeElement.offsetWidth * width, this.divRef.nativeElement.offsetWidth * width];
     }
 }

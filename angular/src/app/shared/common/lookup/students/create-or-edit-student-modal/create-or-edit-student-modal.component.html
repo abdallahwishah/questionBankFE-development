@@ -128,18 +128,6 @@
                         </div>
 
                         <div class="mb-5">
-                            <label class="form-label" for="PhoneNumber">{{ 'PhoneNumber' | localize }}</label>
-                            <input
-                                id="PhoneNumber"
-                                type="text"
-                                name="PhoneNumber"
-                                class="form-control"
-                                [(ngModel)]="student.getUserForEditOutput.user.phoneNumber"
-                                maxlength="32"
-                            />
-                        </div>
-
-                        <div class="mb-5">
                             <label class="form-label required" for="UserName">{{ 'UserName' | localize }}</label>
                             <div class="input-group">
                                 <input
@@ -168,6 +156,43 @@
                                 {{ 'CanNotChangeAdminUserName' | localize }}
                             </span>
                             <validation-messages [formCtrl]="userNameInput"></validation-messages>
+                        </div>
+
+                        <div class="mb-5 gap-3 d-flex">
+                            <div class="w-50">
+                                <label class="form-label" for="PhoneNumber">{{ 'PhoneNumber' | localize }}</label>
+                                <input
+                                    id="PhoneNumber"
+                                    type="text"
+                                    name="PhoneNumber"
+                                    class="form-control"
+                                    [(ngModel)]="student.getUserForEditOutput.user.phoneNumber"
+                                    maxlength="32"
+                                />
+                            </div>
+                            <div class="w-50">
+                                <label class="form-label" for="gender">{{ 'Gender' | localize }}</label>
+                                <p-dropdown
+                                    id="gender"
+                                    name="gender"
+                                    #genderId="ngModel"
+                                    [(ngModel)]="student.student.gender"
+                                    [required]="true"
+                                    [options]="allGender"
+                                    optionLabel="name"
+                                    optionValue="id"
+                                    class="d-flex flex-column"
+                                    required
+                                >
+                                    <ng-template let-item pTemplate="selectedItem">
+                                        {{ l(item.name) }}
+                                    </ng-template>
+                                    <ng-template let-item pTemplate="item">
+                                        {{ l(item.name) }}
+                                    </ng-template>
+                                </p-dropdown>
+                                <validation-messages [formCtrl]="genderId"></validation-messages>
+                            </div>
                         </div>
 
                         <div class="mt-5 gap-3 d-flex">
