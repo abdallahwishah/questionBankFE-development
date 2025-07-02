@@ -14,20 +14,10 @@
 @import url('../node_modules/@devexpress/analytics-core/dist/css/dx-querybuilder.css');
 @import url('../node_modules/devexpress-dashboard/dist/css/dx-dashboard.light.css');
 
-/* report */
-@import '../node_modules/devextreme/dist/css/dx.light.css';
-@import '../node_modules/devexpress-richedit/dist/dx.richedit.css';
-@import '../node_modules/@devexpress/analytics-core/dist/css/dx-analytics.common.css';
-@import '../node_modules/@devexpress/analytics-core/dist/css/dx-analytics.light.css';
-@import '../node_modules/@devexpress/analytics-core/dist/css/dx-querybuilder.css';
-@import '../node_modules/devexpress-reporting/dist/css/dx-webdocumentviewer.css';
-@import '../node_modules/devexpress-reporting/dist/css/dx-reportdesigner.css';
-/* dashbord */
-@import url('../node_modules/devextreme/dist/css/dx.light.css');
-@import url('../node_modules/@devexpress/analytics-core/dist/css/dx-analytics.common.css');
-@import url('../node_modules/@devexpress/analytics-core/dist/css/dx-analytics.light.css');
-@import url('../node_modules/@devexpress/analytics-core/dist/css/dx-querybuilder.css');
-@import url('../node_modules/devexpress-dashboard/dist/css/dx-dashboard.light.css');
+@import url("../node_modules/ace-builds/css/ace.css");
+@import url("../node_modules/ace-builds/css/theme/dreamweaver.css");
+@import url("../node_modules/ace-builds/css/theme/ambiance.css");
+
 .margin-left-5 {
     margin-left: 5px !important;
 }

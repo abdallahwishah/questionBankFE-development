@@ -145,7 +145,7 @@
             class="col-md-7 d-grid gap-3 align-items-end"
             style="grid-template-columns: 2.2fr auto auto"
             [ngStyle]="{
-                'margin-bottom': session?.session.status != sessionStatusEnum.Finished ? '-10vh' : '-10vh'
+                'margin-bottom': session?.session.status != sessionStatusEnum.Finished ? '-10vh' : '-10vh',
             }"
         >
             <div>
@@ -189,8 +189,8 @@
                                         customParams: {
                                             Sorting: '',
                                             SkipCount: 0,
-                                            MaxResultCount: 10
-                                        }
+                                            MaxResultCount: 10,
+                                        },
                                     }"
                                 ></app-auto-complete-feild>
                                 <!-- <div class="col-md-12 mb-5">
@@ -234,8 +234,8 @@
                                             customParams: {
                                                 Sorting: '',
                                                 SkipCount: 0,
-                                                MaxResultCount: 10
-                                            }
+                                                MaxResultCount: 10,
+                                            },
                                         }"
                                     ></app-auto-complete-feild>
                                 </div>
@@ -434,7 +434,7 @@
                                 <span
                                     [ngStyle]="{
                                         color: record?.hasFinished ? 'red' : '',
-                                        display: 'block'
+                                        display: 'block',
                                     }"
                                 >
                                     {{ record.studentNumber || '-' }}
@@ -442,7 +442,7 @@
                                 <span
                                     [ngStyle]="{
                                         color: record?.hasFinished ? 'red' : '',
-                                        display: 'block'
+                                        display: 'block',
                                     }"
                                 >
                                     <td>{{ record?.examAttempt?.expectedEndDate | date: 'short' }}</td>
@@ -479,23 +479,27 @@
                             </td>
                             <td>
                                 <app-action-button
-                                     [ActionsInfo]="[
+                                    [ActionsInfo]="[
                                         {
                                             label: 'MoveStudent',
                                             hasCondition:
                                                 session?.session?.status === sessionStatusEnum.Active ||
-                                                session?.session?.status === sessionStatusEnum.NotStarted
+                                                session?.session?.status === sessionStatusEnum.NotStarted,
                                         },
                                         {
                                             label: 'Extend',
-                                            hasCondition: session?.session?.status === sessionStatusEnum.Active
+                                            hasCondition: session?.session?.status === sessionStatusEnum.Active,
                                         },
                                         {
                                             label: 'Stop',
-                                            hasCondition: session?.session?.status === sessionStatusEnum.Active
+                                            hasCondition: session?.session?.status === sessionStatusEnum.Active,
                                         },
                                         {
-                                            label: 'RequestCamera'                                        }
+                                            label: 'RequestCamera',
+                                        },
+                                        {
+                                            label: 'View',
+                                        },
                                     ]"
                                     (action)="doActionsForAttempts($event, record)"
                                 ></app-action-button>
@@ -620,14 +624,14 @@
                                 <app-action-button
                                     [ActionsInfo]="[
                                         {
-                                            label: 'Delete'
+                                            label: 'Delete',
                                         },
                                         {
                                             label: 'MoveSupervisor',
                                             hasCondition:
                                                 session?.session?.status === sessionStatusEnum.Active ||
-                                                session?.session?.status === sessionStatusEnum.NotStarted
-                                        }
+                                                session?.session?.status === sessionStatusEnum.NotStarted,
+                                        },
                                     ]"
                                     (action)="doActionsForSupervisor($event, record)"
                                 ></app-action-button>

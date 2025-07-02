@@ -1,0 +1,100 @@
+<div>
+    <div class="card m-5">
+        <div class="card-header">
+            <h3 class="card-title">{{ l('Details') }}</h3>
+        </div>
+        <div class="d-flex gap-3 flex-wrap card-body justify-content-between">
+            <div>
+                <label class="form-label fw-bold">{{ l('StudentName') }}:</label>
+                <div>{{ student.studentName }}</div>
+            </div>
+            <div>
+                <label class="form-label fw-bold">{{ l('StudentNumber') }}:</label>
+                <div>{{ student.studentNumber }}</div>
+            </div>
+            <div>
+                <label class="form-label fw-bold">{{ l('SessionName') }}:</label>
+                <div>{{ student.sessionName }}</div>
+            </div>
+            <div>
+                <label class="form-label fw-bold">{{ l('SchoolName') }}:</label>
+                <div>{{ student.schoolName }}</div>
+            </div>
+            <div>
+                <label class="form-label fw-bold">{{ l('Exam') }}:</label>
+                <div>{{ student.examTitle }}</div>
+            </div>
+            <div>
+                <label class="form-label fw-bold">{{ l('StudyLevel') }}:</label>
+                <div>{{ student.studyLevel }}</div>
+            </div>
+        </div>
+        <div class="d-flex gap-3 flex-wrap card-body">
+            <div class="col-md-3">
+                <label class="form-label fw-bold">{{ l('Identity') }}:</label>
+                <div class="rounded">
+                    <p-image
+                        #identityPictureIdImage
+                        [src]="
+                            AppConsts.remoteServiceBaseUrl +
+                            '/File/DownloadBinaryFile?id=' +
+                            student.identityPictureId +
+                            '&contentType=image/jpeg&fileName=image.jpeg'
+                        "
+                        (onImageError)="onImageLoadError($event)"
+                        alt="Image"
+                        [width]="identityPictureIdImage.preview ? '100%' : '50%'"
+                        height="150"
+                        [preview]="student.identityPictureId ? true : false"
+                    />
+                </div>
+            </div>
+            <div class="col-md-3">
+                <label class="form-label fw-bold">{{ l('PersonalImage') }}:</label>
+                <div class="rounded">
+                    <p-image
+                        #selfiePictureIdImage
+                        [src]="
+                            AppConsts.remoteServiceBaseUrl +
+                            '/File/DownloadBinaryFile?id=' +
+                            student.selfiePictureId +
+                            '&contentType=image/jpeg&fileName=image.jpeg'
+                        "
+                        (onImageError)="onImageLoadError($event)"
+                        alt="Image"
+                        [width]="selfiePictureIdImage.preview ? '100%' : '50%'"
+                        height="150"
+                        [preview]="student.selfiePictureId ? true : false"
+                    />
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card m-5">
+        <div class="card-header">
+            <h3 class="card-title">{{ l('Images') }}</h3>
+        </div>
+        <div class="d-flex gap-5 flex-wrap card-body">
+            <div *ngFor="let item of allPhotos" class="border rounded p-5" style="width: min-content">
+                <!-- <img src="assets/common/images/default-icon.png" width="100%" /> -->
+
+                <div class="d-flex justify-content-center mb-2">
+                    <p-image
+                        #image
+                        src="assets/common/images/default-icon.png"
+                        alt="Image"
+                        width="100%"
+                        height="150"
+                        [preview]="true"
+                        (click)="loadPreviewImage(image, item)"
+                    />
+                </div>
+                <div class="d-flex gap-2">
+                    <div>{{ l('MatchingPercentage') }}:</div>
+                    <div>{{ item.examAttemptPhoto.accuracy }}%</div>
+                </div>
+            </div>
+            <div *ngIf="allPhotos.length === 0">{{ l('NoData') }}</div>
+        </div>
+    </div>
+</div>

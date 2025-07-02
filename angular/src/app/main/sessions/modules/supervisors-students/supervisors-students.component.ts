@@ -231,6 +231,10 @@ export class SupervisorsStudentsComponent extends AppComponentBase implements On
                 // scroll to top window
                 window.scrollTo(0, 0);
                 break;
+
+            case 'View':
+                this._router.navigate(['/app/main/sessions/photos', record.examAttempt.id], { state: record });
+                break;
         }
     }
     doActionsForSupervisor(label: any, record: any) {

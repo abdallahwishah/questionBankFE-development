@@ -1,0 +1,12 @@
+<app-dialog-shared [width]="'30vw'" [dialogHeader]="l('AddStudent')" [dialog_name]="View_Student_Photo_dialog">
+    <ng-container bodyDialog>
+        <ng-container>
+            <div class="row">
+                <div class="col-md-12 mb-5"><p-image [src]="imageUrl"></p-image></div>
+            </div>
+        </ng-container>
+    </ng-container>
+    <ng-container footerDialog>
+        <button class="btn btn-outline" (click)="close()">{{ l('Cancel') }}</button>
+    </ng-container>
+</app-dialog-shared>

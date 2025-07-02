@@ -4,7 +4,7 @@
     </label>
     <p-dropdown
         *ngIf="!loading"
-        [placeholder]="l(placeholder)"
+        [placeholder]="l(placeholder())"
         class="w-full py-2"
         [ngClass]="{ disabled: disabled }"
         [formControl]="fieldControl"

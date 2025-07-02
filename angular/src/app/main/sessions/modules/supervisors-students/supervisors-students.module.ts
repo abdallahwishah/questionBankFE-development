@@ -21,7 +21,9 @@ import { ExtendTimeSessionComponent } from './components/extendTimeSession/exten
 import { CheckboxModule } from 'primeng/checkbox';
 import { TriStateCheckboxModule } from 'primeng/tristatecheckbox';
 import { StandaloneWebRTCComponent } from '@app/RTC/standalone-webrtc/standalone-webrtc.component';
-
+import { PhotoStudentsComponent } from './components/photoStudents/photoStudents.component';
+import { PhotoComponent } from './components/photoStudents/components/photo/photo.component';
+import { ImageModule } from 'primeng/image';
 @NgModule({
     imports: [
         CommonModule,
@@ -45,9 +47,17 @@ import { StandaloneWebRTCComponent } from '@app/RTC/standalone-webrtc/standalone
         ExtendTimeSessionComponent,
         TriStateCheckboxModule,
         CheckboxModule,
-        StandaloneWebRTCComponent
+        StandaloneWebRTCComponent,
+        ImageModule
     ],
-    declarations: [SupervisorsStudentsComponent, AddSupervisorComponent, AddStudentComponent, MoveStudentComponent],
+    declarations: [
+        SupervisorsStudentsComponent,
+        AddSupervisorComponent,
+        AddStudentComponent,
+        MoveStudentComponent,
+        PhotoStudentsComponent,
+        PhotoComponent
+    ],
     providers: [SessionSupervisorsServiceProxy, StudentsServiceProxy],
 })
 export class SupervisorsStudentsModule {}
