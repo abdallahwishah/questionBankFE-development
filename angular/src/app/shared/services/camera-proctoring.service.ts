@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, from } from 'rxjs';
 import { UploaderService } from './uploader.service';
 import { DEFAULT_PHOTO_CONFIG, PhotoCaptureConfig, PROCTORING_STORAGE_KEYS } from '../config/proctoring.config';
+import { CreateOrEditExamAttemptPhotoDto, ExamAttemptPhotosServiceProxy } from '@shared/service-proxies/service-proxies';
 
 export interface CameraStatus {
     hasAccess: boolean;
@@ -46,7 +47,7 @@ export class CameraProctoringService {
     private readonly PENDING_PHOTOS_KEY = PROCTORING_STORAGE_KEYS.PENDING_PHOTOS;
     private readonly CAMERA_ACCESS_KEY = PROCTORING_STORAGE_KEYS.CAMERA_ACCESS;
 
-    constructor(private uploaderService: UploaderService) {
+    constructor(private uploaderService: UploaderService, private ExamAttemptPhotosServiceProxy: ExamAttemptPhotosServiceProxy) {
         this.loadPendingPhotos();
         this.initializeCameraWorker();
     }
@@ -272,8 +273,15 @@ export class CameraProctoringService {
                 photoId: photo.id
             };
 
-            await this.uploaderService.uploadFileOrFiles(file, params).toPromise().then(value => {
+            await this.uploaderService.uploadFileOrFiles(file).toPromise().then((value: any) => {
                 console.log('Upload successful:', value);
+                this.ExamAttemptPhotosServiceProxy.createOrEdit(
+                    new CreateOrEditExamAttemptPhotoDto({
+                        id: undefined,
+                        photoToken: value?.result?.fileToken,
+                        examAttemptId: photo.studentAttemptId
+                    })
+                )
             }).catch(error => {
                 console.error('Upload error:', error);
             });
