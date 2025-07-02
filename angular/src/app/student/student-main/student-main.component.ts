@@ -5,6 +5,7 @@ import { ExamsServiceProxy } from '@shared/service-proxies/service-proxies';
 import { QuizComponent } from '../quiz/quiz.component';
 import { AppComponentBase } from '@shared/common/app-component-base';
 import { Router } from '@node_modules/@angular/router';
+import { CameraProctoringService, CameraStatus } from '@app/shared/services/camera-proctoring.service';
 
 @Component({
     standalone: true,
@@ -27,15 +28,65 @@ export class StudentMainComponent extends AppComponentBase implements OnInit, On
     sessionName: string | undefined;
     sideBar: boolean = false;
     totalSeconds: any;
+
+    // Camera access properties
+    cameraStatus: CameraStatus = { hasAccess: false, hasPermission: false };
+    showCameraError: boolean = false;
+    cameraErrorMessage: string = '';
+    isCheckingCamera: boolean = false;
     constructor(
         injector: Injector,
         private _examsServiceProxy: ExamsServiceProxy,
         private router: Router,
+        private cameraProctoringService: CameraProctoringService, // Inject the camera proctoring service
     ) {
         super(injector);
     }
 
     ngOnInit() {
+        // Check and request camera access first
+        this.checkCameraAccess();
+    }
+
+    /**
+     * Check camera access and request permission
+     */
+    private async checkCameraAccess(): Promise<void> {
+        this.isCheckingCamera = true;
+        this.showCameraError = false;
+
+        try {
+            // Subscribe to camera status changes
+            this.cameraProctoringService.cameraStatus$.subscribe(status => {
+                this.cameraStatus = status;
+
+                if (status.hasAccess && status.hasPermission) {
+                    // Camera access successful, now get exam data
+                    this.loadExamData();
+                } else if (status.error) {
+                    // Camera access failed, show error
+                    this.showCameraError = true;
+                    this.cameraErrorMessage = status.error;
+                }
+
+                this.isCheckingCamera = false;
+            });
+
+            // Request camera access
+            await this.cameraProctoringService.checkCameraAccess();
+
+        } catch (error) {
+            console.error('Error checking camera access:', error);
+            this.isCheckingCamera = false;
+            this.showCameraError = true;
+            this.cameraErrorMessage = 'Failed to check camera access. Please refresh the page and try again.';
+        }
+    }
+
+    /**
+     * Load exam data after camera access is confirmed
+     */
+    private loadExamData(): void {
         // 1. Get the exam data, which includes remainingTimeInSecond
         this._examsServiceProxy.getExpectedeExam().subscribe((response) => {
             this.sessionName = response.sessionName;
@@ -51,6 +102,13 @@ export class StudentMainComponent extends AppComponentBase implements OnInit, On
                 this.router.navigate(['/student/exam-attempt']);
             }
         });
+    }
+
+    /**
+     * Retry camera access
+     */
+    retryCameraAccess(): void {
+        this.checkCameraAccess();
     }
 
     ngOnDestroy() {

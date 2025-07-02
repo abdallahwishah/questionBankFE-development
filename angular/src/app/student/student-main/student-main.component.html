@@ -1,61 +1,89 @@
 <div class="bg-cover">
-    <div class="mb-15">
-        <h3 class="mb-8">{{ sessionName }}</h3>
-        <h4 *ngIf="totalSeconds" style="color: #000">{{ l('PleaseWaitUntilTimeComes') }}</h4>
-        <h4 *ngIf="!totalSeconds" style="color: #000">{{ l('ThereIsNoExamsForYou') }}</h4>
+    <!-- Camera Access Check -->
+    <div *ngIf="isCheckingCamera" class="mb-15">
+        <div class="d-flex justify-content-center align-items-center">
+            <div class="spinner-border text-primary me-3" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+            <h4 style="color: #000">{{ l('RequestingCameraAccess') || 'Requesting Camera Access...' }}</h4>
+        </div>
     </div>
-    <ng-container *ngIf="totalSeconds">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-md-5">
-                    <div class="counter-box p-6 d-flex justify-content-between">
-                        <div class="d-flex flex-column align-items-center">
-                            <div class="d-flex gap-2 align-items-center" style="direction: ltr">
-                                <div class="num">{{ seconds[0] }}</div>
-                                <div class="num">{{ seconds[1] }}</div>
-                            </div>
-                            <span>{{ l('Second') }}</span>
-                        </div>
-                        <div class="donts">:</div>
-                        <div class="d-flex flex-column align-items-center">
-                            <div class="d-flex gap-2 align-items-center" style="direction: ltr">
-                                <div class="num">{{ minutes[0] }}</div>
-                                <div class="num">{{ minutes[1] }}</div>
-                            </div>
-                            <span>{{ l('Minute') }}</span>
-                        </div>
-                        <div class="donts">:</div>
 
-                        <div class="d-flex flex-column align-items-center">
-                            <div class="d-flex gap-2 align-items-center" style="direction: ltr">
-                                <div class="num">{{ hours[0] }}</div>
-                                <div class="num">{{ hours[1] }}</div>
-                            </div>
-                            <span>{{ l('Hour') }}</span>
-                        </div>
-                        <div class="donts">:</div>
+    <!-- Camera Error -->
+    <div *ngIf="showCameraError && !isCheckingCamera" class="mb-15">
+        <div class="alert alert-danger mx-auto" style="max-width: 600px;">
+            <h4 class="alert-heading">{{ l('CameraAccessRequired') || 'Camera Access Required' }}</h4>
+            <p>{{ cameraErrorMessage }}</p>
+            <hr>
+            <div class="d-flex justify-content-center gap-3">
+                <button class="btn btn-primary" (click)="retryCameraAccess()">
+                    {{ l('TryAgain') || 'Try Again' }}
+                </button>
+                <button class="btn btn-outline-secondary" onclick="location.reload()">
+                    {{ l('RefreshPage') || 'Refresh Page' }}
+                </button>
+            </div>
+        </div>
+    </div>
 
-                        <div class="d-flex flex-column align-items-center">
-                            <div class="d-flex gap-2 align-items-center" style="direction: ltr">
-                                <div class="num">{{ days[0] }}</div>
-                                <div class="num">{{ days[1] }}</div>
+    <!-- Main Content (only shown when camera access is granted) -->
+    <div *ngIf="cameraStatus.hasAccess && cameraStatus.hasPermission && !isCheckingCamera">
+        <div class="mb-15">
+            <h3 class="mb-8">{{ sessionName }}</h3>
+            <h4 *ngIf="totalSeconds" style="color: #000">{{ l('PleaseWaitUntilTimeComes') }}</h4>
+            <h4 *ngIf="!totalSeconds" style="color: #000">{{ l('ThereIsNoExamsForYou') }}</h4>
+        </div>
+        <ng-container *ngIf="totalSeconds">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-md-5">
+                        <div class="counter-box p-6 d-flex justify-content-between">
+                            <div class="d-flex flex-column align-items-center">
+                                <div class="d-flex gap-2 align-items-center" style="direction: ltr">
+                                    <div class="num">{{ seconds[0] }}</div>
+                                    <div class="num">{{ seconds[1] }}</div>
+                                </div>
+                                <span>{{ l('Second') }}</span>
                             </div>
-                            <span>{{ l('Day') }}</span>
+                            <div class="donts">:</div>
+                            <div class="d-flex flex-column align-items-center">
+                                <div class="d-flex gap-2 align-items-center" style="direction: ltr">
+                                    <div class="num">{{ minutes[0] }}</div>
+                                    <div class="num">{{ minutes[1] }}</div>
+                                </div>
+                                <span>{{ l('Minute') }}</span>
+                            </div>
+                            <div class="donts">:</div>
+
+                            <div class="d-flex flex-column align-items-center">
+                                <div class="d-flex gap-2 align-items-center" style="direction: ltr">
+                                    <div class="num">{{ hours[0] }}</div>
+                                    <div class="num">{{ hours[1] }}</div>
+                                </div>
+                                <span>{{ l('Hour') }}</span>
+                            </div>
+                            <div class="donts">:</div>
+
+                            <div class="d-flex flex-column align-items-center">
+                                <div class="d-flex gap-2 align-items-center" style="direction: ltr">
+                                    <div class="num">{{ days[0] }}</div>
+                                    <div class="num">{{ days[1] }}</div>
+                                </div>
+                                <span>{{ l('Day') }}</span>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <!-- <div class="mt-15" >
-            <a
-                href="javascript:;"
-                style="padding: 10px; color: black; border: #6d31ed solid; border-radius: 5px"
-                (click)="sideBar = true"
-            >
-                {{ l('ViewExams') }}
-            </a>
-        </div> -->
-    </ng-container>
+            <!-- Camera Status Indicator -->
+            <div class="mt-15">
+                <div class="d-flex justify-content-center align-items-center">
+                    <i class="fa fa-camera text-success me-2"></i>
+                    <small class="text-success">{{ l('CameraAccessGranted') || 'Camera Access Granted' }}</small>
+                </div>
+            </div>
+        </ng-container>
+    </div>
 </div>
 <p-sidebar [(visible)]="sideBar" styleClass="w-40rem" position="right">
     <ng-template pTemplate="header">

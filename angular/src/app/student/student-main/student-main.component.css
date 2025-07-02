@@ -46,6 +46,86 @@ h4{
     font-size: 35px;
 }
 
+/* Camera Access Styles */
+.alert {
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.alert-danger {
+    background-color: #f8d7da;
+    border: 1px solid #f5c6cb;
+    color: #721c24;
+}
+
+.alert-heading {
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.btn {
+    padding: 10px 20px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.3s ease;
+}
+
+.btn-primary {
+    background-color: #6d31ed;
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: #5a26d1;
+}
+
+.btn-outline-secondary {
+    background-color: transparent;
+    color: #6c757d;
+    border: 1px solid #6c757d;
+}
+
+.btn-outline-secondary:hover {
+    background-color: #6c757d;
+    color: white;
+}
+
+.spinner-border {
+    width: 1.5rem;
+    height: 1.5rem;
+    border: 0.15em solid;
+    border-right-color: transparent;
+    border-radius: 50%;
+    animation: spinner-border-spin 0.75s linear infinite;
+}
+
+@keyframes spinner-border-spin {
+    to { transform: rotate(360deg); }
+}
+
+.visually-hidden {
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    padding: 0 !important;
+    margin: -1px !important;
+    overflow: hidden !important;
+    clip: rect(0, 0, 0, 0) !important;
+    white-space: nowrap !important;
+    border: 0 !important;
+}
+
+.text-success {
+    color: #198754 !important;
+}
+
+.gap-3 {
+    gap: 1rem !important;
+}
+
 @media (max-width: 768px) {
     .counter-box .num {
         width: 40px;
