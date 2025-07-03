@@ -58,9 +58,11 @@ import { ZeroTemplateHttpConfigurationService } from './zero-template-http-confi
         ApiServiceProxies.SessionsServiceProxy,
         ApiServiceProxies.ExamAttemptsServiceProxy,
         ApiServiceProxies.SupervisorsServiceProxy,
+        ApiServiceProxies.ExamAttemptPhotosServiceProxy,
+
         { provide: RefreshTokenService, useClass: ZeroRefreshTokenService },
         { provide: AbpHttpConfigurationService, useClass: ZeroTemplateHttpConfigurationService },
         { provide: HTTP_INTERCEPTORS, useClass: AbpHttpInterceptor, multi: true },
     ],
 })
-export class ServiceProxyModule {}
+export class ServiceProxyModule { }

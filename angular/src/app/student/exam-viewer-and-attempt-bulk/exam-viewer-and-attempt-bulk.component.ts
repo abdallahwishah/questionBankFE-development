@@ -25,6 +25,7 @@ import { SidebarModule } from 'primeng/sidebar';
 import { AccordionModule } from 'primeng/accordion';
 import { WarningModalComponent } from '@app/main/templates/components/warning-modal/warning-modal.component';
 import { SafeTextPipe } from '@app/shared/pipes/safe-text.pipe';
+import { CameraProctoringService } from '@app/shared/services/camera-proctoring.service';
 
 @Component({
     standalone: true,
@@ -82,6 +83,7 @@ export class ExamViewerAndAttemptBulkComponent extends AppComponentBase implemen
         private _activatedRoute: ActivatedRoute,
         private router: Router,
         private _DialogSharedService: DialogSharedService,
+        private cameraProctoringService: CameraProctoringService,
     ) {
         super(injector);
     }
@@ -89,11 +91,12 @@ export class ExamViewerAndAttemptBulkComponent extends AppComponentBase implemen
         this.isOnline = true;
         console.log('Internet connection restored');
         this.resendFailedQuestions();
+        // Retry failed photo uploads when online
+        this.cameraProctoringService.retryFailedUploads();
     };
 
     handleOffline = () => {
         this.isOnline = false;
-
         console.log('Internet connection lost');
     };
     studentAttemptIdForFaildQuestions: string = '';
@@ -147,6 +150,10 @@ export class ExamViewerAndAttemptBulkComponent extends AppComponentBase implemen
         // Clean up event listeners when the component is destroyed
         window.removeEventListener('online', this.handleOnline);
         window.removeEventListener('offline', this.handleOffline);
+
+        // Stop photo capture and cleanup camera resources
+        this.cameraProctoringService.stopAutomaticCapture();
+        this.cameraProctoringService.cleanup();
     }
 
     // --------------------------
@@ -248,6 +255,10 @@ export class ExamViewerAndAttemptBulkComponent extends AppComponentBase implemen
             this.saveSomeAnswersToServer(true);
         }
 
+        // Stop photo capture and clear stored photos
+        this.cameraProctoringService.stopAutomaticCapture();
+        this.cameraProctoringService.clearStoredPhotos();
+
         localStorage.removeItem(this.LOCAL_STORAGE_KEY);
         this.router.navigate(['/student/main']);
     }
@@ -278,6 +289,11 @@ export class ExamViewerAndAttemptBulkComponent extends AppComponentBase implemen
             }
             // this.saveToLocalStorage();
         }, 1000);
+
+        // Start automatic photo capture every 10 minutes
+        if (this.studentAttemptId) {
+            this.cameraProctoringService.startAutomaticCapture(this.studentAttemptId, this.examEndTime);
+        }
     }
 
     // Helper to update remainingSeconds using examEndTime and current time
