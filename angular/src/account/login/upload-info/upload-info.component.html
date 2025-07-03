@@ -1,0 +1,218 @@
+<div>
+    <div class="mb-5">
+        <div class="pb-5 pt-lg-0 pt-5">
+            <h3 class="fw-bolder text-dark fs-h4 fs-h1-lg pb-1 custom-border">
+                {{ 'Details' | localize }}
+            </h3>
+        </div>
+        <div class="row flex-wrap justify-content-around">
+            <div class="col-5 mb-3 card p-3">
+                <label class="form-label fw-bold">{{ l('Name') }}</label>
+                <div>{{ studentInfo.fullName || '--' }}</div>
+            </div>
+            <div class="col-5 mb-3 card p-3">
+                <label class="form-label fw-bold">{{ l('StudyLevel') }}</label>
+                <div>{{ studentInfo.studyLevelName || '--' }}</div>
+            </div>
+            <div class="col-5 mb-3 card p-3">
+                <label class="form-label fw-bold">{{ l('SpecialityName') }}</label>
+                <div>{{ studentInfo.specialityName || '--' }}</div>
+            </div>
+            <div class="col-5 mb-3 card p-3">
+                <label class="form-label fw-bold">{{ l('Gender') }}</label>
+                <div>{{ l(GenderEnum[studentInfo.gender]) || '--' }}</div>
+            </div>
+            <div class="col-5 mb-3 card p-3">
+                <label class="form-label fw-bold">{{ l('RegistrationYear') }}</label>
+                <div>{{ studentInfo.registrationYear || '--' }}</div>
+            </div>
+            <div class="col-5 mb-3 card p-3">
+                <label class="form-label fw-bold">{{ l('RegistrationCycleNumber') }}</label>
+                <div>{{ studentInfo.registrationCycleNumber || '--' }}</div>
+            </div>
+        </div>
+    </div>
+    <form #info="ngForm">
+        <div class="mb-5">
+            <div class="pb-5 pt-lg-0 pt-5">
+                <h3 class="fw-bolder text-dark fs-h4 fs-h1-lg pb-1 custom-border">
+                    {{ 'Password' | localize }}
+                </h3>
+            </div>
+            <p>
+                {{ l('EnterAndConfirmPassword') }}
+            </p>
+            <div class="col-12 mb-3">
+                <label class="form-label m-0">{{ l('Password') }}</label>
+                <input
+                    type="password"
+                    class="form-control"
+                    [(ngModel)]="registerStudent.password"
+                    (input)="!confirmPassword ? checkPasswordErrors() : checkPassword(); checkPasswordErrors()"
+                    required
+                    [requireDigit]="passwordComplexitySetting.requireDigit"
+                    [requireLowercase]="passwordComplexitySetting.requireLowercase"
+                    [requireUppercase]="passwordComplexitySetting.requireUppercase"
+                    [requireNonAlphanumeric]="passwordComplexitySetting.requireNonAlphanumeric"
+                    [requiredLength]="passwordComplexitySetting.requiredLength"
+                    name="password"
+                    #password
+                />
+                <div [hidden]="!registerStudent.password">
+                    <ul class="help-block text-danger">
+                        <li *ngIf="passwordErrors.requireDigit">
+                            {{ 'PasswordComplexity_RequireDigit_Hint' | localize }}
+                        </li>
+                        <li *ngIf="passwordErrors.requireLowercase">
+                            {{ 'PasswordComplexity_RequireLowercase_Hint' | localize }}
+                        </li>
+                        <li *ngIf="passwordErrors.requireUppercase">
+                            {{ 'PasswordComplexity_RequireUppercase_Hint' | localize }}
+                        </li>
+                        <li *ngIf="passwordErrors.requireNonAlphanumeric">
+                            {{ 'PasswordComplexity_RequireNonAlphanumeric_Hint' | localize }}
+                        </li>
+                        <li *ngIf="passwordErrors.requiredLength">
+                            {{
+                                'PasswordComplexity_RequiredLength_Hint'
+                                    | localize: passwordComplexitySetting.requiredLength
+                            }}
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-12">
+                <label class="form-label m-0">{{ l('ConfirmPassword') }}</label>
+                <input
+                    type="password"
+                    class="form-control"
+                    required
+                    [(ngModel)]="confirmPassword"
+                    (input)="checkPassword(); checkPasswordErrors()"
+                    [requireDigit]="passwordComplexitySetting.requireDigit"
+                    [requireLowercase]="passwordComplexitySetting.requireLowercase"
+                    [requireUppercase]="passwordComplexitySetting.requireUppercase"
+                    [requireNonAlphanumeric]="passwordComplexitySetting.requireNonAlphanumeric"
+                    [requiredLength]="passwordComplexitySetting.requiredLength"
+                    name="confirmPassword"
+                />
+                <div *ngIf="showErrorMessage" class="text-danger fs-8">{{ l('PasswordNotMatch') }}</div>
+                <div [hidden]="!confirmPassword">
+                    <ul class="help-block text-danger">
+                        <li *ngIf="confirmPasswordErrors.requireDigit">
+                            {{ 'PasswordComplexity_RequireDigit_Hint' | localize }}
+                        </li>
+                        <li *ngIf="confirmPasswordErrors.requireLowercase">
+                            {{ 'PasswordComplexity_RequireLowercase_Hint' | localize }}
+                        </li>
+                        <li *ngIf="confirmPasswordErrors.requireUppercase">
+                            {{ 'PasswordComplexity_RequireUppercase_Hint' | localize }}
+                        </li>
+                        <li *ngIf="confirmPasswordErrors.requireNonAlphanumeric">
+                            {{ 'PasswordComplexity_RequireNonAlphanumeric_Hint' | localize }}
+                        </li>
+                        <li *ngIf="confirmPasswordErrors.requiredLength">
+                            {{
+                                'PasswordComplexity_RequiredLength_Hint'
+                                    | localize: passwordComplexitySetting.requiredLength
+                            }}
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div>
+            <div class="pb-5 pt-lg-0 pt-5">
+                <h3 class="fw-bolder text-dark fs-h4 fs-h1-lg pb-1 custom-border">
+                    {{ 'Attachments' | localize }}
+                </h3>
+            </div>
+            <p>
+                {{ l('UploadIdentityAndPersonalImage') }}
+            </p>
+            <div class="d-flex gap-3">
+                <div class="col-6 mb-3">
+                    <div class="d-flex justify-content-between">
+                        <label class="form-label m-0">{{ l('IdentityImage') }}</label>
+                        <div *ngIf="identityImage" class="circle" (click)="identityImageInput.click()">
+                            <i class="fa-solid fa-paperclip" style="color: #74c0fc"></i>
+                        </div>
+                    </div>
+                    <div class="w-100">
+                        <div
+                            *ngIf="!identityImage"
+                            class="cursor-pointer card-image"
+                            (click)="identityImageInput.click()"
+                        >
+                            {{ l('UploadIdentityImageHere') }}
+                        </div>
+                        <img
+                            *ngIf="identityImage"
+                            src="{{ identityImage }}"
+                            class="img-thumbnail img-rounded image"
+                            (click)="identityImageInput.click()"
+                        />
+                        <input
+                            #identityImageInput
+                            type="file"
+                            id="uploadIdentityImageHere"
+                            class="hidden"
+                            accept="image/*"
+                            (change)="uploadIdentity($event)"
+                        />
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="d-flex justify-content-between">
+                        <label class="form-label m-0">{{ l('PersonalImage') }}</label>
+                        <div *ngIf="personalImage" class="circle" (click)="personalImageInput.click()">
+                            <i class="fa-solid fa-paperclip" style="color: #74c0fc"></i>
+                        </div>
+                    </div>
+                    <div class="w-100">
+                        <div
+                            *ngIf="!personalImage"
+                            class="cursor-pointer card-image"
+                            (click)="personalImageInput.click()"
+                        >
+                            {{ l('UploadPersonalImageHere') }}
+                        </div>
+                        <img
+                            *ngIf="personalImage"
+                            src="{{ personalImage }}"
+                            class="img-thumbnail img-rounded image"
+                            (click)="personalImageInput.click()"
+                        />
+                        <input
+                            #personalImageInput
+                            type="file"
+                            id="uploadPersonalImageHere"
+                            class="hidden"
+                            accept="image/*"
+                            (change)="uploadPersonalImage($event)"
+                        />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+    <div class="d-flex gap-3">
+        <p-checkbox [(ngModel)]="isAgree" [binary]="true"></p-checkbox>
+        <label class="col-form-label align-content-center">{{ l('IsAgree') }}</label>
+    </div>
+    <div class="pb-lg-0 pb-5">
+        <button
+            (click)="register()"
+            [disabled]="
+                !isAgree ||
+                info.form.invalid ||
+                !registerStudent.identityPhotoToken ||
+                !registerStudent.selfiePhotoToken
+            "
+            class="btn btn-primary w-100 fw-bolder fs-h6 px-8 py-4 my-3 me-3"
+        >
+            {{ 'Submit' | localize }}
+        </button>
+    </div>
+</div>

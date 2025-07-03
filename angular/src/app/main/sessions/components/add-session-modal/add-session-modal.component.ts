@@ -51,6 +51,8 @@ export class AddSessionsModalComponent extends AppComponentBase implements OnIni
             studentFileToken: [null],
             sessionNumber: [1],
             passwordMultiplier: [2],
+            isForAllSubjects: [true],
+            isStudentsFromExcel: [true],
         });
     }
     ngOnInit(): void {
@@ -69,6 +71,8 @@ export class AddSessionsModalComponent extends AppComponentBase implements OnIni
                     this.dataForEdit = null;
                     this.FormAddSession.reset();
                     this.FormAddSession.get('passwordMultiplier').patchValue(2);
+                    this.FormAddSession.get('isForAllSubjects').patchValue(true);
+                    this.FormAddSession.get('isStudentsFromExcel').patchValue(true);
                 }
             });
 

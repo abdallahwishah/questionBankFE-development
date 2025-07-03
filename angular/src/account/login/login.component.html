@@ -2,14 +2,14 @@
 <div class="login-form" [@routerTransition]>
     <div class="pb-8 pt-lg-0 pt-5">
         <div class="text-center">
-            <img src="assets/common/images/logo.svg" alt="">
+            <img src="assets/common/images/logo.svg" alt="" />
             <h1 class="fw-bolder text-dark mt-7 mb-5">وزارة التعليم العالي</h1>
             <p class="text-gray-600 fs-4">يرجى إدخال اسم المستخدم وكلمة المرور</p>
         </div>
-      <!--   <h3 class="fw-bolder text-dark fs-h4 fs-h1-lg">{{ 'LogIn' | localize }}</h3> -->
+        <!--   <h3 class="fw-bolder text-dark fs-h4 fs-h1-lg">{{ 'LogIn' | localize }}</h3> -->
     </div>
     <!--begin::Form-->
-    <form #loginForm="ngForm" class="login-form form" method="post"  (ngSubmit)="login()">
+    <form #loginForm="ngForm" class="login-form form" method="post" (ngSubmit)="login()">
         <div class="mb-5">
             <input
                 #userNameOrEmailAddressInput="ngModel"
@@ -22,7 +22,10 @@
                 name="userNameOrEmailAddress"
                 required
             />
-            <validation-messages [formCtrl]="userNameOrEmailAddressInput" *ngIf="!userNameOrEmailAddressInput.touched"></validation-messages>
+            <validation-messages
+                [formCtrl]="userNameOrEmailAddressInput"
+                *ngIf="!userNameOrEmailAddressInput.touched"
+            ></validation-messages>
         </div>
 
         <div class="mb-5" data-kt-password-meter="true">
@@ -39,10 +42,21 @@
                     maxlength="32"
                 />
                 <!--begin::Visibility toggle-->
-                <span class="btn btn-sm btn-icon position-absolute translate-middle top-50 end-0 me-n2"
-                      data-kt-password-meter-control="visibility">
-                    <i class="fas fa-eye-slash fs-4"><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span></i>
-                    <i class="fas fa-eye d-none fs-4"><span class="path1"></span><span class="path2"></span><span class="path3"></span></i>
+                <span
+                    class="btn btn-sm btn-icon position-absolute translate-middle top-50 end-0 me-n2"
+                    data-kt-password-meter-control="visibility"
+                >
+                    <i class="fas fa-eye-slash fs-4">
+                        <span class="path1"></span>
+                        <span class="path2"></span>
+                        <span class="path3"></span>
+                        <span class="path4"></span>
+                    </i>
+                    <i class="fas fa-eye d-none fs-4">
+                        <span class="path1"></span>
+                        <span class="path2"></span>
+                        <span class="path3"></span>
+                    </i>
                 </span>
                 <!--end::Visibility toggle-->
             </div>
@@ -51,25 +65,44 @@
 
         <div class="mb-5 d-flex justify-content-between mt-4">
             <label class="form-check form-check-custom form-check-solid">
-                <input type="checkbox" name="rememberMe" class="form-check-input" value="true" [(ngModel)]="loginService.rememberMe">
+                <input
+                    type="checkbox"
+                    name="rememberMe"
+                    class="form-check-input"
+                    value="true"
+                    [(ngModel)]="loginService.rememberMe"
+                />
                 <span class="form-check-label">
                     {{ 'RememberMe' | localize }}
                 </span>
             </label>
-            <a routerLink="/account/forgot-password"
-               id="forget-password" class=" btn-link fs-h6 fw-bolder text-hover-primary">{{ 'ForgotPassword' | localize }}</a>
+            <a
+                routerLink="/account/forgot-password"
+                id="forget-password"
+                class="btn-link fs-h6 fw-bolder text-hover-primary"
+            >
+                {{ 'ForgotPassword' | localize }}
+            </a>
         </div>
 
         <!--begin::Action-->
         <div class="pb-lg-0 pb-5">
-            <button type="submit"
-                    [disabled]="!loginForm.form.valid"
-                    class="btn w-100 btn-primary fw-bolder fs-h6 px-8 py-4 my-3 me-3">{{ 'LogIn' | localize }}</button>
+            <button
+                type="submit"
+                [disabled]="!loginForm.form.valid"
+                class="btn w-100 btn-primary fw-bolder fs-h6 px-8 py-4 mt-3 me-3"
+            >
+                {{ 'LogIn' | localize }}
+            </button>
         </div>
-
 
         <!--end::Action-->
     </form>
+    <div class="pb-lg-0 pb-5">
+        <button (click)="register()" class="btn w-100 btn-success fw-bolder fs-h6 px-8 py-4 my-3 me-3">
+            {{ 'LogInForTawjihiExams' | localize }}
+        </button>
+    </div>
 
     <!--end::Form-->
 

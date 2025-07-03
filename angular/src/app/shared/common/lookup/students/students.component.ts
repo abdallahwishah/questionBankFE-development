@@ -5,6 +5,11 @@ import { Paginator } from '@node_modules/primeng/paginator';
 import { Table } from '@node_modules/primeng/table';
 import { AppComponentBase } from '@shared/common/app-component-base';
 import { CreateOrEditStudentModalComponent } from './create-or-edit-student-modal/create-or-edit-student-modal.component';
+import { FileDownloadService } from '@shared/utils/file-download.service';
+import { HttpClient } from '@angular/common/http';
+import { finalize } from 'rxjs';
+import { AppConsts } from '@shared/AppConsts';
+import { FileUpload } from 'primeng/fileupload';
 
 @Component({
     selector: 'app-students',
@@ -16,11 +21,15 @@ export class StudentsComponent extends AppComponentBase implements OnInit {
     @ViewChild('paginator', { static: true }) paginator: Paginator;
     @ViewChild('createOrEditStudent', { static: true })
     createOrEditStudent: CreateOrEditStudentModalComponent;
+    @ViewChild('ExcelFileUpload', { static: false }) excelFileUpload: FileUpload;
     filterText: string;
+    uploadUrl = AppConsts.remoteServiceBaseUrl + '/Students/ImportFromExcel';
 
     constructor(
         injector: Injector,
         private studentsServiceProxy: StudentsServiceProxy,
+        private _fileDownloadService: FileDownloadService,
+        private _httpClient: HttpClient,
     ) {
         super(injector);
     }
@@ -83,5 +92,32 @@ export class StudentsComponent extends AppComponentBase implements OnInit {
         }
     }
 
-    exportToExcel() {}
+    exportToExcel() {
+        this.studentsServiceProxy
+            .getStudentsToExcel(this.filterText, undefined, undefined, undefined, undefined)
+            .subscribe((result) => {
+                this._fileDownloadService.downloadTempFile(result);
+            });
+    }
+
+    uploadExcel(data: { files: File }): void {
+        const formData: FormData = new FormData();
+        const file = data.files[0];
+        formData.append('file', file, file.name);
+
+        this._httpClient
+            .post<any>(this.uploadUrl, formData)
+            .pipe(finalize(() => this.excelFileUpload.clear()))
+            .subscribe((response) => {
+                if (response.success) {
+                    this.notify.success(this.l('ImportStudentsProcessStart'));
+                } else if (response.error != null) {
+                    this.notify.error(this.l('ImportStudentsUploadFailed'));
+                }
+            });
+    }
+
+    onUploadExcelError(): void {
+        this.notify.error(this.l('ImportStudentsUploadFailed'));
+    }
 }

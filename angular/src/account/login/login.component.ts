@@ -24,7 +24,7 @@ export class LoginComponent extends AppComponentBase implements OnInit, AfterVie
         private _router: Router,
         private _sessionService: AbpSessionService,
         private _sessionAppService: SessionServiceProxy,
-        private _recaptchaWrapperService: ReCaptchaV3WrapperService
+        private _recaptchaWrapperService: ReCaptchaV3WrapperService,
     ) {
         super(injector);
     }
@@ -91,8 +91,11 @@ export class LoginComponent extends AppComponentBase implements OnInit, AfterVie
         }
     }
 
-    login(): void {
+    register() {
+        this._router.navigate(['account/register-student']);
+    }
 
+    login(): void {
         let recaptchaCallback = (token: string) => {
             this.showMainSpinner();
 
@@ -103,12 +106,14 @@ export class LoginComponent extends AppComponentBase implements OnInit, AfterVie
                     this.hideMainSpinner();
                 },
                 null,
-                token
+                token,
             );
         };
 
         if (this._recaptchaWrapperService.useCaptchaOnLogin()) {
-            this._recaptchaWrapperService.getService().execute('login')
+            this._recaptchaWrapperService
+                .getService()
+                .execute('login')
                 .subscribe((token) => recaptchaCallback(token));
         } else {
             recaptchaCallback(null);
@@ -118,5 +123,4 @@ export class LoginComponent extends AppComponentBase implements OnInit, AfterVie
     externalLogin(provider: ExternalLoginProvider) {
         this.loginService.externalAuthenticate(provider);
     }
-
 }

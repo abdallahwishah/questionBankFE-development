@@ -31,26 +31,59 @@
                     </button>
                 </div>
                 <div>
-                    <button class="btn btn-outline d-flex gap-2">
-                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path
-                                d="M7.2838 18.5412C3.19214 18.5412 1.44214 16.7912 1.44214 12.6996V12.5912C1.44214 8.89124 2.90047 7.10791 6.16714 6.79957C6.50047 6.77457 6.81714 7.02457 6.85047 7.36624C6.88381 7.70791 6.63381 8.01624 6.28381 8.04957C3.66714 8.29124 2.69214 9.52457 2.69214 12.5996V12.7079C2.69214 16.0996 3.89214 17.2996 7.2838 17.2996H12.7171C16.1088 17.2996 17.3088 16.0996 17.3088 12.7079V12.5996C17.3088 9.50791 16.3171 8.27457 13.6505 8.04957C13.3088 8.01624 13.0505 7.71624 13.0838 7.37457C13.1171 7.03291 13.4088 6.77457 13.7588 6.80791C17.0755 7.09124 18.5588 8.88291 18.5588 12.6079V12.7162C18.5588 16.7912 16.8088 18.5412 12.7171 18.5412H7.2838Z"
-                                fill="#171A1F"
-                            />
-                            <path
-                                d="M9.375 12.4999V3.0166C9.375 2.67493 9.65833 2.3916 10 2.3916C10.3417 2.3916 10.625 2.67493 10.625 3.0166V12.4999C10.625 12.8416 10.3417 13.1249 10 13.1249C9.65833 13.1249 9.375 12.8416 9.375 12.4999Z"
-                                fill="#171A1F"
-                            />
-                            <path
-                                d="M12.3498 5.31621L9.99979 2.96621L7.64979 5.31621C7.40812 5.55788 7.00812 5.55788 6.76646 5.31621C6.52479 5.07454 6.52479 4.67454 6.76646 4.43288L9.55812 1.64121C9.79979 1.39954 10.1998 1.39954 10.4415 1.64121L13.2331 4.43288C13.4748 4.67454 13.4748 5.07454 13.2331 5.31621C13.1165 5.44121 12.9498 5.49954 12.7915 5.49954C12.6331 5.49954 12.4748 5.44121 12.3498 5.31621Z"
-                                fill="#171A1F"
-                            />
-                        </svg>
-                        <!-- <i class="fa fa-file-excel my-1"></i> -->
-                        <span class="d-none d-md-inline-block" (click)="exportToExcel()">
-                            {{ l('ExportToExcel') }}
-                        </span>
-                    </button>
+                    <div class="btn-group" dropdown placement="button right">
+                        <button
+                            id="dropdownButtonExcelOperations"
+                            dropdownToggle
+                            type="button"
+                            class="btn btn-outline btn-outline-success btn-active-light-success dropdown-toggle me-1"
+                            data-toggle="dropdown"
+                            aria-haspopup="true"
+                            aria-expanded="false"
+                            aria-controls="dropdownMenuExcelOperations"
+                        >
+                            <i class="far fa-file-excel btn-md-icon"></i>
+                            <span class="d-none d-md-inline-block">
+                                {{ 'ExcelOperations' | localize }}
+                            </span>
+                        </button>
+                        <ul
+                            id="dropdownMenuExcelOperations"
+                            class="dropdown-menu dropdown-menu-right dropdown-excel-operations"
+                            role="menu"
+                            *dropdownMenu
+                            aria-labelledby="dropdownButtonExcelOperations"
+                        >
+                            <li role="menuitem">
+                                <a
+                                    class="dropdown-item text-dark"
+                                    id="ExportLocalitiesToExcelButton"
+                                    (click)="exportToExcel()"
+                                    href="javascript:;"
+                                >
+                                    <i class="fa fa-download me-2 mt-1 text-dark" style="font-size: 1rem"></i>
+                                    {{ 'ExportToExcel' | localize }}
+                                </a>
+                            </li>
+                            <li *ngIf="'Pages.Students.Create' | permission" role="menuitem">
+                                <a href="javascript:;" class="dropdown-item text-dark">
+                                    <span class="fileinput-button">
+                                        <p-fileUpload
+                                            customUpload="true"
+                                            name="ExcelFileUpload"
+                                            #ExcelFileUpload
+                                            maxFileSize="10000000"
+                                            auto="auto"
+                                            accept=".xlsx"
+                                            (uploadHandler)="uploadExcel($event)"
+                                            (onError)="onUploadExcelError()"
+                                            chooseLabel="{{ 'ImportFromExcel' | localize }}"
+                                        ></p-fileUpload>
+                                    </span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
@@ -162,12 +195,12 @@
                                             [ActionsInfo]="[
                                                 {
                                                     label: 'Edit',
-                                                    hidden:!isGrantedAny('Pages.Students.Edit')
+                                                    hidden: !isGrantedAny('Pages.Students.Edit'),
                                                 },
                                                 {
                                                     label: 'Delete',
-                                                    hidden:!isGrantedAny('Pages.Students.Delete')
-                                                }
+                                                    hidden: !isGrantedAny('Pages.Students.Delete'),
+                                                },
                                             ]"
                                         ></app-action-button>
                                     </td>

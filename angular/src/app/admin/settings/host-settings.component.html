@@ -184,7 +184,7 @@
                                     class="form-control"
                                     min="1"
                                     [ngClass]="{
-                                        edited: hostSettings.userManagement.sessionTimeOutSettings.timeOutSecond
+                                        edited: hostSettings.userManagement.sessionTimeOutSettings.timeOutSecond,
                                     }"
                                     [(ngModel)]="hostSettings.userManagement.sessionTimeOutSettings.timeOutSecond"
                                 />
@@ -201,7 +201,7 @@
                                     min="1"
                                     [ngClass]="{
                                         edited: hostSettings.userManagement.sessionTimeOutSettings
-                                            .showTimeOutNotificationSecond
+                                            .showTimeOutNotificationSecond,
                                     }"
                                     [(ngModel)]="
                                         hostSettings.userManagement.sessionTimeOutSettings.showTimeOutNotificationSecond
@@ -257,7 +257,7 @@
                                     min="1"
                                     [ngClass]="{
                                         edited: hostSettings.userManagement.userPasswordSettings
-                                            .checkingLastXPasswordCount
+                                            .checkingLastXPasswordCount,
                                     }"
                                     [(ngModel)]="
                                         hostSettings.userManagement.userPasswordSettings.checkingLastXPasswordCount
@@ -293,7 +293,7 @@
                                     min="1"
                                     [ngClass]="{
                                         edited: hostSettings.userManagement.userPasswordSettings
-                                            .passwordExpirationDayCount
+                                            .passwordExpirationDayCount,
                                     }"
                                     [(ngModel)]="
                                         hostSettings.userManagement.userPasswordSettings.passwordExpirationDayCount
@@ -457,7 +457,7 @@
                                             class="form-control"
                                             min="{{ hostSettings.security.passwordComplexity.allowedMinimumLength }}"
                                             [ngClass]="{
-                                                edited: hostSettings.security.passwordComplexity.requiredLength
+                                                edited: hostSettings.security.passwordComplexity.requiredLength,
                                             }"
                                             [(ngModel)]="hostSettings.security.passwordComplexity.requiredLength"
                                             *ngIf="!hostSettings.security.useDefaultPasswordComplexitySettings"
@@ -467,7 +467,7 @@
                                             name="RequiredLength"
                                             class="form-control"
                                             [ngClass]="{
-                                                edited: hostSettings.security.defaultPasswordComplexity.requiredLength
+                                                edited: hostSettings.security.defaultPasswordComplexity.requiredLength,
                                             }"
                                             [(ngModel)]="hostSettings.security.defaultPasswordComplexity.requiredLength"
                                             *ngIf="hostSettings.security.useDefaultPasswordComplexitySettings"
@@ -507,7 +507,7 @@
                                         class="form-control"
                                         [ngClass]="{
                                             edited: hostSettings.security.userLockOut
-                                                .maxFailedAccessAttemptsBeforeLockout
+                                                .maxFailedAccessAttemptsBeforeLockout,
                                         }"
                                         [(ngModel)]="
                                             hostSettings.security.userLockOut.maxFailedAccessAttemptsBeforeLockout
@@ -529,7 +529,7 @@
                                         #defaultAccountLockoutSecondsInput="ngModel"
                                         class="form-control"
                                         [ngClass]="{
-                                            edited: hostSettings.security.userLockOut.defaultAccountLockoutSeconds
+                                            edited: hostSettings.security.userLockOut.defaultAccountLockoutSeconds,
                                         }"
                                         [(ngModel)]="hostSettings.security.userLockOut.defaultAccountLockoutSeconds"
                                         [required]="hostSettings.security.userLockOut.isEnabled"
@@ -823,6 +823,36 @@
                                 maxlength="256"
                             ></textarea>
                         </div>
+                    </tab>
+                    <tab class="p-5" heading="StudentManagement">
+                        <label
+                            for="registrationCycleNumber"
+                            class="form-check form-check-custom form-check-solid mb-3"
+                            style="margin-bottom: 0"
+                        >
+                            <input
+                                id="registrationCycleNumber"
+                                class="form-control"
+                                type="number"
+                                name="registrationCycleNumber"
+                                [(ngModel)]="hostSettings.studentManagement.registrationCycleNumber"
+                            />
+                            <span class="form-check-label">{{ l('CycleNumber') }}</span>
+                        </label>
+                        <label
+                            for="registrationYear"
+                            class="form-check form-check-custom form-check-solid mb-3"
+                            style="margin-bottom: 0"
+                        >
+                            <input
+                                id="registrationYear"
+                                class="form-check-input"
+                                type="number"
+                                name="registrationYear"
+                                [(ngModel)]="hostSettings.studentManagement.registrationYear"
+                            />
+                            <span class="form-check-label">{{ l('Year') }}</span>
+                        </label>
                     </tab>
                     <tab class="p-5" *ngIf="true" heading="{{ 'OtherSettings' | localize }}">
                         <h5 class="mt-5">{{ 'QuickThemeSelection' | localize }}</h5>

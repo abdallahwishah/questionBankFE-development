@@ -34,25 +34,32 @@
                                         <div class="row mx-0">
                                             <div class="mb-5 brand-dark-logo-preview-area pl-0 col p-2">
                                                 <a [href]="getLogo('dark')" target="_blank">
-                                                    <img #darkLogoImg height="38" [src]="getLogo('dark')">
+                                                    <img #darkLogoImg height="38" [src]="getLogo('dark')" />
                                                 </a>
                                             </div>
                                             <div class="col text-end">
-                                                <button type="submit" class="btn btn-primary p-0"
-                                                tooltip="{{ 'UploadLogo_Info' | localize }}">
+                                                <button
+                                                    type="submit"
+                                                    class="btn btn-primary p-0"
+                                                    tooltip="{{ 'UploadLogo_Info' | localize }}"
+                                                >
                                                     <span class="fileinput-button p-3">
-                                                        <input type="file"
+                                                        <input
+                                                            type="file"
                                                             ng2FileSelect
                                                             [uploader]="darkLogoUploader"
                                                             (change)="onUploadDarkLogoInputChange()"
-                                                            >
+                                                        />
                                                         {{ 'Change' | localize }}
                                                     </span>
                                                 </button>
-                                                <button class="btn btn-secondary" type="reset" (click)="clearDarkLogo()">
+                                                <button
+                                                    class="btn btn-secondary"
+                                                    type="reset"
+                                                    (click)="clearDarkLogo()"
+                                                >
                                                     {{ 'Reset' | localize }}
                                                 </button>
-                                            
                                             </div>
                                         </div>
                                     </form>
@@ -61,25 +68,28 @@
                                         <div class="row mx-0">
                                             <div class="mb-5 brand-dark-logo-preview-area pl-0 col p-2">
                                                 <a [href]="getLogo('dark-sm')" target="_blank">
-                                                    <img #darkLogoMinimalImg height="38" [src]="getLogo('dark-sm')">     
+                                                    <img #darkLogoMinimalImg height="38" [src]="getLogo('dark-sm')" />
                                                 </a>
                                             </div>
                                             <div class="col text-end">
-                                                <button type="submit" class="btn btn-primary p-0"
-                                                tooltip="{{ 'UploadLogoIcon_Info' | localize }}">
+                                                <button
+                                                    type="submit"
+                                                    class="btn btn-primary p-0"
+                                                    tooltip="{{ 'UploadLogoIcon_Info' | localize }}"
+                                                >
                                                     <span class="fileinput-button p-3">
-                                                        <input type="file"
-                                                        ng2FileSelect
-                                                        [uploader]="darkLogoMinimalUploader"
-                                                        (change)="onUploadDarkLogoMinimalInputChange()"
-                                                        >
+                                                        <input
+                                                            type="file"
+                                                            ng2FileSelect
+                                                            [uploader]="darkLogoMinimalUploader"
+                                                            (change)="onUploadDarkLogoMinimalInputChange()"
+                                                        />
                                                         {{ 'Change' | localize }}
                                                     </span>
                                                 </button>
                                                 <button class="btn btn-secondary" (click)="clearDarkLogoMinimal()">
                                                     {{ 'Reset' | localize }}
                                                 </button>
-                                            
                                             </div>
                                         </div>
                                     </form>
@@ -92,25 +102,28 @@
                                         <div class="row mx-0">
                                             <div class="mb-5 brand-light-logo-preview-area pl-0 col p-2">
                                                 <a [href]="getLogo('light')" target="_blank">
-                                                    <img #lightLogoImg height="38" [src]="getLogo('light')">
+                                                    <img #lightLogoImg height="38" [src]="getLogo('light')" />
                                                 </a>
                                             </div>
                                             <div class="col text-end">
-                                                <button type="submit" class="btn btn-primary p-0"
-                                                tooltip="{{ 'UploadLogo_Info' | localize }}">
+                                                <button
+                                                    type="submit"
+                                                    class="btn btn-primary p-0"
+                                                    tooltip="{{ 'UploadLogo_Info' | localize }}"
+                                                >
                                                     <span class="fileinput-button p-3">
-                                                        <input type="file"
-                                                        ng2FileSelect
-                                                        [uploader]="lightLogoUploader"
-                                                        (change)="onUploadLightLogoInputChange()"
-                                                        >
+                                                        <input
+                                                            type="file"
+                                                            ng2FileSelect
+                                                            [uploader]="lightLogoUploader"
+                                                            (change)="onUploadLightLogoInputChange()"
+                                                        />
                                                         {{ 'Change' | localize }}
                                                     </span>
                                                 </button>
                                                 <button class="btn btn-secondary" (click)="clearLightLogo()">
                                                     {{ 'Reset' | localize }}
                                                 </button>
-                                            
                                             </div>
                                         </div>
                                     </form>
@@ -119,24 +132,28 @@
                                         <div class="row mx-0">
                                             <div class="mb-5 brand-light-logo-preview-area pl-0 col p-2">
                                                 <a [href]="getLogo('light-sm')" target="_blank">
-                                                    <img #lightLogoMinimalImg height="38" [src]="getLogo('light-sm')">
+                                                    <img #lightLogoMinimalImg height="38" [src]="getLogo('light-sm')" />
                                                 </a>
                                             </div>
                                             <div class="col text-end">
-                                                <button type="submit" class="btn btn-primary p-0"
-                                                tooltip="{{ 'UploadLogoIcon_Info' | localize }}">
+                                                <button
+                                                    type="submit"
+                                                    class="btn btn-primary p-0"
+                                                    tooltip="{{ 'UploadLogoIcon_Info' | localize }}"
+                                                >
                                                     <span class="fileinput-button p-3">
-                                                        <input type="file"
-                                                        ng2FileSelect
-                                                        [uploader]="lightLogoMinimalUploader"
-                                                        (change)="onUploadLightLogoMinimalInputChange()"
-                                                        >
+                                                        <input
+                                                            type="file"
+                                                            ng2FileSelect
+                                                            [uploader]="lightLogoMinimalUploader"
+                                                            (change)="onUploadLightLogoMinimalInputChange()"
+                                                        />
                                                         {{ 'Change' | localize }}
                                                     </span>
                                                 </button>
                                                 <button class="btn btn-secondary" (click)="clearLightLogoMinimal()">
                                                     {{ 'Reset' | localize }}
-                                                </button>                                       
+                                                </button>
                                             </div>
                                         </div>
                                     </form>
@@ -168,11 +185,13 @@
                                 <div *ngIf="!appSession.tenant.customCssId">
                                     <button type="submit" class="btn btn-primary p-0">
                                         <span class="fileinput-button p-3">
-                                            <input type="file" tooltip="{{ 'UploadCSS_Info' | localize }}"
-                                            ng2FileSelect
-                                            [uploader]="customCssUploader"
-                                            (change)="onUploadCustomCSSInputChange()"
-                                            >
+                                            <input
+                                                type="file"
+                                                tooltip="{{ 'UploadCSS_Info' | localize }}"
+                                                ng2FileSelect
+                                                [uploader]="customCssUploader"
+                                                (change)="onUploadCustomCSSInputChange()"
+                                            />
                                             {{ 'Upload' | localize }}
                                         </span>
                                     </button>
@@ -320,7 +339,7 @@
                                     class="form-control"
                                     min="1"
                                     [ngClass]="{
-                                        edited: settings.userManagement.sessionTimeOutSettings.timeOutSecond
+                                        edited: settings.userManagement.sessionTimeOutSettings.timeOutSecond,
                                     }"
                                     [(ngModel)]="settings.userManagement.sessionTimeOutSettings.timeOutSecond"
                                 />
@@ -337,7 +356,7 @@
                                     min="1"
                                     [ngClass]="{
                                         edited: settings.userManagement.sessionTimeOutSettings
-                                            .showTimeOutNotificationSecond
+                                            .showTimeOutNotificationSecond,
                                     }"
                                     [(ngModel)]="
                                         settings.userManagement.sessionTimeOutSettings.showTimeOutNotificationSecond
@@ -589,7 +608,7 @@
                                             name="RequiredLength"
                                             class="form-control"
                                             [ngClass]="{
-                                                edited: settings.security.defaultPasswordComplexity.requiredLength
+                                                edited: settings.security.defaultPasswordComplexity.requiredLength,
                                             }"
                                             [(ngModel)]="settings.security.defaultPasswordComplexity.requiredLength"
                                             *ngIf="settings.security.useDefaultPasswordComplexitySettings"
@@ -626,7 +645,7 @@
                                         #maxFailedAccessAttemptsBeforeLockoutInput="ngModel"
                                         class="form-control"
                                         [ngClass]="{
-                                            edited: settings.security.userLockOut.maxFailedAccessAttemptsBeforeLockout
+                                            edited: settings.security.userLockOut.maxFailedAccessAttemptsBeforeLockout,
                                         }"
                                         [(ngModel)]="settings.security.userLockOut.maxFailedAccessAttemptsBeforeLockout"
                                         [required]="settings.security.userLockOut.isEnabled"
@@ -646,7 +665,7 @@
                                         #defaultAccountLockoutSecondsInput="ngModel"
                                         class="form-control"
                                         [ngClass]="{
-                                            edited: settings.security.userLockOut.defaultAccountLockoutSeconds
+                                            edited: settings.security.userLockOut.defaultAccountLockoutSeconds,
                                         }"
                                         [(ngModel)]="settings.security.userLockOut.defaultAccountLockoutSeconds"
                                         [required]="settings.security.userLockOut.isEnabled"
@@ -680,7 +699,11 @@
                                 <label
                                     for="Setting_TwoFactorLogin_IsEmailProviderEnabled"
                                     class="form-check form-check-custom form-check-solid py-1"
-                                    *ngIf="settings.security.twoFactorLogin.isEnabled && (!isMultiTenancyEnabled || settings.security.twoFactorLogin.isEnabledForApplication)"
+                                    *ngIf="
+                                        settings.security.twoFactorLogin.isEnabled &&
+                                        (!isMultiTenancyEnabled ||
+                                            settings.security.twoFactorLogin.isEnabledForApplication)
+                                    "
                                 >
                                     <input
                                         id="Setting_TwoFactorLogin_IsEmailProviderEnabled"
@@ -696,7 +719,11 @@
                                 <label
                                     for="Setting_TwoFactorLogin_IsSmsProviderEnabled"
                                     class="form-check form-check-custom form-check-solid py-1"
-                                    *ngIf="settings.security.twoFactorLogin.isEnabled && (!isMultiTenancyEnabled || settings.security.twoFactorLogin.isEnabledForApplication)"
+                                    *ngIf="
+                                        settings.security.twoFactorLogin.isEnabled &&
+                                        (!isMultiTenancyEnabled ||
+                                            settings.security.twoFactorLogin.isEnabledForApplication)
+                                    "
                                 >
                                     <input
                                         id="Setting_TwoFactorLogin_IsSmsProviderEnabled"
@@ -710,9 +737,33 @@
                                     </span>
                                 </label>
                                 <label
+                                    for="Setting_TwoFactorLogin_IsFaceRecognitionEnabled"
+                                    class="form-check form-check-custom form-check-solid py-1"
+                                    *ngIf="
+                                        settings.security.twoFactorLogin.isEnabled &&
+                                        (!isMultiTenancyEnabled ||
+                                            settings.security.twoFactorLogin.isEnabledForApplication)
+                                    "
+                                >
+                                    <input
+                                        id="Setting_TwoFactorLogin_IsFaceRecognitionEnabled"
+                                        type="checkbox"
+                                        name="Setting_TwoFactorLogin_IsFaceRecognitionEnabled"
+                                        [(ngModel)]="settings.security.twoFactorLogin.isFaceRecognitionEnabled"
+                                        class="form-check-input"
+                                    />
+                                    <span class="form-check-label">
+                                        {{ 'IsFaceRecognitionEnabled' | localize }}
+                                    </span>
+                                </label>
+                                <label
                                     for="Setting_TwoFactorLogin_IsGoogleAuthenticatorEnabled"
                                     class="form-check form-check-custom form-check-solid py-1"
-                                    *ngIf="settings.security.twoFactorLogin.isEnabled && (!isMultiTenancyEnabled || settings.security.twoFactorLogin.isEnabledForApplication)"
+                                    *ngIf="
+                                        settings.security.twoFactorLogin.isEnabled &&
+                                        (!isMultiTenancyEnabled ||
+                                            settings.security.twoFactorLogin.isEnabledForApplication)
+                                    "
                                 >
                                     <input
                                         id="Setting_TwoFactorLogin_IsGoogleAuthenticatorEnabled"
@@ -787,7 +838,9 @@
                         <div [hidden]="settings.email.useHostDefaultEmailSettings">
                             <form class="form" #emailSmtpSettingsForm="ngForm" method="post">
                                 <div class="mb-5">
-                                    <label class="form-label" for="DefaultFromAddress">{{ 'DefaultFromAddress' | localize }}</label>
+                                    <label class="form-label" for="DefaultFromAddress">
+                                        {{ 'DefaultFromAddress' | localize }}
+                                    </label>
                                     <input
                                         id="DefaultFromAddress"
                                         type="email"
@@ -981,6 +1034,42 @@
                                 [(ngModel)]="settings.billing.taxVatNo"
                                 maxlength="32"
                             />
+                        </div>
+                    </tab>
+                    <tab class="p-5" heading="{{ l('StudentManagement') }}" *ngIf="true">
+                        <div class="d-flex gap-5">
+                            <div class="w-50">
+                                <label
+                                    for="registrationCycleNumber"
+                                    class="form-check form-check-custom form-check-solid mb-3"
+                                    style="margin-bottom: 0"
+                                >
+                                    {{ l('RegistrationCycleNumber') }}
+                                </label>
+                                <input
+                                    id="registrationCycleNumber"
+                                    class="form-control"
+                                    type="number"
+                                    name="registrationCycleNumber"
+                                    [(ngModel)]="settings.studentManagement.registrationCycleNumber"
+                                />
+                            </div>
+                            <div class="w-50">
+                                <label
+                                    for="registrationYear"
+                                    class="form-check form-check-custom form-check-solid mb-3"
+                                    style="margin-bottom: 0"
+                                >
+                                    {{ l('RegistrationYear') }}
+                                </label>
+                                <input
+                                    id="registrationYear"
+                                    class="form-control"
+                                    type="number"
+                                    name="registrationYear"
+                                    [(ngModel)]="settings.studentManagement.registrationYear"
+                                />
+                            </div>
                         </div>
                     </tab>
                     <tab class="p-5" *ngIf="!isMultiTenancyEnabled" heading="{{ 'OtherSettings' | localize }}">

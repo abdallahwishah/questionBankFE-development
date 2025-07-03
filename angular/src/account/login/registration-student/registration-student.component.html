@@ -1,0 +1,24 @@
+<div>
+    <div class="pb-13 pt-lg-0 pt-5">
+        <h3 class="fw-bolder text-dark fs-h4 fs-h1-lg">
+            {{ 'IdentityNumber' | localize }}
+        </h3>
+    </div>
+    <div>
+        <p>
+            {{ l('IdentityVerificationRequired') }}
+        </p>
+        <div>
+            <input class="form-control mb-3" type="text" [(ngModel)]="identityNumber" [placeholder]="l('IdentityNumber')" />
+            <div class="pb-lg-0 pb-5">
+                <button
+                    (click)="check()"
+                    [disabled]="!identityNumber"
+                    class="btn btn-primary w-100 fw-bolder fs-h6 px-8 py-4 my-3 me-3"
+                >
+                    {{ 'Submit' | localize }}
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

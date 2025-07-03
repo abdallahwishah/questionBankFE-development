@@ -32,7 +32,7 @@ import { AccountRouteGuard } from './auth/account-route-guard';
                         path: 'register-tenant-result',
                         loadChildren: () =>
                             import('./register/register-tenant-result.module').then(
-                                (m) => m.RegisterTenantResultModule
+                                (m) => m.RegisterTenantResultModule,
                             ),
                         canActivate: [AccountRouteGuard],
                     },
@@ -71,16 +71,31 @@ import { AccountRouteGuard } from './auth/account-route-guard';
                         canActivate: [AccountRouteGuard],
                     },
                     {
+                        path: 'register-student',
+                        loadChildren: () =>
+                            import('./login/registration-student/registration-student.module').then(
+                                (m) => m.RegistrationStudentModule,
+                            ),
+                        canActivate: [AccountRouteGuard],
+                    },
+                    {
+                        path: 'upload-info',
+                        loadChildren: () =>
+                            import('./login/upload-info/upload-info.module').then((m) => m.UploadInfoModule),
+                        canActivate: [AccountRouteGuard],
+                    },
+                    {
                         path: 'verify-code',
                         loadChildren: () =>
                             import('./login/validate-two-factor-code.module').then(
-                                (m) => m.ValidateTwoFactorCodeModule
+                                (m) => m.ValidateTwoFactorCodeModule,
                             ),
                         canActivate: [AccountRouteGuard],
                     },
                     {
                         path: 'gateway-selection',
-                        loadChildren: () => import('./payment/gateway-selection.module').then((m) => m.GatewaySelectionModule),
+                        loadChildren: () =>
+                            import('./payment/gateway-selection.module').then((m) => m.GatewaySelectionModule),
                     },
                     {
                         path: 'select-edition',
@@ -101,20 +116,19 @@ import { AccountRouteGuard } from './auth/account-route-guard';
                         path: 'stripe-post-payment',
                         loadChildren: () =>
                             import('./payment/stripe/stripe-post-payment.module').then(
-                                (m) => m.StripePostPaymentModule
+                                (m) => m.StripePostPaymentModule,
                             ),
                     },
                     {
                         path: 'stripe-cancel-payment',
                         loadChildren: () =>
                             import('./payment/stripe/stripe-cancel-payment.module').then(
-                                (m) => m.StripeCancelPaymentModule
+                                (m) => m.StripeCancelPaymentModule,
                             ),
                     },
                     {
                         path: 'buy-succeed',
-                        loadChildren: () =>
-                            import('./buy-succeed/buy-succeed.module').then((m) => m.BuySucceedModule),
+                        loadChildren: () => import('./buy-succeed/buy-succeed.module').then((m) => m.BuySucceedModule),
                     },
                     {
                         path: 'extend-succeed',
@@ -139,7 +153,10 @@ import { AccountRouteGuard } from './auth/account-route-guard';
     exports: [RouterModule],
 })
 export class AccountRoutingModule {
-    constructor(private router: Router, private _uiCustomizationService: AppUiCustomizationService) {
+    constructor(
+        private router: Router,
+        private _uiCustomizationService: AppUiCustomizationService,
+    ) {
         router.events.subscribe((event: NavigationEnd) => {
             setTimeout(() => {
                 this.toggleBodyCssClass(event.url);

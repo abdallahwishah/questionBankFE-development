@@ -19,6 +19,7 @@ import { AutoCompleteFeildModule } from '@app/shared/components/auto-complete-fe
 import { ExportByLevelComponent } from '../../components/exportByLevel/exportByLevel.component';
 import { ExtendTimeSessionComponent } from '../supervisors-students/components/extendTimeSession/extendTimeSession.component';
 import { TooltipModule } from 'primeng/tooltip';
+import { CheckboxModule } from 'primeng/checkbox';
 
 @NgModule({
     imports: [
@@ -46,6 +47,7 @@ import { TooltipModule } from 'primeng/tooltip';
         SkeletonComponent,
         AutoCompleteFeildModule,
         ExtendTimeSessionComponent,
+        CheckboxModule
     ],
     declarations: [ListComponent, AddSessionsModalComponent, ExportByLevelComponent],
 })
