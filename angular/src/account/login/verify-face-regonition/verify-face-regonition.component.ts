@@ -46,7 +46,7 @@ export class VerifyFaceRegonitionComponent extends AppComponentBase implements O
 
     submit(): void {
         let recaptchaCallback = (token: string) => {
-            this.loginService.authenticateModel.twoFactorVerificationCode = this.fileToken;
+            this.loginService.authenticateModel.towFactorFaceRecognitionPhotoToken = this.fileToken;
             this.loginService.authenticate(() => {}, null, token);
         };
 
