@@ -93,6 +93,14 @@ import { AccountRouteGuard } from './auth/account-route-guard';
                         canActivate: [AccountRouteGuard],
                     },
                     {
+                        path: 'verify-face-regonition',
+                        loadChildren: () =>
+                            import('./login/verify-face-regonition/verify-face-regonition.module').then(
+                                (m) => m.VerifyFaceRegonitionModule,
+                            ),
+                        canActivate: [AccountRouteGuard],
+                    },
+                    {
                         path: 'gateway-selection',
                         loadChildren: () =>
                             import('./payment/gateway-selection.module').then((m) => m.GatewaySelectionModule),

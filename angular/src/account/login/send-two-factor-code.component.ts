@@ -19,7 +19,7 @@ export class SendTwoFactorCodeComponent extends AppComponentBase implements CanA
         injector: Injector,
         public loginService: LoginService,
         private _tokenAuthService: TokenAuthServiceProxy,
-        private _router: Router
+        private _router: Router,
     ) {
         super(injector);
     }
@@ -56,7 +56,11 @@ export class SendTwoFactorCodeComponent extends AppComponentBase implements CanA
             .sendTwoFactorAuthCode(model)
             .pipe(finalize(() => (this.submitting = false)))
             .subscribe(() => {
-                this._router.navigate(['account/verify-code']);
+                if (this.selectedTwoFactorProvider == 'FaceRecognition') {
+                    this._router.navigate(['account/verify-face-regonition']);
+                } else {
+                    this._router.navigate(['account/verify-code']);
+                }
             });
     }
 }

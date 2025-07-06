@@ -12,7 +12,10 @@ import { ReCaptchaV3WrapperService } from '@account/shared/recaptchav3-wrapper.s
     styleUrls: ['./validate-two-factor-code.component.less'],
     animations: [accountModuleAnimation()],
 })
-export class ValidateTwoFactorCodeComponent extends AppComponentBase implements CanActivate, OnInit, OnDestroy, AfterViewInit {
+export class ValidateTwoFactorCodeComponent
+    extends AppComponentBase
+    implements CanActivate, OnInit, OnDestroy, AfterViewInit
+{
     code: string;
     submitting = false;
     remainingSeconds = 90;
@@ -22,7 +25,7 @@ export class ValidateTwoFactorCodeComponent extends AppComponentBase implements 
         injector: Injector,
         public loginService: LoginService,
         private _router: Router,
-        private _recaptchaWrapperService: ReCaptchaV3WrapperService
+        private _recaptchaWrapperService: ReCaptchaV3WrapperService,
     ) {
         super(injector);
     }
@@ -69,11 +72,14 @@ export class ValidateTwoFactorCodeComponent extends AppComponentBase implements 
     submit(): void {
         let recaptchaCallback = (token: string) => {
             this.loginService.authenticateModel.twoFactorVerificationCode = this.code;
-            this.loginService.authenticate(() => { }, null, token);
+            this.loginService.authenticate(() => {}, null, token);
         };
 
         if (this._recaptchaWrapperService.useCaptchaOnLogin()) {
-            this._recaptchaWrapperService.getService().execute('login').subscribe((token) => recaptchaCallback(token));
+            this._recaptchaWrapperService
+                .getService()
+                .execute('login')
+                .subscribe((token) => recaptchaCallback(token));
         } else {
             recaptchaCallback(null);
         }
