@@ -41,12 +41,14 @@
                                     <span>{{ 'Percentage' | localize }}</span>
                                     <p>
                                         {{
-                                            (
-                                                (session?.numberOfAttemptedStudents /
-                                                    (session?.numberOfAttemptedStudents +
-                                                        session?.numberOfNonAttemptedStudents)) *
-                                                100
-                                            ).toFixed()
+                                            session?.numberOfAttemptedStudents
+                                                ? (
+                                                      (session?.numberOfAttemptedStudents /
+                                                          (session?.numberOfAttemptedStudents +
+                                                              session?.numberOfNonAttemptedStudents)) *
+                                                      100
+                                                  ).toFixed()
+                                                : 0
                                         }}%
                                     </p>
                                 </div>
@@ -63,12 +65,14 @@
                                     <span>{{ 'Percentage' | localize }}</span>
                                     <p>
                                         {{
-                                            (
-                                                (session?.numberOfNonAttemptedStudents /
-                                                    (session?.numberOfAttemptedStudents +
-                                                        session?.numberOfNonAttemptedStudents)) *
-                                                100
-                                            ).toFixed()
+                                            session?.numberOfNonAttemptedStudents
+                                                ? (
+                                                      (session?.numberOfNonAttemptedStudents /
+                                                          (session?.numberOfAttemptedStudents +
+                                                              session?.numberOfNonAttemptedStudents)) *
+                                                      100
+                                                  ).toFixed()
+                                                : 0
                                         }}%
                                     </p>
                                 </div>
@@ -202,8 +206,8 @@
                                     customParams: {
                                         Sorting: '',
                                         SkipCount: 0,
-                                        MaxResultCount: 10
-                                    }
+                                        MaxResultCount: 10,
+                                    },
                                 }"
                             ></app-auto-complete-feild>
                         </div>
@@ -296,12 +300,12 @@
                             [ActionsInfo]="[
                                 {
                                     label: 'Stop',
-                                    hasCondition: session?.session?.status === sessionStatusEnum.Active
+                                    hasCondition: session?.session?.status === sessionStatusEnum.Active,
                                 },
                                 {
                                     label: 'Extend',
-                                    hasCondition: session?.session?.status === sessionStatusEnum.Active
-                                }
+                                    hasCondition: session?.session?.status === sessionStatusEnum.Active,
+                                },
                             ]"
                             (action)="doActions($event, record)"
                         ></app-action-button>
@@ -334,18 +338,18 @@
                                             <app-action-button
                                                 [ActionsInfo]="[
                                                     {
-                                                        label: 'View'
+                                                        label: 'View',
                                                     },
                                                     {
                                                         label: 'Stop',
                                                         hasCondition:
-                                                            session?.session?.status === sessionStatusEnum.Active
+                                                            session?.session?.status === sessionStatusEnum.Active,
                                                     },
                                                     {
                                                         label: 'Extend',
                                                         hasCondition:
-                                                            session?.session?.status === sessionStatusEnum.Active
-                                                    }
+                                                            session?.session?.status === sessionStatusEnum.Active,
+                                                    },
                                                 ]"
                                                 (action)="doActionsClass($event, class, record)"
                                             ></app-action-button>

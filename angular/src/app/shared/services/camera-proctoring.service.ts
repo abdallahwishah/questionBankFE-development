@@ -2,7 +2,10 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, from } from 'rxjs';
 import { UploaderService } from './uploader.service';
 import { DEFAULT_PHOTO_CONFIG, PhotoCaptureConfig, PROCTORING_STORAGE_KEYS } from '../config/proctoring.config';
-import { CreateOrEditExamAttemptPhotoDto, ExamAttemptPhotosServiceProxy } from '@shared/service-proxies/service-proxies';
+import {
+    CreateOrEditExamAttemptPhotoDto,
+    ExamAttemptPhotosServiceProxy,
+} from '@shared/service-proxies/service-proxies';
 
 export interface CameraStatus {
     hasAccess: boolean;
@@ -22,12 +25,12 @@ export interface PhotoCapture {
 }
 
 @Injectable({
-    providedIn: 'root'
+    providedIn: 'root',
 })
 export class CameraProctoringService {
     private cameraStatusSubject = new BehaviorSubject<CameraStatus>({
         hasAccess: false,
-        hasPermission: false
+        hasPermission: false,
     });
 
     public cameraStatus$ = this.cameraStatusSubject.asObservable();
@@ -47,7 +50,10 @@ export class CameraProctoringService {
     private readonly PENDING_PHOTOS_KEY = PROCTORING_STORAGE_KEYS.PENDING_PHOTOS;
     private readonly CAMERA_ACCESS_KEY = PROCTORING_STORAGE_KEYS.CAMERA_ACCESS;
 
-    constructor(private uploaderService: UploaderService, private ExamAttemptPhotosServiceProxy: ExamAttemptPhotosServiceProxy) {
+    constructor(
+        private uploaderService: UploaderService,
+        private ExamAttemptPhotosServiceProxy: ExamAttemptPhotosServiceProxy,
+    ) {
         this.loadPendingPhotos();
         this.initializeCameraWorker();
     }
@@ -62,7 +68,7 @@ export class CameraProctoringService {
                 const status: CameraStatus = {
                     hasAccess: false,
                     hasPermission: false,
-                    error: 'Camera API not supported in this browser'
+                    error: 'Camera API not supported in this browser',
                 };
                 this.cameraStatusSubject.next(status);
                 return status;
@@ -73,8 +79,8 @@ export class CameraProctoringService {
                 video: {
                     width: this.config.photoWidth,
                     height: this.config.photoHeight,
-                    facingMode: 'user' // Front camera preferred
-                }
+                    facingMode: 'user', // Front camera preferred
+                },
             });
 
             this.mediaStream = stream;
@@ -82,7 +88,7 @@ export class CameraProctoringService {
             const status: CameraStatus = {
                 hasAccess: true,
                 hasPermission: true,
-                stream: stream
+                stream: stream,
             };
 
             this.cameraStatusSubject.next(status);
@@ -104,7 +110,7 @@ export class CameraProctoringService {
             const status: CameraStatus = {
                 hasAccess: false,
                 hasPermission: false,
-                error: errorMessage
+                error: errorMessage,
             };
 
             this.cameraStatusSubject.next(status);
@@ -150,7 +156,7 @@ export class CameraProctoringService {
                 command: 'start',
                 intervalMs: captureIntervalMs,
                 examEndTime: examEndTime,
-                studentAttemptId: studentAttemptId
+                studentAttemptId: studentAttemptId,
             });
         }
 
@@ -216,9 +222,13 @@ export class CameraProctoringService {
 
             // Convert to blob
             const blob = await new Promise<Blob>((resolve) => {
-                canvas.toBlob((blob) => {
-                    resolve(blob as Blob);
-                }, 'image/jpeg', this.config.jpegQuality);
+                canvas.toBlob(
+                    (blob) => {
+                        resolve(blob as Blob);
+                    },
+                    'image/jpeg',
+                    this.config.jpegQuality,
+                );
             });
 
             // Convert to base64 for offline storage
@@ -231,7 +241,7 @@ export class CameraProctoringService {
                 base64: base64,
                 studentAttemptId: studentAttemptId,
                 uploaded: false,
-                retryCount: 0
+                retryCount: 0,
             };
 
             // Add to pending photos (limit storage)
@@ -251,7 +261,6 @@ export class CameraProctoringService {
 
             console.log('Photo captured successfully:', photoCapture.id);
             return photoCapture;
-
         } catch (error) {
             console.error('Error capturing photo:', error);
             return null;
@@ -264,34 +273,37 @@ export class CameraProctoringService {
     private async uploadPhoto(photo: PhotoCapture): Promise<void> {
         try {
             const file = new File([photo.blob], `exam-photo-${photo.id}.jpg`, {
-                type: 'image/jpeg'
+                type: 'image/jpeg',
             });
 
             const params = {
                 studentAttemptId: photo.studentAttemptId,
                 timestamp: photo.timestamp.toString(),
-                photoId: photo.id
+                photoId: photo.id,
             };
 
-            await this.uploaderService.uploadFileOrFiles(file).toPromise().then((value: any) => {
-                console.log('Upload successful:', value);
-                this.ExamAttemptPhotosServiceProxy.createOrEdit(
-                    new CreateOrEditExamAttemptPhotoDto({
-                        id: undefined,
-                        photoToken: value?.result?.fileToken,
-                        examAttemptId: photo.studentAttemptId
-                    })
-                )
-            }).catch(error => {
-                console.error('Upload error:', error);
-            });
+            await this.uploaderService
+                .uploadFileOrFiles(file)
+                .toPromise()
+                .then((value: any) => {
+                    console.log('Upload successful:', value);
+                    this.ExamAttemptPhotosServiceProxy.createOrEdit(
+                        new CreateOrEditExamAttemptPhotoDto({
+                            id: undefined,
+                            photoToken: value?.result?.fileToken,
+                            examAttemptId: photo.studentAttemptId,
+                        }),
+                    ).subscribe();
+                })
+                .catch((error) => {
+                    console.error('Upload error:', error);
+                });
 
             // Mark as uploaded
             photo.uploaded = true;
             this.savePendingPhotos();
 
             console.log('Photo uploaded successfully:', photo.id);
-
         } catch (error) {
             console.error('Error uploading photo:', error);
             photo.retryCount++;
@@ -303,19 +315,19 @@ export class CameraProctoringService {
      * Retry uploading failed photos when connection is restored
      */
     async retryFailedUploads(): Promise<void> {
-        const failedPhotos = this.pendingPhotos.filter(p => !p.uploaded && p.retryCount < this.config.maxRetries);
+        const failedPhotos = this.pendingPhotos.filter((p) => !p.uploaded && p.retryCount < this.config.maxRetries);
 
         for (const photo of failedPhotos) {
             await this.uploadPhoto(photo);
 
             // Add delay between retries to avoid overwhelming the server
             if (failedPhotos.length > 1) {
-                await new Promise(resolve => setTimeout(resolve, this.config.uploadRetryDelay / failedPhotos.length));
+                await new Promise((resolve) => setTimeout(resolve, this.config.uploadRetryDelay / failedPhotos.length));
             }
         }
 
         // Remove successfully uploaded photos
-        this.pendingPhotos = this.pendingPhotos.filter(p => !p.uploaded);
+        this.pendingPhotos = this.pendingPhotos.filter((p) => !p.uploaded);
         this.savePendingPhotos();
     }
 
@@ -324,7 +336,7 @@ export class CameraProctoringService {
      */
     private initializeCameraWorker(): void {
         const workerBlob = new Blob([this.getCameraWorkerString()], {
-            type: 'application/javascript'
+            type: 'application/javascript',
         });
         const workerUrl = URL.createObjectURL(workerBlob);
 
@@ -389,10 +401,10 @@ export class CameraProctoringService {
      */
     private savePendingPhotos(): void {
         try {
-            const photosToSave = this.pendingPhotos.map(photo => ({
+            const photosToSave = this.pendingPhotos.map((photo) => ({
                 ...photo,
                 blob: undefined, // Don't store blob in localStorage
-                base64: photo.base64 // Keep base64 for offline storage
+                base64: photo.base64, // Keep base64 for offline storage
             }));
 
             localStorage.setItem(this.PENDING_PHOTOS_KEY, JSON.stringify(photosToSave));
@@ -411,7 +423,7 @@ export class CameraProctoringService {
                 const photos = JSON.parse(savedPhotos);
                 this.pendingPhotos = photos.map((photo: any) => ({
                     ...photo,
-                    blob: this.base64ToBlob(photo.base64) // Convert base64 back to blob
+                    blob: this.base64ToBlob(photo.base64), // Convert base64 back to blob
                 }));
             }
         } catch (error) {
@@ -449,7 +461,7 @@ export class CameraProctoringService {
         this.stopAutomaticCapture();
 
         if (this.mediaStream) {
-            this.mediaStream.getTracks().forEach(track => track.stop());
+            this.mediaStream.getTracks().forEach((track) => track.stop());
             this.mediaStream = null;
         }
 
@@ -465,7 +477,7 @@ export class CameraProctoringService {
      * Get pending photos count
      */
     getPendingPhotosCount(): number {
-        return this.pendingPhotos.filter(p => !p.uploaded).length;
+        return this.pendingPhotos.filter((p) => !p.uploaded).length;
     }
 
     /**
