@@ -1,3 +1,102 @@
-<p>
-  verify-face-regonition works!
-</p>
+<div class="face-verification-container">
+    <div class="verification-card">
+        <div class="card-header">
+            <h2 class="title">{{ l('FaceVerification') || 'Face Verification' }}</h2>
+            <p class="subtitle">{{ l('FaceVerificationDescription') || 'Please take a photo of yourself to verify your identity' }}</p>
+        </div>
+
+        <div class="card-body">
+            <!-- Loading State -->
+            <div *ngIf="isLoading" class="loading-state">
+                <div class="spinner"></div>
+                <p>{{ l('InitializingCamera') || 'Initializing camera...' }}</p>
+            </div>
+
+            <!-- Camera Error -->
+            <div *ngIf="cameraError" class="error-state">
+                <div class="error-icon">
+                    <i class="fa fa-exclamation-triangle"></i>
+                </div>
+                <h3>{{ l('CameraError') || 'Camera Error' }}</h3>
+                <p>{{ cameraErrorMessage }}</p>
+                <button class="btn btn-primary" (click)="initializeCamera()">
+                    {{ l('RetryCamera') || 'Try Again' }}
+                </button>
+            </div>
+
+            <!-- Camera Active -->
+            <div *ngIf="cameraActive && !photoTaken" class="camera-state">
+                <div class="video-container">
+                    <video
+                        #videoElement
+                        autoplay
+                        playsinline
+                        muted
+                        class="video-feed">
+                    </video>
+                    <div class="camera-overlay">
+                        <div class="face-guide">
+                            <div class="face-outline"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="camera-controls">
+                    <button
+                        class="btn btn-capture"
+                        (click)="takePhoto()"
+                        [disabled]="isSubmitting">
+                        <i class="fa fa-camera"></i>
+                        {{ l('TakePhoto') || 'Take Photo' }}
+                    </button>
+                </div>
+
+                <div class="instructions">
+                    <ul>
+                        <li>{{ l('FaceInstructions1') || 'Position your face within the oval guide' }}</li>
+                        <li>{{ l('FaceInstructions2') || 'Make sure your face is well-lit and clearly visible' }}</li>
+                        <li>{{ l('FaceInstructions3') || 'Look directly at the camera' }}</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Photo Taken - Preview -->
+            <div *ngIf="photoTaken" class="photo-preview-state">
+                <div class="photo-container">
+                    <img [src]="capturedImageDataUrl" alt="Captured Photo" class="captured-photo">
+                </div>
+
+                <div class="photo-actions">
+                    <button
+                        class="btn btn-secondary"
+                        (click)="retakePhoto()"
+                        [disabled]="isSubmitting">
+                        <i class="fa fa-redo"></i>
+                        {{ l('RetakePhoto') || 'Retake Photo' }}
+                    </button>
+
+                    <button
+                        class="btn btn-primary btn-confirm"
+                        (click)="confirmPhoto()"
+                        [disabled]="isSubmitting">
+                        <i class="fa fa-check"></i>
+                        {{ l('ConfirmPhoto') || 'Confirm Photo' }}
+                    </button>
+                </div>
+
+                <div class="confirmation-message">
+                    <p>{{ l('PhotoConfirmation') || 'Is this photo clear and does it show your face properly?' }}</p>
+                </div>
+            </div>
+
+            <!-- Submitting State -->
+            <div *ngIf="isSubmitting" class="submitting-state">
+                <div class="spinner"></div>
+                <p>{{ l('VerifyingIdentity') || 'Verifying your identity...' }}</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Hidden canvas for photo capture -->
+<canvas #canvasElement style="display: none;"></canvas>
