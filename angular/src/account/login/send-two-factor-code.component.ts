@@ -57,7 +57,7 @@ export class SendTwoFactorCodeComponent extends AppComponentBase implements CanA
             .pipe(finalize(() => (this.submitting = false)))
             .subscribe(() => {
                 if (this.selectedTwoFactorProvider == 'FaceRecognition') {
-                    this._router.navigate(['account/verify-face-regonition']);
+                    this._router.navigate(['account/verify-face-recognition']);
                 } else {
                     this._router.navigate(['account/verify-code']);
                 }

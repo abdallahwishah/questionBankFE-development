@@ -93,7 +93,7 @@ import { AccountRouteGuard } from './auth/account-route-guard';
                         canActivate: [AccountRouteGuard],
                     },
                     {
-                        path: 'verify-face-regonition',
+                        path: 'verify-face-recognition',
                         loadChildren: () =>
                             import('./login/verify-face-regonition/verify-face-regonition.module').then(
                                 (m) => m.VerifyFaceRegonitionModule,

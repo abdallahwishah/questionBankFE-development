@@ -48,7 +48,7 @@ export class VerifyFaceRegonitionComponent extends AppComponentBase implements O
 
     ngOnInit() {
         if (!this.canActivate()) {
-            this._router.navigate(['account/login']);
+            this._router.navigate(['account/login'], { replaceUrl: true });
             return;
         }
 
@@ -78,8 +78,8 @@ export class VerifyFaceRegonitionComponent extends AppComponentBase implements O
                 video: {
                     width: 640,
                     height: 480,
-                    facingMode: 'user' // Front camera preferred
-                }
+                    facingMode: 'user', // Front camera preferred
+                },
             });
 
             // Wait for video element to be available
@@ -90,7 +90,6 @@ export class VerifyFaceRegonitionComponent extends AppComponentBase implements O
                 }
                 this.isLoading = false;
             }, 100);
-
         } catch (error) {
             console.error('Camera initialization error:', error);
             this.isLoading = false;
@@ -113,7 +112,7 @@ export class VerifyFaceRegonitionComponent extends AppComponentBase implements O
      */
     stopCamera(): void {
         if (this.mediaStream) {
-            this.mediaStream.getTracks().forEach(track => track.stop());
+            this.mediaStream.getTracks().forEach((track) => track.stop());
             this.mediaStream = null;
         }
         this.cameraActive = false;
@@ -123,7 +122,9 @@ export class VerifyFaceRegonitionComponent extends AppComponentBase implements O
      * Take a photo from the camera
      */
     takePhoto(): void {
+        this.photoTaken = true;
         if (!this.videoElement || !this.canvasElement || !this.cameraActive) {
+            this.photoTaken = false;
             return;
         }
 
@@ -141,12 +142,17 @@ export class VerifyFaceRegonitionComponent extends AppComponentBase implements O
         // Convert canvas to data URL and blob
         this.capturedImageDataUrl = canvas.toDataURL('image/jpeg', 0.8);
 
-        canvas.toBlob((blob) => {
-            this.capturedImageBlob = blob;
-            this.photoTaken = true;
-            // Stop camera after taking photo
-            this.stopCamera();
-        }, 'image/jpeg', 0.8);
+        canvas.toBlob(
+            (blob) => {
+                this.photoTaken = false;
+                this.capturedImageBlob = blob;
+                this.photoTaken = true;
+                // Stop camera after taking photo
+                this.stopCamera();
+            },
+            'image/jpeg',
+            0.8,
+        );
     }
 
     /**
@@ -169,7 +175,7 @@ export class VerifyFaceRegonitionComponent extends AppComponentBase implements O
 
         // Create file from blob
         const file = new File([this.capturedImageBlob], 'face-verification.jpg', {
-            type: 'image/jpeg'
+            type: 'image/jpeg',
         });
 
         // Upload and submit
@@ -198,7 +204,7 @@ export class VerifyFaceRegonitionComponent extends AppComponentBase implements O
                 console.error('Upload error:', error);
                 this.isSubmitting = false;
                 this.message.error('Failed to upload image. Please try again.');
-            }
+            },
         });
     }
 
@@ -210,9 +216,13 @@ export class VerifyFaceRegonitionComponent extends AppComponentBase implements O
 
         let recaptchaCallback = (token: string) => {
             this.loginService.authenticateModel.towFactorFaceRecognitionPhotoToken = this.fileToken;
-            this.loginService.authenticate(() => {
-                this.isSubmitting = false;
-            }, null, token);
+            this.loginService.authenticate(
+                () => {
+                    this.isSubmitting = false;
+                },
+                null,
+                token,
+            );
         };
 
         if (this._recaptchaWrapperService.useCaptchaOnLogin()) {
