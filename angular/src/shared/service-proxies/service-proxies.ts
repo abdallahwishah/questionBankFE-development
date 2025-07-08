@@ -26017,12 +26017,14 @@ export class StudentsServiceProxy {
      * @param sessionSupervisorNoteFilter (optional) 
      * @param sessionIdFilter (optional) 
      * @param governorateFilterId (optional) 
+     * @param studySubjectFilterIds (optional) 
+     * @param isRegistered (optional) 
      * @param sorting (optional) 
      * @param skipCount (optional) 
      * @param maxResultCount (optional) 
      * @return Success
      */
-    getAll(filter: string | undefined, classNameFilter: string | undefined, cityFilter: string | undefined, userNameFilter: string | undefined, sessionSupervisorNoteFilter: string | undefined, sessionIdFilter: number | undefined, governorateFilterId: number | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfGetStudentForViewDto> {
+    getAll(filter: string | undefined, classNameFilter: string | undefined, cityFilter: string | undefined, userNameFilter: string | undefined, sessionSupervisorNoteFilter: string | undefined, sessionIdFilter: number | undefined, governorateFilterId: number | undefined, studySubjectFilterIds: number[] | undefined, isRegistered: boolean | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfGetStudentForViewDto> {
         let url_ = this.baseUrl + "/api/services/app/Students/GetAll?";
         if (filter === null)
             throw new Error("The parameter 'filter' cannot be null.");
@@ -26052,6 +26054,14 @@ export class StudentsServiceProxy {
             throw new Error("The parameter 'governorateFilterId' cannot be null.");
         else if (governorateFilterId !== undefined)
             url_ += "GovernorateFilterId=" + encodeURIComponent("" + governorateFilterId) + "&";
+        if (studySubjectFilterIds === null)
+            throw new Error("The parameter 'studySubjectFilterIds' cannot be null.");
+        else if (studySubjectFilterIds !== undefined)
+            studySubjectFilterIds && studySubjectFilterIds.forEach(item => { url_ += "StudySubjectFilterIds=" + encodeURIComponent("" + item) + "&"; });
+        if (isRegistered === null)
+            throw new Error("The parameter 'isRegistered' cannot be null.");
+        else if (isRegistered !== undefined)
+            url_ += "IsRegistered=" + encodeURIComponent("" + isRegistered) + "&";
         if (sorting === null)
             throw new Error("The parameter 'sorting' cannot be null.");
         else if (sorting !== undefined)
@@ -26668,13 +26678,14 @@ export class StudentStudySubjectsServiceProxy {
      * @param filter (optional) 
      * @param maxCycleNumberFilter (optional) 
      * @param minCycleNumberFilter (optional) 
+     * @param studentId (optional) 
      * @param studySubjectNameFilter (optional) 
      * @param sorting (optional) 
      * @param skipCount (optional) 
      * @param maxResultCount (optional) 
      * @return Success
      */
-    getAll(filter: string | undefined, maxCycleNumberFilter: number | undefined, minCycleNumberFilter: number | undefined, studySubjectNameFilter: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfGetStudentStudySubjectForViewDto> {
+    getAll(filter: string | undefined, maxCycleNumberFilter: number | undefined, minCycleNumberFilter: number | undefined, studentId: number | undefined, studySubjectNameFilter: string | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfGetStudentStudySubjectForViewDto> {
         let url_ = this.baseUrl + "/api/services/app/StudentStudySubjects/GetAll?";
         if (filter === null)
             throw new Error("The parameter 'filter' cannot be null.");
@@ -26688,6 +26699,10 @@ export class StudentStudySubjectsServiceProxy {
             throw new Error("The parameter 'minCycleNumberFilter' cannot be null.");
         else if (minCycleNumberFilter !== undefined)
             url_ += "MinCycleNumberFilter=" + encodeURIComponent("" + minCycleNumberFilter) + "&";
+        if (studentId === null)
+            throw new Error("The parameter 'studentId' cannot be null.");
+        else if (studentId !== undefined)
+            url_ += "StudentId=" + encodeURIComponent("" + studentId) + "&";
         if (studySubjectNameFilter === null)
             throw new Error("The parameter 'studySubjectNameFilter' cannot be null.");
         else if (studySubjectNameFilter !== undefined)
@@ -44180,6 +44195,7 @@ export interface IExamAnswerQuestionOptionLookupTableDto {
 
 export class ExamAttemptDto implements IExamAttemptDto {
     id!: string;
+    averageSameFacePercentage!: number;
     year!: number;
     cycleNumber!: number;
     totalScore!: number | undefined;
@@ -44208,6 +44224,7 @@ export class ExamAttemptDto implements IExamAttemptDto {
     init(_data?: any) {
         if (_data) {
             this.id = _data["id"];
+            this.averageSameFacePercentage = _data["averageSameFacePercentage"];
             this.year = _data["year"];
             this.cycleNumber = _data["cycleNumber"];
             this.totalScore = _data["totalScore"];
@@ -44236,6 +44253,7 @@ export class ExamAttemptDto implements IExamAttemptDto {
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["id"] = this.id;
+        data["averageSameFacePercentage"] = this.averageSameFacePercentage;
         data["year"] = this.year;
         data["cycleNumber"] = this.cycleNumber;
         data["totalScore"] = this.totalScore;
@@ -44257,6 +44275,7 @@ export class ExamAttemptDto implements IExamAttemptDto {
 
 export interface IExamAttemptDto {
     id: string;
+    averageSameFacePercentage: number;
     year: number;
     cycleNumber: number;
     totalScore: number | undefined;
@@ -64454,6 +64473,7 @@ export class StudentDto implements IStudentDto {
     studentNumber!: string | undefined;
     studyLevelId!: number | undefined;
     gender!: GenderEnum;
+    isRegistered!: boolean;
 
     constructor(data?: IStudentDto) {
         if (data) {
@@ -64474,6 +64494,7 @@ export class StudentDto implements IStudentDto {
             this.studentNumber = _data["studentNumber"];
             this.studyLevelId = _data["studyLevelId"];
             this.gender = _data["gender"];
+            this.isRegistered = _data["isRegistered"];
         }
     }
 
@@ -64494,6 +64515,7 @@ export class StudentDto implements IStudentDto {
         data["studentNumber"] = this.studentNumber;
         data["studyLevelId"] = this.studyLevelId;
         data["gender"] = this.gender;
+        data["isRegistered"] = this.isRegistered;
         return data;
     }
 }
@@ -64507,6 +64529,7 @@ export interface IStudentDto {
     studentNumber: string | undefined;
     studyLevelId: number | undefined;
     gender: GenderEnum;
+    isRegistered: boolean;
 }
 
 export enum StudentExamStatus {
@@ -64605,6 +64628,7 @@ export class StudentStudySubjectDto implements IStudentStudySubjectDto {
     cycleNumber!: number;
     studySubjectId!: number;
     studentId!: number;
+    hasAttempted!: boolean;
 
     constructor(data?: IStudentStudySubjectDto) {
         if (data) {
@@ -64621,6 +64645,7 @@ export class StudentStudySubjectDto implements IStudentStudySubjectDto {
             this.cycleNumber = _data["cycleNumber"];
             this.studySubjectId = _data["studySubjectId"];
             this.studentId = _data["studentId"];
+            this.hasAttempted = _data["hasAttempted"];
         }
     }
 
@@ -64637,6 +64662,7 @@ export class StudentStudySubjectDto implements IStudentStudySubjectDto {
         data["cycleNumber"] = this.cycleNumber;
         data["studySubjectId"] = this.studySubjectId;
         data["studentId"] = this.studentId;
+        data["hasAttempted"] = this.hasAttempted;
         return data;
     }
 }
@@ -64646,6 +64672,7 @@ export interface IStudentStudySubjectDto {
     cycleNumber: number;
     studySubjectId: number;
     studentId: number;
+    hasAttempted: boolean;
 }
 
 export class StudentStudySubjectStudySubjectLookupTableDto implements IStudentStudySubjectStudySubjectLookupTableDto {

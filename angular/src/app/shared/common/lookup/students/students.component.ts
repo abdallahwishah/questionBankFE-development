@@ -10,6 +10,8 @@ import { HttpClient } from '@angular/common/http';
 import { finalize } from 'rxjs';
 import { AppConsts } from '@shared/AppConsts';
 import { FileUpload } from 'primeng/fileupload';
+import { FiltersComponent } from '@app/shared/components/filters/filters.component';
+import { ViewStudySubjectsComponent } from './view-study-subjects/view-study-subjects.component';
 
 @Component({
     selector: 'app-students',
@@ -21,9 +23,18 @@ export class StudentsComponent extends AppComponentBase implements OnInit {
     @ViewChild('paginator', { static: true }) paginator: Paginator;
     @ViewChild('createOrEditStudent', { static: true })
     createOrEditStudent: CreateOrEditStudentModalComponent;
+    @ViewChild(FiltersComponent) FiltersComponent: FiltersComponent;
+    @ViewChild('viewStudySubjectsComponent') viewStudySubjectsComponent: ViewStudySubjectsComponent;
     @ViewChild('ExcelFileUpload', { static: false }) excelFileUpload: FileUpload;
     filterText: string;
     uploadUrl = AppConsts.remoteServiceBaseUrl + '/Students/ImportFromExcel';
+    studySubject = [];
+    governorate;
+    registerCompletedFilter: boolean;
+    registerCompletedList = [
+        { id: true, displayName: this.l('Yes') },
+        { id: false, displayName: this.l('No') },
+    ];
 
     constructor(
         injector: Injector,
@@ -45,6 +56,14 @@ export class StudentsComponent extends AppComponentBase implements OnInit {
         }
 
         this.primengTableHelper.showLoadingIndicator();
+        let studySubjectIdList = [];
+        if (this.studySubject.length) {
+            this.studySubject.map((result) => {
+                if (!studySubjectIdList.find((item) => item == result.studySubject.id)) {
+                    studySubjectIdList.push(result.studySubject.id);
+                }
+            });
+        }
 
         this.studentsServiceProxy
             .getAll(
@@ -54,7 +73,9 @@ export class StudentsComponent extends AppComponentBase implements OnInit {
                 undefined,
                 undefined,
                 undefined,
-                undefined,
+                this.governorate?.governorate?.id,
+                studySubjectIdList,
+                this.registerCompletedFilter,
                 this.primengTableHelper.getSorting(this.dataTable),
                 this.primengTableHelper.getSkipCount(this.paginator, event),
                 this.primengTableHelper.getMaxResultCount(this.paginator, event),
@@ -89,6 +110,9 @@ export class StudentsComponent extends AppComponentBase implements OnInit {
             case 'Delete':
                 this.deleteStudent(record);
                 break;
+            case 'ViewStudySubjects':
+                this.viewStudySubjectsComponent.show(record.student.id);
+                break;
         }
     }
 
@@ -119,5 +143,16 @@ export class StudentsComponent extends AppComponentBase implements OnInit {
 
     onUploadExcelError(): void {
         this.notify.error(this.l('ImportStudentsUploadFailed'));
+    }
+
+    closeFilters() {
+        this.FiltersComponent.isPanelOpen = false;
+    }
+    clearFilter() {
+        this.studySubject = [];
+        this.governorate = undefined;
+        this.registerCompletedFilter = undefined;
+        this.getStudents();
+        this.closeFilters();
     }
 }

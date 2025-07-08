@@ -418,6 +418,10 @@
                                 {{ l('SchoolName') }}
                                 <p-sortIcon field="SessionName"></p-sortIcon>
                             </th>
+                            <th pSortableColumn="averageSameFacePercentage">
+                                {{ l('MatchingPercentageAverage') }}
+                                <p-sortIcon field="averageSameFacePercentage"></p-sortIcon>
+                            </th>
                             <th>
                                 {{ l('Actions') }}
                             </th>
@@ -476,6 +480,9 @@
                             </td>
                             <td>
                                 {{ schoolName || '-' }}
+                            </td>
+                            <td>
+                                {{ record.averageSameFacePercentage || 0 + '%' }}
                             </td>
                             <td>
                                 <app-action-button

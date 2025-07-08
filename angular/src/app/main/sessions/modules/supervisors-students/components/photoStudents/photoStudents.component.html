@@ -28,6 +28,10 @@
                 <label class="form-label fw-bold">{{ l('StudyLevel') }}:</label>
                 <div>{{ student.studyLevel }}</div>
             </div>
+            <div>
+                <label class="form-label fw-bold">{{ l('MatchingPercentageAverage') }}:</label>
+                <div>{{ student.matchingPercentageAverage || 0 }}%</div>
+            </div>
         </div>
         <div class="d-flex gap-3 flex-wrap card-body">
             <div class="col-md-3">

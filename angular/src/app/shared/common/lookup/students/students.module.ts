@@ -1,3 +1,4 @@
+import { StudentStudySubjectsServiceProxy } from './../../../../../shared/service-proxies/service-proxies';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { StudentsComponent } from './students.component';
@@ -11,6 +12,8 @@ import { GovernoratesServiceProxy, StudentsServiceProxy } from '@shared/service-
 import { CreateOrEditStudentModalComponent } from './create-or-edit-student-modal/create-or-edit-student-modal.component';
 import { ChangeProfilePictureModalModule } from '@app/shared/layout/profile/change-profile-picture-modal.module';
 import { AutoCompleteFeildModule } from '@app/shared/components/auto-complete-feild/auto-complete-feild.module';
+import { FiltersComponent } from '@app/shared/components/filters/filters.component';
+import { ViewStudySubjectsComponent } from './view-study-subjects/view-study-subjects.component';
 
 @NgModule({
     imports: [
@@ -22,6 +25,7 @@ import { AutoCompleteFeildModule } from '@app/shared/components/auto-complete-fe
         ActionButtonComponent,
         ChangeProfilePictureModalModule,
         AutoCompleteFeildModule,
+        FiltersComponent,
         RouterModule.forChild([
             {
                 path: '',
@@ -30,7 +34,7 @@ import { AutoCompleteFeildModule } from '@app/shared/components/auto-complete-fe
             },
         ]),
     ],
-    declarations: [StudentsComponent, CreateOrEditStudentModalComponent],
-    providers: [StudentsServiceProxy, GovernoratesServiceProxy],
+    declarations: [StudentsComponent, CreateOrEditStudentModalComponent, ViewStudySubjectsComponent],
+    providers: [StudentsServiceProxy, GovernoratesServiceProxy, StudentStudySubjectsServiceProxy],
 })
 export class StudentsModule {}

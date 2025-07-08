@@ -92,7 +92,7 @@
     <div [class]="containerClass">
         <div class="card-custom gutter-b">
             <div class="card-body">
-                <div class="row justify-content-between switch-serch-bar mt-9">
+                <div class="d-flex justify-content-between switch-serch-bar mt-9">
                     <div class="col-md-4 px-0">
                         <div class="input-group search-group">
                             <input
@@ -124,6 +124,68 @@
                                 </svg>
                             </button>
                         </div>
+                    </div>
+
+                    <div class="d-grid justify-content-end gap-5" style="grid-template-columns: 1fr auto">
+                        <app-filters>
+                            <ng-container filterBody>
+                                <div class="row">
+                                    <div class="col-12 mb-5">
+                                        <app-auto-complete-feild
+                                            [label]="l('StudySubject')"
+                                            field="studySubject.name"
+                                            [(ngModel)]="studySubject"
+                                            name="studySubjectId"
+                                            multiple="true"
+                                            [ConfigCustomSearch]="{
+                                                api: '/api/services/app/StudySubjects/GetAll',
+                                                keySearch: 'filter',
+                                                customParams: {
+                                                    Sorting: '',
+                                                    SkipCount: 0,
+                                                    MaxResultCount: 10,
+                                                },
+                                            }"
+                                        ></app-auto-complete-feild>
+                                    </div>
+                                    <div class="col-md-12 mb-3">
+                                        <app-auto-complete-feild
+                                            [label]="l('Governorate')"
+                                            field="governorate.name"
+                                            [(ngModel)]="governorate"
+                                            name="governorateId"
+                                            [ConfigCustomSearch]="{
+                                                api: '/api/services/app/Governorates/GetAll',
+                                                keySearch: 'filter',
+                                                customParams: {
+                                                    Sorting: '',
+                                                    SkipCount: 0,
+                                                    MaxResultCount: 10,
+                                                },
+                                            }"
+                                        ></app-auto-complete-feild>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <label class="col-form-label">{{ l('RegistrationCompleted') }}</label>
+                                        <p-dropdown
+                                            [(ngModel)]="registerCompletedFilter"
+                                            [options]="registerCompletedList"
+                                            optionLabel="displayName"
+                                            optionValue="id"
+                                            [autoDisplayFirst]="false"
+                                        ></p-dropdown>
+                                    </div>
+                                </div>
+                                <div class="d-flex justify-content-between mt-4">
+                                    <button class="btn btn-primary" (click)="getStudents(); closeFilters()">
+                                        {{ 'SearchFilters' | localize }}
+                                    </button>
+                                    <button class="btn btn-outline" (click)="clearFilter()">
+                                        {{ 'ResetFilters' | localize }}
+                                    </button>
+                                </div>
+                            </ng-container>
+                        </app-filters>
                     </div>
                 </div>
 
@@ -160,6 +222,10 @@
                                         {{ l('Governorate') }}
                                         <p-sortIcon field="governorateName"></p-sortIcon>
                                     </th>
+                                    <th style="width: 150px" pSortableColumn="student.isRegistered">
+                                        {{ l('RegistrationCompleted') }}
+                                        <p-sortIcon field="student.isRegistered"></p-sortIcon>
+                                    </th>
                                     <th
                                         style="width: 130px"
                                         [hidden]="!isGrantedAny('Pages.Students.Edit', 'Pages.Students.Delete')"
@@ -186,13 +252,33 @@
                                         <span class="p-column-title">{{ l('Governorate') }}</span>
                                         {{ record.governorateName }}
                                     </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('RegistrationCompleted') }}</span>
+                                        <div
+                                            class="badge {{
+                                                record.student.isRegistered ? 'badge-success' : 'badge-dark'
+                                            }}"
+                                        >
+                                            {{ record.student.isRegistered ? this.l('Yes') : this.l('No') }}
+                                        </div>
+                                    </td>
                                     <td
                                         style="width: 130px"
-                                        [hidden]="!isGrantedAny('Pages.Students.Edit', 'Pages.Students.Delete')"
+                                        [hidden]="
+                                            !isGrantedAny(
+                                                'Pages.Students.View',
+                                                'Pages.Students.Edit',
+                                                'Pages.Students.Delete'
+                                            )
+                                        "
                                     >
                                         <app-action-button
                                             (action)="action($event, record)"
                                             [ActionsInfo]="[
+                                                {
+                                                    label: 'ViewStudySubjects',
+                                                    hidden: !isGrantedAny('Pages.Students.View'),
+                                                },
                                                 {
                                                     label: 'Edit',
                                                     hidden: !isGrantedAny('Pages.Students.Edit'),
@@ -231,3 +317,4 @@
     </div>
 </div>
 <app-create-or-edit-student-modal #createOrEditStudent (modalSave)="getStudents()"></app-create-or-edit-student-modal>
+<app-view-study-subjects #viewStudySubjectsComponent></app-view-study-subjects>
