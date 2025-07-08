@@ -117,15 +117,18 @@ export class SchoolsComponent extends AppComponentBase implements OnInit {
                 Object.entries(value?.studentCountBasedOnLevel).map(([key, value]) => {
                     this.studentCount += value;
                 });
-
+                this.noData = true;
+                this.showChart = false;
                 Object.entries(value?.answerPercentagesByQuestion).map(([key, value]) => {
+                    value ? ((this.noData = false), (this.showChart = true)) : '';
                     this.answerPercentagesByQuestion.push({
                         name: key.replace(/<[^>]*>/g, ''),
                         value: value ? value * 100 : 0.000001,
                     });
                 });
-                this.showChart = true;
-                this.noData = Object.entries(value?.answerPercentagesByQuestion).length == 0;
+                Object.entries(value?.answerPercentagesByQuestion).length == 0
+                    ? ((this.noData = true), (this.showChart = false))
+                    : '';
             });
             this.cdr.detectChanges();
             this.getList();

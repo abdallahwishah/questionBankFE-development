@@ -108,7 +108,7 @@ export class StudentsComponent extends AppComponentBase implements OnInit {
                 this.createOrEditStudent.show(record.student.id);
                 break;
             case 'Delete':
-                this.deleteStudent(record);
+                this.deleteStudent(record.student);
                 break;
             case 'ViewStudySubjects':
                 this.viewStudySubjectsComponent.show(record.student.id);
