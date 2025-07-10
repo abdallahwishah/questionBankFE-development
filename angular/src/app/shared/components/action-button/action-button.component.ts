@@ -26,9 +26,14 @@ export class ActionButtonComponent extends AppComponentBase {
     @Output() action = new EventEmitter();
     constructor(injector: Injector) {
         super(injector);
+        console.log(this.ActionsInfo);
     }
     getIconClass(label: string, customIcon: string): string {
         switch (label) {
+            case 'NotAttempted':
+                return 'fa-solid fa-xmark';
+            case 'Attempted':
+                return 'fa-solid fa-check';
             case 'View':
             case 'Preview':
             case 'Viewer':
@@ -98,10 +103,13 @@ export class ActionButtonComponent extends AppComponentBase {
                 return 'fas fa-stop';
             case 'Extend':
                 return 'fas fa-clock';
+
             default:
                 return customIcon; // return customIcon if no label matches
         }
     }
 
-    ngOnInit(): void {}
+    ngOnInit(): void {
+        console.log(this.ActionsInfo);
+    }
 }

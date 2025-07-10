@@ -52,6 +52,7 @@ export class CreateOrEditStudentModalComponent extends AppComponentBase implemen
     allStudyLevel: NameValueDtoOfInt32[];
     allGovernorates: NameValueDtoOfInt32[];
     allGender: any[];
+    AppConsts = AppConsts;
 
     constructor(
         injector: Injector,
@@ -120,6 +121,10 @@ export class CreateOrEditStudentModalComponent extends AppComponentBase implemen
                 });
             });
         }
+    }
+
+    onImageLoadError(event: any): void {
+        event.target.src = 'assets/common/images/image-not-available.png'; // or any fallback image path
     }
 
     setPasswordComplexityInfo(): void {

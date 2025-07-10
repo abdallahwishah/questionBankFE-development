@@ -21,6 +21,7 @@ export class PhotoStudentsComponent extends AppComponentBase implements OnInit {
     allPhotos: GetExamAttemptPhotoForViewDto[] = [];
     student;
     AppConsts = AppConsts;
+    loading = false;
 
     constructor(
         injector: Injector,
@@ -69,8 +70,12 @@ export class PhotoStudentsComponent extends AppComponentBase implements OnInit {
     }
 
     async loadPreviewImage(image: any, item: any): Promise<void> {
-        const url = await this.getImageUrl(item);
-        image.previewImageSrc = url;
-        image.src = url;
+        if (!image.previewImageSrc) {
+            this.loading = true;
+            const url = await this.getImageUrl(item);
+            image.previewImageSrc = url;
+            image.src = url;
+            this.loading = false;
+        }
     }
 }

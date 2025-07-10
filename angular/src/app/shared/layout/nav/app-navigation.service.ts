@@ -25,7 +25,7 @@ export class AppNavigationService {
             ),
             new AppMenuItem('Dashboard', 'Pages.Tenant.Dashboard', 'flaticon-line-graph', '/app/main/dashboard'),
             new AppMenuItem(
-                'QuestionIdentifiers',
+                'SystemIdentifiers',
                 '',
                 'flaticon-line-graph',
                 '',

@@ -1,0 +1,3 @@
+::ng-deep .p-dialog-mask {
+    z-index: 100 !important;
+}

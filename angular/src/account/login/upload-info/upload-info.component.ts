@@ -136,7 +136,7 @@ export class UploadInfoComponent extends AppComponentBase implements OnInit {
             });
         } else {
             // Show error
-            this.notify.error('InvalidFileType');
+            this.notify.error(this.l('InvalidFileType'));
         }
     }
 
@@ -148,7 +148,7 @@ export class UploadInfoComponent extends AppComponentBase implements OnInit {
                 this.personalImage = URL.createObjectURL(personalImage);
             });
         } else {
-            this.notify.error('InvalidFileType');
+            this.notify.error(this.l('InvalidFileType'));
         }
     }
 

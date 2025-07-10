@@ -90,12 +90,15 @@
                         width="100%"
                         height="150"
                         [preview]="true"
+                        [loading]="loading"
                         (click)="loadPreviewImage(image, item)"
                     />
                 </div>
-                <div class="d-flex gap-2">
-                    <div>{{ l('MatchingPercentage') }}:</div>
-                    <div>{{ item.examAttemptPhoto.accuracy }}%</div>
+                <div class="card p-2">
+                    <div class="d-flex justify-content-evenly">
+                        <div>{{ l('MatchingPercentage') }}:</div>
+                        <div>{{ item.examAttemptPhoto.accuracy }}%</div>
+                    </div>
                 </div>
             </div>
             <div *ngIf="allPhotos.length === 0">{{ l('NoData') }}</div>

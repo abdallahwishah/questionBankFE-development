@@ -10,6 +10,8 @@ import { StudentsServiceProxy } from '@shared/service-proxies/service-proxies';
 })
 export class RegistrationStudentComponent extends AppComponentBase implements OnInit {
     identityNumber: string;
+    cycle;
+    year;
 
     constructor(
         injector: Injector,
@@ -19,7 +21,10 @@ export class RegistrationStudentComponent extends AppComponentBase implements On
         super(injector);
     }
 
-    ngOnInit() {}
+    ngOnInit() {
+        this.cycle = abp.setting.get('App.StudentManagement.StudentRegistrationCycleNumber');
+        this.year = abp.setting.get('App.StudentManagement.StudentRegistrationYear');
+    }
 
     check() {
         this.studentService.getStudentInfo(this.identityNumber).subscribe({

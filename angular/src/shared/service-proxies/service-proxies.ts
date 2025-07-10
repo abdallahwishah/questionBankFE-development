@@ -26233,6 +26233,57 @@ export class StudentsServiceProxy {
     }
 
     /**
+     * @return Success
+     */
+    getRegistrationInfo(): Observable<GetRegistrationInfoOutput> {
+        let url_ = this.baseUrl + "/api/services/app/Students/GetRegistrationInfo";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetRegistrationInfo(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetRegistrationInfo(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<GetRegistrationInfoOutput>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<GetRegistrationInfoOutput>;
+        }));
+    }
+
+    protected processGetRegistrationInfo(response: HttpResponseBase): Observable<GetRegistrationInfoOutput> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = GetRegistrationInfoOutput.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
      * @param identityNumber (optional) 
      * @return Success
      */
@@ -26868,6 +26919,58 @@ export class StudentStudySubjectsServiceProxy {
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
             result200 = GetStudentStudySubjectForEditOutput.fromJS(resultData200);
             return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param body (optional) 
+     * @return Success
+     */
+    createOrEdit(body: CreateOrEditStudentStudySubjectDto | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/StudentStudySubjects/CreateOrEdit";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json",
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processCreateOrEdit(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processCreateOrEdit(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<void>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<void>;
+        }));
+    }
+
+    protected processCreateOrEdit(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return _observableOf(null as any);
             }));
         } else if (status !== 200 && status !== 204) {
             return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
@@ -40818,6 +40921,7 @@ export class CreateOrEditStudentStudySubjectDto implements ICreateOrEditStudentS
     cycleNumber!: number;
     studySubjectId!: number;
     studentId!: number;
+    hasAttempted!: boolean;
 
     constructor(data?: ICreateOrEditStudentStudySubjectDto) {
         if (data) {
@@ -40834,6 +40938,7 @@ export class CreateOrEditStudentStudySubjectDto implements ICreateOrEditStudentS
             this.cycleNumber = _data["cycleNumber"];
             this.studySubjectId = _data["studySubjectId"];
             this.studentId = _data["studentId"];
+            this.hasAttempted = _data["hasAttempted"];
         }
     }
 
@@ -40850,6 +40955,7 @@ export class CreateOrEditStudentStudySubjectDto implements ICreateOrEditStudentS
         data["cycleNumber"] = this.cycleNumber;
         data["studySubjectId"] = this.studySubjectId;
         data["studentId"] = this.studentId;
+        data["hasAttempted"] = this.hasAttempted;
         return data;
     }
 }
@@ -40859,6 +40965,7 @@ export interface ICreateOrEditStudentStudySubjectDto {
     cycleNumber: number;
     studySubjectId: number;
     studentId: number;
+    hasAttempted: boolean;
 }
 
 export class CreateOrEditStudyLevelDto implements ICreateOrEditStudyLevelDto {
@@ -50049,6 +50156,46 @@ export interface IGetRegionalStatsOutput {
     stats: RegionalStatCountry[] | undefined;
 }
 
+export class GetRegistrationInfoOutput implements IGetRegistrationInfoOutput {
+    registrationYear!: number;
+    registrationCycleNumber!: number;
+
+    constructor(data?: IGetRegistrationInfoOutput) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.registrationYear = _data["registrationYear"];
+            this.registrationCycleNumber = _data["registrationCycleNumber"];
+        }
+    }
+
+    static fromJS(data: any): GetRegistrationInfoOutput {
+        data = typeof data === 'object' ? data : {};
+        let result = new GetRegistrationInfoOutput();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["registrationYear"] = this.registrationYear;
+        data["registrationCycleNumber"] = this.registrationCycleNumber;
+        return data;
+    }
+}
+
+export interface IGetRegistrationInfoOutput {
+    registrationYear: number;
+    registrationCycleNumber: number;
+}
+
 export class GetReportItemForEditOutput implements IGetReportItemForEditOutput {
     reportItem!: CreateOrEditReportItemDto;
 
@@ -50932,6 +51079,8 @@ export class GetStudentForEditOutput implements IGetStudentForEditOutput {
     fullName!: string | undefined;
     identityNumber!: string | undefined;
     governorateName!: string | undefined;
+    identityPictureId!: string | undefined;
+    selfiePictureId!: string | undefined;
 
     constructor(data?: IGetStudentForEditOutput) {
         if (data) {
@@ -50950,6 +51099,8 @@ export class GetStudentForEditOutput implements IGetStudentForEditOutput {
             this.fullName = _data["fullName"];
             this.identityNumber = _data["identityNumber"];
             this.governorateName = _data["governorateName"];
+            this.identityPictureId = _data["identityPictureId"];
+            this.selfiePictureId = _data["selfiePictureId"];
         }
     }
 
@@ -50968,6 +51119,8 @@ export class GetStudentForEditOutput implements IGetStudentForEditOutput {
         data["fullName"] = this.fullName;
         data["identityNumber"] = this.identityNumber;
         data["governorateName"] = this.governorateName;
+        data["identityPictureId"] = this.identityPictureId;
+        data["selfiePictureId"] = this.selfiePictureId;
         return data;
     }
 }
@@ -50979,6 +51132,8 @@ export interface IGetStudentForEditOutput {
     fullName: string | undefined;
     identityNumber: string | undefined;
     governorateName: string | undefined;
+    identityPictureId: string | undefined;
+    selfiePictureId: string | undefined;
 }
 
 export class GetStudentForViewDto implements IGetStudentForViewDto {

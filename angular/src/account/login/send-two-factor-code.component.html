@@ -24,7 +24,7 @@
                     *ngFor="let provider of loginService.authenticateResult.twoFactorAuthProviders"
                     [value]="provider"
                 >
-                    {{ provider }}
+                    {{ l(provider) }}
                 </option>
             </select>
         </div>

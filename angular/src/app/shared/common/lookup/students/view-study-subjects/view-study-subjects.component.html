@@ -1,97 +1,126 @@
-<div
-    bsModal
-    #viewDetails="bs-modal"
-    class="modal fade"
-    tabindex="-1"
-    role="dialog"
-    aria-labelledby="viewDetails"
-    aria-hidden="true"
-    [config]="{ backdrop: 'static' }"
->
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <form>
-                <div class="modal-header">
-                    <h4 class="modal-title">
-                        <span>{{ l('Details') }}</span>
-                    </h4>
-
-                    <button type="button" class="btn-close" (click)="close()" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="row align-items-center p-0 mt-6">
-                        <div class="primeng-datatable-container col-12" [busyIf]="primengTableHelper.isLoading">
-                            <p-table
-                                #dataTable
-                                [value]="primengTableHelper.records"
-                                rows="{{ primengTableHelper.defaultRecordsCountPerPage }}"
-                                [paginator]="false"
-                                [lazy]="true"
-                                [scrollable]="true"
-                                ScrollWidth="100%"
-                                [tableStyle]="{ 'min-width': '50rem' }"
-                                [resizableColumns]="primengTableHelper.resizableColumns"
-                            >
-                                <ng-template pTemplate="header">
-                                    <tr>
-                                        <th style="width: 150px">
-                                            {{ l('StudySubject') }}
-                                        </th>
-                                        <th style="width: 150px">
-                                            {{ l('HasAttempted') }}
-                                        </th>
-                                    </tr>
-                                </ng-template>
-                                <ng-template pTemplate="body" let-record="$implicit" let-i="rowIndex">
-                                    <tr>
-                                        <td style="width: 150px">
-                                            <span class="p-column-title">{{ l('Name') }}</span>
-                                            {{ record.studySubjectName }}
-                                        </td>
-                                        <td style="width: 150px">
-                                            <span class="p-column-title">{{ l('HasAttempted') }}</span>
-                                            <div
-                                                class="badge {{
-                                                    record.studentStudySubject.hasAttempted
-                                                        ? 'badge-success'
-                                                        : 'badge-dark'
-                                                }}"
-                                            >
-                                                {{
-                                                    record.studentStudySubject.hasAttempted
-                                                        ? this.l('Yes')
-                                                        : this.l('No')
-                                                }}
-                                            </div>
-                                        </td>
-                                    </tr>
-                                </ng-template>
-                            </p-table>
-                            <div class="primeng-no-data" *ngIf="primengTableHelper.totalRecordsCount == 0">
-                                {{ l('NoData') }}
-                            </div>
-                            <div class="primeng-paging-container">
-                                <p-paginator
-                                    [rows]="primengTableHelper.defaultRecordsCountPerPage"
-                                    #paginator
-                                    (onPageChange)="getAll($event)"
-                                    [totalRecords]="primengTableHelper.totalRecordsCount"
-                                    [rowsPerPageOptions]="primengTableHelper.predefinedRecordsCountPerPage"
-                                    [showCurrentPageReport]="true"
-                                    [currentPageReportTemplate]="
-                                        'TotalRecordsCount' | localize: primengTableHelper.totalRecordsCount
-                                    "
-                                ></p-paginator>
-                            </div>
-                        </div>
+<app-dialog-shared [width]="'50vw'" [dialogHeader]="l('Details')" [dialog_name]="'student_details'">
+    <ng-container bodyDialog>
+        <ng-container>
+            <div class="d-flex {{ isShow ? 'justify-content-between' : 'justify-content-end' }} align-items-center">
+                <div *ngIf="isShow" class="d-flex gap-3 col-md-8 justify-content-between">
+                    <app-auto-complete-feild
+                        [label]="l('StudySubject')"
+                        field="studySubject.name"
+                        class="col-md-8"
+                        [(ngModel)]="studySubject"
+                        name="studySubjectId"
+                        [ConfigCustomSearch]="{
+                            api: '/api/services/app/StudySubjects/GetAll',
+                            keySearch: 'filter',
+                            customParams: {
+                                Sorting: '',
+                                SkipCount: 0,
+                                MaxResultCount: 10,
+                            },
+                        }"
+                    ></app-auto-complete-feild>
+                    <div class="d-flex gap-3 mt-7">
+                        <p-checkbox [(ngModel)]="body.hasAttempted" [binary]="true" name="hasAttempted"></p-checkbox>
+                        <label class="col-form-label align-content-center">{{ l('HasAttempted') }}</label>
                     </div>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" (click)="close()">
-                        {{ l('Cancel') }}
-                    </button>
+                <button
+                    type="button"
+                    class="btn btn-primary"
+                    [disabled]="!studySubject && isShow"
+                    style="height: min-content; align-self: flex-end"
+                    (click)="isShow ? addStudySubject() : (isShow = true)"
+                >
+                    {{ isShow ? l('Save') : l('AddNewSubject') }}
+                </button>
+            </div>
+            <div class="row align-items-center p-0 mt-6">
+                <div class="primeng-datatable-container col-12" [busyIf]="primengTableHelper.isLoading">
+                    <p-table
+                        #dataTable
+                        [value]="primengTableHelper.records"
+                        rows="{{ primengTableHelper.defaultRecordsCountPerPage }}"
+                        [paginator]="false"
+                        [lazy]="true"
+                        [scrollable]="true"
+                        ScrollWidth="100%"
+                        [tableStyle]="{ 'min-width': '50rem' }"
+                        [resizableColumns]="primengTableHelper.resizableColumns"
+                    >
+                        <ng-template pTemplate="header">
+                            <tr>
+                                <th style="width: 150px">
+                                    {{ l('StudySubject') }}
+                                </th>
+                                <th style="width: 150px">
+                                    {{ l('HasAttempted') }}
+                                </th>
+                                <th style="width: 150px">
+                                    {{ l('Actions') }}
+                                </th>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-record="$implicit" let-i="rowIndex">
+                            <tr>
+                                <td style="width: 150px">
+                                    <span class="p-column-title">{{ l('Name') }}</span>
+                                    {{ record.studySubjectName }}
+                                </td>
+                                <td style="width: 150px">
+                                    <span class="p-column-title">{{ l('HasAttempted') }}</span>
+                                    <div
+                                        class="badge {{
+                                            record.studentStudySubject.hasAttempted ? 'badge-success' : 'badge-dark'
+                                        }}"
+                                    >
+                                        {{ record.studentStudySubject.hasAttempted ? this.l('Yes') : this.l('No') }}
+                                    </div>
+                                </td>
+                                <td style="width: 150px">
+                                    <app-action-button
+                                        (action)="action($event, record)"
+                                        [ActionsInfo]="[
+                                            {
+                                                label: 'Attempted',
+                                                hasPermission:
+                                                    isGrantedAny('Pages.StudentStudySubjects.Edit') &&
+                                                    !record.studentStudySubject.hasAttempted,
+                                            },
+                                            {
+                                                label: 'NotAttempted',
+                                                hasPermission:
+                                                    isGrantedAny('Pages.StudentStudySubjects.Edit') &&
+                                                    record.studentStudySubject.hasAttempted,
+                                            },
+                                        ]"
+                                    ></app-action-button>
+                                </td>
+                            </tr>
+                        </ng-template>
+                    </p-table>
+                    <div class="primeng-no-data" *ngIf="primengTableHelper.totalRecordsCount == 0">
+                        {{ l('NoData') }}
+                    </div>
+                    <div class="primeng-paging-container">
+                        <p-paginator
+                            [rows]="primengTableHelper.defaultRecordsCountPerPage"
+                            #paginator
+                            (onPageChange)="getAll($event)"
+                            [totalRecords]="primengTableHelper.totalRecordsCount"
+                            [rowsPerPageOptions]="primengTableHelper.predefinedRecordsCountPerPage"
+                            [showCurrentPageReport]="true"
+                            [currentPageReportTemplate]="
+                                'TotalRecordsCount' | localize: primengTableHelper.totalRecordsCount
+                            "
+                        ></p-paginator>
+                    </div>
                 </div>
-            </form>
-        </div>
-    </div>
-</div>
+            </div>
+        </ng-container>
+    </ng-container>
+    <ng-container footerDialog>
+        <button type="button" class="btn btn-default" (click)="close()">
+            {{ l('Cancel') }}
+        </button>
+    </ng-container>
+</app-dialog-shared>

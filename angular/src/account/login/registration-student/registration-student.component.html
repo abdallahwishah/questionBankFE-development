@@ -1,15 +1,23 @@
 <div>
-    <div class="pb-13 pt-lg-0 pt-5">
+    <div class="pb-5 pt-lg-0 pt-5">
         <h3 class="fw-bolder text-dark fs-h4 fs-h1-lg">
-            {{ 'IdentityNumber' | localize }}
+            {{ 'RegistrationScreen' | localize }}
         </h3>
     </div>
     <div>
+        <p class="fs-h3 fw-bolder">
+            {{ l('YouWantToRegirsterInYear') + ' ' + year + ' ' + l('AndCycle') + ' ' + cycle }}
+        </p>
         <p>
             {{ l('IdentityVerificationRequired') }}
         </p>
         <div>
-            <input class="form-control mb-3" type="text" [(ngModel)]="identityNumber" [placeholder]="l('IdentityNumber')" />
+            <input
+                class="form-control mb-3"
+                type="text"
+                [(ngModel)]="identityNumber"
+                [placeholder]="l('IdentityNumber')"
+            />
             <div class="pb-lg-0 pb-5">
                 <button
                     (click)="check()"

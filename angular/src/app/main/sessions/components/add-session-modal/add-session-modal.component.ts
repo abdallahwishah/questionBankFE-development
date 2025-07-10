@@ -45,7 +45,7 @@ export class AddSessionsModalComponent extends AppComponentBase implements OnIni
             id: [null],
             name: [null, Validators.required],
             startDate: [null, Validators.required],
-            endDate: [null, Validators.required],
+            endDate: [null],
             examTemplateId: [null],
             supervisorFileToken: [null],
             studentFileToken: [null],
@@ -89,6 +89,9 @@ export class AddSessionsModalComponent extends AppComponentBase implements OnIni
     }
 
     Save() {
+        this.FormAddSession.markAllAsTouched();
+
+        this.saving = true;
         this._SessionsServiceProxy
             .createOrEdit({
                 ...this.FormAddSession.value,
@@ -96,11 +99,16 @@ export class AddSessionsModalComponent extends AppComponentBase implements OnIni
                 supervisorFileToken: this.fileSuperToken,
                 studentFileToken: this.fileStudentToken,
             })
-            .subscribe((res) => {
-                this.notify.success(this.l('SuccessfullyEdited'));
-                this.clear();
-                this.OnRefresh.emit();
-                this.closeDialog();
+            .subscribe({
+                next: () => {
+                    this.notify.success(this.l('SuccessfullyEdited'));
+                    this.clear();
+                    this.OnRefresh.emit();
+                    this.closeDialog();
+                },
+                error: (err) => {
+                    this.saving = false;
+                },
             });
     }
     fileSuper: any;
@@ -122,6 +130,8 @@ export class AddSessionsModalComponent extends AppComponentBase implements OnIni
         });
     }
     closeDialog() {
+        this.saving = false;
+        this.clear();
         this.FormAddSession.reset();
         this._DialogSharedService.hideDialog(this.Add_Session_dialog);
     }
@@ -132,7 +142,6 @@ export class AddSessionsModalComponent extends AppComponentBase implements OnIni
         this.fileSuper = null;
         this.fileStudent = null;
         this.status = null;
-        console.log('clear', this.uploadFileSuper);
         this.uploadFileSuper.nativeElement.value = '';
         this.uploadFileStudent.nativeElement.value = '';
     }

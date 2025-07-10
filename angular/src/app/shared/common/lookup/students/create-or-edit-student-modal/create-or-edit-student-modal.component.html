@@ -532,6 +532,47 @@
                             <i class="fas fa-info-circle ms-2" tooltip="{{ 'IsLockoutEnabled_Hint' | localize }}"></i>
                         </label>
                     </form>
+                    <h3 class="section-title col-md-12 my-5">{{ l('Images') + ' (' + l('View') + ')' }}</h3>
+                    <div class="d-flex gap-5 flex-wrap card-body">
+                        <div class="col-md-3">
+                            <label class="form-label fw-bold">{{ l('IdentityImage') }}:</label>
+                            <div class="rounded">
+                                <p-image
+                                    #identityPictureIdImage
+                                    [src]="
+                                        AppConsts.remoteServiceBaseUrl +
+                                        '/File/DownloadBinaryFile?id=' +
+                                        student.identityPictureId +
+                                        '&contentType=image/jpeg&fileName=image.jpeg'
+                                    "
+                                    (onImageError)="onImageLoadError($event)"
+                                    alt="Image"
+                                    [width]="'100%'"
+                                    height="150"
+                                    [preview]="student.identityPictureId ? true : false"
+                                />
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label fw-bold">{{ l('PersonalImage') }}:</label>
+                            <div class="rounded">
+                                <p-image
+                                    #selfiePictureIdImage
+                                    [src]="
+                                        AppConsts.remoteServiceBaseUrl +
+                                        '/File/DownloadBinaryFile?id=' +
+                                        student.selfiePictureId +
+                                        '&contentType=image/jpeg&fileName=image.jpeg'
+                                    "
+                                    (onImageError)="onImageLoadError($event)"
+                                    alt="Image"
+                                    [width]="'100%'"
+                                    height="150"
+                                    [preview]="student.selfiePictureId ? true : false"
+                                />
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">

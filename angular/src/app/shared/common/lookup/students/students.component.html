@@ -266,7 +266,7 @@
                                         style="width: 130px"
                                         [hidden]="
                                             !isGrantedAny(
-                                                'Pages.Students.View',
+                                                'Pages.StudentStudySubjects',
                                                 'Pages.Students.Edit',
                                                 'Pages.Students.Delete'
                                             )
@@ -277,15 +277,15 @@
                                             [ActionsInfo]="[
                                                 {
                                                     label: 'ViewStudySubjects',
-                                                    hidden: !isGrantedAny('Pages.Students.View'),
+                                                    hasPermission: isGrantedAny('Pages.StudentStudySubjects'),
                                                 },
                                                 {
                                                     label: 'Edit',
-                                                    hidden: !isGrantedAny('Pages.Students.Edit'),
+                                                    hasPermission: isGrantedAny('Pages.Students.Edit'),
                                                 },
                                                 {
                                                     label: 'Delete',
-                                                    hidden: !isGrantedAny('Pages.Students.Delete'),
+                                                    hasPermission: isGrantedAny('Pages.Students.Delete'),
                                                 },
                                             ]"
                                         ></app-action-button>

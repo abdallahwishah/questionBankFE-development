@@ -14,6 +14,7 @@ import { ChangeProfilePictureModalModule } from '@app/shared/layout/profile/chan
 import { AutoCompleteFeildModule } from '@app/shared/components/auto-complete-feild/auto-complete-feild.module';
 import { FiltersComponent } from '@app/shared/components/filters/filters.component';
 import { ViewStudySubjectsComponent } from './view-study-subjects/view-study-subjects.component';
+import { ImageModule } from 'primeng/image';
 
 @NgModule({
     imports: [
@@ -25,7 +26,9 @@ import { ViewStudySubjectsComponent } from './view-study-subjects/view-study-sub
         ActionButtonComponent,
         ChangeProfilePictureModalModule,
         AutoCompleteFeildModule,
+        ViewStudySubjectsComponent,
         FiltersComponent,
+        ImageModule,
         RouterModule.forChild([
             {
                 path: '',
@@ -34,7 +37,7 @@ import { ViewStudySubjectsComponent } from './view-study-subjects/view-study-sub
             },
         ]),
     ],
-    declarations: [StudentsComponent, CreateOrEditStudentModalComponent, ViewStudySubjectsComponent],
+    declarations: [StudentsComponent, CreateOrEditStudentModalComponent],
     providers: [StudentsServiceProxy, GovernoratesServiceProxy, StudentStudySubjectsServiceProxy],
 })
 export class StudentsModule {}

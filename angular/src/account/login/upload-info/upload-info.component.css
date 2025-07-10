@@ -9,6 +9,7 @@
     height: 200px;
     justify-content: center;
     display: flex;
+    text-align: center;
 }
 
 .image {
