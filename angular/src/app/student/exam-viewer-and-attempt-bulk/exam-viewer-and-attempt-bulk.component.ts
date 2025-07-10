@@ -109,10 +109,10 @@ export class ExamViewerAndAttemptBulkComponent extends AppComponentBase implemen
         // Listen for online and offline events
         window.addEventListener('online', this.handleOnline);
         window.addEventListener('offline', this.handleOffline);
-        
+
         // Check camera access first - critical for photo capture
         this.checkAndRestoreCameraAccess();
-        
+
         // // Attempt to load from localStorage first
         const savedDataJson = localStorage.getItem(this.LOCAL_STORAGE_KEY);
         if (savedDataJson) {
@@ -333,10 +333,10 @@ export class ExamViewerAndAttemptBulkComponent extends AppComponentBase implemen
             // Check if camera access was previously granted
             if (this.cameraProctoringService.hasPreviousCameraAccess()) {
                 console.log('Previous camera access detected, attempting to restore...');
-                
+
                 // Try to restore camera access
                 const cameraStatus = await this.cameraProctoringService.checkCameraAccess();
-                
+
                 if (cameraStatus.hasAccess && cameraStatus.hasPermission) {
                     console.log('Camera access restored successfully');
                     this.isCameraActive = true;
@@ -387,7 +387,7 @@ export class ExamViewerAndAttemptBulkComponent extends AppComponentBase implemen
         try {
             // Check current camera status
             const cameraStatus = await this.cameraProctoringService.checkCameraAccess();
-            
+
             if (cameraStatus.hasAccess && cameraStatus.hasPermission) {
                 console.log('Camera access confirmed, starting photo capture...');
                 this.cameraProctoringService.startAutomaticCapture(this.studentAttemptId, this.examEndTime);
@@ -399,7 +399,7 @@ export class ExamViewerAndAttemptBulkComponent extends AppComponentBase implemen
                 this.isCameraActive = false;
                 this.cameraStatusMessage = 'Camera Offline';
                 this.showCameraAccessWarning(`Photo monitoring disabled: ${cameraStatus.error}`);
-                
+
                 // Optionally try to redirect back to main page if camera is critical
                 // this.router.navigate(['/student/main']);
             }
