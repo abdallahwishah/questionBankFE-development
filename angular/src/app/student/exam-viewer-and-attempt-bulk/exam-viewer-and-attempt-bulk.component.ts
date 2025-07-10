@@ -77,6 +77,11 @@ export class ExamViewerAndAttemptBulkComponent extends AppComponentBase implemen
 
     public isOnline = navigator.onLine;
 
+    // Camera proctoring status
+    public isCameraActive = false;
+    public cameraStatusMessage = '';
+    public showCameraWarning = false;
+
     constructor(
         injector: Injector,
         private _examsServiceProxy: ExamsServiceProxy,
@@ -104,6 +109,10 @@ export class ExamViewerAndAttemptBulkComponent extends AppComponentBase implemen
         // Listen for online and offline events
         window.addEventListener('online', this.handleOnline);
         window.addEventListener('offline', this.handleOffline);
+        
+        // Check camera access first - critical for photo capture
+        this.checkAndRestoreCameraAccess();
+        
         // // Attempt to load from localStorage first
         const savedDataJson = localStorage.getItem(this.LOCAL_STORAGE_KEY);
         if (savedDataJson) {
@@ -292,7 +301,7 @@ export class ExamViewerAndAttemptBulkComponent extends AppComponentBase implemen
 
         // Start automatic photo capture every 10 minutes
         if (this.studentAttemptId) {
-            this.cameraProctoringService.startAutomaticCapture(this.studentAttemptId, this.examEndTime);
+            this.ensureCameraAccessAndStartCapture();
         }
     }
 
@@ -311,6 +320,103 @@ export class ExamViewerAndAttemptBulkComponent extends AppComponentBase implemen
 
     private handleTimeExpired() {
         this.end();
+    }
+
+    // --------------------------
+    // Camera Access Management
+    // --------------------------
+    /**
+     * Check and restore camera access after page refresh
+     */
+    private async checkAndRestoreCameraAccess(): Promise<void> {
+        try {
+            // Check if camera access was previously granted
+            if (this.cameraProctoringService.hasPreviousCameraAccess()) {
+                console.log('Previous camera access detected, attempting to restore...');
+                
+                // Try to restore camera access
+                const cameraStatus = await this.cameraProctoringService.checkCameraAccess();
+                
+                if (cameraStatus.hasAccess && cameraStatus.hasPermission) {
+                    console.log('Camera access restored successfully');
+                    this.isCameraActive = true;
+                    this.cameraStatusMessage = 'Monitoring Active';
+                    this.showCameraWarning = false;
+                } else {
+                    console.warn('Failed to restore camera access:', cameraStatus.error);
+                    this.isCameraActive = false;
+                    this.cameraStatusMessage = 'Camera Offline';
+                    this.showCameraAccessWarning(cameraStatus.error);
+                }
+            } else {
+                console.log('No previous camera access found');
+                // If no previous access, request it now
+                const cameraStatus = await this.cameraProctoringService.checkCameraAccess();
+                if (cameraStatus.hasAccess && cameraStatus.hasPermission) {
+                    this.isCameraActive = true;
+                    this.cameraStatusMessage = 'Monitoring Active';
+                    this.showCameraWarning = false;
+                } else {
+                    this.isCameraActive = false;
+                    this.cameraStatusMessage = 'Camera Offline';
+                    this.showCameraAccessWarning(cameraStatus.error);
+                }
+            }
+        } catch (error) {
+            console.error('Error checking camera access:', error);
+            this.isCameraActive = false;
+            this.cameraStatusMessage = 'Camera Error';
+            this.showCameraAccessWarning('Failed to access camera. Photo monitoring may not work properly.');
+        }
+    }
+
+    /**
+     * Show camera access warning to user
+     */
+    private showCameraAccessWarning(errorMessage?: string): void {
+        this.showCameraWarning = true;
+        this.cameraStatusMessage = 'Camera Issue';
+        console.warn('Camera Access Warning:', errorMessage);
+        // You can implement a toast notification or modal here if needed
+    }
+
+    /**
+     * Ensure camera access is available and start photo capture
+     */
+    private async ensureCameraAccessAndStartCapture(): Promise<void> {
+        try {
+            // Check current camera status
+            const cameraStatus = await this.cameraProctoringService.checkCameraAccess();
+            
+            if (cameraStatus.hasAccess && cameraStatus.hasPermission) {
+                console.log('Camera access confirmed, starting photo capture...');
+                this.cameraProctoringService.startAutomaticCapture(this.studentAttemptId, this.examEndTime);
+                this.isCameraActive = true;
+                this.cameraStatusMessage = 'Monitoring Active';
+                this.showCameraWarning = false;
+            } else {
+                console.error('Camera access not available for photo capture:', cameraStatus.error);
+                this.isCameraActive = false;
+                this.cameraStatusMessage = 'Camera Offline';
+                this.showCameraAccessWarning(`Photo monitoring disabled: ${cameraStatus.error}`);
+                
+                // Optionally try to redirect back to main page if camera is critical
+                // this.router.navigate(['/student/main']);
+            }
+        } catch (error) {
+            console.error('Error ensuring camera access:', error);
+            this.isCameraActive = false;
+            this.cameraStatusMessage = 'Camera Error';
+            this.showCameraAccessWarning('Failed to start photo monitoring. Please refresh the page.');
+        }
+    }
+
+    /**
+     * Manually retry camera access (can be called from UI)
+     */
+    public retryCameraAccess(): void {
+        console.log('Manually retrying camera access...');
+        this.checkAndRestoreCameraAccess();
     }
 
     // --------------------------
