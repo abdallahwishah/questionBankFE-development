@@ -18,7 +18,6 @@ export class CreateOrEditGovernorateModalComponent extends AppComponentBase impl
 
     active = false;
     saving = false;
-    isCreate: boolean = true;
 
     governorate: CreateOrEditGovernorateDto = new CreateOrEditGovernorateDto();
 
@@ -33,12 +32,10 @@ export class CreateOrEditGovernorateModalComponent extends AppComponentBase impl
     show(governorateId?: number): void {
         if (!governorateId) {
             this.governorate = new CreateOrEditGovernorateDto();
-            this.isCreate = true;
 
             this.active = true;
             this.modal.show();
         } else {
-            this.isCreate = false;
             this._governoratesServiceProxy.getGovernorateForEdit(governorateId).subscribe((result) => {
                 this.governorate = result.governorate;
 
@@ -51,33 +48,18 @@ export class CreateOrEditGovernorateModalComponent extends AppComponentBase impl
     save(): void {
         this.saving = true;
 
-        if (this.isCreate) {
-            this._governoratesServiceProxy
-                .create(this.governorate)
-                .pipe(
-                    finalize(() => {
-                        this.saving = false;
-                    }),
-                )
-                .subscribe(() => {
-                    this.notify.info(this.l('SavedSuccessfully'));
-                    this.close();
-                    this.modalSave.emit(null);
-                });
-        } else {
-            this._governoratesServiceProxy
-                .update(this.governorate)
-                .pipe(
-                    finalize(() => {
-                        this.saving = false;
-                    }),
-                )
-                .subscribe(() => {
-                    this.notify.info(this.l('SavedSuccessfully'));
-                    this.close();
-                    this.modalSave.emit(null);
-                });
-        }
+        this._governoratesServiceProxy
+            .createOrEdit(this.governorate)
+            .pipe(
+                finalize(() => {
+                    this.saving = false;
+                }),
+            )
+            .subscribe(() => {
+                this.notify.info(this.l('SavedSuccessfully'));
+                this.close();
+                this.modalSave.emit(null);
+            });
     }
 
     close(): void {

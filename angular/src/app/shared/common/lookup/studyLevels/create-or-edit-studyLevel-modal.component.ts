@@ -18,7 +18,6 @@ export class CreateOrEditStudyLevelModalComponent extends AppComponentBase imple
 
     active = false;
     saving = false;
-    isCreate: boolean = true;
 
     studyLevel: CreateOrEditStudyLevelDto = new CreateOrEditStudyLevelDto();
 
@@ -33,12 +32,10 @@ export class CreateOrEditStudyLevelModalComponent extends AppComponentBase imple
     show(studyLevelId?: number): void {
         if (!studyLevelId) {
             this.studyLevel = new CreateOrEditStudyLevelDto();
-            this.isCreate = true;
 
             this.active = true;
             this.modal.show();
         } else {
-            this.isCreate = false;
             this._studyLevelsServiceProxy.getStudyLevelForEdit(studyLevelId).subscribe((result) => {
                 this.studyLevel = result.studyLevel;
 
@@ -50,34 +47,18 @@ export class CreateOrEditStudyLevelModalComponent extends AppComponentBase imple
 
     save(): void {
         this.saving = true;
-
-        if (this.isCreate) {
-            this._studyLevelsServiceProxy
-                .create(this.studyLevel)
-                .pipe(
-                    finalize(() => {
-                        this.saving = false;
-                    }),
-                )
-                .subscribe(() => {
-                    this.notify.info(this.l('SavedSuccessfully'));
-                    this.close();
-                    this.modalSave.emit(null);
-                });
-        } else {
-            this._studyLevelsServiceProxy
-                .update(this.studyLevel)
-                .pipe(
-                    finalize(() => {
-                        this.saving = false;
-                    }),
-                )
-                .subscribe(() => {
-                    this.notify.info(this.l('SavedSuccessfully'));
-                    this.close();
-                    this.modalSave.emit(null);
-                });
-        }
+        this._studyLevelsServiceProxy
+            .createOrEdit(this.studyLevel)
+            .pipe(
+                finalize(() => {
+                    this.saving = false;
+                }),
+            )
+            .subscribe(() => {
+                this.notify.info(this.l('SavedSuccessfully'));
+                this.close();
+                this.modalSave.emit(null);
+            });
     }
 
     close(): void {

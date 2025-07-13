@@ -8,6 +8,7 @@ import { UrlHelper } from 'shared/helpers/UrlHelper';
 import { ExternalLoginProvider, LoginService } from './login.service';
 import { ReCaptchaV3WrapperService } from '@account/shared/recaptchav3-wrapper.service';
 import { PasswordMeterComponent } from '@metronic/app/kt/components';
+import { AppConsts } from '@shared/AppConsts';
 
 @Component({
     templateUrl: './login.component.html',
@@ -122,5 +123,12 @@ export class LoginComponent extends AppComponentBase implements OnInit, AfterVie
 
     externalLogin(provider: ExternalLoginProvider) {
         this.loginService.externalAuthenticate(provider);
+    }
+
+    downloadApp(): void {
+        const link = document.createElement('a');
+        link.href = '/assets/Common/APKs/app-release.apk';
+        link.download = 'app-release.apk';
+        link.click();
     }
 }

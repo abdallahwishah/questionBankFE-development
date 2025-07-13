@@ -92,6 +92,8 @@ export class AddSessionsModalComponent extends AppComponentBase implements OnIni
         this.FormAddSession.markAllAsTouched();
 
         this.saving = true;
+        this.FormAddSession.get('isForAllSubjects').setValue(!this.FormAddSession.get('isForAllSubjects').value);
+
         this._SessionsServiceProxy
             .createOrEdit({
                 ...this.FormAddSession.value,
@@ -107,6 +109,9 @@ export class AddSessionsModalComponent extends AppComponentBase implements OnIni
                     this.closeDialog();
                 },
                 error: (err) => {
+                    this.FormAddSession.get('isForAllSubjects').setValue(
+                        !this.FormAddSession.get('isForAllSubjects').value,
+                    );
                     this.saving = false;
                 },
             });

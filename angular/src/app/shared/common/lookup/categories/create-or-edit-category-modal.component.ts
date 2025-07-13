@@ -18,7 +18,6 @@ export class CreateOrEditCategoryModalComponent extends AppComponentBase impleme
 
     active = false;
     saving = false;
-    isCreate: boolean = true;
 
     category: CreateOrEditCategoryDto = new CreateOrEditCategoryDto();
 
@@ -33,12 +32,10 @@ export class CreateOrEditCategoryModalComponent extends AppComponentBase impleme
     show(categoryId?: number): void {
         if (!categoryId) {
             this.category = new CreateOrEditCategoryDto();
-            this.isCreate = true;
 
             this.active = true;
             this.modal.show();
         } else {
-            this.isCreate = false;
             this._categoriesServiceProxy.getCategoryForEdit(categoryId).subscribe((result) => {
                 this.category = result.category;
 
@@ -50,33 +47,18 @@ export class CreateOrEditCategoryModalComponent extends AppComponentBase impleme
 
     save(): void {
         this.saving = true;
-        if (this.isCreate) {
-            this._categoriesServiceProxy
-                .create(this.category)
-                .pipe(
-                    finalize(() => {
-                        this.saving = false;
-                    }),
-                )
-                .subscribe(() => {
-                    this.notify.info(this.l('SavedSuccessfully'));
-                    this.close();
-                    this.modalSave.emit(null);
-                });
-        } else {
-            this._categoriesServiceProxy
-                .update(this.category)
-                .pipe(
-                    finalize(() => {
-                        this.saving = false;
-                    }),
-                )
-                .subscribe(() => {
-                    this.notify.info(this.l('SavedSuccessfully'));
-                    this.close();
-                    this.modalSave.emit(null);
-                });
-        }
+        this._categoriesServiceProxy
+            .createOrEdit(this.category)
+            .pipe(
+                finalize(() => {
+                    this.saving = false;
+                }),
+            )
+            .subscribe(() => {
+                this.notify.info(this.l('SavedSuccessfully'));
+                this.close();
+                this.modalSave.emit(null);
+            });
     }
 
     close(): void {

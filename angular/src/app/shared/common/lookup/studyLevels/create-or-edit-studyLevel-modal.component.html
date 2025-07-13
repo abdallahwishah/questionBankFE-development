@@ -27,20 +27,6 @@
                 </div>
                 <div class="modal-body">
                     <div class="row">
-                        <div class="col-md-12 my-3">
-                            <label class="form-label" for="StudyLevel_Id">{{ l('Code') }} *</label>
-                            <input
-                                type="number"
-                                #StudyLevel_Id="ngModel"
-                                id="StudyLevel_Id"
-                                class="form-control"
-                                [(ngModel)]="studyLevel.id"
-                                [disabled]="!isCreate"
-                                name="id"
-                                required
-                            />
-                            <validation-messages [formCtrl]="StudyLevel_Id"></validation-messages>
-                        </div>
                         <div class="col-md-6 my-3">
                             <label class="form-label" for="StudyLevel_NameF">{{ l('NameF') }} *</label>
                             <input

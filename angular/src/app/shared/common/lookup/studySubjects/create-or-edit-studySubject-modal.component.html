@@ -7,20 +7,6 @@
     <ng-container bodyDialog>
         <form *ngIf="active" #studySubjectForm="ngForm">
             <div class="row">
-                <div class="col-md-12 my-3">
-                    <label class="form-label" for="StudySubject_Id">{{ l('Code') }} *</label>
-                    <input
-                        type="number"
-                        #StudySubject_Id="ngModel"
-                        id="StudySubject_Id"
-                        class="form-control"
-                        [(ngModel)]="studySubject.id"
-                        [disabled]="!isCreate"
-                        name="id"
-                        required
-                    />
-                    <validation-messages [formCtrl]="StudySubject_Id"></validation-messages>
-                </div>
                 <div class="col-md-6 my-3">
                     <label class="form-label" for="StudySubject_NameF">{{ l('NameF') }} *</label>
                     <input
@@ -78,8 +64,8 @@
                             customParams: {
                                 Sorting: '',
                                 SkipCount: 0,
-                                MaxResultCount: 10
-                            }
+                                MaxResultCount: 10,
+                            },
                         }"
                     ></app-auto-complete-feild>
                 </div>

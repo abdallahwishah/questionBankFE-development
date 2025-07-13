@@ -21,7 +21,6 @@ export class CreateOrEditStudySubjectModalComponent extends AppComponentBase imp
     studyLevelsValue: any[] = [];
     active = false;
     saving = false;
-    isCreate: boolean = true;
 
     studySubject: CreateOrEditStudySubjectDto = new CreateOrEditStudySubjectDto();
 
@@ -37,13 +36,11 @@ export class CreateOrEditStudySubjectModalComponent extends AppComponentBase imp
     show(studySubjectId?: number): void {
         if (!studySubjectId) {
             this.studySubject = new CreateOrEditStudySubjectDto();
-            this.isCreate = true;
             this.studyLevelsValue = [];
 
             this.active = true;
             this.dialogSharedService.showDialog(this.Add_Study_Subject_dialog, {});
         } else {
-            this.isCreate = false;
             this._studySubjectsServiceProxy.getStudySubjectForEdit(studySubjectId).subscribe((result) => {
                 this.studySubject = result.studySubject;
                 this.studyLevelsValue = this.studySubject.studyLevelIds.map((x, i) => {
@@ -66,22 +63,9 @@ export class CreateOrEditStudySubjectModalComponent extends AppComponentBase imp
         this.studySubject.studyLevelIds = this.studyLevelsValue.map((x) => x?.studyLevel?.id);
         this.studySubjectForm.form.markAllAsTouched();
 
-        if (this.isCreate && this.studySubjectForm.form.valid) {
+        if (this.studySubjectForm.form.valid) {
             this._studySubjectsServiceProxy
-                .create(this.studySubject)
-                .pipe(
-                    finalize(() => {
-                        this.saving = false;
-                    }),
-                )
-                .subscribe(() => {
-                    this.notify.info(this.l('SavedSuccessfully'));
-                    this.close();
-                    this.modalSave.emit(null);
-                });
-        } else if (!this.isCreate && this.studySubjectForm.form.valid) {
-            this._studySubjectsServiceProxy
-                .update(this.studySubject)
+                .createOrEdit(this.studySubject)
                 .pipe(
                     finalize(() => {
                         this.saving = false;
