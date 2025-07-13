@@ -127,7 +127,8 @@ export class LoginComponent extends AppComponentBase implements OnInit, AfterVie
 
     downloadApp(): void {
         const link = document.createElement('a');
-        link.href = '/assets/Common/APKs/app-release.apk';
+        link.href = AppConsts.appBaseUrl + '/assets/common/apks/app-release.apk';
+        console.log(link.href);
         link.download = 'app-release.apk';
         link.click();
     }
