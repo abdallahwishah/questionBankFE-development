@@ -115,12 +115,15 @@
                                 <label class="form-label" for="IdentityNumber">{{ 'IdentityNumber' | localize }}</label>
                                 <input
                                     id="IdentityNumber"
+                                    #identityNumber="ngModel"
                                     type="text"
                                     name="PhoneIdentityNumberNumber"
                                     class="form-control"
                                     [(ngModel)]="user.identityNumber"
                                     maxlength="32"
+                                    required
                                 />
+                                <validation-messages [formCtrl]="identityNumber"></validation-messages>
                             </div>
 
                             <div class="mb-5">
