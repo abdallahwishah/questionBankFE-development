@@ -30,6 +30,7 @@ export class AddSessionsModalComponent extends AppComponentBase implements OnIni
 
     FormAddSession: FormGroup;
     sessionStatusEnum = SessionStatusEnum;
+    minStartDate: Date | null = null;
     status: any;
     ListExamTemplates: any[] = [];
     constructor(
@@ -60,8 +61,10 @@ export class AddSessionsModalComponent extends AppComponentBase implements OnIni
             .SelectorFilterByComponent$(this.Add_Session_dialog, 'configShow')
             .subscribe((configShow) => {
                 if (configShow?.data) {
+                    console.log(configShow?.data);
                     this.dataForEdit = configShow?.data;
                     this.status = configShow?.data?.session?.status;
+                    this.minStartDate = new Date(configShow?.data?.session?.startDate);
                     this.FormAddSession.patchValue({
                         ...configShow?.data?.session,
                         startDate: new Date(configShow?.data?.session?.startDate),
@@ -90,8 +93,19 @@ export class AddSessionsModalComponent extends AppComponentBase implements OnIni
 
     Save() {
         this.FormAddSession.markAllAsTouched();
-
+        const selectedDate = this.FormAddSession.get('startDate')?.value;
         this.saving = true;
+        if (
+            selectedDate &&
+            this.minStartDate &&
+            new Date(selectedDate).getTime() < this.minStartDate.getTime() &&
+            this.status == this.sessionStatusEnum.NotStarted
+        ) {
+            this.notify.warn(this.l('YouCannotSelectATimeBefore') + ' ' + this.minStartDate.toLocaleString());
+            this.saving = false;
+            return;
+        }
+
         this.FormAddSession.get('isForAllSubjects').setValue(!this.FormAddSession.get('isForAllSubjects').value);
 
         this._SessionsServiceProxy

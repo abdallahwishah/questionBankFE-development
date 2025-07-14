@@ -42,6 +42,7 @@
                                 formControlName="startDate"
                                 appendTo="body"
                                 [showTime]="true"
+                                [minDate]="status == sessionStatusEnum.NotStarted ? minStartDate : ''"
                                 class="w-100"
                             ></p-calendar>
                             <svg
@@ -190,11 +191,11 @@
                             [formCtrl]="FormAddSession.get('passwordMultiplier')"
                         ></validation-messages>
                     </div>
-                    <div class="col-md-6 d-flex gap-3">
+                    <div class="col-md-6 d-flex gap-3" *ngIf="status != sessionStatusEnum.NotStarted">
                         <p-checkbox name="studentsFromExcel" formControlName="isStudentsFromExcel" [binary]="true" />
                         <label class="col-form-label align-content-center">{{ l('StudentsFromExcel') }}</label>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-6" *ngIf="status != sessionStatusEnum.NotStarted">
                         <div class="d-flex gap-3" *ngIf="!FormAddSession.get('isStudentsFromExcel').value">
                             <p-checkbox name="forAllSubjects" formControlName="isForAllSubjects" [binary]="true" />
                             <div class="mt-3">
@@ -270,17 +271,7 @@
         <input #uploadFileStudent (change)="uploadStudent($event)" accept=".xlsx" type="file" class="d-none" />
     </ng-container>
     <ng-container footerDialog>
-        <button
-            type="button"
-            class="btn btn-primary blue"
-            [disabled]="
-                !FormAddSession.valid ||
-                !fileSuperToken ||
-                (FormAddSession.get('isStudentsFromExcel').value ? !fileStudentToken : false)
-            "
-            (click)="Save()"
-            [buttonBusy]="saving"
-        >
+        <button type="button" class="btn btn-primary blue" (click)="Save()" [buttonBusy]="saving">
             <span>{{ l('Save') }}</span>
         </button>
         <button class="btn btn-outline" (click)="closeDialog()">{{ l('Cancel') }}</button>

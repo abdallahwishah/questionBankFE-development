@@ -47,7 +47,9 @@
                                 </div>
                                 <div class="col-sm-9">
                                     <div class="mb-5">
-                                        <label class="form-label required" for="Name">{{ 'FirstName' | localize }}</label>
+                                        <label class="form-label required" for="Name">
+                                            {{ 'FirstName' | localize }}
+                                        </label>
                                         <input
                                             id="Name"
                                             #nameInput="ngModel"
@@ -62,7 +64,9 @@
                                     </div>
 
                                     <div class="mb-5">
-                                        <label class="form-label required" for="Surname">{{ 'Surname' | localize }}</label>
+                                        <label class="form-label required" for="Surname">
+                                            {{ 'Surname' | localize }}
+                                        </label>
                                         <input
                                             id="Surname"
                                             #surnameInput="ngModel"
@@ -78,7 +82,9 @@
                                 </div>
                             </div>
                             <div class="mb-5">
-                                <label class="form-label required" for="EmailAddress">{{ 'EmailAddress' | localize }}</label>
+                                <label class="form-label required" for="EmailAddress">
+                                    {{ 'EmailAddress' | localize }}
+                                </label>
                                 <input
                                     id="EmailAddress"
                                     #emailAddressInput="ngModel"
@@ -106,6 +112,18 @@
                             </div>
 
                             <div class="mb-5">
+                                <label class="form-label" for="IdentityNumber">{{ 'IdentityNumber' | localize }}</label>
+                                <input
+                                    id="IdentityNumber"
+                                    type="text"
+                                    name="PhoneIdentityNumberNumber"
+                                    class="form-control"
+                                    [(ngModel)]="user.identityNumber"
+                                    maxlength="32"
+                                />
+                            </div>
+
+                            <div class="mb-5">
                                 <label class="form-label required" for="UserName">{{ 'UserName' | localize }}</label>
                                 <div class="input-group">
                                     <input
@@ -121,7 +139,9 @@
                                     />
                                     <span
                                         class="input-group-text"
-                                        tooltip="{{ 'AllowedUserNameCharactersInfoText' | localize : allowedUserNameCharacters }}"
+                                        tooltip="{{
+                                            'AllowedUserNameCharactersInfoText' | localize: allowedUserNameCharacters
+                                        }}"
                                     >
                                         <i class="fas fa-info-circle"></i>
                                     </span>
@@ -144,7 +164,7 @@
                                     {{ 'SetRandomPassword' | localize }}
                                 </span>
                             </label>
-                            <div class="mb-5" *ngIf="!setRandomPassword" data-kt-password-meter="true"> 
+                            <div class="mb-5" *ngIf="!setRandomPassword" data-kt-password-meter="true">
                                 <div class="right">
                                     <label class="form-label" for="Password">{{ 'Password' | localize }}</label>
                                     <div class="position-relative mb-3">
@@ -167,11 +187,22 @@
                                             reverse="true"
                                             autocomplete="new-password"
                                         />
-                                                <!--begin::Visibility toggle-->
-                                        <span class="btn btn-sm btn-icon position-absolute translate-middle top-50 end-0 me-n2"
-                                                data-kt-password-meter-control="visibility">
-                                            <i class="fas fa-eye-slash fs-4"><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span></i>
-                                            <i class="fas fa-eye d-none fs-4"><span class="path1"></span><span class="path2"></span><span class="path3"></span></i>
+                                        <!--begin::Visibility toggle-->
+                                        <span
+                                            class="btn btn-sm btn-icon position-absolute translate-middle top-50 end-0 me-n2"
+                                            data-kt-password-meter-control="visibility"
+                                        >
+                                            <i class="fas fa-eye-slash fs-4">
+                                                <span class="path1"></span>
+                                                <span class="path2"></span>
+                                                <span class="path3"></span>
+                                                <span class="path4"></span>
+                                            </i>
+                                            <i class="fas fa-eye d-none fs-4">
+                                                <span class="path1"></span>
+                                                <span class="path2"></span>
+                                                <span class="path3"></span>
+                                            </i>
                                         </span>
                                         <!--end::Visibility toggle-->
                                     </div>
@@ -206,7 +237,7 @@
                                 <div class="right">
                                     <label class="form-label" for="PasswordRepeat">
                                         {{ 'PasswordRepeat' | localize }}
-                                    </label>   
+                                    </label>
                                     <div class="position-relative mb-3">
                                         <input
                                             id="PasswordRepeat"
@@ -225,13 +256,24 @@
                                             validateEqual="Password"
                                             reverse="false"
                                             autocomplete="new-password"
-                                        />    
-                                        <span class="btn btn-sm btn-icon position-absolute translate-middle top-50 end-0 me-n2"
-                                        data-kt-password-meter-control="visibility">
-                                            <i class="fas fa-eye-slash fs-4"><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span></i>
-                                            <i class="fas fa-eye d-none fs-4"><span class="path1"></span><span class="path2"></span><span class="path3"></span></i>
+                                        />
+                                        <span
+                                            class="btn btn-sm btn-icon position-absolute translate-middle top-50 end-0 me-n2"
+                                            data-kt-password-meter-control="visibility"
+                                        >
+                                            <i class="fas fa-eye-slash fs-4">
+                                                <span class="path1"></span>
+                                                <span class="path2"></span>
+                                                <span class="path3"></span>
+                                                <span class="path4"></span>
+                                            </i>
+                                            <i class="fas fa-eye d-none fs-4">
+                                                <span class="path1"></span>
+                                                <span class="path2"></span>
+                                                <span class="path3"></span>
+                                            </i>
                                         </span>
-                                    </div>              
+                                    </div>
                                 </div>
                             </div>
                             <div [hidden]="setRandomPassword || userForm.form.valid || userForm.form.pristine">
@@ -340,7 +382,10 @@
                                 <span class="form-check-label">
                                     {{ 'IsLockoutEnabled' | localize }}
                                 </span>
-                                <i class="fas fa-info-circle ms-2" tooltip="{{ 'IsLockoutEnabled_Hint' | localize }}"></i>
+                                <i
+                                    class="fas fa-info-circle ms-2"
+                                    tooltip="{{ 'IsLockoutEnabled_Hint' | localize }}"
+                                ></i>
                             </label>
                         </tab>
                         <tab class="pt-5" heading="{{ 'Roles' | localize }}">
@@ -385,12 +430,7 @@
                     </tabset>
                 </div>
                 <div class="modal-footer">
-                    <button
-                        [disabled]="saving"
-                        type="button"
-                        class="btn btn-light-primary fw-bold"
-                        (click)="close()"
-                    >
+                    <button [disabled]="saving" type="button" class="btn btn-light-primary fw-bold" (click)="close()">
                         {{ 'Cancel' | localize }}
                     </button>
                     <button
