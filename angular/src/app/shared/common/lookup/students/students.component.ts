@@ -1,4 +1,9 @@
-import { EntityDtoOfInt64, StudentDto, StudentsServiceProxy } from '@shared/service-proxies/service-proxies';
+import {
+    EntityDtoOfInt64,
+    GenderEnum,
+    StudentDto,
+    StudentsServiceProxy,
+} from '@shared/service-proxies/service-proxies';
 import { Component, OnInit, Injector, ViewChild } from '@angular/core';
 import { LazyLoadEvent } from '@node_modules/primeng/api';
 import { Paginator } from '@node_modules/primeng/paginator';
@@ -36,6 +41,8 @@ export class StudentsComponent extends AppComponentBase implements OnInit {
         { id: false, displayName: this.l('No') },
     ];
     AppConsts = AppConsts;
+    genderEnumList: any[] = [];
+    genderFilter;
 
     constructor(
         injector: Injector,
@@ -46,7 +53,14 @@ export class StudentsComponent extends AppComponentBase implements OnInit {
         super(injector);
     }
 
-    ngOnInit() {}
+    ngOnInit() {
+        this.genderEnumList = Object.keys(GenderEnum)
+            .filter((key) => isNaN(Number(key)))
+            .map((key) => ({
+                name: key,
+                id: GenderEnum[key as keyof typeof GenderEnum],
+            }));
+    }
 
     getStudents(event?: LazyLoadEvent) {
         if (this.primengTableHelper.shouldResetPaging(event)) {
@@ -77,6 +91,7 @@ export class StudentsComponent extends AppComponentBase implements OnInit {
                 this.governorate?.governorate?.id,
                 studySubjectIdList,
                 this.registerCompletedFilter,
+                this.genderFilter,
                 this.primengTableHelper.getSorting(this.dataTable),
                 this.primengTableHelper.getSkipCount(this.paginator, event),
                 this.primengTableHelper.getMaxResultCount(this.paginator, event),
@@ -159,6 +174,7 @@ export class StudentsComponent extends AppComponentBase implements OnInit {
         this.studySubject = [];
         this.governorate = undefined;
         this.registerCompletedFilter = undefined;
+        this.genderFilter = undefined;
         this.getStudents();
         this.closeFilters();
     }

@@ -25915,12 +25915,13 @@ export class StudentsServiceProxy {
      * @param governorateFilterId (optional) 
      * @param studySubjectFilterIds (optional) 
      * @param isRegistered (optional) 
+     * @param genderFilter (optional) 
      * @param sorting (optional) 
      * @param skipCount (optional) 
      * @param maxResultCount (optional) 
      * @return Success
      */
-    getAll(filter: string | undefined, classNameFilter: string | undefined, cityFilter: string | undefined, userNameFilter: string | undefined, sessionSupervisorNoteFilter: string | undefined, sessionIdFilter: number | undefined, governorateFilterId: number | undefined, studySubjectFilterIds: number[] | undefined, isRegistered: boolean | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfGetStudentForViewDto> {
+    getAll(filter: string | undefined, classNameFilter: string | undefined, cityFilter: string | undefined, userNameFilter: string | undefined, sessionSupervisorNoteFilter: string | undefined, sessionIdFilter: number | undefined, governorateFilterId: number | undefined, studySubjectFilterIds: number[] | undefined, isRegistered: boolean | undefined, genderFilter: GenderEnum | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfGetStudentForViewDto> {
         let url_ = this.baseUrl + "/api/services/app/Students/GetAll?";
         if (filter === null)
             throw new Error("The parameter 'filter' cannot be null.");
@@ -25958,6 +25959,10 @@ export class StudentsServiceProxy {
             throw new Error("The parameter 'isRegistered' cannot be null.");
         else if (isRegistered !== undefined)
             url_ += "IsRegistered=" + encodeURIComponent("" + isRegistered) + "&";
+        if (genderFilter === null)
+            throw new Error("The parameter 'genderFilter' cannot be null.");
+        else if (genderFilter !== undefined)
+            url_ += "GenderFilter=" + encodeURIComponent("" + genderFilter) + "&";
         if (sorting === null)
             throw new Error("The parameter 'sorting' cannot be null.");
         else if (sorting !== undefined)

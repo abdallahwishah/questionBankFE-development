@@ -175,6 +175,23 @@
                                             [autoDisplayFirst]="false"
                                         ></p-dropdown>
                                     </div>
+                                    <div class="col-md-12">
+                                        <label class="col-form-label">{{ l('Gender') }}</label>
+                                        <p-dropdown
+                                            [(ngModel)]="genderFilter"
+                                            [options]="genderEnumList"
+                                            optionLabel="name"
+                                            optionValue="id"
+                                            [autoDisplayFirst]="false"
+                                        >
+                                            <ng-template let-item pTemplate="selectedItem">
+                                                {{ l(item.name) }}
+                                            </ng-template>
+                                            <ng-template let-item pTemplate="item">
+                                                {{ l(item.name) }}
+                                            </ng-template>
+                                        </p-dropdown>
+                                    </div>
                                 </div>
                                 <div class="d-flex justify-content-between mt-4">
                                     <button class="btn btn-primary" (click)="getStudents(); closeFilters()">
