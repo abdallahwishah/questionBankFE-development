@@ -3,8 +3,9 @@
         {{ labelField }}
     </label>
     <p-dropdown
+        #dropdown
         *ngIf="!loading"
-        [placeholder]="l(placeholder())"
+        [placeholder]="l(placeholderText)"
         class="w-full py-2"
         [ngClass]="{ disabled: disabled }"
         [formControl]="fieldControl"

@@ -33,7 +33,6 @@ export class ListComponent extends AppComponentBase implements OnInit {
     fromDate: any;
     toDate: any;
 
-
     constructor(
         private _injector: Injector,
         private _DialogSharedService: DialogSharedService,
@@ -56,16 +55,15 @@ export class ListComponent extends AppComponentBase implements OnInit {
         this.sessionStatus.unshift({ name: 'All', id: undefined });
     }
 
-    formatDate(date){
+    formatDate(date) {
         const dateObj = new Date(date);
-        const  day = String(dateObj.getDate()).padStart(2, '0');       // 26
+        const day = String(dateObj.getDate()).padStart(2, '0'); // 26
         const month = String(dateObj.getMonth() + 1).padStart(2, '0'); // 03
-        const  year = String(dateObj.getFullYear()).slice(-2);          // 25
-        return `${day}/${month}/${year}` ; // 26/03/25
+        const year = String(dateObj.getFullYear()).slice(-2); // 25
+        return `${day}/${month}/${year}`; // 26/03/25
     }
 
     getList(event?: LazyLoadEvent) {
-       
         if (event) {
             if (this.primengTableHelper.shouldResetPaging(event)) {
                 this.paginator.changePage(0);
@@ -126,8 +124,8 @@ export class ListComponent extends AppComponentBase implements OnInit {
                 break;
 
             case 'Delete':
-                this.sessionStatusEnum.Finished
-                 console.log("record" , record.session.status)
+                this.sessionStatusEnum.Finished;
+                console.log('record', record.session.status);
                 this.message.confirm('', this.l('AreYouSure'), (isConfirmed) => {
                     if (isConfirmed) {
                         this._sessionsServiceProxy.delete(record?.session?.id).subscribe((res) => {

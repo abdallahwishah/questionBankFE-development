@@ -26291,6 +26291,58 @@ export class StudentsServiceProxy {
      * @param body (optional) 
      * @return Success
      */
+    unRegister(body: EntityDtoOfInt64 | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/services/app/Students/UnRegister";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json",
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processUnRegister(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processUnRegister(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<void>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<void>;
+        }));
+    }
+
+    protected processUnRegister(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return _observableOf(null as any);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param body (optional) 
+     * @return Success
+     */
     createOrEdit(body: CreateOrEditStudentDto | undefined): Observable<void> {
         let url_ = this.baseUrl + "/api/services/app/Students/CreateOrEdit";
         url_ = url_.replace(/[?&]$/, "");
@@ -26321,58 +26373,6 @@ export class StudentsServiceProxy {
     }
 
     protected processCreateOrEdit(response: HttpResponseBase): Observable<void> {
-        const status = response.status;
-        const responseBlob =
-            response instanceof HttpResponse ? response.body :
-            (response as any).error instanceof Blob ? (response as any).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            return _observableOf(null as any);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf(null as any);
-    }
-
-    /**
-     * @param id (optional) 
-     * @return Success
-     */
-    delete(id: number | undefined): Observable<void> {
-        let url_ = this.baseUrl + "/api/services/app/Students/Delete?";
-        if (id === null)
-            throw new Error("The parameter 'id' cannot be null.");
-        else if (id !== undefined)
-            url_ += "Id=" + encodeURIComponent("" + id) + "&";
-        url_ = url_.replace(/[?&]$/, "");
-
-        let options_ : any = {
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-            })
-        };
-
-        return this.http.request("delete", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processDelete(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processDelete(response_ as any);
-                } catch (e) {
-                    return _observableThrow(e) as any as Observable<void>;
-                }
-            } else
-                return _observableThrow(response_) as any as Observable<void>;
-        }));
-    }
-
-    protected processDelete(response: HttpResponseBase): Observable<void> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -38878,7 +38878,7 @@ export interface ICreateMassNotificationInput {
 }
 
 export class CreateOrEditCategoryDto implements ICreateOrEditCategoryDto {
-    id!: number;
+    id!: number | undefined;
     nameF!: string;
     nameL!: string;
     isActive!: boolean;
@@ -38919,7 +38919,7 @@ export class CreateOrEditCategoryDto implements ICreateOrEditCategoryDto {
 }
 
 export interface ICreateOrEditCategoryDto {
-    id: number;
+    id: number | undefined;
     nameF: string;
     nameL: string;
     isActive: boolean;
@@ -39621,7 +39621,7 @@ export interface ICreateOrEditExamTemplateDto {
 }
 
 export class CreateOrEditGovernorateDto implements ICreateOrEditGovernorateDto {
-    id!: number;
+    id!: number | undefined;
     nameF!: string;
     nameL!: string;
     isActive!: boolean;
@@ -39662,7 +39662,7 @@ export class CreateOrEditGovernorateDto implements ICreateOrEditGovernorateDto {
 }
 
 export interface ICreateOrEditGovernorateDto {
-    id: number;
+    id: number | undefined;
     nameF: string;
     nameL: string;
     isActive: boolean;
@@ -40760,7 +40760,7 @@ export interface ICreateOrEditStudentStudySubjectDto {
 }
 
 export class CreateOrEditStudyLevelDto implements ICreateOrEditStudyLevelDto {
-    id!: number;
+    id!: number | undefined;
     nameF!: string;
     nameL!: string;
     isActive!: boolean;
@@ -40801,14 +40801,14 @@ export class CreateOrEditStudyLevelDto implements ICreateOrEditStudyLevelDto {
 }
 
 export interface ICreateOrEditStudyLevelDto {
-    id: number;
+    id: number | undefined;
     nameF: string;
     nameL: string;
     isActive: boolean;
 }
 
 export class CreateOrEditStudySubjectDto implements ICreateOrEditStudySubjectDto {
-    id!: number;
+    id!: number | undefined;
     nameF!: string;
     nameL!: string;
     language!: QuestionLanguageEnum;
@@ -40866,7 +40866,7 @@ export class CreateOrEditStudySubjectDto implements ICreateOrEditStudySubjectDto
 }
 
 export interface ICreateOrEditStudySubjectDto {
-    id: number;
+    id: number | undefined;
     nameF: string;
     nameL: string;
     language: QuestionLanguageEnum;
@@ -64420,6 +64420,9 @@ export class StudentDto implements IStudentDto {
     studyLevelId!: number | undefined;
     gender!: GenderEnum;
     isRegistered!: boolean;
+    identityPictureId!: string | undefined;
+    selfiePictureId!: string | undefined;
+    phoneNumber!: string | undefined;
 
     constructor(data?: IStudentDto) {
         if (data) {
@@ -64441,6 +64444,9 @@ export class StudentDto implements IStudentDto {
             this.studyLevelId = _data["studyLevelId"];
             this.gender = _data["gender"];
             this.isRegistered = _data["isRegistered"];
+            this.identityPictureId = _data["identityPictureId"];
+            this.selfiePictureId = _data["selfiePictureId"];
+            this.phoneNumber = _data["phoneNumber"];
         }
     }
 
@@ -64462,6 +64468,9 @@ export class StudentDto implements IStudentDto {
         data["studyLevelId"] = this.studyLevelId;
         data["gender"] = this.gender;
         data["isRegistered"] = this.isRegistered;
+        data["identityPictureId"] = this.identityPictureId;
+        data["selfiePictureId"] = this.selfiePictureId;
+        data["phoneNumber"] = this.phoneNumber;
         return data;
     }
 }
@@ -64476,6 +64485,9 @@ export interface IStudentDto {
     studyLevelId: number | undefined;
     gender: GenderEnum;
     isRegistered: boolean;
+    identityPictureId: string | undefined;
+    selfiePictureId: string | undefined;
+    phoneNumber: string | undefined;
 }
 
 export enum StudentExamStatus {

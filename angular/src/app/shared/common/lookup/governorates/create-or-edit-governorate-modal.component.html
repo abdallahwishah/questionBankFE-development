@@ -26,34 +26,35 @@
                     ></button>
                 </div>
                 <div class="modal-body">
-                    <div class="my-3 col-6">
-                        <label class="form-label" for="Governorate_NameL">{{ l('NameL') }} *</label>
-                        <input
-                            type="text"
-                            #Governorate_NameL="ngModel"
-                            id="Governorate_NameL"
-                            class="form-control"
-                            [(ngModel)]="governorate.nameL"
-                            name="NameL"
-                            required
-                        />
-                        <validation-messages [formCtrl]="Governorate_NameL"></validation-messages>
-                    </div>
+                    <div class="d-flex gap-3">
+                        <div class="my-3 col-6">
+                            <label class="form-label" for="Governorate_NameL">{{ l('NameL') }} *</label>
+                            <input
+                                type="text"
+                                #Governorate_NameL="ngModel"
+                                id="Governorate_NameL"
+                                class="form-control"
+                                [(ngModel)]="governorate.nameL"
+                                name="NameL"
+                                required
+                            />
+                            <validation-messages [formCtrl]="Governorate_NameL"></validation-messages>
+                        </div>
 
-                    <div class="my-3 col-6">
-                        <label class="form-label" for="Governorate_NameF">{{ l('NameF') }} *</label>
-                        <input
-                            type="text"
-                            #Governorate_NameF="ngModel"
-                            id="Governorate_NameF"
-                            class="form-control"
-                            [(ngModel)]="governorate.nameF"
-                            name="NameF"
-                            required
-                        />
-                        <validation-messages [formCtrl]="Governorate_NameF"></validation-messages>
+                        <div class="my-3 col-6">
+                            <label class="form-label" for="Governorate_NameF">{{ l('NameF') }} *</label>
+                            <input
+                                type="text"
+                                #Governorate_NameF="ngModel"
+                                id="Governorate_NameF"
+                                class="form-control"
+                                [(ngModel)]="governorate.nameF"
+                                name="NameF"
+                                required
+                            />
+                            <validation-messages [formCtrl]="Governorate_NameF"></validation-messages>
+                        </div>
                     </div>
-
 
                     <br />
                     <label class="form-check form-check-custom form-check-solid">

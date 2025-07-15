@@ -206,19 +206,29 @@
                         >
                             <ng-template pTemplate="header">
                                 <tr>
+                                    <th style="width: 100px">
+                                        {{ l('IdentityImage') }}
+                                    </th>
+                                    <th style="width: 100px">
+                                        {{ l('PersonalImage') }}
+                                    </th>
                                     <th style="width: 150px" pSortableColumn="name">
                                         {{ l('Name') }}
                                         <p-sortIcon field="fullName"></p-sortIcon>
                                     </th>
-                                    <th style="width: 150px" pSortableColumn="isActive">
+                                    <th style="width: 150px" pSortableColumn="userName">
                                         {{ l('UserName') }}
                                         <p-sortIcon field="userName"></p-sortIcon>
                                     </th>
-                                    <th style="width: 150px" pSortableColumn="isActive">
+                                    <th style="width: 150px" pSortableColumn="identityNumber">
                                         {{ l('IdentityNumber') }}
                                         <p-sortIcon field="identityNumber"></p-sortIcon>
                                     </th>
                                     <th style="width: 150px" pSortableColumn="isActive">
+                                        {{ l('PhoneNumber') }}
+                                        <p-sortIcon field="identityNumber"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="governorateName">
                                         {{ l('Governorate') }}
                                         <p-sortIcon field="governorateName"></p-sortIcon>
                                     </th>
@@ -236,6 +246,48 @@
                             </ng-template>
                             <ng-template pTemplate="body" let-record="$implicit" let-i="rowIndex">
                                 <tr>
+                                    <td style="width: 100px">
+                                        <span class="p-column-title">{{ l('IdentityImage') }}</span>
+                                        <div class="d-flex gap-3 justify-content-center">
+                                            <p-image
+                                                #identityPictureIdImage
+                                                [src]="
+                                                    AppConsts.remoteServiceBaseUrl +
+                                                    '/File/DownloadBinaryFile?id=' +
+                                                    record.student.identityPictureId +
+                                                    '&contentType=image/jpeg&fileName=image.jpeg'
+                                                "
+                                                (onImageError)="onImageLoadError($event)"
+                                                [alt]="l('IdentityImage')"
+                                                [width]="'50'"
+                                                height="50"
+                                                class="rounded"
+                                                [ngStyle]="{ overflow: 'hidden' }"
+                                                [preview]="record.student.identityPictureId ? true : false"
+                                            />
+                                        </div>
+                                    </td>
+                                    <td style="width: 100px">
+                                        <span class="p-column-title">{{ l('PersonalImage') }}</span>
+                                        <div class="d-flex gap-3 justify-content-center">
+                                            <p-image
+                                                #selfiePictureIdImage
+                                                [src]="
+                                                    AppConsts.remoteServiceBaseUrl +
+                                                    '/File/DownloadBinaryFile?id=' +
+                                                    record.student.selfiePictureId +
+                                                    '&contentType=image/jpeg&fileName=image.jpeg'
+                                                "
+                                                (onImageError)="onImageLoadError($event)"
+                                                [alt]="l('PersonalImage')"
+                                                [width]="'50'"
+                                                height="50"
+                                                class="rounded"
+                                                [ngStyle]="{ overflow: 'hidden' }"
+                                                [preview]="record.student.selfiePictureId ? true : false"
+                                            />
+                                        </div>
+                                    </td>
                                     <td style="width: 150px">
                                         <span class="p-column-title">{{ l('Name') }}</span>
                                         {{ record.fullName }}
@@ -247,6 +299,10 @@
                                     <td style="width: 150px">
                                         <span class="p-column-title">{{ l('IdentityNumber') }}</span>
                                         {{ record.identityNumber }}
+                                    </td>
+                                    <td style="width: 150px">
+                                        <span class="p-column-title">{{ l('PhoneNumber') }}</span>
+                                        {{ record.student.phoneNumber }}
                                     </td>
                                     <td style="width: 150px">
                                         <span class="p-column-title">{{ l('Governorate') }}</span>
@@ -284,8 +340,10 @@
                                                     hasPermission: isGrantedAny('Pages.Students.Edit'),
                                                 },
                                                 {
-                                                    label: 'Delete',
-                                                    hasPermission: isGrantedAny('Pages.Students.Delete'),
+                                                    label: 'UnRegister',
+                                                    hasPermission:
+                                                        isGrantedAny('Pages.Students.Edit') &&
+                                                        record.student.isRegistered,
                                                 },
                                             ]"
                                         ></app-action-button>

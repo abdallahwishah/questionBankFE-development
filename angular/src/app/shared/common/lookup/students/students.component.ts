@@ -1,4 +1,4 @@
-import { StudentDto, StudentsServiceProxy } from '@shared/service-proxies/service-proxies';
+import { EntityDtoOfInt64, StudentDto, StudentsServiceProxy } from '@shared/service-proxies/service-proxies';
 import { Component, OnInit, Injector, ViewChild } from '@angular/core';
 import { LazyLoadEvent } from '@node_modules/primeng/api';
 import { Paginator } from '@node_modules/primeng/paginator';
@@ -8,11 +8,11 @@ import { CreateOrEditStudentModalComponent } from './create-or-edit-student-moda
 import { FileDownloadService } from '@shared/utils/file-download.service';
 import { HttpClient } from '@angular/common/http';
 import { finalize } from 'rxjs';
-import { AppConsts } from '@shared/AppConsts';
 import { FileUpload } from 'primeng/fileupload';
 import { FiltersComponent } from '@app/shared/components/filters/filters.component';
 import { ViewStudySubjectsComponent } from './view-study-subjects/view-study-subjects.component';
 
+import { AppConsts } from '@shared/AppConsts';
 @Component({
     selector: 'app-students',
     templateUrl: './students.component.html',
@@ -35,6 +35,7 @@ export class StudentsComponent extends AppComponentBase implements OnInit {
         { id: true, displayName: this.l('Yes') },
         { id: false, displayName: this.l('No') },
     ];
+    AppConsts = AppConsts;
 
     constructor(
         injector: Injector,
@@ -87,14 +88,20 @@ export class StudentsComponent extends AppComponentBase implements OnInit {
             });
     }
 
+    onImageLoadError(event: any): void {
+        event.target.src = 'assets/common/images/image-not-available.png'; // or any fallback image path
+    }
+
     reloadPage(): void {
         this.paginator.changePage(this.paginator.getPage());
     }
 
-    deleteStudent(student: StudentDto): void {
+    unRegisterStudent(student: StudentDto): void {
         this.message.confirm('', this.l('AreYouSure'), (isConfirmed) => {
             if (isConfirmed) {
-                this.studentsServiceProxy.delete(student.id).subscribe(() => {
+                let body = new EntityDtoOfInt64();
+                body.id = student.id;
+                this.studentsServiceProxy.unRegister(body).subscribe(() => {
                     this.reloadPage();
                     this.notify.success(this.l('SuccessfullyDeleted'));
                 });
@@ -107,8 +114,8 @@ export class StudentsComponent extends AppComponentBase implements OnInit {
             case 'Edit':
                 this.createOrEditStudent.show(record.student.id);
                 break;
-            case 'Delete':
-                this.deleteStudent(record.student);
+            case 'UnRegister':
+                this.unRegisterStudent(record.student);
                 break;
             case 'ViewStudySubjects':
                 this.viewStudySubjectsComponent.show(record.student.id);

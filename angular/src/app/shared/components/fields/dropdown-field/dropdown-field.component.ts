@@ -13,18 +13,21 @@ import {
     OnChanges,
     SimpleChanges,
     ViewEncapsulation,
+    Signal,
+    WritableSignal,
 } from '@angular/core';
 import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR, ReactiveFormsModule } from '@angular/forms';
 import { optionsConfigModel } from '@app/shared/Models/models';
 import { HttpService } from '@app/shared/services/http.service';
 import { AppComponentBase } from '@shared/common/app-component-base';
+import { UtilsModule } from '@shared/utils/utils.module';
 import { FilterService, PrimeNGConfig } from 'primeng/api';
 import { Dropdown, DropdownModule } from 'primeng/dropdown';
 import { Subscription, map, tap } from 'rxjs';
 
 @Component({
     standalone: true,
-    imports: [CommonModule, DropdownModule, ReactiveFormsModule],
+    imports: [CommonModule, DropdownModule, ReactiveFormsModule, UtilsModule],
     selector: 'app-dropdown-field',
     templateUrl: './dropdown-field.component.html',
     styleUrls: ['./dropdown-field.component.scss'],
@@ -57,6 +60,7 @@ export class DropdownFieldComponent extends Dropdown implements OnInit, ControlV
     @Input() optionsLocal: any;
     autoCompleteConfig: any;
     @Input() enm: any;
+    placeholderText;
 
     @Output() onSelectionChange = new EventEmitter();
     @Output() onLoad: EventEmitter<any> = new EventEmitter();
@@ -173,7 +177,7 @@ export class DropdownFieldComponent extends Dropdown implements OnInit, ControlV
             }),
         );
         this.getOptions();
-        // this.placeholder = this.placeholder;
+        this.placeholderText = this.placeholder();
     }
     getFullDataForItemSelected(value: any) {
         let itemSelected = this.options?.find((item) => item[this.optionValue] == value);
