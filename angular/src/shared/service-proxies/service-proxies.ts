@@ -50991,7 +50991,6 @@ export class GetStudentInfoOutput implements IGetStudentInfoOutput {
     gender!: GenderEnum;
     registrationYear!: number;
     registrationCycleNumber!: number;
-    phoneNumber!: string | undefined;
 
     constructor(data?: IGetStudentInfoOutput) {
         if (data) {
@@ -51011,7 +51010,6 @@ export class GetStudentInfoOutput implements IGetStudentInfoOutput {
             this.gender = _data["gender"];
             this.registrationYear = _data["registrationYear"];
             this.registrationCycleNumber = _data["registrationCycleNumber"];
-            this.phoneNumber = _data["phoneNumber"];
         }
     }
 
@@ -51031,7 +51029,6 @@ export class GetStudentInfoOutput implements IGetStudentInfoOutput {
         data["gender"] = this.gender;
         data["registrationYear"] = this.registrationYear;
         data["registrationCycleNumber"] = this.registrationCycleNumber;
-        data["phoneNumber"] = this.phoneNumber;
         return data;
     }
 }
@@ -51044,7 +51041,6 @@ export interface IGetStudentInfoOutput {
     gender: GenderEnum;
     registrationYear: number;
     registrationCycleNumber: number;
-    phoneNumber: string | undefined;
 }
 
 export class GetStudentStudySubjectForEditOutput implements IGetStudentStudySubjectForEditOutput {
@@ -62314,7 +62310,6 @@ export class RegisterStudentDto implements IRegisterStudentDto {
     identityPhotoToken!: string;
     selfiePhotoToken!: string;
     password!: string;
-    phoneNumber!: string;
 
     constructor(data?: IRegisterStudentDto) {
         if (data) {
@@ -62331,7 +62326,6 @@ export class RegisterStudentDto implements IRegisterStudentDto {
             this.identityPhotoToken = _data["identityPhotoToken"];
             this.selfiePhotoToken = _data["selfiePhotoToken"];
             this.password = _data["password"];
-            this.phoneNumber = _data["phoneNumber"];
         }
     }
 
@@ -62348,7 +62342,6 @@ export class RegisterStudentDto implements IRegisterStudentDto {
         data["identityPhotoToken"] = this.identityPhotoToken;
         data["selfiePhotoToken"] = this.selfiePhotoToken;
         data["password"] = this.password;
-        data["phoneNumber"] = this.phoneNumber;
         return data;
     }
 }
@@ -62358,7 +62351,6 @@ export interface IRegisterStudentDto {
     identityPhotoToken: string;
     selfiePhotoToken: string;
     password: string;
-    phoneNumber: string;
 }
 
 export class RegisterTenantInput implements IRegisterTenantInput {
