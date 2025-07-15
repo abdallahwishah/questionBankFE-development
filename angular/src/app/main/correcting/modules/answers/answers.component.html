@@ -95,6 +95,10 @@
                             {{ l('ExamName') }}
                             <p-sortIcon field="ExamName"></p-sortIcon>
                         </th>
+                        <th pSortableColumn="ExamName">
+                            {{ l('RegistrationCompleted') }}
+                            <p-sortIcon field="ExamName"></p-sortIcon>
+                        </th>
                         <th pSortableColumn="TotalPoints">
                             {{ l('TotalPoints') }}
                             <p-sortIcon field="TotalPoints"></p-sortIcon>
@@ -129,6 +133,13 @@
                             <span class="p-column-title">{{ l('examTitle') }}</span>
                             {{ record.examTitle || '-' }}
                         </td>
+                        <td style="width: 150px">
+                            <span class="p-column-title">{{ l('RegistrationCompleted') }}</span>
+                            <div class="badge {{ record.isRegistered ? 'badge-success' : 'badge-dark' }}">
+                                {{ record.isRegistered ? this.l('Yes') : this.l('No') }}
+                            </div>
+                        </td>
+
                         <td>
                             <span class="p-column-title">{{ l('totalScore') }}</span>
                             {{ record.examAttempt.totalScore }}

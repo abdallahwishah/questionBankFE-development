@@ -47700,6 +47700,7 @@ export class GetExamAttemptForViewDto implements IGetExamAttemptForViewDto {
     selfiePictureId!: string | undefined;
     userId!: number;
     paperNumber!: number;
+    isRegistered!: boolean;
 
     constructor(data?: IGetExamAttemptForViewDto) {
         if (data) {
@@ -47740,6 +47741,7 @@ export class GetExamAttemptForViewDto implements IGetExamAttemptForViewDto {
             this.selfiePictureId = _data["selfiePictureId"];
             this.userId = _data["userId"];
             this.paperNumber = _data["paperNumber"];
+            this.isRegistered = _data["isRegistered"];
         }
     }
 
@@ -47780,6 +47782,7 @@ export class GetExamAttemptForViewDto implements IGetExamAttemptForViewDto {
         data["selfiePictureId"] = this.selfiePictureId;
         data["userId"] = this.userId;
         data["paperNumber"] = this.paperNumber;
+        data["isRegistered"] = this.isRegistered;
         return data;
     }
 }
@@ -47813,6 +47816,7 @@ export interface IGetExamAttemptForViewDto {
     selfiePictureId: string | undefined;
     userId: number;
     paperNumber: number;
+    isRegistered: boolean;
 }
 
 export class GetExamAttemptPhotoForViewDto implements IGetExamAttemptPhotoForViewDto {
