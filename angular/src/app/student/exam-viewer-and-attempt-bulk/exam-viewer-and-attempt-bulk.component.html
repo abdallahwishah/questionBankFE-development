@@ -79,104 +79,101 @@
                                       [class.text-danger]="showCameraWarning"
                                       style="font-size: 10px;">
                                     {{ cameraStatusMessage || (l('ProctorActive') || 'Monitoring Active') }}
-                                </span>
-                            </div> -->
+                                </span>-->
                             </div>
                         </div>
                     </div>
                 </div>
+            </div>
 
-                <!-- Camera Warning Banner -->
-                <div
-                    *ngIf="showCameraWarning"
-                    class="alert alert-warning d-flex justify-content-between align-items-center mb-3"
-                    role="alert"
-                >
-                    <div class="d-flex align-items-center">
-                        <i class="fa fa-exclamation-triangle me-2"></i>
-                        <span>{{ l('CameraWarning') || 'Camera monitoring may not be working properly.' }}</span>
-                    </div>
-                    <button type="button" class="btn btn-sm btn-outline-warning" (click)="retryCameraAccess()">
-                        <i class="fa fa-refresh me-1"></i>
-                        {{ l('Retry') || 'Retry' }}
-                    </button>
+            <!-- Camera Warning Banner -->
+            <div
+                *ngIf="showCameraWarning"
+                class="alert alert-warning d-flex justify-content-between align-items-center mb-3"
+                role="alert"
+            >
+                <div class="d-flex align-items-center">
+                    <i class="fa fa-exclamation-triangle me-2"></i>
+                    <span>{{ l('CameraWarning') || 'Camera monitoring may not be working properly.' }}</span>
                 </div>
+                <button type="button" class="btn btn-sm btn-outline-warning" (click)="retryCameraAccess()">
+                    <i class="fa fa-refresh me-1"></i>
+                    {{ l('Retry') || 'Retry' }}
+                </button>
+            </div>
 
-                <!-- CONTENT -->
-                <div class="content-page">
-                    <ng-container *ngIf="examData">
-                        <!-- If instructions are showing -->
-                        <div *ngIf="showInstructions" class="instructions">
-                            <div [innerHTML]="examData.examInstructions" class="py-15 px-8"></div>
-                            <div class="btn-footer text-end">
-                                <button class="btn btn-primary mt-6 mb-4" (click)="startExam()">
-                                    {{ l('StartExam') }}
-                                </button>
-                            </div>
+            <!-- CONTENT -->
+            <div class="content-page">
+                <ng-container *ngIf="examData">
+                    <!-- If instructions are showing -->
+                    <div *ngIf="showInstructions" class="instructions">
+                        <div [innerHTML]="examData.examInstructions" class="py-15 px-8"></div>
+                        <div class="btn-footer text-end">
+                            <button class="btn btn-primary mt-6 mb-4" (click)="startExam()">
+                                {{ l('StartExam') }}
+                            </button>
                         </div>
+                    </div>
 
-                        <!-- If we are not showing instructions, show the question -->
-                        <ng-container *ngIf="!showInstructions">
-                            <ng-container *ngIf="!loading">
-                                <div
-                                    *ngIf="currentQuestion"
-                                    style="display: flex; align-items: flex-start; gap: 0.5rem; margin-top: 1rem"
-                                    class="justify-content-between"
-                                >
-                                    <app-dynamic-exam-question
-                                        [question]="currentQuestion.question.question"
-                                        [(ngModel)]="currentQuestion.question.question"
-                                        [questionType]="currentQuestion.question?.question.question.type"
-                                        style="display: block; margin-top: 1rem"
-                                    ></app-dynamic-exam-question>
+                    <!-- If we are not showing instructions, show the question -->
+                    <ng-container *ngIf="!showInstructions">
+                        <ng-container *ngIf="!loading">
+                            <div
+                                *ngIf="currentQuestion"
+                                style="display: flex; align-items: flex-start; gap: 0.5rem; margin-top: 1rem"
+                                class="justify-content-between"
+                            >
+                                <app-dynamic-exam-question
+                                    [question]="currentQuestion.question.question"
+                                    [(ngModel)]="currentQuestion.question.question"
+                                    [questionType]="currentQuestion.question?.question.question.type"
+                                    style="display: block; margin-top: 1rem"
+                                ></app-dynamic-exam-question>
 
-                                    <i
-                                        class="fa-solid fa-flag fa-2xl align-self-start {{
-                                            currentQuestion.isFlaggedForReview ? 'text-danger' : ''
-                                        }}"
-                                        (click)="
-                                            currentQuestion.isFlaggedForReview = !currentQuestion.isFlaggedForReview
-                                        "
-                                        style="font-size: large"
-                                    ></i>
-                                </div>
-                            </ng-container>
+                                <i
+                                    class="fa-solid fa-flag fa-2xl align-self-start {{
+                                        currentQuestion.isFlaggedForReview ? 'text-danger' : ''
+                                    }}"
+                                    (click)="currentQuestion.isFlaggedForReview = !currentQuestion.isFlaggedForReview"
+                                    style="font-size: large"
+                                ></i>
+                            </div>
                         </ng-container>
                     </ng-container>
-                </div>
+                </ng-container>
+            </div>
 
-                <!-- FOOTER: Nav Buttons -->
-                <div *ngIf="!showInstructions && currentQuestion">
-                    <br />
-                    <br />
-                    <br />
-                    <br />
-                </div>
-                <div *ngIf="!showInstructions && currentQuestion" class="footer-page row">
-                    <div class="col-12">
-                        <div class="d-flex flex-row justify-content-between">
-                            <div>
-                                <!-- PREV button -->
-                                <button class="btn btn-primary-prev" *ngIf="!isFirstQuestion" (click)="prev()">
-                                    {{ l('Previous') }}
-                                </button>
-                            </div>
-                            <div>
-                                <!-- sidebar toggle -->
-                                <button class="btn btn-primary-showlist" (click)="sidebarVisible = !sidebarVisible">
-                                    <i class="pi pi-align-justify"></i>
-                                </button>
-                            </div>
-                            <div>
-                                <!-- if last question, show EndExam -->
-                                <button class="btn btn-primary-next" (click)="nextCon()" *ngIf="isLastQuestion">
-                                    {{ l('EndExam') }}
-                                </button>
-                                <!-- else show Next -->
-                                <button class="btn btn-primary-next" (click)="next()" *ngIf="!isLastQuestion">
-                                    {{ l('Next') }}
-                                </button>
-                            </div>
+            <!-- FOOTER: Nav Buttons -->
+            <div *ngIf="!showInstructions && currentQuestion">
+                <br />
+                <br />
+                <br />
+                <br />
+            </div>
+            <div *ngIf="!showInstructions && currentQuestion" class="footer-page row">
+                <div class="col-12">
+                    <div class="d-flex flex-row justify-content-between">
+                        <div>
+                            <!-- PREV button -->
+                            <button class="btn btn-primary-prev" *ngIf="!isFirstQuestion" (click)="prev()">
+                                {{ l('Previous') }}
+                            </button>
+                        </div>
+                        <div>
+                            <!-- sidebar toggle -->
+                            <button class="btn btn-primary-showlist" (click)="sidebarVisible = !sidebarVisible">
+                                <i class="pi pi-align-justify"></i>
+                            </button>
+                        </div>
+                        <div>
+                            <!-- if last question, show EndExam -->
+                            <button class="btn btn-primary-next" (click)="nextCon()" *ngIf="isLastQuestion">
+                                {{ l('EndExam') }}
+                            </button>
+                            <!-- else show Next -->
+                            <button class="btn btn-primary-next" (click)="next()" *ngIf="!isLastQuestion">
+                                {{ l('Next') }}
+                            </button>
                         </div>
                     </div>
                 </div>

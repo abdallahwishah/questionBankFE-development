@@ -25,7 +25,7 @@ export class StudentHeaderComponent extends AppComponentBase implements OnInit {
         private _sessionServiceProxy: SessionServiceProxy,
         private _appAuthService: AppAuthService,
         private _activatedRoute: ActivatedRoute,
-        private location:Location
+        private location: Location,
     ) {
         super(_injector);
     }
@@ -53,14 +53,12 @@ export class StudentHeaderComponent extends AppComponentBase implements OnInit {
         this._appAuthService.logout();
     }
     navigateToHome() {
-        if(this._router.url.includes('exam-viewer')){
-
-            this.location.back()
-        }else{
+        if (this._router.url.includes('exam-viewer')) {
+            this.location.back();
+        } else {
             this._router.navigate(['./'], {
                 relativeTo: this._activatedRoute,
             });
         }
-
     }
 }

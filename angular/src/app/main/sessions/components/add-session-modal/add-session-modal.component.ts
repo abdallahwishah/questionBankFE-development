@@ -61,7 +61,6 @@ export class AddSessionsModalComponent extends AppComponentBase implements OnIni
             .SelectorFilterByComponent$(this.Add_Session_dialog, 'configShow')
             .subscribe((configShow) => {
                 if (configShow?.data) {
-                    console.log(configShow?.data);
                     this.dataForEdit = configShow?.data;
                     this.status = configShow?.data?.session?.status;
                     this.minStartDate = new Date(configShow?.data?.session?.startDate);
@@ -69,6 +68,9 @@ export class AddSessionsModalComponent extends AppComponentBase implements OnIni
                         ...configShow?.data?.session,
                         startDate: new Date(configShow?.data?.session?.startDate),
                     });
+                    this.FormAddSession.get('isForAllSubjects').setValue(
+                        !this.FormAddSession.get('isForAllSubjects').value,
+                    );
                 } else {
                     this.status = null;
                     this.dataForEdit = null;
@@ -143,7 +145,6 @@ export class AddSessionsModalComponent extends AppComponentBase implements OnIni
     }
     uploadStudent(file) {
         this.fileStudent = file?.target?.files[0];
-        console.log('fileStudent', this.fileStudent);
         this._uploaderService.uploadFileOrFiles(this.fileStudent).subscribe((value: any) => {
             this.fileStudentToken = value?.result?.fileToken;
         });

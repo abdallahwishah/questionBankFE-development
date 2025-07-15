@@ -39,6 +39,8 @@ import { DropdownFieldComponent } from '@app/shared/components/fields/dropdown-f
 import { PaginatorModule } from 'primeng/paginator';
 import { ActionButtonComponent } from '@app/shared/components/action-button/action-button.component';
 import { BrowserAnimationsModule } from '@node_modules/@angular/platform-browser/animations';
+import { SafeTextPipe } from '@app/shared/pipes/safe-text.pipe';
+import { TooltipModule } from 'primeng/tooltip';
 
 @NgModule({
     imports: [
@@ -64,6 +66,8 @@ import { BrowserAnimationsModule } from '@node_modules/@angular/platform-browser
         DropdownFieldComponent,
         PaginatorModule,
         ActionButtonComponent,
+        TooltipModule,
+        SafeTextPipe,
     ],
 
     declarations: [
