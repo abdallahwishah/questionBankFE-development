@@ -30,3 +30,5 @@
     justify-content: center;
     cursor: pointer;
 }
+
+/* Use Bootstrap classes for camera functionality - no custom CSS needed */

@@ -4,7 +4,16 @@
             <h3 class="fw-bolder text-dark fs-h4 fs-h1-lg pb-1 custom-border">
                 {{ 'Details' | localize }}
             </h3>
-        </div>
+                          <!-- Camera Error -->
+                        <div *ngIf="cameraError" class="alert alert-warning mt-2">
+                            <i class="fa fa-exclamation-triangle me-2"></i>{{ cameraError }}
+                        </div>
+
+                        <!-- Loading State -->
+                        <div *ngIf="isCapturing" class="text-center mt-2 p-3 bg-success text-white rounded">
+                            <div class="spinner-border spinner-border-sm me-2 text-light" role="status"></div>
+                            <span>{{ l('ProcessingPhoto') || 'Processing photo...' }}</span>
+                        </div>v>
         <div class="row flex-wrap justify-content-around">
             <div class="col-5 mb-3 card p-3">
                 <label class="form-label fw-bold">{{ l('Name') }}</label>
@@ -170,32 +179,61 @@
                 <div class="col-6">
                     <div class="d-flex justify-content-between">
                         <label class="form-label m-0">{{ l('PersonalImage') }}</label>
-                        <div *ngIf="personalImage" class="circle" (click)="personalImageInput.click()">
-                            <i class="fa-solid fa-paperclip" style="color: #74c0fc"></i>
+                        <div *ngIf="personalImage && !showCameraPreview" class="circle" (click)="retakePhoto()">
+                            <i class="fa-solid fa-camera text-success"></i>
                         </div>
                     </div>
                     <div class="w-100">
-                        <div
-                            *ngIf="!personalImage"
-                            class="cursor-pointer card-image"
-                            (click)="personalImageInput.click()"
-                        >
-                            {{ l('UploadPersonalImageHere') }}
+                        <!-- Camera Preview -->
+                        <div *ngIf="showCameraPreview" class="border border-warning border-2 rounded p-3 bg-info-subtle text-center">
+                            <video #videoElement autoplay muted playsinline 
+                                   class="w-100 rounded" 
+                                   style="max-width: 300px; height: 225px; object-fit: cover; background: #000;"></video>
+                            <canvas #canvasElement style="display: none;"></canvas>
+                            <div class="d-flex gap-2 justify-content-center flex-wrap mt-3">
+                                <button type="button" class="btn btn-primary" (click)="capturePhoto()" [disabled]="!isCameraActive">
+                                    <i class="fa fa-camera me-1"></i>{{ l('CapturePhoto') || 'Capture Photo' }}
+                                </button>
+                                <button type="button" class="btn btn-secondary" (click)="stopCamera()">
+                                    <i class="fa fa-times me-1"></i>{{ l('Cancel') || 'Cancel' }}
+                                </button>
+                            </div>
                         </div>
-                        <img
-                            *ngIf="personalImage"
-                            src="{{ personalImage }}"
-                            class="img-thumbnail img-rounded image"
-                            (click)="personalImageInput.click()"
-                        />
-                        <input
-                            #personalImageInput
-                            type="file"
-                            id="uploadPersonalImageHere"
-                            class="hidden"
-                            accept="image/*"
-                            (change)="uploadPersonalImage($event)"
-                        />
+
+                        <!-- Captured Photo Preview -->
+                        <div *ngIf="personalImage && !showCameraPreview" class="text-center">
+                            <img src="{{ personalImage }}" 
+                                 class="img-thumbnail rounded border border-info border-3" 
+                                 style="width: 100%; height: 200px; object-fit: cover;" />
+                            <div class="d-flex gap-2 justify-content-center flex-wrap mt-3">
+                                <button type="button" class="btn btn-outline-success" (click)="confirmPhoto()" [disabled]="!registerStudent.selfiePhotoToken">
+                                    <i class="fa fa-check me-1"></i>{{ l('Confirm') || 'Confirm' }}
+                                </button>
+                                <button type="button" class="btn btn-outline-warning" (click)="retakePhoto()">
+                                    <i class="fa fa-camera me-1"></i>{{ l('Retake') || 'Retake' }}
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Start Camera Button -->
+                        <div *ngIf="!personalImage && !showCameraPreview" 
+                             class="btn btn-outline-danger w-100 p-4 d-flex flex-column align-items-center justify-content-center"
+                             style="height: 200px; border-style: dashed; border-width: 2px;"
+                             (click)="startCamera()">
+                            <i class="fa fa-camera text-success mb-2" style="font-size: 3rem;"></i>
+                            <span class="text-info fw-bold">{{ l('TakePersonalPhoto') || 'Take Personal Photo' }}</span>
+                        </div>
+
+                        <!-- Camera Error -->
+                        <div *ngIf="cameraError" class="alert alert-warning mt-2">
+                            <i class="fa fa-exclamation-triangle me-2"></i>{{ cameraError }}
+                        </div>
+
+                        <!-- Loading State -->
+                        <div *ngIf="isCapturing" class="text-center mt-2">
+                            <div class="spinner-border spinner-border-sm text-warning me-2" role="status"></div>
+                            {{ l('StartingCamera') || 'Starting camera...' }}
+                        </div>
                     </div>
                 </div>
             </div>
