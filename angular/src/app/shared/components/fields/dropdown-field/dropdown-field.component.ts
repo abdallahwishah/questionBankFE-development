@@ -60,7 +60,7 @@ export class DropdownFieldComponent extends Dropdown implements OnInit, ControlV
     @Input() optionsLocal: any;
     autoCompleteConfig: any;
     @Input() enm: any;
-    placeholderText;
+    @Input() placeholderText;
 
     @Output() onSelectionChange = new EventEmitter();
     @Output() onLoad: EventEmitter<any> = new EventEmitter();
@@ -177,7 +177,6 @@ export class DropdownFieldComponent extends Dropdown implements OnInit, ControlV
             }),
         );
         this.getOptions();
-        this.placeholderText = this.placeholder();
     }
     getFullDataForItemSelected(value: any) {
         let itemSelected = this.options?.find((item) => item[this.optionValue] == value);
