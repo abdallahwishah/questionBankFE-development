@@ -18,31 +18,31 @@ export class WebRTCService {
     // RTCPeerConnection configuration
     private configuration: RTCConfiguration = {
         iceServers: [
-              {
-            urls: "stun:stun.relay.metered.ca:80"
-        },
-        {
-            urls: "turn:global.relay.metered.ca:80",
-            username: "c8545610f30f62db8eb2ea5b",
-            credential: "uHKRtr3VctMDu0VY"
-        },
-        {
-            urls: "turn:global.relay.metered.ca:80?transport=tcp",
-            username: "c8545610f30f62db8eb2ea5b",
-            credential: "uHKRtr3VctMDu0VY"
-        },
-        {
-            urls: "turn:global.relay.metered.ca:443",
-            username: "c8545610f30f62db8eb2ea5b",
-            credential: "uHKRtr3VctMDu0VY"
-        },
-        {
-            urls: "turns:global.relay.metered.ca:443?transport=tcp",
-            username: "c8545610f30f62db8eb2ea5b",
-            credential: "uHKRtr3VctMDu0VY"
-        }
-
+            {
+                urls: "stun:stun.relay.metered.ca:80",
+            },
+            {
+                urls: "turn:global.relay.metered.ca:80",
+                username: "d3df93543924c5169e9fffab",
+                credential: "+hiJTLWutQUkyzFK",
+            },
+            {
+                urls: "turn:global.relay.metered.ca:80?transport=tcp",
+                username: "d3df93543924c5169e9fffab",
+                credential: "+hiJTLWutQUkyzFK",
+            },
+            {
+                urls: "turn:global.relay.metered.ca:443",
+                username: "d3df93543924c5169e9fffab",
+                credential: "+hiJTLWutQUkyzFK",
+            },
+            {
+                urls: "turns:global.relay.metered.ca:443?transport=tcp",
+                username: "d3df93543924c5169e9fffab",
+                credential: "+hiJTLWutQUkyzFK",
+            },
         ],
+
         iceCandidatePoolSize: 10,
         // Add this to make connections more reliable
         iceTransportPolicy: 'all',
@@ -118,14 +118,14 @@ export class WebRTCService {
 
             // Don't create a new peer connection if one already exists
             if (this.peerConnection && this.peerConnection.connectionState === 'connected') {
-              console.log('Peer connection already exists and is connected, skipping setup');
-              return;
+                console.log('Peer connection already exists and is connected, skipping setup');
+                return;
             }
 
             this.setupPeerConnection().then(() => {
-              this.createAndSendOffer(peerId);
+                this.createAndSendOffer(peerId);
             });
-          });
+        });
         this.signalRService.receiveVideoOffer.subscribe(async ({ senderId, description }) => {
             this.currentPeerId = senderId;
             if (!this.peerConnection) {

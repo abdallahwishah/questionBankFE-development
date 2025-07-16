@@ -186,8 +186,8 @@
                     <div class="w-100">
                         <!-- Camera Preview -->
                         <div *ngIf="showCameraPreview" class="border border-warning border-2 rounded p-3 bg-info-subtle text-center">
-                            <video #videoElement autoplay muted playsinline 
-                                   class="w-100 rounded" 
+                            <video #videoElement autoplay muted playsinline
+                                   class="w-100 rounded"
                                    style="max-width: 300px; height: 225px; object-fit: cover; background: #000;"></video>
                             <canvas #canvasElement style="display: none;"></canvas>
                             <div class="d-flex gap-2 justify-content-center flex-wrap mt-3">
@@ -202,8 +202,8 @@
 
                         <!-- Captured Photo Preview -->
                         <div *ngIf="personalImage && !showCameraPreview" class="text-center">
-                            <img src="{{ personalImage }}" 
-                                 class="img-thumbnail rounded border border-info border-3" 
+                            <img src="{{ personalImage }}"
+                                 class="img-thumbnail rounded border border-info border-3"
                                  style="width: 100%; height: 200px; object-fit: cover;" />
                             <div class="d-flex gap-2 justify-content-center flex-wrap mt-3">
                                 <button type="button" class="btn btn-outline-success" (click)="confirmPhoto()" [disabled]="!registerStudent.selfiePhotoToken">
@@ -216,7 +216,7 @@
                         </div>
 
                         <!-- Start Camera Button -->
-                        <div *ngIf="!personalImage && !showCameraPreview" 
+                        <div *ngIf="!personalImage && !showCameraPreview"
                              class="btn btn-outline-danger w-100 p-4 d-flex flex-column align-items-center justify-content-center"
                              style="height: 200px; border-style: dashed; border-width: 2px;"
                              (click)="startCamera()">

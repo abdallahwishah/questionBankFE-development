@@ -22,7 +22,7 @@ import { register } from 'module';
 export class UploadInfoComponent extends AppComponentBase implements OnInit, OnDestroy {
     @ViewChild('videoElement', { static: false }) videoElement: ElementRef<HTMLVideoElement>;
     @ViewChild('canvasElement', { static: false }) canvasElement: ElementRef<HTMLCanvasElement>;
-    
+
     studentInfo = new GetStudentInfoOutput();
     registerStudent = new RegisterStudentDto();
     showErrorMessage: boolean;
@@ -33,7 +33,7 @@ export class UploadInfoComponent extends AppComponentBase implements OnInit, OnD
     GenderEnum = GenderEnum;
     passwordComplexitySetting: PasswordComplexitySetting = new PasswordComplexitySetting();
     passwordComplexityInfo = '';
-    
+
     // Camera related properties
     mediaStream: MediaStream | null = null;
     isCameraActive = false;
@@ -41,7 +41,7 @@ export class UploadInfoComponent extends AppComponentBase implements OnInit, OnD
     capturedPhoto: string | null = null;
     isCapturing = false;
     cameraError = '';
-    
+
     passwordErrors = {
         requireDigit: false,
         requireLowercase: false,
@@ -87,31 +87,31 @@ export class UploadInfoComponent extends AppComponentBase implements OnInit, OnD
     // --------------------------
     // Camera Methods
     // --------------------------
-    
+
     async startCamera() {
         try {
             this.cameraError = '';
             this.isCapturing = true;
-            
+
             // Request camera access
             this.mediaStream = await navigator.mediaDevices.getUserMedia({
-                video: { 
-                    width: 640, 
+                video: {
+                    width: 640,
                     height: 480,
                     facingMode: 'user' // Front camera
                 }
             });
-            
+
             this.isCameraActive = true;
             this.showCameraPreview = true;
-            
+
             // Wait for view to render
             setTimeout(() => {
                 if (this.videoElement && this.videoElement.nativeElement) {
                     this.videoElement.nativeElement.srcObject = this.mediaStream;
                 }
             }, 100);
-            
+
         } catch (error) {
             console.error('Camera error:', error);
             this.cameraError = this.getCameraErrorMessage(error);
@@ -121,7 +121,7 @@ export class UploadInfoComponent extends AppComponentBase implements OnInit, OnD
             this.isCapturing = false;
         }
     }
-    
+
     stopCamera() {
         if (this.mediaStream) {
             this.mediaStream.getTracks().forEach(track => track.stop());
@@ -130,56 +130,56 @@ export class UploadInfoComponent extends AppComponentBase implements OnInit, OnD
         this.isCameraActive = false;
         this.showCameraPreview = false;
     }
-    
+
     capturePhoto() {
         if (!this.videoElement || !this.canvasElement) {
             this.notify.error('Camera not ready');
             return;
         }
-        
+
         const video = this.videoElement.nativeElement;
         const canvas = this.canvasElement.nativeElement;
         const context = canvas.getContext('2d');
-        
+
         // Set canvas dimensions to match video
         canvas.width = video.videoWidth || 640;
         canvas.height = video.videoHeight || 480;
-        
+
         // Draw current frame to canvas
         context?.drawImage(video, 0, 0, canvas.width, canvas.height);
-        
+
         // Convert to data URL
         this.capturedPhoto = canvas.toDataURL('image/jpeg', 0.8);
         this.personalImage = this.capturedPhoto;
-        
+
         // Convert to blob and upload
         canvas.toBlob((blob) => {
             if (blob) {
                 this.uploadCapturedPhoto(blob);
             }
         }, 'image/jpeg', 0.8);
-        
+
         // Stop camera after capture
         this.stopCamera();
     }
-    
+
     retakePhoto() {
         this.capturedPhoto = null;
         this.personalImage = '';
         this.registerStudent.selfiePhotoToken = null;
         this.startCamera();
     }
-    
+
     confirmPhoto() {
         if (this.capturedPhoto && this.registerStudent.selfiePhotoToken) {
             this.stopCamera();
             this.notify.success('Photo confirmed successfully');
         }
     }
-    
+
     private uploadCapturedPhoto(blob: Blob) {
         const file = new File([blob], 'selfie.jpg', { type: 'image/jpeg' });
-        
+
         this._uploaderService.uploadFileOrFiles(file).subscribe({
             next: (value: any) => {
                 this.registerStudent.selfiePhotoToken = value?.result?.fileToken;
@@ -191,7 +191,7 @@ export class UploadInfoComponent extends AppComponentBase implements OnInit, OnD
             }
         });
     }
-    
+
     private getCameraErrorMessage(error: any): string {
         if (error.name === 'NotFoundError') {
             return 'No camera found. Please use a device with a camera.';
