@@ -41,6 +41,7 @@ export class AddQuestionComponent extends AppComponentBase implements OnInit {
     studyLevelsValue: any[] = [];
     studySubject: any;
     studyUnit: any;
+    saving: boolean;
 
     constructor(
         private _injector: Injector,
@@ -56,6 +57,7 @@ export class AddQuestionComponent extends AppComponentBase implements OnInit {
     id;
     ngOnInit(): void {
         this.loading = true;
+        this.saving = false;
 
         // Load route params once here
         this.id = this._activatedRoute.snapshot.params.id;
@@ -140,6 +142,7 @@ export class AddQuestionComponent extends AppComponentBase implements OnInit {
         this._createOrEditQuestionDto.payload.subQuestions.splice(index, 1);
     }
     Save(): void {
+        this.saving = true;
         this._createOrEditQuestionDto.studyLevelIds = this.studyLevelsValue.map((x) => x?.studyLevel?.id);
         this._createOrEditQuestionDto.studySubjectId = this.studySubject.studySubject.id;
         this._createOrEditQuestionDto.subjectUnitId = this.studyUnit.subjectUnit.id;
@@ -152,6 +155,10 @@ export class AddQuestionComponent extends AppComponentBase implements OnInit {
             next: () => {
                 this.notify.success(this.l('SavedSuccessfully'));
                 this._router.navigate(['app/main/question-bank']);
+                this.saving = false;
+            },
+            error: () => {
+                this.saving = false;
             },
         });
     }
@@ -169,6 +176,6 @@ export class AddQuestionComponent extends AppComponentBase implements OnInit {
         this.studyLevelsValue = [];
         this.studySubject = null;
         this.studyUnit = null;
-
+        this.saving = false;
     }
 }

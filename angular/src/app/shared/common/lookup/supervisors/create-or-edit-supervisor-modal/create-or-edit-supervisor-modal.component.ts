@@ -191,5 +191,6 @@ export class CreateOrEditSupervisorModalComponent extends AppComponentBase imple
 
     close() {
         this.modal.hide();
+        this.saving = false;
     }
 }

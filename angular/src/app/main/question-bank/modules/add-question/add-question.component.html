@@ -85,8 +85,8 @@
                                     customParams: {
                                         Sorting: '',
                                         SkipCount: 0,
-                                        MaxResultCount: 10
-                                    }
+                                        MaxResultCount: 10,
+                                    },
                                 }"
                             ></app-auto-complete-feild>
                         </div>
@@ -103,8 +103,8 @@
                                         Sorting: '',
                                         SkipCount: 0,
                                         MaxResultCount: 10,
-                                        StudyLeveldsFilter: studyLevelIds
-                                    }
+                                        StudyLeveldsFilter: studyLevelIds,
+                                    },
                                 }"
                             ></app-auto-complete-feild>
                         </div>
@@ -122,8 +122,8 @@
                                         studySubjectIdFilter: studySubject?.studySubject?.id,
                                         Sorting: '',
                                         SkipCount: 0,
-                                        MaxResultCount: 10
-                                    }
+                                        MaxResultCount: 10,
+                                    },
                                 }"
                             ></app-auto-complete-feild>
                         </div>
@@ -371,11 +371,11 @@
                                 {{ 'AddAnotherQuestion' | localize }}
                             </button> -->
                             <div>
-                                <button class="btn btn-primary" (click)="Save()">
+                                <button class="btn btn-primary" (click)="Save()" [buttonBusy]="saving">
                                     {{ 'Save' | localize }}
                                 </button>
                                 <button *ngIf="!id" class="btn btn-outline" (click)="reset()">
-                                     {{ 'Reset' | localize }}
+                                    {{ 'Reset' | localize }}
                                 </button>
                             </div>
                         </div>

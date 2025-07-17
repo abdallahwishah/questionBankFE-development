@@ -21,7 +21,8 @@ export class ExtendTimeSessionComponent extends AppComponentBase implements OnIn
     @Input() schoolClassId;
     @Input() schoolId;
     @Input() studentId;
-@Output() extendTimeSession = new EventEmitter();
+    @Output() extendTimeSession = new EventEmitter();
+    loading: boolean;
     constructor(
         private Injector: Injector,
         private _sessionServiceProxy: SessionsServiceProxy,
@@ -32,23 +33,31 @@ export class ExtendTimeSessionComponent extends AppComponentBase implements OnIn
     _extendSessionTimeDto = new ExtendSessionTimeDto();
     extendTimeSession_dialog = UniqueNameComponents.extendTimeSession_dialog;
 
-    ngOnInit() {}
+    ngOnInit() {
+        this.loading = false;
+    }
     save() {
+        this.loading = true;
         this._extendSessionTimeDto.sessionId = this.sessionId || undefined;
         this._extendSessionTimeDto.schoolClassId = this.schoolClassId || undefined;
         this._extendSessionTimeDto.schoolId = this.schoolId || undefined;
         this._extendSessionTimeDto.afterMinutes = this._extendSessionTimeDto.afterMinutes || undefined;
         this._extendSessionTimeDto.studentId = this.studentId || undefined;
-        this._sessionServiceProxy.extendSessionTime(this._extendSessionTimeDto).subscribe((value) => {
-            this.notify.success('Session Time Extended Successfully');
-            this.Close();
-            this.extendTimeSession.emit(value);
-            this._extendSessionTimeDto = new ExtendSessionTimeDto();
+        this._sessionServiceProxy.extendSessionTime(this._extendSessionTimeDto).subscribe({
+            next: (value) => {
+                this.notify.success('Session Time Extended Successfully');
+                this.Close();
+                this.extendTimeSession.emit(value);
+                this._extendSessionTimeDto = new ExtendSessionTimeDto();
+            },
+            error: () => {
+                this.loading = false;
+            },
         });
     }
     Close() {
         this._dialogSharedService.hideDialog(this.extendTimeSession_dialog);
         this._extendSessionTimeDto = new ExtendSessionTimeDto();
-
+        this.loading = false;
     }
 }

@@ -7,15 +7,15 @@
                         [label]="l('StudentName')"
                         field="fullName"
                         [(ngModel)]="StudentSelected"
-                         [ConfigCustomSearch]="{
+                        [ConfigCustomSearch]="{
                             api: '/api/services/app/students/GetAll',
                             keySearch: 'filter',
                             customParams: {
                                 Sorting: '',
                                 SkipCount: 0,
                                 MaxResultCount: 10,
-                                sessionIdFilter:sessionId
-                            }
+                                sessionIdFilter: sessionId,
+                            },
                         }"
                     ></app-auto-complete-feild>
                 </div>
@@ -23,9 +23,9 @@
         </ng-container>
     </ng-container>
     <ng-container footerDialog>
-        <button type="button" class="btn btn-primary blue" (click)="Save()">
+        <button type="button" class="btn btn-primary blue" (click)="Save()" [buttonBusy]="loading">
             <span>{{ l('Save') }}</span>
         </button>
-        <button class="btn btn-outline"(click)="Close()">{{ l('Cancel') }}</button>
+        <button class="btn btn-outline" (click)="Close()">{{ l('Cancel') }}</button>
     </ng-container>
 </app-dialog-shared>

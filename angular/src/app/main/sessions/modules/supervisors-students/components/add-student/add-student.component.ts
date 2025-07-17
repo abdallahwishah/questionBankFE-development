@@ -18,6 +18,7 @@ export class AddStudentComponent extends AppComponentBase implements OnInit {
     @Input() schoolClassId;
     @Input() schoolId;
     @Input() studentId;
+    loading: boolean;
 
     constructor(
         private Injector: Injector,
@@ -32,6 +33,7 @@ export class AddStudentComponent extends AppComponentBase implements OnInit {
         console.log('this.StudentSelected :', this.StudentSelected);
     }
     Save() {
+        this.loading = true;
         this._examAttemptsServiceProxy
             .addStudent(
                 new MoveStudentDto({
@@ -41,12 +43,18 @@ export class AddStudentComponent extends AppComponentBase implements OnInit {
                     studentId: [this.StudentSelected?.student?.id],
                 }),
             )
-            .subscribe((res) => {
-                this.notify.success('Student Added Successfully');
-                this.Close();
+            .subscribe({
+                next: () => {
+                    this.notify.success('Student Added Successfully');
+                    this.Close();
+                },
+                error: () => {
+                    this.loading = false;
+                },
             });
     }
     Close() {
+        this.loading = false;
         this._dialogSharedService.hideDialog(this.Add_Student_dialog);
     }
 }

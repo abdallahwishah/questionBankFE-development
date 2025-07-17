@@ -33,7 +33,7 @@
         </ng-container>
     </ng-container>
     <ng-container footerDialog>
-        <button type="submit" class="btn btn-primary blue" (click)="Save()">
+        <button type="submit" class="btn btn-primary blue" (click)="Save()" [buttonBusy]="saving">
             <!--  [buttonBusy]="saving"
         [busyText]="l('Save')" -->
             <span>{{ l('FileEntry') }}</span>

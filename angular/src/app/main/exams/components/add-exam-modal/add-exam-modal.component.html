@@ -46,8 +46,8 @@
         </ng-container>
     </ng-container>
     <ng-container footerDialog>
-        <button type="submit" class="btn btn-primary blue" (click)="Save()">
-            <!--  [buttonBusy]="saving"
+        <button type="submit" class="btn btn-primary blue" (click)="Save()"  [buttonBusy]="saving">
+            <!--
         [busyText]="l('Save')" -->
             <span>{{ l('Save') }}</span>
         </button>

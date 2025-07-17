@@ -1048,7 +1048,7 @@ span.cke_button_icon.cke_button__about_icon {
 
 /* Level-based student section (third card) */
 .student-level-section .boxes {
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
 }
 
 .student-level-section .box {

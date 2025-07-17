@@ -27,6 +27,7 @@ export class MoveStudentComponent extends AppComponentBase implements OnInit {
     sessionSupervisor: any;
     @Output() moveStudent = new EventEmitter();
     governorateId: any;
+    loading: boolean;
     constructor(
         private Injector: Injector,
         private _examAttemptsServiceProxy: ExamAttemptsServiceProxy,
@@ -38,6 +39,7 @@ export class MoveStudentComponent extends AppComponentBase implements OnInit {
     }
 
     ngOnInit() {
+        this.loading = false;
         this.subscription = this._dialogSharedService
             .SelectorFilterByComponent$(this.Move_Student_dialog, 'configShow')
             .subscribe((configShow) => {
@@ -52,6 +54,7 @@ export class MoveStudentComponent extends AppComponentBase implements OnInit {
     }
 
     Save() {
+        this.loading = true;
         if (this.sessionSupervisor) {
             this._SessionSupervisorsServiceProxy
                 .moveSupervisors(
@@ -62,15 +65,20 @@ export class MoveStudentComponent extends AppComponentBase implements OnInit {
                         supervisorIds: [this.sessionSupervisor],
                     }),
                 )
-                .subscribe((res) => {
-                    this.SessionSelected = undefined;
-                    this.schoolClassId = undefined;
-                    this.schoolId = undefined;
-                    this.studentId = undefined;
-                    this.sessionSupervisor = undefined;
-                    this.moveStudent.emit();
-                    this.notify.success('  Moved Successfully');
-                    this.Close();
+                .subscribe({
+                    next: (res) => {
+                        this.SessionSelected = undefined;
+                        this.schoolClassId = undefined;
+                        this.schoolId = undefined;
+                        this.studentId = undefined;
+                        this.sessionSupervisor = undefined;
+                        this.moveStudent.emit();
+                        this.notify.success('  Moved Successfully');
+                        this.Close();
+                    },
+                    error: () => {
+                        this.loading = false;
+                    },
                 });
         } else {
             this._examAttemptsServiceProxy
@@ -82,21 +90,27 @@ export class MoveStudentComponent extends AppComponentBase implements OnInit {
                         studentId: this.studentId?.length ? this.studentId : [this.studentId],
                     }),
                 )
-                .subscribe((res) => {
-                    this.SessionSelected = undefined;
-                    this.schoolClassId = undefined;
-                    this.schoolId = undefined;
-                    this.studentId = undefined;
-                    this.sessionSupervisor = undefined;
-                    this.moveStudent.emit();
+                .subscribe({
+                    next: (res) => {
+                        this.SessionSelected = undefined;
+                        this.schoolClassId = undefined;
+                        this.schoolId = undefined;
+                        this.studentId = undefined;
+                        this.sessionSupervisor = undefined;
+                        this.moveStudent.emit();
 
-                    this.notify.success('Student Added Successfully');
-                    this.Close();
+                        this.notify.success('Student Added Successfully');
+                        this.Close();
+                    },
+                    error: () => {
+                        this.loading = false;
+                    },
                 });
         }
     }
     Close() {
         this._dialogSharedService.hideDialog(this.Move_Student_dialog);
+        this.loading = false;
     }
     getSchoolClassForViewDtos: any;
     get() {

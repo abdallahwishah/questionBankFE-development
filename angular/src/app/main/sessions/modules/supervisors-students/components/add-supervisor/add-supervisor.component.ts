@@ -30,6 +30,8 @@ export class AddSupervisorComponent extends AppComponentBase implements OnInit {
     roles;
     Role: any;
     @Output() onSupervisorAdded = new EventEmitter<any>();
+    loading: boolean;
+
     constructor(
         private Injector: Injector,
         private SupervisorsServiceProxy: SupervisorsServiceProxy,
@@ -40,8 +42,11 @@ export class AddSupervisorComponent extends AppComponentBase implements OnInit {
         super(Injector);
     }
 
-    ngOnInit() {}
+    ngOnInit() {
+        this.loading = false;
+    }
     Save() {
+        this.loading = true;
         this._SessionSupervisorsServiceProxy
             .createOrEdit(
                 new CreateOrEditSessionSupervisorDto({
@@ -52,15 +57,21 @@ export class AddSupervisorComponent extends AppComponentBase implements OnInit {
                     role: this.Role,
                 }),
             )
-            .subscribe((res) => {
-                this.SupervisoSelected = undefined;
-                this.notify.success('Supervisor Added Successfully');
-                this.onSupervisorAdded.emit();
-                this.Close();
+            .subscribe({
+                next: () => {
+                    this.SupervisoSelected = undefined;
+                    this.notify.success('Supervisor Added Successfully');
+                    this.onSupervisorAdded.emit();
+                    this.Close();
+                },
+                error: () => {
+                    this.loading = false;
+                },
             });
     }
     Close() {
         this._dialogSharedService.hideDialog(this.Add_Supervisor_dialog);
+        this.loading = false;
     }
     clear() {
         this.SupervisoSelected = null;

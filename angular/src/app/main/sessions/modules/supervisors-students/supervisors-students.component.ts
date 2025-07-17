@@ -281,6 +281,9 @@ export class SupervisorsStudentsComponent extends AppComponentBase implements On
         this.StudentAddressFilter = undefined;
         this.YearFilter = undefined;
         this.cycleFilter = undefined;
+        this.hasAttemptedFilter = undefined;
+        this.doesNotAnswerFilter = undefined;
+        this.hasFinishedFilter = undefined;
         this.getListAttempts();
     }
     goToClasses() {

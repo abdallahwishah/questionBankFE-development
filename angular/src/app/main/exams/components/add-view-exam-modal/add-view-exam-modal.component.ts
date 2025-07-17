@@ -46,6 +46,8 @@ export class AddViewExamModalComponent extends AppComponentBase implements OnIni
     QuestionTypeId = undefined;
     filter: any;
     examId: any;
+    saving: boolean;
+
     constructor(
         injector: Injector,
         private _DialogSharedService: DialogSharedService,
@@ -57,6 +59,7 @@ export class AddViewExamModalComponent extends AppComponentBase implements OnIni
     }
     @Input() examSectionId: any;
     ngOnInit() {
+        this.saving = false;
         this._ActivatedRoute.paramMap.subscribe((params) => {
             this.examId = Number(params?.get('id'));
         });
@@ -99,6 +102,7 @@ export class AddViewExamModalComponent extends AppComponentBase implements OnIni
     }
 
     Save() {
+        this.saving = true;
         this._examsServiceProxy
             .addExamQuestion(
                 new CreateExamQuestionDto({
@@ -107,14 +111,20 @@ export class AddViewExamModalComponent extends AppComponentBase implements OnIni
                     isManualInerstion: false,
                 }),
             )
-            .subscribe(() => {
-                this.notify.info(this.l('SavedSuccessfully'));
-                this.selectedQuestion=null
-                this.closeDialog();
+            .subscribe({
+                next: () => {
+                    this.notify.info(this.l('SavedSuccessfully'));
+                    this.selectedQuestion = null;
+                    this.closeDialog();
+                },
+                error: () => {
+                    this.saving = false;
+                },
             });
     }
 
     closeDialog() {
         this._DialogSharedService.hideDialog(this.Add_View_exam_dialog);
+        this.saving = false;
     }
 }

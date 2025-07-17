@@ -17,8 +17,8 @@
                             customParams: {
                                 Sorting: '',
                                 SkipCount: 0,
-                                MaxResultCount: 10
-                            }
+                                MaxResultCount: 10,
+                            },
                         }"
                     ></app-auto-complete-feild>
                 </div>
@@ -36,8 +36,8 @@
                                 Sorting: '',
                                 SkipCount: 0,
                                 MaxResultCount: 10,
-                                governorateIdFilter: governorateId?.governorate?.id
-                            }
+                                governorateIdFilter: governorateId?.governorate?.id,
+                            },
                         }"
                     ></app-auto-complete-feild>
                 </div>
@@ -55,7 +55,13 @@
         </ng-container>
     </ng-container>
     <ng-container footerDialog>
-        <button type="button" class="btn btn-primary blue" (click)="Save()" [disabled]="!schoolId || !schoolClassId">
+        <button
+            type="button"
+            class="btn btn-primary blue"
+            (click)="Save()"
+            [disabled]="!schoolId || !schoolClassId"
+            [buttonBusy]="loading"
+        >
             <span>{{ l('Save') }}</span>
         </button>
         <button class="btn btn-outline" (click)="Close()">{{ l('Cancel') }}</button>

@@ -15,8 +15,8 @@
                                 Sorting: '',
                                 SkipCount: 0,
                                 MaxResultCount: 10,
-                                execuldedIdFilter: execuldedIdFilter
-                            }
+                                execuldedIdFilter: execuldedIdFilter,
+                            },
                         }"
                     ></app-auto-complete-feild>
                 </div>
@@ -31,7 +31,7 @@
         </ng-container>
     </ng-container>
     <ng-container footerDialog>
-        <button type="button" class="btn btn-primary blue" (click)="Save()">
+        <button type="button" class="btn btn-primary blue" (click)="Save()" [buttonBusy]="loading">
             <span>{{ l('Save') }}</span>
         </button>
         <button class="btn btn-outline" (click)="Close()">{{ l('Cancel') }}</button>

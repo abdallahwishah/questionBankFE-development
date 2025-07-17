@@ -14,15 +14,21 @@
                         customParams: {
                             Sorting: '',
                             SkipCount: 0,
-                            MaxResultCount: 10
-                        }
+                            MaxResultCount: 10,
+                        },
                     }"
                 ></app-auto-complete-feild>
             </div>
         </div>
     </ng-container>
     <ng-container footerDialog>
-        <button type="button" [buttonBusy]="loading" class="btn btn-primary blue" (click)="Save()">
+        <button
+            type="button"
+            [buttonBusy]="loading"
+            class="btn btn-primary blue"
+            (click)="Save()"
+            [buttonBusy]="loading"
+        >
             <span>{{ l('Export') }}</span>
         </button>
         <button class="btn btn-outline" (click)="closeDialog()">{{ l('Cancel') }}</button>

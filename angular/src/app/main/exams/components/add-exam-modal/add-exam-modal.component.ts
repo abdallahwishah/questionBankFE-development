@@ -8,11 +8,20 @@ import { ExamTemplatesServiceProxy } from '@shared/service-proxies/service-proxi
 import { SkeletonComponent } from '../../../../shared/components/skeleton/skeleton.component';
 import { FormsModule } from '@node_modules/@angular/forms';
 import { AutoCompleteFeildModule } from '@app/shared/components/auto-complete-feild/auto-complete-feild.module';
+import { AdminSharedModule } from '@app/admin/shared/admin-shared.module';
+import { AppSharedModule } from '@app/shared/app-shared.module';
 
 @Component({
     selector: 'app-add-exam-modal',
     standalone: true,
-    imports: [AutoCompleteFeildModule, DialogSharedModule, SkeletonComponent, FormsModule],
+    imports: [
+        AutoCompleteFeildModule,
+        DialogSharedModule,
+        SkeletonComponent,
+        FormsModule,
+        AdminSharedModule,
+        AppSharedModule,
+    ],
     templateUrl: './add-exam-modal.component.html',
     styleUrl: './add-exam-modal.component.css',
 })
@@ -29,6 +38,7 @@ export class AddExamModalComponent extends AppComponentBase implements OnInit {
         super(injector);
     }
     ngOnInit(): void {
+        this.saving = false;
         this._examTemplatesServiceProxy
             .getAll(undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined)
             .subscribe((result: any) => {
@@ -40,13 +50,20 @@ export class AddExamModalComponent extends AppComponentBase implements OnInit {
     }
 
     Save() {
-        this._examTemplatesServiceProxy.generateExamByTemplate(this.templateId?.examTemplate?.id).subscribe(() => {
-            this.notify.info(this.l('SavedSuccessfully'));
-            this.closeDialog();
+        this.saving = true;
+        this._examTemplatesServiceProxy.generateExamByTemplate(this.templateId?.examTemplate?.id).subscribe({
+            next: () => {
+                this.notify.info(this.l('SavedSuccessfully'));
+                this.closeDialog();
+            },
+            error: () => {
+                this.saving = false;
+            },
         });
     }
 
     closeDialog() {
         this._DialogSharedService.hideDialog(this.Add_Test_dialog);
+        this.saving = false;
     }
 }

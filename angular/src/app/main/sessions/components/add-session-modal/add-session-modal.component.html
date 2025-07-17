@@ -271,7 +271,17 @@
         <input #uploadFileStudent (change)="uploadStudent($event)" accept=".xlsx" type="file" class="d-none" />
     </ng-container>
     <ng-container footerDialog>
-        <button type="button" class="btn btn-primary blue" (click)="Save()" [buttonBusy]="saving">
+        <button
+            type="button"
+            class="btn btn-primary blue"
+            (click)="Save()"
+            [buttonBusy]="saving"
+            [disabled]="
+                !FormAddSession.valid ||
+                (!FormAddSession.get('id')?.value &&
+                    (!fileSuperToken || (FormAddSession.get('isStudentsFromExcel')?.value && !fileStudentToken)))
+            "
+        >
             <span>{{ l('Save') }}</span>
         </button>
         <button class="btn btn-outline" (click)="closeDialog()">{{ l('Cancel') }}</button>

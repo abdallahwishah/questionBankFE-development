@@ -16,6 +16,7 @@ export class ExportByLevelComponent extends AppComponentBase {
     studyLevel;
     subscription = new Subscription();
     sessionId;
+    loading = false;
     constructor(
         injector: Injector,
         private _DialogSharedService: DialogSharedService,
@@ -26,6 +27,7 @@ export class ExportByLevelComponent extends AppComponentBase {
     }
 
     ngOnInit() {
+        this.loading = false;
         this.subscription = this._DialogSharedService
             .SelectorFilterByComponent$(this.Export_By_Level_dialog, 'configShow')
             .subscribe((configShow) => {
@@ -33,7 +35,7 @@ export class ExportByLevelComponent extends AppComponentBase {
                 this.sessionId = configShow?.data?.sessionId;
             });
     }
-    loading = false;
+
     Save() {
         this.loading = true;
         this._examAttemptsServiceProxy
@@ -61,10 +63,15 @@ export class ExportByLevelComponent extends AppComponentBase {
                 undefined,
                 undefined,
             )
-            .subscribe((val) => {
-                this._fileDownloadService.downloadTempFile(val);
-                this.loading = false;
-                this.closeDialog();
+            .subscribe({
+                next: (val) => {
+                    this._fileDownloadService.downloadTempFile(val);
+                    this.loading = false;
+                    this.closeDialog();
+                },
+                error: () => {
+                    this.loading = false;
+                },
             });
     }
     closeDialog() {

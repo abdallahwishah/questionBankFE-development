@@ -45,22 +45,29 @@ export class AddFileModalComponent extends AppComponentBase implements OnInit {
         });
     }
     Save() {
+        this.saving = true;
         this._examsServiceProxy
             .importQuestionsFromExcel(
                 new ImportQuestionInput({
                     fileToken: this.fileStudentToken,
                 }),
             )
-            .subscribe((value) => {
-                // clear
-                this.uploadedFile = undefined;
-                this.fileStudentToken = undefined;
+            .subscribe({
+                next: (value) => {
+                    // clear
+                    this.uploadedFile = undefined;
+                    this.fileStudentToken = undefined;
 
-                this.closeDialog();
+                    this.closeDialog();
+                },
+                error: () => {
+                    this.saving = false;
+                },
             });
     }
 
     closeDialog() {
         this._DialogSharedService.hideDialog(this.Add_File_dialog);
+        this.saving = false;
     }
 }
