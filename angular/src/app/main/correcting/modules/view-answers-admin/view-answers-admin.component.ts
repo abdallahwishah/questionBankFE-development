@@ -1,30 +1,21 @@
 import { Component, Injector, OnInit } from '@angular/core';
-import { AppSharedModule } from '@app/shared/app-shared.module';
-import { DialogSharedService } from '@app/shared/components/dialog-shared/dialog-shared.service';
-import { UniqueNameComponents } from '@app/shared/Models/UniqueNameComponents';
+
 import { CommonModule, Location } from '@node_modules/@angular/common';
 import { ActivatedRoute } from '@node_modules/@angular/router';
 import { AppComponentBase } from '@shared/common/app-component-base';
 import {
-    GetExamForViewDto,
     QuestionTypeEnum,
-    ExamsServiceProxy,
-    ExamQuestionDto,
-    OrderMode,
-    ReOrderExamQuestionDto,
-    StudentsServiceProxy,
-    SessionsServiceProxy,
     ExamAttemptsServiceProxy,
     SubQuestionAnswer,
     UpdateScoreReqDto,
 } from '@shared/service-proxies/service-proxies';
 
 @Component({
-    selector: 'app-view-answers',
-    templateUrl: './view-answers.component.html',
-    styleUrls: ['./view-answers.component.css'],
+    selector: 'app-view-answers-admin',
+    templateUrl: './view-answers-admin.component.html',
+    styleUrls: ['./view-answers-admin.component.css'],
 })
-export class ViewAnswersComponent extends AppComponentBase implements OnInit {
+export class ViewAnswersAdminComponent extends AppComponentBase implements OnInit {
     examForView: any;
     questionsType: any[] = [];
 
@@ -154,13 +145,15 @@ export class ViewAnswersComponent extends AppComponentBase implements OnInit {
         this._examAttemptsServiceProxy
             .updateScoreAll(
                 this.examForView?.map((value) => {
+
                     return new UpdateScoreReqDto({
                         id: undefined,
                         score: value.score,
                         questionId: value?.question?.question?.id,
                         examAttemptId: this.id,
                         subId: undefined,
-                        optionId:undefined
+                        optionId: value.question?.question?.singleChoiceAnswer
+
                     });
                 }),
             )

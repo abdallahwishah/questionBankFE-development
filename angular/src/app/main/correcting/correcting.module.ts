@@ -24,6 +24,11 @@ import { RouterModule } from '@node_modules/@angular/router';
                         path: 'view/:id',
                         loadChildren: () =>
                             import('./modules/view-answers/view-answers.module').then((m) => m.ViewAnswersModule),
+                    },
+                     {
+                        path: 'viewAdmin/:id',
+                        loadChildren: () =>
+                            import('./modules/view-answers-admin/view-answers-admin.module').then((m) => m.ViewAnswersAdminModule),
                     }
 
                 ],
