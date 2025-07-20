@@ -145,15 +145,13 @@ export class ViewAnswersAdminComponent extends AppComponentBase implements OnIni
         this._examAttemptsServiceProxy
             .updateScoreAll(
                 this.examForView?.map((value) => {
-
                     return new UpdateScoreReqDto({
                         id: undefined,
                         score: value.score,
                         questionId: value?.question?.question?.id,
                         examAttemptId: this.id,
                         subId: undefined,
-                        optionId: value.question?.question?.singleChoiceAnswer
-
+                        optionId: value.question?.singleChoiceAnswer,
                     });
                 }),
             )
