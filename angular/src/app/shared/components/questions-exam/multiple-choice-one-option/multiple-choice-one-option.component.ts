@@ -40,10 +40,12 @@ export class MultipleChoiceOneOptionComponent implements ControlValueAccessor, V
      */
     @Input() config!: any;
     @Input() order!: any;
- ngOnInit(): void {
-    //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
-    //Add 'implements OnInit' to the class.
-  }
+    @Input() isAdmin: boolean = false;
+    @Input() corrected;
+    ngOnInit(): void {
+        //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
+        //Add 'implements OnInit' to the class.
+    }
     /**
      * Internal numeric value storing the selected choice.
      * For example: 1, 2, 3, or 4.
@@ -53,7 +55,7 @@ export class MultipleChoiceOneOptionComponent implements ControlValueAccessor, V
     guid = this.generateGUID();
 
     private generateGUID(): string {
-        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
             const r = (Math.random() * 16) | 0,
                 v = c === 'x' ? r : (r & 0x3) | 0x8;
             return v.toString(16);
@@ -84,7 +86,7 @@ export class MultipleChoiceOneOptionComponent implements ControlValueAccessor, V
      * into the component’s view.
      */
     writeValue(val: number): void {
-         if (val !== undefined && val !== null) {
+        if (val !== undefined && val !== null) {
             this.value = val;
         } else {
             this.value = 0;

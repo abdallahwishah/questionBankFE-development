@@ -73,6 +73,7 @@ export class DynamicExamQuestionComponent implements OnInit, ControlValueAccesso
 
     @Input() order: any;
     @Input() isCorrecting: any;
+    @Input() isAdmin: boolean = false;
 
     /**
      * The overall "value" of this component, which is

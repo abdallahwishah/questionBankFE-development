@@ -12,6 +12,9 @@
     -->
     <div [innerHTML]="config.question.body"></div>
 </div>
+<div *ngIf="isAdmin && corrected" class="m-3 bg-secondary rounded" style="width: min-content">
+    {{ 'Corrected:' + corrected }}
+</div>
 
 <!-- 2) QUESTION HELPER (e.g., image or hint) -->
 <div class="mb-3" *ngIf="config?.question?.questionHelper">
@@ -20,6 +23,7 @@
 
 <!-- 3) RADIO BUTTONS (Choices) -->
 <div *ngFor="let choice of config?.questionPayload?.choices" class="mb-4">
+    <label *ngIf="isAdmin" class="mx-3">{{ choice.id }}</label>
     <input
         class="form-check-input"
         type="radio"

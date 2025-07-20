@@ -1,7 +1,8 @@
 <div
     [ngClass]="{
         'card-error': QuestionTypeEnum.LinkedQuestions != questionType && isCorrecting && !fullQuestion?.isAnswerCorect,
-        'card-success': QuestionTypeEnum.LinkedQuestions != questionType && isCorrecting && fullQuestion?.isAnswerCorect
+        'card-success':
+            QuestionTypeEnum.LinkedQuestions != questionType && isCorrecting && fullQuestion?.isAnswerCorect,
     }"
 >
     @switch (questionType) {
@@ -19,6 +20,8 @@
                 (ngModelChange)="notifyChange()"
                 [config]="question"
                 [disabled]="isDisabled"
+                [isAdmin]="isAdmin"
+                [corrected]="fullQuestion.corected"
             ></app-multiple-choice-one-option>
         }
         @case (QuestionTypeEnum.SinglChoice) {
@@ -27,6 +30,8 @@
                 [(ngModel)]="value.singleChoiceAnswer"
                 (ngModelChange)="notifyChange()"
                 [config]="question"
+                [isAdmin]="isAdmin"
+                [corrected]="fullQuestion.corected"
                 [disabled]="isDisabled"
             ></app-multiple-choice-one-option>
         }
