@@ -21,7 +21,7 @@
                 [config]="question"
                 [disabled]="isDisabled"
                 [isAdmin]="isAdmin"
-                [corrected]="fullQuestion.corected"
+                [corrected]="fullQuestion?.corected"
             ></app-multiple-choice-one-option>
         }
         @case (QuestionTypeEnum.SinglChoice) {
@@ -31,7 +31,7 @@
                 (ngModelChange)="notifyChange()"
                 [config]="question"
                 [isAdmin]="isAdmin"
-                [corrected]="fullQuestion.corected"
+                [corrected]="fullQuestion?.corected"
                 [disabled]="isDisabled"
             ></app-multiple-choice-one-option>
         }
