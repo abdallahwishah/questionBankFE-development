@@ -47698,6 +47698,7 @@ export class GetExamAttemptForViewDto implements IGetExamAttemptForViewDto {
     studyLevel!: string | undefined;
     identityNumber!: string | undefined;
     address!: string | undefined;
+    phoneNumber!: string | undefined;
     versionNo!: number;
     dateOfBirth!: DateTime | undefined;
     profilePictureId!: string | undefined;
@@ -47739,6 +47740,7 @@ export class GetExamAttemptForViewDto implements IGetExamAttemptForViewDto {
             this.studyLevel = _data["studyLevel"];
             this.identityNumber = _data["identityNumber"];
             this.address = _data["address"];
+            this.phoneNumber = _data["phoneNumber"];
             this.versionNo = _data["versionNo"];
             this.dateOfBirth = _data["dateOfBirth"] ? DateTime.fromISO(_data["dateOfBirth"].toString()) : <any>undefined;
             this.profilePictureId = _data["profilePictureId"];
@@ -47780,6 +47782,7 @@ export class GetExamAttemptForViewDto implements IGetExamAttemptForViewDto {
         data["studyLevel"] = this.studyLevel;
         data["identityNumber"] = this.identityNumber;
         data["address"] = this.address;
+        data["phoneNumber"] = this.phoneNumber;
         data["versionNo"] = this.versionNo;
         data["dateOfBirth"] = this.dateOfBirth ? this.dateOfBirth.toString() : <any>undefined;
         data["profilePictureId"] = this.profilePictureId;
@@ -47814,6 +47817,7 @@ export interface IGetExamAttemptForViewDto {
     studyLevel: string | undefined;
     identityNumber: string | undefined;
     address: string | undefined;
+    phoneNumber: string | undefined;
     versionNo: number;
     dateOfBirth: DateTime | undefined;
     profilePictureId: string | undefined;
@@ -50521,6 +50525,7 @@ export class GetSessionForViewDto implements IGetSessionForViewDto {
     numberOfSupervisors!: number;
     numberOfAttemptedStudents!: number;
     numberOfNonAttemptedStudents!: number;
+    registeredStudentCount!: number;
     studentCountBasedOnLevel!: { [key: string]: number; } | undefined;
     answerPercentagesByQuestion!: { [key: string]: number; } | undefined;
     versionCount!: number;
@@ -50546,6 +50551,7 @@ export class GetSessionForViewDto implements IGetSessionForViewDto {
             this.numberOfSupervisors = _data["numberOfSupervisors"];
             this.numberOfAttemptedStudents = _data["numberOfAttemptedStudents"];
             this.numberOfNonAttemptedStudents = _data["numberOfNonAttemptedStudents"];
+            this.registeredStudentCount = _data["registeredStudentCount"];
             if (_data["studentCountBasedOnLevel"]) {
                 this.studentCountBasedOnLevel = {} as any;
                 for (let key in _data["studentCountBasedOnLevel"]) {
@@ -50587,6 +50593,7 @@ export class GetSessionForViewDto implements IGetSessionForViewDto {
         data["numberOfSupervisors"] = this.numberOfSupervisors;
         data["numberOfAttemptedStudents"] = this.numberOfAttemptedStudents;
         data["numberOfNonAttemptedStudents"] = this.numberOfNonAttemptedStudents;
+        data["registeredStudentCount"] = this.registeredStudentCount;
         if (this.studentCountBasedOnLevel) {
             data["studentCountBasedOnLevel"] = {};
             for (let key in this.studentCountBasedOnLevel) {
@@ -50621,6 +50628,7 @@ export interface IGetSessionForViewDto {
     numberOfSupervisors: number;
     numberOfAttemptedStudents: number;
     numberOfNonAttemptedStudents: number;
+    registeredStudentCount: number;
     studentCountBasedOnLevel: { [key: string]: number; } | undefined;
     answerPercentagesByQuestion: { [key: string]: number; } | undefined;
     versionCount: number;

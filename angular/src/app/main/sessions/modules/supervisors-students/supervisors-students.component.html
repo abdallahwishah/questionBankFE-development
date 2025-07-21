@@ -389,6 +389,10 @@
                                 {{ l('StudentName') }}
                                 <p-sortIcon field="SessionName"></p-sortIcon>
                             </th>
+                            <th pSortableColumn="PhoneNumber">
+                                {{ l('PhoneNumber') }}
+                                <p-sortIcon field="PhoneNumber"></p-sortIcon>
+                            </th>
                             <th pSortableColumn="SessionName">
                                 {{ l('StudyLevel') }}
                                 <p-sortIcon field="SessionName"></p-sortIcon>
@@ -459,6 +463,7 @@
                             <td>
                                 {{ record.studentName || '-' }}
                             </td>
+                            <td>{{ record.phoneNumber || '-' }}</td>
                             <td>
                                 {{ record.studyLevel || '-' }}
                             </td>
