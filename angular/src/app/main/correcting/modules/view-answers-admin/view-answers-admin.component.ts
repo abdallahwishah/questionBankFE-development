@@ -156,7 +156,7 @@ export class ViewAnswersAdminComponent extends AppComponentBase implements OnIni
                 }),
             )
             .subscribe((value) => {
-                this.location.back();
+                window.location.reload();
             });
     }
 }
