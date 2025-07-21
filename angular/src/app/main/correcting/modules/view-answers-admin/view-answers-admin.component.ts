@@ -80,7 +80,7 @@ export class ViewAnswersAdminComponent extends AppComponentBase implements OnIni
                 answer.multipleChoiceAnswer = questionWithAnswer?.optionId;
                 break;
             case QuestionTypeEnum.SinglChoice:
-                answer.singleChoiceAnswer = questionWithAnswer?.optionId?.[0];
+                answer.singleChoiceAnswer = questionWithAnswer?.optionId?.[0]?questionWithAnswer?.optionId?.[0]:questionWithAnswer?.corected
                 break;
             case QuestionTypeEnum.TrueAndFalse:
                 answer.trueFalseAnswer = questionWithAnswer?.optionId?.[0];
