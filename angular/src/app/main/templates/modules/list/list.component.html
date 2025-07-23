@@ -43,9 +43,10 @@
                         [placeholder]="l('Search')"
                         type="text"
                         [(ngModel)]="filter"
-                        (ngModelChange)="getList()"
+                        (ngModelChange)="!filter ? getList() : ''"
+                        (keyup.enter)="getList()"
                     />
-                    <button class="btn btn-primary" type="submit">
+                    <button class="btn btn-primary" type="submit" (click)="getList()">
                         <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path
                                 fill-rule="evenodd"
@@ -79,8 +80,8 @@
                                             customParams: {
                                                 Sorting: '',
                                                 SkipCount: 0,
-                                                MaxResultCount: 10
-                                            }
+                                                MaxResultCount: 10,
+                                            },
                                         }"
                                     ></app-auto-complete-feild>
                                 </div>
@@ -97,8 +98,8 @@
                                                 Sorting: '',
                                                 SkipCount: 0,
                                                 MaxResultCount: 10,
-                                                StudyLeveldsFilter: [levelId?.studyLevel?.id]
-                                            }
+                                                StudyLeveldsFilter: [levelId?.studyLevel?.id],
+                                            },
                                         }"
                                     ></app-auto-complete-feild>
                                 </div>
@@ -177,7 +178,7 @@
                             <span
                                 [pTooltip]="record.studyLevel"
                                 [tooltipOptions]="{
-                                    tooltipPosition: 'right'
+                                    tooltipPosition: 'right',
                                 }"
                                 [positionStyle]="{ width: '400px' }"
                             >
@@ -204,17 +205,17 @@
                             <app-action-button
                                 [ActionsInfo]="[
                                     {
-                                        label: 'Copy'
+                                        label: 'Copy',
                                     },
                                     {
-                                        label: 'CreateTest'
+                                        label: 'CreateTest',
                                     },
                                     {
-                                        label: 'Edit'
+                                        label: 'Edit',
                                     },
                                     {
-                                        label: 'Delete'
-                                    }
+                                        label: 'Delete',
+                                    },
                                 ]"
                                 (action)="doActions($event, record)"
                             ></app-action-button>

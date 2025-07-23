@@ -188,6 +188,7 @@ export class SchoolsComponent extends AppComponentBase implements OnInit {
     clearFilter() {
         this.FiltersComponent.isPanelOpen = false;
         this.governorateIdFilter = undefined;
+        this.getList();
     }
     doActions(label: any, record: any) {
         this.schoolId = record?.school?.id;
