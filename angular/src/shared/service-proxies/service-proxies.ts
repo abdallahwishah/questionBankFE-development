@@ -25914,6 +25914,7 @@ export class StudentsServiceProxy {
      * @param sessionIdFilter (optional) 
      * @param governorateFilterId (optional) 
      * @param studySubjectFilterIds (optional) 
+     * @param studySubjectCountFilter (optional) 
      * @param isRegistered (optional) 
      * @param genderFilter (optional) 
      * @param sorting (optional) 
@@ -25921,7 +25922,7 @@ export class StudentsServiceProxy {
      * @param maxResultCount (optional) 
      * @return Success
      */
-    getAll(filter: string | undefined, classNameFilter: string | undefined, cityFilter: string | undefined, userNameFilter: string | undefined, sessionSupervisorNoteFilter: string | undefined, sessionIdFilter: number | undefined, governorateFilterId: number | undefined, studySubjectFilterIds: number[] | undefined, isRegistered: boolean | undefined, genderFilter: GenderEnum | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfGetStudentForViewDto> {
+    getAll(filter: string | undefined, classNameFilter: string | undefined, cityFilter: string | undefined, userNameFilter: string | undefined, sessionSupervisorNoteFilter: string | undefined, sessionIdFilter: number | undefined, governorateFilterId: number | undefined, studySubjectFilterIds: number[] | undefined, studySubjectCountFilter: number | undefined, isRegistered: boolean | undefined, genderFilter: GenderEnum | undefined, sorting: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<PagedResultDtoOfGetStudentForViewDto> {
         let url_ = this.baseUrl + "/api/services/app/Students/GetAll?";
         if (filter === null)
             throw new Error("The parameter 'filter' cannot be null.");
@@ -25955,6 +25956,10 @@ export class StudentsServiceProxy {
             throw new Error("The parameter 'studySubjectFilterIds' cannot be null.");
         else if (studySubjectFilterIds !== undefined)
             studySubjectFilterIds && studySubjectFilterIds.forEach(item => { url_ += "StudySubjectFilterIds=" + encodeURIComponent("" + item) + "&"; });
+        if (studySubjectCountFilter === null)
+            throw new Error("The parameter 'studySubjectCountFilter' cannot be null.");
+        else if (studySubjectCountFilter !== undefined)
+            url_ += "StudySubjectCountFilter=" + encodeURIComponent("" + studySubjectCountFilter) + "&";
         if (isRegistered === null)
             throw new Error("The parameter 'isRegistered' cannot be null.");
         else if (isRegistered !== undefined)
@@ -50950,6 +50955,7 @@ export class GetStudentForViewDto implements IGetStudentForViewDto {
     fullName!: string | undefined;
     identityNumber!: string | undefined;
     governorateName!: string | undefined;
+    studySubjects!: GetStudentStudySubjectForViewDto[] | undefined;
 
     constructor(data?: IGetStudentForViewDto) {
         if (data) {
@@ -50967,6 +50973,11 @@ export class GetStudentForViewDto implements IGetStudentForViewDto {
             this.fullName = _data["fullName"];
             this.identityNumber = _data["identityNumber"];
             this.governorateName = _data["governorateName"];
+            if (Array.isArray(_data["studySubjects"])) {
+                this.studySubjects = [] as any;
+                for (let item of _data["studySubjects"])
+                    this.studySubjects!.push(GetStudentStudySubjectForViewDto.fromJS(item));
+            }
         }
     }
 
@@ -50984,6 +50995,11 @@ export class GetStudentForViewDto implements IGetStudentForViewDto {
         data["fullName"] = this.fullName;
         data["identityNumber"] = this.identityNumber;
         data["governorateName"] = this.governorateName;
+        if (Array.isArray(this.studySubjects)) {
+            data["studySubjects"] = [];
+            for (let item of this.studySubjects)
+                data["studySubjects"].push(item ? item.toJSON() : <any>undefined);
+        }
         return data;
     }
 }
@@ -50994,6 +51010,7 @@ export interface IGetStudentForViewDto {
     fullName: string | undefined;
     identityNumber: string | undefined;
     governorateName: string | undefined;
+    studySubjects: GetStudentStudySubjectForViewDto[] | undefined;
 }
 
 export class GetStudentInfoOutput implements IGetStudentInfoOutput {

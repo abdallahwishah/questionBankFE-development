@@ -43,6 +43,8 @@ export class StudentsComponent extends AppComponentBase implements OnInit {
     AppConsts = AppConsts;
     genderEnumList: any[] = [];
     genderFilter;
+    registeredSubjectsCountFilter;
+    excelLoading: boolean;
 
     constructor(
         injector: Injector,
@@ -90,6 +92,7 @@ export class StudentsComponent extends AppComponentBase implements OnInit {
                 undefined,
                 this.governorate?.governorate?.id,
                 studySubjectIdList,
+                this.registeredSubjectsCountFilter,
                 this.registerCompletedFilter,
                 this.genderFilter,
                 this.primengTableHelper.getSorting(this.dataTable),
@@ -139,10 +142,13 @@ export class StudentsComponent extends AppComponentBase implements OnInit {
     }
 
     exportToExcel() {
+        this.excelLoading = true;
         this.studentsServiceProxy
             .getStudentsToExcel(this.filterText, undefined, undefined, undefined, undefined)
             .subscribe((result) => {
                 this._fileDownloadService.downloadTempFile(result);
+                this.excelLoading = false;
+                this.notify.success(this.l('SavedSuccessfully'));
             });
     }
 
@@ -175,6 +181,7 @@ export class StudentsComponent extends AppComponentBase implements OnInit {
         this.governorate = undefined;
         this.registerCompletedFilter = undefined;
         this.genderFilter = undefined;
+        this.registeredSubjectsCountFilter = undefined;
         this.getStudents();
         this.closeFilters();
     }
