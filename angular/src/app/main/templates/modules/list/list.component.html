@@ -44,9 +44,9 @@
                         type="text"
                         [(ngModel)]="filter"
                         (ngModelChange)="!filter ? getList() : ''"
-                        (keyup.enter)="getList()"
+                        (keyup.enter)="getList(); backToFirst()"
                     />
-                    <button class="btn btn-primary" type="submit" (click)="getList()">
+                    <button class="btn btn-primary" type="submit" (click)="getList(); backToFirst()">
                         <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path
                                 fill-rule="evenodd"

@@ -101,6 +101,10 @@ export class ListComponent extends AppComponentBase implements OnInit {
         // });
     }
 
+
+    backToFirst() {
+        this.paginator.changePage(0);
+    }
     getList(event?: LazyLoadEvent) {
         if (event) {
             if (this.primengTableHelper.shouldResetPaging(event)) {

@@ -141,6 +141,10 @@ export class ListComponent extends AppComponentBase implements OnInit {
         }
     }
 
+    backToFirst() {
+        this.paginator.changePage(0);
+    }
+
     closeFilters() {
         this.FiltersComponent.isPanelOpen = false;
     }

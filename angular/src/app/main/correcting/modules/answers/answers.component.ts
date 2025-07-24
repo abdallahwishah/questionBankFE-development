@@ -81,6 +81,9 @@ export class AnswersComponent extends AppComponentBase implements OnInit {
             });
     }
 
+    backToFirst() {
+        this.paginator.changePage(0);
+    }
     doActions(label: any, record: any) {
         switch (label) {
             case 'ViewAnswersStudent':

@@ -160,6 +160,11 @@ export class ListComponent extends AppComponentBase implements OnInit {
     }
     @ViewChild(FiltersComponent) FiltersComponent: FiltersComponent;
 
+
+    backToFirst() {
+        this.paginator.changePage(0);
+    }
+
     closeFilters() {
         this.FiltersComponent.isPanelOpen = false;
     }
